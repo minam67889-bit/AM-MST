@@ -92,17 +92,38 @@ jobs:
           # The download may be an APK itself (APK == zip) or a zip containing APKs.
           if unzip -Z1 download.bin | grep -qE '^(AndroidManifest\.xml|classes[0-9]*\.dex)$'; then
             echo "download is the APK itself"
-            cp download.bin amtunnel.apk
+            mkdir -p apks && cp download.bin apks/base.apk
           else
             unzip -o -q download.bin -d unpacked
             find unpacked -maxdepth 3 -type f -printf '%10s  %p\n' | sort -rn | head -30
-            best=$(find unpacked -name "*.apk" -printf '%s %p\n' | sort -rn | head -1 | cut -d' ' -f2-)
-            test -n "$best" || { echo "error: no APK inside the zip"; exit 1; }
-            echo "picked $best"
-            cp "$best" amtunnel.apk
-            echo "the zip also contains extra APKs (splits); using the largest"
-            find unpacked -name "*.apk" -printf '%10s  %p\n' | sort -rn | head -10
+            mkdir -p apks
+            i=0
+            while read -r line; do
+              i=$((i+1)); cp "$line" "apks/split-$i.apk"
+            done < <(find unpacked -name "*.apk" | sort)
           fi
+          # The base APK is the one carrying dex + the manifest; splits only carry resources/libs.
+          rm -f apks/base.apk.tmp
+          for candidate in apks/*.apk; do
+            if unzip -Z1 "$candidate" | grep -qE '^classes[0-9]*\.dex$'; then
+              echo "base APK: $candidate"
+              cp "$candidate" apks/base.apk.tmp
+            fi
+          done
+          test -f apks/base.apk.tmp || {
+            echo "error: no APK with dex found; candidates:"; ls -l apks
+            exit 1
+          }
+          mv apks/base.apk.tmp amtunnel.apk
+          rm -f apks/base.apk 2>/dev/null || true
+          echo "--- all APKs in the bundle ---"
+          for f in apks/*.apk; do
+            printf '%10s  dex=%s  so=%s  %s\n' "$(stat -c%s "$f")" \
+              "$(unzip -Z1 "$f" | grep -cE '^classes[0-9]*\.dex$')" \
+              "$(unzip -Z1 "$f" | grep -c '\.so$')" "$f"
+          done
+          ls apks/*.apk | grep -v '^apks/base.apk$' > split-apks.txt || true
+          wc -l < split-apks.txt
           ls -l amtunnel.apk
           sha256sum amtunnel.apk
           unzip -l amtunnel.apk | head -15
@@ -208,7 +229,12 @@ jobs:
           exec > >(tee -a analysis/apk_analysis.log) 2>&1
           set -uxo pipefail
           ls -l amtunnel.apk
-          python3 tools/apk_analysis.py --apk amtunnel.apk --out analysis
+          extras=""
+          while read -r split; do
+            [ -n "$split" ] && extras="$extras --extra-apk $split"
+          done < split-apks.txt || true
+          # shellcheck disable=SC2086
+          python3 tools/apk_analysis.py --apk amtunnel.apk $extras --out analysis
           echo "--- domains found ---"
           head -40 analysis/domains.txt || true
           echo "--- protocol hints ---"

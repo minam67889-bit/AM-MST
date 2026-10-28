@@ -68,6 +68,8 @@ def extract_strings(blob):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--apk", required=True)
+    parser.add_argument("--extra-apk", action="append", default=[],
+                        help="additional split APKs whose native libs/assets are also mined")
     parser.add_argument("--out", default="analysis")
     args = parser.parse_args()
 
@@ -117,12 +119,26 @@ def main():
         all_strings.extend(found)
     for name, blob in asset_blobs.items():
         all_strings.extend(extract_strings(blob))
+    native_blobs = {}
     with zipfile.ZipFile(apk) as archive:
         for name in native_libs:
             try:
-                all_strings.extend(extract_strings(archive.read(name)))
+                native_blobs[f"{os.path.basename(apk)}!{name}"] = archive.read(name)
             except Exception:
                 pass
+    extra_libs = []
+    for extra in args.extra_apk:
+        try:
+            with zipfile.ZipFile(extra) as archive:
+                names = [n for n in archive.namelist() if n.endswith(".so")]
+                extra_libs.extend(names)
+                for name in names:
+                    native_blobs[f"{os.path.basename(extra)}!{name}"] = archive.read(name)
+        except Exception as exc:
+            print(f"warning: cannot read split {extra}: {exc}")
+    report["native_libs_extra"] = len(extra_libs)
+    for blob in native_blobs.values():
+        all_strings.extend(extract_strings(blob))
     report["raw_strings"] = len(all_strings)
     report["strings_per_dex"] = per_source
 
