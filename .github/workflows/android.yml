@@ -3,6 +3,10 @@ name: Android build, tests and tunnel integration
 on:
   push:
     branches: ["**"]
+    paths-ignore:
+      - "analysis/**"
+      - "docs/**"
+      - "**.md"
   pull_request:
   workflow_dispatch:
 
