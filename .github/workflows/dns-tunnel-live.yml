@@ -147,6 +147,52 @@ jobs:
           strings -n 3 libs/libxdnstt.so | grep -oE "^-?[a-z]{3,12}$" | sort -u | head -40
           exit 0
 
+      - name: Publish what the binaries need
+        if: env.APK != ''
+        continue-on-error: true
+        run: |
+          set -uo pipefail
+          {
+            for f in libs/*.so; do
+              echo "== $f"
+              file "$f"
+              readelf -h "$f" | grep -E "Class|Machine|Type|Entry"
+              echo "-- interpreter"
+              readelf -l "$f" 2>/dev/null | grep -A1 "INTERP" | tail -2
+              echo "-- needed"
+              readelf -d "$f" 2>/dev/null | grep NEEDED
+            done
+          } > /tmp/readelf.txt 2>&1
+          cat /tmp/readelf.txt
+          cp /tmp/readelf.txt analysis-bdnet/configs/dns/results/native-readelf.txt
+
+      - name: "Plan B: shim the Android linker with glibc's aarch64 loader"
+        if: env.APK != ''
+        continue-on-error: true
+        run: |
+          set -uo pipefail
+          sudo apt-get install -y -qq libc6-arm64-cross
+          mkdir -p sysroot/system/bin sysroot/system/lib64 sysroot/lib
+          ln -sf /usr/aarch64-linux-gnu/lib/ld-linux-aarch64.so.1 sysroot/system/bin/linker64
+          for lib in libc.so.6 libdl.so.2 libm.so.6 libpthread.so.0; do
+            src=$(ls /usr/aarch64-linux-gnu/lib/$lib 2>/dev/null | head -1)
+            [ -n "$src" ] && ln -sf "$src" "sysroot/system/lib64/${lib%%.so*}.so"
+          done
+          ln -sf /usr/aarch64-linux-gnu/lib/libc.so.6 sysroot/system/lib64/libc.so
+          ln -sf /usr/aarch64-linux-gnu/lib/libdl.so.2 sysroot/system/lib64/libdl.so
+          ln -sf /usr/aarch64-linux-gnu/lib/libm.so.6 sysroot/system/lib64/libm.so
+          ln -sf /usr/aarch64-linux-gnu/lib/libpthread.so.0 sysroot/system/lib64/libpthread.so
+          ls -l sysroot/system/bin sysroot/system/lib64
+          {
+            echo "== --help through the shim"
+            QEMU_LD_PREFIX=$PWD/sysroot qemu-aarch64-static libs/libxdnstt.so -h 2>&1 | head -40
+            echo "== --version through the shim"
+            QEMU_LD_PREFIX=$PWD/sysroot qemu-aarch64-static libs/libxdnstt.so --version 2>&1 | head -5
+            echo "== libdns help"
+            QEMU_LD_PREFIX=$PWD/sysroot qemu-aarch64-static libs/libdns.so -h 2>&1 | head -40
+          } | tee /tmp/shim.txt
+          cp /tmp/shim.txt analysis-bdnet/configs/dns/results/native-shim.txt
+
       - name: Their dnstt client, --help
         if: env.APK != ''
         continue-on-error: true
