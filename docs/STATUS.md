@@ -42,6 +42,8 @@ Last verified end-to-end in CI run **40713951951** (`Live DNS-tunnel integration
 | Compression negotiation | Not implemented | client always negotiates OFF; server accepts |
 | **AM Tunnel protocol** | **Analysed** | real APK decompiled in CI: `app.vpn.amtunnellite` v63, Hysteria 2 ("UDP-Q by Prince") + WireGuard + Xray + pdnsd + tun2socks, LIAPP-protected. See `docs/AM-TUNNEL-PROTOCOL.md` |
 | **Baseline test of the original AM Tunnel client** | **Blocked** | the APK runs only against vendor backend credentials held in a LIAPP-encrypted payload; no device/emulator either |
+| **BD NET APK analysis** | **Analysed** | `dastan.prince.bdfreevpn` v106 (patched "Mod" build). Carries **dnstt** (`libxdnstt.so`: KCP + Noise + `DeriveNoise`) = the SlowDNS family, plus Hysteria 2, Xray, pdnsd, tun2socks. See `docs/BDNET-PROTOCOL.md` |
+| **dnstt / SlowDNS transport** | **Not implemented** | different protocol from MasterDnsVPN: base32 labels + Noise NK + KCP + turbotunnel. Needs a dnstt server we control to be verifiable; not faked |
 | Packet duplication (MasterDnsVPN `PACKET_DUPLICATION_COUNT`) | Implemented | `TunnelConfig.packetDuplication` → extra copies to other ranked resolvers; counter in `stats().duplicatesSent` |
 
 ## How the AM Tunnel APK was finally obtained and analysed

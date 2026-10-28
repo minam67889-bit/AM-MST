@@ -14,7 +14,10 @@ independent of the transport: it is plugged in through `ResolverSelector` /
 Tunnel engine, once its protocol is confirmed from the APK) can be dropped in
 without touching the resolver manager.
 
-> **Read `docs/STATUS.md` and `docs/AM-TUNNEL-PROTOCOL.md` first.** The AM Tunnel
+> **Read `docs/STATUS.md`, `docs/AM-TUNNEL-PROTOCOL.md` and
+> `docs/BDNET-PROTOCOL.md` first.** Two real APKs have been decompiled in CI:
+> AM Tunnel (`app.vpn.amtunnellite`, Hysteria 2 + WireGuard + Xray) and BD NET
+> (`dastan.prince.bdfreevpn`, dnstt/SlowDNS + Hysteria 2 + Xray). The AM Tunnel
 > APK has been decompiled and its real protocol identified: it is **Hysteria 2
 > (QUIC/UDP) + WireGuard + Xray**, with pdnsd for local DNS — not a DNS-TXT
 > tunnel. Its server credentials live in a LIAPP-encrypted payload, so this
