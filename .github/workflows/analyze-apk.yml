@@ -620,6 +620,25 @@ jobs:
           done
           cat analysis/hunt/id-owners-smali.txt
 
+      - name: Extract libputils (the real decryptor)
+        continue-on-error: true
+        run: |
+          exec > >(tee -a analysis/putils.log) 2>&1
+          set -uo pipefail
+          mkdir -p analysis/native
+          # PUtils.pDecrypt is native; every config bundle goes through it.
+          for abi in arm64-v8a armeabi-v7a x86_64; do
+            if unzip -l amtunnel.apk | grep -q "lib/$abi/libputils.so"; then
+              unzip -p amtunnel.apk "lib/$abi/libputils.so" > analysis/native/libputils.so
+              echo "extracted $abi/libputils.so"
+              break
+            fi
+          done
+          ls -l analysis/native/libputils.so || exit 0
+          python3 tools/scan_crypto.py analysis/native/libputils.so | head -120
+          echo "=== dynamic symbols ==="
+          (readelf -Ws analysis/native/libputils.so 2>/dev/null || nm -D analysis/native/libputils.so 2>/dev/null) | head -60
+
       - name: Mine native DNS-tunnel libraries
         continue-on-error: true
         run: |
