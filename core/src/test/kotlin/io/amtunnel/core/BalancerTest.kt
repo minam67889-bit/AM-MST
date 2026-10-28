@@ -73,8 +73,11 @@ class BalancerTest {
         val balancer = MasterBalancer()
         balancer.setResolvers(listOf(endpoint("a")))
         val stats = balancer.statsFor("a:53")!!
+        // upstream halves only once a counter passes the threshold
         repeat(1000) { stats.reportSend() }
-        assertTrue("counter should have been halved", stats.sentCount < 1000)
+        assertEquals("exactly at the threshold nothing is halved yet", 1000, stats.sentCount)
+        repeat(5) { stats.reportSend() }
+        assertTrue("past 1000 samples the history must be halved", stats.sentCount < 1005)
     }
 
     // ------------------------------------------------------------- strategy ids

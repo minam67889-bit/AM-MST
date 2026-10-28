@@ -446,16 +446,16 @@ class MasterBalancer(
         this.active.indices.filter { this.active[it] == active }
 
     private fun pickSingle(candidates: List<Int>): Int = when (strategy) {
-        BalancingStrategy.RANDOM -> candidates[(nextRandom() % candidates.size.toLong()).toInt()]
+        BalancingStrategy.RANDOM -> candidates[Math.floorMod(nextRandom(), candidates.size.toLong()).toInt()]
 
         BalancingStrategy.LOSS_THEN_LATENCY -> {
             val pool = lossThenLatencyTier(candidates)
-            if (pool.isEmpty()) roundRobin(candidates) else pool[(nextRandom() % pool.size.toLong()).toInt()]
+            if (pool.isEmpty()) roundRobin(candidates) else pool[Math.floorMod(nextRandom(), pool.size.toLong()).toInt()]
         }
 
         BalancingStrategy.LEAST_LOSS_TOP_RANDOM -> {
             val pool = leastLossTopTier(candidates)
-            if (pool.isEmpty()) roundRobin(candidates) else pool[(nextRandom() % pool.size.toLong()).toInt()]
+            if (pool.isEmpty()) roundRobin(candidates) else pool[Math.floorMod(nextRandom(), pool.size.toLong()).toInt()]
         }
 
         BalancingStrategy.LEAST_LOSS_TOP_ROUND_ROBIN -> {
