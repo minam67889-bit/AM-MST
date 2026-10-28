@@ -307,42 +307,55 @@ jobs:
           ls -l /tmp/dnstt-client
           /tmp/dnstt-client -h 2>&1 | head -20 || true
 
-      - name: Try key derivations of the app's -pubkey value
+      - name: "Candidate keys: is 'prince' a seed or the key itself?"
         env:
-          HOSTS: "173.212.232.241 173.249.10.48"
+          HOSTS: "173.212.232.241 173.249.10.48 185.196.21.114"
         run: |
           exec > >(tee /tmp/stock.log) 2>&1
           set -uo pipefail
+          pip install -q cryptography
           python3 - <<'PY' > /tmp/keys.txt
           import hashlib
+          from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PrivateKey
+          from cryptography.hazmat.primitives import serialization
           pw = b"prince"
-          keys = {
-              "sha256(prince)": hashlib.sha256(pw).digest(),
-              "sha512(prince)[:32]": hashlib.sha512(pw).digest()[:32],
-              "blake2s(prince)": hashlib.blake2s(pw).digest(),
-              "blake2b(prince)[:32]": hashlib.blake2b(pw, digest_size=32).digest(),
-              "prince+zeros": pw + bytes(26),
-              "prince*5+2": (pw * 6)[:32],
-          }
-          for name, key in keys.items():
-              print(name, key.hex())
+          def x25519_pub(seed):
+              k = X25519PrivateKey.from_private_bytes(seed)
+              return k.public_key().public_bytes(serialization.Encoding.Raw,
+                                                 serialization.PublicFormat.Raw)
+          seeds = {"sha256": hashlib.sha256(pw).digest(),
+                   "blake2s": hashlib.blake2s(pw).digest(),
+                   "sha512_32": hashlib.sha512(pw).digest()[:32],
+                   "raw_pad": pw + bytes(26)}
+          # hypothesis A: the string is the server's *private* seed
+          for name, seed in seeds.items():
+              print(f"x25519({name}) {x25519_pub(seed).hex()}")
+          # hypothesis B: the string is hashed straight into the key
+          for name, seed in seeds.items():
+              print(f"direct({name}) {seed.hex()}")
           PY
           cat /tmp/keys.txt
+          : > /tmp/stock-result.txt
           for host in $HOSTS; do
-            for line in $(cat /tmp/keys.txt | tr " " ":"); do
-              name=${line%%:*}; key=${line##*:}
-              port=$((7000 + RANDOM % 200))
-              echo "== $name on $host (port $port)"
-              /tmp/dnstt-client -udp "$host:53" -pubkey "$key" "sd-$host" "127.0.0.1:$port" \
-                > "/tmp/c-$port.log" 2>&1 &
-              pid=$!
-              for i in $(seq 1 10); do ss -ltn 2>/dev/null | grep -q ":$port" && break; sleep 1; done
-              timeout 25 python3 tools/tunnel_probe.py "127.0.0.1:$port" --mode http \
-                --host example.com --timeout 20 || true
-              echo "   client said:"; sed "s/^/     /" "/tmp/c-$port.log" | tail -5
-              kill $pid 2>/dev/null; sleep 1
+            for line in $(awk '{print $1"|"$2}' /tmp/keys.txt); do
+              name=${line%%|*}; key=${line##*|}
+              for zone in "sd-$host" "$host" "t.$host"; do
+                port=$((7000 + RANDOM % 400))
+                /tmp/dnstt-client -udp "$host:53" -pubkey "$key" "$zone" "127.0.0.1:$port" \
+                  > "/tmp/c-$port.log" 2>&1 &
+                pid=$!
+                for i in $(seq 1 8); do ss -ltn 2>/dev/null | grep -q ":$port" && break; sleep 1; done
+                if timeout 20 python3 tools/tunnel_probe.py "127.0.0.1:$port" --mode http \
+                     --host example.com --timeout 15; then
+                  echo "HIT $name $host $zone" | tee -a /tmp/stock-result.txt
+                else
+                  echo "miss $name $host $zone" >> /tmp/stock-result.txt
+                fi
+                kill $pid 2>/dev/null; sleep 1
+              done
             done
           done
+          echo "== summary"; grep -c miss /tmp/stock-result.txt || true; grep HIT /tmp/stock-result.txt || echo "no hits"
 
       - name: Publish
         if: always()
@@ -350,6 +363,7 @@ jobs:
         run: |
           mkdir -p analysis-bdnet/configs/dns/results
           cp /tmp/stock.log analysis-bdnet/configs/dns/results/stock-dnstt.log 2>/dev/null || true
+          cp /tmp/stock-result.txt analysis-bdnet/configs/dns/results/stock-dnstt-result.txt 2>/dev/null || true
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add analysis-bdnet/configs/dns/results
