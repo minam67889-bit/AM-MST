@@ -1,0 +1,93 @@
+##### 54854654195595 in java/sources/prince/dastan/vpn/activities/VPNClient.java
+1864-        u3.f(Deobfuscator$BDNETVPN$app.getString(-69839795091339L), new DialogInterfaceOnClickListenerC3003f10(this, 3));
+1865-        u3.g();
+1866-    }
+1867-
+1868-    @Override // prince.dastan.vpn.service.vpn.TunnelVpnManagerPsi.SocksListener, defpackage.VT
+1869-    public final void restartSocksOpenVPN() {
+1870-        runOnUiThread(new RunnableC3243i10(this, 3));
+1871-    }
+1872-
+1873-    public final void s() {
+1874:        C3599mV c3599mV = new C3599mV(Deobfuscator$BDNETVPN$app.getString(-54854654195595L), new C3083g10(this), new C0407Pi(this));
+1875-        File file = new File(getCacheDir(), "volley");
+1876-        try {
+1877-            int i = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+1878-        } catch (PackageManager.NameNotFoundException unused) {
+1879-        }
+1880-        C3986rO c3986rO = new C3986rO(new C4489xl(file), new C4156ta(new C3393jw()));
+1881-        C0037Bb c0037Bb = c3986rO.j;
+1882-        if (c0037Bb != null) {
+1883-            c0037Bb.e = true;
+1884-            c0037Bb.interrupt();
+1885-        }
+1886-        int i2 = 0;
+1887-        while (true) {
+1888-            QH[] qhArr = c3986rO.i;
+1889-            if (i2 >= qhArr.length) {
+1890-                break;
+1891-            }
+1892-            QH qh = qhArr[i2];
+1893-            if (qh != null) {
+1894-                qh.e = true;
+1895-                qh.interrupt();
+1896-            }
+1897-            i2++;
+1898-        }
+1899-        C0037Bb c0037Bb2 = new C0037Bb(c3986rO.d, c3986rO.e, c3986rO.f, c3986rO.h);
+##### 95639663638411 in java/sources/prince/dastan/vpn/service/vpn/TunnelVpnManagerPsi.java
+236-            psiphonTunnel.stop();
+237-            m_tunnel = null;
+238-        }
+239-        socksListener.addStatus(Deobfuscator$BDNETVPN$app.getString(-95399145469835L));
+240-    }
+241-
+242-    public void startPsiphon() {
+243-        String l = this.mConfig.l();
+244-        String string = Deobfuscator$BDNETVPN$app.getString(-95635368671115L);
+245-        try {
+246:            string = loadServerDat(this.mContext, Deobfuscator$BDNETVPN$app.getString(-95639663638411L));
+247-        } catch (Exception e) {
+248-            F00.g(this.mContext, Deobfuscator$BDNETVPN$app.getString(-95686908278667L) + e.getMessage());
+249-            socksListener.stopSocksOpenVPN();
+250-            TunnelManagerHelper.stopPsiphon(this.mContext);
+251-        }
+252-        try {
+253-            m_tunnel.startRouting();
+254-            if (l.equals(Deobfuscator$BDNETVPN$app.getString(-95789987493771L))) {
+255-                m_tunnel.startTunneling(PUtils.pDecrypt(this.mContext, string));
+256-            } else {
+257-                m_tunnel.startTunneling(PUtils.pDecrypt(this.mContext, l));
+258-            }
+259-        } catch (PsiphonTunnel.Exception e2) {
+260-            F00.g(this.mContext, Deobfuscator$BDNETVPN$app.getString(-95811462330251L) + e2.getMessage());
+261-            socksListener.stopSocksOpenVPN();
+262-            TunnelManagerHelper.stopPsiphon(this.mContext);
+263-        }
+264-    }
+265-}
+##### 72910696707979 in java/sources/prince/dastan/vpn/activities/a.java
+49-            if (file.exists()) {
+50-                String i = i(new FileInputStream(file));
+51-                int i2 = F00.a;
+52-                try {
+53-                    str2 = AbstractC4569ym.c(i, AbstractC4569ym.a);
+54-                } catch (Exception unused) {
+55-                    str2 = null;
+56-                }
+57-                return new JSONObject(str2);
+58-            }
+59:            String D = S50.D(getApplicationContext(), Deobfuscator$BDNETVPN$app.getString(-72910696707979L));
+60-            int i3 = F00.a;
+61-            try {
+62-                str = AbstractC4569ym.c(D, AbstractC4569ym.a);
+63-            } catch (Exception unused2) {
+64-                str = null;
+65-            }
+66-            return new JSONObject(str);
+67-        } catch (Exception e) {
+68-            Toast.makeText((VPNClient) this, Deobfuscator$BDNETVPN$app.getString(-72962236315531L) + e.getMessage(), 1).show();
+69-            return null;
+70-        }
+71-    }
+72-}
