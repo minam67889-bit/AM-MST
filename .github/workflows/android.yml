@@ -46,6 +46,16 @@ jobs:
           python3 - <<'PY'
           import json, os, urllib.request
           errors = []
+          import glob, xml.etree.ElementTree as ET
+          for path in glob.glob("*/build/test-results/test/*.xml"):
+              try:
+                  tree = ET.parse(path)
+              except Exception:
+                  continue
+              for case in tree.iter("testcase"):
+                  for fail in list(case.iter("failure")) + list(case.iter("error")):
+                      msg = (fail.get("message") or "")[:400].replace("\n", " ")
+                      errors.append(f"TEST FAILED: {case.get('classname')}.{case.get('name')} :: {msg}")
           tail = "(no build.log)"
           if os.path.exists("build.log"):
               with open("build.log", encoding="utf-8", errors="replace") as fh:
