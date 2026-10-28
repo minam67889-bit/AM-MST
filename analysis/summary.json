@@ -1,0 +1,28 @@
+{
+  "apk": "amtunnel.apk",
+  "size": 41063870,
+  "sha256": "85a81ab25833ddb8e8b238755dae7d3e92a5e9b76190c8fc9398105018157b0c",
+  "entries": 20,
+  "dex": [],
+  "native_libs": [
+    "lib/armeabi-v7a/libdatastore_shared_counter.so",
+    "lib/armeabi-v7a/libdns.so",
+    "lib/armeabi-v7a/libdnslite.so",
+    "lib/armeabi-v7a/libefuyxx.so",
+    "lib/armeabi-v7a/libpdnsd.so",
+    "lib/armeabi-v7a/libpdr.so",
+    "lib/armeabi-v7a/libputils.so",
+    "lib/armeabi-v7a/libsuperdns.so",
+    "lib/armeabi-v7a/libtun2socks.so",
+    "lib/armeabi-v7a/libudpq.so",
+    "lib/armeabi-v7a/libudpqtwo.so",
+    "lib/armeabi-v7a/libwg-go.so",
+    "lib/armeabi-v7a/libwg-quick.so",
+    "lib/armeabi-v7a/libwg.so",
+    "lib/armeabi-v7a/libxray.so"
+  ],
+  "assets": [],
+  "res_raw": [],
+  "raw_strings": 418325,
+  "strings_per_dex": {}
+}

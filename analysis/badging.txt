@@ -1,0 +1,16 @@
+package: name='app.vpn.amtunnellite' versionCode='63' versionName='' split='config.armeabi_v7a'
+application: label='' icon=''
+uses-permission: name='android.permission.WRITE_EXTERNAL_STORAGE'
+uses-implied-permission: name='android.permission.WRITE_EXTERNAL_STORAGE' reason='targetSdkVersion < 4'
+uses-permission: name='android.permission.READ_PHONE_STATE'
+uses-implied-permission: name='android.permission.READ_PHONE_STATE' reason='targetSdkVersion < 4'
+uses-permission: name='android.permission.READ_EXTERNAL_STORAGE'
+uses-implied-permission: name='android.permission.READ_EXTERNAL_STORAGE' reason='requested WRITE_EXTERNAL_STORAGE'
+feature-group: label=''
+  uses-feature: name='android.hardware.faketouch'
+  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'
+supports-screens: 'normal'
+supports-any-density: 'false'
+locales:
+densities:
+native-code: 'armeabi-v7a'
