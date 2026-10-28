@@ -1,0 +1,176 @@
+name: Native BD client under qemu
+
+# The only way left to prove a byte moves through the tunnel: run the app's own
+# tunnel binaries, unmodified. They are Android/arm64 PIE executables whose
+# interpreter is /system/bin/linker64, so they are executed with
+# qemu-aarch64-static and a sysroot that maps the bionic names onto glibc plus
+# stubs for the two bionic-only libs they need (liblog, libandroid).
+#
+# Everything is wrapped in `timeout` - a Go tunnel client that starts fine and
+# then waits forever must not eat the job again.
+
+on:
+  workflow_dispatch:
+    inputs:
+      host:
+        description: "FastDNS / SlowDNS endpoint"
+        default: "173.212.232.241"
+      slowdns_host:
+        description: "SlowDNS endpoint"
+        default: "13.140.185.158"
+  push:
+    paths:
+      - ".github/workflows/qemu-native.yml"
+      - "tools/tunnel_probe.py"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      FASTDNS_HOST: ${{ inputs.host || '173.212.232.241' }}
+      SLOWDNS_HOST: ${{ inputs.slowdns_host || '13.140.185.158' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq qemu-user-static libc6-arm64-cross \
+            gcc-aarch64-linux-gnu unzip binutils file
+          qemu-aarch64-static --version | head -1
+          aarch64-linux-gnu-gcc --version | head -1
+
+      - name: APK
+        run: |
+          set -euo pipefail
+          mkdir -p art libs
+          RUN=$(gh run list --workflow=analyze-apk.yml --status success --limit 1 \
+                  --json databaseId --jq '.[0].databaseId')
+          ART=$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$RUN/artifacts" \
+                  --jq '.artifacts[] | select(.name=="amtunnel-apk-analysis") | .id' | head -1)
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$ART/zip" > art/a.zip
+          unzip -o -q art/a.zip -d art/x
+          APK=$(find art/x -name '*.apk' | head -1)
+          echo "APK=$APK"
+          unzip -o -j "$APK" 'lib/arm64-v8a/*' -d libs
+          chmod +x libs/* || true
+          ls -l libs
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Sysroot: glibc loader + bionic stubs
+        run: |
+          set -euo pipefail
+          mkdir -p sysroot/system/bin sysroot/system/lib64
+          ln -sf /usr/aarch64-linux-gnu/lib/ld-linux-aarch64.so.1 sysroot/system/bin/linker64
+          for lib in libc.so.6 libdl.so.2 libm.so.6 libpthread.so.0 librt.so.1; do
+            ln -sf "/usr/aarch64-linux-gnu/lib/$lib" "sysroot/system/lib64/${lib%%.so*}.so"
+          done
+          cat > /tmp/stubs.c <<'EOF'
+          #include <stdarg.h>
+          #include <stdio.h>
+          #include <string.h>
+          int __android_log_print(int p, const char *t, const char *f, ...) {
+            va_list a; va_start(a, f); if (t) fprintf(stderr, "%s: ", t);
+            vfprintf(stderr, f, a); fputc('\n', stderr); va_end(a); return 0; }
+          int __android_log_write(int p, const char *t, const char *s) {
+            fprintf(stderr, "%s: %s\n", t ? t : "android", s); return 0; }
+          int __android_log_vprint(int p, const char *t, const char *f, va_list a) {
+            vfprintf(stderr, f, a); return 0; }
+          int __android_log_assert(const char *c, const char *t, const char *f, ...) {
+            va_list a; va_start(a, f); vfprintf(stderr, f, a); va_end(a); return 0; }
+          void android_set_abort_message(const char *m) {
+            fprintf(stderr, "abort: %s\n", m ? m : ""); }
+          int __system_property_get(const char *n, char *v) { strcpy(v, ""); return 0; }
+          int __system_property_find(const char *n) { return -1; }
+          EOF
+          aarch64-linux-gnu-gcc -shared -fPIC -O1 -o sysroot/system/lib64/liblog.so /tmp/stubs.c
+          cp sysroot/system/lib64/liblog.so sysroot/system/lib64/libandroid.so
+          ls -l sysroot/system/lib64
+
+      - name: "Does it start at all?"
+        run: |
+          set -uo pipefail
+          {
+            for bin in libxdnstt libdns; do
+              for flag in -h --help -version --version; do
+                echo "===== $bin $flag"
+                timeout 20 qemu-aarch64-static -L "$PWD/sysroot" "libs/$bin.so" "$flag" 2>&1 | head -30
+                echo "[exit $?]"
+              done
+            done
+          } | tee /tmp/startup.txt
+
+      - name: "their FastDNS client: -udp ... -pubkey prince sd-<host> 127.0.0.1:7000"
+        run: |
+          set -uo pipefail
+          {
+            echo "== host $FASTDNS_HOST"
+            timeout 150 qemu-aarch64-static -L "$PWD/sysroot" libs/libxdnstt.so \
+              -udp "$FASTDNS_HOST:53" -report BDNET -pubkey prince \
+              "sd-$FASTDNS_HOST" 127.0.0.1:7000 > /tmp/xdnstt.log 2>&1 &
+            pid=$!
+            for i in $(seq 1 15); do
+              ss -ltn 2>/dev/null | grep -q ":7000" && { echo "listener up after ${i}s"; break; }
+              sleep 1
+            done
+            ss -ltnp 2>/dev/null | grep 7000 || echo "no listener on 7000"
+            echo "== client log"
+            cat /tmp/xdnstt.log
+            for mode in socks http raw; do
+              timeout 60 python3 tools/tunnel_probe.py 127.0.0.1:7000 --mode $mode \
+                --timeout 25 --wait 5 || true
+            done
+            echo "== client log after probes"
+            cat /tmp/xdnstt.log
+            kill $pid 2>/dev/null || true
+          } 2>&1 | tee /tmp/xdnstt-run.txt
+
+      - name: "their SlowDNS client: -tunnel <enc> -report BDNET"
+        run: |
+          set -uo pipefail
+          ENC=$(python3 -c "import sys; sys.path.insert(0,'tools'); import bdnet_dns as b; print(b.p_encrypt('${SLOWDNS_HOST}:53'))")
+          {
+            echo "== host $SLOWDNS_HOST  encrypted=$ENC"
+            timeout 150 qemu-aarch64-static -L "$PWD/sysroot" libs/libdns.so \
+              -tunnel "$ENC" -report BDNET > /tmp/libdns.log 2>&1 &
+            pid=$!
+            sleep 25
+            echo "== log"; cat /tmp/libdns.log
+            echo "== every listening port"
+            ss -ltnp 2>/dev/null
+            for port in 53 7000 1080 1081 8080 9050 9000 1053; do
+              if ss -ltn 2>/dev/null | grep -q ":$port "; then
+                echo "== port $port is open, probing"
+                timeout 40 python3 tools/tunnel_probe.py "127.0.0.1:$port" --mode socks --timeout 15 || true
+                timeout 40 python3 tools/tunnel_probe.py "127.0.0.1:$port" --mode http --timeout 15 || true
+              fi
+            done
+            echo "== log after probes"; cat /tmp/libdns.log
+            kill $pid 2>/dev/null || true
+          } 2>&1 | tee /tmp/libdns-run.txt
+
+      - name: Publish
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p analysis-bdnet/configs/dns/results
+          for f in startup xdnstt-run libdns-run xdnstt libdns; do
+            [ -f "/tmp/$f.txt" ] && cp "/tmp/$f.txt" "analysis-bdnet/configs/dns/results/qemu-$f.txt"
+            [ -f "/tmp/$f.log" ] && cp "/tmp/$f.log" "analysis-bdnet/configs/dns/results/qemu-$f.log"
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-bdnet/configs/dns/results
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "dns: qemu run of the app's own tunnel clients [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
