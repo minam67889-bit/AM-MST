@@ -46,22 +46,32 @@ jobs:
           aarch64-linux-gnu-gcc --version | head -1
 
       - name: APK
-        run: |
-          set -euo pipefail
-          mkdir -p art libs
-          RUN=$(gh run list --workflow=analyze-apk.yml --status success --limit 1 \
-                  --json databaseId --jq '.[0].databaseId')
-          ART=$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$RUN/artifacts" \
-                  --jq '.artifacts[] | select(.name=="amtunnel-apk-analysis") | .id' | head -1)
-          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$ART/zip" > art/a.zip
-          unzip -o -q art/a.zip -d art/x
-          APK=$(find art/x -name '*.apk' | head -1)
-          echo "APK=$APK"
-          unzip -o -j "$APK" 'lib/arm64-v8a/*' -d libs
-          chmod +x libs/* || true
-          ls -l libs
         env:
           GH_TOKEN: ${{ github.token }}
+        run: |
+          exec > >(tee /tmp/apk.txt) 2>&1
+          mkdir -p art libs
+          run=$(gh run list --workflow=analyze-apk.yml --status success --limit 1 \
+                  --json databaseId --jq '.[0].databaseId' || true)
+          echo "analysis run: $run"
+          art=$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$run/artifacts" \
+                  --jq '.artifacts[] | select(.name=="amtunnel-apk-analysis") | .id' | head -1 || true)
+          echo "artifact: $art"
+          if [ -n "${art:-}" ]; then
+            gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$art/zip" > art/a.zip || true
+            file art/a.zip || true
+            unzip -o -q art/a.zip -d art/x || true
+          fi
+          if ! find art -name '*.apk' | grep -q .; then
+            echo "falling back to gh run download"
+            gh run download "$run" -n amtunnel-apk-analysis -D art/dl -R "$GITHUB_REPOSITORY" || true
+          fi
+          apk=$(find art -name '*.apk' | head -1 || true)
+          echo "APK=$apk"
+          if [ -z "$apk" ]; then echo "NO APK"; exit 1; fi
+          unzip -o -j "$apk" 'lib/arm64-v8a/*' -d libs || true
+          chmod +x libs/* 2>/dev/null || true
+          ls -l libs
 
       - name: "Sysroot - glibc loader plus bionic stubs"
         run: |
@@ -160,7 +170,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p analysis-bdnet/configs/dns/results
-          for f in startup xdnstt-run libdns-run xdnstt libdns; do
+          for f in apk startup xdnstt-run libdns-run xdnstt libdns; do
             [ -f "/tmp/$f.txt" ] && cp "/tmp/$f.txt" "analysis-bdnet/configs/dns/results/qemu-$f.txt"
             [ -f "/tmp/$f.log" ] && cp "/tmp/$f.log" "analysis-bdnet/configs/dns/results/qemu-$f.log"
           done
