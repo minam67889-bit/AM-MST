@@ -1,0 +1,160 @@
+name: DNS tunnel live test
+
+# The real end-to-end test: take the app's *own* tunnel binaries out of its APK,
+# run them unmodified on an x86_64 runner under qemu-aarch64, and push actual
+# bytes through the DNS tunnel.
+#
+# What the app does (recovered from the prince dump, string table ids in
+# brackets):
+#
+#   FastDNS / dnstt   [binaries: libxdnstt.so]
+#     libxdnstt.so -udp <server>:53 -report <app> -pubkey prince sd-<server> 127.0.0.1:7000
+#                  [-98598896105355] [-98637550811019] [-98671910549387]
+#                  [-98706270287755] [-98581716236171]          [-98736335058827]
+#
+#   SlowDNS / libdns  [binary: libdns.so]
+#     libdns.so -tunnel <pEncrypt("<server>:53")> -report <app>
+#               [-85963102320523]                  [-86014641928075]
+#
+# There is no 64-hex dnstt pubkey to hunt for: the -pubkey value is the literal
+# string "prince", and the SlowDNS key never leaves libdns.so.
+
+on:
+  workflow_dispatch:
+    inputs:
+      fastdns_host:
+        description: "FastDNS endpoint to tunnel through"
+        default: "173.212.232.241"
+      slowdns_host:
+        description: "SlowDNS endpoint"
+        default: "13.140.185.158"
+      hold:
+        description: "seconds to keep the client running"
+        default: "90"
+  push:
+    paths:
+      - "tools/tunnel_probe.py"
+      - ".github/workflows/dns-tunnel-live.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  native-binary:
+    name: run their own binaries
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      FASTDNS_HOST: ${{ inputs.fastdns_host || '173.212.232.241' }}
+      SLOWDNS_HOST: ${{ inputs.slowdns_host || '13.140.185.158' }}
+      HOLD: ${{ inputs.hold || '90' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: qemu + unzip
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq qemu-user-static unzip file binutils
+          qemu-aarch64-static --version | head -2
+
+      - name: Get the APK the analysis job already saved
+        run: |
+          set -uo pipefail
+          mkdir -p art
+          RUN=$(gh run list --workflow=analyze-apk.yml --status success --limit 1 \
+                  --json databaseId --jq '.[0].databaseId')
+          echo "analysis run: $RUN"
+          gh run download "$RUN" -n amtunnel-apk-analysis -D art -R "$GITHUB_REPOSITORY" || true
+          find art -name '*.apk' | head
+          APK=$(find art -name '*.apk' | head -1)
+          test -n "$APK" || { echo "no apk in the artifact"; exit 1; }
+          echo "APK=$APK" >> "$GITHUB_ENV"
+          mkdir -p libs
+          unzip -o -j "$APK" 'lib/arm64-v8a/*' -d libs > /dev/null
+          chmod +x libs/* || true
+          ls -l libs
+
+      - name: What are these binaries?
+        run: |
+          set -uo pipefail
+          for f in libs/*.so; do
+            echo "== $f"
+            file "$f"
+            readelf -d "$f" 2>/dev/null | grep -E "NEEDED|dynamic" || echo "  (static: no NEEDED)"
+            readelf -h "$f" | grep -E "Class|Machine|Type"
+          done
+
+      - name: Key material actually present in libxdnstt
+        run: |
+          set -uo pipefail
+          echo "== every 64-hex literal"
+          strings -n 8 libs/libxdnstt.so | grep -oE '\b[0-9a-f]{64}\b' | sort -u | head -20
+          echo "== base64-ish 43/44 char tokens"
+          strings -n 43 libs/libxdnstt.so | grep -oE '\b[A-Za-z0-9+/_-]{43,44}={0,2}\b' | sort -u | head -20
+          echo "== context around the pubkey flag"
+          strings -n 4 libs/libxdnstt.so | grep -n -i "prince" | head -10
+          strings -n 4 libs/libxdnstt.so | grep -o ".\{0,60\}pubkey.\{0,80\}" | head -5
+
+      - name: Their dnstt client, --help
+        continue-on-error: true
+        run: |
+          qemu-aarch64-static libs/libxdnstt.so -h 2>&1 | head -40 || true
+
+      - name: Run their dnstt client against a real FastDNS endpoint
+        run: |
+          set -uo pipefail
+          DOMAIN="sd-${FASTDNS_HOST}"
+          echo "== libxdnstt.so -udp ${FASTDNS_HOST}:53 -report BDNET -pubkey prince ${DOMAIN} 127.0.0.1:7000"
+          qemu-aarch64-static libs/libxdnstt.so \
+            -udp "${FASTDNS_HOST}:53" -report BDNET -pubkey prince \
+            "${DOMAIN}" 127.0.0.1:7000 > /tmp/xdnstt.log 2>&1 &
+          echo $! > /tmp/xdnstt.pid
+          for i in $(seq 1 20); do ss -ltn 2>/dev/null | grep -q ":7000" && break; sleep 1; done
+          ss -ltnp 2>/dev/null | grep 7000 || echo "listener not up"
+          sleep 5
+          echo "== client log so far"; cat /tmp/xdnstt.log
+          set +e
+          python3 tools/tunnel_probe.py 127.0.0.1:7000 --mode socks --timeout "$HOLD"
+          python3 tools/tunnel_probe.py 127.0.0.1:7000 --mode http --host example.com --timeout "$HOLD"
+          python3 tools/tunnel_probe.py 127.0.0.1:7000 --mode raw --payload 'GET / HTTP/1.0\r\n\r\n' --timeout "$HOLD"
+          echo "== full client log"; cat /tmp/xdnstt.log
+          kill "$(cat /tmp/xdnstt.pid)" 2>/dev/null || true
+
+      - name: Their SlowDNS client
+        continue-on-error: true
+        run: |
+          set -uo pipefail
+          ENC=$(python3 -c "import sys; sys.path.insert(0,'tools'); import bdnet_dns as b; print(b.p_encrypt('${SLOWDNS_HOST}:53'))")
+          echo "== libdns.so -tunnel ${ENC} -report BDNET"
+          qemu-aarch64-static libs/libdns.so -tunnel "$ENC" -report BDNET > /tmp/libdns.log 2>&1 &
+          echo $! > /tmp/libdns.pid
+          sleep 20
+          cat /tmp/libdns.log
+          echo "== listeners"
+          ss -ltnp 2>/dev/null | head -20
+          for port in 1080 1081 7000 8080 9050; do
+            python3 tools/tunnel_probe.py "127.0.0.1:$port" --mode socks --timeout 10 --wait 1 \
+              && echo "  ^ SlowDNS client speaks SOCKS on $port"
+          done
+          kill "$(cat /tmp/libdns.pid)" 2>/dev/null || true
+
+      - name: Publish logs into the branch
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p analysis-bdnet/configs/dns/results
+          cp /tmp/xdnstt.log analysis-bdnet/configs/dns/results/native-dnstt.log 2>/dev/null || true
+          cp /tmp/libdns.log analysis-bdnet/configs/dns/results/native-slowdns.log 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-bdnet/configs/dns/results
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "dns: native tunnel client logs [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
