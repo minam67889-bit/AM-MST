@@ -328,5 +328,7 @@ the one link still missing, and it is the same gap as before — see §7.
 | our client answers, scores, and rejects dead endpoints | **verified** — loopback, real socket |
 | the balancer (shipping Kotlin) picks working resolvers | **verified in CI** — live run, see §6 |
 | the real servers answer *this* network | **cannot be tested here** — egress blocked; measured in CI |
-| a full DNS tunnel session through SlowDNS/FastDNS | **not yet** — needs the dnstt `-pubkey` (and, for SlowDNS, the server's `confuse` secret) |
+| the exact argv the app uses for both tunnel clients | **verified** — see `docs/BDNET-CONFIGS.md` §4 |
+| `-pubkey` is the literal string `prince`, not a 64-hex key | **verified** — `XRayDNSService.java` call site |
+| a full DNS tunnel session | **not yet** — their fork uses a KEM handshake (`kemKey`/`Kyber` in `libxdnstt`), so only *their* binary can complete it; `.github/workflows/dns-tunnel-live.yml` runs it |
 | 18 Psiphon entries decrypted from `server.psi` | **verified** — `tools/bdnet_serverpsi.py`, full entries with credentials |

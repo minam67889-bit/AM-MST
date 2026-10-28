@@ -138,17 +138,62 @@ expand `[sip]` into.
 `tlsVersion`, `reconnectSeconds`. The `payload`/`sausage` blobs inside are
 obfuscated with a *different* key and are deliberately left undecoded.
 
-## 4. What is still unknown
+## 4. The DNS clients — the exact command lines (was: "still unknown")
 
-The SlowDNS engines need a **dnstt public key** (64 hex) next to the domain.
-It is not in the string table (1 841 strings, zero 64-hex literals), not in the
-bundles, and not in the native `strings` dumps — the Go binaries take it as a
-`-pubkey` argument, so it is passed from Java at call time. Finding the caller
-is the next step; until then the domains are known but not yet usable as dnstt
-peers.
+Earlier versions of this document said a 64-hex **dnstt public key** was
+missing. That was wrong, and the call sites in `XRayDNSService.java` and
+`SocksDNSService.java` settle it. Neither tunnel is handed a 64-hex key.
 
-The Psiphon entries, by contrast, are complete: host, port, user, password and
-signature all recovered.
+### 4.1 FastDNS — `libxdnstt.so`
+
+```java
+this.s = new File(nativeLibraryDir, this.q + ".so");      // q = "libxdnstt"
+arrayList.add(binary);
+arrayList.add("-udp");                                    // [-98598896105355]
+arrayList.add(host + ":53");                              // [-98620370941835]
+arrayList.add("-report");                                 // [-98637550811019]
+arrayList.add(getString(R.string.app));                   // "BD NET"
+arrayList.add("-pubkey");                                 // [-98671910549387]
+arrayList.add("prince");                                  // [-98706270287755]
+arrayList.add("sd-" + server);                            // [-98581716236171] = "sd-"
+arrayList.add("127.0.0.1:7000");                          // [-98736335058827]
+```
+
+So the pubkey **is the literal string `prince`** — their fork's `-pubkey` is not
+the stock 64-hex X25519 key, and the zone is `sd-<server>`. `libxdnstt` also
+carries `kemKey`, `Kyber`, and a long `_`/`-` base64 token next to the
+`Chrome/iOS_13/iOS_14` uTLS fingerprints, i.e. the fork replaced the stock
+`Noise_NK_25519_ChaChaPoly_BLAKE2s` handshake with a KEM-based one. That is
+why a stock `dnstt-client` cannot talk to these servers: the *dance* differs,
+not just the key.
+
+### 4.2 SlowDNS — `libdns.so`
+
+```java
+arrayList.add(binary);                                    // libdns.so
+arrayList.add("-tunnel");                                 // [-85963102320523]
+arrayList.add(PUtils.pEncrypt(ctx, host + ":53"));        // hex(xor("ip:53"))
+arrayList.add("-report");                                 // [-86014641928075]
+arrayList.add(getString(R.string.app));
+```
+
+The tunnel secret is never written down: `libdns.so` receives an obfuscated
+`ip:53` and does everything else itself. It is a Go binary built on
+`routedns` + `quic-go` + `pion/dtls` + `certmagic` + `goproxy`, i.e. a DNS
+forwarder with DoH/DoQ/DTLS listeners rather than a dnstt client.
+
+### 4.3 What this means for "the key"
+
+* A dnstt key is generated **on the server** with `dnstt-server -gen-key`; the
+  client only ever receives the public half. It cannot be derived from
+  anything observable from the client side.
+* For these two particular servers neither a 64-hex key nor a SlowDNS secret is
+  in the APK, because the app ships the vendor's *pre-configured* clients and
+  only passes a name.
+* Testing therefore has to run **their own binary** (or reproduce their KEM
+  handshake). `.github/workflows/dns-tunnel-live.yml` does the former under
+  `qemu-aarch64`; `analysis-bdnet/configs/dns/results/native-shim.txt` records
+  how far the shim got.
 
 ## 5. Reproduce
 
