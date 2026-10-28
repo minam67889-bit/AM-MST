@@ -38,6 +38,7 @@ on:
 
 permissions:
   contents: write
+  actions: read
 
 jobs:
   native-binary:
@@ -67,10 +68,27 @@ jobs:
           RUN=$(gh run list --workflow=analyze-apk.yml --status success --limit 1 \
                   --json databaseId --jq '.[0].databaseId')
           echo "analysis run: $RUN"
-          gh run download "$RUN" -n amtunnel-apk-analysis -D art -R "$GITHUB_REPOSITORY" || true
+          gh run download "$RUN" -n amtunnel-apk-analysis -D art -R "$GITHUB_REPOSITORY" \
+            || echo "artifact download failed (needs actions:read)"
           find art -name '*.apk' | head
           APK=$(find art -name '*.apk' | head -1)
-          test -n "$APK" || { echo "no apk in the artifact"; exit 1; }
+          if [ -z "$APK" ]; then
+            echo "no apk in the artifact, falling back to the filebin upload"
+            UA="Mozilla/5.0 (X11; Linux x86_64) Chrome/124 Safari/537.36"
+            JAR=/tmp/cookies.txt; : > "$JAR"
+            for attempt in 1 2 3; do
+              curl -sSL --connect-timeout 20 --max-time 900 -A "$UA" -c "$JAR" -b "$JAR" \
+                -e "https://filebin.net/" -o art/bdnet.zip \
+                "https://filebin.net/idukzq7kugvrtcau/BDNET.VPN%20v106%20Mod.zip" || true
+              file art/bdnet.zip | grep -qi zip && break
+              sleep 5
+            done
+            if file art/bdnet.zip | grep -qi zip; then
+              unzip -o art/bdnet.zip -d art/zip > /dev/null
+              APK=$(find art/zip -name '*.apk' | head -1)
+            fi
+          fi
+          test -n "$APK" || { echo "no apk available at all"; exit 1; }
           echo "APK=$APK" >> "$GITHUB_ENV"
           mkdir -p libs
           unzip -o -j "$APK" 'lib/arm64-v8a/*' -d libs > /dev/null
