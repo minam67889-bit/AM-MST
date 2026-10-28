@@ -63,7 +63,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
-      - name: Sysroot: glibc loader + bionic stubs
+      - name: "Sysroot - glibc loader plus bionic stubs"
         run: |
           set -euo pipefail
           mkdir -p sysroot/system/bin sysroot/system/lib64
