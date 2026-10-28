@@ -105,19 +105,27 @@ jobs:
 
       - name: "Does it start at all?"
         run: |
-          set -uo pipefail
+          exec > >(tee /tmp/startup.txt) 2>&1
+          set -x
+          date -u
+          qemu-aarch64-static --version | head -1
+          printf 'int main(void){return 0;}' > /tmp/t.c
+          aarch64-linux-gnu-gcc -o /tmp/t /tmp/t.c
+          timeout 15 qemu-aarch64-static /tmp/t; echo "trivial static exit=$?"
           export QEMU_LD_PREFIX="$PWD/sysroot"
           export LD_LIBRARY_PATH="$PWD/sysroot/system/lib64"
-          : > /tmp/startup.txt
+          ls -l sysroot/system/bin sysroot/system/lib64
+          aarch64-linux-gnu-gcc -o /tmp/td /tmp/t.c
+          timeout 15 qemu-aarch64-static -L "$PWD/sysroot" /tmp/td; echo "trivial shimmed exit=$?"
           for bin in libxdnstt libdns; do
             for flag in -h --help -version; do
-              echo "===== $bin $flag" >> /tmp/startup.txt
-              timeout 25 qemu-aarch64-static "libs/$bin.so" "$flag" > /tmp/o.txt 2>&1
-              echo "[exit $?]" >> /tmp/startup.txt
-              head -25 /tmp/o.txt >> /tmp/startup.txt
+              echo "===== $bin $flag"
+              timeout 25 qemu-aarch64-static "libs/$bin.so" "$flag" 2>&1 | head -30
+              echo "[pipeline exit ${PIPESTATUS[*]}]"
             done
           done
-          cat /tmp/startup.txt
+          set +x
+          echo "done"
 
       - name: "their FastDNS client: -udp host:53 -pubkey prince sd-<host> 127.0.0.1:7000"
         run: |
