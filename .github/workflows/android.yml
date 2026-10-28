@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: read
+  checks: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -32,10 +33,45 @@ jobs:
           gradle-version: "8.9"
 
       - name: Core unit tests
-        run: gradle :core:test --no-daemon --stacktrace
+        run: |
+          set -o pipefail
+          gradle :core:test --no-daemon --stacktrace 2>&1 | tee -a build.log
 
       - name: Build debug APK
-        run: gradle :app:assembleDebug --no-daemon --stacktrace
+        run: |
+          set -o pipefail
+          gradle :app:assembleDebug --no-daemon --stacktrace 2>&1 | tee -a build.log
+
+      - name: Publish build diagnostics (read via API when job logs are unreachable)
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request
+          tail = "(no build.log)"
+          if os.path.exists("build.log"):
+              with open("build.log", encoding="utf-8", errors="replace") as fh:
+                  tail = fh.read()[-55000:]
+          payload = {
+              "name": "gradle-output",
+              "head_sha": os.environ["GITHUB_SHA"],
+              "status": "completed",
+              "conclusion": "neutral",
+              "output": {"title": "Gradle output tail", "summary": tail[:65000]},
+          }
+          req = urllib.request.Request(
+              f"https://api.github.com/repos/{os.environ['GITHUB_REPOSITORY']}/check-runs",
+              data=json.dumps(payload).encode(),
+              method="POST",
+              headers={
+                  "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
+                  "Accept": "application/vnd.github+json",
+                  "Content-Type": "application/json",
+              },
+          )
+          print("check-run status:", urllib.request.urlopen(req).status)
+          PY
 
       - name: Build release APK (signed if secrets are present)
         env:

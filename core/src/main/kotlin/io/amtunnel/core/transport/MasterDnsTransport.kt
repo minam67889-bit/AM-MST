@@ -463,12 +463,14 @@ class MasterDnsTransport(
         }
 
         // Remove the matching pending entry (ACK).
-        pending.keys.removeIf { spec ->
+        val acked = pending.keys.filter { spec ->
             spec.streamId == frame.streamId &&
                 spec.acceptableTypes.contains(frame.packetType) &&
-                (spec.sn == frame.sequenceNum || frame.packetType == PacketType.SOCKS5_CONNECTED ||
+                (spec.sn == frame.sequenceNum ||
+                    frame.packetType == PacketType.SOCKS5_CONNECTED ||
                     frame.packetType == PacketType.SOCKS5_SYN_ACK)
         }
+        acked.forEach { pending.remove(it) }
 
         when (frame.packetType) {
             PacketType.PONG -> {
