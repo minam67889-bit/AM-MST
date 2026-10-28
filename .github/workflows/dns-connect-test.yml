@@ -32,7 +32,7 @@ on:
       - .github/workflows/dns-connect-test.yml
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   python-clients:
@@ -120,6 +120,27 @@ jobs:
               pathlib.Path(summary).write_text("## DNS connect test\n\n" + body + "\n")
           PY
 
+      - name: Publish results into the branch
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p analysis-bdnet/configs/dns/results
+          for f in compare theirs-slowdns ours-slowdns ours-fastdns ours-udpq; do
+            cp "/tmp/$f.json" analysis-bdnet/configs/dns/results/ 2>/dev/null || true
+          done
+          cp /tmp/app-config.txt analysis-bdnet/configs/dns/results/ 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-bdnet/configs/dns/results
+          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+          git commit -q -m "dns: live connect-test results [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
+          echo "could not publish"; exit 0
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -175,8 +196,25 @@ jobs:
           PY
 
       - name: Run strategy 5 (hybrid score) for 3 rounds
-        continue-on-error: true
         run: java -jar /tmp/balancer-live.jar /tmp/hosts.txt 5 3 | tee /tmp/balancer-run.txt
+
+      - name: Publish the transcript into the branch
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p analysis-bdnet/configs/dns/results
+          cp /tmp/balancer-run.txt analysis-bdnet/configs/dns/results/ 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-bdnet/configs/dns/results
+          if git diff --cached --quiet; then echo "nothing new"; exit 0; fi
+          git commit -q -m "dns: live balancer transcript [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
+          echo "could not publish"; exit 0
 
       - uses: actions/upload-artifact@v4
         if: always()
