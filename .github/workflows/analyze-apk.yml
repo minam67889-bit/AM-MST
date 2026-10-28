@@ -225,6 +225,7 @@ jobs:
           fi
 
       - name: Mine native DNS-tunnel libraries
+        continue-on-error: true
         run: |
           exec > >(tee -a analysis/native-libs.log) 2>&1
           set -uxo pipefail
@@ -323,8 +324,9 @@ jobs:
           python3 - <<'PY'
           import json, os, glob, urllib.request
           parts = []
-          for path in ("download.log", "unpack.log", "analysis/apk_analysis.log",
-                       "analysis/apktool.log", "analysis/jadx.log", "analysis/badging.txt"):
+          for path in ("download.log", "unpack.log", "analysis/native-libs.log",
+                       "analysis/apk_analysis.log", "analysis/apktool.log",
+                       "analysis/jadx.log", "analysis/badging.txt"):
               if os.path.exists(path):
                   with open(path, encoding="utf-8", errors="replace") as fh:
                       parts.append(f"\n===== {path} =====\n" + fh.read()[-20000:])
