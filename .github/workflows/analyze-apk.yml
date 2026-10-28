@@ -497,6 +497,54 @@ jobs:
           echo "config-code lines: $(wc -l < analysis/hunt/config-code.txt)"
           echo "crypto-code lines: $(wc -l < analysis/hunt/crypto-code.txt)"
 
+      - name: Find the config decryptor in smali
+        continue-on-error: true
+        run: |
+          exec > >(tee -a analysis/smali-trace.log) 2>&1
+          set -uo pipefail
+          mkdir -p analysis/hunt
+          echo "smali roots: $(find decoded -maxdepth 1 -type d 2>/dev/null | wc -l)"
+          find decoded -maxdepth 1 -type d 2>/dev/null | head
+
+          # The two 40-hex secrets and the config URL as 64-bit literals.
+          : > analysis/hunt/smali-secret-users.txt
+          for lit in 0xffff6b0527d28875 0xffff6adc27d28875 0xffff6b6427d28875; do
+            echo "### $lit" >> analysis/hunt/smali-secret-users.txt
+            grep -rl "$lit" decoded --include=*.smali 2>/dev/null | head -10 >> analysis/hunt/smali-secret-users.txt || true
+          done
+          cat analysis/hunt/smali-secret-users.txt
+
+          # Who calls the AES helper, and what does the helper look like?
+          grep -rl "heIran;->decrypt\|heIran;->generateKey" decoded --include=*.smali 2>/dev/null \
+            | head -10 > analysis/hunt/heiran-callers.txt || true
+          cat analysis/hunt/heiran-callers.txt
+          : > analysis/hunt/heiran-body.txt
+          find decoded -path '*smalihelper/heIran.smali' 2>/dev/null | while read -r f; do
+            echo "##### $f" >> analysis/hunt/heiran-body.txt
+            cat "$f" >> analysis/hunt/heiran-body.txt
+          done
+          grep -c . analysis/hunt/heiran-body.txt || true
+
+          # Any smali that mentions the config repository or its file names.
+          grep -rl "BDNET2023\|JSONDNSTT\|JSONFASTDNS\|raw.githubusercontent" decoded --include=*.smali 2>/dev/null \
+            | head -20 > analysis/hunt/config-smali-files.txt || true
+          cat analysis/hunt/config-smali-files.txt
+          : > analysis/hunt/config-smali-bodies.txt
+          head -10 analysis/hunt/config-smali-files.txt | while read -r f; do
+            echo "##### $f" >> analysis/hunt/config-smali-bodies.txt
+            grep -n -B8 -A25 "BDNET2023\|JSONDNSTT\|JSONFASTDNS\|raw.githubusercontent" "$f" \
+              >> analysis/hunt/config-smali-bodies.txt
+          done
+          echo "config smali bodies: $(wc -l < analysis/hunt/config-smali-bodies.txt)"
+
+          # Bodies of classes that hold those constants but that jadx skipped.
+          : > analysis/hunt/secret-smali-bodies.txt
+          grep -rl "0xffff6b0527d28875\|0xffff6adc27d28875\|0xffff6b6427d28875" decoded --include=*.smali 2>/dev/null \
+            | head -10 | while read -r f; do
+              echo "##### $f" >> analysis/hunt/secret-smali-bodies.txt
+              cat "$f" >> analysis/hunt/secret-smali-bodies.txt
+            done
+
       - name: Mine native DNS-tunnel libraries
         continue-on-error: true
         run: |
