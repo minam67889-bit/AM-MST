@@ -283,6 +283,7 @@ class TunnelIntegrationTest {
             assertTrue("all traffic must be attributed to some resolver", rows.any { it.sent > 0 })
             assertTrue("the balancer must have measured losses on the dead ones", rows.any { it.lost > 0 })
         } finally {
+            runCatching { dump("final") }
             transport.stop()
         }
     }
