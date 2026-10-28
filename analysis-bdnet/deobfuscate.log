@@ -1,0 +1,185 @@
++ mkdir -p analysis/obfuscation
++ '[' -d java ']'
++ grep -ril Deobfuscator java '--include=*.java'
++ head -20
++ read -r f
++ cp java/sources/org/lsposed/lsparanoid/DeobfuscatorHelper.java analysis/obfuscation/
++ echo 'found: java/sources/org/lsposed/lsparanoid/DeobfuscatorHelper.java'
+found: java/sources/org/lsposed/lsparanoid/DeobfuscatorHelper.java
++ read -r f
++ cp 'java/sources/org/lsposed/lsparanoid/Deobfuscator$BDNETVPN$app.java' analysis/obfuscation/
++ echo 'found: java/sources/org/lsposed/lsparanoid/Deobfuscator$BDNETVPN$app.java'
+found: java/sources/org/lsposed/lsparanoid/Deobfuscator$BDNETVPN$app.java
++ read -r f
++ cp java/sources/defpackage/C0223If.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/C0223If.java'
+found: java/sources/defpackage/C0223If.java
++ read -r f
++ cp java/sources/defpackage/Z00.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/Z00.java'
+found: java/sources/defpackage/Z00.java
++ read -r f
++ cp java/sources/defpackage/ViewOnClickListenerC4074sX.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/ViewOnClickListenerC4074sX.java'
+found: java/sources/defpackage/ViewOnClickListenerC4074sX.java
++ read -r f
++ cp java/sources/defpackage/OF.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/OF.java'
+found: java/sources/defpackage/OF.java
++ read -r f
++ cp java/sources/defpackage/C3012f6.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/C3012f6.java'
+found: java/sources/defpackage/C3012f6.java
++ read -r f
++ cp java/sources/defpackage/ViewOnClickListenerC0848c10.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/ViewOnClickListenerC0848c10.java'
+found: java/sources/defpackage/ViewOnClickListenerC0848c10.java
++ read -r f
++ cp java/sources/defpackage/Y00.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/Y00.java'
+found: java/sources/defpackage/Y00.java
++ read -r f
++ cp java/sources/defpackage/DialogInterfaceOnClickListenerC3003f10.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/DialogInterfaceOnClickListenerC3003f10.java'
+found: java/sources/defpackage/DialogInterfaceOnClickListenerC3003f10.java
++ read -r f
++ cp java/sources/defpackage/AbstractC0482Sf.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/AbstractC0482Sf.java'
+found: java/sources/defpackage/AbstractC0482Sf.java
++ read -r f
++ cp java/sources/defpackage/C0689a10.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/C0689a10.java'
+found: java/sources/defpackage/C0689a10.java
++ read -r f
++ cp java/sources/defpackage/X00.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/X00.java'
+found: java/sources/defpackage/X00.java
++ read -r f
++ cp java/sources/defpackage/RunnableC3243i10.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/RunnableC3243i10.java'
+found: java/sources/defpackage/RunnableC3243i10.java
++ read -r f
++ cp java/sources/defpackage/C0287Kr.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/C0287Kr.java'
+found: java/sources/defpackage/C0287Kr.java
++ read -r f
++ cp java/sources/defpackage/O00.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/O00.java'
+found: java/sources/defpackage/O00.java
++ read -r f
++ cp java/sources/defpackage/C0270Ka.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/C0270Ka.java'
+found: java/sources/defpackage/C0270Ka.java
++ read -r f
++ cp java/sources/defpackage/AbstractC0480Sd.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/AbstractC0480Sd.java'
+found: java/sources/defpackage/AbstractC0480Sd.java
++ read -r f
++ cp java/sources/defpackage/DialogInterfaceOnClickListenerC4500xw.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/DialogInterfaceOnClickListenerC4500xw.java'
+found: java/sources/defpackage/DialogInterfaceOnClickListenerC4500xw.java
++ read -r f
++ cp java/sources/defpackage/C4651zp.java analysis/obfuscation/
++ echo 'found: java/sources/defpackage/C4651zp.java'
+found: java/sources/defpackage/C4651zp.java
++ read -r f
++ ls -l analysis/obfuscation
+total 520
+-rw-r--r-- 1 runner runner    348 Oct 28 18:35 AbstractC0480Sd.java
+-rw-r--r-- 1 runner runner    542 Oct 28 18:35 AbstractC0482Sf.java
+-rw-r--r-- 1 runner runner   6682 Oct 28 18:35 C0223If.java
+-rw-r--r-- 1 runner runner   4291 Oct 28 18:35 C0270Ka.java
+-rw-r--r-- 1 runner runner  25993 Oct 28 18:35 C0287Kr.java
+-rw-r--r-- 1 runner runner   1279 Oct 28 18:35 C0689a10.java
+-rw-r--r-- 1 runner runner   1319 Oct 28 18:35 C3012f6.java
+-rw-r--r-- 1 runner runner   1182 Oct 28 18:35 C4651zp.java
+-rw-r--r-- 1 runner runner 138795 Oct 28 18:35 Deobfuscator$BDNETVPN$app.java
+-rw-r--r-- 1 runner runner   1019 Oct 28 18:35 DeobfuscatorHelper.java
+-rw-r--r-- 1 runner runner   3271 Oct 28 18:35 DialogInterfaceOnClickListenerC3003f10.java
+-rw-r--r-- 1 runner runner   1287 Oct 28 18:35 DialogInterfaceOnClickListenerC4500xw.java
+-rw-r--r-- 1 runner runner   2804 Oct 28 18:35 O00.java
+-rw-r--r-- 1 runner runner 247757 Oct 28 18:35 OF.java
+-rw-r--r-- 1 runner runner  13422 Oct 28 18:35 RunnableC3243i10.java
+-rw-r--r-- 1 runner runner  10673 Oct 28 18:35 ViewOnClickListenerC0848c10.java
+-rw-r--r-- 1 runner runner   2044 Oct 28 18:35 ViewOnClickListenerC4074sX.java
+-rw-r--r-- 1 runner runner   9923 Oct 28 18:35 X00.java
+-rw-r--r-- 1 runner runner   1621 Oct 28 18:35 Y00.java
+-rw-r--r-- 1 runner runner   8675 Oct 28 18:35 Z00.java
++ :
++ for dir in decoded/smali decoded/smali_classes*
++ '[' -d decoded/smali ']'
++ grep -rhoE 'const-wide [vp][0-9]+, -?[0-9]+L?' decoded/smali
++ grep -rhB1 'Deobfuscator$BDNETVPN$app;->getString(J)' decoded/smali
++ grep -oE '-?[0-9]{6,}L?'
+grep: invalid option -- '?'
+Usage: grep [OPTION]... PATTERNS [FILE]...
+Try 'grep --help' for more information.
++ true
++ for dir in decoded/smali decoded/smali_classes*
++ '[' -d decoded/smali_classes2 ']'
++ grep -rhoE 'const-wide [vp][0-9]+, -?[0-9]+L?' decoded/smali_classes2
++ grep -rhB1 'Deobfuscator$BDNETVPN$app;->getString(J)' decoded/smali_classes2
++ grep -oE '-?[0-9]{6,}L?'
+grep: invalid option -- '?'
+Usage: grep [OPTION]... PATTERNS [FILE]...
+Try 'grep --help' for more information.
++ true
++ for dir in decoded/smali decoded/smali_classes*
++ '[' -d decoded/smali_classes3 ']'
++ grep -rhoE 'const-wide [vp][0-9]+, -?[0-9]+L?' decoded/smali_classes3
++ true
++ grep -rhB1 'Deobfuscator$BDNETVPN$app;->getString(J)' decoded/smali_classes3
++ grep -oE '-?[0-9]{6,}L?'
+grep: invalid option -- '?'
+Usage: grep [OPTION]... PATTERNS [FILE]...
+Try 'grep --help' for more information.
++ true
++ sort -u analysis/obfuscation/keys.txt
++ grep -E '^-?[0-9]+L?$'
++ true
++ for dir in decoded/smali/decoded/smali
++ :
++ '[' -d decoded ']'
++ find decoded -path '*prince*' -name '*.smali' -print0
++ xargs -0 grep -hoE 'const-wide [vp][0-9]+, -?[0-9]+L'
++ grep -oE '-?[0-9]+L'
+grep: invalid option -- '?'
+Usage: grep [OPTION]... PATTERNS [FILE]...
+Try 'grep --help' for more information.
++ tr -d L
++ sort -u
++ true
++ sort -u /tmp/keys.clean
++ grep -E '^-?[0-9]{6,}$'
++ true
+++ wc -l
++ echo 'candidate keys: 0'
+candidate keys: 0
++ head -5 analysis/obfuscation/keys.txt
+++ ls analysis/obfuscation/AbstractC0480Sd.java analysis/obfuscation/AbstractC0482Sf.java analysis/obfuscation/C0223If.java analysis/obfuscation/C0270Ka.java analysis/obfuscation/C0287Kr.java analysis/obfuscation/C0689a10.java analysis/obfuscation/C3012f6.java analysis/obfuscation/C4651zp.java 'analysis/obfuscation/Deobfuscator$BDNETVPN$app.java' analysis/obfuscation/DeobfuscatorHelper.java analysis/obfuscation/DialogInterfaceOnClickListenerC3003f10.java analysis/obfuscation/DialogInterfaceOnClickListenerC4500xw.java analysis/obfuscation/O00.java analysis/obfuscation/OF.java analysis/obfuscation/RunnableC3243i10.java analysis/obfuscation/ViewOnClickListenerC0848c10.java analysis/obfuscation/ViewOnClickListenerC4074sX.java analysis/obfuscation/X00.java analysis/obfuscation/Y00.java analysis/obfuscation/Z00.java
+++ head -1
++ DEOB=analysis/obfuscation/AbstractC0480Sd.java
++ '[' -n analysis/obfuscation/AbstractC0480Sd.java ']'
++ echo 'deobfuscator source: analysis/obfuscation/AbstractC0480Sd.java'
+deobfuscator source: analysis/obfuscation/AbstractC0480Sd.java
++ mkdir -p /tmp/deob
++ cp analysis/obfuscation/AbstractC0480Sd.java /tmp/deob/
+++ basename analysis/obfuscation/AbstractC0480Sd.java .java
+++ sed 's/.*\$//'
++ CLS=AbstractC0480Sd
++ cat
++ javac -nowarn -d /tmp/deob/classes /tmp/deob/AbstractC0480Sd.java /tmp/deob/Harness.java
++ echo 'javac failed (see log)'
+javac failed (see log)
++ cat /tmp/deob/javac.log
++ head -30
+/tmp/deob/AbstractC0480Sd.java:3: error: package org.lsposed.lsparanoid does not exist
+import org.lsposed.lsparanoid.Deobfuscator$BDNETVPN$app;
+                             ^
+/tmp/deob/AbstractC0480Sd.java:11: error: cannot find symbol
+        Deobfuscator$BDNETVPN$app.getString(-156538004928395L);
+        ^
+  symbol:   variable Deobfuscator$BDNETVPN$app
+  location: class AbstractC0480Sd
+2 errors
++ '[' -d /tmp/deob/classes ']'

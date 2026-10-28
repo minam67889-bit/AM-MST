@@ -1,5 +1,5 @@
 + ls -l amtunnel.apk
--rw-r--r-- 1 runner runner 65639039 Oct 28 16:54 amtunnel.apk
+-rw-r--r-- 1 runner runner 65639039 Oct 28 18:34 amtunnel.apk
 + extras=
 + read -r split
 + python3 tools/apk_analysis.py --apk amtunnel.apk --out analysis
