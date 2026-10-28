@@ -456,6 +456,47 @@ jobs:
           # 6. What the app asks its own backend for (strings near http).
           grep -rn -B3 -A3 '"http' java --include=*.java 2>/dev/null | head -60 > "analysis/hunt/http-literals.txt" || true
 
+      - name: Trace the config decryption routine
+        continue-on-error: true
+        run: |
+          exec > >(tee -a analysis/config-trace.log) 2>&1
+          set -uo pipefail
+          mkdir -p analysis/hunt
+
+          # Ids used by the class that holds BD NET's config endpoint and the
+          # two 40-hex secrets, plus the engine selectors.
+          IDS='163397067700107|163710600312715|163805089593227|163981183252363|98422802446219|85516425721739|85550785460107|49932621674379|49966981412747'
+          grep -rlE "$IDS" java --include=*.java 2>/dev/null | head -30 > /tmp/cfgfiles.txt || true
+          echo "=== files touching the config ids: $(wc -l < /tmp/cfgfiles.txt)"
+          cat /tmp/cfgfiles.txt
+          : > analysis/hunt/config-code.txt
+          while read -r f; do
+            echo "##### $f" >> analysis/hunt/config-code.txt
+            sed -n '1,220p' "$f" >> analysis/hunt/config-code.txt
+          done < /tmp/cfgfiles.txt
+
+          # Anything that instantiates a cipher, keyed hash or stream.
+          grep -rlE 'Cipher\.getInstance|SecretKeySpec|IvParameterSpec|MessageDigest\.getInstance|GCMParameterSpec|KeyGenerator' \
+            java --include=*.java 2>/dev/null \
+            | grep -viE '/(androidx|com/google|com/facebook|kotlin/|ads_mobile_sdk|okhttp3|org/chromium)/' \
+            | head -30 > /tmp/cryptofiles.txt || true
+          echo "=== crypto files: $(wc -l < /tmp/cryptofiles.txt)"
+          cat /tmp/cryptofiles.txt
+          : > analysis/hunt/crypto-code.txt
+          while read -r f; do
+            echo "##### $f" >> analysis/hunt/crypto-code.txt
+            sed -n '1,220p' "$f" >> analysis/hunt/crypto-code.txt
+          done < /tmp/cryptofiles.txt
+
+          # Base64.decode sites in app code - the configs arrive base64 wrapped.
+          grep -rn 'Base64\.decode' java --include=*.java 2>/dev/null \
+            | grep -viE '/(androidx|com/google|com/facebook|kotlin/|ads_mobile_sdk|okhttp3|org/chromium)/' \
+            | head -40 > analysis/hunt/base64-sites.txt || true
+          cat analysis/hunt/base64-sites.txt
+
+          echo "config-code lines: $(wc -l < analysis/hunt/config-code.txt)"
+          echo "crypto-code lines: $(wc -l < analysis/hunt/crypto-code.txt)"
+
       - name: Mine native DNS-tunnel libraries
         continue-on-error: true
         run: |
