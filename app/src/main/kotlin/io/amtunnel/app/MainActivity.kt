@@ -29,6 +29,8 @@ import io.amtunnel.core.transport.TransportState
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import io.amtunnel.core.transport.BalancingStrategy
+import io.amtunnel.core.transport.MasterBalancer
 
 /**
  * Single-screen dashboard: connection state, resolver management, scanning,
@@ -46,6 +48,7 @@ class MainActivity : Activity() {
     private lateinit var detailText: TextView
     private lateinit var resolverList: LinearLayout
     private lateinit var logView: TextView
+    private lateinit var balancerView: TextView
     private lateinit var connectButton: Button
     private lateinit var disconnectButton: Button
     private lateinit var scanStateText: TextView
@@ -163,6 +166,22 @@ class MainActivity : Activity() {
         val failoverCheck = checkbox("Automatic resolver failover", engine.settings.autoFailover)
         val autoScanCheck = checkbox("Adaptive background scanning", engine.settings.autoScan)
         val dnsModeCheck = checkbox("DNS-mode VPN (captures DNS only, experimental)", engine.settings.dnsMode)
+        // MasterDnsVPN balancing knobs. Numbers are upstream's, so the labels
+        // say what each one does rather than inventing new names.
+        val strategyField = field(
+            "RESOLVER_BALANCING_STRATEGY 0-8  (0 rrobin-default, 1 random, 2 round-robin, " +
+                "3 least-loss, 4 lowest-latency, 5 hybrid, 6 loss-then-latency, " +
+                "7 top-loss random, 8 top-loss rrobin)",
+            engine.settings.balancingStrategy.toString(),
+        )
+        val duplicationField = field(
+            "PACKET_DUPLICATION_COUNT 1-10 (Master default 2)",
+            engine.settings.packetDuplication.toString(),
+        )
+        val autoDisableCheck = checkbox(
+            "AUTO_DISABLE_TIMEOUT_SERVERS (park a resolver after it stops answering)",
+            engine.settings.autoDisableResolvers,
+        )
 
         val tunnelCard = card()
         tunnelCard.addView(domainField)
@@ -174,6 +193,9 @@ class MainActivity : Activity() {
         tunnelCard.addView(failoverCheck)
         tunnelCard.addView(autoScanCheck)
         tunnelCard.addView(dnsModeCheck)
+        tunnelCard.addView(strategyField)
+        tunnelCard.addView(duplicationField)
+        tunnelCard.addView(autoDisableCheck)
         tunnelCard.addView(button("Save settings", Color.parseColor("#4C8DFF")) {
             val updated = engine.settings.copy(
                 domain = domainField.text.toString().trim(),
@@ -185,6 +207,9 @@ class MainActivity : Activity() {
                 autoFailover = failoverCheck.isChecked,
                 autoScan = autoScanCheck.isChecked,
                 dnsMode = dnsModeCheck.isChecked,
+                balancingStrategy = (strategyField.text.toString().trim().toIntOrNull() ?: 2).coerceIn(0, 8),
+                packetDuplication = (duplicationField.text.toString().trim().toIntOrNull() ?: 2).coerceIn(1, 10),
+                autoDisableResolvers = autoDisableCheck.isChecked,
             )
             engine.updateSettings(updated)
             toast(if (updated.isValid()) "Settings saved" else "Saved - tunnel domain is still empty")
@@ -209,6 +234,17 @@ class MainActivity : Activity() {
         root.addView(scanCard)
 
         // ---- diagnostics
+        root.addView(sectionHeader("Resolver scoring (live)"))
+        balancerView = TextView(this).apply {
+            setTextColor(Color.parseColor("#8FE3B0"))
+            textSize = 10f
+            typeface = android.graphics.Typeface.MONOSPACE
+            setPadding(0, dp(4), 0, dp(4))
+        }
+        val balancerCard = card()
+        balancerCard.addView(balancerView)
+        root.addView(balancerCard)
+
         root.addView(sectionHeader("Diagnostics"))
         logView = TextView(this).apply {
             setTextColor(Color.parseColor("#B9C7D6"))
@@ -397,6 +433,29 @@ class MainActivity : Activity() {
 
     private fun refresh() {
         val stats = engine.stats()
+        if (::balancerView.isInitialized) {
+            val rows = engine.balancerRows()
+            balancerView.text = if (rows.isEmpty()) {
+                "no live pool yet - start the tunnel to see strategy scoring"
+            } else {
+                val strategy = BalancingStrategy.fromId(engine.settings.balancingStrategy)
+                buildString {
+                    appendLine("strategy ${strategy.id} ${strategy.name}   pool ${rows.count { it.active }}/${rows.size}")
+                    rows.sortedWith(compareByDescending<MasterBalancer.BalancerRow> { it.active }
+                        .thenBy { it.hybridScore })
+                        .take(25)
+                        .forEach { row ->
+                            val flag = if (row.active) "+" else "-"
+                            val latency = row.latencyMs?.let { "%.0fms".format(it) } ?: "-"
+                            appendLine(
+                                "%s %-22s sent %-4d lost %-4d loss %-4d %s".format(
+                                    flag, row.key, row.sent, row.lost, row.lossScore, latency,
+                                ),
+                            )
+                        }
+                }
+            }
+        }
         val state = stats.state
         statusText.text = when {
             TunnelVpnService.isActive && state == TransportState.READY -> "Connected"
