@@ -283,7 +283,8 @@ def cmd_selftest(args) -> int:
 # --------------------------------------------------------------------------- #
 # "their" algorithm vs "ours", head to head
 # --------------------------------------------------------------------------- #
-def their_run(servers: list[dict], timeout: float, retry: int, interval: float) -> dict:
+def their_run(servers: list[dict], timeout: float, retry: int, interval: float,
+              transport: str = "tcp") -> dict:
     """Replay exactly what the app's own client does.
 
     pdnsd is configured `tcp_only`, `validate=1`, `confuse=3`, `retry=1`,
@@ -300,14 +301,14 @@ def their_run(servers: list[dict], timeout: float, retry: int, interval: float) 
         attempts, result = 0, {"ok": False, "ms": 0.0, "error": "unknown"}
         for attempt in range(retry + 1):
             attempts = attempt + 1
-            result = probe_one(ips[0], int(srv.get("port") or 53), name, timeout, "tcp")
+            result = probe_one(ips[0], int(srv.get("port") or 53), name, timeout, transport)
             result["ip"] = ips[0]
             if result["ok"]:
                 break
             if attempt < retry:
                 time.sleep(interval)
         rows.append({**srv, **result, "attempts": attempts})
-    return {"mode": "theirs", "transport": "tcp", "secs": round(time.time() - t0, 2),
+    return {"mode": "theirs", "transport": transport, "secs": round(time.time() - t0, 2),
             "alive": sum(1 for r in rows if r["ok"]), "total": len(rows), "rows": rows}
 
 
@@ -334,15 +335,23 @@ def our_run(servers: list[dict], timeout: float, workers: int,
             "rows": rows}
 
 
-def render_compare(theirs: dict, ours: dict) -> str:
-    lines = []
-    lines.append(f"{'':22s} {'theirs (pdnsd/tcp)':21s} {'ours (balanced/udp)':21s}")
-    lines.append(f"{'reachable':22s} {theirs['alive']}/{theirs['total']:<19d} {ours['alive']}/{ours['total']:<19d}")
-    lines.append(f"{'wall clock':22s} {theirs['secs']:<21.1f} {ours['secs']:<21.1f}")
-    tt = [r["ms"] for r in theirs["rows"] if r["ok"]]
-    oo = [r["ms"] for r in ours["rows"] if r["ok"]]
-    fmt = lambda v: f"{sum(v)/len(v):.0f} ms ({len(v)} samples)" if v else "n/a"
-    lines.append(f"{'mean RTT':22s} {fmt(tt):<21s} {fmt(oo):<21s}")
+def render_compare(*runs: dict) -> str:
+    """Three columns: their config as shipped (tcp_only), their config with
+    PDNSD_TYPE=udp_only, and our balancer. Same hosts, same timeout."""
+    for r in runs:
+        r.setdefault("label", f"{r.get('mode', 'run')} {r.get('transport', '')}".strip())
+    head = f"{'':14s}" + "".join(f"{r['label']:<26s}" for r in runs)
+    lines = [head]
+    lines.append(f"{'reachable':14s}" + "".join(f"{r['alive']}/{r['total']:<21d}" for r in runs))
+    lines.append(f"{'wall clock':14s}" + "".join(f"{r['secs']:<26.1f}" for r in runs))
+    for r in runs:
+        ms = [x["ms"] for x in r["rows"] if x["ok"]]
+        r["_mean"] = (sum(ms) / len(ms)) if ms else None
+        r["_n"] = len(ms)
+    lines.append(f"{'mean RTT':14s}" + "".join(
+        (f"{r['_mean']:.0f} ms ({r['_n']} samples)" if r["_mean"] else "n/a") .ljust(26)
+        for r in runs))
+    ours = runs[-1]
     if ones := ours.get("route_plan"):
         lines.append("")
         lines.append("our duplicate-route plan (each packet goes out twice):")
@@ -353,10 +362,10 @@ def render_compare(theirs: dict, ours: dict) -> str:
 
 def cmd_their(args) -> int:
     servers = filter_mode(load_servers(args), args.mode)
-    res = their_run(servers, args.timeout, args.retry, args.interval)
+    res = their_run(servers, args.timeout, args.retry, args.interval, args.transport)
     print(render_rows(res["rows"], limit=args.show))
-    print(f"\n{res['alive']}/{res['total']} answered over TCP/53 in {res['secs']}s "
-          f"(one at a time, retry={args.retry})")
+    print(f"\n{res['alive']}/{res['total']} answered over {args.transport.upper()}/53 in "
+          f"{res['secs']}s (one at a time, retry={args.retry})")
     dump(args.out, res)
     return 0 if res["alive"] else 1
 
@@ -377,12 +386,16 @@ def cmd_mine(args) -> int:
 def cmd_compare(args) -> int:
     servers = filter_mode(load_servers(args), args.mode)
     print(f"== {len(servers)} servers, mode={args.mode or 'all'} ==")
-    theirs = their_run(servers, args.timeout, args.retry, args.interval)
+    theirs_tcp = their_run(servers, args.timeout, args.retry, args.interval, "tcp")
+    theirs_tcp["label"] = "theirs tcp_only"
+    theirs_udp = their_run(servers, args.timeout, args.retry, args.interval, "udp")
+    theirs_udp["label"] = "theirs udp_only"
     ours = our_run(servers, args.timeout, args.workers, args.duplication)
-    print(render_compare(theirs, ours))
-    payload = {"theirs": theirs, "ours": ours}
+    ours["label"] = "ours balanced"
+    print(render_compare(theirs_tcp, theirs_udp, ours))
+    payload = {"theirs_tcp": theirs_tcp, "theirs_udp": theirs_udp, "ours": ours}
     dump(args.out, payload)
-    return 0 if (theirs["alive"] or ours["alive"]) else 1
+    return 0 if (theirs_tcp["alive"] or theirs_udp["alive"] or ours["alive"]) else 1
 
 
 def _flat(row: dict) -> dict:
@@ -538,6 +551,8 @@ def main(argv: list[str] | None = None) -> int:
     t = sub.add_parser("their", help="replay the app's own pdnsd/TCP client, sequentially")
     t.add_argument("servers"); t.add_argument("--mode"); t.add_argument("--timeout", type=float, default=6.0)
     t.add_argument("--retry", type=int, default=1); t.add_argument("--interval", type=float, default=1.0)
+    t.add_argument("--transport", choices=("tcp", "udp"), default="tcp",
+                   help="PDNSD_TYPE: tcp_only (their default) or udp_only")
     t.add_argument("--show", type=int, default=25); t.add_argument("--out"); t.set_defaults(func=cmd_their)
 
     m = sub.add_parser("mine", help="MasterDnsVPN-shaped balanced client")

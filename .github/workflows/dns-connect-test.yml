@@ -86,20 +86,25 @@ jobs:
           python3 - <<'PY'
           import json, os, pathlib
           rows = []
-          for name in ("compare", "ours-fastdns", "ours-udpq"):
-              p = pathlib.Path(f"/tmp/{name}.json")
-              if not p.exists():
-                  rows.append(f"| {name} | missing | | |")
-                  continue
+          p = pathlib.Path("/tmp/compare.json")
+          if p.exists():
               d = json.loads(p.read_text())
-              if "theirs" in d:
-                  th, ou = d["theirs"], d["ours"]
-                  rows.append(f"| compare | theirs {th['alive']}/{th['total']} tcp | "
-                              f"ours {ou['alive']}/{ou['total']} udp | {th['secs']:.0f}s vs {ou['secs']:.0f}s |")
-              else:
-                  rows.append(f"| {name} | {d.get('alive')}/{d.get('total')} | {d.get('transport')} | "
-                              f"{d.get('secs')}s |")
-          body = "\n".join(["| set | reachable | transport | wall clock |", "|---|---|---|---|"] + rows)
+              for key in ("theirs_tcp", "theirs_udp", "ours"):
+                  r = d.get(key)
+                  if not r:
+                      continue
+                  ms = [x["ms"] for x in r["rows"] if x["ok"]]
+                  mean = f"{sum(ms)/len(ms):.0f} ms" if ms else "-"
+                  rows.append(f"| {r.get('label', key)} | {r['alive']}/{r['total']} | "
+                              f"{r['secs']} s | {mean} |")
+          for name in ("ours-fastdns", "ours-udpq"):
+              q = pathlib.Path(f"/tmp/{name}.json")
+              if q.exists():
+                  d = json.loads(q.read_text())
+                  rows.append(f"| {name} | {d.get('alive')}/{d.get('total')} | "
+                              f"{d.get('secs')} s | udp |")
+          body = "\n".join(["| set | reachable | wall clock | mean RTT |",
+                            "|---|---|---|---|"] + rows)
           print(body)
           summary = os.environ.get("GITHUB_STEP_SUMMARY")
           if summary:
