@@ -1,0 +1,110 @@
+name: BD NET runtime capture
+
+# Runs the real APK on an emulator so the decrypted server list can be read
+# straight out of /data/data instead of being reverse engineered by hand.
+# The APK ships only arm64-v8a, so the AVD has to be arm64 too.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/capture-bdnet.yml"
+      - "tools/ui_tap.py"
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: capture-bdnet-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          ls -l /dev/kvm || echo "no /dev/kvm (arm64 AVD will fall back to qemu)"
+
+      - name: Reuse the APK the analysis run already prepared
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -uo pipefail
+          mkdir -p art
+          RUN=$(gh run list --workflow=analyze-apk.yml --status success --limit 1 \
+                  --json databaseId --jq '.[0].databaseId')
+          echo "analysis run: $RUN"
+          gh run download "$RUN" -n amtunnel-apk-analysis -D art -R "$GITHUB_REPOSITORY" || true
+          find art -name '*.apk' | head
+          ls -l art/amtunnel.apk || { echo "apk missing"; exit 1; }
+
+      - name: Run on emulator and harvest the app's data dir
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          target: default
+          arch: arm64-v8a
+          profile: pixel_2
+          disable-animations: true
+          emulator-options: >-
+            -no-window -no-snapshot -gpu swiftshader_indirect -noaudio
+            -no-boot-anim -camera-back none -camera-front none -memory 2048
+          script: |
+            set -uo pipefail
+            adb root || true
+            adb wait-for-device
+            adb shell settings put global window_animation_scale 0 || true
+
+            echo "=== install ==="
+            adb install -r -g art/amtunnel.apk || adb install-multiple -r -g art/*.apk || true
+            adb shell pm list packages | grep -i bdfreevpn || echo "package not installed"
+
+            echo "=== launch ==="
+            adb shell monkey -p dastan.prince.bdfreevpn -c android.intent.category.LAUNCHER 1 || true
+            sleep 60
+            adb shell dumpsys activity activities 2>/dev/null | grep -i "mResumedActivity\|topResumedActivity" | head -3
+
+            echo "=== ui dump 1 ==="
+            adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1 || true
+            adb shell cat /sdcard/ui.xml 2>/dev/null | head -c 4000
+
+            echo "=== wait for the config fetch ==="
+            sleep 90
+
+            echo "=== files the app wrote ==="
+            adb shell "ls -laR /data/data/dastan.prince.bdfreevpn 2>/dev/null | head -120" || true
+
+            echo "=== shared_prefs ==="
+            adb shell "for f in /data/data/dastan.prince.bdfreevpn/shared_prefs/*.xml; do echo \"--- \$f\"; cat \"\$f\"; echo; done" 2>/dev/null | head -300 || true
+
+            echo "=== json/config files ==="
+            adb shell "find /data/data/dastan.prince.bdfreevpn /sdcard/Android/data/dastan.prince.bdfreevpn -type f 2>/dev/null | head -80" || true
+            adb shell "find /data/data/dastan.prince.bdfreevpn -type f \( -name '*.json' -o -name '*.dat' -o -name '*.txt' -o -name '*.conf' \) -size -2M 2>/dev/null | while read f; do echo \"--- \$f\"; head -c 2000 \"\$f\"; echo; done" 2>/dev/null | head -300 || true
+
+            echo "=== logcat: network + server + cipher ==="
+            adb logcat -d 2>/dev/null | grep -iE "server|dnstt|slowdns|udpq|json|github|decrypt|cipher|host" | tail -120 || true
+
+            echo "=== screenshot ==="
+            adb exec-out screencap -p > /tmp/screen.png 2>/dev/null || true
+            ls -l /tmp/screen.png || true
+
+      - name: Pull the harvested data out of the job
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bdnet-runtime-capture
+          path: |
+            /tmp/screen.png
+          retention-days: 14
+          if-no-files-found: ignore

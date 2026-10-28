@@ -545,6 +545,47 @@ jobs:
               cat "$f" >> analysis/hunt/secret-smali-bodies.txt
             done
 
+      - name: Locate the cipher in smali
+        continue-on-error: true
+        run: |
+          exec > >(tee -a analysis/cipher-hunt.log) 2>&1
+          set -uo pipefail
+          mkdir -p analysis/hunt
+
+          # smali is complete where jadx gave up, so the decryptor must be here.
+          grep -rl "Ljavax/crypto/Cipher;" decoded --include=*.smali 2>/dev/null \
+            | grep -viE 'smali_classes[0-9]*/(com/google|androidx|okhttp|org/|ads_|com/facebook|kotlin)' \
+            | head -30 > /tmp/cipher-files.txt || true
+          echo "cipher users: $(wc -l < /tmp/cipher-files.txt)"
+          cat /tmp/cipher-files.txt
+          : > analysis/hunt/cipher-bodies.txt
+          while read -r f; do
+            echo "##### $f" >> analysis/hunt/cipher-bodies.txt
+            grep -n -B12 -A18 "Cipher;->getInstance\|Cipher;->doFinal\|SecretKeySpec;-><init>" "$f" \
+              >> analysis/hunt/cipher-bodies.txt
+          done < /tmp/cipher-files.txt
+          echo "cipher body lines: $(wc -l < analysis/hunt/cipher-bodies.txt)"
+
+          # The repack's own injected package.
+          ls decoded/smali/smalihelper/ 2>/dev/null | head -40 > analysis/hunt/smalihelper-list.txt || true
+          cat analysis/hunt/smalihelper-list.txt
+
+          # Distinctive suffix shared by the three config ids.
+          grep -rl "27d28875" decoded --include=*.smali 2>/dev/null | head -20 \
+            > analysis/hunt/id-suffix-users.txt || true
+          echo "id suffix users: $(wc -l < analysis/hunt/id-suffix-users.txt)"
+          cat analysis/hunt/id-suffix-users.txt
+
+          # Anything that loads the bundled server list.
+          grep -rl "server.psi" decoded --include=*.smali 2>/dev/null | head \
+            > analysis/hunt/psi-users.txt || true
+          cat analysis/hunt/psi-users.txt
+
+          # Native bridges that take a byte[]/String from Java.
+          grep -rn "native " decoded/smali*/smalihelper/*.smali 2>/dev/null | head -20 \
+            > analysis/hunt/native-bridges.txt || true
+          cat analysis/hunt/native-bridges.txt
+
       - name: Mine native DNS-tunnel libraries
         continue-on-error: true
         run: |
