@@ -6,6 +6,13 @@ MasterDnsVPN: manual entry and bulk import, concurrent scanning, reachability
 continuous health monitoring, failover, recovery, persistence and live
 diagnostics.
 
+The resolver engine is a faithful port of MasterDnsVPN's balancer: all nine
+`RESOLVER_BALANCING_STRATEGY` modes with its exact scoring formulas, packet
+duplication (default 2), auto-disable with recheck, and stream-sticky failover.
+See `docs/MASTER-ENGINE.md` for the setting-by-setting mapping and the tests
+that prove each one. None of it changes the wire format, so stock servers stay
+compatible.
+
 The transport is a byte-compatible implementation of the MasterDnsVPN DNS
 tunnel protocol (`docs/PROTOCOL.md`), rebuilt in Kotlin from the upstream Go
 source and verified against the real Go server in CI. The DNS engine is

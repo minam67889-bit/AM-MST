@@ -44,7 +44,11 @@ Last verified end-to-end in CI run **40713951951** (`Live DNS-tunnel integration
 | **Baseline test of the original AM Tunnel client** | **Blocked** | the APK runs only against vendor backend credentials held in a LIAPP-encrypted payload; no device/emulator either |
 | **BD NET APK analysis** | **Analysed** | `dastan.prince.bdfreevpn` v106 (patched "Mod" build). Carries **dnstt** (`libxdnstt.so`: KCP + Noise + `DeriveNoise`) = the SlowDNS family, plus Hysteria 2, Xray, pdnsd, tun2socks. See `docs/BDNET-PROTOCOL.md` |
 | **dnstt / SlowDNS transport** | **Not implemented** | different protocol from MasterDnsVPN: base32 labels + Noise NK + KCP + turbotunnel. Needs a dnstt server we control to be verifiable; not faked |
-| Packet duplication (MasterDnsVPN `PACKET_DUPLICATION_COUNT`) | Implemented | `TunnelConfig.packetDuplication` → extra copies to other ranked resolvers; counter in `stats().duplicatesSent` |
+| **MasterDnsVPN balancing engine (9 strategies)** | **Verified** | ported from `balancer.go` (commit `5f83ee9`); 19 unit tests pin the exact formulas; live `test4` with 10 resolvers, 5 killed mid-session kept `state=READY` and traffic flowing |
+| Packet duplication (`PACKET_DUPLICATION_COUNT`, default 2) | Verified | `test2`: `duplicatesSent > 0`, HTTP through the tunnel |
+| Auto-disable (`AUTO_DISABLE_TIMEOUT_SERVERS`, 30 s) | Verified | window rule + 3-consecutive-timeout rule; unit tests `auto disable parks…`, `three timeouts in a row…` |
+| Recheck of parked resolvers (`RECHECK_INACTIVE_SERVERS_ENABLED`) | Verified | unit test `a parked resolver returns after a successful recheck`; live recheck probes in the transport pump |
+| Stream-sticky failover (threshold 2, cooldown 2.5 s) | Verified | unit tests `a stream keeps its resolver…`, `failover respects the cooldown` |
 
 ## How the AM Tunnel APK was finally obtained and analysed
 
