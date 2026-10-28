@@ -1,0 +1,18 @@
+{
+  "server": "05167e556c53460f5e5e7e6c011d6a516b",
+  "validate": "1",
+  "confuse": "3",
+  "rx": 3,
+  "tx": -1,
+  "retry": 1,
+  "retry_interval": 1,
+  "socks5": {
+  "listen": "127.0.0.1:10802"
+  },
+  "recv_window_conn": 196608,
+  "recv_window": 491520,
+ "report": "BD NET"
+}
+
+server field  : 05167e556c53460f5e5e7e6c011d6a516b
+decodes back  : '13.140.185.158:53'
