@@ -224,6 +224,36 @@ jobs:
             du -sh analysis/sources || true
           fi
 
+      - name: Mine native DNS-tunnel libraries
+        run: |
+          exec > >(tee -a analysis/native-libs.log) 2>&1
+          set -uxo pipefail
+          mkdir -p analysis/native
+          for apk in apks/*.apk; do
+            abi_label=$(basename "$apk" .apk)
+            for lib in $(unzip -Z1 "$apk" | grep -E '\.so$' | grep -Ei 'dns|pdns|udpq|tun2socks|wg|super' || true); do
+              base=$(basename "$lib" .so)
+              out="analysis/native/${base}.strings.txt"
+              echo "== $apk :: $lib"
+              unzip -p "$apk" "$lib" > "/tmp/${base}.so" || continue
+              strings -a -n 5 "/tmp/${base}.so" | sort -u > "$out" || true
+              wc -l "$out"
+              # everything that looks like a hostname / domain used by the tunnel
+              grep -Eio '([a-z0-9][a-z0-9-]{1,62}\.)+(com|net|org|io|xyz|top|site|online|vip|app|dev|cloud|link|live|pro|cc|tk|ru|ir|info|tech|store|fun|space|website|icu|cyou|cfd|click|shop|club|host|press|world|life|today|network|digital|sbs|bond|rest|bar|monster|quest|buzz)' "$out" \
+                | sort -u > "analysis/native/${base}.domains.txt" || true
+              echo "-- domains in ${base}: $(wc -l < "analysis/native/${base}.domains.txt")"
+              head -20 "analysis/native/${base}.domains.txt" || true
+              # protocol-ish tokens
+              grep -iE 'qname|base36|base64|chunk|fragment|session|cookie|handshake|socks|mtu|packet|sequence|checksum|encrypt|decrypt|xor|chacha|aes|tunnel|resolver|authoritative|txt|edns|compress' "$out" \
+                | grep -vE '^(__|_ZN|_Z)' | head -200 > "analysis/native/${base}.keywords.txt" || true
+              wc -l "analysis/native/${base}.keywords.txt"
+            done
+          done
+          echo "=== summary ==="
+          ls -l analysis/native/ | head -40
+          echo "=== libs in bundle ==="
+          for apk in apks/*.apk; do echo "-- $apk"; unzip -Z1 "$apk" | grep '\.so$' | head -30; done
+
       - name: Static analysis
         run: |
           exec > >(tee -a analysis/apk_analysis.log) 2>&1

@@ -178,6 +178,9 @@ def main():
     # ------------------------------------------------------- deleted-file hints
     with open(os.path.join(out, "assets.txt"), "w", errors="replace") as handle:
         for name, blob in asset_blobs.items():
+            if name.endswith((".dex", ".prof", ".profm", ".so")):
+                handle.write(f"\n=== {name} ({len(blob)} B) binary, skipped ===\n")
+                continue
             handle.write(f"\n=== {name} ({len(blob)} B) ===\n")
             try:
                 handle.write(blob[:4000].decode("utf-8", "replace"))
