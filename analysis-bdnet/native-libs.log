@@ -12,48 +12,232 @@
 + out=analysis/native/libdns.strings.txt
 + echo '== apks/base.apk :: lib/arm64-v8a/libdns.so'
 == apks/base.apk :: lib/arm64-v8a/libdns.so
-+ unzip -p apks/base.apk lib/arm64-v8a/libdns.so
-+ continue
++ python3 tools/extract_apk_entry.py apks/base.apk lib/arm64-v8a/libdns.so /tmp/libdns.so
+extracted lib/arm64-v8a/libdns.so (5126496 B, zipfile)
++ strings -a -n 5 /tmp/libdns.so
++ sort -u
++ wc -l analysis/native/libdns.strings.txt
+22800 analysis/native/libdns.strings.txt
++ grep -Eio '([a-z0-9][a-z0-9-]{1,62}\.)+(com|net|org|io|xyz|top|site|online|vip|app|dev|cloud|link|live|pro|cc|tk|ru|ir|info|tech|store|fun|space|website|icu|cyou|cfd|click|shop|club|host|press|world|life|today|network|digital|sbs|bond|rest|bar|monster|quest|buzz)' analysis/native/libdns.strings.txt
++ sort -u
+++ wc -l
++ echo '-- domains in libdns: 483'
+-- domains in libdns: 483
++ head -20 analysis/native/libdns.domains.txt
+1ZLcKi.da6sJ8.fun
+1ZLcKi.q6smbLI.fun
+1pa.fun
+3E.init.fun
+4YrTQcka.AybPHsoe.fun
+4YrTQcka.init.fun
+4YrTQcka.kPqyM5gKLHm.fun
+4YrTQcka.pfz6b1CPSc1.fun
+4roIqmw4E.GoString.fun
+4roIqmw4E.String.fun
+6yIE.fun
+6yqAG.fun
+73.DEyUbR2kq.App
+73.DEyUbR2kq.AppendFormat.fun
+73.DEyUbR2kq.String.fun
+73.J8EZrfL0yRq.String.fun
+73.VcFlwweanWhD.String.fun
+73.hE4o5ZmhavSd.fun
+73.init.fun
+73.koZevG.fun
++ grep -iE 'qname|base36|base64|chunk|fragment|session|cookie|handshake|socks|mtu|packet|sequence|checksum|encrypt|decrypt|xor|chacha|aes|tunnel|resolver|authoritative|txt|edns|compress' analysis/native/libdns.strings.txt
++ head -200
++ grep -vE '^(__|_ZN|_Z)'
++ wc -l analysis/native/libdns.keywords.txt
+129 analysis/native/libdns.keywords.txt
 + for lib in $(unzip -Z1 "$apk" | grep -E '\.so$' | grep -Ei 'dns|pdns|udpq|tun2socks|wg|super' || true)
 ++ basename lib/arm64-v8a/libpdnsd.so .so
 + base=libpdnsd
 + out=analysis/native/libpdnsd.strings.txt
 + echo '== apks/base.apk :: lib/arm64-v8a/libpdnsd.so'
 == apks/base.apk :: lib/arm64-v8a/libpdnsd.so
-+ unzip -p apks/base.apk lib/arm64-v8a/libpdnsd.so
-+ continue
++ python3 tools/extract_apk_entry.py apks/base.apk lib/arm64-v8a/libpdnsd.so /tmp/libpdnsd.so
+extracted lib/arm64-v8a/libpdnsd.so (215632 B, zipfile)
++ strings -a -n 5 /tmp/libpdnsd.so
++ sort -u
++ wc -l analysis/native/libpdnsd.strings.txt
+1149 analysis/native/libpdnsd.strings.txt
++ grep -Eio '([a-z0-9][a-z0-9-]{1,62}\.)+(com|net|org|io|xyz|top|site|online|vip|app|dev|cloud|link|live|pro|cc|tk|ru|ir|info|tech|store|fun|space|website|icu|cyou|cfd|click|shop|club|host|press|world|life|today|network|digital|sbs|bond|rest|bar|monster|quest|buzz)' analysis/native/libpdnsd.strings.txt
++ sort -u
+++ wc -l
++ echo '-- domains in libpdnsd: 3'
+-- domains in libpdnsd: 3
++ head -20 analysis/native/libpdnsd.domains.txt
+android.googlesource.com
+gmx.net
+www.gnu.org
++ grep -iE 'qname|base36|base64|chunk|fragment|session|cookie|handshake|socks|mtu|packet|sequence|checksum|encrypt|decrypt|xor|chacha|aes|tunnel|resolver|authoritative|txt|edns|compress' analysis/native/libpdnsd.strings.txt
++ grep -vE '^(__|_ZN|_Z)'
++ head -200
++ wc -l analysis/native/libpdnsd.keywords.txt
+23 analysis/native/libpdnsd.keywords.txt
 + for lib in $(unzip -Z1 "$apk" | grep -E '\.so$' | grep -Ei 'dns|pdns|udpq|tun2socks|wg|super' || true)
 ++ basename lib/arm64-v8a/libtun2socks.so .so
 + base=libtun2socks
 + out=analysis/native/libtun2socks.strings.txt
 + echo '== apks/base.apk :: lib/arm64-v8a/libtun2socks.so'
 == apks/base.apk :: lib/arm64-v8a/libtun2socks.so
-+ unzip -p apks/base.apk lib/arm64-v8a/libtun2socks.so
-+ continue
++ python3 tools/extract_apk_entry.py apks/base.apk lib/arm64-v8a/libtun2socks.so /tmp/libtun2socks.so
+extracted lib/arm64-v8a/libtun2socks.so (160232 B, zipfile)
++ strings -a -n 5 /tmp/libtun2socks.so
++ sort -u
++ wc -l analysis/native/libtun2socks.strings.txt
+879 analysis/native/libtun2socks.strings.txt
++ grep -Eio '([a-z0-9][a-z0-9-]{1,62}\.)+(com|net|org|io|xyz|top|site|online|vip|app|dev|cloud|link|live|pro|cc|tk|ru|ir|info|tech|store|fun|space|website|icu|cyou|cfd|click|shop|club|host|press|world|life|today|network|digital|sbs|bond|rest|bar|monster|quest|buzz)' analysis/native/libtun2socks.strings.txt
++ sort -u
+++ wc -l
++ echo '-- domains in libtun2socks: 2'
+-- domains in libtun2socks: 2
++ head -20 analysis/native/libtun2socks.domains.txt
+android.googlesource.com
+gmail.com
++ grep -iE 'qname|base36|base64|chunk|fragment|session|cookie|handshake|socks|mtu|packet|sequence|checksum|encrypt|decrypt|xor|chacha|aes|tunnel|resolver|authoritative|txt|edns|compress' analysis/native/libtun2socks.strings.txt
++ grep -vE '^(__|_ZN|_Z)'
++ head -200
++ wc -l analysis/native/libtun2socks.keywords.txt
+48 analysis/native/libtun2socks.keywords.txt
 + for lib in $(unzip -Z1 "$apk" | grep -E '\.so$' | grep -Ei 'dns|pdns|udpq|tun2socks|wg|super' || true)
 ++ basename lib/arm64-v8a/libudpq.so .so
 + base=libudpq
 + out=analysis/native/libudpq.strings.txt
 + echo '== apks/base.apk :: lib/arm64-v8a/libudpq.so'
 == apks/base.apk :: lib/arm64-v8a/libudpq.so
-+ unzip -p apks/base.apk lib/arm64-v8a/libudpq.so
-+ continue
++ python3 tools/extract_apk_entry.py apks/base.apk lib/arm64-v8a/libudpq.so /tmp/libudpq.so
+extracted lib/arm64-v8a/libudpq.so (19989720 B, zipfile)
++ strings -a -n 5 /tmp/libudpq.so
++ sort -u
++ wc -l analysis/native/libudpq.strings.txt
+50943 analysis/native/libudpq.strings.txt
++ grep -Eio '([a-z0-9][a-z0-9-]{1,62}\.)+(com|net|org|io|xyz|top|site|online|vip|app|dev|cloud|link|live|pro|cc|tk|ru|ir|info|tech|store|fun|space|website|icu|cyou|cfd|click|shop|club|host|press|world|life|today|network|digital|sbs|bond|rest|bar|monster|quest|buzz)' analysis/native/libudpq.strings.txt
++ sort -u
+++ wc -l
++ echo '-- domains in libudpq: 1255'
+-- domains in libudpq: 1255
++ head -20 analysis/native/libudpq.domains.txt
+0github.com
+0google.golang.org
+0google.pro
+0v.fun
+1google.golang.org
+2-.google.pro
+26.google.pro
+2ev3.Marshal.fun
+2ev3.resolve.fun
+2ev3.unmarshal.fun
+2github.com
+2google.golang.org
+3Mb.fun
+4github.com
+5x1K02jJ.fun
+7github.com
+APPENDreflect.Fun
+Accept.fun
+AcksPacket.fun
+Add.fun
++ grep -iE 'qname|base36|base64|chunk|fragment|session|cookie|handshake|socks|mtu|packet|sequence|checksum|encrypt|decrypt|xor|chacha|aes|tunnel|resolver|authoritative|txt|edns|compress' analysis/native/libudpq.strings.txt
++ grep -vE '^(__|_ZN|_Z)'
++ head -200
+grep: write error: Broken pipe
+grep: write error: Broken pipe
++ true
++ wc -l analysis/native/libudpq.keywords.txt
+200 analysis/native/libudpq.keywords.txt
 + for lib in $(unzip -Z1 "$apk" | grep -E '\.so$' | grep -Ei 'dns|pdns|udpq|tun2socks|wg|super' || true)
 ++ basename lib/arm64-v8a/libudpqtwo.so .so
 + base=libudpqtwo
 + out=analysis/native/libudpqtwo.strings.txt
 + echo '== apks/base.apk :: lib/arm64-v8a/libudpqtwo.so'
 == apks/base.apk :: lib/arm64-v8a/libudpqtwo.so
-+ unzip -p apks/base.apk lib/arm64-v8a/libudpqtwo.so
-+ continue
++ python3 tools/extract_apk_entry.py apks/base.apk lib/arm64-v8a/libudpqtwo.so /tmp/libudpqtwo.so
+extracted lib/arm64-v8a/libudpqtwo.so (17928600 B, zipfile)
++ strings -a -n 5 /tmp/libudpqtwo.so
++ sort -u
++ wc -l analysis/native/libudpqtwo.strings.txt
+46616 analysis/native/libudpqtwo.strings.txt
++ grep -Eio '([a-z0-9][a-z0-9-]{1,62}\.)+(com|net|org|io|xyz|top|site|online|vip|app|dev|cloud|link|live|pro|cc|tk|ru|ir|info|tech|store|fun|space|website|icu|cyou|cfd|click|shop|club|host|press|world|life|today|network|digital|sbs|bond|rest|bar|monster|quest|buzz)' analysis/native/libudpqtwo.strings.txt
++ sort -u
+++ wc -l
++ echo '-- domains in libudpqtwo: 1227'
+-- domains in libudpqtwo: 1227
++ head -20 analysis/native/libudpqtwo.domains.txt
+0github.com
+0google.golang.org
+0google.pro
+0v.fun
+1google.golang.org
+2-.google.pro
+26.google.pro
+2ev3.Marshal.fun
+2ev3.resolve.fun
+2ev3.unmarshal.fun
+2github.com
+2google.golang.org
+3C.fun
+4github.com
+7D.fun
+7github.com
+APPENDreflect.Fun
+Accept.fun
+AcksPacket.fun
+Add.fun
++ grep -iE 'qname|base36|base64|chunk|fragment|session|cookie|handshake|socks|mtu|packet|sequence|checksum|encrypt|decrypt|xor|chacha|aes|tunnel|resolver|authoritative|txt|edns|compress' analysis/native/libudpqtwo.strings.txt
++ grep -vE '^(__|_ZN|_Z)'
++ head -200
+grep: write error: Broken pipe
+grep: write error: Broken pipe
++ true
++ wc -l analysis/native/libudpqtwo.keywords.txt
+200 analysis/native/libudpqtwo.keywords.txt
 + for lib in $(unzip -Z1 "$apk" | grep -E '\.so$' | grep -Ei 'dns|pdns|udpq|tun2socks|wg|super' || true)
 ++ basename lib/arm64-v8a/libxdnstt.so .so
 + base=libxdnstt
 + out=analysis/native/libxdnstt.strings.txt
 + echo '== apks/base.apk :: lib/arm64-v8a/libxdnstt.so'
 == apks/base.apk :: lib/arm64-v8a/libxdnstt.so
-+ unzip -p apks/base.apk lib/arm64-v8a/libxdnstt.so
-+ continue
++ python3 tools/extract_apk_entry.py apks/base.apk lib/arm64-v8a/libxdnstt.so /tmp/libxdnstt.so
+extracted lib/arm64-v8a/libxdnstt.so (16587328 B, zipfile)
++ strings -a -n 5 /tmp/libxdnstt.so
++ sort -u
++ wc -l analysis/native/libxdnstt.strings.txt
+79992 analysis/native/libxdnstt.strings.txt
++ grep -Eio '([a-z0-9][a-z0-9-]{1,62}\.)+(com|net|org|io|xyz|top|site|online|vip|app|dev|cloud|link|live|pro|cc|tk|ru|ir|info|tech|store|fun|space|website|icu|cyou|cfd|click|shop|club|host|press|world|life|today|network|digital|sbs|bond|rest|bar|monster|quest|buzz)' analysis/native/libxdnstt.strings.txt
++ sort -u
+++ wc -l
++ echo '-- domains in libxdnstt: 1462'
+-- domains in libxdnstt: 1462
++ head -20 analysis/native/libxdnstt.domains.txt
+0kvK0C.fun
+1pa.fun
+3E.init.fun
+3QoaR.fun
+4Qv.fun
+4YrTQcka.AybPHsoe.fun
+4YrTQcka.init.fun
+4YrTQcka.kPqyM5gKLHm.fun
+4YrTQcka.pfz6b1CPSc1.fun
+4roIqmw4E.App
+4roIqmw4E.GoString.fun
+4roIqmw4E.String.fun
+5M0Xkdq1y.fun
+61DY1Kb.fun
+66P.fun
+6d.fun
+6i.init.fun
+6i.r2sAbzdlMA.fun
+6k.AdV33aHvMisR.Size.fun
+6k.fun
++ grep -iE 'qname|base36|base64|chunk|fragment|session|cookie|handshake|socks|mtu|packet|sequence|checksum|encrypt|decrypt|xor|chacha|aes|tunnel|resolver|authoritative|txt|edns|compress' analysis/native/libxdnstt.strings.txt
++ head -200
++ grep -vE '^(__|_ZN|_Z)'
+grep: write error: Broken pipe
+grep: write error: Broken pipe
++ true
++ wc -l analysis/native/libxdnstt.keywords.txt
+200 analysis/native/libxdnstt.keywords.txt
 + for apk in apks/*.apk amtunnel.apk
 + '[' -f amtunnel.apk ']'
 ++ basename amtunnel.apk .apk
@@ -67,61 +251,263 @@
 + out=analysis/native/libdns.strings.txt
 + echo '== amtunnel.apk :: lib/arm64-v8a/libdns.so'
 == amtunnel.apk :: lib/arm64-v8a/libdns.so
-+ unzip -p amtunnel.apk lib/arm64-v8a/libdns.so
-+ continue
++ python3 tools/extract_apk_entry.py amtunnel.apk lib/arm64-v8a/libdns.so /tmp/libdns.so
+extracted lib/arm64-v8a/libdns.so (5126496 B, zipfile)
++ strings -a -n 5 /tmp/libdns.so
++ sort -u
++ wc -l analysis/native/libdns.strings.txt
+22800 analysis/native/libdns.strings.txt
++ grep -Eio '([a-z0-9][a-z0-9-]{1,62}\.)+(com|net|org|io|xyz|top|site|online|vip|app|dev|cloud|link|live|pro|cc|tk|ru|ir|info|tech|store|fun|space|website|icu|cyou|cfd|click|shop|club|host|press|world|life|today|network|digital|sbs|bond|rest|bar|monster|quest|buzz)' analysis/native/libdns.strings.txt
++ sort -u
+++ wc -l
++ echo '-- domains in libdns: 483'
+-- domains in libdns: 483
++ head -20 analysis/native/libdns.domains.txt
+1ZLcKi.da6sJ8.fun
+1ZLcKi.q6smbLI.fun
+1pa.fun
+3E.init.fun
+4YrTQcka.AybPHsoe.fun
+4YrTQcka.init.fun
+4YrTQcka.kPqyM5gKLHm.fun
+4YrTQcka.pfz6b1CPSc1.fun
+4roIqmw4E.GoString.fun
+4roIqmw4E.String.fun
+6yIE.fun
+6yqAG.fun
+73.DEyUbR2kq.App
+73.DEyUbR2kq.AppendFormat.fun
+73.DEyUbR2kq.String.fun
+73.J8EZrfL0yRq.String.fun
+73.VcFlwweanWhD.String.fun
+73.hE4o5ZmhavSd.fun
+73.init.fun
+73.koZevG.fun
++ grep -iE 'qname|base36|base64|chunk|fragment|session|cookie|handshake|socks|mtu|packet|sequence|checksum|encrypt|decrypt|xor|chacha|aes|tunnel|resolver|authoritative|txt|edns|compress' analysis/native/libdns.strings.txt
++ grep -vE '^(__|_ZN|_Z)'
++ head -200
++ wc -l analysis/native/libdns.keywords.txt
+129 analysis/native/libdns.keywords.txt
 + for lib in $(unzip -Z1 "$apk" | grep -E '\.so$' | grep -Ei 'dns|pdns|udpq|tun2socks|wg|super' || true)
 ++ basename lib/arm64-v8a/libpdnsd.so .so
 + base=libpdnsd
 + out=analysis/native/libpdnsd.strings.txt
 + echo '== amtunnel.apk :: lib/arm64-v8a/libpdnsd.so'
 == amtunnel.apk :: lib/arm64-v8a/libpdnsd.so
-+ unzip -p amtunnel.apk lib/arm64-v8a/libpdnsd.so
-+ continue
++ python3 tools/extract_apk_entry.py amtunnel.apk lib/arm64-v8a/libpdnsd.so /tmp/libpdnsd.so
+extracted lib/arm64-v8a/libpdnsd.so (215632 B, zipfile)
++ strings -a -n 5 /tmp/libpdnsd.so
++ sort -u
++ wc -l analysis/native/libpdnsd.strings.txt
+1149 analysis/native/libpdnsd.strings.txt
++ grep -Eio '([a-z0-9][a-z0-9-]{1,62}\.)+(com|net|org|io|xyz|top|site|online|vip|app|dev|cloud|link|live|pro|cc|tk|ru|ir|info|tech|store|fun|space|website|icu|cyou|cfd|click|shop|club|host|press|world|life|today|network|digital|sbs|bond|rest|bar|monster|quest|buzz)' analysis/native/libpdnsd.strings.txt
++ sort -u
+++ wc -l
++ echo '-- domains in libpdnsd: 3'
+-- domains in libpdnsd: 3
++ head -20 analysis/native/libpdnsd.domains.txt
+android.googlesource.com
+gmx.net
+www.gnu.org
++ grep -iE 'qname|base36|base64|chunk|fragment|session|cookie|handshake|socks|mtu|packet|sequence|checksum|encrypt|decrypt|xor|chacha|aes|tunnel|resolver|authoritative|txt|edns|compress' analysis/native/libpdnsd.strings.txt
++ grep -vE '^(__|_ZN|_Z)'
++ head -200
++ wc -l analysis/native/libpdnsd.keywords.txt
+23 analysis/native/libpdnsd.keywords.txt
 + for lib in $(unzip -Z1 "$apk" | grep -E '\.so$' | grep -Ei 'dns|pdns|udpq|tun2socks|wg|super' || true)
 ++ basename lib/arm64-v8a/libtun2socks.so .so
 + base=libtun2socks
 + out=analysis/native/libtun2socks.strings.txt
 + echo '== amtunnel.apk :: lib/arm64-v8a/libtun2socks.so'
 == amtunnel.apk :: lib/arm64-v8a/libtun2socks.so
-+ unzip -p amtunnel.apk lib/arm64-v8a/libtun2socks.so
-+ continue
++ python3 tools/extract_apk_entry.py amtunnel.apk lib/arm64-v8a/libtun2socks.so /tmp/libtun2socks.so
+extracted lib/arm64-v8a/libtun2socks.so (160232 B, zipfile)
++ strings -a -n 5 /tmp/libtun2socks.so
++ sort -u
++ wc -l analysis/native/libtun2socks.strings.txt
+879 analysis/native/libtun2socks.strings.txt
++ grep -Eio '([a-z0-9][a-z0-9-]{1,62}\.)+(com|net|org|io|xyz|top|site|online|vip|app|dev|cloud|link|live|pro|cc|tk|ru|ir|info|tech|store|fun|space|website|icu|cyou|cfd|click|shop|club|host|press|world|life|today|network|digital|sbs|bond|rest|bar|monster|quest|buzz)' analysis/native/libtun2socks.strings.txt
++ sort -u
+++ wc -l
++ echo '-- domains in libtun2socks: 2'
+-- domains in libtun2socks: 2
++ head -20 analysis/native/libtun2socks.domains.txt
+android.googlesource.com
+gmail.com
++ grep -iE 'qname|base36|base64|chunk|fragment|session|cookie|handshake|socks|mtu|packet|sequence|checksum|encrypt|decrypt|xor|chacha|aes|tunnel|resolver|authoritative|txt|edns|compress' analysis/native/libtun2socks.strings.txt
++ grep -vE '^(__|_ZN|_Z)'
++ head -200
++ wc -l analysis/native/libtun2socks.keywords.txt
+48 analysis/native/libtun2socks.keywords.txt
 + for lib in $(unzip -Z1 "$apk" | grep -E '\.so$' | grep -Ei 'dns|pdns|udpq|tun2socks|wg|super' || true)
 ++ basename lib/arm64-v8a/libudpq.so .so
 + base=libudpq
 + out=analysis/native/libudpq.strings.txt
 + echo '== amtunnel.apk :: lib/arm64-v8a/libudpq.so'
 == amtunnel.apk :: lib/arm64-v8a/libudpq.so
-+ unzip -p amtunnel.apk lib/arm64-v8a/libudpq.so
-+ continue
++ python3 tools/extract_apk_entry.py amtunnel.apk lib/arm64-v8a/libudpq.so /tmp/libudpq.so
+extracted lib/arm64-v8a/libudpq.so (19989720 B, zipfile)
++ strings -a -n 5 /tmp/libudpq.so
++ sort -u
++ wc -l analysis/native/libudpq.strings.txt
+50943 analysis/native/libudpq.strings.txt
++ grep -Eio '([a-z0-9][a-z0-9-]{1,62}\.)+(com|net|org|io|xyz|top|site|online|vip|app|dev|cloud|link|live|pro|cc|tk|ru|ir|info|tech|store|fun|space|website|icu|cyou|cfd|click|shop|club|host|press|world|life|today|network|digital|sbs|bond|rest|bar|monster|quest|buzz)' analysis/native/libudpq.strings.txt
++ sort -u
+++ wc -l
++ echo '-- domains in libudpq: 1255'
+-- domains in libudpq: 1255
++ head -20 analysis/native/libudpq.domains.txt
+0github.com
+0google.golang.org
+0google.pro
+0v.fun
+1google.golang.org
+2-.google.pro
+26.google.pro
+2ev3.Marshal.fun
+2ev3.resolve.fun
+2ev3.unmarshal.fun
+2github.com
+2google.golang.org
+3Mb.fun
+4github.com
+5x1K02jJ.fun
+7github.com
+APPENDreflect.Fun
+Accept.fun
+AcksPacket.fun
+Add.fun
++ grep -iE 'qname|base36|base64|chunk|fragment|session|cookie|handshake|socks|mtu|packet|sequence|checksum|encrypt|decrypt|xor|chacha|aes|tunnel|resolver|authoritative|txt|edns|compress' analysis/native/libudpq.strings.txt
++ grep -vE '^(__|_ZN|_Z)'
++ head -200
+grep: write error: Broken pipe
+grep: write error: Broken pipe
++ true
++ wc -l analysis/native/libudpq.keywords.txt
+200 analysis/native/libudpq.keywords.txt
 + for lib in $(unzip -Z1 "$apk" | grep -E '\.so$' | grep -Ei 'dns|pdns|udpq|tun2socks|wg|super' || true)
 ++ basename lib/arm64-v8a/libudpqtwo.so .so
 + base=libudpqtwo
 + out=analysis/native/libudpqtwo.strings.txt
 + echo '== amtunnel.apk :: lib/arm64-v8a/libudpqtwo.so'
 == amtunnel.apk :: lib/arm64-v8a/libudpqtwo.so
-+ unzip -p amtunnel.apk lib/arm64-v8a/libudpqtwo.so
-+ continue
++ python3 tools/extract_apk_entry.py amtunnel.apk lib/arm64-v8a/libudpqtwo.so /tmp/libudpqtwo.so
+extracted lib/arm64-v8a/libudpqtwo.so (17928600 B, zipfile)
++ strings -a -n 5 /tmp/libudpqtwo.so
++ sort -u
++ wc -l analysis/native/libudpqtwo.strings.txt
+46616 analysis/native/libudpqtwo.strings.txt
++ grep -Eio '([a-z0-9][a-z0-9-]{1,62}\.)+(com|net|org|io|xyz|top|site|online|vip|app|dev|cloud|link|live|pro|cc|tk|ru|ir|info|tech|store|fun|space|website|icu|cyou|cfd|click|shop|club|host|press|world|life|today|network|digital|sbs|bond|rest|bar|monster|quest|buzz)' analysis/native/libudpqtwo.strings.txt
++ sort -u
+++ wc -l
++ echo '-- domains in libudpqtwo: 1227'
+-- domains in libudpqtwo: 1227
++ head -20 analysis/native/libudpqtwo.domains.txt
+0github.com
+0google.golang.org
+0google.pro
+0v.fun
+1google.golang.org
+2-.google.pro
+26.google.pro
+2ev3.Marshal.fun
+2ev3.resolve.fun
+2ev3.unmarshal.fun
+2github.com
+2google.golang.org
+3C.fun
+4github.com
+7D.fun
+7github.com
+APPENDreflect.Fun
+Accept.fun
+AcksPacket.fun
+Add.fun
++ grep -iE 'qname|base36|base64|chunk|fragment|session|cookie|handshake|socks|mtu|packet|sequence|checksum|encrypt|decrypt|xor|chacha|aes|tunnel|resolver|authoritative|txt|edns|compress' analysis/native/libudpqtwo.strings.txt
++ grep -vE '^(__|_ZN|_Z)'
++ head -200
+grep: write error: Broken pipe
+grep: write error: Broken pipe
++ true
++ wc -l analysis/native/libudpqtwo.keywords.txt
+200 analysis/native/libudpqtwo.keywords.txt
 + for lib in $(unzip -Z1 "$apk" | grep -E '\.so$' | grep -Ei 'dns|pdns|udpq|tun2socks|wg|super' || true)
 ++ basename lib/arm64-v8a/libxdnstt.so .so
 + base=libxdnstt
 + out=analysis/native/libxdnstt.strings.txt
 + echo '== amtunnel.apk :: lib/arm64-v8a/libxdnstt.so'
 == amtunnel.apk :: lib/arm64-v8a/libxdnstt.so
-+ unzip -p amtunnel.apk lib/arm64-v8a/libxdnstt.so
-+ continue
++ python3 tools/extract_apk_entry.py amtunnel.apk lib/arm64-v8a/libxdnstt.so /tmp/libxdnstt.so
+extracted lib/arm64-v8a/libxdnstt.so (16587328 B, zipfile)
++ strings -a -n 5 /tmp/libxdnstt.so
++ sort -u
++ wc -l analysis/native/libxdnstt.strings.txt
+79992 analysis/native/libxdnstt.strings.txt
++ grep -Eio '([a-z0-9][a-z0-9-]{1,62}\.)+(com|net|org|io|xyz|top|site|online|vip|app|dev|cloud|link|live|pro|cc|tk|ru|ir|info|tech|store|fun|space|website|icu|cyou|cfd|click|shop|club|host|press|world|life|today|network|digital|sbs|bond|rest|bar|monster|quest|buzz)' analysis/native/libxdnstt.strings.txt
++ sort -u
+++ wc -l
++ echo '-- domains in libxdnstt: 1462'
+-- domains in libxdnstt: 1462
++ head -20 analysis/native/libxdnstt.domains.txt
+0kvK0C.fun
+1pa.fun
+3E.init.fun
+3QoaR.fun
+4Qv.fun
+4YrTQcka.AybPHsoe.fun
+4YrTQcka.init.fun
+4YrTQcka.kPqyM5gKLHm.fun
+4YrTQcka.pfz6b1CPSc1.fun
+4roIqmw4E.App
+4roIqmw4E.GoString.fun
+4roIqmw4E.String.fun
+5M0Xkdq1y.fun
+61DY1Kb.fun
+66P.fun
+6d.fun
+6i.init.fun
+6i.r2sAbzdlMA.fun
+6k.AdV33aHvMisR.Size.fun
+6k.fun
++ grep -iE 'qname|base36|base64|chunk|fragment|session|cookie|handshake|socks|mtu|packet|sequence|checksum|encrypt|decrypt|xor|chacha|aes|tunnel|resolver|authoritative|txt|edns|compress' analysis/native/libxdnstt.strings.txt
++ grep -vE '^(__|_ZN|_Z)'
++ head -200
+grep: write error: Broken pipe
+grep: write error: Broken pipe
++ true
++ wc -l analysis/native/libxdnstt.keywords.txt
+200 analysis/native/libxdnstt.keywords.txt
 + echo '=== summary ==='
 === summary ===
 + ls -l analysis/native/
 + head -40
-total 0
+total 5852
+-rw-r--r-- 1 runner runner    9289 Oct 28 16:53 libdns.domains.txt
+-rw-r--r-- 1 runner runner    8623 Oct 28 16:53 libdns.keywords.txt
+-rw-r--r-- 1 runner runner  440169 Oct 28 16:53 libdns.strings.txt
+-rw-r--r-- 1 runner runner      45 Oct 28 16:53 libpdnsd.domains.txt
+-rw-r--r-- 1 runner runner    1092 Oct 28 16:53 libpdnsd.keywords.txt
+-rw-r--r-- 1 runner runner   32390 Oct 28 16:53 libpdnsd.strings.txt
+-rw-r--r-- 1 runner runner      35 Oct 28 16:53 libtun2socks.domains.txt
+-rw-r--r-- 1 runner runner    1280 Oct 28 16:53 libtun2socks.keywords.txt
+-rw-r--r-- 1 runner runner   16635 Oct 28 16:53 libtun2socks.strings.txt
+-rw-r--r-- 1 runner runner   23325 Oct 28 16:53 libudpq.domains.txt
+-rw-r--r-- 1 runner runner   37223 Oct 28 16:53 libudpq.keywords.txt
+-rw-r--r-- 1 runner runner 2046032 Oct 28 16:53 libudpq.strings.txt
+-rw-r--r-- 1 runner runner   22896 Oct 28 16:53 libudpqtwo.domains.txt
+-rw-r--r-- 1 runner runner   28381 Oct 28 16:53 libudpqtwo.keywords.txt
+-rw-r--r-- 1 runner runner 1794883 Oct 28 16:53 libudpqtwo.strings.txt
+-rw-r--r-- 1 runner runner   28948 Oct 28 16:53 libxdnstt.domains.txt
+-rw-r--r-- 1 runner runner   29648 Oct 28 16:53 libxdnstt.keywords.txt
+-rw-r--r-- 1 runner runner 1421391 Oct 28 16:53 libxdnstt.strings.txt
 + echo '=== libs in bundle ==='
 === libs in bundle ===
 + for apk in apks/*.apk
 + echo '-- apks/base.apk'
 -- apks/base.apk
-+ unzip -Z1 apks/base.apk
 + grep '\.so$'
 + head -30
++ unzip -Z1 apks/base.apk
 lib/arm64-v8a/libSignatureKiller.so
 lib/arm64-v8a/libdatastore_shared_counter.so
 lib/arm64-v8a/libdns.so
