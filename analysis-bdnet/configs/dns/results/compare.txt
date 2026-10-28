@@ -1,13 +1,13 @@
 == 20 servers, mode=slowdns ==
-                       theirs (pdnsd/tcp)    ours (balanced/udp)  
-reachable              0/20                  19/20                 
-wall clock             25.7                  6.0                  
-mean RTT               n/a                   110 ms (19 samples)  
+              theirs tcp_only           theirs udp_only           ours balanced             
+reachable     0/20                   19/20                   17/20                   
+wall clock    28.0                      16.1                      6.0                       
+mean RTT      n/a                       162 ms (19 samples)       194 ms (17 samples)       
 
 our duplicate-route plan (each packet goes out twice):
-  de7.liftmeon.org  +  de3.liftmeon.org
-  de3.liftmeon.org  +  de16.liftmeon.org
-  de16.liftmeon.org  +  de9.liftmeon.org
-  de9.liftmeon.org  +  de15.liftmeon.org
-  de15.liftmeon.org  +  de13.liftmeon.org
+  de13.liftmeon.org  +  de12.liftmeon.org
+  de12.liftmeon.org  +  de17.liftmeon.org
+  de17.liftmeon.org  +  de15.liftmeon.org
+  de15.liftmeon.org  +  de11.liftmeon.org
+  de11.liftmeon.org  +  de7.liftmeon.org
 wrote /tmp/compare.json

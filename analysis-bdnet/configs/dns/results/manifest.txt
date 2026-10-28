@@ -1,0 +1,25 @@
+total 360
+-rw-r--r-- 1 runner runner    363 Oct 28 20:39 app-config.txt
+prwx------ 1 runner runner      0 Oct 28 20:39 clr-debug-pipe-2476-7719-in
+prwx------ 1 runner runner      0 Oct 28 20:39 clr-debug-pipe-2476-7719-out
+prwx------ 1 runner runner      0 Oct 28 20:39 clr-debug-pipe-2496-7912-in
+prwx------ 1 runner runner      0 Oct 28 20:39 clr-debug-pipe-2496-7912-out
+-rw-r--r-- 1 runner runner  22760 Oct 28 20:40 compare.json
+-rw-r--r-- 1 runner runner    685 Oct 28 20:40 compare.txt
+srw------- 1 runner runner      0 Oct 28 20:39 dotnet-diagnostic-2476-7719-socket
+srw------- 1 runner runner      0 Oct 28 20:39 dotnet-diagnostic-2496-7912-socket
+-rw-r--r-- 1 runner runner   1404 Oct 28 20:39 fastdns.txt
+-rw-r--r-- 1 runner runner  32528 Oct 28 20:40 ours-fastdns.json
+-rw-r--r-- 1 runner runner   1202 Oct 28 20:40 ours-fastdns.txt
+-rw-r--r-- 1 runner runner 241922 Oct 28 20:40 ours-udpq.json
+-rw-r--r-- 1 runner runner   1355 Oct 28 20:40 ours-udpq.txt
+-rw-r--r-- 1 runner runner    351 Oct 28 20:39 slowdns.txt
+drwx------ 2 root   root     4096 Oct 28 20:38 snap-private-tmp
+drwx------ 3 root   root     4096 Oct 28 20:38 systemd-private-9fddfe8eeeb441ff886452b3193966f9-ModemManager.service-v1lkPt
+drwx------ 3 root   root     4096 Oct 28 20:38 systemd-private-9fddfe8eeeb441ff886452b3193966f9-chrony.service-QxZF7j
+drwx------ 3 root   root     4096 Oct 28 20:38 systemd-private-9fddfe8eeeb441ff886452b3193966f9-haveged.service-m3DBFj
+drwx------ 3 root   root     4096 Oct 28 20:38 systemd-private-9fddfe8eeeb441ff886452b3193966f9-polkit.service-26FlAl
+drwx------ 3 root   root     4096 Oct 28 20:38 systemd-private-9fddfe8eeeb441ff886452b3193966f9-systemd-logind.service-Xfe3qg
+drwx------ 3 root   root     4096 Oct 28 20:38 systemd-private-9fddfe8eeeb441ff886452b3193966f9-systemd-resolved.service-3wR3Ev
+-rw-r--r-- 1 runner runner  10345 Oct 28 20:39 udpq.txt
+Python 3.12.3
