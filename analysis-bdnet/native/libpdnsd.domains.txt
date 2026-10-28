@@ -1,3 +1,0 @@
-android.googlesource.com
-gmx.net
-www.gnu.org

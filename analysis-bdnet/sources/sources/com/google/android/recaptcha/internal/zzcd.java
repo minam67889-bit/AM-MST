@@ -1,28 +1,24 @@
 package com.google.android.recaptcha.internal;
 
 import android.content.Context;
-import defpackage.AbstractC4167q6;
-import defpackage.AbstractC4673wh;
-import defpackage.AbstractC4747xe;
-import defpackage.AbstractC4766xx;
-import defpackage.C0550Uo;
+import defpackage.AbstractC0325Me;
+import defpackage.AbstractC0641Yi;
+import defpackage.AbstractC3634my;
+import defpackage.C3148gp;
+import defpackage.I6;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
-import org.jetbrains.annotations.NotNull;
 
 /* loaded from: classes.dex */
 public final class zzcd {
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
-    public zzcd(@NotNull Context context) {
+    public zzcd(Context context) {
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
-    @NotNull
-    public static final byte[] zza(@NotNull File file) {
-        AbstractC4766xx.p(file, "<this>");
+    public static final byte[] zza(File file) {
+        AbstractC3634my.g(file, "<this>");
         FileInputStream fileInputStream = new FileInputStream(file);
         try {
             long length = file.length();
@@ -43,45 +39,44 @@ public final class zzcd {
             }
             if (i2 > 0) {
                 bArr = Arrays.copyOf(bArr, i3);
-                AbstractC4766xx.o(bArr, "copyOf(...)");
+                AbstractC3634my.f(bArr, "copyOf(...)");
             } else {
                 int read2 = fileInputStream.read();
                 if (read2 != -1) {
-                    C0550Uo c0550Uo = new C0550Uo(8193);
-                    c0550Uo.write(read2);
-                    AbstractC4673wh.m(fileInputStream, c0550Uo);
-                    int size = c0550Uo.size() + i;
+                    C3148gp c3148gp = new C3148gp(8193);
+                    c3148gp.write(read2);
+                    AbstractC0641Yi.o(fileInputStream, c3148gp);
+                    int size = c3148gp.size() + i;
                     if (size < 0) {
                         throw new OutOfMemoryError("File " + file + " is too big to fit in memory.");
                     }
-                    byte[] f = c0550Uo.f();
+                    byte[] b = c3148gp.b();
                     bArr = Arrays.copyOf(bArr, size);
-                    AbstractC4766xx.o(bArr, "copyOf(...)");
-                    AbstractC4167q6.N(f, i, bArr, 0, c0550Uo.size());
+                    AbstractC3634my.f(bArr, "copyOf(...)");
+                    I6.R(b, i, bArr, 0, c3148gp.size());
                 }
             }
-            AbstractC4747xe.l(fileInputStream, null);
+            fileInputStream.close();
             return bArr;
         } catch (Throwable th) {
             try {
                 throw th;
             } catch (Throwable th2) {
-                AbstractC4747xe.l(fileInputStream, th);
+                AbstractC0325Me.k(fileInputStream, th);
                 throw th2;
             }
         }
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
-    public static final void zzb(@NotNull File file, @NotNull byte[] bArr) {
+    public static final void zzb(File file, byte[] bArr) {
         if (file.exists() && !file.delete()) {
             throw new IOException("Unable to delete existing encrypted file");
         }
-        AbstractC4766xx.p(bArr, "array");
+        AbstractC3634my.g(bArr, "array");
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         try {
             fileOutputStream.write(bArr);
-            AbstractC4747xe.l(fileOutputStream, null);
+            fileOutputStream.close();
         } finally {
         }
     }

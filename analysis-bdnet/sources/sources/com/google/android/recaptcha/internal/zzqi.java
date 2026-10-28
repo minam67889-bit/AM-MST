@@ -48,18 +48,15 @@ public enum zzqi implements zznf {
 
     private final int zzS;
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     zzqi(int i) {
         this.zzS = i;
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     @Override // java.lang.Enum
     public final String toString() {
         return Integer.toString(zza());
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     @Override // com.google.android.recaptcha.internal.zznf
     public final int zza() {
         if (this != UNRECOGNIZED) {

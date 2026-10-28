@@ -4,83 +4,78 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import app.vpn.amtunnellite.R;
 import com.google.android.material.button.MaterialButton;
-import defpackage.A4;
-import defpackage.AbstractC0427Pv;
-import defpackage.AbstractC3411gE;
-import defpackage.AbstractC4702x40;
-import defpackage.AbstractC4817ya0;
-import defpackage.C3551i5;
-import defpackage.C4;
-import defpackage.C4716xD;
-import defpackage.C4778y4;
-import defpackage.CL;
-import defpackage.I5;
-import defpackage.LD;
-import defpackage.Q5;
-import defpackage.QD;
-import defpackage.WD;
+import dastan.prince.bdfreevpn.R;
+import defpackage.AbstractC0641Yi;
+import defpackage.AbstractC0731aZ;
+import defpackage.C0778b6;
+import defpackage.C3740oE;
+import defpackage.C4120t5;
+import defpackage.CE;
+import defpackage.FM;
+import defpackage.GE;
+import defpackage.J4;
+import defpackage.L4;
+import defpackage.LE;
+import defpackage.N4;
+import defpackage.T5;
+import defpackage.W80;
+import defpackage.XE;
 
 /* loaded from: classes.dex */
-public class MaterialComponentsViewInflater extends Q5 {
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
-    @Override // defpackage.Q5
-    public final C4778y4 a(Context context, AttributeSet attributeSet) {
-        return new C4716xD(context, attributeSet);
+public class MaterialComponentsViewInflater extends C0778b6 {
+    @Override // defpackage.C0778b6
+    public final J4 a(Context context, AttributeSet attributeSet) {
+        return new C3740oE(context, attributeSet);
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
-    @Override // defpackage.Q5
-    public final A4 b(Context context, AttributeSet attributeSet) {
+    @Override // defpackage.C0778b6
+    public final L4 b(Context context, AttributeSet attributeSet) {
         return new MaterialButton(context, attributeSet);
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
-    @Override // defpackage.Q5
-    public final C4 c(Context context, AttributeSet attributeSet) {
-        return new LD(context, attributeSet);
+    @Override // defpackage.C0778b6
+    public final N4 c(Context context, AttributeSet attributeSet) {
+        return new CE(context, attributeSet);
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
-    @Override // defpackage.Q5
-    public final C3551i5 d(Context context, AttributeSet attributeSet) {
-        QD qd = new QD(AbstractC4817ya0.f0(context, attributeSet, R.attr.radioButtonStyle, R.style.Widget_MaterialComponents_CompoundButton_RadioButton), attributeSet, 0);
-        Context context2 = qd.getContext();
-        TypedArray B = AbstractC4702x40.B(context2, attributeSet, CL.s, R.attr.radioButtonStyle, R.style.Widget_MaterialComponents_CompoundButton_RadioButton, new int[0]);
-        if (B.hasValue(0)) {
-            qd.setButtonTintList(AbstractC3411gE.d0(context2, B, 0));
+    @Override // defpackage.C0778b6
+    public final C4120t5 d(Context context, AttributeSet attributeSet) {
+        GE ge = new GE(XE.B(context, attributeSet, R.attr.radioButtonStyle, R.style.Widget_MaterialComponents_CompoundButton_RadioButton), attributeSet);
+        Context context2 = ge.getContext();
+        TypedArray G = AbstractC0641Yi.G(context2, attributeSet, FM.s, R.attr.radioButtonStyle, R.style.Widget_MaterialComponents_CompoundButton_RadioButton, new int[0]);
+        if (G.hasValue(0)) {
+            ge.setButtonTintList(W80.s(context2, G, 0));
         }
-        qd.f = B.getBoolean(1, false);
-        B.recycle();
-        return qd;
+        ge.f = G.getBoolean(1, false);
+        G.recycle();
+        return ge;
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
-    @Override // defpackage.Q5
-    public final I5 e(Context context, AttributeSet attributeSet) {
-        WD wd = new WD(AbstractC4817ya0.f0(context, attributeSet, android.R.attr.textViewStyle, 0), attributeSet, android.R.attr.textViewStyle);
-        Context context2 = wd.getContext();
-        if (AbstractC0427Pv.N(context2, R.attr.textAppearanceLineHeightEnabled, true)) {
+    @Override // defpackage.C0778b6
+    public final T5 e(Context context, AttributeSet attributeSet) {
+        LE le = new LE(XE.B(context, attributeSet, android.R.attr.textViewStyle, 0), attributeSet, android.R.attr.textViewStyle);
+        Context context2 = le.getContext();
+        if (AbstractC0731aZ.Z(context2, R.attr.textAppearanceLineHeightEnabled, true)) {
             Resources.Theme theme = context2.getTheme();
-            int[] iArr = CL.w;
+            int[] iArr = FM.w;
             TypedArray obtainStyledAttributes = theme.obtainStyledAttributes(attributeSet, iArr, android.R.attr.textViewStyle, 0);
-            int n = WD.n(context2, obtainStyledAttributes, 1, 2);
+            int h = LE.h(context2, obtainStyledAttributes, 1, 2);
             obtainStyledAttributes.recycle();
-            if (n == -1) {
+            if (h == -1) {
                 TypedArray obtainStyledAttributes2 = theme.obtainStyledAttributes(attributeSet, iArr, android.R.attr.textViewStyle, 0);
                 int resourceId = obtainStyledAttributes2.getResourceId(0, -1);
                 obtainStyledAttributes2.recycle();
                 if (resourceId != -1) {
-                    TypedArray obtainStyledAttributes3 = theme.obtainStyledAttributes(resourceId, CL.v);
-                    int n2 = WD.n(wd.getContext(), obtainStyledAttributes3, 2, 4);
+                    TypedArray obtainStyledAttributes3 = theme.obtainStyledAttributes(resourceId, FM.v);
+                    int h2 = LE.h(le.getContext(), obtainStyledAttributes3, 2, 4);
                     obtainStyledAttributes3.recycle();
-                    if (n2 >= 0) {
-                        wd.setLineHeight(n2);
+                    if (h2 >= 0) {
+                        le.setLineHeight(h2);
                     }
                 }
             }
         }
-        return wd;
+        return le;
     }
 }

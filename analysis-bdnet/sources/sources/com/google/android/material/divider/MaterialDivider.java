@@ -6,55 +6,49 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.View;
-import app.vpn.amtunnellite.R;
-import defpackage.AbstractC3411gE;
-import defpackage.AbstractC4702x40;
-import defpackage.AbstractC4817ya0;
-import defpackage.CL;
-import defpackage.UD;
+import dastan.prince.bdfreevpn.R;
+import defpackage.AbstractC0641Yi;
+import defpackage.FM;
+import defpackage.JE;
+import defpackage.W80;
+import defpackage.XE;
 
 /* loaded from: classes.dex */
 public class MaterialDivider extends View {
-    public final UD a;
+    public final JE a;
     public int b;
     public int c;
     public int d;
     public int e;
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     public MaterialDivider(Context context, AttributeSet attributeSet) {
-        super(AbstractC4817ya0.f0(context, attributeSet, R.attr.materialDividerStyle, R.style.Widget_MaterialComponents_MaterialDivider), attributeSet, R.attr.materialDividerStyle);
+        super(XE.B(context, attributeSet, R.attr.materialDividerStyle, R.style.Widget_MaterialComponents_MaterialDivider), attributeSet, R.attr.materialDividerStyle);
         Context context2 = getContext();
-        this.a = new UD();
-        TypedArray B = AbstractC4702x40.B(context2, attributeSet, CL.r, R.attr.materialDividerStyle, R.style.Widget_MaterialComponents_MaterialDivider, new int[0]);
-        this.b = B.getDimensionPixelSize(3, getResources().getDimensionPixelSize(R.dimen.material_divider_thickness));
-        this.d = B.getDimensionPixelOffset(2, 0);
-        this.e = B.getDimensionPixelOffset(1, 0);
-        setDividerColor(AbstractC3411gE.d0(context2, B, 0).getDefaultColor());
-        B.recycle();
+        this.a = new JE();
+        TypedArray G = AbstractC0641Yi.G(context2, attributeSet, FM.r, R.attr.materialDividerStyle, R.style.Widget_MaterialComponents_MaterialDivider, new int[0]);
+        this.b = G.getDimensionPixelSize(3, getResources().getDimensionPixelSize(R.dimen.material_divider_thickness));
+        this.d = G.getDimensionPixelOffset(2, 0);
+        this.e = G.getDimensionPixelOffset(1, 0);
+        setDividerColor(W80.s(context2, G, 0).getDefaultColor());
+        G.recycle();
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     public int getDividerColor() {
         return this.c;
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     public int getDividerInsetEnd() {
         return this.e;
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     public int getDividerInsetStart() {
         return this.d;
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     public int getDividerThickness() {
         return this.b;
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     @Override // android.view.View
     public final void onDraw(Canvas canvas) {
         int width;
@@ -70,12 +64,11 @@ public class MaterialDivider extends View {
             i = this.e;
         }
         int i3 = width - i;
-        UD ud = this.a;
-        ud.setBounds(i2, 0, i3, getBottom() - getTop());
-        ud.draw(canvas);
+        JE je = this.a;
+        je.setBounds(i2, 0, i3, getBottom() - getTop());
+        je.draw(canvas);
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     @Override // android.view.View
     public final void onMeasure(int i, int i2) {
         super.onMeasure(i, i2);
@@ -90,41 +83,34 @@ public class MaterialDivider extends View {
         }
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     public void setDividerColor(int i) {
         if (this.c != i) {
             this.c = i;
-            this.a.o(ColorStateList.valueOf(i));
+            this.a.n(ColorStateList.valueOf(i));
             invalidate();
         }
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     public void setDividerColorResource(int i) {
         setDividerColor(getContext().getColor(i));
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     public void setDividerInsetEnd(int i) {
         this.e = i;
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     public void setDividerInsetEndResource(int i) {
         setDividerInsetEnd(getContext().getResources().getDimensionPixelOffset(i));
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     public void setDividerInsetStart(int i) {
         this.d = i;
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     public void setDividerInsetStartResource(int i) {
         setDividerInsetStart(getContext().getResources().getDimensionPixelOffset(i));
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     public void setDividerThickness(int i) {
         if (this.b != i) {
             this.b = i;
@@ -132,7 +118,6 @@ public class MaterialDivider extends View {
         }
     }
 
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     public void setDividerThicknessResource(int i) {
         setDividerThickness(getContext().getResources().getDimensionPixelSize(i));
     }
