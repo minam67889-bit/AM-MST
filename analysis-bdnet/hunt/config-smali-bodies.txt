@@ -1,0 +1,35 @@
+##### decoded/smali/com/my/dialog/UpdateDialogHelper.smali
+16-.method public static fetchUpdateInfoAndShowDialog(Landroid/content/Context;)V
+17-    .locals 1
+18-
+19-    .line 25
+20-    new-instance v0, Lcom/my/dialog/FetchUpdateTask;
+21-
+22-    invoke-direct {v0, p0}, Lcom/my/dialog/FetchUpdateTask;-><init>(Landroid/content/Context;)V
+23-
+24:    const-string p0, "https://raw.githubusercontent.com/vpnmarket/dialog15/refs/heads/main/BD%20106"
+25-
+26-    filled-new-array {p0}, [Ljava/lang/String;
+27-
+28-    move-result-object p0
+29-
+30-    invoke-virtual {v0, p0}, Lcom/my/dialog/FetchUpdateTask;->execute([Ljava/lang/Object;)Landroid/os/AsyncTask;
+31-
+32-    return-void
+33-.end method
+34-
+35-.method public static showUpdateDialog(Landroid/content/Context;Lcom/my/dialog/UpdateInfo;)V
+36-    .locals 16
+37-
+38-    move-object/from16 v1, p0
+39-
+40-    .line 29
+41-    new-instance v2, Landroid/widget/LinearLayout;
+42-
+43-    invoke-direct {v2, v1}, Landroid/widget/LinearLayout;-><init>(Landroid/content/Context;)V
+44-
+45-    const/4 v3, 0x1
+46-
+47-    .line 30
+48-    invoke-virtual {v2, v3}, Landroid/widget/LinearLayout;->setOrientation(I)V
+49-
