@@ -1,0 +1,186 @@
+name: DNS connect test
+
+# The thing this proves: the DNS server list we extracted actually answers, and
+# two different client algorithms can drive it.
+#
+#   1. "theirs"  - the app's own client settings (pdnsd, tcp_only, validate=1,
+#                  confuse=3, retry=1/1s), one resolver at a time over TCP/53.
+#   2. "ours"    - the MasterDnsVPN-shaped client: every resolver probed at
+#                  once, loss/latency scoring, duplicated routes.
+#   3. the shipping Kotlin balancer itself (core/.../MasterBalancer.kt) driven
+#                  by real socket RTTs instead of a unit-test fake.
+#
+# Runners get unrestricted UDP/53, which is why the measurement happens here and
+# not in the dev sandbox (see analysis-bdnet/configs/dns/sandbox-egress.json).
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "which server set"
+        default: "slowdns"
+        type: choice
+        options: [slowdns, fastdns, udpq, all]
+      timeout:
+        description: "per-probe timeout (s)"
+        default: "6"
+  push:
+    paths:
+      - tools/bdnet_dns.py
+      - tools/BalancerLiveRunner.kt
+      - analysis-bdnet/configs/dns/servers.json
+      - .github/workflows/dns-connect-test.yml
+
+permissions:
+  contents: read
+
+jobs:
+  python-clients:
+    name: theirs vs ours (python)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Algorithm selftest
+        run: python3 tools/bdnet_dns.py selftest
+
+      - name: What the app's own client would send
+        run: |
+          python3 tools/bdnet_dns.py config --host 13.140.185.158 --port 53 | tee /tmp/app-config.txt
+
+      - name: Host list
+        run: |
+          python3 - <<'PY'
+          import json
+          data = json.load(open("analysis-bdnet/configs/dns/servers.json"))
+          for mode in ("slowdns", "fastdns", "udpq"):
+              hosts = [s["host"] for s in data["servers"] if s["mode"] == mode]
+              open(f"/tmp/{mode}.txt", "w").write("\n".join(hosts) + "\n")
+              print(mode, len(hosts))
+          PY
+
+      - name: Their algorithm - pdnsd/tcp_only, one resolver at a time
+        continue-on-error: true
+        run: |
+          python3 tools/bdnet_dns.py their analysis-bdnet/configs/dns/servers.json \
+            --mode slowdns --timeout "${{ inputs.timeout || '6' }}" \
+            --out /tmp/theirs-slowdns.json | tail -30
+
+      - name: Our algorithm - fan out to every resolver, balance, duplicate
+        continue-on-error: true
+        run: |
+          python3 tools/bdnet_dns.py mine analysis-bdnet/configs/dns/servers.json \
+            --mode slowdns --timeout "${{ inputs.timeout || '6' }}" --workers 64 \
+            --out /tmp/ours-slowdns.json | tail -30
+
+      - name: Head to head on the same hosts
+        continue-on-error: true
+        run: |
+          python3 tools/bdnet_dns.py compare analysis-bdnet/configs/dns/servers.json \
+            --mode "${{ inputs.mode || 'slowdns' }}" --timeout "${{ inputs.timeout || '6' }}" \
+            --out /tmp/compare.json | tail -40
+
+      - name: FastDNS (dnstt, UDP/53) reachability
+        continue-on-error: true
+        run: |
+          python3 tools/bdnet_dns.py mine analysis-bdnet/configs/dns/servers.json \
+            --mode fastdns --timeout "${{ inputs.timeout || '6' }}" --workers 100 \
+            --out /tmp/ours-fastdns.json | tail -20
+
+      - name: UDPQ pool reachability
+        continue-on-error: true
+        run: |
+          python3 tools/bdnet_dns.py mine analysis-bdnet/configs/dns/servers.json \
+            --mode udpq --timeout 3 --workers 128 \
+            --out /tmp/ours-udpq.json | tail -12
+
+      - name: Summary
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib
+          rows = []
+          for name in ("compare", "ours-slowdns", "theirs-slowdns", "ours-fastdns", "ours-udpq"):
+              p = pathlib.Path(f"/tmp/{name}.json")
+              if not p.exists():
+                  rows.append(f"| {name} | missing | | |")
+                  continue
+              d = json.loads(p.read_text())
+              if "theirs" in d:
+                  th, ou = d["theirs"], d["ours"]
+                  rows.append(f"| compare | theirs {th['alive']}/{th['total']} tcp | "
+                              f"ours {ou['alive']}/{ou['total']} udp | {th['secs']:.0f}s vs {ou['secs']:.0f}s |")
+              else:
+                  rows.append(f"| {name} | {d.get('alive')}/{d.get('total')} | {d.get('transport')} | "
+                              f"{d.get('secs')}s |")
+          body = "\n".join(["| set | reachable | transport | wall clock |", "|---|---|---|---|"] + rows)
+          print(body)
+          summary = os.environ.get("GITHUB_STEP_SUMMARY")
+          if summary:
+              pathlib.Path(summary).write_text("## DNS connect test\n\n" + body + "\n")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dns-connect-test
+          path: |
+            /tmp/compare.json
+            /tmp/theirs-slowdns.json
+            /tmp/ours-slowdns.json
+            /tmp/ours-fastdns.json
+            /tmp/ours-udpq.json
+            /tmp/app-config.txt
+          if-no-files-found: warn
+
+  kotlin-balancer:
+    name: the shipping balancer against live resolvers
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Install kotlinc
+        run: |
+          curl -fsSL -o /tmp/kotlin.zip \
+            https://github.com/JetBrains/kotlin/releases/download/v2.0.21/kotlin-compiler-2.0.21.zip
+          unzip -q /tmp/kotlin.zip -d /tmp/kotlin
+          /tmp/kotlin/kotlinc/bin/kotlinc -version
+
+      - name: Compile the real balancer + live runner
+        run: |
+          /tmp/kotlin/kotlinc/bin/kotlinc \
+            core/src/main/kotlin/io/amtunnel/core/dns/ResolverEndpoint.kt \
+            core/src/main/kotlin/io/amtunnel/core/transport/MasterBalancer.kt \
+            tools/BalancerLiveRunner.kt \
+            -include-runtime -d /tmp/balancer-live.jar 2>&1 | tail -20
+          ls -l /tmp/balancer-live.jar
+
+      - name: Build host list (resolvable tunnel hosts + a known-dead control)
+        run: |
+          python3 - <<'PY'
+          import json
+          data = json.load(open("analysis-bdnet/configs/dns/servers.json"))
+          hosts = [s["host"] for s in data["servers"] if s["mode"] == "slowdns"]
+          hosts += [s["host"] for s in data["servers"] if s["mode"] == "fastdns"][:12]
+          # two resolvers that cannot exist, so auto-disable has something to drop
+          hosts += ["192.0.2.1:53", "198.51.100.1:53"]
+          open("/tmp/hosts.txt", "w").write("\n".join(hosts) + "\n")
+          print(len(hosts), "hosts")
+          PY
+
+      - name: Run strategy 5 (hybrid score) for 3 rounds
+        continue-on-error: true
+        run: java -jar /tmp/balancer-live.jar /tmp/hosts.txt 5 3 | tee /tmp/balancer-run.txt
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: balancer-live-run
+          path: /tmp/balancer-run.txt
+          if-no-files-found: warn
