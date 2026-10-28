@@ -230,7 +230,7 @@ jobs:
         run: |
           set -uo pipefail
           sudo apt-get update -qq || true
-          sudo apt-get install -y -qq apktool jadx unzip zip > /dev/null 2>&1 || true
+          sudo apt-get install -y -qq apktool jadx unzip zip zstd > /dev/null 2>&1 || true
           if ! command -v apktool >/dev/null; then
             echo "installing apktool from upstream releases"
             curl -fsSL -o /tmp/apktool.jar https://github.com/iBotPeaches/Apktool/releases/download/v2.10.0/apktool_2.10.0.jar || true
@@ -327,7 +327,10 @@ jobs:
               base=$(basename "$lib" .so)
               out="analysis/native/${base}.strings.txt"
               echo "== $apk :: $lib"
-              unzip -p "$apk" "$lib" > "/tmp/${base}.so" || continue
+              if ! python3 tools/extract_apk_entry.py "$apk" "$lib" "/tmp/${base}.so"; then
+                echo "SKIP $lib (extraction failed)"
+                continue
+              fi
               strings -a -n 5 "/tmp/${base}.so" | sort -u > "$out" || true
               wc -l "$out"
               # everything that looks like a hostname / domain used by the tunnel
