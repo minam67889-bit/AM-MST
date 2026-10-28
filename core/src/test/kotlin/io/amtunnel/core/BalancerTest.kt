@@ -301,4 +301,24 @@ class BalancerTest {
         balancer.reactivate("10.0.0.2:53")
         assertTrue(balancer.isActive("10.0.0.2:53"))
     }
+
+    @Test
+    fun `three timeouts in a row park a resolver immediately`() {
+        val balancer = MasterBalancer(BalancingStrategy.ROUND_ROBIN, seed = 43)
+        balancer.autoDisableWindowMs = 30_000
+        balancer.setResolvers(pool(6))
+        val victim = "10.0.0.4:53"
+        repeat(3) { balancer.reportTimeout(victim, nowMs = 1_000L + it) }
+        assertFalse("three consecutive timeouts must park it", balancer.isActive(victim))
+        assertTrue("the rest of the pool stays", balancer.activeCount >= 5)
+
+        // one success clears the streak, so a flaky-but-alive resolver stays
+        val flaky = "10.0.0.5:53"
+        balancer.reportTimeout(flaky, nowMs = 2_000)
+        balancer.reportTimeout(flaky, nowMs = 2_001)
+        balancer.reportSuccess(flaky, 40)
+        balancer.reportTimeout(flaky, nowMs = 2_002)
+        balancer.reportTimeout(flaky, nowMs = 2_003)
+        assertTrue("a success must reset the streak", balancer.isActive(flaky))
+    }
 }

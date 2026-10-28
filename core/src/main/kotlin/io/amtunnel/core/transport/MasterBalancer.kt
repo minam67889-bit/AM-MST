@@ -80,6 +80,16 @@ class ResolverStats {
     private val windowSent = AtomicLong()
     private val windowLost = AtomicLong()
 
+    /** Back-to-back timeouts; the fast path to parking a dead resolver. */
+    private val consecutiveTimeouts = AtomicLong()
+
+    val consecutiveTimeoutCount: Long get() = consecutiveTimeouts.get()
+
+    fun noteTimeoutStreak() = consecutiveTimeouts.incrementAndGet()
+    fun clearTimeoutStreak() {
+        consecutiveTimeouts.set(0)
+    }
+
     val sentCount: Long get() = sent.get()
     val lostCount: Long get() = lost.get()
     val ackedCount: Long get() = acked.get()
@@ -200,6 +210,9 @@ class ResolverStats {
 
     companion object {
         const val HALF_LIFE_THRESHOLD = 1000L
+
+        /** Three timeouts in a row park a resolver (pool >= 3). */
+        const val CONSECUTIVE_TIMEOUTS_TO_PARK = 3L
     }
 }
 
@@ -315,6 +328,7 @@ class MasterBalancer(
     fun reportSuccess(key: String, rttMs: Long) {
         val stats = statsFor(key) ?: return
         stats.reportSuccess(rttMs)
+        stats.clearTimeoutStreak()
         stats.retractWindowTimeout(System.currentTimeMillis(), autoDisableWindowMs)
         synchronized(lock) {
             streamPreferred.values.forEach { it.resendStreak = 0 }
@@ -333,6 +347,26 @@ class MasterBalancer(
         val stats = statsFor(key) ?: return false
         stats.reportLoss()
         if (!autoDisableEnabled) return false
+
+        // Fast path: a resolver that answers nothing three times in a row is
+        // down now, whatever the long-window statistics say. This is the
+        // "confirm the resolver is down" step; upstream confirms with a direct
+        // probe, we confirm with the timeouts themselves, and the recheck loop
+        // below puts it back when it answers again.
+        if (stats.noteTimeoutStreak() >= ResolverStats.CONSECUTIVE_TIMEOUTS_TO_PARK) {
+            synchronized(lock) {
+                val index = indexByKey[key] ?: return false
+                val activeCount = active.count { it }
+                if (!active[index] || activeCount <= max(autoDisableMinActive, 2)) return false
+                active[index] = false
+                inactiveSince[key] = nowMs
+                stats.clearTimeoutStreak()
+                stats.resetWindow()
+                streamPreferred.entries.removeIf { it.value.preferredKey == key }
+            }
+            onResolverDisabled?.invoke(key, "TIMEOUT_STREAK")
+            return true
+        }
 
         val (timedOut, totalSent) = stats.recordWindowTimeout(nowMs, autoDisableWindowMs)
         synchronized(lock) {
