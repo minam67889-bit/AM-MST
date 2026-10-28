@@ -463,6 +463,11 @@ def _serve_udp(sock: socket.socket, stop: threading.Event) -> None:
     while not stop.is_set():
         try:
             data, peer = sock.recvfrom(2048)
+        except socket.timeout:
+            continue          # idle tick, not a reason to stop serving
+        except OSError:
+            return
+        try:
             sock.sendto(_answer_udp(data), peer)
         except OSError:
             return
