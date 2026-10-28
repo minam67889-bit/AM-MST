@@ -210,13 +210,60 @@ jobs:
           AMTUNNEL_SERVER_PORT: "15353"
           AMTUNNEL_ENC: "1"
           AMTUNNEL_KEY: ${{ steps.server.outputs.key }}
-        run: gradle :integration:test --no-daemon --stacktrace --info
+        run: |
+          set -o pipefail
+          { echo "=== tunnel server log (before tests) ==="; tail -60 /tmp/md/server.log || true; } | tee -a build.log
+          gradle :integration:test --no-daemon --stacktrace --info 2>&1 | tee -a build.log
 
       - name: Server log
         if: always()
         run: |
-          echo "=== tunnel server log ==="
-          tail -200 /tmp/md/server.log || true
+          { echo "=== tunnel server log (after tests) ==="; tail -300 /tmp/md/server.log || true; } | tee -a build.log
+
+      - name: Publish integration diagnostics
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import glob, json, os, urllib.request, xml.etree.ElementTree as ET
+          errors = []
+          for path in glob.glob("integration/build/test-results/test/*.xml"):
+              try:
+                  tree = ET.parse(path)
+              except Exception:
+                  continue
+              for case in tree.iter("testcase"):
+                  for fail in list(case.iter("failure")) + list(case.iter("error")):
+                      msg = (fail.get("message") or "")[:600].replace("\n", " ")
+                      errors.append(f"TEST FAILED: {case.get('classname')}.{case.get('name')} :: {msg}")
+                      detail = (fail.text or "")[:1200]
+                      if detail:
+                          errors.append("  detail: " + detail.replace("\n", " | ")[:1200])
+          tail = "(no build.log)"
+          if os.path.exists("build.log"):
+              with open("build.log", encoding="utf-8", errors="replace") as fh:
+                  tail = fh.read()[-30000:]
+          summary = "\n".join(errors[:80]) + "\n\n---- log tail ----\n" + tail
+          payload = {
+              "name": "integration-diagnostics",
+              "head_sha": os.environ["GITHUB_SHA"],
+              "status": "completed",
+              "conclusion": "neutral",
+              "output": {"title": "Integration test diagnostics", "summary": summary[:65000]},
+          }
+          req = urllib.request.Request(
+              f"https://api.github.com/repos/{os.environ['GITHUB_REPOSITORY']}/check-runs",
+              data=json.dumps(payload).encode(),
+              method="POST",
+              headers={
+                  "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
+                  "Accept": "application/vnd.github+json",
+                  "Content-Type": "application/json",
+              },
+          )
+          print("check-run status:", urllib.request.urlopen(req).status)
+          PY
 
       - name: Upload integration reports
         if: always()
