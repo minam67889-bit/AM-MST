@@ -586,6 +586,40 @@ jobs:
             > analysis/hunt/native-bridges.txt || true
           cat analysis/hunt/native-bridges.txt
 
+      - name: Follow the live string ids, not the dead copies
+        continue-on-error: true
+        run: |
+          exec > >(tee -a analysis/id-trace.log) 2>&1
+          set -uo pipefail
+          mkdir -p analysis/hunt
+          # LSParanoid stores a duplicate per call site, so the id next to a
+          # constant holder is not the id the fetcher uses. Resolve every copy
+          # of the interesting strings and chase all of them.
+          : > analysis/hunt/id-owners.txt
+          for id in 54854654195595 95639663638411 72910696707979 72854862133131 67627886933899; do
+            echo "### id $id" >> analysis/hunt/id-owners.txt
+            grep -rl "$id" java --include=*.java 2>/dev/null | head -8 >> analysis/hunt/id-owners.txt || true
+          done
+          cat analysis/hunt/id-owners.txt
+
+          : > analysis/hunt/id-owner-bodies.txt
+          for id in 54854654195595 95639663638411 72910696707979; do
+            for f in $(grep -rl "$id" java --include=*.java 2>/dev/null | head -4); do
+              echo "##### $id in $f" >> analysis/hunt/id-owner-bodies.txt
+              grep -n -B10 -A25 "$id" "$f" >> analysis/hunt/id-owner-bodies.txt
+            done
+          done
+          echo "owner body lines: $(wc -l < analysis/hunt/id-owner-bodies.txt)"
+
+          # Same ids in smali, where jadx cannot interfere.
+          : > analysis/hunt/id-owners-smali.txt
+          for id in 54854654195595 95639663638411 72910696707979; do
+            hexv=$(python3 -c "print(format(($id) & 0xFFFFFFFFFFFFFFFF, 'x'))" 2>/dev/null)
+            echo "### $id -> 0x$hexv" >> analysis/hunt/id-owners-smali.txt
+            grep -rl "0x$hexv" decoded --include=*.smali 2>/dev/null | head -6 >> analysis/hunt/id-owners-smali.txt || true
+          done
+          cat analysis/hunt/id-owners-smali.txt
+
       - name: Mine native DNS-tunnel libraries
         continue-on-error: true
         run: |
