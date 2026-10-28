@@ -14,7 +14,7 @@ artifact id: 12845051663
 + file art/a.zip
 art/a.zip: Zip archive data, at least v2.0 to extract, compression method=deflate
 + ls -l art/a.zip
--rw-r--r-- 1 runner runner 67635843 Oct 28 22:21 art/a.zip
+-rw-r--r-- 1 runner runner 67635843 Oct 28 22:30 art/a.zip
 + file art/a.zip
 + grep -qi zip
 + unzip -o -q art/a.zip -d art/x
@@ -28,8 +28,8 @@ APK=art/x/amtunnel.apk
 + '[' -n art/x/amtunnel.apk ']'
 + echo APK=art/x/amtunnel.apk
 + unzip -l art/x/amtunnel.apk
-+ head -20
 + grep -E 'lib/.*\.so'
++ head -20
     21184  2026-06-24 02:09   lib/arm64-v8a/libSignatureKiller.so
      7112  1981-01-01 01:01   lib/arm64-v8a/libdatastore_shared_counter.so
   5126496  1981-01-01 01:01   lib/arm64-v8a/libdns.so
