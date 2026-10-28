@@ -248,52 +248,62 @@ class TunnelIntegrationTest {
         val balancer = MasterBalancer(BalancingStrategy.ROUND_ROBIN).apply {
             failoverThreshold = 2
             failoverCooldownMs = 300
+            autoDisableEnabled = true
+            autoDisableWindowMs = 5_000
             setResolvers(resolvers)
         }
         val transport = MasterDnsTransport(config(duplication = 2), BalancerResolverSelector(balancer), log)
+        fun dump(label: String) {
+            val stats = transport.stats()
+            log.info("it", "[$label] state=${stats.state} pool=${balancer.activeCount}/${balancer.totalCount} " +
+                "tx=${stats.packetsSent} dupes=${stats.duplicatesSent} timeouts=${stats.timeouts} down=${stats.bytesDown}B")
+            balancer.snapshot().forEach {
+                log.info("it", "[$label] ${it.key} active=${it.active} sent=${it.sent} lost=${it.lost} score=${it.hybridScore}")
+            }
+        }
         try {
             assertTrue("session handshake failed", transport.start(20_000))
             assertEquals("every resolver must be in the pool", resolvers.size, balancer.activeCount)
 
+            // 1. Baseline: traffic must flow through the pool as it stands.
+            assertTrue("baseline request through the pool failed", fetchThrough(transport))
+            dump("baseline")
+
+            // 2. Kill half of the pool while the session is live.
             extraRelays.take(5).forEach { it.kill() }
             log.info("it", "killed 5 of ${resolvers.size} resolvers mid-session")
 
-            val stream = transport.openStream(targetHost, targetPort, 30_000)
-            assertNotNull("stream setup must survive losing half the pool", stream)
-            stream!!.write("GET /probe HTTP/1.1\r\nHost: ${targetHost}\r\nConnection: close\r\n\r\n".toByteArray())
+            // 3. The next stream still has to complete, on the survivors.
+            assertTrue("traffic must keep flowing after losing half the pool", fetchThrough(transport))
+            dump("after-loss")
 
-            val response = StringBuilder()
-            val buffer = ByteArray(2048)
-            val deadline = System.currentTimeMillis() + 40_000
-            while (System.currentTimeMillis() < deadline) {
-                val n = stream.read(buffer, 0, buffer.size, 2000)
-                if (n < 0) break
-                if (n > 0) response.append(String(buffer, 0, n))
-                if (response.contains("HTTP/1.")) break
-            }
-            stream.close()
-
-            assertTrue(
-                "traffic must keep flowing through the survivors, got: ${response.take(120)}",
-                response.contains("HTTP/1."),
-            )
             val stats = transport.stats()
             assertTrue("duplicates must have gone out over the pool", stats.duplicatesSent > 0)
-            println(
-                "multi-resolver: pool=${balancer.activeCount}/${balancer.totalCount} " +
-                    "tx=${stats.packetsSent} dupes=${stats.duplicatesSent} down=${stats.bytesDown}B",
-            )
-            balancer.snapshot().forEach {
-                println("balancer row: ${it.key} active=${it.active} sent=${it.sent} lost=${it.lost} score=${it.hybridScore}")
-            }
             val rows = balancer.snapshot()
             assertTrue("all traffic must be attributed to some resolver", rows.any { it.sent > 0 })
-            assertTrue(
-                "the balancer must have measured losses on the dead ones",
-                rows.any { it.lost > 0 },
-            )
+            assertTrue("the balancer must have measured losses on the dead ones", rows.any { it.lost > 0 })
         } finally {
             transport.stop()
+        }
+    }
+
+    /** One HTTP exchange through a fresh stream; true when a response came back. */
+    private fun fetchThrough(transport: MasterDnsTransport): Boolean {
+        val stream = transport.openStream(targetHost, targetPort, 30_000) ?: return false
+        try {
+            stream.write("GET /probe HTTP/1.1\r\nHost: ${targetHost}\r\nConnection: close\r\n\r\n".toByteArray())
+            val response = StringBuilder()
+            val buffer = ByteArray(2048)
+            val deadline = System.currentTimeMillis() + 25_000
+            while (System.currentTimeMillis() < deadline) {
+                val n = stream.read(buffer, 0, buffer.size, 2_000)
+                if (n < 0) break
+                if (n > 0) response.append(String(buffer, 0, n))
+                if (response.contains("HTTP/1.")) return true
+            }
+            return false
+        } finally {
+            stream.close()
         }
     }
 
