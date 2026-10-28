@@ -152,49 +152,70 @@ jobs:
         continue-on-error: true
         run: |
           set -uo pipefail
-          {
-            for f in libs/*.so; do
+          : > /tmp/readelf.txt
+          for f in libs/*.so; do
+            {
               echo "== $f"
               file "$f"
-              readelf -h "$f" | grep -E "Class|Machine|Type|Entry"
+              readelf -h "$f" 2>&1 | grep -E "Class|Machine|Type|Entry"
               echo "-- interpreter"
-              readelf -l "$f" 2>/dev/null | grep -A1 "INTERP" | tail -2
+              readelf -l "$f" 2>&1 | grep -A1 INTERP | tail -2
               echo "-- needed"
-              readelf -d "$f" 2>/dev/null | grep NEEDED
-            done
-          } > /tmp/readelf.txt 2>&1
+              readelf -d "$f" 2>&1 | grep NEEDED
+              echo
+            } >> /tmp/readelf.txt 2>&1 || true
+          done
+          ls -l libs >> /tmp/readelf.txt
           cat /tmp/readelf.txt
           mkdir -p analysis-bdnet/configs/dns/results
           cp /tmp/readelf.txt analysis-bdnet/configs/dns/results/native-readelf.txt
-          ls -l analysis-bdnet/configs/dns/results/native-readelf.txt
-          echo "=== files in the binary dir ===" | tee -a /tmp/readelf.txt
-          ls -l libs | tee -a /tmp/readelf.txt
 
       - name: "Plan B: shim the Android linker with glibc's aarch64 loader"
         if: env.APK != ''
         continue-on-error: true
         run: |
           set -uo pipefail
-          sudo apt-get install -y -qq libc6-arm64-cross
-          mkdir -p sysroot/system/bin sysroot/system/lib64 sysroot/lib
+          sudo apt-get install -y -qq libc6-arm64-cross gcc-aarch64-linux-gnu
+          mkdir -p sysroot/system/bin sysroot/system/lib64
           ln -sf /usr/aarch64-linux-gnu/lib/ld-linux-aarch64.so.1 sysroot/system/bin/linker64
-          for lib in libc.so.6 libdl.so.2 libm.so.6 libpthread.so.0; do
-            src=$(ls /usr/aarch64-linux-gnu/lib/$lib 2>/dev/null | head -1)
-            [ -n "$src" ] && ln -sf "$src" "sysroot/system/lib64/${lib%%.so*}.so"
+          for lib in libc.so.6 libdl.so.2 libm.so.6 libpthread.so.0 librt.so.1; do
+            base=${lib%%.so*}
+            ln -sf "/usr/aarch64-linux-gnu/lib/$lib" "sysroot/system/lib64/$base.so"
           done
-          ln -sf /usr/aarch64-linux-gnu/lib/libc.so.6 sysroot/system/lib64/libc.so
-          ln -sf /usr/aarch64-linux-gnu/lib/libdl.so.2 sysroot/system/lib64/libdl.so
-          ln -sf /usr/aarch64-linux-gnu/lib/libm.so.6 sysroot/system/lib64/libm.so
-          ln -sf /usr/aarch64-linux-gnu/lib/libpthread.so.0 sysroot/system/lib64/libpthread.so
+          # bionic-only libraries: real stubs, because a Go/cgo binary only logs
+          cat > /tmp/android_stubs.c <<'EOF'
+          #include <stdarg.h>
+          #include <stdio.h>
+          int __android_log_print(int prio, const char *tag, const char *fmt, ...) {
+            va_list ap; va_start(ap, fmt); if (tag) fprintf(stderr, "[%s] ", tag);
+            vfprintf(stderr, fmt, ap); fputc('\n', stderr); va_end(ap); return 0; }
+          int __android_log_write(int prio, const char *tag, const char *text) {
+            fprintf(stderr, "[%s] %s\n", tag ? tag : "android", text); return 0; }
+          int __android_log_vprint(int prio, const char *tag, const char *fmt, va_list ap) {
+            vfprintf(stderr, fmt, ap); return 0; }
+          int __android_log_assert(const char *cond, const char *tag, const char *fmt, ...) {
+            va_list ap; va_start(ap, fmt); vfprintf(stderr, fmt, ap); va_end(ap);
+            fputc('\n', stderr); return 0; }
+          void android_set_abort_message(const char *msg) {
+            fprintf(stderr, "abort: %s\n", msg ? msg : ""); }
+          int __system_property_get(const char *name, char *value) { value[0] = 0; return 0; }
+          EOF
+          aarch64-linux-gnu-gcc -shared -fPIC -O1 -o sysroot/system/lib64/liblog.so /tmp/android_stubs.c
+          cp sysroot/system/lib64/liblog.so sysroot/system/lib64/libandroid.so
           ls -l sysroot/system/bin sysroot/system/lib64
-          {
-            echo "== --help through the shim"
-            QEMU_LD_PREFIX=$PWD/sysroot qemu-aarch64-static libs/libxdnstt.so -h 2>&1 | head -40
-            echo "== --version through the shim"
-            QEMU_LD_PREFIX=$PWD/sysroot qemu-aarch64-static libs/libxdnstt.so --version 2>&1 | head -5
-            echo "== libdns help"
-            QEMU_LD_PREFIX=$PWD/sysroot qemu-aarch64-static libs/libdns.so -h 2>&1 | head -40
-          } | tee /tmp/shim.txt
+          : > /tmp/shim.txt
+          for round in 1 2 3 4 5 6 7 8; do
+            out=$(QEMU_LD_PREFIX=$PWD/sysroot qemu-aarch64-static libs/libxdnstt.so -h 2>&1 || true)
+            echo "--- round $round ---" >> /tmp/shim.txt
+            echo "$out" >> /tmp/shim.txt
+            missing=$(echo "$out" | sed -n "s/.*error while loading shared libraries: \([^:]*\):.*/\1/p" | head -1)
+            if [ -z "$missing" ]; then echo "no missing library left" >> /tmp/shim.txt; break; fi
+            echo "stubbing $missing" >> /tmp/shim.txt
+            cp sysroot/system/lib64/liblog.so "sysroot/system/lib64/$missing"
+          done
+          echo "== libdns through the shim" >> /tmp/shim.txt
+          QEMU_LD_PREFIX=$PWD/sysroot qemu-aarch64-static libs/libdns.so -h >> /tmp/shim.txt 2>&1 || true
+          cat /tmp/shim.txt
           cp /tmp/shim.txt analysis-bdnet/configs/dns/results/native-shim.txt
 
       - name: Their dnstt client, --help
