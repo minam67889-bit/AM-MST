@@ -14,8 +14,8 @@
 ++ wc -c
 + echo '== assets/server.psi -> assets_server.psi 103253 bytes'
 == assets/server.psi -> assets_server.psi 103253 bytes
-+ tr -cd '[:print:]\n'
 + head -c 240 analysis/assets/assets_server.psi
++ tr -cd '[:print:]\n'
 + head -4
 658656b071665526d505d0d525d626e0d1663576c555c08545d626b0113615761505e0d5f5d636e0c1361526d50500d575d616b011362576c505e0d535d616e071364526e505108545d626e0c1660526a555c0d5f58696e031361576d505a0d5e5d626e0d1666576a505b0d5259626f571762536b545b085+ strings -n 6 analysis/assets/assets_server.psi
 + head -40
@@ -39,9 +39,9 @@
 ++ wc -c
 + echo '== assets/sorter.json -> assets_sorter.json 414920 bytes'
 == assets/sorter.json -> assets_sorter.json 414920 bytes
++ head -c 240 analysis/assets/assets_sorter.json
 + tr -cd '[:print:]\n'
 + head -4
-+ head -c 240 analysis/assets/assets_sorter.json
 jXelaC1VUYqQh+amLrCYhzlKv4wfOX8ZAIjTMlwVU9c08AgC6w1IrXdy1qRtxctCSnCRmCSfcfK4sT02+i9cI8Kv08dhJ0b+DuI4S47Fq4ohWHZwYRxfijHa+JIPVjo6qSxKoqOUKLiFb9uCZ2rxQEjkmuAGmyHQLzyGbADRQIJ5Tp4ofRaNbi4Ql1tT8YKuLZi9oVnIYR0jqUWBnr3kCAi1DrMZG+7rpPimpyxlmJ9ND+yt+ strings -n 6 analysis/assets/assets_sorter.json
 + head -40
 + strings -n 6 analysis/assets/assets_sorter.json
@@ -137,8 +137,8 @@ java/sources/dastan/prince/bdfreevpn/R.java:4859:        public static final int
 + :
 + grep -rlE 'HttpURLConnection|OkHttpClient|openConnection|new URL\(|getAssets\(|server\.psi' java '--include=*.java'
 + grep -viE '/(androidx|com/google|com/facebook|kotlin|okhttp3|okio)/'
-+ head -40
 + read -r f
++ head -40
 + echo '##### java/sources/org/chromium/net/CronetEngine.java'
 + sed -n 1,140p java/sources/org/chromium/net/CronetEngine.java
 + read -r f
