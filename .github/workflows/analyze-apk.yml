@@ -355,69 +355,50 @@ jobs:
           set -uo pipefail
           mkdir -p analysis/obfuscation
 
-          # LSParanoid: an open-source string obfuscator. The key material is
-          # generated into org/lsposed/lsparanoid/Deobfuscator<tag>.java, so the
-          # table can be decrypted by running that very class - no brute force.
-          mkdir -p /tmp/deob/src
-          if [ -d java/sources/org/lsposed/lsparanoid ]; then
-            cp -r java/sources/org/lsposed/lsparanoid/. /tmp/deob/src/
-          fi
-          ls -l /tmp/deob/src || true
-          for f in /tmp/deob/src/*.java; do
-            cp "$f" analysis/obfuscation/ 2>/dev/null || true
-          done
-          echo "--- DeobfuscatorHelper head ---"
-          sed -n '1,90p' /tmp/deob/src/DeobfuscatorHelper.java 2>/dev/null || echo "helper missing"
+          # BD NET is packed with LSParanoid: one generated class holds the
+          # ciphertext table, DeobfuscatorHelper turns an id into a string.
+          # jadx mangles that helper (0xffff0000 becomes -65536 and the index
+          # sign-extends out of range), so we never compile it. Instead we run
+          # tools/lsparanoid_decode.py, a literal port of LSParanoid's own
+          # algorithm that proves itself with a round trip through the
+          # obfuscator's encoder before touching the app's data.
+          CHUNKS_JAVA=$(find java -name 'Deobfuscator$*.java' -path '*lsparanoid*' | head -1)
+          echo "chunks class: ${CHUNKS_JAVA:-<none>}"
 
-          # Every literal the app hands to getString(...) - from readable Java.
-          : > /tmp/keys.txt
-          if [ -d java ]; then
-            grep -rhoE "getString\((-?[0-9]+)L?\)" java --include=*.java 2>/dev/null \
-              | grep -oE -- "-?[0-9]{6,}" | sort -u > /tmp/keys.txt || true
-          fi
-          # Some call sites only exist in smali; pull those literals too.
+          # Call sites that jadx inlined only survive as smali: take the
+          # const-wide that feeds each getString(J).
+          : > /tmp/ids.smali.txt
           if [ -d decoded ]; then
-            find decoded -name "*.smali" -print0 2>/dev/null \
-              | xargs -0 grep -hA1 "Deobfuscator\\\$.*->getString(J)" 2>/dev/null \
-              | grep -oE "const-wide [vp][0-9]+, -?[0-9]x?[0-9a-fA-F]+L" \
-              | grep -oE -- "-?0x[0-9a-fA-F]+L|-?[0-9]{6,}L" >> /tmp/keys.raw || true
-            if [ -s /tmp/keys.raw ]; then
-              while read -r k; do
+            find decoded -name '*.smali' -print0 2>/dev/null \
+              | xargs -0 awk '/const-wide .*0x[0-9a-fA-F]+L/ {lit=$NF} /->getString\(J\)/ {if (lit!="") print lit; lit=""}' \
+              > /tmp/ids.hex 2>/dev/null || true
+            if [ -s /tmp/ids.hex ]; then
+              sed -E 's/L$//' /tmp/ids.hex | while read -r k; do
                 case "$k" in
                   -0x*|0x*) printf '%d\n' "$k" 2>/dev/null || true ;;
+                  *) printf '%s\n' "$k" ;;
                 esac
-              done < /tmp/keys.raw >> /tmp/keys.txt
+              done >> /tmp/ids.smali.txt
             fi
+            echo "smali ids: $(wc -l < /tmp/ids.smali.txt)"
           fi
-          sort -u /tmp/keys.txt -o /tmp/keys.txt
-          echo "call-site literals: $(wc -l < /tmp/keys.txt)"
-          head -5 /tmp/keys.txt || true
 
-          # Run the real deobfuscator on the JVM. The two Java sources are
-          # embedded base64 so this YAML stays indentation-safe.
-          mkdir -p /tmp/deob/stub/android/util
-          echo "aW1wb3J0IGphdmEubmlvLmZpbGUuKjsKaW1wb3J0IGphdmEudXRpbC4qOwppbXBvcnQgamF2YS5sYW5nLnJlZmxlY3QuKjsKCnB1YmxpYyBjbGFzcyBIYXJuZXNzIHsKICAgIHB1YmxpYyBzdGF0aWMgdm9pZCBtYWluKFN0cmluZ1tdIGFyZ3MpIHRocm93cyBFeGNlcHRpb24gewogICAgICAgIExpc3Q8U3RyaW5nPiBrZXlzID0gRmlsZXMucmVhZEFsbExpbmVzKFBhdGhzLmdldChhcmdzWzBdKSk7CiAgICAgICAgQ2xhc3M8Pz4gY2xhenogPSBDbGFzcy5mb3JOYW1lKGFyZ3NbMV0pOwogICAgICAgIE1ldGhvZCB0YXJnZXQgPSBudWxsOwogICAgICAgIGZvciAoTWV0aG9kIG0gOiBjbGF6ei5nZXREZWNsYXJlZE1ldGhvZHMoKSkgewogICAgICAgICAgICBpZiAobS5nZXRSZXR1cm5UeXBlKCkgPT0gU3RyaW5nLmNsYXNzICYmIG0uZ2V0UGFyYW1ldGVyQ291bnQoKSA9PSAxCiAgICAgICAgICAgICAgICAgICAgJiYgbS5nZXRQYXJhbWV0ZXJUeXBlcygpWzBdID09IGxvbmcuY2xhc3MpIHsKICAgICAgICAgICAgICAgIHRhcmdldCA9IG07CiAgICAgICAgICAgICAgICBicmVhazsKICAgICAgICAgICAgfQogICAgICAgIH0KICAgICAgICBpZiAodGFyZ2V0ID09IG51bGwpIHsKICAgICAgICAgICAgU3lzdGVtLm91dC5wcmludGxuKCIjRVJSIG5vIHN0YXRpYyBTdHJpbmcgZ2V0U3RyaW5nKGxvbmcpIGluICIgKyBhcmdzWzFdKTsKICAgICAgICAgICAgcmV0dXJuOwogICAgICAgIH0KICAgICAgICB0YXJnZXQuc2V0QWNjZXNzaWJsZSh0cnVlKTsKICAgICAgICBpbnQgb2sgPSAwLCBiYWQgPSAwOwogICAgICAgIGZvciAoU3RyaW5nIHJhdyA6IGtleXMpIHsKICAgICAgICAgICAgaWYgKHJhdyA9PSBudWxsIHx8IHJhdy5pc0JsYW5rKCkpIGNvbnRpbnVlOwogICAgICAgICAgICB0cnkgewogICAgICAgICAgICAgICAgT2JqZWN0IG91dCA9IHRhcmdldC5pbnZva2UobnVsbCwgTG9uZy5wYXJzZUxvbmcocmF3LnRyaW0oKSkpOwogICAgICAgICAgICAgICAgaWYgKG91dCAhPSBudWxsKSB7CiAgICAgICAgICAgICAgICAgICAgU3lzdGVtLm91dC5wcmludGxuKHJhdy50cmltKCkgKyAiXHQiICsgb3V0KTsKICAgICAgICAgICAgICAgICAgICBvaysrOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9IGNhdGNoIChUaHJvd2FibGUgdCkgewogICAgICAgICAgICAgICAgU3lzdGVtLm91dC5wcmludGxuKCIjRVJSICIgKyByYXcudHJpbSgpICsgIiAiICsgdC5nZXRDbGFzcygpLmdldFNpbXBsZU5hbWUoKSk7CiAgICAgICAgICAgICAgICBiYWQrKzsKICAgICAgICAgICAgfQogICAgICAgIH0KICAgICAgICBTeXN0ZW0ub3V0LnByaW50bG4oIiMgZG9uZSBvaz0iICsgb2sgKyAiIGZhaWxlZD0iICsgYmFkKTsKICAgIH0KfQo=" | base64 -d > /tmp/deob/Harness.java
-          echo "cGFja2FnZSBhbmRyb2lkLnV0aWw7CgpwdWJsaWMgY2xhc3MgQmFzZTY0IHsKICAgIHB1YmxpYyBzdGF0aWMgZmluYWwgaW50IE5PX1dSQVAgPSAyOwogICAgcHVibGljIHN0YXRpYyBmaW5hbCBpbnQgREVGQVVMVCA9IDA7CgogICAgcHVibGljIHN0YXRpYyBieXRlW10gZGVjb2RlKFN0cmluZyBzLCBpbnQgZmxhZ3MpIHsKICAgICAgICByZXR1cm4gamF2YS51dGlsLkJhc2U2NC5nZXREZWNvZGVyKCkuZGVjb2RlKHMpOwogICAgfQoKICAgIHB1YmxpYyBzdGF0aWMgYnl0ZVtdIGRlY29kZShieXRlW10gcywgaW50IGZsYWdzKSB7CiAgICAgICAgcmV0dXJuIGphdmEudXRpbC5CYXNlNjQuZ2V0RGVjb2RlcigpLmRlY29kZShzKTsKICAgIH0KCiAgICBwdWJsaWMgc3RhdGljIFN0cmluZyBlbmNvZGVUb1N0cmluZyhieXRlW10gYiwgaW50IGZsYWdzKSB7CiAgICAgICAgcmV0dXJuIGphdmEudXRpbC5CYXNlNjQuZ2V0RW5jb2RlcigpLmVuY29kZVRvU3RyaW5nKGIpOwogICAgfQp9Cg==" | base64 -d > /tmp/deob/stub/android/util/Base64.java
-          javac -nowarn -d /tmp/deob/classes \
-            $(find /tmp/deob/src /tmp/deob/stub -name '*.java') /tmp/deob/Harness.java \
-            > /tmp/deob/javac.log 2>&1 || echo "javac failed"
-          head -30 /tmp/deob/javac.log 2>/dev/null || true
-
-          if [ -d /tmp/deob/classes ]; then
-            APP_CLASS=$(cd /tmp/deob/classes && find org -name 'Deobfuscator*.class' | head -1 \
-              | sed 's|/|.|g; s|\.class$||')
-            echo "obfuscated app class: ${APP_CLASS:-<none>}"
-            if [ -n "${APP_CLASS:-}" ]; then
-              java -cp /tmp/deob/classes Harness /tmp/keys.txt "$APP_CLASS" \
-                > analysis/obfuscation/decrypted.txt 2>/tmp/deob/run.err || true
-              head -20 /tmp/deob/run.err 2>/dev/null || true
-              echo "decrypted lines: $(wc -l < analysis/obfuscation/decrypted.txt 2>/dev/null || echo 0)"
-              grep -av "^#" analysis/obfuscation/decrypted.txt | head -60 || true
-              grep -aoiE "[a-z0-9][a-z0-9.-]{3,60}\.(com|net|org|io|xyz|top|site|online|vip|app|dev|cloud|link|live|pro|fun|ir|ru|info|tech|store|club|host|space|website|icu|cyou|cfd|click|shop|press|world|life|today|network|digital|sbs|bond|rest|bar)" \
-                analysis/obfuscation/decrypted.txt | sort -u > analysis/obfuscation/decrypted-hosts.txt 2>/dev/null || true
-              echo "--- hosts found in the decrypted table ---"
-              head -40 analysis/obfuscation/decrypted-hosts.txt || true
-            fi
+          python3 tools/lsparanoid_decode.py --selftest
+          if [ -n "${CHUNKS_JAVA:-}" ]; then
+            python3 tools/lsparanoid_decode.py \
+              --java "$CHUNKS_JAVA" \
+              --scan java \
+              --ids-file /tmp/ids.smali.txt \
+              --out analysis/obfuscation/decrypted.txt \
+              --hosts-out analysis/obfuscation/decrypted-hosts.txt
+            echo "--- sample ---"
+            head -30 analysis/obfuscation/decrypted.txt
+            echo "--- endpoints ---"
+            grep -aoE 'https?://[^[:space:]]+' analysis/obfuscation/decrypted.txt | sort -u | head -20
+            echo "--- hosts ---"
+            head -40 analysis/obfuscation/decrypted-hosts.txt
+          else
+            echo "no LSParanoid chunks class in this build"
           fi
 
       - name: Mine native DNS-tunnel libraries
