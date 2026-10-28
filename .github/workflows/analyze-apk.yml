@@ -140,6 +140,26 @@ jobs:
             done
             fi
           fi
+          if ! file apk/candidate | grep -qi "zip archive"; then
+            echo "== not a plain zip; trying to carve one out of the body"
+            python3 - <<'PY' || true
+          import sys
+          data = open("apk/candidate", "rb").read()
+          start = data.find(b"PK\x03\x04")
+          end_marker = data.rfind(b"PK\x05\x06")
+          if start >= 0 and end_marker > start:
+              end = end_marker + 22
+              carved = data[start:end]
+              open("apk/carved.zip", "wb").write(carved)
+              print(f"carved {len(carved)} bytes from offset {start} (body was {len(data)})")
+          else:
+              print("no zip signature found in the body")
+          PY
+            if [ -f apk/carved.zip ]; then
+              mv apk/carved.zip apk/candidate
+              file apk/candidate
+            fi
+          fi
           if file apk/candidate | grep -qi "zip archive"; then
             echo "DOWNLOAD_OK $(stat -c%s apk/candidate) bytes"
             cp apk/candidate download.bin
