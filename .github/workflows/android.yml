@@ -54,37 +54,43 @@ jobs:
 
       - name: Verify APK contents
         run: |
-          {
-          set -x
-          set -o pipefail
+          set -euo pipefail
+          exec > >(tee -a build.log) 2>&1
           APK=app/build/outputs/apk/debug/app-debug.apk
+          test -f "$APK" || { echo "error: debug APK missing"; exit 1; }
           AAPT2=$(ls "${ANDROID_HOME:-/usr/local/lib/android/sdk}"/build-tools/*/aapt2 | sort -V | tail -1)
           echo "using $AAPT2"
-          "$AAPT2" dump badging "$APK" | tee apk-badging.txt
+          "$AAPT2" dump badging "$APK" | tee apk-badging.txt > /dev/null
           "$AAPT2" dump xmltree --file AndroidManifest.xml "$APK" > apk-manifest.txt
-          check() { grep -q -- "$1" apk-badging.txt apk-manifest.txt || { echo "error: APK check failed - $2"; exit 1; }; echo "ok: $2"; }
-          check "package: name='io.amtunnel.app.debug'" "debug applicationId present"
-          check "android.permission.INTERNET" "INTERNET permission"
+          check() {
+            if grep -Eq -- "$1" apk-badging.txt apk-manifest.txt; then
+              echo "ok: $2"
+            else
+              echo "error: APK check failed - $2"
+              exit 1
+            fi
+          }
+          check "package: name='io\.amtunnel\.app\.debug'" "debug applicationId"
+          check "android\.permission\.INTERNET" "INTERNET permission"
+          check "android\.permission\.FOREGROUND_SERVICE" "foreground service permission"
           check "TunnelVpnService" "VpnService declared"
-          check "android.net.VpnService" "VPN intent filter"
+          check "android\.net\.VpnService" "VPN intent filter"
           check "MainActivity" "launcher activity"
-          check "sdkVersion:'26'" "minSdk 26"
+          check "(sdk|minSdk)Version:'26'" "minSdk 26"
           check "targetSdkVersion:'34'" "targetSdk 34"
-          if ! unzip -l "$APK" | grep -q "classes.*\\.dex"; then
-            echo "error: APK contains no dex"; exit 1
-          fi
           found=0
-          for dex in $(unzip -Z1 "$APK" | grep -E "^classes[0-9]*\\.dex$"); do
+          for dex in $(unzip -Z1 "$APK" | grep -E "^classes[0-9]*\.dex$"); do
             if unzip -p "$APK" "$dex" | strings | grep -q "MasterDnsTransport"; then found=1; fi
+            if unzip -p "$APK" "$dex" | strings | grep -q "TunnelVpnService"; then echo "ok: VPN service code in $dex"; fi
           done
-          if [ "$found" -ne 1 ]; then echo "error: transport classes are not in the APK"; exit 1; fi
+          if [ "$found" -ne 1 ]; then echo "error: client transport classes are not in the APK"; exit 1; fi
           echo "ok: client transport packaged into the APK"
-          } 2>&1 | tee -a build.log
+          echo "apk size: $(stat -c%s "$APK") bytes, sha256: $(sha256sum "$APK" | cut -d' ' -f1)"
           {
             echo "### APK verification"
             echo ""
             echo '```'
-            head -5 apk-badging.txt 2>/dev/null
+            grep -E "^(package|sdkVersion|targetSdkVersion)" apk-badging.txt || head -5 apk-badging.txt
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
