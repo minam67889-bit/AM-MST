@@ -1,0 +1,85 @@
+name: BD NET server list recovery
+
+# Independent, from-scratch proof of docs/BDNET-CONFIGS.md §3: take the APK that
+# the analysis run already produced, pull `assets/server.psi` out of it, run
+# tools/bdnet_decrypt.py, and fail unless every recovered line is a parseable
+# Psiphon server entry. No filebin, no local state, no user device.
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "Run id that holds the analysed APK artifact"
+        required: false
+        default: "40748028026"
+      artifact:
+        description: "Artifact name holding the APK"
+        required: false
+        default: "amtunnel-apk-analysis"
+  push:
+    paths:
+      - "tools/bdnet_decrypt.py"
+      - ".github/workflows/bdnet-servers.yml"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  recover:
+    name: Decrypt assets/server.psi
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      RUN_ID: ${{ inputs.run_id || '40748028026' }}
+      ARTIFACT: ${{ inputs.artifact || 'amtunnel-apk-analysis' }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pull the analysed APK artifact
+        run: |
+          set -euo pipefail
+          gh run download "$RUN_ID" -n "$ARTIFACT" -D dl --repo "$GITHUB_REPOSITORY"
+          ls -la dl
+          APK=$(find dl -name '*.apk' -size +1M | head -1)
+          echo "APK=$APK" >> "$GITHUB_ENV"
+          ls -l "$APK"
+
+      - name: Extract assets/server.psi
+        run: |
+          set -euo pipefail
+          mkdir -p work
+          unzip -p "$APK" assets/server.psi > work/assets_server.psi
+          ls -l work/assets_server.psi
+          echo "chars=$(wc -c < work/assets_server.psi)"
+
+      - name: Decrypt and self-test
+        run: |
+          set -euo pipefail
+          python3 tools/bdnet_decrypt.py work/assets_server.psi -o out --json
+          n=$(wc -l < out/psiphon_entries.txt)
+          j=$(python3 -c "import json;print(len(json.load(open('out/psiphon_entries.json'))))")
+          echo "entries=$n json=$j"
+          test "$n" -eq 18
+          test "$j" -eq 18
+          python3 - <<'PY'
+          import json, ipaddress
+          ents = json.load(open("out/psiphon_entries.json"))
+          for e in ents:
+              ipaddress.ip_address(e["ipAddress"])
+              assert e["sshPort"] > 0 and e["sshObfuscatedPort"] > 0
+              assert len(e["sshPassword"]) == 64 and len(e["sshUsername"]) > 10
+              assert e["signature"] and e["region"] and e["sshHostKey"]
+              assert e["capabilities"]
+          regions = sorted({e["region"] for e in ents})
+          print(f"SELFTEST PASS ({len(ents)} server entries, regions {regions})")
+          PY
+
+      - name: Upload recovered configs
+        uses: actions/upload-artifact@v4
+        with:
+          name: bdnet-servers
+          path: out/
+          if-no-files-found: error
+          retention-days: 30
