@@ -1,0 +1,188 @@
+name: Android build, tests and tunnel integration
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Unit tests + APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+
+      - name: Core unit tests
+        run: gradle :core:test --no-daemon --stacktrace
+
+      - name: Build debug APK
+        run: gradle :app:assembleDebug --no-daemon --stacktrace
+
+      - name: Build release APK (signed if secrets are present)
+        env:
+          AMTUNNEL_KEYSTORE: ${{ secrets.AMTUNNEL_KEYSTORE_PATH }}
+          AMTUNNEL_KEYSTORE_PASSWORD: ${{ secrets.AMTUNNEL_KEYSTORE_PASSWORD }}
+          AMTUNNEL_KEY_ALIAS: ${{ secrets.AMTUNNEL_KEY_ALIAS }}
+          AMTUNNEL_KEY_PASSWORD: ${{ secrets.AMTUNNEL_KEY_PASSWORD }}
+        run: |
+          if [ -n "$AMTUNNEL_KEYSTORE" ] && [ -f "$AMTUNNEL_KEYSTORE" ]; then
+            gradle :app:assembleRelease --no-daemon --stacktrace
+          else
+            echo "No signing secrets configured - release APK skipped, debug APK is the deliverable."
+          fi
+
+      - name: Publish unit test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-test-report
+          path: |
+            core/build/reports/tests/**
+            core/build/test-results/**
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: amtunnel-mst-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload release APK
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amtunnel-mst-release-apk
+          path: app/build/outputs/apk/release/*.apk
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## Build summary"
+            echo ""
+            echo "- Debug APK: $(ls -1 app/build/outputs/apk/debug/*.apk 2>/dev/null || echo 'not produced')"
+            echo "- Unit tests: $(grep -h 'tests=' core/build/test-results/test/*.xml 2>/dev/null | sed -E 's/.*tests="([0-9]+)".*failures="([0-9]+)".*/tests=\1 failures=\2/' | head -1)"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  integration:
+    name: Live DNS-tunnel integration
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - name: Build the reference DNS-tunnel server from source
+        run: |
+          set -euo pipefail
+          git clone --depth 1 https://github.com/masterking32/MasterDnsVPN.git /tmp/mdvpn
+          cd /tmp/mdvpn
+          go build -trimpath -o /tmp/mdvpn-server ./cmd/server
+          /tmp/mdvpn-server -version
+
+      - name: Configure and start the tunnel server
+        id: server
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/md
+          cat > /tmp/md/server_config.toml <<'EOF'
+          DOMAIN = ["t.amtunnel.test"]
+          PROTOCOL_TYPE = "SOCKS5"
+          UDP_HOST = "127.0.0.1"
+          UDP_PORT = 15353
+          DATA_ENCRYPTION_METHOD = 1
+          ENCRYPTION_KEY_FILE = "/tmp/md/encryption_key.txt"
+          MAX_PACKETS_PER_BATCH = 10
+          EOF
+          nohup /tmp/mdvpn-server -config /tmp/md/server_config.toml -nowait > /tmp/md/server.log 2>&1 &
+          echo $! > /tmp/md/server.pid
+          for i in $(seq 1 40); do
+            if [ -s /tmp/md/encryption_key.txt ]; then break; fi
+            sleep 0.5
+          done
+          sleep 2
+          if ! kill -0 "$(cat /tmp/md/server.pid)"; then
+            echo "server failed to start"; cat /tmp/md/server.log; exit 1
+          fi
+          KEY=$(tr -d '[:space:]' < /tmp/md/encryption_key.txt)
+          echo "key length: ${#KEY}"
+          echo "key=$KEY" >> "$GITHUB_OUTPUT"
+          echo "--- server log (head) ---"
+          head -30 /tmp/md/server.log
+
+      - name: Run tunnel integration tests
+        env:
+          AMTUNNEL_IT: "1"
+          AMTUNNEL_DOMAIN: t.amtunnel.test
+          AMTUNNEL_SERVER_HOST: 127.0.0.1
+          AMTUNNEL_SERVER_PORT: "15353"
+          AMTUNNEL_ENC: "1"
+          AMTUNNEL_KEY: ${{ steps.server.outputs.key }}
+        run: gradle :integration:test --no-daemon --stacktrace --info
+
+      - name: Server log
+        if: always()
+        run: |
+          echo "=== tunnel server log ==="
+          tail -200 /tmp/md/server.log || true
+
+      - name: Upload integration reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: integration-test-report
+          path: |
+            integration/build/reports/tests/**
+            integration/build/test-results/**
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## Live tunnel integration"
+            echo ""
+            echo '```'
+            grep -h -E "tunnel stats|failover stats|dns-only resolver|tests=" integration/build/test-results/test/*.xml 2>/dev/null | head -20 || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

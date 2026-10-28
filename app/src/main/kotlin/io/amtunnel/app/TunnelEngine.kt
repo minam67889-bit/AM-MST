@@ -1,0 +1,283 @@
+package io.amtunnel.app
+
+import android.content.Context
+import io.amtunnel.core.dns.FileResolverStore
+import io.amtunnel.core.dns.ResolverEndpoint
+import io.amtunnel.core.dns.ResolverHealthMonitor
+import io.amtunnel.core.dns.ResolverScanner
+import io.amtunnel.core.dns.ResolverSource
+import io.amtunnel.core.dns.ResolverStore
+import io.amtunnel.core.dns.ScanMode
+import io.amtunnel.core.dns.ScanProgress
+import io.amtunnel.core.dns.ScanScheduler
+import io.amtunnel.core.dns.ScanSummary
+import io.amtunnel.core.net.DnsTunnelRelay
+import io.amtunnel.core.net.SocketProtector
+import io.amtunnel.core.net.Socks5Server
+import io.amtunnel.core.transport.EncryptionMethod
+import io.amtunnel.core.transport.HealthResolverSelector
+import io.amtunnel.core.transport.MasterDnsTransport
+import io.amtunnel.core.transport.StaticResolverSelector
+import io.amtunnel.core.transport.TransportState
+import io.amtunnel.core.transport.TransportStats
+import io.amtunnel.core.transport.TunnelConfig
+import io.amtunnel.core.transport.TunnelTransport
+import io.amtunnel.core.util.TunnelLog
+import java.io.File
+import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.atomic.AtomicBoolean
+
+/**
+ * Single owner of the DNS engine + tunnel transport + local proxy.
+ *
+ * The UI never talks to the transport directly: it reads state from here and
+ * calls the small command surface (start/stop/scan/import).
+ */
+class TunnelEngine(private val context: Context) {
+
+    val log = TunnelLog()
+    val monitor = ResolverHealthMonitor(log)
+    private val store: ResolverStore = FileResolverStore(File(context.filesDir, "resolvers.tsv"))
+
+    @Volatile
+    var settings: AppSettings = AppSettings.load(context)
+        private set
+
+    private val resolverList = CopyOnWriteArrayList<ResolverEndpoint>()
+    private val starting = AtomicBoolean(false)
+
+    @Volatile private var transport: MasterDnsTransport? = null
+    @Volatile private var socks: Socks5Server? = null
+    @Volatile private var scheduler: ScanScheduler? = null
+    @Volatile private var scanner: ResolverScanner = ResolverScanner(
+        monitor, log, TunnelConfig(domain = "invalid"), SocketProtector.Noop,
+    )
+
+    /** Set by the VpnService so tunnel sockets bypass the tun (loop protection). */
+    @Volatile
+    var protector: SocketProtector = SocketProtector.Noop
+
+    private val stateListeners = CopyOnWriteArrayList<() -> Unit>()
+
+    init {
+        val loaded = store.load()
+        resolverList.addAll(loaded)
+        resolverList.forEach { monitor.register(it) }
+        scanner = ResolverScanner(monitor, log, buildConfig(settings), protector)
+        log.info("engine", "loaded ${resolverList.size} resolver(s) from storage")
+    }
+
+    val resolvers: List<ResolverEndpoint> get() = resolverList.toList()
+
+    val isRunning: Boolean get() = transport?.isReady == true
+
+    val isScanning: Boolean get() = scanner.isRunning
+
+    fun stats(): TransportStats = transport?.stats() ?: TransportStats(state = TransportState.IDLE)
+
+    fun socksPort(): Int = socks?.port ?: settings.socksPort
+
+    fun sessionDebug(): String = transport?.sessionDebug() ?: "-"
+
+    fun addListener(listener: () -> Unit) {
+        stateListeners.add(listener)
+    }
+
+    fun removeListener(listener: () -> Unit) {
+        stateListeners.remove(listener)
+    }
+
+    fun notifyStateChanged() {
+        stateListeners.forEach { runCatching { it() } }
+    }
+
+    // ---------------------------------------------------------------- settings
+
+    fun updateSettings(newSettings: AppSettings) {
+        settings = newSettings
+        AppSettings.save(context, newSettings)
+        scanner = ResolverScanner(monitor, log, buildConfig(newSettings), protector)
+        notifyStateChanged()
+    }
+
+    private fun buildConfig(s: AppSettings) = TunnelConfig(
+        domain = s.domain,
+        encryptionMethod = s.encryptionMethod,
+        encryptionKey = s.encryptionKey,
+        uploadMtu = s.uploadMtu,
+        downloadMtu = s.downloadMtu,
+    )
+
+    // ---------------------------------------------------------------- resolvers
+
+    fun addResolvers(text: String, source: ResolverSource = ResolverSource.IMPORTED): Int {
+        val parsed = ResolverEndpoint.parseMany(text, source)
+        var added = 0
+        for (endpoint in parsed) {
+            if (resolverList.none { it.key == endpoint.key }) {
+                resolverList.add(endpoint)
+                monitor.register(endpoint)
+                added++
+            }
+        }
+        persistResolvers()
+        log.info("engine", "imported $added resolver(s) (${parsed.size} parsed, ${resolverList.size} total)")
+        notifyStateChanged()
+        return added
+    }
+
+    fun addResolver(endpoint: ResolverEndpoint) {
+        if (resolverList.none { it.key == endpoint.key }) {
+            resolverList.add(endpoint)
+            monitor.register(endpoint)
+            persistResolvers()
+            log.info("engine", "added resolver ${endpoint.key}")
+            notifyStateChanged()
+        }
+    }
+
+    fun setResolverEnabled(endpoint: ResolverEndpoint, enabled: Boolean) {
+        val index = resolverList.indexOfFirst { it.key == endpoint.key }
+        if (index < 0) return
+        resolverList[index] = resolverList[index].copy(enabled = enabled)
+        monitor.setEnabled(endpoint, enabled)
+        persistResolvers()
+        notifyStateChanged()
+    }
+
+    fun removeResolver(endpoint: ResolverEndpoint) {
+        resolverList.removeAll { it.key == endpoint.key }
+        persistResolvers()
+        log.info("engine", "removed resolver ${endpoint.key}")
+        notifyStateChanged()
+    }
+
+    private fun persistResolvers() {
+        runCatching { store.save(resolverList.toList()) }
+    }
+
+    // ---------------------------------------------------------------- scanning
+
+    fun scan(mode: ScanMode, onProgress: (ScanProgress) -> Unit = {}, onFinished: (ScanSummary) -> Unit = {}) {
+        if (resolverList.isEmpty()) {
+            log.warn("scan", "no resolvers configured")
+            return
+        }
+        val freshScanner = ResolverScanner(monitor, log, buildConfig(settings), protector)
+        scanner = freshScanner
+        Thread({
+            freshScanner.scan(resolverList.toList(), mode, onProgress) { summary ->
+                onFinished(summary)
+                notifyStateChanged()
+            }
+        }, "resolver-scan-${mode.name.lowercase()}").apply {
+            isDaemon = true
+            start()
+        }
+    }
+
+    fun stopScan() {
+        scanner.cancel()
+        log.info("scan", "scan cancellation requested")
+    }
+
+    private fun startScheduler(s: AppSettings) {
+        if (!s.autoScan) return
+        val scheduled = ScanScheduler(
+            scannerProvider = { scanner },
+            monitor = monitor,
+            log = log,
+            resolversProvider = { resolverList.toList() },
+            recreateScanner = {
+                scanner = ResolverScanner(monitor, log, buildConfig(settings), protector)
+            },
+            onStateChanged = { notifyStateChanged() },
+        )
+        scheduler = scheduled
+        scheduled.start()
+    }
+
+    // ---------------------------------------------------------------- lifecycle
+
+    /** Blocking: performs the tunnel handshake. Returns true when READY. */
+    fun start(): Boolean {
+        if (transport?.isReady == true) return true
+        if (!starting.compareAndSet(false, true)) return false
+        try {
+            val s = settings
+            val problems = buildConfig(s).validate()
+            if (problems.isNotEmpty()) {
+                log.error("engine", "configuration rejected: ${problems.joinToString("; ")}")
+                return false
+            }
+            val enabled = resolverList.filter { it.enabled }
+            if (enabled.isEmpty()) {
+                log.error("engine", "no enabled resolvers - import or add one first")
+                return false
+            }
+
+            log.info(
+                "engine",
+                "starting tunnel: domain=${s.domain}, ${EncryptionMethod.name(s.encryptionMethod)}, " +
+                    "${enabled.size} candidate resolver(s)",
+            )
+
+            val selector = if (s.autoFailover) {
+                HealthResolverSelector(monitor)
+            } else {
+                StaticResolverSelector(enabled.first())
+            }
+            val newTransport = MasterDnsTransport(buildConfig(s), selector, log, protector)
+            transport = newTransport
+
+            if (!newTransport.start(timeoutMs = 20_000)) {
+                log.error("engine", "tunnel handshake failed - see diagnostics")
+                transport = null
+                return false
+            }
+
+            if (s.socksEnabled) {
+                val server = Socks5Server({ transport }, log, "127.0.0.1", s.socksPort)
+                if (server.start()) {
+                    socks = server
+                } else {
+                    log.error("engine", "SOCKS5 listener failed on port ${s.socksPort}")
+                }
+            }
+            startScheduler(s)
+            notifyStateChanged()
+            return true
+        } finally {
+            starting.set(false)
+        }
+    }
+
+    fun stop() {
+        runCatching { scheduler?.stop() }
+        scheduler = null
+        runCatching { socks?.stop() }
+        socks = null
+        runCatching { transport?.stop() }
+        transport = null
+        notifyStateChanged()
+    }
+
+    fun dnsRelay(): DnsTunnelRelay = DnsTunnelRelay({ transport }, log, settings.upstreamDns, 53)
+
+    fun transportOrNull(): TunnelTransport? = transport
+}
+
+/** Process-wide accessor: the VPN service owns the lifecycle, the UI observes. */
+object TunnelRuntime {
+    @Volatile private var engine: TunnelEngine? = null
+
+    fun get(context: Context): TunnelEngine {
+        val current = engine
+        if (current != null) return current
+        return synchronized(this) {
+            engine ?: TunnelEngine(context.applicationContext).also { engine = it }
+        }
+    }
+
+    fun peek(): TunnelEngine? = engine
+}
