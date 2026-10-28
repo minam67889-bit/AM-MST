@@ -43,3 +43,18 @@ builds it at test time.
 
 Built against the Android SDK. No AndroidX, Compose or other runtime
 dependencies are used by the application module.
+
+## Pinned reference
+
+Upstream source that this client was written against (not vendored):
+
+* Repository: <https://github.com/masterking32/MasterDnsVPN>
+* Commit: `5f83ee9a1690a968f9edf495d3a7e00a2043b0bd`
+  (release tag `v2026.10.26.100415-5f83ee9`)
+
+Reproduce the comparison locally with:
+
+```bash
+git clone https://github.com/masterking32/MasterDnsVPN
+cd MasterDnsVPN && git checkout 5f83ee9a1690a968f9edf495d3a7e00a2043b0bd
+```
