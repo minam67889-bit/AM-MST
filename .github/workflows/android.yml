@@ -49,16 +49,27 @@ jobs:
         run: |
           python3 - <<'PY'
           import json, os, urllib.request
+          errors = []
           tail = "(no build.log)"
           if os.path.exists("build.log"):
               with open("build.log", encoding="utf-8", errors="replace") as fh:
-                  tail = fh.read()[-55000:]
+                  full = fh.read()
+              tail = full[-20000:]
+              for line in full.splitlines():
+                  low = line.strip()
+                  if (low.startswith("e: ")
+                          or "error: " in low
+                          or "Unresolved reference" in low
+                          or low.startswith("> Task") and "FAILED" in low
+                          or low.startswith("* What went wrong")):
+                      errors.append(line[:500])
+          summary = "\n".join(errors[:120]) + "\n\n---- tail ----\n" + tail
           payload = {
               "name": "gradle-output",
               "head_sha": os.environ["GITHUB_SHA"],
               "status": "completed",
               "conclusion": "neutral",
-              "output": {"title": "Gradle output tail", "summary": tail[:65000]},
+              "output": {"title": "Gradle output tail", "summary": summary[:65000]},
           }
           req = urllib.request.Request(
               f"https://api.github.com/repos/{os.environ['GITHUB_REPOSITORY']}/check-runs",
