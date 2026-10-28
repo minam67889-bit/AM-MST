@@ -13,8 +13,8 @@
 + continue
 + for pattern in java/prince java/dastan java/app/vpn java/com/prince java/*/prince java/*/dastan
 + '[' -d java/sources/prince ']'
-++ sed 's|^java/||; s|/|_|g'
 ++ echo java/sources/prince
+++ sed 's|^java/||; s|/|_|g'
 + dest=analysis/app-sources/sources_prince
 + mkdir -p analysis/app-sources/sources_prince
 + cp -r java/sources/prince/. analysis/app-sources/sources_prince/
@@ -64,7 +64,7 @@ analysis/app-sources/sources_prince/dastan/vpn/service/vpn/PsiphonVpnService.jav
 analysis/app-sources/sources_prince/dastan/vpn/service/vpn/TunnelManagerHelper.java
 + echo '--- strings that look like a tunnel config ---'
 --- strings that look like a tunnel config ---
++ grep -rhoE '(slowdns|dnstt)[^ "'\'']{0,60}' analysis/app-sources
 + sort -u
 + head -20
-+ grep -rhoE '(slowdns|dnstt)[^ "'\'']{0,60}' analysis/app-sources
 + true
