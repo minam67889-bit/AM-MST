@@ -1,0 +1,78 @@
+sha256(prince) 9bd2ef7a9ddbb22386f27f5f6885f8eeef6cdf57e96bbdef0f9e0421f1ec4654
+sha512(prince)[:32] 3568b43de64dccd76512531211cb9ad14a61061d6b686eb0324311ffa123e2d7
+blake2s(prince) 8010bc4cc463597d7ad6739011d7d854179172d206a9b7e716ea98ed0859f470
+blake2b(prince)[:32] 724b0eff1a6cc322ee430458d9cad635186a4b02edaf8c7abfa783bf0096d22b
+prince+zeros 7072696e63650000000000000000000000000000000000000000000000000000
+prince*5+2 7072696e63657072696e63657072696e63657072696e63657072696e63657072
+== sha256(prince) on 173.212.232.241 (port 7131)
+HTTP probe -> FAIL in 20.0s: no response
+   client said:
+     2026/10/28 22:22:18 uTLS fingerprint Randomized-ALPN 0
+     2026/10/28 22:22:18 effective MTU 131
+     2026/10/28 22:22:18 begin session f8f46ca3
+== sha512(prince)[ on 173.212.232.241 (port 7089)
+HTTP probe -> FAIL in 20.0s: no response
+   client said:
+     2026/10/28 22:22:39 uTLS fingerprint Randomized-ALPN 0
+     2026/10/28 22:22:39 effective MTU 131
+     2026/10/28 22:22:39 begin session bc3a5762
+== blake2s(prince) on 173.212.232.241 (port 7178)
+HTTP probe -> FAIL in 20.0s: no response
+   client said:
+     2026/10/28 22:23:01 uTLS fingerprint Randomized-ALPN 0
+     2026/10/28 22:23:01 effective MTU 131
+     2026/10/28 22:23:01 begin session fba6be2e
+== blake2b(prince)[ on 173.212.232.241 (port 7176)
+HTTP probe -> FAIL in 20.0s: no response
+   client said:
+     2026/10/28 22:23:24 uTLS fingerprint Chrome 120
+     2026/10/28 22:23:24 effective MTU 131
+     2026/10/28 22:23:24 begin session 69fbbd06
+== prince+zeros on 173.212.232.241 (port 7113)
+HTTP probe -> FAIL in 20.0s: no response
+   client said:
+     2026/10/28 22:23:46 uTLS fingerprint Chrome 102
+     2026/10/28 22:23:46 effective MTU 131
+     2026/10/28 22:23:46 begin session 8d314029
+== prince*5+2 on 173.212.232.241 (port 7040)
+HTTP probe -> FAIL in 20.0s: no response
+   client said:
+     2026/10/28 22:24:08 uTLS fingerprint Firefox 120
+     2026/10/28 22:24:08 effective MTU 131
+     2026/10/28 22:24:08 begin session 46114600
+== sha256(prince) on 173.249.10.48 (port 7097)
+HTTP probe -> FAIL in 20.0s: no response
+   client said:
+     2026/10/28 22:24:30 uTLS fingerprint Chrome 120
+     2026/10/28 22:24:30 effective MTU 132
+     2026/10/28 22:24:30 begin session e7f2ecc1
+== sha512(prince)[ on 173.249.10.48 (port 7078)
+HTTP probe -> FAIL in 20.0s: no response
+   client said:
+     2026/10/28 22:24:52 uTLS fingerprint Firefox 120
+     2026/10/28 22:24:52 effective MTU 132
+     2026/10/28 22:24:52 begin session fb6f4326
+== blake2s(prince) on 173.249.10.48 (port 7085)
+HTTP probe -> FAIL in 20.0s: no response
+   client said:
+     2026/10/28 22:25:14 uTLS fingerprint Chrome 120
+     2026/10/28 22:25:14 effective MTU 132
+     2026/10/28 22:25:14 begin session 95c8e749
+== blake2b(prince)[ on 173.249.10.48 (port 7124)
+HTTP probe -> FAIL in 20.0s: no response
+   client said:
+     2026/10/28 22:25:36 uTLS fingerprint Firefox 120
+     2026/10/28 22:25:36 effective MTU 132
+     2026/10/28 22:25:36 begin session 08837fdc
+== prince+zeros on 173.249.10.48 (port 7138)
+HTTP probe -> FAIL in 20.0s: no response
+   client said:
+     2026/10/28 22:25:58 uTLS fingerprint iOS 14
+     2026/10/28 22:25:58 effective MTU 132
+     2026/10/28 22:25:58 begin session 2f1f02d9
+== prince*5+2 on 173.249.10.48 (port 7029)
+HTTP probe -> FAIL in 20.0s: no response
+   client said:
+     2026/10/28 22:26:20 uTLS fingerprint Chrome 120
+     2026/10/28 22:26:20 effective MTU 132
+     2026/10/28 22:26:20 begin session e589e068
