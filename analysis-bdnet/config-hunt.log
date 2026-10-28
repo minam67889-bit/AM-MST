@@ -1,0 +1,267 @@
++ mkdir -p analysis/assets analysis/hunt
++ unzip -l amtunnel.apk
++ awk '{print $4}'
++ grep -iE '^(assets|res/raw)/.*\.(psi|json|url|txt|conf|cfg|dat|db|bin)$'
++ grep -viE 'audience_network|SignatureKiller|flags/'
++ read -r a
++ '[' -n assets/server.psi ']'
+++ echo assets/server.psi
+++ tr / _
++ out=analysis/assets/assets_server.psi
++ unzip -p amtunnel.apk assets/server.psi
++ true
+++ basename analysis/assets/assets_server.psi
+++ wc -c
++ echo '== assets/server.psi -> assets_server.psi 103253 bytes'
+== assets/server.psi -> assets_server.psi 103253 bytes
++ head -c 240 analysis/assets/assets_server.psi
++ head -4
++ tr -cd '[:print:]\n'
+658656b071665526d505d0d525d626e0d1663576c555c08545d626b0113615761505e0d5f5d636e0c1361526d50500d575d616b011362576c505e0d535d616e071364526e505108545d626e0c1660526a555c0d5f58696e031361576d505a0d5e5d626e0d1666576a505b0d5259626f571762536b545b085+ strings -n 6 analysis/assets/assets_server.psi
++ head -40
++ strings -n 6 analysis/assets/assets_server.psi
++ grep -oiE '[a-z0-9][a-z0-9.-]+\.(com|net|org|io|ir|app|dev|xyz|online|site|top|fun|club|shop|live|icu|me|co)'
++ head -40
++ sort -u
++ true
+++ wc -l
++ echo '-- hosts in asset: 0'
+-- hosts in asset: 0
++ head -20 analysis/assets/assets_server.psi.hosts.txt
++ read -r a
++ '[' -n assets/sorter.json ']'
+++ echo assets/sorter.json
+++ tr / _
++ out=analysis/assets/assets_sorter.json
++ unzip -p amtunnel.apk assets/sorter.json
++ true
+++ basename analysis/assets/assets_sorter.json
+++ wc -c
++ echo '== assets/sorter.json -> assets_sorter.json 414920 bytes'
+== assets/sorter.json -> assets_sorter.json 414920 bytes
++ head -c 240 analysis/assets/assets_sorter.json
++ tr -cd '[:print:]\n'
++ head -4
+jXelaC1VUYqQh+amLrCYhzlKv4wfOX8ZAIjTMlwVU9c08AgC6w1IrXdy1qRtxctCSnCRmCSfcfK4sT02+i9cI8Kv08dhJ0b+DuI4S47Fq4ohWHZwYRxfijHa+JIPVjo6qSxKoqOUKLiFb9uCZ2rxQEjkmuAGmyHQLzyGbADRQIJ5Tp4ofRaNbi4Ql1tT8YKuLZi9oVnIYR0jqUWBnr3kCAi1DrMZG+7rpPimpyxlmJ9ND+yt+ strings -n 6 analysis/assets/assets_sorter.json
++ head -40
++ strings -n 6 analysis/assets/assets_sorter.json
++ grep -oiE '[a-z0-9][a-z0-9.-]+\.(com|net|org|io|ir|app|dev|xyz|online|site|top|fun|club|shop|live|icu|me|co)'
++ sort -u
++ head -40
++ true
+++ wc -l
++ echo '-- hosts in asset: 0'
+-- hosts in asset: 0
++ head -20 analysis/assets/assets_sorter.json.hosts.txt
++ read -r a
++ grep -rhoE '(https?|wss?|tg)://[A-Za-z0-9._~:/?#@!$&()*+,;=%-]{4,200}' java '--include=*.java'
++ sort -u
+++ wc -l
++ echo 'url literals: 68'
+url literals: 68
++ head -60 analysis/hunt/urls-full.txt
+http://localhost
+http://pyyaml.org/wiki/YAMLColonInFlowContext
+http://schemas.android.com/apk/res-auto
+http://schemas.android.com/apk/res/android
+http://www.google.com
+https://accounts.google.com
+https://accounts.google.com/o/oauth2/revoke?token=
+https://app-measurement.com/a
+https://app-measurement.com/s/d
+https://crbug.com/581399
+https://developer.android.com/google/play/integrity/reference/com/google/android/play/core/integrity/model/IntegrityErrorCode.html#
+https://developer.android.com/google/play/integrity/reference/com/google/android/play/core/integrity/model/StandardIntegrityErrorCode.html#
+https://developer.android.com/reference/com/google/android/play/core/install/model/InstallErrorCode#
+https://developers.google.com/admob/android/test-ads#enable_test_devices
+https://developers.google.com/tink/faq/registration_errors
+https://fcmregistrations.googleapis.com/v1/projects/
+https://firebase.google.com/docs/crashlytics/get-started?platform=android#add-plugin
+https://firebase.google.com/support/guides/disable-analytics
+https://firebase.google.com/support/privacy/init-options.
+https://firebaseinstallations.googleapis.com/v1/
+https://fonts.googleapis.com
+https://fundingchoicesmessages.google.com/a/consent
+https://github.com/L-JINBIN/ApkSignatureKillerEx
+https://github.com/androidx/media/pull/1742
+https://github.com/androidx/media/pull/1754
+https://github.com/androidx/media/pull/1768
+https://github.com/google/ExoPlayer/commit/9f352434c72da527d1fa7963447c3cf680db884f
+https://github.com/google/gson/blob/main/Troubleshooting.md#
+https://goo.gl/NAOOOI
+https://goo.gl/NAOOOI.
+https://goo.gle/admob-interstitial-policies
+https://google.com/search?
+https://issuetracker.google.com/issues/241760537
+https://issuetracker.google.com/issues/new?component=907884&template=1466542
+https://lh3.googleusercontent.com
+https://login.live.com
+https://login.yahoo.com
+https://mediation.goog
+https://mediation.goog/mads/static/sdk/native/sdk-core-v40.html
+https://play.google.com/d
+https://raw.githubusercontent.com/vpnmarket/dialog15/refs/heads/main/BD%20106
+https://redirector.gvt1-cn.com
+https://redirector.gvt1.com
+https://s0.2mdn.net
+https://s1.2mdn.net
+https://t.me/anty_filter
+https://twitter.com
+https://www.facebook.com
+https://www.facebook.com/adnw_logging/
+https://www.googleapis.com/auth/appstate
+https://www.googleapis.com/auth/datastoremobile
+https://www.googleapis.com/auth/drive
+https://www.googleapis.com/auth/drive.appdata
+https://www.googleapis.com/auth/drive.apps
+https://www.googleapis.com/auth/drive.file
+https://www.googleapis.com/auth/games
+https://www.googleapis.com/auth/games.firstparty
+https://www.googleapis.com/auth/games_lite
+https://www.googleapis.com/auth/plus.login
+https://www.googleapis.com/auth/plus.me
++ grep -rn 'appspot\|google_storage_bucket' java '--include=*.java'
++ head -40
++ cat analysis/hunt/appspot-usage.txt
+java/sources/defpackage/C3864pr.java:40:        return new C3864pr(string, stringResourceValueReader.getString("google_api_key"), stringResourceValueReader.getString("firebase_database_url"), stringResourceValueReader.getString("ga_trackingId"), stringResourceValueReader.getString("gcm_defaultSenderId"), stringResourceValueReader.getString("google_storage_bucket"), stringResourceValueReader.getString("recaptcha_site_key"), stringResourceValueReader.getString("project_id"));
+java/sources/dastan/prince/bdfreevpn/R.java:5589:        public static final int google_storage_bucket = 0x7f1300e7;
++ grep -rn -iE 'serverlist|server_list|getServers|loadServers|serversJson|listServers|rawServers' java '--include=*.java'
++ head -80
+++ wc -l
++ echo 'server-word hits: 3'
+server-word hits: 3
++ head -40 analysis/hunt/server-words.txt
+java/sources/defpackage/C0407Pi.java:64:        android.util.Log.d("DNSUtil", "Exception in getServersMethodExec", r0);
+java/sources/ads_mobile_sdk/mx2.java:8:    public static final /* synthetic */ InterfaceC0706aA[] b = {F20.d(mx2.class, "serverSideVerificationOptions", "getServerSideVerificationOptions()Lcom/google/android/libraries/ads/mobile/sdk/rewarded/ServerSideVerificationOptions;")};
+java/sources/dastan/prince/bdfreevpn/R.java:4859:        public static final int server_list_dialog = 0x7f0a02a0;
++ :
++ grep -viE '/(androidx|com/google|com/facebook|kotlin|okhttp3|okio)/'
++ grep -rlE 'HttpURLConnection|OkHttpClient|openConnection|new URL\(|getAssets\(|server\.psi' java '--include=*.java'
++ head -40
++ read -r f
++ echo '##### java/sources/org/chromium/net/CronetEngine.java'
++ sed -n 1,140p java/sources/org/chromium/net/CronetEngine.java
++ read -r f
++ echo '##### java/sources/org/chromium/net/ExperimentalCronetEngine.java'
++ sed -n 1,140p java/sources/org/chromium/net/ExperimentalCronetEngine.java
++ read -r f
++ echo '##### java/sources/org/chromium/net/impl/JavaUrlRequest.java'
++ sed -n 1,140p java/sources/org/chromium/net/impl/JavaUrlRequest.java
++ read -r f
++ echo '##### java/sources/org/chromium/net/impl/JavaCronetEngine.java'
++ sed -n 1,140p java/sources/org/chromium/net/impl/JavaCronetEngine.java
++ read -r f
++ echo '##### java/sources/org/chromium/net/impl/AndroidHttpEngineWrapper.java'
++ sed -n 1,140p java/sources/org/chromium/net/impl/AndroidHttpEngineWrapper.java
++ read -r f
++ echo '##### java/sources/org/chromium/net/impl/b.java'
++ sed -n 1,140p java/sources/org/chromium/net/impl/b.java
++ read -r f
++ echo '##### java/sources/defpackage/C0240Iw.java'
++ sed -n 1,140p java/sources/defpackage/C0240Iw.java
++ read -r f
++ echo '##### java/sources/defpackage/IY.java'
++ sed -n 1,140p java/sources/defpackage/IY.java
++ read -r f
++ echo '##### java/sources/defpackage/C4452xG.java'
++ sed -n 1,140p java/sources/defpackage/C4452xG.java
++ read -r f
++ echo '##### java/sources/defpackage/C3448kc.java'
++ sed -n 1,140p java/sources/defpackage/C3448kc.java
++ read -r f
++ echo '##### java/sources/defpackage/C3393jw.java'
++ sed -n 1,140p java/sources/defpackage/C3393jw.java
++ read -r f
++ echo '##### java/sources/defpackage/DL.java'
++ sed -n 1,140p java/sources/defpackage/DL.java
++ read -r f
++ echo '##### java/sources/defpackage/C3290ic.java'
++ sed -n 1,140p java/sources/defpackage/C3290ic.java
++ read -r f
++ echo '##### java/sources/defpackage/C2853d6.java'
++ sed -n 1,140p java/sources/defpackage/C2853d6.java
++ read -r f
++ echo '##### java/sources/defpackage/S50.java'
++ sed -n 1,140p java/sources/defpackage/S50.java
++ read -r f
++ echo '##### java/sources/defpackage/DialogInterfaceOnCancelListenerC0471Ru.java'
++ sed -n 1,140p java/sources/defpackage/DialogInterfaceOnCancelListenerC0471Ru.java
++ read -r f
++ echo '##### java/sources/defpackage/C3144gl.java'
++ sed -n 1,140p java/sources/defpackage/C3144gl.java
++ read -r f
++ echo '##### java/sources/defpackage/C0172Gg.java'
++ sed -n 1,140p java/sources/defpackage/C0172Gg.java
++ read -r f
++ echo '##### java/sources/defpackage/M30.java'
++ sed -n 1,140p java/sources/defpackage/M30.java
++ read -r f
++ echo '##### java/sources/defpackage/AbstractC0199Hh.java'
++ sed -n 1,140p java/sources/defpackage/AbstractC0199Hh.java
++ read -r f
++ echo '##### java/sources/defpackage/C3045fZ.java'
++ sed -n 1,140p java/sources/defpackage/C3045fZ.java
++ read -r f
++ echo '##### java/sources/defpackage/C3150gr.java'
++ sed -n 1,140p java/sources/defpackage/C3150gr.java
++ read -r f
++ echo '##### java/sources/defpackage/RunnableC3954r1.java'
++ sed -n 1,140p java/sources/defpackage/RunnableC3954r1.java
++ read -r f
++ echo '##### java/sources/defpackage/C0800bO.java'
++ sed -n 1,140p java/sources/defpackage/C0800bO.java
++ read -r f
++ echo '##### java/sources/defpackage/C2990er.java'
++ sed -n 1,140p java/sources/defpackage/C2990er.java
++ read -r f
++ echo '##### java/sources/defpackage/C3462kl.java'
++ sed -n 1,140p java/sources/defpackage/C3462kl.java
++ read -r f
++ echo '##### java/sources/defpackage/C0720aO.java'
++ sed -n 1,140p java/sources/defpackage/C0720aO.java
++ read -r f
++ echo '##### java/sources/ads_mobile_sdk/j01.java'
++ sed -n 1,140p java/sources/ads_mobile_sdk/j01.java
++ read -r f
++ echo '##### java/sources/ads_mobile_sdk/hz0.java'
++ sed -n 1,140p java/sources/ads_mobile_sdk/hz0.java
++ read -r f
++ echo '##### java/sources/ads_mobile_sdk/of0.java'
++ sed -n 1,140p java/sources/ads_mobile_sdk/of0.java
++ read -r f
++ echo '##### java/sources/ads_mobile_sdk/i5.java'
++ sed -n 1,140p java/sources/ads_mobile_sdk/i5.java
++ read -r f
++ echo '##### java/sources/ads_mobile_sdk/ag0.java'
++ sed -n 1,140p java/sources/ads_mobile_sdk/ag0.java
++ read -r f
++ echo '##### java/sources/ads_mobile_sdk/d01.java'
++ sed -n 1,140p java/sources/ads_mobile_sdk/d01.java
++ read -r f
++ echo '##### java/sources/ads_mobile_sdk/pz0.java'
++ sed -n 1,140p java/sources/ads_mobile_sdk/pz0.java
++ read -r f
++ echo '##### java/sources/ads_mobile_sdk/iz0.java'
++ sed -n 1,140p java/sources/ads_mobile_sdk/iz0.java
++ read -r f
++ echo '##### java/sources/ads_mobile_sdk/nn3.java'
++ sed -n 1,140p java/sources/ads_mobile_sdk/nn3.java
++ read -r f
++ echo '##### java/sources/ads_mobile_sdk/b30.java'
++ sed -n 1,140p java/sources/ads_mobile_sdk/b30.java
++ read -r f
++ echo '##### java/sources/ads_mobile_sdk/cp.java'
++ sed -n 1,140p java/sources/ads_mobile_sdk/cp.java
++ read -r f
++ echo '##### java/sources/ads_mobile_sdk/fz0.java'
++ sed -n 1,140p java/sources/ads_mobile_sdk/fz0.java
++ read -r f
++ echo '##### java/sources/ads_mobile_sdk/sr2.java'
++ sed -n 1,140p java/sources/ads_mobile_sdk/sr2.java
++ read -r f
+++ wc -l
++ echo 'network-code lines: 4477'
+network-code lines: 4477
++ grep -rn -B3 -A3 '"http' java '--include=*.java'
++ head -60
++ true

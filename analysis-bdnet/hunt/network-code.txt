@@ -1,0 +1,4477 @@
+##### java/sources/org/chromium/net/CronetEngine.java
+package org.chromium.net;
+
+import android.content.Context;
+import android.os.Process;
+import android.os.SystemClock;
+import android.util.Log;
+import defpackage.W50;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLStreamHandlerFactory;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.Executor;
+import org.chromium.base.metrics.ScopedSysTraceEvent;
+import org.chromium.net.BidirectionalStream;
+import org.chromium.net.ConnectionMigrationOptions;
+import org.chromium.net.CronetProvider;
+import org.chromium.net.DnsOptions;
+import org.chromium.net.ExperimentalOptionsTranslator;
+import org.chromium.net.ProxyOptions;
+import org.chromium.net.QuicOptions;
+import org.chromium.net.RequestFinishedInfo;
+import org.chromium.net.UrlRequest;
+import org.chromium.net.impl.CronetLogger;
+import org.chromium.net.impl.CronetLoggerFactory;
+import org.json.JSONObject;
+
+/* loaded from: classes2.dex */
+public abstract class CronetEngine {
+    public static final int ACTIVE_REQUEST_COUNT_UNKNOWN = -1;
+    public static final int CONNECTION_METRIC_UNKNOWN = -1;
+    public static final int EFFECTIVE_CONNECTION_TYPE_2G = 3;
+    public static final int EFFECTIVE_CONNECTION_TYPE_3G = 4;
+    public static final int EFFECTIVE_CONNECTION_TYPE_4G = 5;
+    public static final int EFFECTIVE_CONNECTION_TYPE_OFFLINE = 1;
+    public static final int EFFECTIVE_CONNECTION_TYPE_SLOW_2G = 2;
+    public static final int EFFECTIVE_CONNECTION_TYPE_UNKNOWN = 0;
+    private static final String TAG = "CronetEngine";
+    public static final long UNBIND_NETWORK_HANDLE = -1;
+
+    public static class Builder {
+        public static final int HTTP_CACHE_DISABLED = 0;
+        public static final int HTTP_CACHE_DISK = 3;
+        public static final int HTTP_CACHE_DISK_NO_HTTP = 2;
+        public static final int HTTP_CACHE_IN_MEMORY = 1;
+        private static final String TAG = "CronetEngine.Builder";
+        protected final ICronetEngineBuilder mBuilderDelegate;
+        private final List<ExperimentalOptionsTranslator.JsonPatch> mExperimentalOptionsPatches;
+        protected JSONObject mParsedExperimentalOptions;
+
+        public static abstract class LibraryLoader {
+            public abstract void loadLibrary(String str);
+        }
+
+        public Builder(Context context) {
+            this(createBuilderDelegate(context));
+        }
+
+        public static int compareVersions(String str, String str2) {
+            if (str == null || str2 == null) {
+                throw new IllegalArgumentException("The input values cannot be null");
+            }
+            String[] split = str.split("\\.");
+            String[] split2 = str2.split("\\.");
+            for (int i = 0; i < split.length && i < split2.length; i++) {
+                try {
+                    int parseInt = Integer.parseInt(split[i]);
+                    int parseInt2 = Integer.parseInt(split2[i]);
+                    if (parseInt != parseInt2) {
+                        return Integer.signum(parseInt - parseInt2);
+                    }
+                } catch (NumberFormatException e) {
+                    throw new IllegalArgumentException(W50.o("Unable to convert version segments into integers: ", split[i], " & ", split2[i]), e);
+                }
+            }
+            return Integer.signum(split.length - split2.length);
+        }
+
+        private static ICronetEngineBuilder createBuilderDelegate(Context context) {
+            ScopedSysTraceEvent scoped = ScopedSysTraceEvent.scoped("CronetEngine#createBuilderDelegate");
+            try {
+                long uptimeMillis = SystemClock.uptimeMillis();
+                CronetProvider.ProviderInfo providerInfo = getEnabledCronetProviders(context, new ArrayList(CronetProvider.getAllProviderInfos(context))).get(0);
+                CronetLogger createLogger = CronetLoggerFactory.createLogger(context, providerInfo.logSource);
+                CronetLogger.CronetEngineBuilderInitializedInfo cronetEngineBuilderInitializedInfo = new CronetLogger.CronetEngineBuilderInitializedInfo();
+                try {
+                    cronetEngineBuilderInitializedInfo.creationSuccessful = Boolean.FALSE;
+                    cronetEngineBuilderInitializedInfo.author = CronetLogger.CronetEngineBuilderInitializedInfo.Author.API;
+                    cronetEngineBuilderInitializedInfo.source = providerInfo.logSource;
+                    cronetEngineBuilderInitializedInfo.uid = Process.myUid();
+                    cronetEngineBuilderInitializedInfo.apiVersion = new CronetLogger.CronetVersion(ApiVersion.getCronetVersion());
+                    if (Log.isLoggable(TAG, 3)) {
+                        Log.d(TAG, String.format("Using '%s' provider for creating CronetEngine.Builder.", providerInfo.provider));
+                    }
+                    ICronetEngineBuilder iCronetEngineBuilder = providerInfo.provider.createBuilder().mBuilderDelegate;
+                    String implCronetVersion = getImplCronetVersion(iCronetEngineBuilder);
+                    if (implCronetVersion != null) {
+                        cronetEngineBuilderInitializedInfo.implVersion = new CronetLogger.CronetVersion(implCronetVersion);
+                    }
+                    cronetEngineBuilderInitializedInfo.cronetInitializationRef = iCronetEngineBuilder.getLogCronetInitializationRef();
+                    cronetEngineBuilderInitializedInfo.creationSuccessful = Boolean.TRUE;
+                    cronetEngineBuilderInitializedInfo.engineBuilderCreatedLatencyMillis = (int) (SystemClock.uptimeMillis() - uptimeMillis);
+                    createLogger.logCronetEngineBuilderInitializedInfo(cronetEngineBuilderInitializedInfo);
+                    if (scoped != null) {
+                        scoped.close();
+                    }
+                    return iCronetEngineBuilder;
+                } catch (Throwable th) {
+                    cronetEngineBuilderInitializedInfo.engineBuilderCreatedLatencyMillis = (int) (SystemClock.uptimeMillis() - uptimeMillis);
+                    createLogger.logCronetEngineBuilderInitializedInfo(cronetEngineBuilderInitializedInfo);
+                    throw th;
+                }
+            } catch (Throwable th2) {
+                if (scoped != null) {
+                    try {
+                        scoped.close();
+                    } catch (Throwable th3) {
+                        th2.addSuppressed(th3);
+                    }
+                }
+                throw th2;
+            }
+        }
+
+        public static List<CronetProvider.ProviderInfo> getEnabledCronetProviders(Context context, List<CronetProvider.ProviderInfo> list) {
+            if (list.isEmpty()) {
+                throw new RuntimeException("Unable to find any Cronet provider. Have you included all necessary jars?");
+            }
+            Iterator<CronetProvider.ProviderInfo> it = list.iterator();
+            while (it.hasNext()) {
+                if (!it.next().provider.isEnabled()) {
+                    it.remove();
+                }
+            }
+##### java/sources/org/chromium/net/ExperimentalCronetEngine.java
+package org.chromium.net;
+
+import android.content.Context;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Date;
+import java.util.Set;
+import java.util.concurrent.Executor;
+import org.chromium.net.BidirectionalStream;
+import org.chromium.net.ConnectionMigrationOptions;
+import org.chromium.net.CronetEngine;
+import org.chromium.net.DnsOptions;
+import org.chromium.net.ExperimentalBidirectionalStream;
+import org.chromium.net.ExperimentalUrlRequest;
+import org.chromium.net.QuicOptions;
+import org.chromium.net.UrlRequest;
+import org.chromium.net.httpflags.ResolvedFlags;
+
+@Deprecated
+/* loaded from: classes2.dex */
+public abstract class ExperimentalCronetEngine extends CronetEngine {
+    public static final int CONNECTION_METRIC_UNKNOWN = -1;
+    public static final int EFFECTIVE_CONNECTION_TYPE_2G = 3;
+    public static final int EFFECTIVE_CONNECTION_TYPE_3G = 4;
+    public static final int EFFECTIVE_CONNECTION_TYPE_4G = 5;
+    public static final int EFFECTIVE_CONNECTION_TYPE_OFFLINE = 1;
+    public static final int EFFECTIVE_CONNECTION_TYPE_SLOW_2G = 2;
+    public static final int EFFECTIVE_CONNECTION_TYPE_UNKNOWN = 0;
+    private static final String SHOULD_OVERRIDE_WITH_HTTPENGINE = "Cronet_OverrideWithHttpEngine";
+    public static final long UNBIND_NETWORK_HANDLE = -1;
+
+    public static class Builder extends CronetEngine.Builder {
+        public Builder(Context context) {
+            super(context);
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+        public /* bridge */ /* synthetic */ CronetEngine.Builder addPublicKeyPins(String str, Set set, boolean z, Date date) {
+            return addPublicKeyPins(str, (Set<byte[]>) set, z, date);
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+        public Builder enableSdch(boolean z) {
+            return this;
+        }
+
+        public ICronetEngineBuilder getBuilderDelegate() {
+            return this.mBuilderDelegate;
+        }
+
+        public Builder setExperimentalOptions(String str) {
+            this.mParsedExperimentalOptions = ExperimentalOptionsTranslator.toJsonExperimentalOptions(str);
+            return this;
+        }
+
+        public Builder(ICronetEngineBuilder iCronetEngineBuilder) {
+            super(iCronetEngineBuilder);
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+        public Builder addPublicKeyPins(String str, Set<byte[]> set, boolean z, Date date) {
+            super.addPublicKeyPins(str, set, z, date);
+            return this;
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+        public Builder addQuicHint(String str, int i, int i2) {
+            super.addQuicHint(str, i, i2);
+            return this;
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+        public ExperimentalCronetEngine build() {
+            return buildExperimental();
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+        public Builder enableHttp2(boolean z) {
+            super.enableHttp2(z);
+            return this;
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+        public Builder enableHttpCache(int i, long j) {
+            super.enableHttpCache(i, j);
+            return this;
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+        public Builder enableNetworkQualityEstimator(boolean z) {
+            super.enableNetworkQualityEstimator(z);
+            return this;
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+        public Builder enablePublicKeyPinningBypassForLocalTrustAnchors(boolean z) {
+            super.enablePublicKeyPinningBypassForLocalTrustAnchors(z);
+            return this;
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+        public Builder enableQuic(boolean z) {
+            super.enableQuic(z);
+            return this;
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+        @ConnectionMigrationOptions.Experimental
+        public Builder setConnectionMigrationOptions(ConnectionMigrationOptions connectionMigrationOptions) {
+            super.setConnectionMigrationOptions(connectionMigrationOptions);
+            return this;
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+        @DnsOptions.Experimental
+        public Builder setDnsOptions(DnsOptions dnsOptions) {
+            super.setDnsOptions(dnsOptions);
+            return this;
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+        public Builder setLibraryLoader(CronetEngine.Builder.LibraryLoader libraryLoader) {
+            super.setLibraryLoader(libraryLoader);
+            return this;
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+        @QuicOptions.Experimental
+        public Builder setQuicOptions(QuicOptions quicOptions) {
+            super.setQuicOptions(quicOptions);
+            return this;
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+        public Builder setStoragePath(String str) {
+            super.setStoragePath(str);
+            return this;
+        }
+
+        @Override // org.chromium.net.CronetEngine.Builder
+##### java/sources/org/chromium/net/impl/JavaUrlRequest.java
+package org.chromium.net.impl;
+
+import ads_mobile_sdk.id;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.TrafficStats;
+import android.os.Build;
+import android.os.Process;
+import android.util.Log;
+import defpackage.C3290ic;
+import defpackage.W50;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.nio.ByteBuffer;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
+import java.nio.channels.WritableByteChannel;
+import java.time.Duration;
+import java.util.AbstractMap;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
+import java.util.concurrent.Executor;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.chromium.base.metrics.ScopedSysTraceEvent;
+import org.chromium.net.CronetException;
+import org.chromium.net.ExperimentalUrlRequest;
+import org.chromium.net.InlineExecutionProhibitedException;
+import org.chromium.net.ThreadStatsUid;
+import org.chromium.net.UploadDataProvider;
+import org.chromium.net.UrlRequest;
+import org.chromium.net.UrlResponseInfo;
+import org.chromium.net.impl.CronetLogger;
+import org.chromium.net.impl.JavaUrlRequestUtils;
+import org.chromium.net.impl.VersionSafeCallbacks;
+
+/* loaded from: classes2.dex */
+final class JavaUrlRequest extends ExperimentalUrlRequest {
+    private static final int DEFAULT_CHUNK_LENGTH = 8192;
+    private static final String TAG = "JavaUrlRequest";
+    private static final String USER_AGENT = "User-Agent";
+    private static final String X_ANDROID = "X-Android";
+    private static final String X_ANDROID_SELECTED_TRANSPORT = "X-Android-Selected-Transport";
+    private final boolean mAllowDirectExecutor;
+    private final AsyncUrlRequestCallback mCallbackAsync;
+    private final int mCronetEngineId;
+    private String mCurrentUrl;
+    private HttpURLConnection mCurrentUrlConnection;
+    private final JavaCronetEngine mEngine;
+    private final Executor mExecutor;
+    private boolean mFinalUserCallbackThrew;
+    private final String mInitialMethod;
+    private final CronetLogger mLogger;
+    private final long mNetworkHandle;
+    private int mNonfinalUserCallbackExceptionCount;
+    private OutputStreamDataSink mOutputStreamDataSink;
+    private String mPendingRedirectUrl;
+    private int mReadCount;
+    private ReadableByteChannel mResponseChannel;
+    private final VersionSafeCallbacks.UploadDataProviderWrapper mUploadDataProvider;
+    private final Executor mUploadExecutor;
+    private UrlResponseInfoImpl mUrlResponseInfo;
+    private final String mUserAgent;
+    private final Map<String, String> mRequestHeaders = new TreeMap(String.CASE_INSENSITIVE_ORDER);
+    private final List<String> mUrlChain = new ArrayList();
+    private final AtomicInteger mState = new AtomicInteger(0);
+    private final AtomicBoolean mUploadProviderClosed = new AtomicBoolean(false);
+    private volatile int mAdditionalStatusDetails = -1;
+
+    public final class AsyncUrlRequestCallback {
+        static final /* synthetic */ boolean $assertionsDisabled = false;
+        final VersionSafeCallbacks.UrlRequestCallback mCallback;
+        final Executor mFallbackExecutor;
+        final Executor mUserExecutor;
+
+        public AsyncUrlRequestCallback(UrlRequest.Callback callback, Executor executor) {
+            this.mCallback = new VersionSafeCallbacks.UrlRequestCallback(callback);
+            if (JavaUrlRequest.this.mAllowDirectExecutor) {
+                this.mUserExecutor = executor;
+                this.mFallbackExecutor = null;
+            } else {
+                this.mUserExecutor = new JavaUrlRequestUtils.DirectPreventingExecutor(executor);
+                this.mFallbackExecutor = executor;
+            }
+        }
+
+        private CronetLogger.CronetTrafficInfo buildCronetTrafficInfo() {
+            Map<String, List<String>> map;
+            String str;
+            boolean z;
+            int i;
+            long estimateHeadersSizeInBytes;
+            long j;
+            long j2;
+            long j3;
+            Duration ofSeconds;
+            Duration ofSeconds2;
+            CronetLogger.CronetTrafficInfo.RequestTerminalState requestTerminalState;
+            if (JavaUrlRequest.this.mUrlResponseInfo != null) {
+                map = JavaUrlRequest.this.mUrlResponseInfo.getAllHeaders();
+                str = JavaUrlRequest.this.mUrlResponseInfo.getNegotiatedProtocol();
+                int httpStatusCode = JavaUrlRequest.this.mUrlResponseInfo.getHttpStatusCode();
+                z = JavaUrlRequest.this.mUrlResponseInfo.wasCached();
+                i = httpStatusCode;
+            } else {
+                map = Collections.EMPTY_MAP;
+                str = "";
+                z = false;
+                i = 0;
+            }
+            String str2 = str;
+            long j4 = 0;
+            if (z) {
+                estimateHeadersSizeInBytes = 0;
+                j = 0;
+            } else {
+                estimateHeadersSizeInBytes = JavaUrlRequest.estimateHeadersSizeInBytes(JavaUrlRequest.this.mRequestHeaders);
+                j = 0;
+                j4 = -1;
+            }
+            if (z) {
+                j2 = estimateHeadersSizeInBytes;
+                j3 = j;
+            } else {
+                long estimateHeadersSizeInBytesList = JavaUrlRequest.estimateHeadersSizeInBytesList(map);
+                j = map.containsKey("Content-Length") ? JavaUrlRequest.parseContentLengthString(map.get("Content-Length").get(0)) : -1L;
+                j2 = estimateHeadersSizeInBytes;
+                j3 = estimateHeadersSizeInBytesList;
+            }
+##### java/sources/org/chromium/net/impl/JavaCronetEngine.java
+package org.chromium.net.impl;
+
+import android.content.Context;
+import android.os.Process;
+import android.util.Log;
+import defpackage.W50;
+import java.net.Proxy;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLStreamHandler;
+import java.net.URLStreamHandlerFactory;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.chromium.base.metrics.ScopedSysTraceEvent;
+import org.chromium.net.BidirectionalStream;
+import org.chromium.net.ExperimentalBidirectionalStream;
+import org.chromium.net.ExperimentalUrlRequest;
+import org.chromium.net.NetworkQualityRttListener;
+import org.chromium.net.NetworkQualityThroughputListener;
+import org.chromium.net.RequestFinishedInfo;
+import org.chromium.net.UploadDataProvider;
+import org.chromium.net.UrlRequest;
+import org.chromium.net.impl.CronetLogger;
+
+/* loaded from: classes2.dex */
+public final class JavaCronetEngine extends CronetEngineBase {
+    private static final String TAG = "JavaCronetEngine";
+    private final Context mContext;
+    private final int mCronetEngineId;
+    private final ExecutorService mExecutorService;
+    private final CronetLogger mLogger;
+    private final String mUserAgent;
+    private final AtomicInteger mActiveRequestCount = new AtomicInteger();
+    private long mNetworkHandle = -1;
+
+    public JavaCronetEngine(CronetEngineBuilderImpl cronetEngineBuilderImpl) {
+        ScopedSysTraceEvent scoped = ScopedSysTraceEvent.scoped("JavaCronetEngine#JavaCronetEngine");
+        try {
+            Context context = cronetEngineBuilderImpl.getContext();
+            this.mContext = context;
+            int hashCode = hashCode();
+            this.mCronetEngineId = hashCode;
+            this.mUserAgent = cronetEngineBuilderImpl.getUserAgent();
+            this.mExecutorService = new ThreadPoolExecutor(10, 10, 50L, TimeUnit.SECONDS, new LinkedBlockingQueue(), new ThreadFactory() { // from class: org.chromium.net.impl.JavaCronetEngine.1
+                @Override // java.util.concurrent.ThreadFactory
+                public Thread newThread(final Runnable runnable) {
+                    return Executors.defaultThreadFactory().newThread(new Runnable(this) { // from class: org.chromium.net.impl.JavaCronetEngine.1.1
+                        final /* synthetic */ AnonymousClass1 this$1;
+
+                        {
+                            this.this$1 = this;
+                        }
+
+                        @Override // java.lang.Runnable
+                        public void run() {
+                            Thread.currentThread().setName(JavaCronetEngine.TAG);
+                            Process.setThreadPriority(0);
+                            runnable.run();
+                        }
+                    });
+                }
+            });
+            CronetLogger.CronetSource cronetSource = CronetLogger.CronetSource.CRONET_SOURCE_FALLBACK;
+            CronetLogger createLogger = CronetLoggerFactory.createLogger(context, cronetSource);
+            this.mLogger = createLogger;
+            try {
+                createLogger.logCronetEngineCreation(hashCode, cronetEngineBuilderImpl.toLoggerInfo(), buildCronetVersion(), cronetSource);
+            } catch (RuntimeException e) {
+                Log.e(TAG, "Error while trying to log JavaCronetEngine creation: ", e);
+            }
+            Log.w(TAG, "using the fallback Cronet Engine implementation. Performance will suffer and many HTTP client features, including caching, will not work.");
+            if (scoped != null) {
+                scoped.close();
+            }
+        } finally {
+        }
+    }
+
+    private CronetLogger.CronetVersion buildCronetVersion() {
+        return new CronetLogger.CronetVersion(getVersionString().split("/")[1].split("@")[0]);
+    }
+
+    @Override // org.chromium.net.CronetEngine
+    public void addRequestFinishedListener(RequestFinishedInfo.Listener listener) {
+    }
+
+    @Override // org.chromium.net.CronetEngine
+    public void addRttListener(NetworkQualityRttListener networkQualityRttListener) {
+    }
+
+    @Override // org.chromium.net.CronetEngine
+    public void addThroughputListener(NetworkQualityThroughputListener networkQualityThroughputListener) {
+    }
+
+    @Override // org.chromium.net.CronetEngine
+    public void bindToNetwork(long j) {
+        this.mNetworkHandle = j;
+    }
+
+    @Override // org.chromium.net.CronetEngine
+    public void configureNetworkQualityEstimatorForTesting(boolean z, boolean z2, boolean z3) {
+    }
+
+    @Override // org.chromium.net.impl.CronetEngineBase
+    public ExperimentalBidirectionalStream createBidirectionalStream(String str, BidirectionalStream.Callback callback, Executor executor, String str2, List<Map.Entry<String, String>> list, int i, boolean z, Collection<Object> collection, boolean z2, int i2, boolean z3, int i3, long j) {
+        throw new UnsupportedOperationException("Can't create a bidi stream - httpurlconnection doesn't have those APIs");
+    }
+
+    @Override // org.chromium.net.impl.CronetEngineBase
+    public ExperimentalUrlRequest createRequest(String str, UrlRequest.Callback callback, Executor executor, int i, Collection<Object> collection, boolean z, boolean z2, boolean z3, boolean z4, int i2, boolean z5, int i3, RequestFinishedInfo.Listener listener, int i4, long j, String str2, ArrayList<Map.Entry<String, String>> arrayList, UploadDataProvider uploadDataProvider, Executor executor2, byte[] bArr, ByteBuffer byteBuffer, String str3) {
+        if (j != -1) {
+            this.mNetworkHandle = j;
+        }
+        return new JavaUrlRequest(this, callback, this.mExecutorService, executor, str, this.mUserAgent, z3, z4, i2, z5, i3, this.mNetworkHandle, str2, arrayList, uploadDataProvider, executor2);
+    }
+
+    @Override // org.chromium.net.CronetEngine
+    public URLStreamHandlerFactory createURLStreamHandlerFactory() {
+        return new URLStreamHandlerFactory() { // from class: org.chromium.net.impl.JavaCronetEngine.2
+            @Override // java.net.URLStreamHandlerFactory
+            public URLStreamHandler createURLStreamHandler(String str) {
+                return null;
+            }
+        };
+    }
+
+    public void decrementActiveRequestCount() {
+        this.mActiveRequestCount.decrementAndGet();
+    }
+##### java/sources/org/chromium/net/impl/AndroidHttpEngineWrapper.java
+package org.chromium.net.impl;
+
+import android.net.Network;
+import android.net.http.BidirectionalStream;
+import android.net.http.HttpEngine;
+import android.net.http.UrlRequest;
+import android.util.Log;
+import defpackage.W50;
+import java.io.IOException;
+import java.net.Proxy;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLStreamHandlerFactory;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.RejectedExecutionException;
+import org.chromium.net.BidirectionalStream;
+import org.chromium.net.ExperimentalBidirectionalStream;
+import org.chromium.net.ExperimentalUrlRequest;
+import org.chromium.net.RequestFinishedInfo;
+import org.chromium.net.UploadDataProvider;
+import org.chromium.net.UrlRequest;
+import org.chromium.net.impl.VersionSafeCallbacks;
+
+/* loaded from: classes2.dex */
+class AndroidHttpEngineWrapper extends CronetEngineBase {
+    private static final String TAG = "HttpEngineWrapper";
+    private static boolean sGlobalMetricsUnsupportedLogged;
+    private static boolean sNetlogUnsupportedLogged;
+    private final HttpEngine mBackend;
+    private final Map<RequestFinishedInfo.Listener, VersionSafeCallbacks.RequestFinishedInfoListener> mFinishedListenerMap = Collections.synchronizedMap(new HashMap());
+
+    public AndroidHttpEngineWrapper(HttpEngine httpEngine) {
+        this.mBackend = httpEngine;
+    }
+
+    private Network getNetwork(long j) {
+        Network fromNetworkHandle;
+        if (j == -1) {
+            return null;
+        }
+        fromNetworkHandle = Network.fromNetworkHandle(j);
+        return fromNetworkHandle;
+    }
+
+    /* JADX INFO: Access modifiers changed from: private */
+    public /* synthetic */ URLConnection lambda$openConnection$0(URL url) {
+        URLConnection openConnection;
+        openConnection = this.mBackend.openConnection(url);
+        return openConnection;
+    }
+
+    /* JADX INFO: Access modifiers changed from: private */
+    public static /* synthetic */ void lambda$reportRequestFinished$1(VersionSafeCallbacks.RequestFinishedInfoListener requestFinishedInfoListener, RequestFinishedInfo requestFinishedInfo) {
+        try {
+            requestFinishedInfoListener.onRequestFinished(requestFinishedInfo);
+        } catch (Exception e) {
+            Log.e(TAG, "Exception thrown from observation task", e);
+        }
+    }
+
+    @Override // org.chromium.net.CronetEngine
+    public void addRequestFinishedListener(RequestFinishedInfo.Listener listener) {
+        this.mFinishedListenerMap.put(listener, new VersionSafeCallbacks.RequestFinishedInfoListener(listener));
+    }
+
+    @Override // org.chromium.net.CronetEngine
+    public void bindToNetwork(long j) {
+        this.mBackend.bindToNetwork(getNetwork(j));
+    }
+
+    @Override // org.chromium.net.impl.CronetEngineBase
+    public ExperimentalBidirectionalStream createBidirectionalStream(String str, BidirectionalStream.Callback callback, Executor executor, String str2, List<Map.Entry<String, String>> list, int i, boolean z, Collection<Object> collection, boolean z2, int i2, boolean z3, int i3, long j) {
+        BidirectionalStream.Builder newBidirectionalStreamBuilder;
+        android.net.http.BidirectionalStream build;
+        AndroidBidirectionalStreamCallbackWrapper androidBidirectionalStreamCallbackWrapper = new AndroidBidirectionalStreamCallbackWrapper(callback);
+        newBidirectionalStreamBuilder = this.mBackend.newBidirectionalStreamBuilder(str, executor, androidBidirectionalStreamCallbackWrapper);
+        newBidirectionalStreamBuilder.setHttpMethod(str2);
+        for (Map.Entry<String, String> entry : list) {
+            newBidirectionalStreamBuilder.addHeader(entry.getKey(), entry.getValue());
+        }
+        newBidirectionalStreamBuilder.setPriority(i);
+        newBidirectionalStreamBuilder.setDelayRequestHeadersUntilFirstFlushEnabled(z);
+        if (z2) {
+            newBidirectionalStreamBuilder.setTrafficStatsTag(i2);
+        }
+        if (z3) {
+            newBidirectionalStreamBuilder.setTrafficStatsUid(i3);
+        }
+        build = newBidirectionalStreamBuilder.build();
+        return AndroidBidirectionalStreamWrapper.createAndAddToCallback(build, androidBidirectionalStreamCallbackWrapper, this, str, collection);
+    }
+
+    @Override // org.chromium.net.impl.CronetEngineBase
+    public ExperimentalUrlRequest createRequest(String str, UrlRequest.Callback callback, Executor executor, int i, Collection<Object> collection, boolean z, boolean z2, boolean z3, boolean z4, int i2, boolean z5, int i3, RequestFinishedInfo.Listener listener, int i4, long j, String str2, ArrayList<Map.Entry<String, String>> arrayList, UploadDataProvider uploadDataProvider, Executor executor2, byte[] bArr, ByteBuffer byteBuffer, String str3) {
+        UrlRequest.Builder newUrlRequestBuilder;
+        android.net.http.UrlRequest build;
+        AndroidUrlRequestCallbackWrapper androidUrlRequestCallbackWrapper = new AndroidUrlRequestCallbackWrapper(callback);
+        newUrlRequestBuilder = this.mBackend.newUrlRequestBuilder(str, executor, androidUrlRequestCallbackWrapper);
+        newUrlRequestBuilder.setPriority(i);
+        if (z) {
+            newUrlRequestBuilder.setCacheDisabled(z);
+        }
+        if (z3) {
+            newUrlRequestBuilder.setDirectExecutorAllowed(z3);
+        }
+        if (z4) {
+            newUrlRequestBuilder.setTrafficStatsTag(i2);
+        }
+        if (z5) {
+            newUrlRequestBuilder.setTrafficStatsTag(i3);
+        }
+        newUrlRequestBuilder.bindToNetwork(getNetwork(j));
+        newUrlRequestBuilder.setHttpMethod(str2);
+        Iterator<Map.Entry<String, String>> it = arrayList.iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, String> next = it.next();
+            newUrlRequestBuilder.addHeader(next.getKey(), next.getValue());
+        }
+        if (uploadDataProvider != null) {
+            newUrlRequestBuilder.setUploadDataProvider(new AndroidUploadDataProviderWrapper(uploadDataProvider), executor2);
+        }
+        build = newUrlRequestBuilder.build();
+        return AndroidUrlRequestWrapper.createAndAddToCallback(build, androidUrlRequestCallbackWrapper, this, str, collection, listener);
+    }
+
+    @Override // org.chromium.net.CronetEngine
+    public URLStreamHandlerFactory createURLStreamHandlerFactory() {
+        URLStreamHandlerFactory createUrlStreamHandlerFactory;
+        createUrlStreamHandlerFactory = this.mBackend.createUrlStreamHandlerFactory();
+        return createUrlStreamHandlerFactory;
+    }
+
+##### java/sources/org/chromium/net/impl/b.java
+package org.chromium.net.impl;
+
+import android.net.http.UrlResponseInfo;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.ByteBuffer;
+import org.chromium.net.impl.CronetExceptionTranslationUtils;
+import org.chromium.net.impl.JavaUrlRequestUtils;
+
+/* loaded from: classes2.dex */
+public final /* synthetic */ class b implements CronetExceptionTranslationUtils.CronetWork, JavaUrlRequestUtils.CheckedRunnable {
+    public final /* synthetic */ int a;
+    public final /* synthetic */ Object b;
+    public final /* synthetic */ Object c;
+
+    public /* synthetic */ b(int i, Object obj, Object obj2) {
+        this.a = i;
+        this.b = obj;
+        this.c = obj2;
+    }
+
+    @Override // org.chromium.net.impl.CronetExceptionTranslationUtils.CronetWork
+    public Object run() {
+        URLConnection lambda$openConnection$0;
+        Object lambda$onResponseStarted$1;
+        switch (this.a) {
+            case 0:
+                lambda$openConnection$0 = ((AndroidHttpEngineWrapper) this.b).lambda$openConnection$0((URL) this.c);
+                return lambda$openConnection$0;
+            default:
+                lambda$onResponseStarted$1 = ((AndroidUrlRequestCallbackWrapper) this.b).lambda$onResponseStarted$1((UrlResponseInfo) this.c);
+                return lambda$onResponseStarted$1;
+        }
+    }
+
+    @Override // org.chromium.net.impl.JavaUrlRequestUtils.CheckedRunnable
+    /* renamed from: run, reason: collision with other method in class */
+    public void mo28run() {
+        ((JavaUrlRequest) this.b).lambda$read$11((ByteBuffer) this.c);
+    }
+}
+##### java/sources/defpackage/C0240Iw.java
+package defpackage;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+import com.google.android.gms.tasks.Task;
+import java.io.Closeable;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.concurrent.Future;
+
+/* renamed from: Iw, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public final class C0240Iw implements Closeable {
+    public final URL a;
+    public volatile Future b;
+    public Task c;
+
+    public C0240Iw(URL url) {
+        this.a = url;
+    }
+
+    public final Bitmap b() {
+        boolean isLoggable = Log.isLoggable("FirebaseMessaging", 4);
+        URL url = this.a;
+        if (isLoggable) {
+            Log.i("FirebaseMessaging", "Starting download of: " + url);
+        }
+        URLConnection openConnection = url.openConnection();
+        if (openConnection.getContentLength() > 1048576) {
+            throw new IOException("Content-Length exceeds max size of 1048576");
+        }
+        InputStream inputStream = openConnection.getInputStream();
+        try {
+            byte[] c0 = AbstractC0199Hh.c0(new C3208hb(inputStream));
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            if (Log.isLoggable("FirebaseMessaging", 2)) {
+                Log.v("FirebaseMessaging", "Downloaded " + c0.length + " bytes from " + url);
+            }
+            if (c0.length > 1048576) {
+                throw new IOException("Image exceeds max size of 1048576");
+            }
+            Bitmap decodeByteArray = BitmapFactory.decodeByteArray(c0, 0, c0.length);
+            if (decodeByteArray == null) {
+                throw new IOException("Failed to decode image: " + url);
+            }
+            if (Log.isLoggable("FirebaseMessaging", 3)) {
+                Log.d("FirebaseMessaging", "Successfully downloaded image: " + url);
+            }
+            return decodeByteArray;
+        } catch (Throwable th) {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (Throwable th2) {
+                    th.addSuppressed(th2);
+                }
+            }
+            throw th;
+        }
+    }
+
+    @Override // java.io.Closeable, java.lang.AutoCloseable
+    public final void close() {
+        this.b.cancel(true);
+    }
+}
+##### java/sources/defpackage/IY.java
+package defpackage;
+
+import java.net.URL;
+
+/* loaded from: classes.dex */
+public class IY extends AbstractC4154tY {
+    @Override // defpackage.AbstractC4154tY
+    public final Object b(C0295Kz c0295Kz) {
+        if (c0295Kz.C() == 9) {
+            c0295Kz.y();
+            return null;
+        }
+        String A = c0295Kz.A();
+        if (A.equals("null")) {
+            return null;
+        }
+        return new URL(A);
+    }
+
+    @Override // defpackage.AbstractC4154tY
+    public final void c(C0424Pz c0424Pz, Object obj) {
+        URL url = (URL) obj;
+        c0424Pz.y(url == null ? null : url.toExternalForm());
+    }
+}
+##### java/sources/defpackage/C4452xG.java
+package defpackage;
+
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
+import android.database.Cursor;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.location.LocationManager;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.util.TypedValue;
+import android.view.ViewGroup;
+import androidx.webkit.WebViewStartUpResult;
+import androidx.work.OverwritingInputMerger;
+import androidx.work.impl.WorkDatabase_Impl;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.android.libraries.ads.mobile.sdk.banner.AdView;
+import com.google.firebase.messaging.FirebaseMessaging;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import org.chromium.support_lib_boundary.WebViewStartUpResultBoundaryInterface;
+import prince.dastan.vpn.activities.VPNClient;
+
+/* renamed from: xG, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public final class C4452xG implements InterfaceC0440Qp, XQ, InterfaceC0414Pp, P1, WebViewStartUpResult {
+    public static C4452xG e;
+    public final /* synthetic */ int a;
+    public Object b;
+    public Object c;
+    public Object d;
+
+    public /* synthetic */ C4452xG(int i) {
+        this.a = i;
+    }
+
+    public static Object a(Task task) {
+        try {
+            return Tasks.await(task, 30L, TimeUnit.SECONDS);
+        } catch (InterruptedException | TimeoutException e2) {
+            throw new IOException("SERVICE_NOT_AVAILABLE", e2);
+        } catch (ExecutionException e3) {
+            Throwable cause = e3.getCause();
+            if (cause instanceof IOException) {
+                throw ((IOException) cause);
+            }
+            if (cause instanceof RuntimeException) {
+                throw ((RuntimeException) cause);
+            }
+            throw new IOException(e3);
+        }
+    }
+
+    public static C4452xG n(Context context, AttributeSet attributeSet, int[] iArr, int i) {
+        return new C4452xG(context, context.obtainStyledAttributes(attributeSet, iArr, i, 0));
+    }
+
+    public C3745oJ b() {
+        UUID uuid = (UUID) this.b;
+        C3091g50 c3091g50 = (C3091g50) this.c;
+        HashSet hashSet = (HashSet) this.d;
+        C3745oJ c3745oJ = new C3745oJ();
+        c3745oJ.a = uuid;
+        c3745oJ.b = c3091g50;
+        c3745oJ.c = hashSet;
+        C3932qg c3932qg = c3091g50.j;
+        boolean z = c3932qg.h.a.size() > 0 || c3932qg.d || c3932qg.b || c3932qg.c;
+        if (((C3091g50) this.c).q && z) {
+            throw new IllegalArgumentException("Expedited jobs only support network and storage constraints");
+        }
+        this.b = UUID.randomUUID();
+        C3091g50 c3091g502 = (C3091g50) this.c;
+        C3091g50 c3091g503 = new C3091g50();
+        c3091g503.b = 1;
+        C0537Ui c0537Ui = C0537Ui.c;
+        c3091g503.e = c0537Ui;
+        c3091g503.f = c0537Ui;
+        c3091g503.j = C3932qg.i;
+        c3091g503.l = 1;
+        c3091g503.m = 30000L;
+        c3091g503.p = -1L;
+        c3091g503.r = 1;
+        c3091g503.a = c3091g502.a;
+        c3091g503.c = c3091g502.c;
+        c3091g503.b = c3091g502.b;
+        c3091g503.d = c3091g502.d;
+        c3091g503.e = new C0537Ui(c3091g502.e);
+        c3091g503.f = new C0537Ui(c3091g502.f);
+        c3091g503.g = c3091g502.g;
+        c3091g503.h = c3091g502.h;
+        c3091g503.i = c3091g502.i;
+        C3932qg c3932qg2 = c3091g502.j;
+        C3932qg c3932qg3 = new C3932qg();
+        c3932qg3.a = 1;
+        c3932qg3.f = -1L;
+        c3932qg3.g = -1L;
+        c3932qg3.h = new C0094Dg();
+        c3932qg3.b = c3932qg2.b;
+        c3932qg3.c = c3932qg2.c;
+        c3932qg3.a = c3932qg2.a;
+        c3932qg3.d = c3932qg2.d;
+        c3932qg3.e = c3932qg2.e;
+        c3932qg3.h = c3932qg2.h;
+        c3091g503.j = c3932qg3;
+        c3091g503.k = c3091g502.k;
+        c3091g503.l = c3091g502.l;
+        c3091g503.m = c3091g502.m;
+        c3091g503.n = c3091g502.n;
+        c3091g503.o = c3091g502.o;
+        c3091g503.p = c3091g502.p;
+        c3091g503.q = c3091g502.q;
+        c3091g503.r = c3091g502.r;
+        this.c = c3091g503;
+        c3091g503.a = ((UUID) this.b).toString();
+        return c3745oJ;
+    }
+
+    public C3513lP c() {
+        C4395wb a;
+        if (((C2876dP) this.b) == null) {
+            throw new GeneralSecurityException("Cannot build without parameters");
+##### java/sources/defpackage/C3448kc.java
+package defpackage;
+
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
+import android.telephony.TelephonyManager;
+import android.util.SparseArray;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.TimeZone;
+
+/* renamed from: kc, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public final class C3448kc implements InterfaceC2964eY {
+    public final C2835cv a;
+    public final ConnectivityManager b;
+    public final Context c;
+    public final URL d;
+    public final C4227uS e;
+    public final C4227uS f;
+    public final int g;
+
+    public C3448kc(Context context, C4227uS c4227uS, C4227uS c4227uS2) {
+        C4108sz c4108sz = new C4108sz();
+        X6 x6 = X6.a;
+        c4108sz.a(AbstractC4235ua.class, x6);
+        c4108sz.a(C0861c8.class, x6);
+        C2934e7 c2934e7 = C2934e7.a;
+        c4108sz.a(AbstractC3739oD.class, c2934e7);
+        c4108sz.a(C3018f9.class, c2934e7);
+        Y6 y6 = Y6.a;
+        c4108sz.a(AbstractC0350Nd.class, y6);
+        c4108sz.a(C2857d8.class, y6);
+        W6 w6 = W6.a;
+        c4108sz.a(AbstractC3248i4.class, w6);
+        c4108sz.a(C0702a8.class, w6);
+        C2855d7 c2855d7 = C2855d7.a;
+        c4108sz.a(AbstractC3501lD.class, c2855d7);
+        c4108sz.a(C2938e9.class, c2855d7);
+        Z6 z6 = Z6.a;
+        c4108sz.a(AbstractC0901cf.class, z6);
+        c4108sz.a(C2936e8.class, z6);
+        C0859c7 c0859c7 = C0859c7.a;
+        c4108sz.a(AbstractC4414wp.class, c0859c7);
+        c4108sz.a(X8.class, c0859c7);
+        C0780b7 c0780b7 = C0780b7.a;
+        c4108sz.a(AbstractC4335vp.class, c0780b7);
+        c4108sz.a(W8.class, c0780b7);
+        C3014f7 c3014f7 = C3014f7.a;
+        c4108sz.a(PH.class, c3014f7);
+        c4108sz.a(C3178h9.class, c3014f7);
+        C0700a7 c0700a7 = C0700a7.a;
+        c4108sz.a(AbstractC2988ep.class, c0700a7);
+        c4108sz.a(V8.class, c0700a7);
+        c4108sz.d = true;
+        this.a = new C2835cv(c4108sz, 22);
+        this.c = context;
+        this.b = (ConnectivityManager) context.getSystemService("connectivity");
+        this.d = b(C4474xb.c);
+        this.e = c4227uS2;
+        this.f = c4227uS;
+        this.g = 130000;
+    }
+
+    public static URL b(String str) {
+        try {
+            return new URL(str);
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException(W50.m("Invalid url: ", str), e);
+        }
+    }
+
+    /* JADX WARN: Code restructure failed: missing block: B:34:0x00a1, code lost:
+    
+        if (((defpackage.NH) defpackage.NH.a.get(r0)) != null) goto L21;
+     */
+    /* JADX WARN: Removed duplicated region for block: B:16:0x00a7  */
+    /* JADX WARN: Removed duplicated region for block: B:28:0x0107  */
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public final T8 a(T8 t8) {
+        int type;
+        int subtype;
+        HashMap hashMap;
+        NetworkInfo activeNetworkInfo = this.b.getActiveNetworkInfo();
+        S8 c = t8.c();
+        int i = Build.VERSION.SDK_INT;
+        HashMap hashMap2 = c.f;
+        if (hashMap2 == null) {
+            throw new IllegalStateException("Property \"autoMetadata\" has not been set");
+        }
+        hashMap2.put("sdk-version", String.valueOf(i));
+        c.a("model", Build.MODEL);
+        c.a("hardware", Build.HARDWARE);
+        c.a("device", Build.DEVICE);
+        c.a("product", Build.PRODUCT);
+        c.a("os-uild", Build.ID);
+        c.a("manufacturer", Build.MANUFACTURER);
+        c.a("fingerprint", Build.FINGERPRINT);
+        Calendar.getInstance();
+        long offset = TimeZone.getDefault().getOffset(Calendar.getInstance().getTimeInMillis()) / 1000;
+        HashMap hashMap3 = c.f;
+        if (hashMap3 == null) {
+            throw new IllegalStateException("Property \"autoMetadata\" has not been set");
+        }
+        hashMap3.put("tz-offset", String.valueOf(offset));
+        int i2 = -1;
+        if (activeNetworkInfo == null) {
+            SparseArray sparseArray = OH.a;
+            type = -1;
+        } else {
+            type = activeNetworkInfo.getType();
+        }
+        HashMap hashMap4 = c.f;
+        if (hashMap4 == null) {
+            throw new IllegalStateException("Property \"autoMetadata\" has not been set");
+        }
+        hashMap4.put("net-type", String.valueOf(type));
+        if (activeNetworkInfo != null) {
+            subtype = activeNetworkInfo.getSubtype();
+            if (subtype == -1) {
+                SparseArray sparseArray2 = NH.a;
+                subtype = 100;
+            }
+            hashMap = c.f;
+            if (hashMap != null) {
+                throw new IllegalStateException("Property \"autoMetadata\" has not been set");
+            }
+            hashMap.put("mobile-subtype", String.valueOf(subtype));
+            c.a("country", Locale.getDefault().getCountry());
+            c.a("locale", Locale.getDefault().getLanguage());
+            Context context = this.c;
+            String simOperator = ((TelephonyManager) context.getSystemService("phone")).getSimOperator();
+            if (simOperator == null) {
+##### java/sources/defpackage/C3393jw.java
+package defpackage;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.apache.http.HttpResponse;
+import org.apache.http.ProtocolVersion;
+import org.apache.http.entity.BasicHttpEntity;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.message.BasicHttpResponse;
+import org.apache.http.message.BasicStatusLine;
+
+/* renamed from: jw, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public final class C3393jw implements InterfaceC3313iw {
+    public final HttpResponse a(C3599mV c3599mV, Map map) {
+        InputStream errorStream;
+        String d = c3599mV.d();
+        HashMap hashMap = new HashMap();
+        hashMap.putAll(Collections.EMPTY_MAP);
+        hashMap.putAll(map);
+        URL url = new URL(d);
+        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+        int i = c3599mV.j.b;
+        httpURLConnection.setConnectTimeout(i);
+        httpURLConnection.setReadTimeout(i);
+        httpURLConnection.setUseCaches(false);
+        httpURLConnection.setDoInput(true);
+        "https".equals(url.getProtocol());
+        for (String str : hashMap.keySet()) {
+            httpURLConnection.addRequestProperty(str, (String) hashMap.get(str));
+        }
+        httpURLConnection.setRequestMethod("GET");
+        ProtocolVersion protocolVersion = new ProtocolVersion("HTTP", 1, 1);
+        if (httpURLConnection.getResponseCode() == -1) {
+            throw new IOException("Could not retrieve response code from HttpUrlConnection.");
+        }
+        BasicStatusLine basicStatusLine = new BasicStatusLine(protocolVersion, httpURLConnection.getResponseCode(), httpURLConnection.getResponseMessage());
+        BasicHttpResponse basicHttpResponse = new BasicHttpResponse(basicStatusLine);
+        int statusCode = basicStatusLine.getStatusCode();
+        if ((100 > statusCode || statusCode >= 200) && statusCode != 204 && statusCode != 304) {
+            BasicHttpEntity basicHttpEntity = new BasicHttpEntity();
+            try {
+                errorStream = httpURLConnection.getInputStream();
+            } catch (IOException unused) {
+                errorStream = httpURLConnection.getErrorStream();
+            }
+            basicHttpEntity.setContent(errorStream);
+            basicHttpEntity.setContentLength(httpURLConnection.getContentLength());
+            basicHttpEntity.setContentEncoding(httpURLConnection.getContentEncoding());
+            basicHttpEntity.setContentType(httpURLConnection.getContentType());
+            basicHttpResponse.setEntity(basicHttpEntity);
+        }
+        for (Map.Entry<String, List<String>> entry : httpURLConnection.getHeaderFields().entrySet()) {
+            if (entry.getKey() != null) {
+                basicHttpResponse.addHeader(new BasicHeader(entry.getKey(), entry.getValue().get(0)));
+            }
+        }
+        return basicHttpResponse;
+    }
+}
+##### java/sources/defpackage/DL.java
+package defpackage;
+
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.content.res.AssetFileDescriptor;
+import android.os.Build;
+import java.io.File;
+import java.io.IOException;
+
+/* loaded from: classes.dex */
+public abstract class DL {
+    public static final C4144tO a = new C4144tO();
+    public static final Object b = new Object();
+    public static C4254un c = null;
+
+    public static long a(Context context) {
+        PackageManager packageManager = context.getApplicationContext().getPackageManager();
+        return Build.VERSION.SDK_INT >= 33 ? H0.a(packageManager, context).lastUpdateTime : packageManager.getPackageInfo(context.getPackageName(), 0).lastUpdateTime;
+    }
+
+    public static C4254un b() {
+        C4254un c4254un = new C4254un(27);
+        c = c4254un;
+        a.i(c4254un);
+        return c;
+    }
+
+    /* JADX WARN: Can't wrap try/catch for region: R(17:33|34|35|(2:75|76)(1:37)|38|(9:45|(1:49)|(1:56)|57|(2:65|66)|61|62|63|64)|(1:72)(1:(1:74))|(1:49)|(3:51|54|56)|57|(1:59)|65|66|61|62|63|64) */
+    /* JADX WARN: Code restructure failed: missing block: B:70:0x00c5, code lost:
+    
+        r5 = 327680;
+     */
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public static void c(Context context, boolean z) {
+        boolean z2;
+        CL a2;
+        CL cl;
+        int i;
+        if (z || c == null) {
+            synchronized (b) {
+                if (!z) {
+                    if (c != null) {
+                        return;
+                    }
+                }
+                int i2 = 0;
+                try {
+                    AssetFileDescriptor openFd = context.getAssets().openFd("dexopt/baseline.prof");
+                    try {
+                        z2 = openFd.getLength() > 0;
+                        openFd.close();
+                    } finally {
+                    }
+                } catch (IOException unused) {
+                    z2 = false;
+                }
+                int i3 = Build.VERSION.SDK_INT;
+                if (i3 >= 28 && i3 != 30) {
+                    File file = new File(new File("/data/misc/profiles/ref/", context.getPackageName()), "primary.prof");
+                    long length = file.length();
+                    boolean z3 = file.exists() && length > 0;
+                    File file2 = new File(new File("/data/misc/profiles/cur/0/", context.getPackageName()), "primary.prof");
+                    long length2 = file2.length();
+                    boolean z4 = file2.exists() && length2 > 0;
+                    try {
+                        long a3 = a(context);
+                        File file3 = new File(context.getFilesDir(), "profileInstalled");
+                        if (file3.exists()) {
+                            try {
+                                a2 = CL.a(file3);
+                            } catch (IOException unused2) {
+                                b();
+                                return;
+                            }
+                        } else {
+                            a2 = null;
+                        }
+                        if (a2 != null && a2.c == a3 && (i = a2.b) != 2) {
+                            i2 = i;
+                            if (z && z4 && i2 != 1) {
+                                i2 = 2;
+                            }
+                            if (a2 != null && a2.b == 2 && i2 == 1 && length < a2.d) {
+                                i2 = 3;
+                            }
+                            cl = new CL(1, i2, a3, length2);
+                            if (a2 != null || !a2.equals(cl)) {
+                                cl.b(file3);
+                            }
+                            b();
+                            return;
+                        }
+                        if (z3) {
+                            i2 = 1;
+                        } else if (z4) {
+                            i2 = 2;
+                        }
+                        if (z) {
+                            i2 = 2;
+                        }
+                        if (a2 != null) {
+                            i2 = 3;
+                        }
+                        cl = new CL(1, i2, a3, length2);
+                        if (a2 != null) {
+                        }
+                        cl.b(file3);
+                        b();
+                        return;
+                    } catch (PackageManager.NameNotFoundException unused3) {
+                        b();
+                        return;
+                    }
+                }
+                b();
+            }
+        }
+    }
+}
+##### java/sources/defpackage/C3290ic.java
+package defpackage;
+
+import android.content.ClipData;
+import android.content.ClipDescription;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Parcelable;
+import android.text.TextUtils;
+import android.util.Log;
+import androidx.credentials.playservices.HiddenActivity;
+import androidx.webkit.WebViewCompat;
+import androidx.webkit.WebViewStartUpResult;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.crashlytics.CrashlyticsRegistrar;
+import dastan.prince.bdfreevpn.R;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.lang.Thread;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.net.ConnectException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
+import okhttp3.EventListener;
+import org.chromium.net.impl.JavaUrlRequestUtils;
+import org.chromium.net.impl.VersionSafeCallbacks;
+import prince.dastan.vpn.activities.VPNClient;
+import xyz.hasnat.sweettoast.SweetToast;
+
+/* renamed from: ic, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public final /* synthetic */ class C3290ic implements InterfaceC4561yf, DI, InterfaceC0245Jb, InterfaceC0150Fk, Continuation, OX, OnSuccessListener, JavaUrlRequestUtils.CheckedRunnable, WV, EventListener.Factory, InterfaceC4428x1, OnCompleteListener, WebViewCompat.WebViewStartUpCallback {
+    public final /* synthetic */ int a;
+    public final /* synthetic */ Object b;
+
+    public /* synthetic */ C3290ic(Object obj, int i) {
+        this.a = i;
+        this.b = obj;
+    }
+
+    @Override // defpackage.InterfaceC0245Jb
+    public Object a(C0219Ib c0219Ib) {
+        C0202Hk c0202Hk = (C0202Hk) this.b;
+        c0202Hk.invokeOnCompletion(new C0535Ug(0, c0219Ib, c0202Hk));
+        return "Deferred.asListenableFuture";
+    }
+
+    @Override // defpackage.OX
+    public Object apply(Object obj) {
+        ((C0206Ho) this.b).getClass();
+        String e = SR.b.e((RR) obj);
+        AbstractC3634my.f(e, "encode(...)");
+        EnumC0465Ro enumC0465Ro = EnumC0465Ro.b;
+        Log.d("FirebaseSessions", "Session Event Type: SESSION_START");
+        byte[] bytes = e.getBytes(AbstractC0738ad.a);
+        AbstractC3634my.f(bytes, "getBytes(...)");
+        return bytes;
+    }
+
+    @Override // defpackage.InterfaceC0150Fk
+    public void b(ZL zl) {
+        C0043Bh c0043Bh = (C0043Bh) this.b;
+        c0043Bh.getClass();
+        if (Log.isLoggable("FirebaseCrashlytics", 3)) {
+            Log.d("FirebaseCrashlytics", "Crashlytics native component now available.", null);
+        }
+        c0043Bh.b.set((C0043Bh) zl.get());
+    }
+
+    @Override // defpackage.WV
+    public Object c() {
+        SQLiteDatabase b;
+        Object obj = this.b;
+        switch (this.a) {
+            case 21:
+                TP tp = (TP) ((InterfaceC0299Ld) obj);
+                tp.getClass();
+                int i = C0376Od.e;
+                FR fr = new FR();
+                fr.b = null;
+                fr.c = new ArrayList();
+                fr.d = null;
+                fr.a = "";
+                HashMap hashMap = new HashMap();
+                b = tp.b();
+                b.beginTransaction();
+                try {
+                    C0376Od c0376Od = (C0376Od) TP.m(b.rawQuery("SELECT log_source, reason, events_dropped_count FROM log_event_dropped", new String[0]), new C3061fi(tp, hashMap, fr, 4));
+                    b.setTransactionSuccessful();
+                    return c0376Od;
+                } finally {
+                }
+            case 22:
+                TP tp2 = (TP) ((InterfaceC0439Qo) obj);
+                long c = tp2.b.c() - tp2.d.d;
+                b = tp2.b();
+                b.beginTransaction();
+                try {
+                    String[] strArr = {String.valueOf(c)};
+                    Cursor rawQuery = b.rawQuery("SELECT COUNT(*), transport_name FROM events WHERE timestamp_ms < ? GROUP BY transport_name", strArr);
+                    while (rawQuery.moveToNext()) {
+                        try {
+                            tp2.h(rawQuery.getInt(0), EnumC3581mD.MESSAGE_TOO_OLD, rawQuery.getString(1));
+                        } catch (Throwable th) {
+                            rawQuery.close();
+##### java/sources/defpackage/C2853d6.java
+package defpackage;
+
+import android.app.ActivityManager;
+import android.app.KeyguardManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.ClipDescription;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.media.AudioAttributes;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Process;
+import android.os.SystemClock;
+import android.os.Trace;
+import android.text.Editable;
+import android.text.Selection;
+import android.text.TextUtils;
+import android.util.Log;
+import android.util.SparseArray;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import androidx.core.graphics.drawable.IconCompat;
+import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.gms.cloudmessaging.CloudMessagingReceiver;
+import com.google.android.gms.common.internal.Preconditions;
+import com.google.android.gms.common.util.PlatformVersion;
+import com.google.android.gms.fido.fido2.api.common.UserVerificationMethods;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.messaging.FirebaseMessagingService;
+import dastan.prince.bdfreevpn.R;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.ByteBuffer;
+import java.security.GeneralSecurityException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.spec.ECPoint;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.WeakHashMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
+import javax.net.ssl.HttpsURLConnection;
+import org.chromium.net.impl.JavaUploadDataSinkBase;
+
+/* renamed from: d6, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public final class C2853d6 implements InterfaceC0853c4, InterfaceC0774b4, InterfaceC0414Pp, InterfaceC4106sx {
+    public static volatile C2853d6 e;
+    public static final Object f = new Object();
+    public static final C3775oh g = new C3775oh(0);
+    public static final C3854ph h = new C3854ph(0);
+    public static final C3379ji i = new C3379ji();
+    public final /* synthetic */ int a;
+    public Object b;
+    public Object c;
+    public Object d;
+
+    public /* synthetic */ C2853d6(int i2, boolean z) {
+        this.a = i2;
+    }
+
+    public static final C2853d6 A(C4446xA c4446xA) {
+        AbstractC0731aZ c3658nB;
+        boolean z;
+        if (c4446xA.y() <= 0) {
+            throw new GeneralSecurityException("empty keyset");
+        }
+        ArrayList arrayList = new ArrayList(c4446xA.y());
+        for (C4367wA c4367wA : c4446xA.z()) {
+            int A = c4367wA.A();
+            try {
+                c3658nB = c0(c4367wA);
+                z = false;
+            } catch (GeneralSecurityException e2) {
+                if (AbstractC3074fv.a.a.get()) {
+                    throw e2;
+                }
+                c3658nB = new C3658nB(d0(c4367wA));
+                z = true;
+            }
+            if (AbstractC3074fv.a.a.get() && !S(c4367wA.C())) {
+                throw new GeneralSecurityException("Parsing of a single key failed (wrong status) and Tink is configured via validateKeysetsOnParsing to reject such keysets.");
+            }
+            arrayList.add(new AA(c3658nB, c4367wA.C(), A, A == c4446xA.A(), z, AA.h));
+        }
+        return new C2853d6(Collections.unmodifiableList(arrayList), C3742oG.b);
+    }
+
+    public static void B(C2853d6 c2853d6, C0489Sm c0489Sm) {
+        long[] jArr = (long[]) c2853d6.b;
+        C2853d6 c2853d62 = c0489Sm.a;
+        long[] jArr2 = (long[]) c2853d62.b;
+        long[] jArr3 = c0489Sm.b;
+        AbstractC3131gc0.A(jArr, jArr2, jArr3);
+        long[] jArr4 = (long[]) c2853d62.c;
+        long[] jArr5 = (long[]) c2853d6.c;
+        long[] jArr6 = (long[]) c2853d62.d;
+        AbstractC3131gc0.A(jArr5, jArr4, jArr6);
+        AbstractC3131gc0.A((long[]) c2853d6.d, jArr6, jArr3);
+    }
+
+    public static final C2853d6 C(C4195u3 c4195u3) {
+        int i2;
+        EnumC3736oA enumC3736oA;
+        int i3 = 0;
+        C4326vg c4326vg = new C4326vg();
+        C4604zA c4604zA = new C4604zA(c4195u3);
+        C0213Hv c0213Hv = C0213Hv.d;
+        c4604zA.c = c0213Hv;
+##### java/sources/defpackage/S50.java
+package defpackage;
+
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.text.TextUtils;
+import android.util.SparseArray;
+import android.util.TypedValue;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.Window;
+import com.google.android.gms.tasks.Task;
+import dastan.prince.bdfreevpn.R;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.WeakHashMap;
+import java.util.concurrent.CancellationException;
+import org.chromium.base.metrics.ScopedSysTraceEvent;
+import org.lsposed.lsparanoid.Deobfuscator$BDNETVPN$app;
+import prince.dastan.vpn.utils.PUtils;
+
+/* loaded from: classes.dex */
+public abstract class S50 {
+    public static boolean A;
+    public static Class B;
+    public static boolean C;
+    public static Field D;
+    public static boolean E;
+    public static Field F;
+    public static boolean G;
+    public static final C2853d6 d;
+    public static C2853d6 e;
+    public static final S40 l;
+    public static final S40 m;
+    public static final S40 n;
+    public static final S40 o;
+    public static final S40 p;
+    public static boolean v;
+    public static Method w;
+    public static boolean x;
+    public static Field y;
+    public static Field z;
+    public static final Q2 a = new Q2("RESUME_TOKEN", 5);
+    public static final Q2 b = new Q2("REMOVED_TASK", 5);
+    public static final Q2 c = new Q2("CLOSED_EMPTY", 5);
+    public static final Q2 f = new Q2("STATE_REG", 5);
+    public static final Q2 g = new Q2("STATE_COMPLETED", 5);
+    public static final Q2 h = new Q2("STATE_CANCELLED", 5);
+    public static final Q2 i = new Q2("NO_RESULT", 5);
+    public static final Q2 j = new Q2("PARAM_CLAUSE_0", 5);
+    public static final S40 k = new S40(1, 2, 0);
+    public static final S40 q = new S40(11, 12, 6);
+    public static final T50 r = new T50(10);
+    public static final T50 s = new T50(19);
+    public static final C4084sd0 t = new C4084sd0(0);
+    public static final C4084sd0 u = new C4084sd0(9);
+
+    static {
+        Object obj = null;
+        d = new C2853d6(obj, obj, obj, 29);
+        int i2 = 4;
+        l = new S40(3, i2, 1);
+        m = new S40(i2, 5, 2);
+        int i3 = 7;
+        n = new S40(6, i3, 3);
+        int i4 = 8;
+        o = new S40(i3, i4, 4);
+        p = new S40(i4, 9, 5);
+    }
+
+    public static int A(Object obj, InterfaceC4620zQ interfaceC4620zQ, byte[] bArr, int i2, int i3, int i4, C4201u6 c4201u6) {
+        OF of = (OF) interfaceC4620zQ;
+        int i5 = c4201u6.d + 1;
+        c4201u6.d = i5;
+        if (i5 >= 100) {
+            throw new C4107sy("Protocol message had too many levels of nesting.  May be malicious.  Use setRecursionLimit() to increase the recursion depth limit.");
+        }
+        int F2 = of.F(obj, bArr, i2, i3, i4, c4201u6);
+        c4201u6.d--;
+        c4201u6.c = obj;
+        return F2;
+    }
+
+    public static int B(Object obj, InterfaceC4620zQ interfaceC4620zQ, byte[] bArr, int i2, int i3, C4201u6 c4201u6) {
+        int i4 = i2 + 1;
+        int i5 = bArr[i2];
+        if (i5 < 0) {
+            i4 = k(i5, bArr, i4, c4201u6);
+            i5 = c4201u6.a;
+        }
+        int i6 = i4;
+        if (i5 < 0 || i5 > i3 - i6) {
+            throw C4107sy.e();
+        }
+        int i7 = c4201u6.d + 1;
+        c4201u6.d = i7;
+        if (i7 >= 100) {
+            throw new C4107sy("Protocol message had too many levels of nesting.  May be malicious.  Use setRecursionLimit() to increase the recursion depth limit.");
+        }
+        int i8 = i6 + i5;
+        interfaceC4620zQ.g(obj, bArr, i6, i8, c4201u6);
+        c4201u6.d--;
+        c4201u6.c = obj;
+        return i8;
+    }
+
+    /* JADX WARN: Code restructure failed: missing block: B:69:0x014a, code lost:
+    
+        continue;
+     */
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public static C4218uJ C(C4316vb... c4316vbArr) {
+        int i2;
+        int i3 = 0;
+        if (c4316vbArr.length == 0) {
+            return new C4218uJ(new C4316vb[0], new int[]{0, -1});
+        }
+        ArrayList arrayList = new ArrayList(new C4122t6(c4316vbArr, false));
+        if (arrayList.size() > 1) {
+            Collections.sort(arrayList);
+##### java/sources/defpackage/DialogInterfaceOnCancelListenerC0471Ru.java
+package defpackage;
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.Toast;
+import dastan.prince.bdfreevpn.R;
+import java.net.URL;
+import prince.dastan.vpn.activities.VPNClient;
+
+/* renamed from: Ru, reason: case insensitive filesystem */
+/* loaded from: classes2.dex */
+public final class DialogInterfaceOnCancelListenerC0471Ru implements DialogInterface.OnCancelListener, View.OnClickListener, AdapterView.OnItemSelectedListener, RadioGroup.OnCheckedChangeListener {
+    public View a;
+    public RadioGroup b;
+    public V3 c;
+    public Context d;
+    public C0136Ew e;
+    public SharedPreferences f;
+    public SharedPreferences.Editor g;
+    public EditText h;
+    public Spinner i;
+    public Spinner j;
+    public RadioGroup k;
+    public CheckBox l;
+    public CheckBox m;
+    public CheckBox n;
+    public CheckBox o;
+    public CheckBox p;
+    public CheckBox q;
+    public Button r;
+
+    public final String a() {
+        int selectedItemPosition = this.j.getSelectedItemPosition();
+        RadioGroup radioGroup = this.b;
+        int indexOfChild = radioGroup.indexOfChild(radioGroup.findViewById(radioGroup.getCheckedRadioButtonId()));
+        if (selectedItemPosition == 0) {
+            return "[crlf]";
+        }
+        if (selectedItemPosition == 1) {
+            return "[crlf][crlf]";
+        }
+        if (selectedItemPosition != 2) {
+            return null;
+        }
+        return indexOfChild == 2 ? "[crlf][crlf]" : "[crlf]";
+    }
+
+    /* JADX WARN: Code restructure failed: missing block: B:27:0x00c9, code lost:
+    
+        if (r2 != 2) goto L34;
+     */
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public final String b() {
+        String D = W50.D("http://", this.h.getText().toString(), "/");
+        try {
+            D = new URL(D).getHost();
+        } catch (Exception unused) {
+        }
+        String D2 = W50.D("Host: ", D, "[crlf]");
+        String D3 = this.l.isChecked() ? W50.D("X-Online-Host: ", D, "[crlf]") : "";
+        String D4 = this.m.isChecked() ? W50.D("X-Forward-Host: ", D, "[crlf]") : "";
+        String D5 = this.n.isChecked() ? W50.D("X-Forwarded-For: ", D, "[crlf]") : "";
+        String str = this.p.isChecked() ? "Proxy-Authorization: [auth][crlf]" : "";
+        String str2 = this.o.isChecked() ? "Connection: Keep-Alive[crlf]" : "";
+        StringBuilder sb = new StringBuilder();
+        sb.append((String) this.i.getSelectedItem());
+        sb.append(" ");
+        sb.append("http://" + this.h.getText().toString() + "/");
+        sb.append(" ");
+        int selectedItemPosition = this.j.getSelectedItemPosition();
+        RadioGroup radioGroup = this.b;
+        int indexOfChild = radioGroup.indexOfChild(radioGroup.findViewById(radioGroup.getCheckedRadioButtonId()));
+        String str3 = "HTTP/1.1";
+        if (indexOfChild != 0 && indexOfChild != 1) {
+            if (indexOfChild == 2) {
+                if (selectedItemPosition != 0) {
+                    if (selectedItemPosition != 1) {
+                    }
+                }
+                str3 = "[protocol]";
+            }
+            str3 = null;
+        }
+        String q = W50.q(str3, "[crlf]", sb);
+        String str4 = this.q.isChecked() ? "CONNECT [host_port] [protocol][crlf][crlf]" : "[crlf]";
+        RadioGroup radioGroup2 = this.k;
+        int indexOfChild2 = radioGroup2.indexOfChild(radioGroup2.findViewById(radioGroup2.getCheckedRadioButtonId()));
+        String str5 = this.b.getCheckedRadioButtonId() == R.id.split_instant ? "[instant_split]" : this.b.getCheckedRadioButtonId() == R.id.split_delay ? "[delay_split]" : this.b.getCheckedRadioButtonId() == R.id.split_none ? "" : null;
+        int selectedItemPosition2 = this.j.getSelectedItemPosition();
+        if (selectedItemPosition2 == 0) {
+            StringBuilder sb2 = new StringBuilder("CONNECT ");
+            sb2.append(c(indexOfChild2, D, a()));
+            sb2.append(D2);
+            ZT.s(sb2, D3, D4, D5, str);
+            return W50.q(str2, str4, sb2);
+        }
+        if (selectedItemPosition2 != 1) {
+            if (selectedItemPosition2 != 2) {
+                return "";
+            }
+            StringBuilder sb3 = new StringBuilder("CONNECT ");
+            sb3.append(c(indexOfChild2, D, a()));
+            sb3.append(str5);
+            ZT.s(sb3, q, D2, D3, D4);
+            return W50.v(sb3, D5, str, str2, str4);
+        }
+        StringBuilder sb4 = new StringBuilder();
+        sb4.append(q);
+        sb4.append(D2);
+        sb4.append(D3);
+        sb4.append(D4);
+        sb4.append(D5);
+        ZT.s(sb4, str, str2, "[crlf]", str5);
+        sb4.append("CONNECT ");
+        return W50.q(c(indexOfChild2, D, "[crlf]"), str4, sb4);
+    }
+
+    /* JADX WARN: Code restructure failed: missing block: B:10:0x003a, code lost:
+    
+        r6 = "HTTP/1.1";
+     */
+    /* JADX WARN: Code restructure failed: missing block: B:11:0x003c, code lost:
+    
+        if (r2 == 2) goto L14;
+     */
+    /* JADX WARN: Code restructure failed: missing block: B:9:0x0038, code lost:
+    
+        if (r2 == 2) goto L14;
+     */
+##### java/sources/defpackage/C3144gl.java
+package defpackage;
+
+import android.content.Context;
+import android.net.Uri;
+import android.text.TextUtils;
+import android.util.Log;
+import java.io.IOException;
+import java.io.InputStream;
+
+/* renamed from: gl, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public final class C3144gl {
+    public final String a;
+    public final String b;
+
+    public C3144gl(ML ml) {
+        int A = AbstractC0325Me.A((Context) ml.b, "com.google.firebase.crashlytics.unity_version", "string");
+        Context context = (Context) ml.b;
+        if (A != 0) {
+            this.a = "Unity";
+            String string = context.getResources().getString(A);
+            this.b = string;
+            String m = W50.m("Unity Editor version is: ", string);
+            if (Log.isLoggable("FirebaseCrashlytics", 2)) {
+                Log.v("FirebaseCrashlytics", m, null);
+                return;
+            }
+            return;
+        }
+        if (context.getAssets() != null) {
+            try {
+                InputStream open = context.getAssets().open("flutter_assets/NOTICES.Z");
+                if (open != null) {
+                    open.close();
+                }
+                this.a = "Flutter";
+                this.b = null;
+                if (Log.isLoggable("FirebaseCrashlytics", 2)) {
+                    Log.v("FirebaseCrashlytics", "Development platform is: Flutter", null);
+                    return;
+                }
+                return;
+            } catch (IOException unused) {
+            }
+        }
+        this.a = null;
+        this.b = null;
+    }
+
+    public C3144gl(C2835cv c2835cv) {
+        this.a = c2835cv.B("gcm.n.title");
+        c2835cv.x("gcm.n.title");
+        Object[] w = c2835cv.w("gcm.n.title");
+        if (w != null) {
+            String[] strArr = new String[w.length];
+            for (int i = 0; i < w.length; i++) {
+                strArr[i] = String.valueOf(w[i]);
+            }
+        }
+        this.b = c2835cv.B("gcm.n.body");
+        c2835cv.x("gcm.n.body");
+        Object[] w2 = c2835cv.w("gcm.n.body");
+        if (w2 != null) {
+            String[] strArr2 = new String[w2.length];
+            for (int i2 = 0; i2 < w2.length; i2++) {
+                strArr2[i2] = String.valueOf(w2[i2]);
+            }
+        }
+        c2835cv.B("gcm.n.icon");
+        if (TextUtils.isEmpty(c2835cv.B("gcm.n.sound2"))) {
+            c2835cv.B("gcm.n.sound");
+        }
+        c2835cv.B("gcm.n.tag");
+        c2835cv.B("gcm.n.color");
+        c2835cv.B("gcm.n.click_action");
+        c2835cv.B("gcm.n.android_channel_id");
+        String B = c2835cv.B("gcm.n.link_android");
+        B = TextUtils.isEmpty(B) ? c2835cv.B("gcm.n.link") : B;
+        if (!TextUtils.isEmpty(B)) {
+            Uri.parse(B);
+        }
+        c2835cv.B("gcm.n.image");
+        c2835cv.B("gcm.n.ticker");
+        c2835cv.s("gcm.n.notification_priority");
+        c2835cv.s("gcm.n.visibility");
+        c2835cv.s("gcm.n.notification_count");
+        c2835cv.o("gcm.n.sticky");
+        c2835cv.o("gcm.n.local_only");
+        c2835cv.o("gcm.n.default_sound");
+        c2835cv.o("gcm.n.default_vibrate_timings");
+        c2835cv.o("gcm.n.default_light_settings");
+        c2835cv.y();
+        c2835cv.v();
+        c2835cv.C();
+    }
+}
+##### java/sources/defpackage/C0172Gg.java
+package defpackage;
+
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.content.res.AssetManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
+import android.view.LayoutInflater;
+import dastan.prince.bdfreevpn.R;
+
+/* renamed from: Gg, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public final class C0172Gg extends ContextWrapper {
+    public static Configuration f;
+    public int a;
+    public Resources.Theme b;
+    public LayoutInflater c;
+    public Configuration d;
+    public Resources e;
+
+    public C0172Gg(Context context, int i) {
+        super(context);
+        this.a = i;
+    }
+
+    public final void a(Configuration configuration) {
+        if (this.e != null) {
+            throw new IllegalStateException("getResources() or getAssets() has already been called");
+        }
+        if (this.d != null) {
+            throw new IllegalStateException("Override configuration has already been set");
+        }
+        this.d = new Configuration(configuration);
+    }
+
+    @Override // android.content.ContextWrapper
+    public final void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
+    }
+
+    public final void b() {
+        if (this.b == null) {
+            this.b = getResources().newTheme();
+            Resources.Theme theme = getBaseContext().getTheme();
+            if (theme != null) {
+                this.b.setTo(theme);
+            }
+        }
+        this.b.applyStyle(this.a, true);
+    }
+
+    @Override // android.content.ContextWrapper, android.content.Context
+    public final AssetManager getAssets() {
+        return getResources().getAssets();
+    }
+
+    /* JADX WARN: Code restructure failed: missing block: B:11:0x0022, code lost:
+    
+        if (r0.equals(defpackage.C0172Gg.f) != false) goto L15;
+     */
+    @Override // android.content.ContextWrapper, android.content.Context
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public final Resources getResources() {
+        if (this.e == null) {
+            Configuration configuration = this.d;
+            if (configuration != null) {
+                if (Build.VERSION.SDK_INT >= 26) {
+                    if (f == null) {
+                        Configuration configuration2 = new Configuration();
+                        configuration2.fontScale = 0.0f;
+                        f = configuration2;
+                    }
+                }
+                this.e = createConfigurationContext(this.d).getResources();
+            }
+            this.e = super.getResources();
+        }
+        return this.e;
+    }
+
+    @Override // android.content.ContextWrapper, android.content.Context
+    public final Object getSystemService(String str) {
+        if (!"layout_inflater".equals(str)) {
+            return getBaseContext().getSystemService(str);
+        }
+        if (this.c == null) {
+            this.c = LayoutInflater.from(getBaseContext()).cloneInContext(this);
+        }
+        return this.c;
+    }
+
+    @Override // android.content.ContextWrapper, android.content.Context
+    public final Resources.Theme getTheme() {
+        Resources.Theme theme = this.b;
+        if (theme != null) {
+            return theme;
+        }
+        if (this.a == 0) {
+            this.a = R.style.Theme_AppCompat_Light;
+        }
+        b();
+        return this.b;
+    }
+
+    @Override // android.content.ContextWrapper, android.content.Context
+    public final void setTheme(int i) {
+        if (this.a != i) {
+            this.a = i;
+            b();
+        }
+    }
+}
+##### java/sources/defpackage/M30.java
+package defpackage;
+
+import ads_mobile_sdk.hq0;
+import ads_mobile_sdk.mm0;
+import ads_mobile_sdk.ni;
+import ads_mobile_sdk.ou1;
+import ads_mobile_sdk.t8;
+import ads_mobile_sdk.x8;
+import android.app.ActivityManager;
+import android.app.KeyguardManager;
+import android.content.Context;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Build;
+import android.os.PowerManager;
+import android.os.Process;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import java.net.URL;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+/* loaded from: classes.dex */
+public abstract class M30 {
+    public static int a = 2;
+
+    /* JADX WARN: Removed duplicated region for block: B:12:? A[RETURN, SYNTHETIC] */
+    /* JADX WARN: Removed duplicated region for block: B:5:0x000f A[EXC_TOP_SPLITTER, SYNTHETIC] */
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public static final Integer a(C0139Ez c0139Ez, String str) {
+        C0139Ez A;
+        int i = ou1.h;
+        if (c0139Ez != null) {
+            try {
+                A = c0139Ez.A(str);
+            } catch (Exception unused) {
+            }
+            if (A != null) {
+                return null;
+            }
+            try {
+                return Integer.valueOf(Color.rgb(A.y("r").e(), A.y("g").e(), A.y("b").e()));
+            } catch (Exception unused2) {
+                return null;
+            }
+        }
+        A = null;
+        if (A != null) {
+        }
+    }
+
+    /* JADX WARN: Code restructure failed: missing block: B:35:0x002b, code lost:
+    
+        continue;
+     */
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public static String b(ni niVar, String str, String str2) {
+        AbstractC3634my.g(str, "adUnitId");
+        AbstractC3634my.g(str2, "format");
+        Map r = niVar.r();
+        String lowerCase = str2.toLowerCase(Locale.ROOT);
+        AbstractC3634my.f(lowerCase, "toLowerCase(...)");
+        x8 x8Var = (x8) r.get(lowerCase);
+        if (x8Var == null) {
+            return "";
+        }
+        for (t8 t8Var : x8Var.o()) {
+            List q = t8Var.q();
+            AbstractC3634my.f(q, "getIncludingRegexesList(...)");
+            if (!(q instanceof Collection) || !q.isEmpty()) {
+                Iterator it = q.iterator();
+                while (true) {
+                    if (it.hasNext()) {
+                        String str3 = (String) it.next();
+                        AbstractC3634my.d(str3);
+                        Pattern compile = Pattern.compile(str3);
+                        AbstractC3634my.f(compile, "compile(...)");
+                        String lowerCase2 = str.toLowerCase(Locale.ROOT);
+                        AbstractC3634my.f(lowerCase2, "toLowerCase(...)");
+                        if (compile.matcher(lowerCase2).matches()) {
+                            List<String> p = t8Var.p();
+                            AbstractC3634my.f(p, "getExcludingRegexesList(...)");
+                            if (!(p instanceof Collection) || !p.isEmpty()) {
+                                for (String str4 : p) {
+                                    AbstractC3634my.d(str4);
+                                    Pattern compile2 = Pattern.compile(str4);
+                                    AbstractC3634my.f(compile2, "compile(...)");
+                                    String lowerCase3 = str.toLowerCase(Locale.ROOT);
+                                    AbstractC3634my.f(lowerCase3, "toLowerCase(...)");
+                                    if (compile2.matcher(lowerCase3).matches()) {
+                                        break;
+                                    }
+                                }
+                            }
+                            String o = t8Var.o();
+                            AbstractC3634my.f(o, "getEffectiveAdUnitId(...)");
+                            String lowerCase4 = o.toLowerCase(Locale.ROOT);
+                            AbstractC3634my.f(lowerCase4, "toLowerCase(...)");
+                            return lowerCase4;
+                        }
+                    }
+                }
+            }
+        }
+        return "";
+    }
+
+    public static final URL c(URL url, mm0 mm0Var, hq0 hq0Var) {
+        String str;
+        AbstractC3634my.g(url, "<this>");
+        AbstractC3634my.g(mm0Var, "firebaseAnalyticsIds");
+        String url2 = url.toString();
+        AbstractC3634my.f(url2, "toString(...)");
+        if (hq0Var == null || (str = hq0Var.L()) == null) {
+            str = "%5Bgw_fbsaeid%5D";
+        }
+        Uri.Builder buildUpon = Uri.parse(AbstractC4388wV.t0(url2, str, mm0Var.c)).buildUpon();
+        buildUpon.appendQueryParameter("gmp_app_id", mm0Var.a);
+        buildUpon.appendQueryParameter("fbs_aiid", mm0Var.b);
+        if (buildUpon.build().getQueryParameter("fbs_aeid") == null) {
+            buildUpon.appendQueryParameter("fbs_aeid", mm0Var.c);
+        }
+        return new URL(buildUpon.build().toString());
+    }
+
+    public static void d(String str) {
+        if (Log.isLoggable("InstallReferrerClient", 2)) {
+            Log.v("InstallReferrerClient", str);
+        }
+    }
+
+##### java/sources/defpackage/AbstractC0199Hh.java
+package defpackage;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.graphics.Typeface;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
+import com.google.android.gms.common.api.Api;
+import com.google.android.gms.fido.fido2.api.common.UserVerificationMethods;
+import com.google.common.util.concurrent.ListenableFuture;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.lang.reflect.GenericArrayType;
+import java.lang.reflect.GenericDeclaration;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.chromium.net.impl.JavaUploadDataSinkBase;
+
+/* renamed from: Hh, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public abstract class AbstractC0199Hh {
+    public static final int[] a = new int[0];
+    public static final Object[] b = new Object[0];
+    public static final Type[] c = new Type[0];
+    public static final C4254un d = new C4254un(26);
+    public static final Q2 e = new Q2("NONE", 5);
+    public static final Q2 f = new Q2("PENDING", 5);
+    public static final T50 g = new T50(4);
+    public static final T50 h = new T50(14);
+    public static final T50 i = new T50(24);
+    public static final Ad0 j = new Ad0();
+
+    public AbstractC0199Hh() {
+        new ConcurrentHashMap();
+    }
+
+    public static final Object F(long j2, InterfaceC0198Hg interfaceC0198Hg) {
+        C4471xZ c4471xZ = C4471xZ.a;
+        if (j2 > 0) {
+            C0582Wb c0582Wb = new C0582Wb(1, S50.w(interfaceC0198Hg));
+            c0582Wb.s();
+            if (j2 < Long.MAX_VALUE) {
+                L(c0582Wb.e).b(j2, c0582Wb);
+            }
+            Object r = c0582Wb.r();
+            if (r == EnumC3299ih.a) {
+                return r;
+            }
+        }
+        return c4471xZ;
+    }
+
+    public static final Object G(long j2, InterfaceC0198Hg interfaceC0198Hg) {
+        Object F = F(d0(j2), interfaceC0198Hg);
+        return F == EnumC3299ih.a ? F : C4471xZ.a;
+    }
+
+    /* JADX WARN: Code restructure failed: missing block: B:27:0x008e, code lost:
+    
+        if (r2.emit(r11, r0) == r1) goto L37;
+     */
+    /* JADX WARN: Removed duplicated region for block: B:16:0x0067  */
+    /* JADX WARN: Removed duplicated region for block: B:19:0x0068  */
+    /* JADX WARN: Removed duplicated region for block: B:22:0x0074 A[Catch: all -> 0x0035, TryCatch #0 {all -> 0x0035, blocks: (B:12:0x002f, B:14:0x0057, B:20:0x006c, B:22:0x0074, B:24:0x007a, B:26:0x0080, B:28:0x0091, B:29:0x0099, B:30:0x009a, B:31:0x00a1, B:39:0x0048, B:42:0x0053), top: B:7:0x0021 }] */
+    /* JADX WARN: Removed duplicated region for block: B:32:0x00a2  */
+    /* JADX WARN: Removed duplicated region for block: B:40:0x004c  */
+    /* JADX WARN: Removed duplicated region for block: B:9:0x0023  */
+    /* JADX WARN: Unsupported multi-entry loop pattern (BACK_EDGE: B:27:0x008e -> B:13:0x0032). Please report as a decompilation issue!!! */
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public static final Object H(InterfaceC0494Sr interfaceC0494Sr, TM tm, boolean z, InterfaceC0198Hg interfaceC0198Hg) {
+        C0520Tr c0520Tr;
+        int i2;
+        C0529Ua it;
+        C0529Ua c0529Ua;
+        InterfaceC0494Sr interfaceC0494Sr2;
+        Object b2;
+        try {
+            if (interfaceC0198Hg instanceof C0520Tr) {
+                c0520Tr = (C0520Tr) interfaceC0198Hg;
+                int i3 = c0520Tr.y;
+                if ((i3 & Integer.MIN_VALUE) != 0) {
+                    c0520Tr.y = i3 - Integer.MIN_VALUE;
+                    Object obj = c0520Tr.x;
+                    EnumC3299ih enumC3299ih = EnumC3299ih.a;
+                    i2 = c0520Tr.y;
+                    if (i2 != 0) {
+                        W80.U(obj);
+                        if (interfaceC0494Sr instanceof PW) {
+                            throw ((PW) interfaceC0494Sr).a;
+                        }
+                        it = tm.iterator();
+                        c0520Tr.t = interfaceC0494Sr;
+                        c0520Tr.u = tm;
+                        c0520Tr.v = it;
+                        c0520Tr.w = z;
+                        c0520Tr.y = 1;
+                        b2 = it.b(c0520Tr);
+                        if (b2 != enumC3299ih) {
+                        }
+                    } else if (i2 == 1) {
+                        z = c0520Tr.w;
+                        c0529Ua = c0520Tr.v;
+                        tm = c0520Tr.u;
+##### java/sources/defpackage/C3045fZ.java
+package defpackage;
+
+import android.content.Context;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.graphics.Typeface;
+import android.graphics.fonts.FontVariationAxis;
+import android.net.Uri;
+import android.os.ParcelFileDescriptor;
+import android.util.Log;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.nio.ByteBuffer;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+/* renamed from: fZ, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public class C3045fZ extends C2886dZ {
+    public final Class p;
+    public final Constructor q;
+    public final Method r;
+    public final Method s;
+    public final Method t;
+    public final Method u;
+    public final Method v;
+
+    public C3045fZ() {
+        Class<?> cls;
+        Method method;
+        Constructor<?> constructor;
+        Method method2;
+        Method method3;
+        Method method4;
+        Method method5;
+        try {
+            cls = Class.forName("android.graphics.FontFamily");
+            constructor = cls.getConstructor(new Class[0]);
+            method2 = n0(cls);
+            Class cls2 = Integer.TYPE;
+            method3 = cls.getMethod("addFontFromBuffer", ByteBuffer.class, cls2, FontVariationAxis[].class, cls2, cls2);
+            method4 = cls.getMethod("freeze", new Class[0]);
+            method = cls.getMethod("abortCreation", new Class[0]);
+            method5 = o0(cls);
+        } catch (ClassNotFoundException | NoSuchMethodException e) {
+            Log.e("TypefaceCompatApi26Impl", "Unable to collect necessary methods for class ".concat(e.getClass().getName()), e);
+            cls = null;
+            method = null;
+            constructor = null;
+            method2 = null;
+            method3 = null;
+            method4 = null;
+            method5 = null;
+        }
+        this.p = cls;
+        this.q = constructor;
+        this.r = method2;
+        this.s = method3;
+        this.t = method4;
+        this.u = method;
+        this.v = method5;
+    }
+
+    public static Method n0(Class cls) {
+        Class cls2 = Integer.TYPE;
+        return cls.getMethod("addFontFromAssetManager", AssetManager.class, String.class, cls2, Boolean.TYPE, cls2, cls2, cls2, FontVariationAxis[].class);
+    }
+
+    @Override // defpackage.C2886dZ, defpackage.AbstractC0199Hh
+    public final Typeface A(Context context, C0054Bs c0054Bs, Resources resources, int i) {
+        Method method = this.r;
+        if (method == null) {
+            Log.w("TypefaceCompatApi26Impl", "Unable to collect necessary private methods. Fallback to legacy implementation.");
+        }
+        if (method == null) {
+            return super.A(context, c0054Bs, resources, i);
+        }
+        Object m0 = m0();
+        if (m0 != null) {
+            C0080Cs[] c0080CsArr = c0054Bs.a;
+            int length = c0080CsArr.length;
+            int i2 = 0;
+            while (i2 < length) {
+                C0080Cs c0080Cs = c0080CsArr[i2];
+                String str = c0080Cs.a;
+                FontVariationAxis[] fromFontVariationSettings = FontVariationAxis.fromFontVariationSettings(c0080Cs.d);
+                Context context2 = context;
+                if (!j0(context2, m0, str, c0080Cs.e, c0080Cs.b, c0080Cs.c ? 1 : 0, fromFontVariationSettings)) {
+                    i0(m0);
+                    return null;
+                }
+                i2++;
+                context = context2;
+            }
+            if (l0(m0)) {
+                return k0(m0);
+            }
+        }
+        return null;
+    }
+
+    @Override // defpackage.C2886dZ, defpackage.AbstractC0199Hh
+    public final Typeface B(Context context, C0132Es[] c0132EsArr, int i) {
+        Typeface k0;
+        boolean z;
+        if (c0132EsArr.length >= 1) {
+            Method method = this.r;
+            if (method == null) {
+                Log.w("TypefaceCompatApi26Impl", "Unable to collect necessary private methods. Fallback to legacy implementation.");
+            }
+            if (method != null) {
+                HashMap hashMap = new HashMap();
+                for (C0132Es c0132Es : c0132EsArr) {
+                    if (c0132Es.f == 0) {
+                        Uri uri = c0132Es.a;
+                        if (!hashMap.containsKey(uri)) {
+                            hashMap.put(uri, AbstractC0641Yi.F(context, uri));
+                        }
+                    }
+                }
+                Map unmodifiableMap = Collections.unmodifiableMap(hashMap);
+                Object m0 = m0();
+                if (m0 != null) {
+                    int length = c0132EsArr.length;
+                    int i2 = 0;
+                    boolean z2 = false;
+                    while (i2 < length) {
+                        C0132Es c0132Es2 = c0132EsArr[i2];
+                        ByteBuffer byteBuffer = (ByteBuffer) unmodifiableMap.get(c0132Es2.a);
+                        if (byteBuffer != null) {
+                            try {
+                                z = ((Boolean) this.s.invoke(m0, byteBuffer, Integer.valueOf(c0132Es2.b), null, Integer.valueOf(c0132Es2.c), Integer.valueOf(c0132Es2.d ? 1 : 0))).booleanValue();
+                            } catch (IllegalAccessException | InvocationTargetException unused) {
+                                z = false;
+                            }
+                            if (!z) {
+##### java/sources/defpackage/C3150gr.java
+package defpackage;
+
+import android.net.TrafficStats;
+import android.text.TextUtils;
+import android.util.Log;
+import com.google.android.gms.common.internal.Preconditions;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Pattern;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+/* renamed from: gr, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public final class C3150gr implements InterfaceC3230hr {
+    public static final Object m = new Object();
+    public final C0493Sq a;
+    public final C2990er b;
+    public final C0595Wo c;
+    public final E00 d;
+    public final VA e;
+    public final LM f;
+    public final Object g;
+    public final ExecutorService h;
+    public final ExecutorC3832pR i;
+    public String j;
+    public final HashSet k;
+    public final ArrayList l;
+
+    static {
+        new AtomicInteger(1);
+    }
+
+    public C3150gr(C0493Sq c0493Sq, ZL zl, ExecutorService executorService, ExecutorC3832pR executorC3832pR) {
+        c0493Sq.a();
+        C2990er c2990er = new C2990er(c0493Sq.a, zl);
+        C0595Wo c0595Wo = new C0595Wo(12, (Object) c0493Sq, false);
+        if (RT.b == null) {
+            RT.b = new RT(3);
+        }
+        RT rt = RT.b;
+        if (E00.d == null) {
+            E00.d = new E00(rt);
+        }
+        E00 e00 = E00.d;
+        VA va = new VA(new C4482xf(c0493Sq, 2));
+        LM lm = new LM();
+        this.g = new Object();
+        this.k = new HashSet();
+        this.l = new ArrayList();
+        this.a = c0493Sq;
+        this.b = c2990er;
+        this.c = c0595Wo;
+        this.d = e00;
+        this.e = va;
+        this.f = lm;
+        this.h = executorService;
+        this.i = executorC3832pR;
+    }
+
+    /* JADX WARN: Code restructure failed: missing block: B:12:0x0020, code lost:
+    
+        r3 = f(r2);
+        r4 = r6.c;
+        r2 = r2.a();
+        r2.a = r3;
+        r2.b = 3;
+        r2 = r2.a();
+        r4.B(r2);
+     */
+    /* JADX WARN: Finally extract failed */
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public final void a() {
+        C3416k9 J;
+        synchronized (m) {
+            try {
+                C0493Sq c0493Sq = this.a;
+                c0493Sq.a();
+                ML c = ML.c(c0493Sq.a);
+                try {
+                    J = this.c.J();
+                    int i = J.b;
+                    boolean z = true;
+                    if (i != 2 && i != 1) {
+                        z = false;
+                    }
+                    if (c != null) {
+                        c.v();
+                    }
+                } catch (Throwable th) {
+                    if (c != null) {
+                        c.v();
+                    }
+                    throw th;
+                }
+            } catch (Throwable th2) {
+                throw th2;
+            }
+        }
+        i(J);
+        this.i.execute(new RunnableC3070fr(this, 2));
+    }
+
+    public final C3416k9 b(C3416k9 c3416k9) {
+        String str;
+        int responseCode;
+        String str2;
+        C4207u9 c4207u9;
+        C4207u9 c4207u92;
+        C0493Sq c0493Sq = this.a;
+        c0493Sq.a();
+        String str3 = c0493Sq.c.a;
+        String str4 = c3416k9.a;
+        C0493Sq c0493Sq2 = this.a;
+        c0493Sq2.a();
+        String str5 = c0493Sq2.c.h;
+        String str6 = c3416k9.d;
+        C2990er c2990er = this.b;
+        C3908qO c3908qO = c2990er.c;
+        String str7 = "Firebase Installations Service is unavailable. Please try again later.";
+        if (!c3908qO.a()) {
+            throw new C3309ir("Firebase Installations Service is unavailable. Please try again later.");
+        }
+        URL a = C2990er.a("projects/" + str5 + "/installations/" + str4 + "/authTokens:generate");
+        int i = 0;
+        while (i <= 1) {
+            TrafficStats.setThreadStatsTag(32771);
+            HttpURLConnection c = c2990er.c(a, str3);
+##### java/sources/defpackage/RunnableC3954r1.java
+package defpackage;
+
+import ads_mobile_sdk.et0;
+import ads_mobile_sdk.fb0;
+import ads_mobile_sdk.fh2;
+import ads_mobile_sdk.ft0;
+import ads_mobile_sdk.gt0;
+import ads_mobile_sdk.h02;
+import ads_mobile_sdk.jt1;
+import ads_mobile_sdk.ls0;
+import ads_mobile_sdk.mc1;
+import ads_mobile_sdk.ni1;
+import ads_mobile_sdk.qq2;
+import ads_mobile_sdk.uc1;
+import ads_mobile_sdk.vb3;
+import ads_mobile_sdk.yv;
+import ads_mobile_sdk.zv;
+import android.animation.ValueAnimator;
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
+import android.os.Trace;
+import android.util.Log;
+import android.view.Choreographer;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import androidx.webkit.WebViewCompat;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.carousel.CarouselLayoutManager;
+import com.google.android.material.sidesheet.SideSheetBehavior;
+import com.google.android.material.textfield.TextInputLayout;
+import dastan.prince.bdfreevpn.R;
+import java.lang.reflect.Method;
+import java.net.HttpURLConnection;
+import java.nio.MappedByteBuffer;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicMarkableReference;
+import java.util.concurrent.atomic.AtomicReference;
+import org.chromium.net.impl.JavaUploadDataSinkBase;
+import org.lsposed.lsparanoid.Deobfuscator$BDNETVPN$app;
+import prince.dastan.vpn.activities.VPNApplication;
+import prince.dastan.vpn.activities.VPNClient;
+import prince.dastan.vpn.service.SocksDNSService;
+import prince.dastan.vpn.service.XRayDNSService;
+import prince.dastan.vpn.service.vpn.TunnelManagerHelper;
+import prince.dastan.vpn.service.vpn.TunnelUtils;
+import prince.dastan.vpn.service.vpn.logger.SkStatus;
+
+/* renamed from: r1, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public final /* synthetic */ class RunnableC3954r1 implements Runnable {
+    public final /* synthetic */ int a;
+    public final /* synthetic */ Object b;
+
+    public /* synthetic */ RunnableC3954r1(Object obj, int i) {
+        this.a = i;
+        this.b = obj;
+    }
+
+    private final void a() {
+        C3164h2 c3164h2 = (C3164h2) this.b;
+        synchronized (((ArrayDeque) c3164h2.e)) {
+            SharedPreferences.Editor edit = ((SharedPreferences) c3164h2.b).edit();
+            String str = (String) c3164h2.c;
+            StringBuilder sb = new StringBuilder();
+            Iterator it = ((ArrayDeque) c3164h2.e).iterator();
+            while (it.hasNext()) {
+                sb.append((String) it.next());
+                sb.append((String) c3164h2.d);
+            }
+            edit.putString(str, sb.toString()).apply();
+        }
+    }
+
+    private final void b() {
+        C0148Fi c0148Fi = (C0148Fi) this.b;
+        Map map = null;
+        ((AtomicReference) c0148Fi.c).set(null);
+        synchronized (c0148Fi) {
+            if (((AtomicMarkableReference) c0148Fi.b).isMarked()) {
+                C4130tA c4130tA = (C4130tA) ((AtomicMarkableReference) c0148Fi.b).getReference();
+                synchronized (c4130tA) {
+                    map = Collections.unmodifiableMap(new HashMap(c4130tA.a));
+                }
+                AtomicMarkableReference atomicMarkableReference = (AtomicMarkableReference) c0148Fi.b;
+                atomicMarkableReference.set((C4130tA) atomicMarkableReference.getReference(), false);
+            }
+        }
+        if (map != null) {
+            C4548yX c4548yX = (C4548yX) c0148Fi.d;
+            ((C0712aG) c4548yX.a).h((String) c4548yX.c, map, c0148Fi.a);
+        }
+    }
+
+    private final void c() {
+        Object obj;
+        VPNApplication vPNApplication = (VPNApplication) this.b;
+        int i = VPNApplication.e;
+        String string = Deobfuscator$BDNETVPN$app.getString(-17402539374475L);
+        AbstractC3634my.g(string, "applicationId");
+        Bundle bundle = new Bundle();
+        EnumC3512lO enumC3512lO = EnumC3512lO.b;
+        EnumC3592mO enumC3592mO = EnumC3592mO.b;
+        C3671nO c3671nO = new C3671nO(EnumC3352jO.b, new ArrayList(new C4122t6(new String[]{"B3EEABB8EE11C2BE770B684D95219ECB"}, true)), EnumC3432kO.b);
+        C3712nx c3712nx = new C3712nx(string, c3671nO, bundle);
+        I00 i00 = new I00();
+        Context applicationContext = vPNApplication.getApplicationContext();
+        if (!(applicationContext instanceof Application)) {
+            throw new IllegalArgumentException("The provided application context is not an instance of Application. The Google Mobile Ads SDK should not be used from contexts like BroadcastReceivers, only Services and Activities.");
+        }
+        ni1 ni1Var = gt0.a;
+        if (!ni1Var.b()) {
+            int i2 = zv.k;
+            int i3 = C3859pm.d;
+            XE.r(AbstractC0538Uj.a(new C0834bp(new yv(new ThreadPoolExecutor(1, 1, C3859pm.k(0L, EnumC4016rm.e), TimeUnit.SECONDS, new LinkedBlockingQueue(), new vb3(null, "WebView"))))), null, new et0(applicationContext, null), 3);
+        }
+        gt0.b = false;
+        ft0 ft0Var = new ft0(vPNApplication, applicationContext, c3712nx);
+        synchronized (ni1Var) {
+            try {
+                if (ni1Var.a == null) {
+                    ni1Var.a = ft0Var.invoke();
+                }
+                obj = ni1Var.a;
+                if (obj == null) {
+##### java/sources/defpackage/C0800bO.java
+package defpackage;
+
+import android.net.Uri;
+import java.net.URL;
+
+/* renamed from: bO, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public final class C0800bO {
+    public final C3886q6 a;
+    public final InterfaceC0613Xg b;
+
+    public C0800bO(C3886q6 c3886q6, InterfaceC0613Xg interfaceC0613Xg) {
+        AbstractC3634my.g(c3886q6, "appInfo");
+        AbstractC3634my.g(interfaceC0613Xg, "blockingDispatcher");
+        this.a = c3886q6;
+        this.b = interfaceC0613Xg;
+    }
+
+    public static final URL a(C0800bO c0800bO) {
+        c0800bO.getClass();
+        Uri.Builder appendPath = new Uri.Builder().scheme("https").authority("firebase-settings.crashlytics.com").appendPath("spi").appendPath("v2").appendPath("platforms").appendPath("android").appendPath("gmp");
+        C3886q6 c3886q6 = c0800bO.a;
+        Uri.Builder appendPath2 = appendPath.appendPath(c3886q6.a).appendPath("settings");
+        C3088g4 c3088g4 = c3886q6.b;
+        return new URL(appendPath2.appendQueryParameter("build_version", c3088g4.c).appendQueryParameter("display_version", c3088g4.b).build().toString());
+    }
+}
+##### java/sources/defpackage/C2990er.java
+package defpackage;
+
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.UserManager;
+import android.text.TextUtils;
+import android.util.JsonReader;
+import android.util.Log;
+import com.google.android.gms.common.internal.Preconditions;
+import com.google.android.gms.common.util.AndroidUtilsLight;
+import com.google.android.gms.common.util.Hex;
+import com.google.android.gms.measurement.api.AppMeasurementSdk;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.Charset;
+import java.util.concurrent.ExecutionException;
+import java.util.regex.Pattern;
+import java.util.zip.GZIPOutputStream;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+/* renamed from: er, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public final class C2990er {
+    public static final Pattern d = Pattern.compile("[0-9]+s");
+    public static final Charset e = Charset.forName("UTF-8");
+    public final Context a;
+    public final ZL b;
+    public final C3908qO c = new C3908qO();
+
+    public C2990er(Context context, ZL zl) {
+        this.a = context;
+        this.b = zl;
+    }
+
+    public static URL a(String str) {
+        try {
+            return new URL("https://firebaseinstallations.googleapis.com/v1/" + str);
+        } catch (MalformedURLException e2) {
+            throw new C3309ir(e2.getMessage());
+        }
+    }
+
+    public static void b(HttpURLConnection httpURLConnection, String str, String str2, String str3) {
+        InputStream errorStream = httpURLConnection.getErrorStream();
+        String str4 = null;
+        if (errorStream != null) {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(errorStream, e));
+            try {
+                StringBuilder sb = new StringBuilder();
+                while (true) {
+                    String readLine = bufferedReader.readLine();
+                    if (readLine == null) {
+                        break;
+                    }
+                    sb.append(readLine);
+                    sb.append('\n');
+                }
+                str4 = String.format("Error when communicating with the Firebase Installations server API. HTTP response: [%d %s: %s]", Integer.valueOf(httpURLConnection.getResponseCode()), httpURLConnection.getResponseMessage(), sb);
+            } catch (IOException unused) {
+            } catch (Throwable th) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException unused2) {
+                }
+                throw th;
+            }
+            try {
+                bufferedReader.close();
+            } catch (IOException unused3) {
+            }
+        }
+        if (TextUtils.isEmpty(str4)) {
+            return;
+        }
+        Log.w("Firebase-Installations", str4);
+        Log.w("Firebase-Installations", W50.p("Firebase options used while communicating with Firebase server APIs: ", str2, ", ", str3, TextUtils.isEmpty(str) ? "" : W50.m(", ", str)));
+    }
+
+    public static long d(String str) {
+        Preconditions.checkArgument(d.matcher(str).matches(), "Invalid Expiration Timestamp.");
+        if (str == null || str.length() == 0) {
+            return 0L;
+        }
+        return Long.parseLong(str.substring(0, str.length() - 1));
+    }
+
+    public static C0704a9 e(HttpURLConnection httpURLConnection) {
+        InputStream inputStream = httpURLConnection.getInputStream();
+        JsonReader jsonReader = new JsonReader(new InputStreamReader(inputStream, e));
+        byte b = (byte) (0 | 1);
+        jsonReader.beginObject();
+        String str = null;
+        String str2 = null;
+        C4207u9 c4207u9 = null;
+        long j = 0;
+        String str3 = null;
+        String str4 = null;
+        while (jsonReader.hasNext()) {
+            String nextName = jsonReader.nextName();
+            if (nextName.equals(AppMeasurementSdk.ConditionalUserProperty.NAME)) {
+                str3 = jsonReader.nextString();
+            } else if (nextName.equals("fid")) {
+                str4 = jsonReader.nextString();
+            } else if (nextName.equals("refreshToken")) {
+                str2 = jsonReader.nextString();
+            } else if (nextName.equals("authToken")) {
+                jsonReader.beginObject();
+                while (jsonReader.hasNext()) {
+                    String nextName2 = jsonReader.nextName();
+                    if (nextName2.equals("token")) {
+                        str = jsonReader.nextString();
+                    } else if (nextName2.equals("expiresIn")) {
+                        b = (byte) (b | 1);
+                        j = d(jsonReader.nextString());
+                    } else {
+                        jsonReader.skipValue();
+                    }
+                }
+                if (b != 1) {
+                    throw new IllegalStateException("Missing required properties: tokenExpirationTimestamp");
+                }
+                c4207u9 = new C4207u9(str, j, 0);
+                jsonReader.endObject();
+            } else {
+                jsonReader.skipValue();
+            }
+        }
+        jsonReader.endObject();
+        jsonReader.close();
+        inputStream.close();
+        return new C0704a9(str3, str4, str2, c4207u9, 1);
+##### java/sources/defpackage/C3462kl.java
+package defpackage;
+
+import android.content.Context;
+import android.util.Log;
+import com.facebook.ads.AudienceNetworkAds;
+import com.facebook.ads.internal.dynamicloading.DexLoadErrorReporter;
+import com.google.ads.mediation.facebook.FacebookMediationAdapter;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.UUID;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+/* renamed from: kl, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public final class C3462kl extends Thread {
+    public final /* synthetic */ int a = 0;
+    public final Object b;
+    public final Object c;
+
+    public C3462kl(InputStream inputStream, InterfaceC3281iV interfaceC3281iV) {
+        this.b = new BufferedReader(new InputStreamReader(inputStream));
+        this.c = interfaceC3281iV;
+    }
+
+    /* JADX WARN: Removed duplicated region for block: B:53:? A[RETURN, SYNTHETIC] */
+    /* JADX WARN: Removed duplicated region for block: B:54:0x01aa A[EXC_TOP_SPLITTER, SYNTHETIC] */
+    /* JADX WARN: Removed duplicated region for block: B:59:0x01a0 A[EXC_TOP_SPLITTER, SYNTHETIC] */
+    @Override // java.lang.Thread, java.lang.Runnable
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public final void run() {
+        String str;
+        String str2;
+        DataOutputStream dataOutputStream;
+        HttpURLConnection httpURLConnection;
+        InputStream inputStream;
+        String jSONObject;
+        DataOutputStream dataOutputStream2;
+        byte[] bArr;
+        ByteArrayOutputStream byteArrayOutputStream;
+        InputStream inputStream2;
+        int read;
+        String str3;
+        String str4;
+        switch (this.a) {
+            case 0:
+                Context context = (Context) this.b;
+                super.run();
+                try {
+                    httpURLConnection = (HttpURLConnection) new URL("https://www.facebook.com/adnw_logging/").openConnection();
+                    try {
+                        httpURLConnection.setRequestMethod("POST");
+                        httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+                        httpURLConnection.setRequestProperty("Accept", "application/json");
+                        httpURLConnection.setRequestProperty("Accept-Charset", "UTF-8");
+                        httpURLConnection.setRequestProperty("user-agent", "[FBAN/AudienceNetworkForAndroid;FBSN/Android]");
+                        httpURLConnection.setDoOutput(true);
+                        httpURLConnection.setDoInput(true);
+                        httpURLConnection.connect();
+                        String uuid = UUID.randomUUID().toString();
+                        JSONObject jSONObject2 = new JSONObject();
+                        jSONObject2.put("attempt", "0");
+                        DexLoadErrorReporter.a(context, jSONObject2, uuid);
+                        JSONObject jSONObject3 = new JSONObject();
+                        jSONObject3.put("subtype", "generic");
+                        jSONObject3.put("subtype_code", "1320");
+                        jSONObject3.put("caught_exception", "1");
+                        jSONObject3.put("stacktrace", (String) this.c);
+                        JSONObject jSONObject4 = new JSONObject();
+                        jSONObject4.put(FacebookMediationAdapter.KEY_ID, UUID.randomUUID().toString());
+                        jSONObject4.put("type", "debug");
+                        StringBuilder sb = new StringBuilder("");
+                        try {
+                            sb.append(System.currentTimeMillis() / 1000);
+                            jSONObject4.put("session_time", sb.toString());
+                            jSONObject4.put("time", "" + (System.currentTimeMillis() / 1000));
+                            jSONObject4.put("session_id", uuid);
+                            jSONObject4.put("data", jSONObject3);
+                            jSONObject4.put("attempt", "0");
+                            DexLoadErrorReporter.a(context, jSONObject3, uuid);
+                            JSONArray jSONArray = new JSONArray();
+                            jSONArray.put(jSONObject4);
+                            JSONObject jSONObject5 = new JSONObject();
+                            jSONObject5.put("data", jSONObject2);
+                            jSONObject5.put("events", jSONArray);
+                            jSONObject = jSONObject5.toString();
+                            dataOutputStream2 = new DataOutputStream(httpURLConnection.getOutputStream());
+                        } catch (Throwable th) {
+                            th = th;
+                            str = "Can't close connection.";
+                            str2 = AudienceNetworkAds.TAG;
+                            dataOutputStream = null;
+                            inputStream = null;
+                            try {
+                                Log.e(str2, "Can't send error.", th);
+                                if (dataOutputStream != null) {
+                                    try {
+                                        dataOutputStream.close();
+                                    } catch (Exception e) {
+                                        Log.e(str2, str, e);
+                                    }
+                                }
+                                if (inputStream != null) {
+                                    try {
+                                        inputStream.close();
+                                    } catch (Exception e2) {
+                                        Log.e(str2, str, e2);
+                                    }
+                                }
+                                if (httpURLConnection == null) {
+                                    return;
+                                }
+                                httpURLConnection.disconnect();
+                                return;
+                            } finally {
+                            }
+                        }
+                    } catch (Throwable th2) {
+                        th = th2;
+                        str = "Can't close connection.";
+                        str2 = AudienceNetworkAds.TAG;
+                    }
+                } catch (Throwable th3) {
+                    th = th3;
+                    str = "Can't close connection.";
+                    str2 = AudienceNetworkAds.TAG;
+                    dataOutputStream = null;
+                    httpURLConnection = null;
+                }
+                try {
+                    dataOutputStream2.writeBytes("payload=" + URLEncoder.encode(jSONObject, "UTF-8"));
+##### java/sources/defpackage/C0720aO.java
+package defpackage;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URLConnection;
+import java.util.Map;
+import javax.net.ssl.HttpsURLConnection;
+import org.json.JSONObject;
+
+/* renamed from: aO, reason: case insensitive filesystem */
+/* loaded from: classes.dex */
+public final class C0720aO extends RV implements InterfaceC3233hu {
+    public int t;
+    public final /* synthetic */ C0800bO u;
+    public final /* synthetic */ Object v;
+    public final /* synthetic */ XN w;
+    public final /* synthetic */ YN x;
+
+    /* JADX WARN: 'super' call moved to the top of the method (can break code semantics) */
+    public C0720aO(C0800bO c0800bO, Map map, XN xn, YN yn, InterfaceC0198Hg interfaceC0198Hg) {
+        super(2, interfaceC0198Hg);
+        this.u = c0800bO;
+        this.v = map;
+        this.w = xn;
+        this.x = yn;
+    }
+
+    /* JADX WARN: Type inference failed for: r2v0, types: [java.lang.Object, java.util.Map] */
+    @Override // defpackage.X9
+    public final InterfaceC0198Hg create(Object obj, InterfaceC0198Hg interfaceC0198Hg) {
+        XN xn = this.w;
+        YN yn = this.x;
+        return new C0720aO(this.u, this.v, xn, yn, interfaceC0198Hg);
+    }
+
+    @Override // defpackage.InterfaceC3233hu
+    public final Object invoke(Object obj, Object obj2) {
+        return ((C0720aO) create((InterfaceC3220hh) obj, (InterfaceC0198Hg) obj2)).invokeSuspend(C4471xZ.a);
+    }
+
+    /* JADX WARN: Type inference failed for: r1v7, types: [java.lang.Object, java.util.Map] */
+    @Override // defpackage.X9
+    public final Object invokeSuspend(Object obj) {
+        EnumC3299ih enumC3299ih = EnumC3299ih.a;
+        int i = this.t;
+        YN yn = this.x;
+        C4471xZ c4471xZ = C4471xZ.a;
+        try {
+        } catch (Exception e) {
+            String message = e.getMessage();
+            if (message == null) {
+                message = e.toString();
+            }
+            this.t = 3;
+            yn.invoke(message, this);
+            if (c4471xZ == enumC3299ih) {
+            }
+        }
+        if (i == 0) {
+            W80.U(obj);
+            URLConnection openConnection = C0800bO.a(this.u).openConnection();
+            AbstractC3634my.e(openConnection, "null cannot be cast to non-null type javax.net.ssl.HttpsURLConnection");
+            HttpsURLConnection httpsURLConnection = (HttpsURLConnection) openConnection;
+            httpsURLConnection.setRequestMethod("GET");
+            httpsURLConnection.setRequestProperty("Accept", "application/json");
+            for (Map.Entry entry : this.v.entrySet()) {
+                httpsURLConnection.setRequestProperty((String) entry.getKey(), (String) entry.getValue());
+            }
+            int responseCode = httpsURLConnection.getResponseCode();
+            if (responseCode == 200) {
+                InputStream inputStream = httpsURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder sb = new StringBuilder();
+                while (true) {
+                    String readLine = bufferedReader.readLine();
+                    if (readLine == null) {
+                        break;
+                    }
+                    sb.append(readLine);
+                }
+                bufferedReader.close();
+                inputStream.close();
+                JSONObject jSONObject = new JSONObject(sb.toString());
+                XN xn = this.w;
+                this.t = 1;
+                if (xn.invoke(jSONObject, this) == enumC3299ih) {
+                    return enumC3299ih;
+                }
+            } else {
+                this.t = 2;
+                yn.invoke("Bad response code: " + responseCode, this);
+                if (c4471xZ == enumC3299ih) {
+                    return enumC3299ih;
+                }
+            }
+        } else if (i == 1 || i == 2) {
+            W80.U(obj);
+        } else {
+            if (i != 3) {
+                throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
+            }
+            W80.U(obj);
+        }
+        return c4471xZ;
+    }
+}
+##### java/sources/ads_mobile_sdk/j01.java
+package ads_mobile_sdk;
+
+import defpackage.AbstractC3634my;
+import defpackage.C4471xZ;
+import defpackage.EnumC3299ih;
+import defpackage.InterfaceC0198Hg;
+import defpackage.Ja0;
+import defpackage.V90;
+import defpackage.W80;
+import java.net.URL;
+import java.util.Map;
+
+/* loaded from: classes.dex */
+public final class j01 implements V90 {
+    public final Ja0 a;
+
+    public j01(Ja0 ja0) {
+        AbstractC3634my.g(ja0, "httpClient");
+        this.a = ja0;
+    }
+
+    /* JADX WARN: Can't wrap try/catch for region: R(7:0|1|(2:3|(4:5|6|7|(1:(2:10|11)(2:13|14))(2:15|(2:17|18)(2:19|(1:21)(1:22)))))|25|6|7|(0)(0)) */
+    /* JADX WARN: Code restructure failed: missing block: B:23:0x0029, code lost:
+    
+        r6 = move-exception;
+     */
+    /* JADX WARN: Code restructure failed: missing block: B:24:0x0066, code lost:
+    
+        ads_mobile_sdk.td3.b(r6);
+     */
+    /* JADX WARN: Removed duplicated region for block: B:15:0x0033  */
+    /* JADX WARN: Removed duplicated region for block: B:9:0x0023  */
+    @Override // defpackage.V90
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public final Object a(lw0 lw0Var, Map map, InterfaceC0198Hg interfaceC0198Hg) {
+        i01 i01Var;
+        int i;
+        if (interfaceC0198Hg instanceof i01) {
+            i01Var = (i01) interfaceC0198Hg;
+            int i2 = i01Var.c;
+            if ((i2 & Integer.MIN_VALUE) != 0) {
+                i01Var.c = i2 - Integer.MIN_VALUE;
+                Object obj = i01Var.a;
+                EnumC3299ih enumC3299ih = EnumC3299ih.a;
+                i = i01Var.c;
+                C4471xZ c4471xZ = C4471xZ.a;
+                if (i == 0) {
+                    if (i != 1) {
+                        throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
+                    }
+                    W80.U(obj);
+                    return c4471xZ;
+                }
+                W80.U(obj);
+                String str = (String) map.get("u");
+                if (str == null) {
+                    td3.a("URL is missing from an httpTrack GMSG: " + map, null, 6);
+                    return c4471xZ;
+                }
+                Ja0 ja0 = this.a;
+                URL url = new URL(str);
+                i01Var.c = 1;
+                return Ja0.b(ja0, url, null, i01Var, 14) == enumC3299ih ? enumC3299ih : c4471xZ;
+            }
+        }
+        i01Var = new i01(this, interfaceC0198Hg);
+        Object obj2 = i01Var.a;
+        EnumC3299ih enumC3299ih2 = EnumC3299ih.a;
+        i = i01Var.c;
+        C4471xZ c4471xZ2 = C4471xZ.a;
+        if (i == 0) {
+        }
+    }
+
+    @Override // defpackage.V90
+    public final ru0 b() {
+        return ru0.GMSG_NAME_HTTP_TRACK;
+    }
+}
+##### java/sources/ads_mobile_sdk/hz0.java
+package ads_mobile_sdk;
+
+import defpackage.AbstractC0224Ig;
+import defpackage.C3859pm;
+import defpackage.InterfaceC0198Hg;
+import java.util.Map;
+import okhttp3.OkHttpClient;
+
+/* loaded from: classes.dex */
+public final class hz0 extends AbstractC0224Ig {
+    public Object a;
+    public Object b;
+    public OkHttpClient c;
+    public boolean d;
+    public /* synthetic */ Object e;
+    public final /* synthetic */ nz0 f;
+    public int g;
+
+    /* JADX WARN: 'super' call moved to the top of the method (can break code semantics) */
+    public hz0(nz0 nz0Var, InterfaceC0198Hg interfaceC0198Hg) {
+        super(interfaceC0198Hg);
+        this.f = nz0Var;
+    }
+
+    @Override // defpackage.X9
+    public final Object invokeSuspend(Object obj) {
+        this.e = obj;
+        this.g |= Integer.MIN_VALUE;
+        return this.f.a((e01) null, (C3859pm) null, (Map) null, false, (InterfaceC0198Hg) this);
+    }
+}
+##### java/sources/ads_mobile_sdk/of0.java
+package ads_mobile_sdk;
+
+import ads_mobile_sdk.of0;
+import android.R;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import defpackage.AbstractC0325Me;
+import defpackage.AbstractC0731aZ;
+import defpackage.AbstractC3634my;
+import defpackage.AbstractC3757oV;
+import defpackage.AbstractC4243ue;
+import defpackage.C0139Ez;
+import defpackage.C0729aX;
+import defpackage.C0912co;
+import defpackage.C3147go;
+import defpackage.C3518lU;
+import defpackage.C3710nv;
+import defpackage.C3859pm;
+import defpackage.C4471xZ;
+import defpackage.EnumC3299ih;
+import defpackage.EnumC4016rm;
+import defpackage.Ge0;
+import defpackage.InterfaceC0198Hg;
+import defpackage.InterfaceC0613Xg;
+import defpackage.InterfaceC3215he0;
+import defpackage.InterfaceC3220hh;
+import defpackage.Ja0;
+import defpackage.LI;
+import defpackage.Nb0;
+import defpackage.O1;
+import defpackage.P00;
+import defpackage.Pb0;
+import defpackage.Sf0;
+import defpackage.T00;
+import defpackage.U20;
+import defpackage.W80;
+import defpackage.XE;
+import defpackage.Yc0;
+import java.io.Closeable;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.WeakHashMap;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Pattern;
+
+/* loaded from: classes.dex */
+public final class of0 {
+    public static final Uri q = Uri.parse("127.0.0.1");
+    public final InterfaceC0613Xg a;
+    public final InterfaceC3220hh b;
+    public final wt2 c;
+    public final InterfaceC3215he0 d;
+    public final f0 e;
+    public final hq0 f;
+    public final kv0 g;
+    public final sj h;
+    public final Ja0 i;
+    public final l61 j;
+    public final AtomicBoolean k;
+    public String l;
+    public String m;
+    public C0139Ez n;
+    public gd3 o;
+    public String p;
+
+    public of0(InterfaceC0613Xg interfaceC0613Xg, InterfaceC3220hh interfaceC3220hh, wt2 wt2Var, InterfaceC3215he0 interfaceC3215he0, f0 f0Var, hq0 hq0Var, kv0 kv0Var, sj sjVar, Ja0 ja0, l61 l61Var, String str) {
+        AbstractC3634my.g(interfaceC0613Xg, "uiContext");
+        AbstractC3634my.g(interfaceC3220hh, "backgroundScope");
+        AbstractC3634my.g(wt2Var, "rootTraceCreator");
+        AbstractC3634my.g(interfaceC3215he0, "traceLogger");
+        AbstractC3634my.g(f0Var, "activityTracker");
+        AbstractC3634my.g(hq0Var, "flags");
+        AbstractC3634my.g(kv0Var, "gmaUtil");
+        AbstractC3634my.g(sjVar, "appState");
+        AbstractC3634my.g(ja0, "httpClient");
+        AbstractC3634my.g(l61Var, "inspectorManager");
+        AbstractC3634my.g(str, "afmaVersion");
+        this.a = interfaceC0613Xg;
+        this.b = interfaceC3220hh;
+        this.c = wt2Var;
+        this.d = interfaceC3215he0;
+        this.e = f0Var;
+        this.f = hq0Var;
+        this.g = kv0Var;
+        this.h = sjVar;
+        this.i = ja0;
+        this.j = l61Var;
+        this.k = new AtomicBoolean(false);
+        this.o = U20.b();
+    }
+
+    /* JADX WARN: Multi-variable type inference failed */
+    /* JADX WARN: Removed duplicated region for block: B:104:0x00a3  */
+    /* JADX WARN: Removed duplicated region for block: B:108:0x00b2  */
+    /* JADX WARN: Removed duplicated region for block: B:10:0x0032  */
+    /* JADX WARN: Removed duplicated region for block: B:112:0x00be  */
+    /* JADX WARN: Removed duplicated region for block: B:119:0x01f5  */
+    /* JADX WARN: Removed duplicated region for block: B:121:0x01fa  */
+    /* JADX WARN: Removed duplicated region for block: B:128:0x0225 A[Catch: all -> 0x0235, TryCatch #12 {all -> 0x0235, blocks: (B:126:0x021e, B:128:0x0225, B:130:0x022c, B:132:0x0230, B:134:0x0234, B:135:0x0238, B:136:0x023d, B:137:0x023e, B:138:0x0245, B:139:0x0246, B:140:0x024d, B:141:0x024e), top: B:125:0x021e }] */
+    /* JADX WARN: Removed duplicated region for block: B:13:0x003a  */
+    /* JADX WARN: Removed duplicated region for block: B:141:0x024e A[Catch: all -> 0x0235, TRY_LEAVE, TryCatch #12 {all -> 0x0235, blocks: (B:126:0x021e, B:128:0x0225, B:130:0x022c, B:132:0x0230, B:134:0x0234, B:135:0x0238, B:136:0x023d, B:137:0x023e, B:138:0x0245, B:139:0x0246, B:140:0x024d, B:141:0x024e), top: B:125:0x021e }] */
+    /* JADX WARN: Removed duplicated region for block: B:153:0x00d8  */
+    /* JADX WARN: Removed duplicated region for block: B:158:0x01cf  */
+    /* JADX WARN: Removed duplicated region for block: B:162:0x00ee  */
+    /* JADX WARN: Removed duplicated region for block: B:168:0x0175  */
+    /* JADX WARN: Removed duplicated region for block: B:175:0x0203 A[Catch: all -> 0x0102, TRY_ENTER, TRY_LEAVE, TryCatch #0 {all -> 0x0102, blocks: (B:164:0x00fc, B:166:0x015e, B:169:0x0177, B:171:0x017b, B:175:0x0203), top: B:163:0x00fc }] */
+    /* JADX WARN: Removed duplicated region for block: B:17:0x0049  */
+    /* JADX WARN: Removed duplicated region for block: B:180:0x0107  */
+    /* JADX WARN: Removed duplicated region for block: B:21:0x0055  */
+    /* JADX WARN: Removed duplicated region for block: B:29:0x0330  */
+    /* JADX WARN: Removed duplicated region for block: B:31:0x0334  */
+    /* JADX WARN: Removed duplicated region for block: B:41:0x0362 A[Catch: all -> 0x0372, TryCatch #10 {all -> 0x0372, blocks: (B:39:0x035b, B:41:0x0362, B:43:0x0369, B:45:0x036d, B:47:0x0371, B:48:0x0375, B:49:0x037a, B:50:0x037b, B:51:0x0382, B:52:0x0383, B:53:0x038a, B:54:0x038b), top: B:38:0x035b }] */
+    /* JADX WARN: Removed duplicated region for block: B:54:0x038b A[Catch: all -> 0x0372, TRY_LEAVE, TryCatch #10 {all -> 0x0372, blocks: (B:39:0x035b, B:41:0x0362, B:43:0x0369, B:45:0x036d, B:47:0x0371, B:48:0x0375, B:49:0x037a, B:50:0x037b, B:51:0x0382, B:52:0x0383, B:53:0x038a, B:54:0x038b), top: B:38:0x035b }] */
+    /* JADX WARN: Removed duplicated region for block: B:69:0x006f  */
+    /* JADX WARN: Removed duplicated region for block: B:76:0x0306  */
+    /* JADX WARN: Removed duplicated region for block: B:84:0x0088  */
+    /* JADX WARN: Removed duplicated region for block: B:91:0x02ac  */
+    /* JADX WARN: Removed duplicated region for block: B:98:0x033d A[Catch: all -> 0x030f, TRY_ENTER, TRY_LEAVE, TryCatch #8 {all -> 0x030f, blocks: (B:89:0x0295, B:92:0x02ae, B:94:0x02b2, B:98:0x033d), top: B:88:0x0295 }] */
+    /* JADX WARN: Type inference failed for: r2v10 */
+    /* JADX WARN: Type inference failed for: r2v11 */
+    /* JADX WARN: Type inference failed for: r2v13 */
+    /* JADX WARN: Type inference failed for: r2v19 */
+    /* JADX WARN: Type inference failed for: r2v20 */
+    /* JADX WARN: Type inference failed for: r2v21 */
+    /* JADX WARN: Type inference failed for: r2v22 */
+    /* JADX WARN: Type inference failed for: r2v23 */
+    /* JADX WARN: Type inference failed for: r2v24 */
+    /* JADX WARN: Type inference failed for: r2v25 */
+    /* JADX WARN: Type inference failed for: r2v27 */
+    /* JADX WARN: Type inference failed for: r2v3, types: [ih, java.lang.Object] */
+    /* JADX WARN: Type inference failed for: r2v4, types: [java.io.Closeable] */
+    /* JADX WARN: Type inference failed for: r2v5, types: [java.io.Closeable] */
+    /* JADX WARN: Type inference failed for: r2v6 */
+    /* JADX WARN: Type inference failed for: r2v7 */
+##### java/sources/ads_mobile_sdk/i5.java
+package ads_mobile_sdk;
+
+import defpackage.C4471xZ;
+import defpackage.EnumC3299ih;
+import defpackage.InterfaceC0198Hg;
+import defpackage.InterfaceC3233hu;
+import defpackage.Ja0;
+import defpackage.RV;
+import defpackage.Sf0;
+import defpackage.W80;
+import java.net.URL;
+
+/* loaded from: classes.dex */
+public final class i5 extends RV implements InterfaceC3233hu {
+    public int a;
+    public final /* synthetic */ k5 b;
+    public final /* synthetic */ String c;
+
+    /* JADX WARN: 'super' call moved to the top of the method (can break code semantics) */
+    public i5(k5 k5Var, String str, InterfaceC0198Hg interfaceC0198Hg) {
+        super(2, interfaceC0198Hg);
+        this.b = k5Var;
+        this.c = str;
+    }
+
+    @Override // defpackage.X9
+    public final InterfaceC0198Hg create(Object obj, InterfaceC0198Hg interfaceC0198Hg) {
+        return new i5(this.b, this.c, interfaceC0198Hg);
+    }
+
+    @Override // defpackage.InterfaceC3233hu
+    public final Object invoke(Object obj, Object obj2) {
+        return new i5(this.b, this.c, (InterfaceC0198Hg) obj2).invokeSuspend(C4471xZ.a);
+    }
+
+    @Override // defpackage.X9
+    public final Object invokeSuspend(Object obj) {
+        EnumC3299ih enumC3299ih = EnumC3299ih.a;
+        int i = this.a;
+        if (i == 0) {
+            W80.U(obj);
+            Ja0 ja0 = this.b.d;
+            URL url = new URL(this.c);
+            this.a = 1;
+            obj = ja0.a(url, this);
+            if (obj == enumC3299ih) {
+                return enumC3299ih;
+            }
+        } else {
+            if (i != 1) {
+                throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
+            }
+            W80.U(obj);
+        }
+        Sf0 sf0 = (Sf0) obj;
+        if (sf0 instanceof vt0) {
+            ((g01) ((vt0) sf0).b).getClass();
+        }
+        return C4471xZ.a;
+    }
+}
+##### java/sources/ads_mobile_sdk/ag0.java
+package ads_mobile_sdk;
+
+import android.net.Uri;
+import defpackage.AbstractC3634my;
+import defpackage.BO;
+import defpackage.C0139Ez;
+import defpackage.C4471xZ;
+import defpackage.EnumC3299ih;
+import defpackage.InterfaceC0198Hg;
+import defpackage.Ja0;
+import defpackage.Uc0;
+import defpackage.W80;
+import java.net.URL;
+
+/* loaded from: classes.dex */
+public final class ag0 implements Uc0 {
+    public final hq0 a;
+    public final sj b;
+    public final Ja0 c;
+    public final of0 d;
+
+    public ag0(hq0 hq0Var, sj sjVar, Ja0 ja0, of0 of0Var) {
+        AbstractC3634my.g(hq0Var, "flags");
+        AbstractC3634my.g(sjVar, "appState");
+        AbstractC3634my.g(ja0, "httpClient");
+        AbstractC3634my.g(of0Var, "debugDialogManager");
+        this.a = hq0Var;
+        this.b = sjVar;
+        this.c = ja0;
+        this.d = of0Var;
+    }
+
+    /* JADX WARN: Removed duplicated region for block: B:18:0x009f A[RETURN] */
+    /* JADX WARN: Removed duplicated region for block: B:19:0x00a0 A[RETURN] */
+    /* JADX WARN: Removed duplicated region for block: B:20:0x003a  */
+    /* JADX WARN: Removed duplicated region for block: B:8:0x0024  */
+    @Override // defpackage.Uc0
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public final Object a(px2 px2Var, a2 a2Var, BO bo, InterfaceC0198Hg interfaceC0198Hg) {
+        zf0 zf0Var;
+        int i;
+        ag0 ag0Var;
+        if (interfaceC0198Hg instanceof zf0) {
+            zf0Var = (zf0) interfaceC0198Hg;
+            int i2 = zf0Var.d;
+            if ((i2 & Integer.MIN_VALUE) != 0) {
+                zf0Var.d = i2 - Integer.MIN_VALUE;
+                Object obj = zf0Var.b;
+                EnumC3299ih enumC3299ih = EnumC3299ih.a;
+                i = zf0Var.d;
+                C4471xZ c4471xZ = C4471xZ.a;
+                if (i != 0) {
+                    W80.U(obj);
+                    if (this.b.g.get() && !a2Var.A.a.isEmpty()) {
+                        of0 of0Var = this.d;
+                        hq0 hq0Var = this.a;
+                        hq0Var.getClass();
+                        String str = (String) hq0Var.a("gads:drx_debug:send_debug_data_url", "127.0.0.1", Cdo.o);
+                        String l = px2Var.a.a.l();
+                        C0139Ez c0139Ez = a2Var.A;
+                        zf0Var.a = this;
+                        zf0Var.d = 1;
+                        l61 l61Var = of0Var.j;
+                        l61Var.getClass();
+                        obj = l61.a(l61Var, str, l, c0139Ez, zf0Var);
+                        if (obj != enumC3299ih) {
+                            ag0Var = this;
+                        }
+                    }
+                }
+                if (i != 1) {
+                    if (i != 2) {
+                        throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
+                    }
+                    W80.U(obj);
+                    return c4471xZ;
+                }
+                ag0Var = zf0Var.a;
+                W80.U(obj);
+                String uri = ((Uri) obj).toString();
+                AbstractC3634my.f(uri, "toString(...)");
+                Ja0 ja0 = ag0Var.c;
+                URL url = new URL(uri);
+                zf0Var.a = null;
+                zf0Var.d = 2;
+                return Ja0.b(ja0, url, null, zf0Var, 14) != enumC3299ih ? enumC3299ih : c4471xZ;
+            }
+        }
+        zf0Var = new zf0(this, interfaceC0198Hg);
+        Object obj2 = zf0Var.b;
+        EnumC3299ih enumC3299ih2 = EnumC3299ih.a;
+        i = zf0Var.d;
+        C4471xZ c4471xZ2 = C4471xZ.a;
+        if (i != 0) {
+        }
+        String uri2 = ((Uri) obj2).toString();
+        AbstractC3634my.f(uri2, "toString(...)");
+        Ja0 ja02 = ag0Var.c;
+        URL url2 = new URL(uri2);
+        zf0Var.a = null;
+        zf0Var.d = 2;
+        if (Ja0.b(ja02, url2, null, zf0Var, 14) != enumC3299ih2) {
+        }
+    }
+}
+##### java/sources/ads_mobile_sdk/d01.java
+package ads_mobile_sdk;
+
+import android.net.Uri;
+import com.google.android.gms.common.internal.ImagesContract;
+import com.google.android.gms.measurement.api.AppMeasurementSdk;
+import defpackage.AbstractC3264iE;
+import defpackage.AbstractC3634my;
+import defpackage.EJ;
+import defpackage.T60;
+import defpackage.W50;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+
+/* loaded from: classes.dex */
+public final class d01 {
+    public URL a;
+    public String b;
+    public final LinkedHashMap c;
+    public byte[] d;
+    public final mm0 e;
+    public T60 f;
+    public final ArrayList g;
+
+    public d01() {
+        this.b = "GET";
+        this.c = new LinkedHashMap();
+        this.g = new ArrayList();
+    }
+
+    public final d01 a(String str, String str2) {
+        AbstractC3634my.g(str, AppMeasurementSdk.ConditionalUserProperty.NAME);
+        AbstractC3634my.g(str2, AppMeasurementSdk.ConditionalUserProperty.VALUE);
+        String str3 = (String) this.c.get(str);
+        LinkedHashMap linkedHashMap = this.c;
+        if (str3 != null) {
+            str2 = W50.n(str3, ", ", str2);
+        }
+        linkedHashMap.put(str, str2);
+        return this;
+    }
+
+    public final d01 b(String str, String str2) {
+        AbstractC3634my.g(str, AppMeasurementSdk.ConditionalUserProperty.NAME);
+        AbstractC3634my.g(str2, AppMeasurementSdk.ConditionalUserProperty.VALUE);
+        this.g.add(new EJ(str, str2));
+        return this;
+    }
+
+    public d01(e01 e01Var) {
+        AbstractC3634my.g(e01Var, "request");
+        this.b = "GET";
+        LinkedHashMap linkedHashMap = new LinkedHashMap();
+        this.c = linkedHashMap;
+        this.g = new ArrayList();
+        this.a = e01Var.f();
+        this.b = e01Var.e();
+        linkedHashMap.putAll(e01Var.c());
+        this.d = e01Var.a();
+        this.e = e01Var.b();
+        this.f = e01Var.d();
+    }
+
+    public final d01 b() {
+        return a("GET", (byte[]) null);
+    }
+
+    public final d01 b(String str, byte[] bArr) {
+        AbstractC3634my.g(bArr, "body");
+        AbstractC3634my.g(str, "contentType");
+        d01 a = a("POST", bArr);
+        a.c.put("Content-Type", str);
+        return a;
+    }
+
+    public final d01 b(String str) {
+        AbstractC3634my.g(str, ImagesContract.URL);
+        this.a = new URL(str);
+        return this;
+    }
+
+    public final e01 a() {
+        URL url;
+        URL url2 = this.a;
+        if (url2 != null) {
+            if (this.g.isEmpty()) {
+                url = url2;
+            } else {
+                String url3 = url2.toString();
+                AbstractC3634my.f(url3, "toString(...)");
+                Uri.Builder buildUpon = Uri.parse(url3).buildUpon();
+                Iterator it = this.g.iterator();
+                while (it.hasNext()) {
+                    EJ ej = (EJ) it.next();
+                    buildUpon.appendQueryParameter((String) ej.a, (String) ej.b);
+                }
+                url = new URL(buildUpon.build().toString());
+            }
+            return new e01(url, this.b, AbstractC3264iE.K(this.c), this.d, this.e, this.f);
+        }
+        throw new IllegalStateException("HttpRequest.Builder: URL must be set before calling build()");
+    }
+
+    public final d01 a(String str, byte[] bArr) {
+        AbstractC3634my.g(str, "method");
+        if (str.length() > 0) {
+            if (bArr == null && (str.equals("POST") || str.equals("PUT") || str.equals("PATCH"))) {
+                throw new IllegalArgumentException(W50.D("Method ", str, " must have a request body.").toString());
+            }
+            this.b = str;
+            this.d = bArr;
+            return this;
+        }
+        throw new IllegalArgumentException("HTTP method must not be empty");
+    }
+
+    public final void a(String str) {
+        AbstractC3634my.g(str, AppMeasurementSdk.ConditionalUserProperty.NAME);
+        this.c.remove(str);
+    }
+
+    public final void a(URL url) {
+        AbstractC3634my.g(url, ImagesContract.URL);
+        this.a = url;
+    }
+}
+##### java/sources/ads_mobile_sdk/pz0.java
+package ads_mobile_sdk;
+
+import ads_mobile_sdk.pz0;
+import com.google.common.util.concurrent.ListenableFuture;
+import defpackage.AbstractC3634my;
+import defpackage.C0219Ib;
+import defpackage.C4144tO;
+import defpackage.InterfaceC0245Jb;
+import defpackage.InterfaceC3447kb0;
+import defpackage.RunnableC3954r1;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
+import java.net.URI;
+import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeoutException;
+
+/* loaded from: classes.dex */
+public final class pz0 implements InterfaceC3447kb0 {
+    public final ExecutorService a;
+    public final String b;
+    public final long c;
+
+    public pz0(ExecutorService executorService, String str, long j) {
+        this.a = executorService;
+        this.b = str;
+        this.c = j;
+    }
+
+    public final ListenableFuture a(final String str, final boolean z, final byte[] bArr, final String str2) {
+        return AbstractC3634my.q(new InterfaceC0245Jb() { // from class: tc0
+            @Override // defpackage.InterfaceC0245Jb
+            public final Object a(C0219Ib c0219Ib) {
+                return pz0.this.a(str, z, str2, bArr, c0219Ib);
+            }
+        });
+    }
+
+    public final void a(String str, C0219Ib c0219Ib, boolean z, String str2, byte[] bArr) {
+        HttpURLConnection httpURLConnection = null;
+        try {
+            try {
+                HttpURLConnection httpURLConnection2 = (HttpURLConnection) URI.create(str).toURL().openConnection();
+                try {
+                    Objects.requireNonNull(httpURLConnection2);
+                    RunnableC3954r1 runnableC3954r1 = new RunnableC3954r1(httpURLConnection2, 28);
+                    ExecutorService executorService = this.a;
+                    C4144tO c4144tO = c0219Ib.c;
+                    if (c4144tO != null) {
+                        c4144tO.addListener(runnableC3954r1, executorService);
+                    }
+                    httpURLConnection2.setRequestProperty("User-Agent", this.b);
+                    httpURLConnection2.setConnectTimeout((int) this.c);
+                    httpURLConnection2.setReadTimeout((int) this.c);
+                    if (z) {
+                        httpURLConnection2.setDoOutput(true);
+                        httpURLConnection2.setRequestMethod("POST");
+                        if (str2 != null) {
+                            httpURLConnection2.setRequestProperty("Content-Type", str2);
+                        }
+                        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(httpURLConnection2.getOutputStream());
+                        try {
+                            bufferedOutputStream.write(bArr);
+                            bufferedOutputStream.close();
+                        } catch (Throwable th) {
+                            try {
+                                bufferedOutputStream.close();
+                            } catch (Throwable th2) {
+                                th.addSuppressed(th2);
+                            }
+                            throw th;
+                        }
+                    }
+                    int responseCode = httpURLConnection2.getResponseCode();
+                    c0219Ib.a(new oz0(responseCode, a(httpURLConnection2, responseCode)));
+                    httpURLConnection2.disconnect();
+                } catch (SocketTimeoutException e) {
+                    e = e;
+                    httpURLConnection = httpURLConnection2;
+                    c0219Ib.b(new TimeoutException("Timeout: " + e.getMessage()));
+                    if (httpURLConnection == null) {
+                        return;
+                    }
+                    httpURLConnection.disconnect();
+                } catch (Throwable th3) {
+                    th = th3;
+                    httpURLConnection = httpURLConnection2;
+                    c0219Ib.b(th);
+                    if (httpURLConnection != null) {
+                        httpURLConnection.disconnect();
+                    }
+                }
+            } catch (Throwable th4) {
+                if (0 != 0) {
+                    httpURLConnection.disconnect();
+                }
+                throw th4;
+            }
+        } catch (SocketTimeoutException e2) {
+            e = e2;
+        } catch (Throwable th5) {
+            th = th5;
+        }
+    }
+
+    public final /* synthetic */ Object a(final String str, final boolean z, final String str2, final byte[] bArr, final C0219Ib c0219Ib) {
+        this.a.execute(new Runnable() { // from class: uc0
+            @Override // java.lang.Runnable
+            public final void run() {
+                pz0.this.a(str, c0219Ib, z, str2, bArr);
+            }
+        });
+        return "";
+    }
+
+    public static byte[] a(HttpURLConnection httpURLConnection, int i) {
+        InputStream inputStream = i < 400 ? httpURLConnection.getInputStream() : httpURLConnection.getErrorStream();
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            try {
+                if (inputStream == null) {
+                    byte[] bArr = new byte[0];
+                    byteArrayOutputStream.close();
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
+                    return bArr;
+                }
+                byte[] bArr2 = new byte[4096];
+                while (true) {
+                    int read = inputStream.read(bArr2);
+                    if (read != -1) {
+                        byteArrayOutputStream.write(bArr2, 0, read);
+                    } else {
+                        byte[] byteArray = byteArrayOutputStream.toByteArray();
+                        byteArrayOutputStream.close();
+                        inputStream.close();
+##### java/sources/ads_mobile_sdk/iz0.java
+package ads_mobile_sdk;
+
+import defpackage.InterfaceC0470Rt;
+import defpackage.RA;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+
+/* loaded from: classes.dex */
+public final class iz0 extends RA implements InterfaceC0470Rt {
+    public final /* synthetic */ OkHttpClient a;
+    public final /* synthetic */ Request b;
+
+    /* JADX WARN: 'super' call moved to the top of the method (can break code semantics) */
+    public iz0(OkHttpClient okHttpClient, Request request) {
+        super(0);
+        this.a = okHttpClient;
+        this.b = request;
+    }
+
+    @Override // defpackage.InterfaceC0470Rt
+    /* renamed from: a, reason: merged with bridge method [inline-methods] */
+    public final String invoke() {
+        return "HttpClient " + this.a.b.a.e.size() + " connections before: " + this.b.a.g();
+    }
+}
+##### java/sources/ads_mobile_sdk/nn3.java
+package ads_mobile_sdk;
+
+import android.net.Uri;
+import android.webkit.WebResourceRequest;
+import defpackage.AbstractC3634my;
+import defpackage.AbstractC3757oV;
+import defpackage.AbstractC4589z20;
+import defpackage.C0912co;
+import defpackage.EnumC3299ih;
+import defpackage.InterfaceC0198Hg;
+import defpackage.InterfaceC3127ga0;
+import defpackage.InterfaceC3220hh;
+import defpackage.Ja0;
+import defpackage.Sf0;
+import defpackage.W80;
+import defpackage.XE;
+import java.net.URL;
+
+/* loaded from: classes.dex */
+public final class nn3 implements InterfaceC3127ga0 {
+    public final fm0 a;
+    public final InterfaceC3220hh b;
+    public final kv0 c;
+    public final hq0 d;
+    public final a2 e;
+    public final Ja0 f;
+
+    public nn3(fm0 fm0Var, InterfaceC3220hh interfaceC3220hh, kv0 kv0Var, hq0 hq0Var, a2 a2Var, Ja0 ja0) {
+        AbstractC3634my.g(fm0Var, "firebaseAnalyticsAdapter");
+        AbstractC3634my.g(interfaceC3220hh, "backgroundScope");
+        AbstractC3634my.g(kv0Var, "gmaUtil");
+        AbstractC3634my.g(hq0Var, "flags");
+        AbstractC3634my.g(a2Var, "adConfiguration");
+        AbstractC3634my.g(ja0, "httpClient");
+        this.a = fm0Var;
+        this.b = interfaceC3220hh;
+        this.c = kv0Var;
+        this.d = hq0Var;
+        this.e = a2Var;
+        this.f = ja0;
+    }
+
+    /* JADX WARN: Code restructure failed: missing block: B:21:0x00f0, code lost:
+    
+        if (r11 != r1) goto L45;
+     */
+    /* JADX WARN: Removed duplicated region for block: B:23:0x0041  */
+    /* JADX WARN: Removed duplicated region for block: B:8:0x0023  */
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public final Object a(WebResourceRequest webResourceRequest, InterfaceC0198Hg interfaceC0198Hg) {
+        ln3 ln3Var;
+        int i;
+        String obj;
+        Uri uri;
+        String str;
+        nn3 nn3Var;
+        if (interfaceC0198Hg instanceof ln3) {
+            ln3Var = (ln3) interfaceC0198Hg;
+            int i2 = ln3Var.g;
+            if ((i2 & Integer.MIN_VALUE) != 0) {
+                ln3Var.g = i2 - Integer.MIN_VALUE;
+                Object obj2 = ln3Var.e;
+                EnumC3299ih enumC3299ih = EnumC3299ih.a;
+                i = ln3Var.g;
+                if (i != 0) {
+                    W80.U(obj2);
+                    Uri url = webResourceRequest.getUrl();
+                    String uri2 = url.toString();
+                    AbstractC3634my.f(uri2, "toString(...)");
+                    if (AbstractC3757oV.x0(uri2, this.d.L())) {
+                        Object a = this.a.a("generateEventId");
+                        obj = a != null ? a.toString() : null;
+                        if (obj != null) {
+                            cm0 cm0Var = this.c.a(url) ? cm0.b : this.c.c(url) ? cm0.c : null;
+                            if (cm0Var != null) {
+                                InterfaceC3220hh interfaceC3220hh = this.b;
+                                mn3 mn3Var = new mn3(this, cm0Var, obj, null);
+                                C0912co c0912co = C0912co.a;
+                                AbstractC3634my.g(interfaceC3220hh, "<this>");
+                                XE.r(interfaceC3220hh, c0912co, new sd3(mn3Var, null), 2);
+                                Object a2 = this.a.a("getAppInstanceId");
+                                String obj3 = a2 != null ? a2.toString() : null;
+                                fm0 fm0Var = this.a;
+                                ln3Var.a = this;
+                                ln3Var.b = url;
+                                ln3Var.c = obj;
+                                ln3Var.d = obj3;
+                                ln3Var.g = 1;
+                                fm0Var.getClass();
+                                Object a3 = fm0.a(fm0Var, ln3Var);
+                                if (a3 != enumC3299ih) {
+                                    uri = url;
+                                    str = obj3;
+                                    obj2 = a3;
+                                    nn3Var = this;
+                                }
+                                return enumC3299ih;
+                            }
+                        }
+                    }
+                    return null;
+                }
+                if (i != 1) {
+                    if (i != 2) {
+                        throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
+                    }
+                    W80.U(obj2);
+                    Sf0 sf0 = (Sf0) obj2;
+                    if (sf0 instanceof vt0) {
+                        return AbstractC4589z20.f((g01) ((vt0) sf0).b);
+                    }
+                    return null;
+                }
+                str = ln3Var.d;
+                obj = ln3Var.c;
+                uri = ln3Var.b;
+                nn3Var = ln3Var.a;
+                W80.U(obj2);
+                Ja0 ja0 = nn3Var.f;
+                URL url2 = new URL(uri.toString());
+                mm0 mm0Var = new mm0((String) obj2, str, obj);
+                ln3Var.a = null;
+                ln3Var.b = null;
+                ln3Var.c = null;
+                ln3Var.d = null;
+                ln3Var.g = 2;
+                obj2 = ja0.a(url2, mm0Var, ln3Var);
+            }
+        }
+        ln3Var = new ln3(this, interfaceC0198Hg);
+        Object obj22 = ln3Var.e;
+        EnumC3299ih enumC3299ih2 = EnumC3299ih.a;
+        i = ln3Var.g;
+        if (i != 0) {
+        }
+        Ja0 ja02 = nn3Var.f;
+        URL url22 = new URL(uri.toString());
+        mm0 mm0Var2 = new mm0((String) obj22, str, obj);
+##### java/sources/ads_mobile_sdk/b30.java
+package ads_mobile_sdk;
+
+import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
+import com.google.android.gms.common.internal.ImagesContract;
+import com.google.android.gms.measurement.api.AppMeasurementSdk;
+import defpackage.AbstractC0325Me;
+import defpackage.AbstractC0538Uj;
+import defpackage.AbstractC0738ad;
+import defpackage.AbstractC3264iE;
+import defpackage.AbstractC3634my;
+import defpackage.AbstractC3757oV;
+import defpackage.AbstractC4388wV;
+import defpackage.AbstractC4589z20;
+import defpackage.Ae0;
+import defpackage.C0139Ez;
+import defpackage.C0582Wb;
+import defpackage.C0605Wy;
+import defpackage.C0729aX;
+import defpackage.C0834bp;
+import defpackage.C0912co;
+import defpackage.C3147go;
+import defpackage.C3345jH;
+import defpackage.C3712nx;
+import defpackage.C3714nz;
+import defpackage.C3859pm;
+import defpackage.C4471xZ;
+import defpackage.C4603z90;
+import defpackage.EJ;
+import defpackage.EV;
+import defpackage.EnumC3299ih;
+import defpackage.Ge0;
+import defpackage.InterfaceC0198Hg;
+import defpackage.InterfaceC0585We;
+import defpackage.InterfaceC3107gH;
+import defpackage.InterfaceC3220hh;
+import defpackage.InterfaceC3571m60;
+import defpackage.Ja0;
+import defpackage.M30;
+import defpackage.S50;
+import defpackage.Sf0;
+import defpackage.UA;
+import defpackage.W80;
+import defpackage.XE;
+import java.net.SocketTimeoutException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+import org.chromium.net.ConnectionMigrationOptions;
+import org.chromium.net.CronetEngine;
+import org.chromium.net.QuicOptions;
+import org.chromium.net.UrlRequest;
+import org.chromium.net.apihelpers.UploadDataProviders;
+
+/* loaded from: classes.dex */
+public final class b30 implements Ja0 {
+    public final InterfaceC3220hh a;
+    public final hq0 b;
+    public final InterfaceC3571m60 c;
+    public final Context d;
+    public final wt2 e;
+    public final C3712nx f;
+    public final xh0 g;
+    public final yv h;
+    public fs i;
+    public Ae0 j;
+    public final InterfaceC3107gH k;
+    public final AtomicReference l;
+    public final AtomicReference m;
+    public final InterfaceC0585We n;
+    public final InterfaceC0585We o;
+    public final AtomicBoolean p;
+    public final AtomicBoolean q;
+    public final InterfaceC3220hh r;
+    public final UA s;
+
+    public b30(InterfaceC3220hh interfaceC3220hh, hq0 hq0Var, zv zvVar, InterfaceC3571m60 interfaceC3571m60, Context context, wt2 wt2Var, C3712nx c3712nx, xh0 xh0Var) {
+        AbstractC3634my.g(interfaceC3220hh, "backgroundScope");
+        AbstractC3634my.g(zvVar, "concurrencyObjects");
+        AbstractC3634my.g(interfaceC3571m60, "userAgentProvider");
+        AbstractC3634my.g(context, "context");
+        this.a = interfaceC3220hh;
+        this.b = hq0Var;
+        this.c = interfaceC3571m60;
+        this.d = context;
+        this.e = wt2Var;
+        this.f = c3712nx;
+        this.g = xh0Var;
+        yv a = zvVar.a();
+        this.h = a;
+        this.k = new C3345jH();
+        this.l = new AtomicReference();
+        this.m = new AtomicReference();
+        this.n = new C0605Wy();
+        this.o = new C0605Wy();
+        this.p = new AtomicBoolean();
+        this.q = new AtomicBoolean();
+        this.r = AbstractC0538Uj.a(new C0834bp(a).plus(new EV()).plus(new nd3()));
+        this.s = W80.N(new r20(this));
+    }
+
+    /* JADX WARN: Removed duplicated region for block: B:27:0x00bc  */
+    /* JADX WARN: Removed duplicated region for block: B:29:0x00d5  */
+    /* JADX WARN: Removed duplicated region for block: B:36:0x00fa  */
+    /* JADX WARN: Removed duplicated region for block: B:56:0x00d1  */
+    /* JADX WARN: Removed duplicated region for block: B:62:0x003f  */
+    /* JADX WARN: Removed duplicated region for block: B:8:0x0024  */
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public static final Object a(b30 b30Var, CronetEngine.Builder builder, Long l, InterfaceC0198Hg interfaceC0198Hg) {
+        a30 a30Var;
+        int i;
+        Object obj;
+        Long l2;
+        CronetEngine.Builder builder2;
+        int intValue;
+        QuicOptions.Builder enableTlsZeroRtt;
+        hq0 hq0Var;
+        hq0 hq0Var2;
+        hq0 hq0Var3;
+        b30Var.getClass();
+        if (interfaceC0198Hg instanceof a30) {
+            a30Var = (a30) interfaceC0198Hg;
+            int i2 = a30Var.g;
+            if ((i2 & Integer.MIN_VALUE) != 0) {
+                a30Var.g = i2 - Integer.MIN_VALUE;
+                Object obj2 = a30Var.e;
+                Object obj3 = EnumC3299ih.a;
+                i = a30Var.g;
+##### java/sources/ads_mobile_sdk/cp.java
+package ads_mobile_sdk;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.util.Base64;
+import com.google.android.gms.ads.AdSize;
+import defpackage.AbstractC3634my;
+import defpackage.AbstractC3757oV;
+import defpackage.AbstractC4388wV;
+import defpackage.EnumC3299ih;
+import defpackage.InterfaceC0198Hg;
+import defpackage.InterfaceC3215he0;
+import defpackage.Ja0;
+import defpackage.Sf0;
+import defpackage.W80;
+import java.net.URL;
+
+/* loaded from: classes.dex */
+public final class cp {
+    public final Ja0 a;
+    public final hq0 b;
+    public final InterfaceC3215he0 c;
+
+    public cp(Ja0 ja0, hq0 hq0Var, InterfaceC3215he0 interfaceC3215he0) {
+        AbstractC3634my.g(ja0, "httpClient");
+        AbstractC3634my.g(hq0Var, "flags");
+        AbstractC3634my.g(interfaceC3215he0, "traceLogger");
+        this.a = ja0;
+        this.b = hq0Var;
+        this.c = interfaceC3215he0;
+    }
+
+    /* JADX WARN: Removed duplicated region for block: B:12:0x0107  */
+    /* JADX WARN: Removed duplicated region for block: B:15:0x010a  */
+    /* JADX WARN: Removed duplicated region for block: B:31:0x0037  */
+    /* JADX WARN: Removed duplicated region for block: B:8:0x0022  */
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public static Object a(cp cpVar, String str, double d, boolean z, InterfaceC0198Hg interfaceC0198Hg) {
+        bp bpVar;
+        int i;
+        Object tt0Var;
+        Object qt0Var;
+        Sf0 sf0;
+        byte[] bArr;
+        if (interfaceC0198Hg instanceof bp) {
+            bpVar = (bp) interfaceC0198Hg;
+            int i2 = bpVar.f;
+            if ((i2 & Integer.MIN_VALUE) != 0) {
+                bpVar.f = i2 - Integer.MIN_VALUE;
+                Object obj = bpVar.d;
+                EnumC3299ih enumC3299ih = EnumC3299ih.a;
+                i = bpVar.f;
+                String str2 = null;
+                if (i != 0) {
+                    W80.U(obj);
+                    hq0 hq0Var = cpVar.b;
+                    hq0Var.getClass();
+                    if (((Boolean) hq0Var.a("gads:native_bitmap_loader_supports_data_url", Boolean.TRUE, Cdo.b)).booleanValue() && AbstractC4388wV.v0(str, "data:", false)) {
+                        int B0 = AbstractC3757oV.B0(str, ",", 0, 6);
+                        if (B0 == -1) {
+                            tt0Var = new tt0("Bad data URL: no ',' found for base64 data", fb1.n);
+                        } else {
+                            String substring = str.substring(0, B0);
+                            AbstractC3634my.f(substring, "substring(...)");
+                            if (AbstractC4388wV.q0(substring, ";base64", false)) {
+                                int B02 = AbstractC3757oV.B0(str, ":", 0, 6);
+                                int B03 = AbstractC3757oV.B0(str, ";", 0, 6);
+                                if (B02 != -1) {
+                                    String substring2 = str.substring(B02 + 1, B03);
+                                    AbstractC3634my.f(substring2, "substring(...)");
+                                    if (AbstractC4388wV.v0(substring2, "image/", false)) {
+                                        String substring3 = str.substring(B0 + 1);
+                                        AbstractC3634my.f(substring3, "substring(...)");
+                                        try {
+                                            qt0Var = new vt0(Base64.decode(substring3, 0));
+                                        } catch (IllegalArgumentException e) {
+                                            qt0Var = new qt0(e, fb1.n, "Bad data URL: could not decode base64");
+                                        }
+                                        tt0Var = qt0Var;
+                                    }
+                                }
+                                tt0Var = new tt0("Bad data URL: only image media is supported", fb1.n);
+                            } else {
+                                tt0Var = new tt0("Bad data URL: only base64 is supported", fb1.n);
+                            }
+                        }
+                        return tt0Var instanceof pt0 ? (pt0) tt0Var : cpVar.a((byte[]) ((vt0) tt0Var).b, d, z);
+                    }
+                    Ja0 ja0 = cpVar.a;
+                    URL url = new URL(Uri.parse(str).toString());
+                    bpVar.a = cpVar;
+                    bpVar.b = d;
+                    bpVar.c = z;
+                    bpVar.f = 1;
+                    obj = Ja0.b(ja0, url, null, bpVar, 14);
+                    if (obj == enumC3299ih) {
+                        return enumC3299ih;
+                    }
+                } else {
+                    if (i != 1) {
+                        throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
+                    }
+                    z = bpVar.c;
+                    d = bpVar.b;
+                    cpVar = bpVar.a;
+                    W80.U(obj);
+                }
+                sf0 = (Sf0) obj;
+                if (!(sf0 instanceof pt0)) {
+                    return (pt0) sf0;
+                }
+                AbstractC3634my.e(sf0, "null cannot be cast to non-null type com.google.android.libraries.ads.mobile.sdk.internal.util.GmaResult.Success<T of com.google.android.libraries.ads.mobile.sdk.internal.util.GmaResult.Companion.returnIfError>");
+                try {
+                    ir2 ir2Var = ((g01) ((vt0) sf0).b).d;
+                    return (ir2Var == null || (bArr = ir2Var.a) == null) ? new tt0("HTTP response body is null", fb1.a) : cpVar.a(bArr, d, z);
+                } catch (Exception e2) {
+                    ((yc3) cpVar.c).a("Error downloading bitmap from url.", e2);
+                    return new qt0(e2, fb1.e, str2, 4);
+                }
+            }
+        }
+        bpVar = new bp(cpVar, interfaceC0198Hg);
+        Object obj2 = bpVar.d;
+        EnumC3299ih enumC3299ih2 = EnumC3299ih.a;
+        i = bpVar.f;
+        String str22 = null;
+        if (i != 0) {
+        }
+        sf0 = (Sf0) obj2;
+        if (!(sf0 instanceof pt0)) {
+        }
+    }
+
+    public final Sf0 a(byte[] bArr, double d, boolean z) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inDensity = (int) (AdSize.WIDE_SKYSCRAPER_WIDTH * d);
+        if (!z) {
+##### java/sources/ads_mobile_sdk/fz0.java
+package ads_mobile_sdk;
+
+import defpackage.InterfaceC0470Rt;
+import defpackage.RA;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+
+/* loaded from: classes.dex */
+public final class fz0 extends RA implements InterfaceC0470Rt {
+    public final /* synthetic */ OkHttpClient a;
+    public final /* synthetic */ Request b;
+
+    /* JADX WARN: 'super' call moved to the top of the method (can break code semantics) */
+    public fz0(OkHttpClient okHttpClient, Request request) {
+        super(0);
+        this.a = okHttpClient;
+        this.b = request;
+    }
+
+    @Override // defpackage.InterfaceC0470Rt
+    /* renamed from: a, reason: merged with bridge method [inline-methods] */
+    public final String invoke() {
+        return "HttpClient " + this.a.b.a.e.size() + " connections after: " + this.b.a.g();
+    }
+}
+##### java/sources/ads_mobile_sdk/sr2.java
+package ads_mobile_sdk;
+
+import android.net.Uri;
+import defpackage.C3518lU;
+import defpackage.C4471xZ;
+import defpackage.EnumC3299ih;
+import defpackage.InterfaceC0198Hg;
+import defpackage.InterfaceC3220hh;
+import defpackage.InterfaceC3233hu;
+import defpackage.Ja0;
+import defpackage.RV;
+import defpackage.Sf0;
+import defpackage.W80;
+import java.net.URL;
+import java.util.Map;
+
+/* loaded from: classes.dex */
+public final class sr2 extends RV implements InterfaceC3233hu {
+    public int a;
+    public final /* synthetic */ vr2 b;
+    public final /* synthetic */ Uri c;
+    public final /* synthetic */ z2 d;
+    public final /* synthetic */ gd3 e;
+
+    /* JADX WARN: 'super' call moved to the top of the method (can break code semantics) */
+    public sr2(vr2 vr2Var, Uri uri, z2 z2Var, gd3 gd3Var, InterfaceC0198Hg interfaceC0198Hg) {
+        super(2, interfaceC0198Hg);
+        this.b = vr2Var;
+        this.c = uri;
+        this.d = z2Var;
+        this.e = gd3Var;
+    }
+
+    @Override // defpackage.X9
+    public final InterfaceC0198Hg create(Object obj, InterfaceC0198Hg interfaceC0198Hg) {
+        return new sr2(this.b, this.c, this.d, this.e, interfaceC0198Hg);
+    }
+
+    @Override // defpackage.InterfaceC3233hu
+    public final Object invoke(Object obj, Object obj2) {
+        return ((sr2) create((InterfaceC3220hh) obj, (InterfaceC0198Hg) obj2)).invokeSuspend(C4471xZ.a);
+    }
+
+    /* JADX WARN: Code restructure failed: missing block: B:16:0x0059, code lost:
+    
+        if (r7 == r0) goto L22;
+     */
+    @Override // defpackage.X9
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+    */
+    public final Object invokeSuspend(Object obj) {
+        Ja0 ja0;
+        Object a;
+        EnumC3299ih enumC3299ih = EnumC3299ih.a;
+        int i = this.a;
+        try {
+        } catch (Exception e) {
+            C3518lU c3518lU = mt0.a;
+            mt0.b("Error while pinging URL: " + this.c + ": " + e.getMessage(), null);
+        }
+        if (i == 0) {
+            W80.U(obj);
+            Map a2 = vr2.a(this.b, this.c);
+            ja0 = this.b.e;
+            URL url = new URL(this.c.toString());
+            this.a = 1;
+            obj = Ja0.b(ja0, url, a2, this, 10);
+            if (obj == enumC3299ih) {
+                return enumC3299ih;
+            }
+        } else {
+            if (i != 1) {
+                if (i != 2) {
+                    throw new IllegalStateException("call to 'resume' before 'invoke' with coroutine");
+                }
+                W80.U(obj);
+                return C4471xZ.a;
+            }
+            W80.U(obj);
+        }
+        Sf0 sf0 = (Sf0) obj;
+        if (sf0 instanceof vt0) {
+            z2 z2Var = this.d;
+            gd3 gd3Var = this.e;
+            this.a = 2;
+            a = this.b.a((vt0) sf0, z2Var, gd3Var, this);
+        }
+        return C4471xZ.a;
+    }
+}

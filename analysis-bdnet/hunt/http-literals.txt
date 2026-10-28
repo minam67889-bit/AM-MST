@@ -1,0 +1,60 @@
+java/sources/bin/mt/signature/KillerApplication.java-23-
+java/sources/bin/mt/signature/KillerApplication.java-24-/* loaded from: classes3.dex */
+java/sources/bin/mt/signature/KillerApplication.java-25-public class KillerApplication extends Application {
+java/sources/bin/mt/signature/KillerApplication.java:26:    public static final String URL = "https://github.com/L-JINBIN/ApkSignatureKillerEx";
+java/sources/bin/mt/signature/KillerApplication.java-27-
+java/sources/bin/mt/signature/KillerApplication.java-28-    static {
+java/sources/bin/mt/signature/KillerApplication.java-29-        killPM("dastan.prince.bdfreevpn", "MIIFiTCCA3GgAwIBAgIVANc10uPZnFM8FPowwA6j9sjqE51nMA0GCSqGSIb3DQEBCwUAMHQxCzAJ\nBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1Nb3VudGFpbiBWaWV3MRQw\nEgYDVQQKEwtHb29nbGUgSW5jLjEQMA4GA1UECxMHQW5kcm9pZDEQMA4GA1UEAxMHQW5kcm9pZDAg\nFw0yMjEwMDgwNTE0MTlaGA8yMDUyMTAwODA1MTQxOVowdDELMAkGA1UEBhMCVVMxEzARBgNVBAgT\nCkNhbGlmb3JuaWExFjAUBgNVBAcTDU1vdW50YWluIFZpZXcxFDASBgNVBAoTC0dvb2dsZSBJbmMu\nMRAwDgYDVQQLEwdBbmRyb2lkMRAwDgYDVQQDEwdBbmRyb2lkMIICIjANBgkqhkiG9w0BAQEFAAOC\nAg8AMIICCgKCAgEAwU8oL7+K4XRugNqCoq0vCjvPFyBHOiLiOxm84tzN12Y1PWt35VRsgvAoc7Rs\nJMBw7QqGO9ULj0aUYbZEd4VQ8m0Wmd/noCWex5+CSEs7Hlh5uIriJN9LGHAJUJOM5UiGz7Ihi9el\nHbs6sN3LV8bEAt5YE105Zcrrrc+LAm4Q5hIzo43tNo8EyYy/Lz4W2hKYMmNL09UCCZuvbtNp8Bfs\nmL3ZXU/jArXZml6tmOdecVIzPmxOtZetIoBOVemcjGX5+dDftmV5quIDaXYn/AUMEsFODFJH0mCN\n5Xqic3hGu0AByO2XWUQIqJbwhmA5mbE4/vP6jmnDcluSzGO1284I+qtv94eiitCvGv7u83Ohi5+O\n6fno20W4LJERJmm/yMhGbf2t42Q3YemnAoCU4N/XtbyvoC6Nc1nii+xyXY5MdatILnzVQ+/Bzut3\nC28YDgtZcxY6Fotp5mgxzugddrwXeifdDJ9iAGiTlCV7nuri7XCXa+wZ++ViI2/QkQ8LS8/rMeUJ\ntiqIIdqwI9uYuBiStKpl1ig9S/G9sOfuJRHoZUVBN/Lk5I006Qq8jZfbTiuSvu6kTxbR1uP1RzJk\nlPsswlqpsX+x4qHD58GiMlqSc9wPDZ1Gkro9Mpd2Yty4c6En/FOtuk00rTWP/C1G20kHOyxL0rRY\nXBFg05EdzjF70QMCAwEAAaMQMA4wDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAgEAY4cM\nznz6cDql7oQfpHVPYfmZJN3AG7flk7/mSlJPCiyswsP9OXEQsw6f7QkRN2priytWRgvptWnErw4B\nIvWAeG2iBL6WV3kN3ZpeD9SFx5PfZW1989YR0PuHaXKEodRfCYKkET+WRUHzPC/4Gvk+4R9YJbvz\nZG2ZcbVhqRpr6soRLbgd5Jv+QGvvvS5PMWh/ceNobN4Ut5j0LxbxyYJmqpTkleJo715jQdD3hPdg\nC8CBG8rmHPLO7UG9DN38AW1tCZA6d1C197crM+mpd6T0qRY+CHFegl+wNdnL3fRAWLdciBH+xz/M\ndeMuAowhFiCxf60ALLgZy8M2QO6Z/90KPPlVBIZHOPmib6uL52+uxPcY80xvv0za/yWcHOmsIomD\nwQmWvCMh8n5MiWivuJxcteDAuYjkqxuGFx+I1AWFIGoZWiXifdzVqCgi2PFJ93KU7yKz/TN2l7Wy\neDdP+Th/BpJRXIlJcOMXefkJoeaztKtvWC3l1lxGkz8sM9XsjdOk7m31E89noSP58BbyP3G9w65R\nn/ajBxn94uB1netSDJnBQEUhBINyfZqtFLcx4UjF6z5VJ9CcxRAqVm3uxTJQ64MJ7bIJzbHvrk0J\nc5VXtsckfdgzUBtPG3UNoU+uRhaEKxf8co1yUecju47Iy3kFrs04W9zLDSmhaGE4IKZ8V1g=\n");
+--
+java/sources/org/chromium/net/impl/JavaUrlRequest.java-798-            return;
+java/sources/org/chromium/net/impl/JavaUrlRequest.java-799-        }
+java/sources/org/chromium/net/impl/JavaUrlRequest.java-800-        ArrayList arrayList = new ArrayList();
+java/sources/org/chromium/net/impl/JavaUrlRequest.java:801:        String str = "http/1.1";
+java/sources/org/chromium/net/impl/JavaUrlRequest.java-802-        int i = 0;
+java/sources/org/chromium/net/impl/JavaUrlRequest.java-803-        while (true) {
+java/sources/org/chromium/net/impl/JavaUrlRequest.java-804-            String headerFieldKey = this.mCurrentUrlConnection.getHeaderFieldKey(i);
+--
+java/sources/org/chromium/net/impl/AndroidHttpEngineWrapper.java-217-            throw new UnsupportedOperationException();
+java/sources/org/chromium/net/impl/AndroidHttpEngineWrapper.java-218-        }
+java/sources/org/chromium/net/impl/AndroidHttpEngineWrapper.java-219-        String protocol = url.getProtocol();
+java/sources/org/chromium/net/impl/AndroidHttpEngineWrapper.java:220:        if ("http".equals(protocol) || "https".equals(protocol)) {
+java/sources/org/chromium/net/impl/AndroidHttpEngineWrapper.java-221-            return openConnection(url);
+java/sources/org/chromium/net/impl/AndroidHttpEngineWrapper.java-222-        }
+java/sources/org/chromium/net/impl/AndroidHttpEngineWrapper.java-223-        throw new UnsupportedOperationException(W50.m("Unexpected protocol:", protocol));
+--
+java/sources/org/chromium/net/impl/proto/RequestContextConfigOptions.java-743-            case 1:
+java/sources/org/chromium/net/impl/proto/RequestContextConfigOptions.java-744-                return null;
+java/sources/org/chromium/net/impl/proto/RequestContextConfigOptions.java-745-            case 2:
+java/sources/org/chromium/net/impl/proto/RequestContextConfigOptions.java:746:                return AbstractC0393Ou.newMessageInfo(DEFAULT_INSTANCE, "\u0001\u000f\u0000\u0001\u0001\u000f\u000f\u0000\u0000\u0000\u0001ဈ\u0000\u0002ဈ\u0001\u0003ဇ\u0002\u0004ဈ\u0003\u0005ဇ\u0004\u0006ဇ\u0005\u0007ဇ\u0006\bင\u0007\tဂ\b\nဈ\t\u000bဂ\n\fဇ\u000b\rဇ\f\u000eင\r\u000fဉ\u000e", new Object[]{"bitField0_", "userAgent_", "storagePath_", "quicEnabled_", "quicDefaultUserAgentId_", "http2Enabled_", "brotliEnabled_", "disableCache_", "httpCacheMode_", "httpCacheMaxSize_", "experimentalOptions_", "mockCertVerifier_", "enableNetworkQualityEstimator_", "bypassPublicKeyPinningForLocalTrustAnchors_", "networkThreadPriority_", "proxyOptions_"});
+java/sources/org/chromium/net/impl/proto/RequestContextConfigOptions.java-747-            case 3:
+java/sources/org/chromium/net/impl/proto/RequestContextConfigOptions.java-748-                return new RequestContextConfigOptions();
+java/sources/org/chromium/net/impl/proto/RequestContextConfigOptions.java-749-            case 4:
+--
+java/sources/defpackage/AbstractC0325Me.java-85-    }
+java/sources/defpackage/AbstractC0325Me.java-86-
+java/sources/defpackage/AbstractC0325Me.java-87-    public static boolean B(XmlPullParser xmlPullParser, String str) {
+java/sources/defpackage/AbstractC0325Me.java:88:        return xmlPullParser.getAttributeValue("http://schemas.android.com/apk/res/android", str) != null;
+java/sources/defpackage/AbstractC0325Me.java-89-    }
+java/sources/defpackage/AbstractC0325Me.java-90-
+java/sources/defpackage/AbstractC0325Me.java-91-    public static final int C(InterfaceC3989rR interfaceC3989rR, InterfaceC3989rR[] interfaceC3989rRArr) {
+--
+java/sources/defpackage/AbstractC0325Me.java-1044-
+java/sources/defpackage/AbstractC0325Me.java-1045-    public static C3805p5 y(TypedArray typedArray, XmlPullParser xmlPullParser, Resources.Theme theme, String str, int i2) {
+java/sources/defpackage/AbstractC0325Me.java-1046-        C3805p5 c3805p5;
+java/sources/defpackage/AbstractC0325Me.java:1047:        if (xmlPullParser.getAttributeValue("http://schemas.android.com/apk/res/android", str) != null) {
+java/sources/defpackage/AbstractC0325Me.java-1048-            TypedValue typedValue = new TypedValue();
+java/sources/defpackage/AbstractC0325Me.java-1049-            typedArray.getValue(i2, typedValue);
+java/sources/defpackage/AbstractC0325Me.java-1050-            int i3 = typedValue.type;
+--
+java/sources/defpackage/C4326vg.java-41-        if (!Modifier.isAbstract(modifiers)) {
+java/sources/defpackage/C4326vg.java-42-            return null;
+java/sources/defpackage/C4326vg.java-43-        }
+java/sources/defpackage/C4326vg.java:44:        return "Abstract classes can't be instantiated! Adjust the R8 configuration or register an InstanceCreator or a TypeAdapter for this type. Class name: " + cls.getName() + "\nSee " + "https://github.com/google/gson/blob/main/Troubleshooting.md#".concat("r8-abstract-class");
+java/sources/defpackage/C4326vg.java-45-    }
+java/sources/defpackage/C4326vg.java-46-
+java/sources/defpackage/C4326vg.java-47-    @Override // defpackage.JI
+--
+java/sources/defpackage/C4452xG.java-346-        if (str5 == null) {
+java/sources/defpackage/C4452xG.java-347-            throw new IOException("Project ID or API Key is missing");
+java/sources/defpackage/C4452xG.java-348-        }
+java/sources/defpackage/C4452xG.java:349:        URL url = new URL(W50.u(W50.y("https://fcmregistrations.googleapis.com/v1/projects/", str5, "/registrations/", str3, "/topicSubscriptions/"), str, ":", str4));
