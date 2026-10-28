@@ -19,6 +19,8 @@ data class TransportStats(
     val activeStreams: Int = 0,
     val currentResolver: String = "-",
     val sessionId: Int = -1,
+    /** Frames put on the wire through [TunnelConfig.packetDuplication]. */
+    val duplicatesSent: Long = 0,
 )
 
 /**

@@ -18,6 +18,15 @@ data class TunnelConfig(
     val pingIntervalMs: Long = 12000,
     val responseMode: Int = DnsEnvelope.RESPONSE_MODE_RAW,
     val ednsUdpSize: Int = DnsEnvelope.DEFAULT_EDNS_UDP_SIZE,
+    /**
+     * MasterDnsVPN `PACKET_DUPLICATION_COUNT`: send every frame to this many
+     * distinct resolvers. 1 = no duplication. The server ignores duplicate
+     * sequence numbers, so this only costs upload bandwidth, never correctness.
+     */
+    val packetDuplication: Int = 1,
+    /** MasterDnsVPN `MIN_UPLOAD_MTU` / `MAX_UPLOAD_MTU` - clamp for MTU probing. */
+    val minUploadMtu: Int = 32,
+    val maxUploadMtu: Int = 180,
 ) {
     fun validate(): List<String> {
         val problems = ArrayList<String>()
@@ -29,6 +38,9 @@ data class TunnelConfig(
         if (uploadMtu < 32) problems.add("upload MTU too small ($uploadMtu)")
         if (queryTimeoutMs < 200) problems.add("query timeout too small (${queryTimeoutMs}ms)")
         if (responseMode !in 0..1) problems.add("invalid response mode $responseMode")
+        if (packetDuplication !in 1..8) problems.add("packet duplication must be 1..8")
+        if (minUploadMtu > maxUploadMtu) problems.add("min upload MTU exceeds max upload MTU")
+        if (uploadMtu > maxUploadMtu) problems.add("upload MTU $uploadMtu exceeds max ${maxUploadMtu}")
         return problems
     }
 

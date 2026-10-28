@@ -48,6 +48,11 @@ class MasterDnsTransport(
     private val bytesDown = AtomicLong()
     private val lastRtt = AtomicLong(-1)
     private val switches = AtomicInteger()
+    private val duplicates = AtomicLong()
+    private val duplicateExecutor: java.util.concurrent.ExecutorService =
+        java.util.concurrent.Executors.newFixedThreadPool(2) { runnable ->
+            Thread(runnable, "dns-duplicate").apply { isDaemon = true }
+        }
     private val recoveries = AtomicInteger()
 
     @Volatile private var state = TransportState.IDLE
@@ -67,6 +72,7 @@ class MasterDnsTransport(
     override fun stats(): TransportStats = TransportStats(
         state = state,
         packetsSent = sent.get(),
+        duplicatesSent = duplicates.get(),
         responsesReceived = responses.get(),
         retransmits = retransmits.get(),
         timeouts = timeouts.get(),
@@ -140,6 +146,7 @@ class MasterDnsTransport(
         pickEndpoint()?.let { runCatching { session.sendClose(it) } }
         pending.clear()
         outbox.clear()
+        duplicateExecutor.shutdownNow()
         state = TransportState.STOPPED
         log.info("transport", "stopped")
     }
@@ -372,11 +379,40 @@ class MasterDnsTransport(
         outbox.add(item)
     }
 
+    /**
+     * MasterDnsVPN-style packet duplication: put the same frame on the wire via
+     * additional healthy resolvers. Only the primary response is processed; the
+     * copies exist to beat lossy resolvers, and the server drops duplicate
+     * sequence numbers itself.
+     */
+    private fun duplicateToAlternates(frame: VpnFrame, primary: ResolverEndpoint) {
+        val copies = config.packetDuplication - 1
+        if (copies <= 0) return
+        val alternates = selector.ranked()
+            .asSequence()
+            .filter { it.key != primary.key }
+            .take(copies)
+            .toList()
+        for (alternate in alternates) {
+            duplicates.incrementAndGet()
+            duplicateExecutor.execute {
+                try {
+                    session.exchange(frame, alternate, config.queryTimeoutMs)
+                } catch (_: Exception) {
+                    // A duplicate failing is not an error: the primary still owns the result.
+                }
+            }
+        }
+    }
+
     private fun transmit(item: Outbound) {
         val endpoint = pickEndpoint()
         if (endpoint == null) {
             failStream(item, "no usable resolver")
             return
+        }
+        if (config.packetDuplication > 1 && item.attempts == 0) {
+            duplicateToAlternates(item.frame, endpoint)
         }
         sent.incrementAndGet()
         try {
