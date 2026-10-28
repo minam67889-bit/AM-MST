@@ -67,21 +67,57 @@ jobs:
           set -x
           mkdir -p apk
           UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"
+          JAR=/tmp/cookies.txt
+          : > "$JAR"
           trY() {
             url="$1"; out="$2"
             echo "== trying $url"
+            # A cookie jar matters: filebin sets `verified` on the first hit and
+            # serves the actual file only to a client that presents it back.
             curl -sSL --connect-timeout 20 --max-time 900 -A "$UA" \
-                 -H "Accept: application/octet-stream, application/vnd.android.package-archive, */*" \
+                 -c "$JAR" -b "$JAR" \
+                 -H "Accept: application/octet-stream, application/vnd.android.package-archive, text/html, */*" \
+                 -e "https://filebin.net/" \
                  -D "$out.headers" -o "$out" "$url"
             echo "curl exit: $?"
-            head -25 "$out.headers" 2>/dev/null
+            head -20 "$out.headers" 2>/dev/null
             file "$out" 2>/dev/null
             ls -l "$out" 2>/dev/null
           }
           trY "$APK_URL" apk/candidate
+          if file apk/candidate | grep -qi "zip archive"; then :; else
+            echo "== second attempt with the cookie filebin just set"
+            sleep 5
+            trY "$APK_URL" apk/candidate
+            if ! file apk/candidate | grep -qi "zip archive"; then
+              echo "== following links/forms found in the interstitial"
+              grep -oiE '<title>[^<]*</title>' apk/candidate | head -3
+              sed -n '1,400p' apk/candidate | grep -oiE '(action|href)="[^"]+"' | head -20
+              for link in $(grep -oiE 'href="[^"]+"' apk/candidate | cut -d'"' -f2 | head -10); do
+                case "$link" in
+                  http*) target="$link" ;;
+                  *) target="https://filebin.net$link" ;;
+                esac
+                echo "-> $target"
+                trY "$target" apk/candidate2
+                if file apk/candidate2 | grep -qi "zip archive"; then
+                  mv apk/candidate2 apk/candidate; break
+                fi
+              done
+              # last resort: POST the confirm form
+              action=$(grep -oiE '<form[^>]*action="[^"]+"' apk/candidate | head -1 | cut -d'"' -f2)
+              if [ -n "${action:-}" ] && ! file apk/candidate | grep -qi "zip archive"; then
+                echo "-> POST https://filebin.net$action"
+                curl -sSL -A "$UA" -c "$JAR" -b "$JAR" -X POST \
+                     -D apk/post.headers -o apk/candidate -e "$APK_URL" \
+                     "https://filebin.net$action" || true
+                file apk/candidate
+              fi
+            fi
+          fi
           if ! file apk/candidate | grep -qi "zip archive"; then
             echo "== first attempt did not yield a zip; dumping beginning of body"
-            head -c 2000 apk/candidate 2>/dev/null
+            head -c 6000 apk/candidate 2>/dev/null
             echo
             grep -oE 'href="[^"]+"' apk/candidate 2>/dev/null | head -20
             grep -oE 'https?://[^"<> ]+\.(zip|apk)[^"<> ]*' apk/candidate 2>/dev/null | head -10
