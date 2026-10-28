@@ -106,12 +106,13 @@ jobs:
       - name: "Does it start at all?"
         run: |
           exec > >(tee /tmp/startup.txt) 2>&1
+          set +e            # GitHub runs bash -e: one failed probe killed the step
           set -x
           date -u
           qemu-aarch64-static --version | head -1
           printf 'int main(void){return 0;}' > /tmp/t.c
           aarch64-linux-gnu-gcc -o /tmp/t /tmp/t.c
-          timeout 15 qemu-aarch64-static /tmp/t; echo "trivial static exit=$?"
+          timeout 15 qemu-aarch64-static -L /usr/aarch64-linux-gnu /tmp/t; echo "trivial via cross loader exit=$?"
           export QEMU_LD_PREFIX="$PWD/sysroot"
           export LD_LIBRARY_PATH="$PWD/sysroot/system/lib64"
           ls -l sysroot/system/bin sysroot/system/lib64
@@ -129,6 +130,7 @@ jobs:
 
       - name: "their FastDNS client: -udp host:53 -pubkey prince sd-<host> 127.0.0.1:7000"
         run: |
+          set +e
           set -uo pipefail
           export QEMU_LD_PREFIX="$PWD/sysroot"
           export LD_LIBRARY_PATH="$PWD/sysroot/system/lib64"
@@ -156,6 +158,7 @@ jobs:
 
       - name: "their SlowDNS client: -tunnel <pEncrypt(ip:53)> -report BDNET"
         run: |
+          set +e
           set -uo pipefail
           export QEMU_LD_PREFIX="$PWD/sysroot"
           export LD_LIBRARY_PATH="$PWD/sysroot/system/lib64"
