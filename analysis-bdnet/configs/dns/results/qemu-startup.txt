@@ -1,1 +1,9 @@
-===== libxdnstt -h
++ date -u
+Wed Oct 28 23:52:33 UTC 2026
++ qemu-aarch64-static --version
++ head -1
+qemu-aarch64 version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)
++ printf 'int main(void){return 0;}'
++ aarch64-linux-gnu-gcc -o /tmp/t /tmp/t.c
++ timeout 15 qemu-aarch64-static /tmp/t
+qemu-aarch64-static: Could not open '/lib/ld-linux-aarch64.so.1': No such file or directory
