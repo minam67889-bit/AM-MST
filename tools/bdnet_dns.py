@@ -147,6 +147,10 @@ def tcp_dns(server: tuple[str, int], pkt: bytes, timeout: float) -> bytes:
 
 def probe_one(host: str, port: int, name: str, timeout: float, transport: str) -> dict:
     pkt = dns_packet(name)
+    if port == 0:
+        # UDPQ has no fixed port; the payload says 6000-19999 / 20000-50000.
+        # Sending to port 0 is EINVAL, so draw one from the documented range.
+        port = random.randrange(6000, 20000)
     server = (host, port)
     t0 = time.perf_counter()
     try:
@@ -348,9 +352,9 @@ def render_compare(theirs: dict, ours: dict) -> str:
 
 
 def cmd_their(args) -> int:
-    servers = load_servers(args)
+    servers = filter_mode(load_servers(args), args.mode)
     res = their_run(servers, args.timeout, args.retry, args.interval)
-    print(render_rows(res["rows"]))
+    print(render_rows(res["rows"], limit=args.show))
     print(f"\n{res['alive']}/{res['total']} answered over TCP/53 in {res['secs']}s "
           f"(one at a time, retry={args.retry})")
     dump(args.out, res)
@@ -358,9 +362,9 @@ def cmd_their(args) -> int:
 
 
 def cmd_mine(args) -> int:
-    servers = load_servers(args)
+    servers = filter_mode(load_servers(args), args.mode)
     res = our_run(servers, args.timeout, args.workers, args.duplication)
-    print(render_rows(res["rows"]))
+    print(render_rows(res["rows"], limit=args.show))
     print(f"\n{res['alive']}/{res['total']} answered over UDP/53 in {res['secs']}s "
           f"(all in flight at once)")
     print("tier0 (best): " + ", ".join(res["tiers"]["tier0"]))
@@ -371,9 +375,7 @@ def cmd_mine(args) -> int:
 
 
 def cmd_compare(args) -> int:
-    servers = load_servers(args)
-    if args.mode:
-        servers = [s for s in servers if s.get("mode") == args.mode]
+    servers = filter_mode(load_servers(args), args.mode)
     print(f"== {len(servers)} servers, mode={args.mode or 'all'} ==")
     theirs = their_run(servers, args.timeout, args.retry, args.interval)
     ours = our_run(servers, args.timeout, args.workers, args.duplication)
@@ -383,15 +385,27 @@ def cmd_compare(args) -> int:
     return 0 if (theirs["alive"] or ours["alive"]) else 1
 
 
-def render_rows(rows: list[dict]) -> str:
+def _flat(row: dict) -> dict:
+    """`their_run` flattens the server fields, `probe` keeps them nested."""
+    srv = row.get("server") or {}
+    merged = dict(srv)
+    merged.update({k: v for k, v in row.items() if k != "server"})
+    return merged
+
+
+def render_rows(rows: list[dict], limit: int | None = None) -> str:
     out = [f"{'host':32s} {'ip':16s} {'port':>5s} {'ms':>8s}  result"]
-    for r in sorted(rows, key=lambda r: (not r.get("ok"), r.get("ms", 0))):
+    ordered = sorted((_flat(r) for r in rows), key=lambda r: (not r.get("ok"), r.get("ms", 0)))
+    shown = ordered if limit is None else ordered[:limit]
+    for r in shown:
         ip = r.get("ip", "-")
-        line = (f"{r['host']:32s} {ip:16s} {int(r.get('port') or 53):5d} "
+        line = (f"{r.get('host', '?'):32s} {ip:16s} {int(r.get('port') or 53):5d} "
                 f"{r.get('ms', 0):8.1f}  ")
         line += (f"rcode={r['rcode']} answers={r['answers']}" if r.get("ok")
                  else f"FAIL {r.get('error')}")
         out.append(line)
+    if limit is not None and len(ordered) > limit:
+        out.append(f"... and {len(ordered) - limit} more")
     return "\n".join(out)
 
 
@@ -399,6 +413,15 @@ def dump(path: str | None, payload: dict) -> None:
     if path:
         pathlib.Path(path).write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
         print(f"wrote {path}")
+
+
+def filter_mode(servers: list[dict], mode: str | None) -> list[dict]:
+    """`--mode` used to be silently ignored outside `probe`/`compare`, which
+    turned a 20-host check into an 845-host one. Keep it in one place."""
+    picked = [s for s in servers if s.get("mode") == mode] if mode else servers
+    if not picked:
+        raise SystemExit(f"no servers with mode={mode!r}")
+    return picked
 
 
 def load_servers(args) -> list[dict]:
@@ -515,18 +538,18 @@ def main(argv: list[str] | None = None) -> int:
     t = sub.add_parser("their", help="replay the app's own pdnsd/TCP client, sequentially")
     t.add_argument("servers"); t.add_argument("--mode"); t.add_argument("--timeout", type=float, default=6.0)
     t.add_argument("--retry", type=int, default=1); t.add_argument("--interval", type=float, default=1.0)
-    t.add_argument("--out"); t.set_defaults(func=cmd_their)
+    t.add_argument("--show", type=int, default=25); t.add_argument("--out"); t.set_defaults(func=cmd_their)
 
     m = sub.add_parser("mine", help="MasterDnsVPN-shaped balanced client")
     m.add_argument("servers"); m.add_argument("--mode"); m.add_argument("--timeout", type=float, default=6.0)
     m.add_argument("--workers", type=int, default=64); m.add_argument("--duplication", type=int, default=2)
-    m.add_argument("--out"); m.set_defaults(func=cmd_mine)
+    m.add_argument("--show", type=int, default=25); m.add_argument("--out"); m.set_defaults(func=cmd_mine)
 
     k = sub.add_parser("compare", help="run theirs then ours on the same host list")
     k.add_argument("servers"); k.add_argument("--mode"); k.add_argument("--timeout", type=float, default=6.0)
     k.add_argument("--retry", type=int, default=1); k.add_argument("--interval", type=float, default=1.0)
     k.add_argument("--workers", type=int, default=64); k.add_argument("--duplication", type=int, default=2)
-    k.add_argument("--out"); k.set_defaults(func=cmd_compare)
+    k.add_argument("--show", type=int, default=25); k.add_argument("--out"); k.set_defaults(func=cmd_compare)
 
     lb = sub.add_parser("loopback", help="prove both clients against a local resolver")
     lb.set_defaults(func=cmd_loopback)

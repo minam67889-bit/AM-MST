@@ -95,9 +95,28 @@ python3 tools/bdnet_dns.py config --host 13.140.185.158 --port 53
 python3 tools/bdnet_dns.py selftest          # 8/8 PASS
 ```
 
-The transport semantics that matter for a test: **`tcp_only`**, **one resolver
-at a time**, **one retry one second later**. That is the baseline:
-`tools/bdnet_dns.py their`.
+On the SlowDNS side there is a second, older code path that is worth knowing,
+because it is the one the 20 domains belong to — `Tunnel.java` builds a `pdnsd`
+config out of `res/raw/pdnsd_local`:
+
+```java
+// Pdnsd.java
+"server {\n label= \"%1$s\";\n ip = %2$s;\n port = %3$d;\n uptest = none;\n }\n"
+// Tunnel.java - one block per DNS host, port fixed at 53
+new Pdnsd(context, strArr, 53, vpnAddress, findAvailablePort, PDNSD_TYPE)
+```
+
+So every `deN.liftmeon.org:53` gets its own `server {}` block, `uptest = none`
+(no health probing at all), and the upstream transport comes from the
+`PDNSD_TYPE` preference — default `tcp_only`, switchable to `udp_only`
+(id `-163311168354187` → `PDNSD_TYPE`, `-163358412994443` → `tcp_only`).
+pdnsd chooses among those blocks, so "theirs" is not purely sequential: it is
+one dumb pool with no scoring, no failover and no duplication.
+
+The test reproduces their **transport** faithfully — TCP/53 per host,
+`retry = 1`, `retry_interval = 1`, `validate = 1`, `confuse = 3`, the exact
+windows — and runs it sequentially so the comparison against our scoring client
+is apples to apples: `tools/bdnet_dns.py their`.
 
 ---
 

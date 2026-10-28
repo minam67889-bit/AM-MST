@@ -60,47 +60,33 @@ jobs:
               print(mode, len(hosts))
           PY
 
-      - name: Their algorithm - pdnsd/tcp_only, one resolver at a time
-        continue-on-error: true
-        run: |
-          python3 tools/bdnet_dns.py their analysis-bdnet/configs/dns/servers.json \
-            --mode slowdns --timeout "${{ inputs.timeout || '6' }}" \
-            --out /tmp/theirs-slowdns.json | tail -30
-
-      - name: Our algorithm - fan out to every resolver, balance, duplicate
-        continue-on-error: true
-        run: |
-          python3 tools/bdnet_dns.py mine analysis-bdnet/configs/dns/servers.json \
-            --mode slowdns --timeout "${{ inputs.timeout || '6' }}" --workers 64 \
-            --out /tmp/ours-slowdns.json | tail -30
-
-      - name: Head to head on the same hosts
+      - name: Head to head - their transport vs our balancer (SlowDNS, 20 hosts)
         continue-on-error: true
         run: |
           python3 tools/bdnet_dns.py compare analysis-bdnet/configs/dns/servers.json \
-            --mode "${{ inputs.mode || 'slowdns' }}" --timeout "${{ inputs.timeout || '6' }}" \
-            --out /tmp/compare.json | tail -40
+            --mode slowdns --timeout "${{ inputs.timeout || '6' }}" --show 20 \
+            --out /tmp/compare.json | tee /tmp/compare.txt
 
-      - name: FastDNS (dnstt, UDP/53) reachability
+      - name: FastDNS reachability (100 dnstt endpoints, UDP/53)
         continue-on-error: true
         run: |
           python3 tools/bdnet_dns.py mine analysis-bdnet/configs/dns/servers.json \
-            --mode fastdns --timeout "${{ inputs.timeout || '6' }}" --workers 100 \
-            --out /tmp/ours-fastdns.json | tail -20
+            --mode fastdns --timeout 5 --workers 100 --show 12 \
+            --out /tmp/ours-fastdns.json | tee /tmp/ours-fastdns.txt
 
-      - name: UDPQ pool reachability
+      - name: UDPQ pool reachability (725 endpoints, UDP 6000-19999)
         continue-on-error: true
         run: |
           python3 tools/bdnet_dns.py mine analysis-bdnet/configs/dns/servers.json \
-            --mode udpq --timeout 3 --workers 128 \
-            --out /tmp/ours-udpq.json | tail -12
+            --mode udpq --timeout 3 --workers 128 --show 12 \
+            --out /tmp/ours-udpq.json | tee /tmp/ours-udpq.txt
 
       - name: Summary
         run: |
           python3 - <<'PY'
           import json, os, pathlib
           rows = []
-          for name in ("compare", "ours-slowdns", "theirs-slowdns", "ours-fastdns", "ours-udpq"):
+          for name in ("compare", "ours-fastdns", "ours-udpq"):
               p = pathlib.Path(f"/tmp/{name}.json")
               if not p.exists():
                   rows.append(f"| {name} | missing | | |")
@@ -125,10 +111,13 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p analysis-bdnet/configs/dns/results
-          for f in compare theirs-slowdns ours-slowdns ours-fastdns ours-udpq; do
+          for f in compare ours-fastdns ours-udpq; do
             cp "/tmp/$f.json" analysis-bdnet/configs/dns/results/ 2>/dev/null || true
           done
           cp /tmp/app-config.txt analysis-bdnet/configs/dns/results/ 2>/dev/null || true
+          for f in compare ours-fastdns ours-udpq; do
+            cp "/tmp/$f.txt" analysis-bdnet/configs/dns/results/ 2>/dev/null || true
+          done
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add analysis-bdnet/configs/dns/results
