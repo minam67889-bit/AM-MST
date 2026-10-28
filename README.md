@@ -14,9 +14,11 @@ independent of the transport: it is plugged in through `ResolverSelector` /
 Tunnel engine, once its protocol is confirmed from the APK) can be dropped in
 without touching the resolver manager.
 
-> **Read `docs/REPORT.md` and `docs/STATUS.md` first.** They separate what has
-> been verified end-to-end from what is blocked. The AM Tunnel APK itself could
-> not be obtained from this environment (see "Blocked" below).
+> **Read `docs/STATUS.md` and `docs/AM-TUNNEL-PROTOCOL.md` first.** The AM Tunnel
+> APK has been decompiled and its real protocol identified: it is **Hysteria 2
+> (QUIC/UDP) + WireGuard + Xray**, with pdnsd for local DNS — not a DNS-TXT
+> tunnel. Its server credentials live in a LIAPP-encrypted payload, so this
+> client does not pretend to reach their servers.
 
 ---
 

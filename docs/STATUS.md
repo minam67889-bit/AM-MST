@@ -40,35 +40,30 @@ Last verified end-to-end in CI run **40713951951** (`Live DNS-tunnel integration
 | Full-device TCP routing (tun2socks) | Blocked (by design) | would require a userland TCP/IP stack or a native tun2socks library; not shipped. SOCKS5 proxy mode is the verified traffic path |
 | MTU discovery packets | Not implemented | fixed/configurable MTU used instead (server clamps to its policy) |
 | Compression negotiation | Not implemented | client always negotiates OFF; server accepts |
-| **AM Tunnel protocol** | **Blocked** | APK could not be downloaded in this environment (see below) |
-| **Baseline test of the original AM Tunnel client** | **Blocked** | needs the APK plus a working AM Tunnel configuration |
+| **AM Tunnel protocol** | **Analysed** | real APK decompiled in CI: `app.vpn.amtunnellite` v63, Hysteria 2 ("UDP-Q by Prince") + WireGuard + Xray + pdnsd + tun2socks, LIAPP-protected. See `docs/AM-TUNNEL-PROTOCOL.md` |
+| **Baseline test of the original AM Tunnel client** | **Blocked** | the APK runs only against vendor backend credentials held in a LIAPP-encrypted payload; no device/emulator either |
+| Packet duplication (MasterDnsVPN `PACKET_DUPLICATION_COUNT`) | Implemented | `TunnelConfig.packetDuplication` → extra copies to other ranked resolvers; counter in `stats().duplicatesSent` |
 
-## Why AM Tunnel is blocked
+## How the AM Tunnel APK was finally obtained and analysed
 
-The supplied link `https://filebin.net/6kebb3eierc437j7/app.vpn.amtunnellite.zip`
-is unreachable from the build environment: TCP connects, but the TLS handshake
-is terminated at the network edge (`SSL_ERROR_SYSCALL`), identically with
-`curl` and `wget`. Only `github.com`, `codeload.github.com`, `api.github.com`,
-`registry.npmjs.org`, `pypi.org` and `files.pythonhosted.org` are permitted, and
-GitHub **release assets** redirect to a host that is also blocked.
+The sandbox itself only reaches six hosts, so the download had to happen in CI
+(`.github/workflows/analyze-apk.yml`):
 
-Consequences:
+1. the supplied `filebin.net/6kebb3eierc437j7/app.vpn.amtunnellite.zip` is
+   **dead** — it answers `200` with a 5,412-byte HTML page (the bin expired);
+2. the apkpure mirror `https://d.apkpure.net/b/APK/app.vpn.amtunnellite?version=latest`
+   served the real 63,738,028-byte bundle;
+3. the bundle is an App Bundle with per-ABI splits, so the workflow picks the
+   split that actually contains `classes*.dex` as the base APK, decompiles it
+   with `apktool` + `jadx`, mines strings out of every native library and
+   commits the report to `analysis/`.
 
-* The original client cannot be decompiled, so its transport cannot be
-  identified (it is **not** assumed to be SlowDNS or MasterDnsVPN).
-* Its resolver usage cannot be characterised (single vs. multiple, per-session
-  vs. per-query).
-* No baseline connection test can be run, because there is no client binary and
-  no server configuration.
-* Consequently, no claim is made anywhere in this repository that the modified
-  client talks to AM Tunnel servers.
+Result: the protocol is identified (Hysteria 2 / QUIC + WireGuard + Xray, with
+pdnsd for local DNS) and the server credentials are proven to be inside a
+LIAPP-encrypted payload. Full write-up: `docs/AM-TUNNEL-PROTOCOL.md`.
 
-What is prepared for that work:
-
-* `TunnelTransport` / `ResolverSelector` seams isolate the DNS engine from the
-  transport, so an AM Tunnel adapter can be added as one class.
-* `docs/REPORT.md` lists the exact questions the APK analysis must answer and
-  the commands to run once the file is available.
+**No claim is made that this client talks to AM Tunnel servers**, because doing
+so would require their backend credentials.
 
 ## How the live tests reach a target
 
