@@ -1,0 +1,7 @@
+== libs/libSignatureKiller.so
+libs/libSignatureKiller.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, BuildID[sha1]=58bb34c20393a78f2a23ee298230047980d9b2ad, stripped
+  Class:                             ELF64
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Entry point address:               0x19e4
+-- interpreter
