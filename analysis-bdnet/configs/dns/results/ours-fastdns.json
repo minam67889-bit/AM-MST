@@ -1,0 +1,1416 @@
+{
+  "mode": "ours",
+  "transport": "udp",
+  "secs": 5.03,
+  "alive": 0,
+  "total": 100,
+  "strategy": "hybrid",
+  "duplication": 2,
+  "route_plan": [],
+  "tiers": {
+    "tier0": [],
+    "tier1": []
+  },
+  "rows": [
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "173.212.232.241",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "173.212.232.241"
+      },
+      "ok": false,
+      "ms": 5005.9,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "173.212.252.3",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "173.212.252.3"
+      },
+      "ok": false,
+      "ms": 5005.9,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "173.249.10.48",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "173.249.10.48"
+      },
+      "ok": false,
+      "ms": 5005.7,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "173.249.15.5",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "173.249.15.5"
+      },
+      "ok": false,
+      "ms": 5001.2,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "173.249.48.107",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "173.249.48.107"
+      },
+      "ok": false,
+      "ms": 5005.3,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "173.249.53.105",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "173.249.53.105"
+      },
+      "ok": false,
+      "ms": 5005.1,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "185.196.21.114",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "185.196.21.114"
+      },
+      "ok": false,
+      "ms": 5005.3,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "192.145.37.229",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "192.145.37.229"
+      },
+      "ok": false,
+      "ms": 5004.5,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "193.187.129.66",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "193.187.129.66"
+      },
+      "ok": false,
+      "ms": 5003.8,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "194.34.232.161",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "194.34.232.161"
+      },
+      "ok": false,
+      "ms": 5005.1,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "207.180.234.213",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "207.180.234.213"
+      },
+      "ok": false,
+      "ms": 5004.9,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "207.180.235.227",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "207.180.235.227"
+      },
+      "ok": false,
+      "ms": 5004.8,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.128.161",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.128.161"
+      },
+      "ok": false,
+      "ms": 5004.5,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.130.236",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.130.236"
+      },
+      "ok": false,
+      "ms": 5002.2,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.157.55",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.157.55"
+      },
+      "ok": false,
+      "ms": 5004.9,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.192.133",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.192.133"
+      },
+      "ok": false,
+      "ms": 5004.7,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.193.10",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.193.10"
+      },
+      "ok": false,
+      "ms": 5004.4,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.193.12",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.193.12"
+      },
+      "ok": false,
+      "ms": 5005.2,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.193.15",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.193.15"
+      },
+      "ok": false,
+      "ms": 5001.1,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.197.125",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.197.125"
+      },
+      "ok": false,
+      "ms": 5004.6,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.201.87",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.201.87"
+      },
+      "ok": false,
+      "ms": 5000.7,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.206.163",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.206.163"
+      },
+      "ok": false,
+      "ms": 5005.3,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.214.54",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.214.54"
+      },
+      "ok": false,
+      "ms": 5005.2,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.224.6",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.224.6"
+      },
+      "ok": false,
+      "ms": 5004.8,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.224.9",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.224.9"
+      },
+      "ok": false,
+      "ms": 5004.7,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.230.202",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.230.202"
+      },
+      "ok": false,
+      "ms": 5005.4,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.232.46",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.232.46"
+      },
+      "ok": false,
+      "ms": 5005.1,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.237.51",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.237.51"
+      },
+      "ok": false,
+      "ms": 5004.8,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.237.68",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.237.68"
+      },
+      "ok": false,
+      "ms": 5004.8,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.241.152",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.241.152"
+      },
+      "ok": false,
+      "ms": 5005.5,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.241.185",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.241.185"
+      },
+      "ok": false,
+      "ms": 5005.5,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.241.75",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.241.75"
+      },
+      "ok": false,
+      "ms": 5005.3,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.244.152",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.244.152"
+      },
+      "ok": false,
+      "ms": 5004.9,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.244.81",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.244.81"
+      },
+      "ok": false,
+      "ms": 5004.8,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.244.95",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.244.95"
+      },
+      "ok": false,
+      "ms": 5004.7,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.244.97",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.244.97"
+      },
+      "ok": false,
+      "ms": 5005.4,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.245.255",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.245.255"
+      },
+      "ok": false,
+      "ms": 5005.0,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.246.122",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.246.122"
+      },
+      "ok": false,
+      "ms": 5005.0,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.246.248",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.246.248"
+      },
+      "ok": false,
+      "ms": 5004.8,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.247.136",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.247.136"
+      },
+      "ok": false,
+      "ms": 5004.6,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.248.154",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.248.154"
+      },
+      "ok": false,
+      "ms": 5005.5,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.250.1",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.250.1"
+      },
+      "ok": false,
+      "ms": 5005.2,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.251.46",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.251.46"
+      },
+      "ok": false,
+      "ms": 5004.9,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.252.156",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.252.156"
+      },
+      "ok": false,
+      "ms": 5005.8,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "45.85.147.160",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "45.85.147.160"
+      },
+      "ok": false,
+      "ms": 5004.7,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.81.116",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.81.116"
+      },
+      "ok": false,
+      "ms": 5005.4,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.81.172",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.81.172"
+      },
+      "ok": false,
+      "ms": 5005.2,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.81.179",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.81.179"
+      },
+      "ok": false,
+      "ms": 5005.1,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.81.180",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.81.180"
+      },
+      "ok": false,
+      "ms": 5004.8,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.81.20",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.81.20"
+      },
+      "ok": false,
+      "ms": 5005.6,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.81.223",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.81.223"
+      },
+      "ok": false,
+      "ms": 5005.2,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.81.23",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.81.23"
+      },
+      "ok": false,
+      "ms": 5005.0,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.81.235",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.81.235"
+      },
+      "ok": false,
+      "ms": 5004.7,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.81.252",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.81.252"
+      },
+      "ok": false,
+      "ms": 5005.8,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.81.98",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.81.98"
+      },
+      "ok": false,
+      "ms": 5005.6,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.82.103",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.82.103"
+      },
+      "ok": false,
+      "ms": 5005.4,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.82.126",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.82.126"
+      },
+      "ok": false,
+      "ms": 5005.0,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.82.167",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.82.167"
+      },
+      "ok": false,
+      "ms": 5004.8,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.82.17",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.82.17"
+      },
+      "ok": false,
+      "ms": 5005.6,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.82.190",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.82.190"
+      },
+      "ok": false,
+      "ms": 5005.4,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.82.191",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.82.191"
+      },
+      "ok": false,
+      "ms": 5004.3,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.82.236",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.82.236"
+      },
+      "ok": false,
+      "ms": 5005.1,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.82.254",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.82.254"
+      },
+      "ok": false,
+      "ms": 5004.8,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.83.100",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.83.100"
+      },
+      "ok": false,
+      "ms": 5004.8,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.83.101",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.83.101"
+      },
+      "ok": false,
+      "ms": 5005.4,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.83.102",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.83.102"
+      },
+      "ok": false,
+      "ms": 5005.3,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.83.103",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.83.103"
+      },
+      "ok": false,
+      "ms": 5005.0,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.83.104",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.83.104"
+      },
+      "ok": false,
+      "ms": 5004.7,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.83.105",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.83.105"
+      },
+      "ok": false,
+      "ms": 5005.6,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.83.106",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.83.106"
+      },
+      "ok": false,
+      "ms": 5004.6,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.83.107",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.83.107"
+      },
+      "ok": false,
+      "ms": 5005.2,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.83.109",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.83.109"
+      },
+      "ok": false,
+      "ms": 5005.1,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.83.110",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.83.110"
+      },
+      "ok": false,
+      "ms": 5004.9,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "80.190.83.112",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "80.190.83.112"
+      },
+      "ok": false,
+      "ms": 5004.8,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "81.0.218.131",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "81.0.218.131"
+      },
+      "ok": false,
+      "ms": 5005.3,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "81.0.220.110",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "81.0.220.110"
+      },
+      "ok": false,
+      "ms": 5005.2,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "81.0.220.117",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "81.0.220.117"
+      },
+      "ok": false,
+      "ms": 5006.0,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "81.0.220.197",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "81.0.220.197"
+      },
+      "ok": false,
+      "ms": 5004.7,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "81.0.220.74",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "81.0.220.74"
+      },
+      "ok": false,
+      "ms": 5004.7,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "81.0.220.75",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "81.0.220.75"
+      },
+      "ok": false,
+      "ms": 5005.5,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "81.0.221.111",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "81.0.221.111"
+      },
+      "ok": false,
+      "ms": 5005.1,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "81.0.221.16",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "81.0.221.16"
+      },
+      "ok": false,
+      "ms": 5005.1,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "81.0.221.77",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "81.0.221.77"
+      },
+      "ok": false,
+      "ms": 5005.7,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "86.48.2.98",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "86.48.2.98"
+      },
+      "ok": false,
+      "ms": 5004.8,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "94.72.104.90",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "94.72.104.90"
+      },
+      "ok": false,
+      "ms": 5004.4,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "94.72.111.147",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "94.72.111.147"
+      },
+      "ok": false,
+      "ms": 5005.0,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "94.72.111.153",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "94.72.111.153"
+      },
+      "ok": false,
+      "ms": 5004.9,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "94.72.111.157",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "94.72.111.157"
+      },
+      "ok": false,
+      "ms": 5004.9,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "94.72.96.108",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "94.72.96.108"
+      },
+      "ok": false,
+      "ms": 5004.6,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "94.72.96.127",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "94.72.96.127"
+      },
+      "ok": false,
+      "ms": 5005.2,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "217.76.49.7",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "217.76.49.7"
+      },
+      "ok": false,
+      "ms": 5005.3,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "217.76.48.55",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "217.76.48.55"
+      },
+      "ok": false,
+      "ms": 5005.2,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "82.208.22.13",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "82.208.22.13"
+      },
+      "ok": false,
+      "ms": 5004.7,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.153.143",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.153.143"
+      },
+      "ok": false,
+      "ms": 5004.6,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.147.121",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.147.121"
+      },
+      "ok": false,
+      "ms": 5004.5,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "185.182.187.117",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "185.182.187.117"
+      },
+      "ok": false,
+      "ms": 5005.5,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.243.163",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.243.163"
+      },
+      "ok": false,
+      "ms": 5005.0,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.154.171",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.154.171"
+      },
+      "ok": false,
+      "ms": 5004.9,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.153.214",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.153.214"
+      },
+      "ok": false,
+      "ms": 5004.6,
+      "error": "TimeoutError",
+      "mode": "ours"
+    },
+    {
+      "server": {
+        "mode": "fastdns",
+        "host": "38.242.153.188",
+        "port": 53,
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d FastDns Global",
+        "ip": "38.242.153.188"
+      },
+      "ok": false,
+      "ms": 5004.4,
+      "error": "TimeoutError",
+      "mode": "ours"
+    }
+  ]
+}

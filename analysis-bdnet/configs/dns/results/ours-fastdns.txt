@@ -1,0 +1,18 @@
+host                             ip                port       ms  result
+38.242.201.87                    38.242.201.87       53   5000.7  FAIL TimeoutError
+38.242.193.15                    38.242.193.15       53   5001.1  FAIL TimeoutError
+173.249.15.5                     173.249.15.5        53   5001.2  FAIL TimeoutError
+38.242.130.236                   38.242.130.236      53   5002.2  FAIL TimeoutError
+193.187.129.66                   193.187.129.66      53   5003.8  FAIL TimeoutError
+80.190.82.191                    80.190.82.191       53   5004.3  FAIL TimeoutError
+38.242.193.10                    38.242.193.10       53   5004.4  FAIL TimeoutError
+94.72.104.90                     94.72.104.90        53   5004.4  FAIL TimeoutError
+38.242.153.188                   38.242.153.188      53   5004.4  FAIL TimeoutError
+192.145.37.229                   192.145.37.229      53   5004.5  FAIL TimeoutError
+38.242.128.161                   38.242.128.161      53   5004.5  FAIL TimeoutError
+38.242.147.121                   38.242.147.121      53   5004.5  FAIL TimeoutError
+... and 88 more
+
+0/100 answered over UDP/53 in 5.03s (all in flight at once)
+tier0 (best): 
+wrote /tmp/ours-fastdns.json

@@ -2,7 +2,7 @@
   "theirs": {
     "mode": "theirs",
     "transport": "tcp",
-    "secs": 24.87,
+    "secs": 25.71,
     "alive": 0,
     "total": 20,
     "rows": [
@@ -13,7 +13,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 87.1,
+        "ms": 88.7,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.158",
         "attempts": 2
@@ -25,7 +25,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 109.0,
+        "ms": 89.4,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.159",
         "attempts": 2
@@ -37,7 +37,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 246.8,
+        "ms": 144.0,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.160",
         "attempts": 2
@@ -49,7 +49,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 127.5,
+        "ms": 190.7,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.162",
         "attempts": 2
@@ -61,7 +61,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 156.6,
+        "ms": 123.4,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.163",
         "attempts": 2
@@ -73,7 +73,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 91.9,
+        "ms": 117.5,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.161",
         "attempts": 2
@@ -85,7 +85,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 89.8,
+        "ms": 92.7,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.164",
         "attempts": 2
@@ -97,7 +97,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 179.1,
+        "ms": 89.1,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.165",
         "attempts": 2
@@ -109,7 +109,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 90.4,
+        "ms": 219.2,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.168",
         "attempts": 2
@@ -121,7 +121,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 104.8,
+        "ms": 88.9,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.170",
         "attempts": 2
@@ -133,7 +133,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 89.3,
+        "ms": 92.0,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.171",
         "attempts": 2
@@ -145,7 +145,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 94.7,
+        "ms": 91.8,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.172",
         "attempts": 2
@@ -157,7 +157,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 96.5,
+        "ms": 90.2,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.173",
         "attempts": 2
@@ -169,7 +169,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 138.7,
+        "ms": 179.7,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.174",
         "attempts": 2
@@ -181,7 +181,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 87.2,
+        "ms": 89.9,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.175",
         "attempts": 2
@@ -193,7 +193,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 90.6,
+        "ms": 89.6,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.176",
         "attempts": 2
@@ -205,7 +205,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 89.2,
+        "ms": 89.9,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.177",
         "attempts": 2
@@ -217,7 +217,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 98.9,
+        "ms": 92.3,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.178",
         "attempts": 2
@@ -229,7 +229,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 88.9,
+        "ms": 110.9,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.180",
         "attempts": 2
@@ -241,7 +241,7 @@
         "transport": "udp",
         "server_name": "\ud83c\udf0d SlowDns Global",
         "ok": false,
-        "ms": 108.9,
+        "ms": 110.1,
         "error": "ConnectionRefusedError",
         "ip": "13.140.185.181",
         "attempts": 2
@@ -251,52 +251,56 @@
   "ours": {
     "mode": "ours",
     "transport": "udp",
-    "secs": 6.01,
-    "alive": 15,
+    "secs": 6.02,
+    "alive": 19,
     "total": 20,
     "strategy": "hybrid",
     "duplication": 2,
     "route_plan": [
       [
-        "de15.liftmeon.org",
-        "de11.liftmeon.org"
-      ],
-      [
-        "de11.liftmeon.org",
-        "de1.liftmeon.org"
-      ],
-      [
-        "de1.liftmeon.org",
+        "de7.liftmeon.org",
         "de3.liftmeon.org"
       ],
       [
         "de3.liftmeon.org",
-        "de7.liftmeon.org"
+        "de16.liftmeon.org"
       ],
       [
-        "de7.liftmeon.org",
-        "de17.liftmeon.org"
+        "de16.liftmeon.org",
+        "de9.liftmeon.org"
+      ],
+      [
+        "de9.liftmeon.org",
+        "de15.liftmeon.org"
+      ],
+      [
+        "de15.liftmeon.org",
+        "de13.liftmeon.org"
       ]
     ],
     "tiers": {
       "tier0": [
-        "de15.liftmeon.org",
-        "de11.liftmeon.org",
-        "de1.liftmeon.org"
+        "de7.liftmeon.org",
+        "de3.liftmeon.org",
+        "de16.liftmeon.org"
       ],
       "tier1": [
-        "de3.liftmeon.org",
-        "de7.liftmeon.org",
-        "de17.liftmeon.org",
-        "de12.liftmeon.org",
-        "de2.liftmeon.org",
         "de9.liftmeon.org",
-        "de10.liftmeon.org",
-        "de6.liftmeon.org",
+        "de15.liftmeon.org",
+        "de13.liftmeon.org",
+        "de2.liftmeon.org",
+        "de11.liftmeon.org",
+        "de12.liftmeon.org",
+        "de17.liftmeon.org",
         "de19.liftmeon.org",
-        "de16.liftmeon.org",
-        "de20.liftmeon.org",
-        "de18.liftmeon.org"
+        "de8.liftmeon.org",
+        "de1.liftmeon.org",
+        "de14.liftmeon.org",
+        "de6.liftmeon.org",
+        "de5.liftmeon.org",
+        "de18.liftmeon.org",
+        "de10.liftmeon.org",
+        "de4.liftmeon.org"
       ]
     },
     "rows": [
@@ -310,12 +314,12 @@
           "ip": "13.140.185.158"
         },
         "ok": true,
-        "ms": 90.2,
+        "ms": 101.9,
         "rcode": 3,
         "answers": 0,
         "bytes": 45,
         "mode": "ours",
-        "tier": 0
+        "tier": 1
       },
       {
         "server": {
@@ -327,7 +331,7 @@
           "ip": "13.140.185.159"
         },
         "ok": true,
-        "ms": 94.5,
+        "ms": 90.7,
         "rcode": 3,
         "answers": 0,
         "bytes": 45,
@@ -344,12 +348,12 @@
           "ip": "13.140.185.160"
         },
         "ok": true,
-        "ms": 91.3,
+        "ms": 87.7,
         "rcode": 3,
         "answers": 0,
         "bytes": 45,
         "mode": "ours",
-        "tier": 1
+        "tier": 0
       },
       {
         "server": {
@@ -360,10 +364,13 @@
           "server_name": "\ud83c\udf0d SlowDns Global",
           "ip": "13.140.185.162"
         },
-        "ok": false,
-        "ms": 6006.2,
-        "error": "TimeoutError",
-        "mode": "ours"
+        "ok": true,
+        "ms": 258.6,
+        "rcode": 3,
+        "answers": 0,
+        "bytes": 45,
+        "mode": "ours",
+        "tier": 1
       },
       {
         "server": {
@@ -374,10 +381,13 @@
           "server_name": "\ud83c\udf0d SlowDns Global",
           "ip": "13.140.185.163"
         },
-        "ok": false,
-        "ms": 6006.3,
-        "error": "TimeoutError",
-        "mode": "ours"
+        "ok": true,
+        "ms": 116.3,
+        "rcode": 3,
+        "answers": 0,
+        "bytes": 45,
+        "mode": "ours",
+        "tier": 1
       },
       {
         "server": {
@@ -389,7 +399,7 @@
           "ip": "13.140.185.161"
         },
         "ok": true,
-        "ms": 110.0,
+        "ms": 113.0,
         "rcode": 3,
         "answers": 0,
         "bytes": 45,
@@ -406,12 +416,12 @@
           "ip": "13.140.185.164"
         },
         "ok": true,
-        "ms": 92.0,
+        "ms": 87.6,
         "rcode": 3,
         "answers": 0,
         "bytes": 45,
         "mode": "ours",
-        "tier": 1
+        "tier": 0
       },
       {
         "server": {
@@ -422,10 +432,13 @@
           "server_name": "\ud83c\udf0d SlowDns Global",
           "ip": "13.140.185.165"
         },
-        "ok": false,
-        "ms": 6005.5,
-        "error": "TimeoutError",
-        "mode": "ours"
+        "ok": true,
+        "ms": 98.3,
+        "rcode": 3,
+        "answers": 0,
+        "bytes": 45,
+        "mode": "ours",
+        "tier": 1
       },
       {
         "server": {
@@ -437,7 +450,7 @@
           "ip": "13.140.185.168"
         },
         "ok": true,
-        "ms": 101.3,
+        "ms": 89.3,
         "rcode": 3,
         "answers": 0,
         "bytes": 45,
@@ -454,7 +467,7 @@
           "ip": "13.140.185.170"
         },
         "ok": true,
-        "ms": 103.7,
+        "ms": 164.4,
         "rcode": 3,
         "answers": 0,
         "bytes": 46,
@@ -471,12 +484,12 @@
           "ip": "13.140.185.171"
         },
         "ok": true,
-        "ms": 89.2,
+        "ms": 92.5,
         "rcode": 3,
         "answers": 0,
         "bytes": 46,
         "mode": "ours",
-        "tier": 0
+        "tier": 1
       },
       {
         "server": {
@@ -488,7 +501,7 @@
           "ip": "13.140.185.172"
         },
         "ok": true,
-        "ms": 94.1,
+        "ms": 92.6,
         "rcode": 3,
         "answers": 0,
         "bytes": 46,
@@ -504,10 +517,13 @@
           "server_name": "\ud83c\udf0d SlowDns Global",
           "ip": "13.140.185.173"
         },
-        "ok": false,
-        "ms": 6001.9,
-        "error": "TimeoutError",
-        "mode": "ours"
+        "ok": true,
+        "ms": 90.1,
+        "rcode": 3,
+        "answers": 0,
+        "bytes": 46,
+        "mode": "ours",
+        "tier": 1
       },
       {
         "server": {
@@ -518,10 +534,13 @@
           "server_name": "\ud83c\udf0d SlowDns Global",
           "ip": "13.140.185.174"
         },
-        "ok": false,
-        "ms": 6001.7,
-        "error": "TimeoutError",
-        "mode": "ours"
+        "ok": true,
+        "ms": 111.3,
+        "rcode": 3,
+        "answers": 0,
+        "bytes": 46,
+        "mode": "ours",
+        "tier": 1
       },
       {
         "server": {
@@ -533,12 +552,12 @@
           "ip": "13.140.185.175"
         },
         "ok": true,
-        "ms": 88.1,
+        "ms": 89.4,
         "rcode": 3,
         "answers": 0,
         "bytes": 46,
         "mode": "ours",
-        "tier": 0
+        "tier": 1
       },
       {
         "server": {
@@ -550,12 +569,12 @@
           "ip": "13.140.185.176"
         },
         "ok": true,
-        "ms": 147.3,
+        "ms": 88.8,
         "rcode": 3,
         "answers": 0,
         "bytes": 46,
         "mode": "ours",
-        "tier": 1
+        "tier": 0
       },
       {
         "server": {
@@ -567,7 +586,7 @@
           "ip": "13.140.185.177"
         },
         "ok": true,
-        "ms": 92.4,
+        "ms": 93.5,
         "rcode": 3,
         "answers": 0,
         "bytes": 46,
@@ -584,7 +603,7 @@
           "ip": "13.140.185.178"
         },
         "ok": true,
-        "ms": 310.7,
+        "ms": 120.8,
         "rcode": 3,
         "answers": 0,
         "bytes": 46,
@@ -601,7 +620,7 @@
           "ip": "13.140.185.180"
         },
         "ok": true,
-        "ms": 118.2,
+        "ms": 95.9,
         "rcode": 3,
         "answers": 0,
         "bytes": 46,
@@ -617,13 +636,10 @@
           "server_name": "\ud83c\udf0d SlowDns Global",
           "ip": "13.140.185.181"
         },
-        "ok": true,
-        "ms": 206.9,
-        "rcode": 3,
-        "answers": 0,
-        "bytes": 46,
-        "mode": "ours",
-        "tier": 1
+        "ok": false,
+        "ms": 6006.2,
+        "error": "TimeoutError",
+        "mode": "ours"
       }
     ]
   }
