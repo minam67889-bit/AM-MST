@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   checks: write
 
 concurrency:
@@ -121,6 +121,26 @@ jobs:
           path: app/build/outputs/apk/debug/*.apk
           if-no-files-found: error
           retention-days: 30
+
+      - name: Publish APK to GitHub Releases
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          APK=app/build/outputs/apk/debug/app-debug.apk
+          if [ ! -f "$APK" ]; then
+            echo "No debug APK was produced - skipping release upload."
+            exit 0
+          fi
+          SHA7=$(git rev-parse --short HEAD)
+          TAG="apk-${GITHUB_RUN_NUMBER}-${SHA7}"
+          cp "$APK" "/tmp/amtunnel-mst-${SHA7}.apk"
+          gh release create "$TAG" "/tmp/amtunnel-mst-${SHA7}.apk#amtunnel-mst-debug-${SHA7}.apk" \
+            --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" \
+            --title "AM Tunnel MST debug APK ($SHA7)" \
+            --notes "Debug APK built by workflow run [#${GITHUB_RUN_NUMBER}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}) from \`${SHA7}\`. Install with \`adb install -r amtunnel-mst-debug-${SHA7}.apk\`. Debug-signed: not for production distribution. Server-side AM Tunnel infrastructure is unchanged; see docs/STATUS.md for what is verified."
 
       - name: Upload release APK
         if: always()

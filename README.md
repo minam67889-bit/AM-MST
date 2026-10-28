@@ -36,8 +36,17 @@ gradle :core:test          # unit tests
 gradle :app:assembleDebug  # debug APK -> app/build/outputs/apk/debug/
 ```
 
-CI does this automatically on every push and uploads the APK as an artifact
-(`.github/workflows/android.yml`).
+CI does this automatically on every push (`.github/workflows/android.yml`). It
+runs the unit tests, compiles every module, runs the live tunnel integration
+suite against a freshly built MasterDnsVPN server inside the job, uploads the
+APK as a build artifact **and** publishes it as a GitHub Release.
+
+### Download the APK
+
+Grab the newest `amtunnel-mst-debug-*.apk` from the
+[Releases page](https://github.com/minam67889-bit/AM-MST/releases). It is a
+debug-signed build (install with `adb install -r <file>.apk`); a release-signed
+APK is built automatically when the signing secrets are configured.
 
 ## Run
 

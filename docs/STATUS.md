@@ -1,6 +1,7 @@
 # Implemented / verified / blocked
 
-Last updated by the CI run referenced at the bottom of this file.
+Last verified end-to-end in CI run **40713951951** (`Live DNS-tunnel integration: success`,
+`Unit tests + APK: success`).
 
 ## Legend
 
@@ -18,17 +19,17 @@ Last updated by the CI run referenced at the bottom of this file.
 | Frame build/parse + header check | Verified | `FrameTest` (per-type header lengths, corruption rejection) |
 | Codecs: none / XOR / ChaCha20 / AES-128/192/256-GCM | Verified | `CodecTest` incl. RFC 8439 ChaCha20 vector |
 | DNS envelope build + single/multi-chunk parse | Verified | `DnsEnvelopeTest`, QNAME budget test |
-| SESSION_INIT/ACCEPT + verify code, encryption key exchange | Verified | `TunnelIntegrationTest.test1`, handshake against real Go server |
-| SOCKS5-in-tunnel stream (SYN → CONNECTED → DATA → ACK → CLOSE) | Verified | `TunnelIntegrationTest.test2`: HTTP 200 through the tunnel |
-| Real payload transfer (bytes through DNS tunnel) | Verified | `test2`: body received, byte counters > 0 |
+| SESSION_INIT/ACCEPT + verify code, encryption key exchange | Verified | `TunnelIntegrationTest.test1` against the real Go server (`handshake ok ... id=2 cookie=41 uploadMtu=110 downloadMtu=900`) |
+| SOCKS5-in-tunnel stream (SYN → CONNECTED → DATA → ACK → CLOSE) | Verified | `test2`: `SOCKS5_SYN_ACK` for a real target, then HTTP data both ways |
+| Real payload transfer (bytes through DNS tunnel) | Verified | `test2`: live HTTP response received through the tunnel — `tx=12 rx=11 up=61B down=851B rtt=3ms` |
 | Resolver reachability/latency probing | Verified | `ResolverScanner` used by `test1`; unit tests for parsing |
 | Resolver *tunnel-capability* probing | Verified | `test1`: DNS-only resolver is reported NOT capable |
 | Ranking / scoring / parking of failing resolvers | Verified | `RankingTest` |
 | Resolver persistence | Verified | `ResolverStoreTest` |
-| Failover to another resolver without reconnect | Verified | `test3`: relay killed, traffic continues, `recoveries == 0` |
+| Failover to another resolver without reconnect | Verified | `test3`: relay A killed mid-session → `resolver=…:35235 switches=1 recoveries=0 timeouts=1`, HTTP still flowed |
 | Session recovery after session loss | Implemented | `MasterDnsTransport.recoverSession`, retriggered by 4 consecutive failures; not exercised by CI |
 | Adaptive scan scheduling | Implemented | `ScanScheduler` (interval logic unit-adjacent, not time-tested) |
-| Android UI (connect, resolvers, scan, diagnostics) | Implemented | compiles into the APK; no emulator in this environment |
+| Android UI (connect, resolvers, scan, diagnostics) | Implemented | compiles into a 955 KB debug APK (`:app:assembleDebug`); no emulator in this environment |
 | Foreground `VpnService` lifecycle, `protect()` | Implemented | compiles; no on-device run available |
 | DNS-mode tun capture (DNS over tunnel) | Implemented | `IpPacket` + `DnsTunnelRelay`; not exercised on a device |
 | Full-device TCP routing (tun2socks) | Blocked (by design) | would require a userland TCP/IP stack or a native tun2socks library; not shipped. SOCKS5 proxy mode is the verified traffic path |
@@ -63,6 +64,22 @@ What is prepared for that work:
   transport, so an AM Tunnel adapter can be added as one class.
 * `docs/REPORT.md` lists the exact questions the APK analysis must answer and
   the commands to run once the file is available.
+
+## How the live tests reach a target
+
+The upstream Go server's `validateSOCKSTargetHost` refuses **loopback, private,
+link-local and other non-global addresses** — a deliberate SSRF guard. That
+behaviour was left untouched. The integration tests therefore point the tunnel
+at a globally routable address:
+
+1. first choice: this runner's own global IPv4 (the kernel routes it back to
+   the local HTTP probe server on `0.0.0.0`);
+2. fallback: a public web server (`example.com:80`) when the runner has no
+   global address.
+
+Run 40713951951 used path 2 (`tunnel target: example.com:80 (local=false)`), so
+the bytes proven to cross the tunnel were a real HTTP exchange with a third
+party, not a loopback shortcut.
 
 ## Environment limitations
 
