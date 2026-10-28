@@ -87,7 +87,7 @@ class Base36Test {
 class FrameTest {
     @Test
     fun `session init frame round trip`() {
-        val payload = byteArrayOf(0, 0, 0, 120, 4, 176, 1, 2, 3, 4)
+        val payload = byteArrayOf(0, 0, 0, 120, 4, 176.toByte(), 1, 2, 3, 4)
         val frame = VpnFrame(
             sessionId = 7,
             packetType = PacketType.SESSION_INIT,

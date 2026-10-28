@@ -32,15 +32,11 @@ jobs:
         with:
           gradle-version: "8.9"
 
-      - name: Core unit tests
+      - name: Compile all modules, run unit tests, build debug APK
         run: |
           set -o pipefail
-          gradle :core:test --no-daemon --stacktrace 2>&1 | tee -a build.log
-
-      - name: Build debug APK
-        run: |
-          set -o pipefail
-          gradle :app:assembleDebug --no-daemon --stacktrace 2>&1 | tee -a build.log
+          gradle :core:test :integration:compileTestKotlin :app:assembleDebug \
+            --continue --no-daemon --stacktrace 2>&1 | tee -a build.log
 
       - name: Publish build diagnostics (read via API when job logs are unreachable)
         if: always()
