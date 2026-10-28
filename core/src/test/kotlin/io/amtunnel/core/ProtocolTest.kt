@@ -254,11 +254,11 @@ class DnsEnvelopeTest {
             labels.add(String(query, offset, len, Charsets.US_ASCII))
             offset += len
         }
-        assertEquals("t.example.com", labels.takeLast(3).joinToString("."), "wire labels: $labels")
+        assertEquals("wire labels: $labels", "t.example.com", labels.takeLast(3).joinToString("."))
         assertEquals(
+            "payload labels must carry the base36 frame",
             Base36Lower.encode(ByteArray(40) { it.toByte() }),
             labels.dropLast(3).joinToString(""),
-            "payload labels must carry the base36 frame",
         )
         val payloadLabels = labels.dropLast(3).joinToString("")
         assertTrue(
