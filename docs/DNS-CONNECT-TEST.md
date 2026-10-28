@@ -211,15 +211,88 @@ Everything is written to `GITHUB_STEP_SUMMARY` and uploaded as
 
 Run it: `gh workflow run dns-connect-test.yml -f mode=slowdns`.
 
-> Fill-in note: the numbers from the first run are appended in section 6.
+> Results are published back into the branch by the workflow itself, under
+> `analysis-bdnet/configs/dns/results/`.
 
 ---
 
 ## 6. Results
 
-(see below — appended after the run)
+Live, from GitHub Actions. Numbers below are from runs `40763098113` (head to
+head) and `40765192422` (FastDNS, UDPQ, balancer); every step publishes its
+output back into `analysis-bdnet/configs/dns/results/` because CI artifacts are
+not reachable from the dev sandbox.
 
----
+### 6.1 SlowDNS — their transport vs ours, same 20 hosts, same timeout
+
+| | theirs `tcp_only` (shipped default) | theirs `udp_only` | ours (balanced) |
+| --- | --- | --- | --- |
+| reachable | **0 / 20** | **19 / 20** | **17 / 20** |
+| wall clock | 28.0 s | 16.1 s | **6.0 s** |
+| mean RTT | – (all `ConnectionRefused`) | 162 ms | 194 ms |
+
+* Every one of the 20 `deN.liftmeon.org` refused **TCP/53** in under 1.5 s. The
+  app's shipped `PdnsdType = tcp_only` therefore cannot connect on this network
+  at all — the default is simply wrong, and the same client works the moment
+  `PDNSD_TYPE` is switched to `udp_only`.
+* Ours covers 17/20 in **6.0 s** — one probe timeout — because all 20 are in
+  flight at once, against 16.1 s for theirs (sequential, one retry each). The
+  three misses are per-attempt UDP loss, which is exactly what the duplicate
+  routing and the 30 s auto-disable window exist for.
+
+### 6.2 The shipping Kotlin balancer against live resolvers
+
+`analysis-bdnet/configs/dns/results/balancer-run.txt` — 34 endpoints, 3 rounds,
+strategy 5 (`HYBRID_SCORE`):
+
+```
+endpoints     : 34 resolved, 0 unresolvable
+round 1       : 20/20 SlowDNS answered, 89-251 ms, rcode=3, 41 B
+round 2       : 17/20 SlowDNS answered
+round 3       : 20/20 SlowDNS answered
+active pool   : 20/34
+selectTargets(2) : 13.140.185.158:53 + 13.140.185.159:53   (packet duplication)
+nextForRecheck() : 173.212.232.241:53
+auto-disabled : 14 endpoints, all TIMEOUT_STREAK
+                (12 FastDNS + 192.0.2.1 + 198.51.100.1, the two controls)
+LIVE RUN PASS: 57/102 probes answered, 20 resolvers still routable
+```
+
+That is the behaviour the design promises, on real sockets: every SlowDNS
+resolver stayed routable, every dead endpoint — including both RFC 5737
+controls — was parked automatically, and the routing calls kept handing out
+live resolvers.
+
+### 6.3 FastDNS (dnstt, 100 endpoints, UDP/53)
+
+```
+0/100 answered in 5.03 s (all in flight at once) - all TimeoutError
+```
+
+Silence here is *expected and not evidence of death*: a dnstt server only
+decodes qnames that carry a valid tunnel frame and has no reason to answer a
+random label. Distinguishing "strict" from "down" needs the `-pubkey` (see §7).
+The SlowDNS result above rules out the runner's network as the cause: UDP/53
+egress works, 19/20 of the SlowDNS set answered.
+
+### 6.4 UDPQ (725 endpoints, UDP 6000-19999)
+
+```
+196/725 answered in 15.02 s (all in flight at once)
+tier0: 38.242.134.29, 89.116.31.42, 82.208.22.250
+```
+
+196 endpoints return a normal 42–44 byte NXDOMAIN for a random label — they are
+open resolvers listening on the high ports, alive and fast (~90–120 ms). That
+pool is the "thousands of resolvers" side of the design, and it measured
+27 % alive.
+
+### 6.5 What "reachable" means here
+
+Every number above is *the server answered a DNS query on the expected port and
+transport*. It is **not** "the tunnel came up": the tunnel needs the dnstt
+`-pubkey` for FastDNS and the SlowDNS secret carried inside the payload. That is
+the one link still missing, and it is the same gap as before — see §7.
 
 ## 7. Verified vs not
 
