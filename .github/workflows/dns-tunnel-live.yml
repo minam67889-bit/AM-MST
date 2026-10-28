@@ -164,7 +164,11 @@ jobs:
             done
           } > /tmp/readelf.txt 2>&1
           cat /tmp/readelf.txt
+          mkdir -p analysis-bdnet/configs/dns/results
           cp /tmp/readelf.txt analysis-bdnet/configs/dns/results/native-readelf.txt
+          ls -l analysis-bdnet/configs/dns/results/native-readelf.txt
+          echo "=== files in the binary dir ===" | tee -a /tmp/readelf.txt
+          ls -l libs | tee -a /tmp/readelf.txt
 
       - name: "Plan B: shim the Android linker with glibc's aarch64 loader"
         if: env.APK != ''
@@ -247,6 +251,11 @@ jobs:
           cp /tmp/xdnstt.log analysis-bdnet/configs/dns/results/native-dnstt.log 2>/dev/null || true
           cp /tmp/libdns.log analysis-bdnet/configs/dns/results/native-slowdns.log 2>/dev/null || true
           cp /tmp/apk.log analysis-bdnet/configs/dns/results/native-apk-fetch.log 2>/dev/null || true
+          for f in readelf shim; do
+            cp "/tmp/$f.txt" "analysis-bdnet/configs/dns/results/native-$f.txt" 2>/dev/null || \
+              echo "missing /tmp/$f.txt" > "analysis-bdnet/configs/dns/results/native-$f.txt"
+          done
+          ls -l analysis-bdnet/configs/dns/results/
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add analysis-bdnet/configs/dns/results
