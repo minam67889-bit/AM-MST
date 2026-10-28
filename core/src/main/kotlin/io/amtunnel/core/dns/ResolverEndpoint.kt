@@ -106,10 +106,15 @@ data class ResolverEndpoint(
             return labels.all { part -> part.all { it.isLetterOrDigit() || it == '-' || it == '_' } }
         }
 
-        /** Bulk import: split on newlines / commas / semicolons / whitespace. */
+        /**
+         * Bulk import: strips `#`, `//` and `;` comments first, then splits the
+         * remainder on newlines, commas, tabs and spaces.
+         */
         fun parseMany(text: String, source: ResolverSource = ResolverSource.IMPORTED): List<ResolverEndpoint> {
             val seen = LinkedHashMap<String, ResolverEndpoint>()
-            text.split('\n', '\r', ',', ';', '\t', ' ')
+            text.lineSequence()
+                .map { line -> line.substringBefore('#').substringBefore("//").substringBefore(';') }
+                .flatMap { it.split(',', ' ', '\t').asSequence() }
                 .map { it.trim() }
                 .filter { it.isNotEmpty() }
                 .forEach { part ->

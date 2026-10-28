@@ -244,11 +244,27 @@ class DnsEnvelopeTest {
         assertEquals(1, (query[4].toInt() and 0xFF) shl 8 or (query[5].toInt() and 0xFF)) // QDCOUNT
         assertEquals(1, (query[10].toInt() and 0xFF) shl 8 or (query[11].toInt() and 0xFF)) // ARCOUNT (EDNS)
 
-        val text = String(query, Charsets.ISO_8859_1)
-        assertTrue(text.contains("example"))
-        // The tunnel payload must only consist of [0-9a-z] characters.
-        val labels = text.substring(13).split('.')
-        assertTrue(labels.first().all { it in '0'..'9' || it in 'a'..'z' })
+        // Walk the QNAME on the wire (length-prefixed labels, not dot separated).
+        var offset = 12
+        val labels = ArrayList<String>()
+        while (offset < query.size) {
+            val len = query[offset].toInt() and 0xFF
+            offset++
+            if (len == 0) break
+            labels.add(String(query, offset, len, Charsets.US_ASCII))
+            offset += len
+        }
+        assertEquals("t.example.com", labels.takeLast(3).joinToString("."), "wire labels: $labels")
+        assertEquals(
+            Base36Lower.encode(ByteArray(40) { it.toByte() }),
+            labels.dropLast(3).joinToString(""),
+            "payload labels must carry the base36 frame",
+        )
+        val payloadLabels = labels.dropLast(3).joinToString("")
+        assertTrue(
+            "payload labels must only contain [0-9a-z]",
+            payloadLabels.all { it in '0'..'9' || it in 'a'..'z' },
+        )
     }
 
     @Test
