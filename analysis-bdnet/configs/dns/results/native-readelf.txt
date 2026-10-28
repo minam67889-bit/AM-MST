@@ -5,3 +5,202 @@ libs/libSignatureKiller.so: ELF 64-bit LSB shared object, ARM aarch64, version 1
   Machine:                           AArch64
   Entry point address:               0x19e4
 -- interpreter
+-- needed
+ 0x0000000000000001 (NEEDED)             Shared library: [liblog.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libm.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libdl.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so]
+
+== libs/libdatastore_shared_counter.so
+libs/libdatastore_shared_counter.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, BuildID[sha1]=17db37bd6770ac00dd2d1d2828839fd23a7959a3, stripped
+  Class:                             ELF64
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Entry point address:               0x0
+-- interpreter
+-- needed
+ 0x0000000000000001 (NEEDED)             Shared library: [libm.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libdl.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so]
+
+== libs/libdns.so
+libs/libdns.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /system/bin/linker64, stripped
+  Class:                             ELF64
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Entry point address:               0x8b910
+-- interpreter
+  INTERP         0x0000000000000238 0x0000000000000238 0x0000000000000238
+                 0x0000000000000015 0x0000000000000015  R      0x1
+-- needed
+ 0x0000000000000001 (NEEDED)             Shared library: [liblog.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libdl.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so]
+
+== libs/libfwpuncher.so
+libs/libfwpuncher.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /system/bin/linker64, stripped
+  Class:                             ELF64
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Entry point address:               0xde0c0
+-- interpreter
+  INTERP         0x0000000000000238 0x0000000000000238 0x0000000000000238
+                 0x0000000000000015 0x0000000000000015  R      0x1
+-- needed
+ 0x0000000000000001 (NEEDED)             Shared library: [liblog.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libdl.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so]
+
+== libs/libgojni.so
+libs/libgojni.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, Go BuildID=9ib1uq3U_e4-6LMuU3WJ/Z5GHHVv70V-tIjtLaKyJ/PcncFJnI3m5TJtsWPOYO/gBTRlpu7Nw0haN7byHNe, BuildID[sha1]=04f69650ace0f473e1d75f3f26fb2d4fa4439ddb, stripped
+  Class:                             ELF64
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Entry point address:               0x301140
+-- interpreter
+-- needed
+ 0x0000000000000001 (NEEDED)             Shared library: [liblog.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libandroid.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libdl.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so]
+
+== libs/libpdnsd.so
+libs/libpdnsd.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /system/bin/linker64, BuildID[sha1]=11fb1567356f0a5ee3e85469ed7bff8de61c51c7, stripped
+  Class:                             ELF64
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Entry point address:               0x50e0
+-- interpreter
+  INTERP         0x0000000000000238 0x0000000000000238 0x0000000000000238
+                 0x0000000000000015 0x0000000000000015  R      0x1
+-- needed
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libm.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libdl.so]
+
+== libs/libputils.so
+libs/libputils.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, BuildID[sha1]=31a0b4153a46be5efa68ca5888b559f97ca9b95a, stripped
+  Class:                             ELF64
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Entry point address:               0x0
+-- interpreter
+-- needed
+ 0x0000000000000001 (NEEDED)             Shared library: [liblog.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libm.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libdl.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so]
+
+== libs/libtoolChecker.so
+libs/libtoolChecker.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, BuildID[sha1]=c0ef9dc91a9a44d2d2b01cf7d72301441aa024e3, stripped
+  Class:                             ELF64
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Entry point address:               0x0
+-- interpreter
+-- needed
+ 0x0000000000000001 (NEEDED)             Shared library: [libandroid.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [liblog.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libm.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libdl.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so]
+
+== libs/libtun2socks.so
+libs/libtun2socks.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /system/bin/linker64, BuildID[sha1]=12e699d19813b7ba6d408fd8d90b61ccb8fafa11, stripped
+  Class:                             ELF64
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Entry point address:               0x3fc0
+-- interpreter
+  INTERP         0x0000000000000238 0x0000000000000238 0x0000000000000238
+                 0x0000000000000015 0x0000000000000015  R      0x1
+-- needed
+ 0x0000000000000001 (NEEDED)             Shared library: [libdl.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [liblog.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libm.so]
+
+== libs/libtunpsi.so
+libs/libtunpsi.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, stripped
+  Class:                             ELF64
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Entry point address:               0x6b60
+-- interpreter
+-- needed
+ 0x0000000000000001 (NEEDED)             Shared library: [libstdc++.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libm.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libdl.so]
+
+== libs/libudpq.so
+libs/libudpq.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /system/bin/linker64, stripped
+  Class:                             ELF64
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Entry point address:               0x2389c0
+-- interpreter
+  INTERP         0x0000000000000238 0x0000000000000238 0x0000000000000238
+                 0x0000000000000015 0x0000000000000015  R      0x1
+-- needed
+ 0x0000000000000001 (NEEDED)             Shared library: [liblog.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libdl.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so]
+
+== libs/libudpqtwo.so
+libs/libudpqtwo.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /system/bin/linker64, stripped
+  Class:                             ELF64
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Entry point address:               0x1bd900
+-- interpreter
+  INTERP         0x0000000000000238 0x0000000000000238 0x0000000000000238
+                 0x0000000000000015 0x0000000000000015  R      0x1
+-- needed
+ 0x0000000000000001 (NEEDED)             Shared library: [liblog.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libdl.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so]
+
+== libs/libxdnstt.so
+libs/libxdnstt.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /system/bin/linker64, stripped
+  Class:                             ELF64
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Entry point address:               0x1b1770
+-- interpreter
+  INTERP         0x0000000000000238 0x0000000000000238 0x0000000000000238
+                 0x0000000000000015 0x0000000000000015  R      0x1
+-- needed
+ 0x0000000000000001 (NEEDED)             Shared library: [liblog.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libdl.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so]
+
+== libs/libxray.so
+libs/libxray.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /system/bin/linker64, Go BuildID=uY0WYbchtPJ9MnBj5fTT/EeO1rCpTqg6WytV4v-Im/mHYuLM6YaQswJ1SjaX6-/hacf6rbUc0ScyTZEpFR3, stripped
+  Class:                             ELF64
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Entry point address:               0x2f7900
+-- interpreter
+  INTERP         0x0000000000000238 0x0000000000000238 0x0000000000000238
+                 0x0000000000000015 0x0000000000000015  R      0x1
+-- needed
+ 0x0000000000000001 (NEEDED)             Shared library: [liblog.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libdl.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so]
+
+total 116244
+-rwxr-xr-x 1 runner runner    21184 Jun 24 02:09 libSignatureKiller.so
+-rwxr-xr-x 1 runner runner     7112 Jan  1  1981 libdatastore_shared_counter.so
+-rwxr-xr-x 1 runner runner  5126496 Jan  1  1981 libdns.so
+-rwxr-xr-x 1 runner runner  8392576 Jan  1  1981 libfwpuncher.so
+-rwxr-xr-x 1 runner runner 17999336 Jan  1  1981 libgojni.so
+-rwxr-xr-x 1 runner runner   215632 Jan  1  1981 libpdnsd.so
+-rwxr-xr-x 1 runner runner  3193912 Jan  1  1981 libputils.so
+-rwxr-xr-x 1 runner runner     5512 Jan  1  1981 libtoolChecker.so
+-rwxr-xr-x 1 runner runner   160232 Jan  1  1981 libtun2socks.so
+-rwxr-xr-x 1 runner runner   196344 Jan  1  1981 libtunpsi.so
+-rwxr-xr-x 1 runner runner 19989720 Jan  1  1981 libudpq.so
+-rwxr-xr-x 1 runner runner 17928600 Jan  1  1981 libudpqtwo.so
+-rwxr-xr-x 1 runner runner 16587328 Jan  1  1981 libxdnstt.so
+-rwxr-xr-x 1 runner runner 29180304 Jan  1  1981 libxray.so
