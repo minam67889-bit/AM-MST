@@ -31,8 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      RUN_ID: ${{ inputs.run_id || '40748028026' }}
-      ARTIFACT: ${{ inputs.artifact || 'amtunnel-apk-analysis' }}
+      RUN_ID: ${{ github.event.inputs.run_id || '40748028026' }}
+      ARTIFACT: ${{ github.event.inputs.artifact || 'amtunnel-apk-analysis' }}
       GH_TOKEN: ${{ github.token }}
     steps:
       - uses: actions/checkout@v4
