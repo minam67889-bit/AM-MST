@@ -393,59 +393,11 @@ jobs:
           echo "call-site literals: $(wc -l < /tmp/keys.txt)"
           head -5 /tmp/keys.txt || true
 
-          # Run the real deobfuscator on the JVM.
-          cat > /tmp/deob/Harness.java <<'JAVA'
-import java.nio.file.*;
-import java.util.*;
-import java.lang.reflect.*;
-
-public class Harness {
-    public static void main(String[] args) throws Exception {
-        List<String> keys = Files.readAllLines(Paths.get(args[0]));
-        Class<?> clazz = Class.forName(args[1]);
-        Method target = null;
-        for (Method m : clazz.getDeclaredMethods()) {
-            if (m.getReturnType() == String.class && m.getParameterCount() == 1
-                    && m.getParameterTypes()[0] == long.class) {
-                target = m;
-                break;
-            }
-        }
-        if (target == null) {
-            System.out.println("#ERR no static String getString(long) in " + args[1]);
-            return;
-        }
-        target.setAccessible(true);
-        int ok = 0, bad = 0;
-        for (String raw : keys) {
-            if (raw == null || raw.isBlank()) continue;
-            try {
-                Object out = target.invoke(null, Long.parseLong(raw.trim()));
-                if (out != null) {
-                    System.out.println(raw.trim() + "\t" + out);
-                    ok++;
-                }
-            } catch (Throwable t) {
-                System.out.println("#ERR " + raw.trim() + " " + t.getClass().getSimpleName());
-                bad++;
-            }
-        }
-        System.out.println("# done ok=" + ok + " failed=" + bad);
-    }
-}
-JAVA
-          # LSParanoid's helper sometimes uses android.util.Base64; provide it.
+          # Run the real deobfuscator on the JVM. The two Java sources are
+          # embedded base64 so this YAML stays indentation-safe.
           mkdir -p /tmp/deob/stub/android/util
-          cat > /tmp/deob/stub/android/util/Base64.java <<'JAVA'
-package android.util;
-public class Base64 {
-    public static final int NO_WRAP = 2;
-    public static final int DEFAULT = 0;
-    public static byte[] decode(String s, int flags) { return java.util.Base64.getDecoder().decode(s); }
-    public static byte[] decode(byte[] s, int flags) { return java.util.Base64.getDecoder().decode(s); }
-    public static String encodeToString(byte[] b, int flags) { return java.util.Base64.getEncoder().encodeToString(b); }
-}
-JAVA
+          echo "aW1wb3J0IGphdmEubmlvLmZpbGUuKjsKaW1wb3J0IGphdmEudXRpbC4qOwppbXBvcnQgamF2YS5sYW5nLnJlZmxlY3QuKjsKCnB1YmxpYyBjbGFzcyBIYXJuZXNzIHsKICAgIHB1YmxpYyBzdGF0aWMgdm9pZCBtYWluKFN0cmluZ1tdIGFyZ3MpIHRocm93cyBFeGNlcHRpb24gewogICAgICAgIExpc3Q8U3RyaW5nPiBrZXlzID0gRmlsZXMucmVhZEFsbExpbmVzKFBhdGhzLmdldChhcmdzWzBdKSk7CiAgICAgICAgQ2xhc3M8Pz4gY2xhenogPSBDbGFzcy5mb3JOYW1lKGFyZ3NbMV0pOwogICAgICAgIE1ldGhvZCB0YXJnZXQgPSBudWxsOwogICAgICAgIGZvciAoTWV0aG9kIG0gOiBjbGF6ei5nZXREZWNsYXJlZE1ldGhvZHMoKSkgewogICAgICAgICAgICBpZiAobS5nZXRSZXR1cm5UeXBlKCkgPT0gU3RyaW5nLmNsYXNzICYmIG0uZ2V0UGFyYW1ldGVyQ291bnQoKSA9PSAxCiAgICAgICAgICAgICAgICAgICAgJiYgbS5nZXRQYXJhbWV0ZXJUeXBlcygpWzBdID09IGxvbmcuY2xhc3MpIHsKICAgICAgICAgICAgICAgIHRhcmdldCA9IG07CiAgICAgICAgICAgICAgICBicmVhazsKICAgICAgICAgICAgfQogICAgICAgIH0KICAgICAgICBpZiAodGFyZ2V0ID09IG51bGwpIHsKICAgICAgICAgICAgU3lzdGVtLm91dC5wcmludGxuKCIjRVJSIG5vIHN0YXRpYyBTdHJpbmcgZ2V0U3RyaW5nKGxvbmcpIGluICIgKyBhcmdzWzFdKTsKICAgICAgICAgICAgcmV0dXJuOwogICAgICAgIH0KICAgICAgICB0YXJnZXQuc2V0QWNjZXNzaWJsZSh0cnVlKTsKICAgICAgICBpbnQgb2sgPSAwLCBiYWQgPSAwOwogICAgICAgIGZvciAoU3RyaW5nIHJhdyA6IGtleXMpIHsKICAgICAgICAgICAgaWYgKHJhdyA9PSBudWxsIHx8IHJhdy5pc0JsYW5rKCkpIGNvbnRpbnVlOwogICAgICAgICAgICB0cnkgewogICAgICAgICAgICAgICAgT2JqZWN0IG91dCA9IHRhcmdldC5pbnZva2UobnVsbCwgTG9uZy5wYXJzZUxvbmcocmF3LnRyaW0oKSkpOwogICAgICAgICAgICAgICAgaWYgKG91dCAhPSBudWxsKSB7CiAgICAgICAgICAgICAgICAgICAgU3lzdGVtLm91dC5wcmludGxuKHJhdy50cmltKCkgKyAiXHQiICsgb3V0KTsKICAgICAgICAgICAgICAgICAgICBvaysrOwogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9IGNhdGNoIChUaHJvd2FibGUgdCkgewogICAgICAgICAgICAgICAgU3lzdGVtLm91dC5wcmludGxuKCIjRVJSICIgKyByYXcudHJpbSgpICsgIiAiICsgdC5nZXRDbGFzcygpLmdldFNpbXBsZU5hbWUoKSk7CiAgICAgICAgICAgICAgICBiYWQrKzsKICAgICAgICAgICAgfQogICAgICAgIH0KICAgICAgICBTeXN0ZW0ub3V0LnByaW50bG4oIiMgZG9uZSBvaz0iICsgb2sgKyAiIGZhaWxlZD0iICsgYmFkKTsKICAgIH0KfQo=" | base64 -d > /tmp/deob/Harness.java
+          echo "cGFja2FnZSBhbmRyb2lkLnV0aWw7CgpwdWJsaWMgY2xhc3MgQmFzZTY0IHsKICAgIHB1YmxpYyBzdGF0aWMgZmluYWwgaW50IE5PX1dSQVAgPSAyOwogICAgcHVibGljIHN0YXRpYyBmaW5hbCBpbnQgREVGQVVMVCA9IDA7CgogICAgcHVibGljIHN0YXRpYyBieXRlW10gZGVjb2RlKFN0cmluZyBzLCBpbnQgZmxhZ3MpIHsKICAgICAgICByZXR1cm4gamF2YS51dGlsLkJhc2U2NC5nZXREZWNvZGVyKCkuZGVjb2RlKHMpOwogICAgfQoKICAgIHB1YmxpYyBzdGF0aWMgYnl0ZVtdIGRlY29kZShieXRlW10gcywgaW50IGZsYWdzKSB7CiAgICAgICAgcmV0dXJuIGphdmEudXRpbC5CYXNlNjQuZ2V0RGVjb2RlcigpLmRlY29kZShzKTsKICAgIH0KCiAgICBwdWJsaWMgc3RhdGljIFN0cmluZyBlbmNvZGVUb1N0cmluZyhieXRlW10gYiwgaW50IGZsYWdzKSB7CiAgICAgICAgcmV0dXJuIGphdmEudXRpbC5CYXNlNjQuZ2V0RW5jb2RlcigpLmVuY29kZVRvU3RyaW5nKGIpOwogICAgfQp9Cg==" | base64 -d > /tmp/deob/stub/android/util/Base64.java
           javac -nowarn -d /tmp/deob/classes \
             $(find /tmp/deob/src /tmp/deob/stub -name '*.java') /tmp/deob/Harness.java \
             > /tmp/deob/javac.log 2>&1 || echo "javac failed"
@@ -461,7 +413,6 @@ JAVA
               head -20 /tmp/deob/run.err 2>/dev/null || true
               echo "decrypted lines: $(wc -l < analysis/obfuscation/decrypted.txt 2>/dev/null || echo 0)"
               grep -av "^#" analysis/obfuscation/decrypted.txt | head -60 || true
-              # What we actually came for: anything that looks like a host.
               grep -aoiE "[a-z0-9][a-z0-9.-]{3,60}\.(com|net|org|io|xyz|top|site|online|vip|app|dev|cloud|link|live|pro|fun|ir|ru|info|tech|store|club|host|space|website|icu|cyou|cfd|click|shop|press|world|life|today|network|digital|sbs|bond|rest|bar)" \
                 analysis/obfuscation/decrypted.txt | sort -u > analysis/obfuscation/decrypted-hosts.txt 2>/dev/null || true
               echo "--- hosts found in the decrypted table ---"
