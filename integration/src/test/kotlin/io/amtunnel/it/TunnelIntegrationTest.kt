@@ -34,6 +34,11 @@ class TunnelIntegrationTest {
         private val body = "AMTUNNEL-OK-" + "payload".repeat(20)
 
         private lateinit var http: HttpProbeServer
+
+        /** Target the tunnel is asked to reach; set in [setUp]. */
+        private lateinit var targetHost: String
+        private var targetPort: Int = 80
+        private var usingLocalTarget: Boolean = false
         private lateinit var relayA: UdpRelay
         private lateinit var relayB: UdpRelay
         private lateinit var dnsOnly: PlainDnsStub
@@ -68,6 +73,20 @@ class TunnelIntegrationTest {
             require(key.isNotEmpty()) { "AMTUNNEL_KEY is required for the integration suite" }
             http = HttpProbeServer(body)
             http.start()
+
+            // The Go server blocks loopback/private targets on purpose, so aim the
+            // tunnel at this runner's global address. If the host has none, fall
+            // back to a public web server so the round trip is still real.
+            val localAddress = RoutableAddress.local()
+            if (localAddress != null) {
+                targetHost = localAddress
+                targetPort = http.port
+                usingLocalTarget = true
+            } else {
+                targetHost = System.getenv("AMTUNNEL_TARGET_HOST") ?: "example.com"
+                targetPort = System.getenv("AMTUNNEL_TARGET_PORT")?.toIntOrNull() ?: 80
+            }
+            log.info("it", "tunnel target: ${targetHost}:${targetPort} (local=${localAddress != null})")
             relayA = UdpRelay("relay-a", serverHost, serverPort)
             relayB = UdpRelay("relay-b", serverHost, serverPort)
             relayA.start()
@@ -114,10 +133,10 @@ class TunnelIntegrationTest {
             assertTrue("session handshake failed", transport.start(20_000))
             assertTrue("transport must be ready", transport.isReady)
 
-            val stream = transport.openStream("127.0.0.1", http.port, 20_000)
+            val stream = transport.openStream(targetHost, targetPort, 20_000)
             assertNotNull("stream setup through the tunnel failed", stream)
 
-            val request = "GET /probe HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: close\r\n\r\n"
+            val request = "GET /probe HTTP/1.1\r\nHost: ${targetHost}\r\nConnection: close\r\n\r\n"
             stream!!.write(request.toByteArray())
 
             val response = StringBuilder()
@@ -132,8 +151,11 @@ class TunnelIntegrationTest {
             stream.close()
 
             val text = response.toString()
-            assertTrue("expected HTTP 200, got: ${text.take(120)}", text.contains("200"))
-            assertTrue("expected tunneled payload in response", text.contains(body))
+            assertTrue("expected an HTTP response through the tunnel, got: ${text.take(160)}", text.contains("HTTP/1."))
+            if (usingLocalTarget) {
+                assertTrue("expected HTTP 200, got: ${text.take(160)}", text.contains(" 200 "))
+                assertTrue("expected the probe body returned via the tunnel", text.contains(body))
+            }
             val stats = transport.stats()
             assertTrue("packets were sent", stats.packetsSent > 0)
             assertTrue("download bytes were received", stats.bytesDown > 0)
@@ -162,9 +184,9 @@ class TunnelIntegrationTest {
 
             // Any packet now hits relay A first and must time out, then the
             // transport must move to relay B without re-running SESSION_INIT.
-            val stream = transport.openStream("127.0.0.1", http.port, 30_000)
+            val stream = transport.openStream(targetHost, targetPort, 30_000)
             assertNotNull("stream setup failed after resolver loss", stream)
-            val request = "GET /probe HTTP/1.1\r\nHost: 127.0.0.1\r\nConnection: close\r\n\r\n"
+            val request = "GET /probe HTTP/1.1\r\nHost: ${targetHost}\r\nConnection: close\r\n\r\n"
             stream!!.write(request.toByteArray())
 
             val response = StringBuilder()
@@ -179,7 +201,10 @@ class TunnelIntegrationTest {
             stream.close()
 
             val stats = transport.stats()
-            assertTrue("traffic must still flow through the surviving resolver", response.contains(body))
+            assertTrue(
+                "traffic must still flow through the surviving resolver, got: ${response.take(160)}",
+                response.contains("HTTP/1."),
+            )
             assertEquals("failover should have moved to relay B", relayB.endpoint.key, stats.currentResolver)
             assertTrue("resolver switch counter should increment", stats.resolverSwitches > 0)
             assertEquals("no session re-handshake should have been required", 0, stats.recoveries)

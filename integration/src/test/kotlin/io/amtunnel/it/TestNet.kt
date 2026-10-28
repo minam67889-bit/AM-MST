@@ -131,13 +131,13 @@ class PlainDnsStub {
     }
 }
 
-class HttpProbeServer(private val body: String) {
+class HttpProbeServer(private val body: String, private val bindHost: String = "0.0.0.0") {
     private var server: HttpServer? = null
     var port: Int = 0
         private set
 
     fun start() {
-        val http = HttpServer.create(InetSocketAddress("127.0.0.1", 0), 0)
+        val http = HttpServer.create(InetSocketAddress(bindHost, 0), 0)
         http.createContext("/probe") { exchange ->
             val payload = body.toByteArray()
             exchange.responseHeaders.add("Content-Type", "text/plain")
@@ -152,5 +152,42 @@ class HttpProbeServer(private val body: String) {
 
     fun stop() {
         runCatching { server?.stop(0) }
+    }
+}
+
+/**
+ * The reference tunnel server refuses to dial loopback, private, link-local and
+ * otherwise non-global targets (`validateSOCKSTargetHost` in the Go server) -
+ * a deliberate SSRF guard that we must not weaken. To still exercise a real
+ * payload round trip we point the tunnel at the runner's own globally routable
+ * address: the kernel routes that back through the loopback interface, so the
+ * bytes really do leave the tunnel as TCP and the HTTP server really answers.
+ */
+object RoutableAddress {
+    fun local(): String? {
+        val interfaces = java.net.NetworkInterface.getNetworkInterfaces()
+        val candidates = ArrayList<Pair<Int, String>>()
+        for (iface in interfaces) {
+            if (!iface.isUp || iface.isLoopback) continue
+            val name = iface.name.lowercase()
+            if (name.startsWith("docker") || name.startsWith("br-") || name.startsWith("veth") ||
+                name.startsWith("tun") || name.startsWith("tap")
+            ) {
+                continue
+            }
+            for (address in iface.inetAddresses) {
+                if (address !is java.net.Inet4Address) continue
+                if (address.isLoopbackAddress || address.isLinkLocalAddress ||
+                    address.isSiteLocalAddress || address.isMulticastAddress ||
+                    address.isAnyLocalAddress
+                ) {
+                    continue
+                }
+                val host = address.hostAddress ?: continue
+                // Prefer the primary interface (lowest interface index).
+                candidates.add(iface.index to host)
+            }
+        }
+        return candidates.minByOrNull { it.first }?.second
     }
 }
