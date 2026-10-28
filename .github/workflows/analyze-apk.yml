@@ -9,9 +9,13 @@ on:
   workflow_dispatch:
     inputs:
       apk_url:
-        description: "URL of the AM Tunnel APK / zip"
+        description: "URL of the APK / zip to analyse"
         required: false
         default: "https://filebin.net/6kebb3eierc437j7/app.vpn.amtunnellite.zip"
+      out_dir:
+        description: "Directory the committed report goes to"
+        required: false
+        default: "analysis"
   push:
     paths:
       - "tools/apk_analysis.py"
@@ -32,6 +36,7 @@ jobs:
     timeout-minutes: 60
     env:
       APK_URL: ${{ github.event.inputs.apk_url || 'https://filebin.net/6kebb3eierc437j7/app.vpn.amtunnellite.zip' }}
+      OUT_DIR: ${{ github.event.inputs.out_dir || 'analysis' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -62,6 +67,10 @@ jobs:
             grep -oE 'https?://[^"<> ]+\.(zip|apk)[^"<> ]*' apk/candidate 2>/dev/null | head -10
           fi
           if ! file apk/candidate | grep -qi "zip archive"; then
+            if ! echo "$APK_URL" | grep -qi amtunnellite; then
+              echo "no mirror fallbacks configured for this URL"
+              for url in; do :; done
+            else
             for url in \
               "https://d.apkpure.com/b/APK/app.vpn.amtunnellite?version=latest" \
               "https://d.apkpure.net/b/APK/app.vpn.amtunnellite?version=latest" \
@@ -73,6 +82,7 @@ jobs:
               trY "$url" apk/candidate2
               if file apk/candidate2 | grep -qi "zip archive"; then mv apk/candidate2 apk/candidate; break; fi
             done
+            fi
           fi
           if file apk/candidate | grep -qi "zip archive"; then
             echo "DOWNLOAD_OK $(stat -c%s apk/candidate) bytes"
@@ -303,12 +313,22 @@ jobs:
           retention-days: 30
           if-no-files-found: warn
 
+      - name: Relocate report
+        if: always()
+        run: |
+          set -euo pipefail
+          if [ "$OUT_DIR" != "analysis" ] && [ -d analysis ]; then
+            rm -rf "$OUT_DIR"
+            cp -a analysis "$OUT_DIR"
+            echo "report copied to $OUT_DIR"
+          fi
+
       - name: Commit the report
         run: |
           set -euo pipefail
           git config user.name "AM Tunnel CI"
           git config user.email "ci@users.noreply.github.com"
-          git add -f analysis || true
+          git add -f "$OUT_DIR" || true
           if git diff --cached --quiet; then
             echo "no changes to commit"
           else
@@ -324,9 +344,10 @@ jobs:
           python3 - <<'PY'
           import json, os, glob, urllib.request
           parts = []
-          for path in ("download.log", "unpack.log", "analysis/native-libs.log",
-                       "analysis/apk_analysis.log", "analysis/apktool.log",
-                       "analysis/jadx.log", "analysis/badging.txt"):
+          out = os.environ.get("OUT_DIR", "analysis")
+          for path in ("download.log", "unpack.log",
+                       f"{out}/native-libs.log", f"{out}/apk_analysis.log",
+                       f"{out}/apktool.log", f"{out}/jadx.log", f"{out}/badging.txt"):
               if os.path.exists(path):
                   with open(path, encoding="utf-8", errors="replace") as fh:
                       parts.append(f"\n===== {path} =====\n" + fh.read()[-20000:])
