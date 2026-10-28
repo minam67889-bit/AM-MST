@@ -1,0 +1,73 @@
+analysis run: 40752547864
+artifact: 12845051663
+art/a.zip: Zip archive data, at least v2.0 to extract, compression method=deflate
+APK=art/x/amtunnel.apk
+Archive:  art/x/amtunnel.apk
+  inflating: libs/libSignatureKiller.so  
+file #2 (lib/arm64-v8a/libdatastore_shared_counter.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libdatastore_shared_counter.so  
+file #3 (lib/arm64-v8a/libdns.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libdns.so          
+file #4 (lib/arm64-v8a/libfwpuncher.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libfwpuncher.so    
+file #5 (lib/arm64-v8a/libgojni.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libgojni.so        
+file #6 (lib/arm64-v8a/libpdnsd.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libpdnsd.so        
+file #7 (lib/arm64-v8a/libputils.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libputils.so       
+file #8 (lib/arm64-v8a/libtoolChecker.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libtoolChecker.so  
+file #9 (lib/arm64-v8a/libtun2socks.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libtun2socks.so    
+file #10 (lib/arm64-v8a/libtunpsi.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libtunpsi.so       
+file #11 (lib/arm64-v8a/libudpq.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libudpq.so         
+file #12 (lib/arm64-v8a/libudpqtwo.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libudpqtwo.so      
+file #13 (lib/arm64-v8a/libxdnstt.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libxdnstt.so       
+file #14 (lib/arm64-v8a/libxray.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libxray.so         
+total 116244
+-rwxr-xr-x 1 runner runner    21184 Jun 24 02:09 libSignatureKiller.so
+-rwxr-xr-x 1 runner runner     7112 Jan  1  1981 libdatastore_shared_counter.so
+-rwxr-xr-x 1 runner runner  5126496 Jan  1  1981 libdns.so
+-rwxr-xr-x 1 runner runner  8392576 Jan  1  1981 libfwpuncher.so
+-rwxr-xr-x 1 runner runner 17999336 Jan  1  1981 libgojni.so
+-rwxr-xr-x 1 runner runner   215632 Jan  1  1981 libpdnsd.so
+-rwxr-xr-x 1 runner runner  3193912 Jan  1  1981 libputils.so
+-rwxr-xr-x 1 runner runner     5512 Jan  1  1981 libtoolChecker.so
+-rwxr-xr-x 1 runner runner   160232 Jan  1  1981 libtun2socks.so
+-rwxr-xr-x 1 runner runner   196344 Jan  1  1981 libtunpsi.so
+-rwxr-xr-x 1 runner runner 19989720 Jan  1  1981 libudpq.so
+-rwxr-xr-x 1 runner runner 17928600 Jan  1  1981 libudpqtwo.so
+-rwxr-xr-x 1 runner runner 16587328 Jan  1  1981 libxdnstt.so
+-rwxr-xr-x 1 runner runner 29180304 Jan  1  1981 libxray.so
