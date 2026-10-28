@@ -133,6 +133,7 @@ jobs:
 
       - name: Key material actually present in libxdnstt
         if: env.APK != ''
+        continue-on-error: true
         run: |
           set -uo pipefail
           echo "== every 64-hex literal"
@@ -142,6 +143,9 @@ jobs:
           echo "== context around the pubkey flag"
           strings -n 4 libs/libxdnstt.so | grep -n -i "prince" | head -10
           strings -n 4 libs/libxdnstt.so | grep -o ".\{0,60\}pubkey.\{0,80\}" | head -5
+          echo "== flag names the fork knows"
+          strings -n 3 libs/libxdnstt.so | grep -oE "^-?[a-z]{3,12}$" | sort -u | head -40
+          exit 0
 
       - name: Their dnstt client, --help
         if: env.APK != ''
