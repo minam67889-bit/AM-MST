@@ -348,6 +348,94 @@ jobs:
           echo "--- strings that look like a tunnel config ---"
           grep -rhoE "(slowdns|dnstt)[^ \"']{0,60}" analysis/app-sources 2>/dev/null | sort -u | head -20 || true
 
+      - name: Extract obfuscated string tables
+        continue-on-error: true
+        run: |
+          exec > >(tee -a analysis/deobfuscate.log) 2>&1
+          set -uxo pipefail
+          mkdir -p analysis/obfuscation
+
+          # 1. the deobfuscator class, whatever package it hides in
+          if [ -d java ]; then
+            grep -ril "Deobfuscator" java --include=*.java | head -20 | while read -r f; do
+              cp "$f" analysis/obfuscation/ 2>/dev/null || true
+              echo "found: $f"
+            done
+          fi
+          ls -l analysis/obfuscation || true
+
+          # 2. every long constant handed to getString(...), straight from smali
+          : > analysis/obfuscation/keys.txt
+          for dir in decoded/smali decoded/smali_classes*; do
+            [ -d "$dir" ] || continue
+            grep -rhoE "const-wide [vp][0-9]+, -?[0-9]+L?" "$dir" 2>/dev/null >> /tmp/all-longs.txt || true
+            grep -rhB1 "Deobfuscator\$BDNETVPN\$app;->getString(J)" "$dir" 2>/dev/null \
+              | grep -oE "-?[0-9]{6,}L?" >> analysis/obfuscation/keys.txt || true
+          done
+          sort -u analysis/obfuscation/keys.txt | grep -E "^-?[0-9]+L?$" > /tmp/keys.clean || true
+          # widen: every long literal in the app package (the deobfuscator is fed literals)
+          for dir in decoded/smali/decoded/smali; do :; done
+          if [ -d decoded ]; then
+            find decoded -path "*prince*" -name "*.smali" -print0 2>/dev/null \
+              | xargs -0 grep -hoE "const-wide [vp][0-9]+, -?[0-9]+L" 2>/dev/null \
+              | grep -oE "-?[0-9]+L" | tr -d 'L' | sort -u >> /tmp/keys.clean || true
+          fi
+          sort -u /tmp/keys.clean | grep -E "^-?[0-9]{6,}$" > analysis/obfuscation/keys.txt || true
+          echo "candidate keys: $(wc -l < analysis/obfuscation/keys.txt)"
+          head -5 analysis/obfuscation/keys.txt || true
+
+          # 3. try to actually run the deobfuscator on a JVM
+          DEOB=$(ls analysis/obfuscation/*.java 2>/dev/null | head -1)
+          if [ -n "${DEOB:-}" ]; then
+            echo "deobfuscator source: $DEOB"
+            mkdir -p /tmp/deob
+            cp "$DEOB" /tmp/deob/ 2>/dev/null || true
+            CLS=$(basename "$DEOB" .java | sed 's/.*\$//')
+            cat > /tmp/deob/Harness.java <<'JAVA'
+          import java.nio.file.*;
+          import java.util.*;
+          import java.lang.reflect.*;
+
+          public class Harness {
+              public static void main(String[] args) throws Exception {
+                  List<String> keys = Files.readAllLines(Paths.get(args[0]));
+                  Class<?> clazz = Class.forName(args[1]);
+                  // find any static String getString(long)
+                  for (Method m : clazz.getDeclaredMethods()) {
+                      if (m.getReturnType() != String.class || m.getParameterCount() != 1) continue;
+                      if (m.getParameterTypes()[0] != long.class) continue;
+                      m.setAccessible(true);
+                      System.out.println("# using " + m.getName());
+                      for (String raw : keys) {
+                          if (raw.isBlank()) continue;
+                          try {
+                              Object out = m.invoke(null, Long.parseLong(raw.trim()));
+                              if (out != null) System.out.println(raw + "\t" + out);
+                          } catch (Throwable t) {
+                              System.out.println(raw + "\t<" + t.getClass().getSimpleName() + ">");
+                          }
+                      }
+                      return;
+                  }
+                  System.out.println("# no static String getString(long) found in " + args[1]);
+              }
+          }
+          JAVA
+            javac -nowarn -d /tmp/deob/classes /tmp/deob/*.java > /tmp/deob/javac.log 2>&1 || echo "javac failed (see log)"
+            cat /tmp/deob/javac.log | head -30 || true
+            if [ -d /tmp/deob/classes ]; then
+              cp "$DEOB" /tmp/deob/ 2>/dev/null || true
+              PKG=$(grep -m1 "^package " "$DEOB" | sed 's/package //; s/;//' | tr -d '\r')
+              echo "package: ${PKG:-<default>}"
+              java -cp /tmp/deob/classes Harness analysis/obfuscation/keys.txt \
+                "${PKG:-}.${CLS}" 2>&1 | head -400 > analysis/obfuscation/decrypted.txt || true
+              wc -l analysis/obfuscation/decrypted.txt || true
+              grep -vE "^<|<$" analysis/obfuscation/decrypted.txt | head -40 || true
+            fi
+          else
+            echo "no deobfuscator java source found"
+          fi
+
       - name: Mine native DNS-tunnel libraries
         continue-on-error: true
         run: |
@@ -464,7 +552,7 @@ jobs:
           parts = []
           out = os.environ.get("OUT_DIR", "analysis")
           for path in ("download.log", "unpack.log",
-                       f"{out}/native-libs.log", f"{out}/apk_analysis.log",
+                       f"{out}/deobfuscate.log", f"{out}/native-libs.log", f"{out}/apk_analysis.log",
                        f"{out}/apktool.log", f"{out}/jadx.log", f"{out}/badging.txt"):
               if os.path.exists(path):
                   with open(path, encoding="utf-8", errors="replace") as fh:
