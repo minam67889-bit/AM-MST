@@ -61,41 +61,67 @@ jobs:
           sudo apt-get install -y -qq qemu-user-static unzip file binutils
           qemu-aarch64-static --version | head -2
 
-      - name: Get the APK the analysis job already saved
+      - name: Get the APK
         run: |
-          set -uo pipefail
-          mkdir -p art
+          exec > >(tee /tmp/apk.log) 2>&1
+          set -x
+          mkdir -p art libs
+          APK=""
           RUN=$(gh run list --workflow=analyze-apk.yml --status success --limit 1 \
                   --json databaseId --jq '.[0].databaseId')
           echo "analysis run: $RUN"
-          gh run download "$RUN" -n amtunnel-apk-analysis -D art -R "$GITHUB_REPOSITORY" \
-            || echo "artifact download failed (needs actions:read)"
-          find art -name '*.apk' | head
-          APK=$(find art -name '*.apk' | head -1)
+          ART=$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$RUN/artifacts" \
+                  --jq '.artifacts[] | select(.name=="amtunnel-apk-analysis") | .id' | head -1)
+          echo "artifact id: $ART"
+          if [ -n "$ART" ]; then
+            gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$ART/zip" > art/a.zip || true
+            file art/a.zip; ls -l art/a.zip
+            if file art/a.zip | grep -qi zip; then
+              unzip -o -q art/a.zip -d art/x || true
+              APK=$(find art/x -name '*.apk' | head -1)
+            fi
+          fi
           if [ -z "$APK" ]; then
-            echo "no apk in the artifact, falling back to the filebin upload"
+            echo "== gh run download path"
+            gh run download "$RUN" -n amtunnel-apk-analysis -D art/dl -R "$GITHUB_REPOSITORY" || true
+            APK=$(find art/dl -name '*.apk' | head -1)
+          fi
+          if [ -z "$APK" ]; then
+            echo "== filebin path"
             UA="Mozilla/5.0 (X11; Linux x86_64) Chrome/124 Safari/537.36"
             JAR=/tmp/cookies.txt; : > "$JAR"
             for attempt in 1 2 3; do
               curl -sSL --connect-timeout 20 --max-time 900 -A "$UA" -c "$JAR" -b "$JAR" \
                 -e "https://filebin.net/" -o art/bdnet.zip \
                 "https://filebin.net/idukzq7kugvrtcau/BDNET.VPN%20v106%20Mod.zip" || true
+              file art/bdnet.zip; ls -l art/bdnet.zip
               file art/bdnet.zip | grep -qi zip && break
               sleep 5
             done
             if file art/bdnet.zip | grep -qi zip; then
-              unzip -o art/bdnet.zip -d art/zip > /dev/null
-              APK=$(find art/zip -name '*.apk' | head -1)
+              unzip -o -q art/bdnet.zip -d art/zip || true
+              APK=$(find art/zip -name '*.apk' -o -name '*.xapk' | head -1)
+              if [ -z "$APK" ]; then
+                # some uploads wrap the apk inside another zip
+                find art/zip -name '*.zip' | head -3
+                for z in $(find art/zip -name '*.zip' | head -3); do
+                  unzip -o -q "$z" -d art/zip2 || true
+                done
+                APK=$(find art/zip art/zip2 -name '*.apk' 2>/dev/null | head -1)
+              fi
             fi
           fi
-          test -n "$APK" || { echo "no apk available at all"; exit 1; }
-          echo "APK=$APK" >> "$GITHUB_ENV"
-          mkdir -p libs
-          unzip -o -j "$APK" 'lib/arm64-v8a/*' -d libs > /dev/null
-          chmod +x libs/* || true
-          ls -l libs
+          echo "APK=$APK"
+          if [ -n "$APK" ]; then
+            echo "APK=$APK" >> "$GITHUB_ENV"
+            unzip -l "$APK" | grep -E "lib/.*\.so" | head -20
+            unzip -o -j "$APK" 'lib/arm64-v8a/*' -d libs || true
+            chmod +x libs/* 2>/dev/null || true
+            ls -l libs
+          fi
 
       - name: What are these binaries?
+        if: env.APK != ''
         run: |
           set -uo pipefail
           for f in libs/*.so; do
@@ -106,6 +132,7 @@ jobs:
           done
 
       - name: Key material actually present in libxdnstt
+        if: env.APK != ''
         run: |
           set -uo pipefail
           echo "== every 64-hex literal"
@@ -117,11 +144,13 @@ jobs:
           strings -n 4 libs/libxdnstt.so | grep -o ".\{0,60\}pubkey.\{0,80\}" | head -5
 
       - name: Their dnstt client, --help
+        if: env.APK != ''
         continue-on-error: true
         run: |
           qemu-aarch64-static libs/libxdnstt.so -h 2>&1 | head -40 || true
 
       - name: Run their dnstt client against a real FastDNS endpoint
+        if: env.APK != ''
         run: |
           set -uo pipefail
           DOMAIN="sd-${FASTDNS_HOST}"
@@ -142,6 +171,7 @@ jobs:
           kill "$(cat /tmp/xdnstt.pid)" 2>/dev/null || true
 
       - name: Their SlowDNS client
+        if: env.APK != ''
         continue-on-error: true
         run: |
           set -uo pipefail
@@ -166,6 +196,7 @@ jobs:
           mkdir -p analysis-bdnet/configs/dns/results
           cp /tmp/xdnstt.log analysis-bdnet/configs/dns/results/native-dnstt.log 2>/dev/null || true
           cp /tmp/libdns.log analysis-bdnet/configs/dns/results/native-slowdns.log 2>/dev/null || true
+          cp /tmp/apk.log analysis-bdnet/configs/dns/results/native-apk-fetch.log 2>/dev/null || true
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add analysis-bdnet/configs/dns/results
