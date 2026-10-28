@@ -174,7 +174,8 @@ def extract(bundle: dict) -> dict:
         "cdnhosts": hostlist("CDNHosts"),
         "fronthosts": hostlist("FrontHosts"),
         "backhosts": hostlist("BackHosts"),
-        "sips": [deobfuscate(s) for s in (bundle.get("SIPs", "") or "").split(";") if s],
+        # SIPs are plain dotted-quad addresses; SRanges are obfuscated.
+        "sips": [s for s in (bundle.get("SIPs", "") or "").split(";") if s],
         "sranges": [deobfuscate(s) for s in (bundle.get("SRanges", "") or "").split(";") if s],
         "blocked_apps": [a for a in (bundle.get("BlockedApps", "") or "").split(";") if a],
     }
