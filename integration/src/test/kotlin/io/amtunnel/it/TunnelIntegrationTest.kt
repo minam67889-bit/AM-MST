@@ -49,7 +49,7 @@ class TunnelIntegrationTest {
         private val serverPort: Int = System.getenv("AMTUNNEL_SERVER_PORT")?.toIntOrNull() ?: 15353
         private val encMethod: Int = System.getenv("AMTUNNEL_ENC")?.toIntOrNull() ?: EncryptionMethod.XOR
 
-        private fun config(): TunnelConfig = TunnelConfig(
+        private fun config(duplication: Int = 1): TunnelConfig = TunnelConfig(
             domain = domain,
             encryptionMethod = encMethod,
             encryptionKey = key,
@@ -58,6 +58,7 @@ class TunnelIntegrationTest {
             queryTimeoutMs = 1500,
             retryCount = 4,
             pingIntervalMs = 5000,
+            packetDuplication = duplication,
         )
 
         private fun selector(): Pair<ResolverHealthMonitor, HealthResolverSelector> {
@@ -128,7 +129,9 @@ class TunnelIntegrationTest {
     @Test
     fun test2_realHttpTrafficFlowsThroughTheDnsTunnel() {
         val (_, selector) = selector()
-        val transport = MasterDnsTransport(config(), selector, log)
+        // MasterDnsVPN-style duplication: every frame also goes out on a second
+        // resolver. The primary answer is still what the stream consumes.
+        val transport = MasterDnsTransport(config(duplication = 2), selector, log)
         try {
             assertTrue("session handshake failed", transport.start(20_000))
             assertTrue("transport must be ready", transport.isReady)
@@ -158,6 +161,10 @@ class TunnelIntegrationTest {
             }
             val stats = transport.stats()
             assertTrue("packets were sent", stats.packetsSent > 0)
+            assertTrue(
+                "packet duplication must have put extra copies on the wire",
+                stats.duplicatesSent > 0,
+            )
             assertTrue("download bytes were received", stats.bytesDown > 0)
             println(
                 "tunnel stats: tx=${stats.packetsSent} rx=${stats.responsesReceived} " +
