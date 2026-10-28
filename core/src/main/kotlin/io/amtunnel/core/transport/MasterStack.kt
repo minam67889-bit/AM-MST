@@ -2,6 +2,7 @@ package io.amtunnel.core.transport
 
 import io.amtunnel.core.dns.ResolverEndpoint
 import io.amtunnel.core.dns.ResolverHealthMonitor
+import io.amtunnel.core.net.SocketProtector
 import io.amtunnel.core.util.TunnelLog
 
 /**
