@@ -1,0 +1,127 @@
+name: Server binaries
+
+# Builds the tunnel server so nobody has to install Go or compile anything.
+# The result is a static linux binary attached to a GitHub Release, plus the
+# SHA-256 of each file. Everything here is upstream MasterDnsVPN source; we do
+# not modify it.
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "server-*"
+    paths:
+      - ".github/workflows/server-release.yml"
+      - "server/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: server-binaries
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build for ${{ matrix.arch }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - name: Build the server from upstream source
+        run: |
+          set -euo pipefail
+          git clone --depth 1 https://github.com/masterking32/MasterDnsVPN.git /tmp/mdvpn
+          cd /tmp/mdvpn
+          COMMIT=$(git rev-parse --short HEAD)
+          echo "upstream commit: $COMMIT"
+          echo "UPSTREAM=$COMMIT" >> "$GITHUB_ENV"
+
+          export CGO_ENABLED=0
+          export GOOS=linux
+          export GOARCH=${{ matrix.arch }}
+          go build -trimpath -ldflags "-s -w" -o "/tmp/masterdnsvpn-server-linux-${{ matrix.arch }}" ./cmd/server
+          ls -l "/tmp/masterdnsvpn-server-linux-${{ matrix.arch }}"
+          sha256sum "/tmp/masterdnsvpn-server-linux-${{ matrix.arch }}" | tee "/tmp/sha-${{ matrix.arch }}.txt"
+
+      - name: Smoke test (amd64 runs natively)
+        if: matrix.arch == 'amd64'
+        run: |
+          set -euo pipefail
+          BIN="/tmp/masterdnsvpn-server-linux-amd64"
+          "$BIN" -version || true
+          mkdir -p /tmp/smoke
+          cat > /tmp/smoke/server.toml <<'EOF'
+          DOMAIN = ["smoke.example.com"]
+          PROTOCOL_TYPE = "SOCKS5"
+          UDP_HOST = "127.0.0.1"
+          UDP_PORT = 15399
+          DATA_ENCRYPTION_METHOD = 1
+          ENCRYPTION_KEY_FILE = "/tmp/smoke/key.txt"
+          MAX_PACKETS_PER_BATCH = 10
+          EOF
+          "$BIN" -config /tmp/smoke/server.toml -nowait > /tmp/smoke/log 2>&1 &
+          PID=$!
+          for i in $(seq 1 30); do [ -s /tmp/smoke/key.txt ] && break; sleep 0.5; done
+          sleep 2
+          if ! kill -0 "$PID" 2>/dev/null; then
+            echo "error: the server did not stay up"; tail -40 /tmp/smoke/log; exit 1
+          fi
+          echo "server is running, key: $(cat /tmp/smoke/key.txt)"
+          kill "$PID" || true
+
+      - name: Upload binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: masterdnsvpn-server-linux-${{ matrix.arch }}
+          path: |
+            /tmp/masterdnsvpn-server-linux-${{ matrix.arch }}
+            /tmp/sha-${{ matrix.arch }}.txt
+          retention-days: 30
+
+  release:
+    name: Publish
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Collect binaries
+        uses: actions/download-artifact@v4
+        with:
+          pattern: masterdnsvpn-server-linux-*
+          path: dist
+          merge-multiple: true
+
+      - name: Publish a release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          cd dist
+          ls -l
+          sha256sum masterdnsvpn-server-linux-* > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+          TAG="servers-${GITHUB_RUN_NUMBER}"
+          gh release create "$TAG" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "Tunnel server binaries (run ${GITHUB_RUN_NUMBER})" \
+            --notes "Static linux binaries built from upstream MasterDnsVPN source, unmodified.
+
+          Install with:
+          \`\`\`
+          curl -fsSLO https://github.com/${GITHUB_REPOSITORY}/releases/download/${TAG}/masterdnsvpn-server-linux-amd64
+          chmod +x masterdnsvpn-server-linux-amd64
+          \`\`\`
+
+          Or run \`server/install-masterdnsvpn.sh\`, which downloads and configures it for you. See docs/SERVER.md." \
+            masterdnsvpn-server-linux-* SHA256SUMS.txt

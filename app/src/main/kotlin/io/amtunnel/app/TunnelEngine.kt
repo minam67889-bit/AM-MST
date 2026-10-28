@@ -105,6 +105,61 @@ class TunnelEngine(private val context: Context) {
         notifyStateChanged()
     }
 
+    /**
+     * Applies the `key = value` block that install-masterdnsvpn.sh prints, so a
+     * fresh server can be set up by pasting one blob instead of typing five
+     * fields. Unknown keys are ignored on purpose; `#` starts a comment line.
+     */
+    fun importProfile(text: String): ProfileImport {
+        val values = HashMap<String, String>()
+        var resolversText = ""
+        text.lineSequence().forEach { raw ->
+            val line = raw.substringBefore('#').trim()
+            if (line.isEmpty()) return@forEach
+            val cut = line.indexOf('=')
+            if (cut <= 0) return@forEach
+            val key = line.substring(0, cut).trim().lowercase()
+            val value = line.substring(cut + 1).trim()
+            if (key == "resolvers" || key == "resolver") {
+                resolversText = if (resolversText.isEmpty()) value else "$resolversText,$value"
+            } else {
+                values[key] = value
+            }
+        }
+
+        val domain = values["domain"]?.trim().orEmpty()
+        if (domain.isEmpty()) {
+            return ProfileImport(false, "The profile has no `domain = ...` line", 0)
+        }
+
+        val updated = settings.copy(
+            domain = domain,
+            encryptionKey = values["key"] ?: settings.encryptionKey,
+            encryptionMethod = values["method"]?.toIntOrNull()?.coerceIn(0, 5) ?: settings.encryptionMethod,
+            uploadMtu = values["upload_mtu"]?.toIntOrNull() ?: settings.uploadMtu,
+            balancingStrategy = values["strategy"]?.toIntOrNull()?.coerceIn(0, 8)
+                ?: settings.balancingStrategy,
+            packetDuplication = values["duplication"]?.toIntOrNull()?.coerceIn(1, 10)
+                ?: settings.packetDuplication,
+        )
+        updateSettings(updated)
+
+        val added = if (resolversText.isEmpty()) 0 else addResolvers(resolversText)
+        log.info(
+            "engine",
+            "imported server profile for $domain: ${EncryptionMethod.name(updated.encryptionMethod)}, " +
+                "$added new resolver(s), strategy ${updated.balancingStrategy}, " +
+                "duplication ${updated.packetDuplication}",
+        )
+        val problems = buildConfig(updated).validate()
+        if (problems.isNotEmpty()) {
+            return ProfileImport(false, problems.joinToString("; "), added)
+        }
+        return ProfileImport(true, "Profile applied for $domain", added)
+    }
+
+    data class ProfileImport(val ok: Boolean, val message: String, val resolversAdded: Int)
+
     private fun buildConfig(s: AppSettings) = TunnelConfig(
         domain = s.domain,
         encryptionMethod = s.encryptionMethod,

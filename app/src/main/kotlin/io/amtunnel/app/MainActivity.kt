@@ -97,6 +97,14 @@ class MainActivity : Activity() {
 
     private fun dp(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 
+    /** Rebuild the form so imported values are visible in every field. */
+    private fun rebuildUi() {
+        window.decorView.post {
+            setContentView(buildUi())
+            refresh()
+        }
+    }
+
     private fun buildUi(): View {
         val root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
@@ -227,6 +235,7 @@ class MainActivity : Activity() {
             setPadding(0, dp(8), 0, 0)
         }
         scanButtons.addView(button("Add / import", Color.parseColor("#4C8DFF")) { importDialog() }, weight(1f))
+        scanButtons.addView(button("Server profile", Color.parseColor("#4C8DFF")) { profileDialog() }, weight(1f))
         scanButtons.addView(button("Ping scan", Color.parseColor("#9B7BFF")) { scan(ScanMode.REACHABILITY) }, weight(1f))
         scanButtons.addView(button("Tunnel scan", Color.parseColor("#9B7BFF")) { scan(ScanMode.TUNNEL) }, weight(1f))
         scanCard.addView(scanButtons)
@@ -406,6 +415,33 @@ class MainActivity : Activity() {
                 refresh()
             }
         })
+    }
+
+    /**
+     * Paste the block printed by server/install-masterdnsvpn.sh: domain, key,
+     * method, resolvers, strategy. One paste sets everything up.
+     */
+    private fun profileDialog() {
+        val input = EditText(this).apply {
+            hint = "domain = t.example.com\nkey = <hex>\nmethod = 1\nresolvers = 1.1.1.1, 8.8.8.8"
+            setTextColor(textPrimary)
+            setHintTextColor(textMuted)
+            minLines = 8
+            gravity = Gravity.TOP
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE
+        }
+        AlertDialog.Builder(this)
+            .setTitle("Import server profile")
+            .setMessage("Paste the profile block from your server (docs/SERVER.md).")
+            .setView(input)
+            .setPositiveButton("Apply") { _, _ ->
+                val result = engine.importProfile(input.text.toString())
+                toast(result.message)
+                if (result.ok) rebuildUi()
+                refresh()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 
     private fun importDialog() {
