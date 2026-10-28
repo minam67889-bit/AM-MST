@@ -1,0 +1,2 @@
+libs/libxdnstt.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libdl.so: version `LIBC' not found (required by libs/libxdnstt.so)
+libs/libxdnstt.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libc.so: version `LIBC' not found (required by libs/libxdnstt.so)

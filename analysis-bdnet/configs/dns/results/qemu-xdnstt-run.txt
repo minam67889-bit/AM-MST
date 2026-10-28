@@ -1,0 +1,11 @@
+== host 173.212.232.241
+no listener on 7000
+== client log
+libs/libxdnstt.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libdl.so: version `LIBC' not found (required by libs/libxdnstt.so)
+libs/libxdnstt.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libc.so: version `LIBC' not found (required by libs/libxdnstt.so)
+PROBE FAIL: nothing listening on 127.0.0.1:7000 ([Errno 111] Connection refused)
+PROBE FAIL: nothing listening on 127.0.0.1:7000 ([Errno 111] Connection refused)
+PROBE FAIL: nothing listening on 127.0.0.1:7000 ([Errno 111] Connection refused)
+== client log after the probes
+libs/libxdnstt.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libdl.so: version `LIBC' not found (required by libs/libxdnstt.so)
+libs/libxdnstt.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libc.so: version `LIBC' not found (required by libs/libxdnstt.so)

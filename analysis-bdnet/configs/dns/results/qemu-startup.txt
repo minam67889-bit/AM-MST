@@ -1,9 +1,91 @@
 + date -u
-Wed Oct 28 23:52:33 UTC 2026
+Wed Oct 28 23:56:37 UTC 2026
 + qemu-aarch64-static --version
 + head -1
 qemu-aarch64 version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)
 + printf 'int main(void){return 0;}'
 + aarch64-linux-gnu-gcc -o /tmp/t /tmp/t.c
-+ timeout 15 qemu-aarch64-static /tmp/t
++ timeout 15 qemu-aarch64-static -L /usr/aarch64-linux-gnu /tmp/t
++ echo 'trivial via cross loader exit=0'
+trivial via cross loader exit=0
++ export QEMU_LD_PREFIX=/home/runner/work/AM-MST/AM-MST/sysroot
++ QEMU_LD_PREFIX=/home/runner/work/AM-MST/AM-MST/sysroot
++ export LD_LIBRARY_PATH=/home/runner/work/AM-MST/AM-MST/sysroot/system/lib64
++ LD_LIBRARY_PATH=/home/runner/work/AM-MST/AM-MST/sysroot/system/lib64
++ ls -l sysroot/system/bin sysroot/system/lib64
+sysroot/system/bin:
+total 0
+lrwxrwxrwx 1 runner runner 48 Oct 28 23:56 linker64 -> /usr/aarch64-linux-gnu/lib/ld-linux-aarch64.so.1
+
+sysroot/system/lib64:
+total 32
+-rwxr-xr-x 1 runner runner 70184 Oct 28 23:56 libandroid.so
+lrwxrwxrwx 1 runner runner    36 Oct 28 23:56 libc.so -> /usr/aarch64-linux-gnu/lib/libc.so.6
+lrwxrwxrwx 1 runner runner    37 Oct 28 23:56 libdl.so -> /usr/aarch64-linux-gnu/lib/libdl.so.2
+-rwxr-xr-x 1 runner runner 70184 Oct 28 23:56 liblog.so
+lrwxrwxrwx 1 runner runner    36 Oct 28 23:56 libm.so -> /usr/aarch64-linux-gnu/lib/libm.so.6
+lrwxrwxrwx 1 runner runner    42 Oct 28 23:56 libpthread.so -> /usr/aarch64-linux-gnu/lib/libpthread.so.0
+lrwxrwxrwx 1 runner runner    37 Oct 28 23:56 librt.so -> /usr/aarch64-linux-gnu/lib/librt.so.1
++ aarch64-linux-gnu-gcc -o /tmp/td /tmp/t.c
++ timeout 15 qemu-aarch64-static -L /home/runner/work/AM-MST/AM-MST/sysroot /tmp/td
 qemu-aarch64-static: Could not open '/lib/ld-linux-aarch64.so.1': No such file or directory
++ echo 'trivial shimmed exit=255'
+trivial shimmed exit=255
++ for bin in libxdnstt libdns
++ for flag in -h --help -version
++ echo '===== libxdnstt -h'
+===== libxdnstt -h
++ timeout 25 qemu-aarch64-static libs/libxdnstt.so -h
++ head -30
+libs/libxdnstt.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libdl.so: version `LIBC' not found (required by libs/libxdnstt.so)
+libs/libxdnstt.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libc.so: version `LIBC' not found (required by libs/libxdnstt.so)
++ echo '[pipeline exit 1 0]'
+[pipeline exit 1 0]
++ for flag in -h --help -version
++ echo '===== libxdnstt --help'
+===== libxdnstt --help
++ timeout 25 qemu-aarch64-static libs/libxdnstt.so --help
++ head -30
+libs/libxdnstt.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libdl.so: version `LIBC' not found (required by libs/libxdnstt.so)
+libs/libxdnstt.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libc.so: version `LIBC' not found (required by libs/libxdnstt.so)
++ echo '[pipeline exit 1 0]'
+[pipeline exit 1 0]
++ for flag in -h --help -version
++ echo '===== libxdnstt -version'
+===== libxdnstt -version
++ timeout 25 qemu-aarch64-static libs/libxdnstt.so -version
++ head -30
+libs/libxdnstt.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libdl.so: version `LIBC' not found (required by libs/libxdnstt.so)
+libs/libxdnstt.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libc.so: version `LIBC' not found (required by libs/libxdnstt.so)
++ echo '[pipeline exit 1 0]'
+[pipeline exit 1 0]
++ for bin in libxdnstt libdns
++ for flag in -h --help -version
++ echo '===== libdns -h'
+===== libdns -h
++ timeout 25 qemu-aarch64-static libs/libdns.so -h
++ head -30
+libs/libdns.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libdl.so: version `LIBC' not found (required by libs/libdns.so)
+libs/libdns.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libc.so: version `LIBC' not found (required by libs/libdns.so)
++ echo '[pipeline exit 1 0]'
+[pipeline exit 1 0]
++ for flag in -h --help -version
++ echo '===== libdns --help'
+===== libdns --help
++ timeout 25 qemu-aarch64-static libs/libdns.so --help
++ head -30
+libs/libdns.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libdl.so: version `LIBC' not found (required by libs/libdns.so)
+libs/libdns.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libc.so: version `LIBC' not found (required by libs/libdns.so)
++ echo '[pipeline exit 1 0]'
+[pipeline exit 1 0]
++ for flag in -h --help -version
++ echo '===== libdns -version'
+===== libdns -version
++ timeout 25 qemu-aarch64-static libs/libdns.so -version
++ head -30
+libs/libdns.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libdl.so: version `LIBC' not found (required by libs/libdns.so)
+libs/libdns.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libc.so: version `LIBC' not found (required by libs/libdns.so)
++ echo '[pipeline exit 1 0]'
+[pipeline exit 1 0]
++ set +x
+done
