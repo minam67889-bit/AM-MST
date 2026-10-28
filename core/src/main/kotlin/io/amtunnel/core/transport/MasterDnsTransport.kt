@@ -68,6 +68,8 @@ class MasterDnsTransport(
     @Volatile private var lastPingMs = 0L
     @Volatile private var lastRecheckMs = 0L
     private val sequence = AtomicLong()
+    /** Serialises inbound frame handling: the pump and the duplicate paths both feed it. */
+    private val inboundLock = Any()
     private val streamIdCounter = AtomicInteger(java.security.SecureRandom().nextInt(0x4000) + 1)
 
     override val isReady: Boolean get() = state == TransportState.READY || state == TransportState.DEGRADED
@@ -409,7 +411,16 @@ class MasterDnsTransport(
             selector.reportSend(alternate)
             duplicateExecutor.execute {
                 try {
-                    session.exchange(frame, alternate, config.queryTimeoutMs)
+                    val copy = session.exchange(frame, alternate, config.queryTimeoutMs)
+                    // Multi-path: the ACK may arrive on the copy, not the primary.
+                    // Discarding it here is what made duplicated streams stall,
+                    // so every response is fed into the state machine.
+                    copy.frame?.let { inbound ->
+                        synchronized(inboundLock) { handleInbound(inbound) }
+                    }
+                    if (copy.frame != null) {
+                        selector.reportSuccess(alternate, copy.rttMs)
+                    }
                 } catch (_: Exception) {
                     // A duplicate failing is not an error: the primary still owns the result.
                 }
@@ -440,7 +451,7 @@ class MasterDnsTransport(
 
             val frame = exchange.frame
             if (frame != null) {
-                handleInbound(frame)
+                synchronized(inboundLock) { handleInbound(frame) }
             }
             // A frame that we were waiting on an ACK for is retransmitted by the
             // deadline sweep if the ACK did not arrive on this response.
