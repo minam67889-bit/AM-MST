@@ -211,3 +211,76 @@ jobs:
               git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
             sleep 5
           done
+
+  stock-dnstt:
+    name: stock dnstt with candidate keys
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: Build a stock dnstt-client
+        run: |
+          git clone --depth 1 https://github.com/Mygod/dnstt.git /tmp/dnstt
+          cd /tmp/dnstt/dnstt-client
+          go build -o /tmp/dnstt-client . 2>&1 | tail -5
+          ls -l /tmp/dnstt-client
+          /tmp/dnstt-client -h 2>&1 | head -20 || true
+
+      - name: Try key derivations of the app's -pubkey value
+        env:
+          HOSTS: "173.212.232.241 173.249.10.48"
+        run: |
+          exec > >(tee /tmp/stock.log) 2>&1
+          set -uo pipefail
+          python3 - <<'PY' > /tmp/keys.txt
+          import hashlib
+          pw = b"prince"
+          keys = {
+              "sha256(prince)": hashlib.sha256(pw).digest(),
+              "sha512(prince)[:32]": hashlib.sha512(pw).digest()[:32],
+              "blake2s(prince)": hashlib.blake2s(pw).digest(),
+              "blake2b(prince)[:32]": hashlib.blake2b(pw, digest_size=32).digest(),
+              "prince+zeros": pw + bytes(26),
+              "prince*5+2": (pw * 6)[:32],
+          }
+          for name, key in keys.items():
+              print(name, key.hex())
+          PY
+          cat /tmp/keys.txt
+          for host in $HOSTS; do
+            for line in $(cat /tmp/keys.txt | tr " " ":"); do
+              name=${line%%:*}; key=${line##*:}
+              port=$((7000 + RANDOM % 200))
+              echo "== $name on $host (port $port)"
+              /tmp/dnstt-client -udp "$host:53" -pubkey "$key" "sd-$host" "127.0.0.1:$port" \
+                > "/tmp/c-$port.log" 2>&1 &
+              pid=$!
+              for i in $(seq 1 10); do ss -ltn 2>/dev/null | grep -q ":$port" && break; sleep 1; done
+              timeout 25 python3 tools/tunnel_probe.py "127.0.0.1:$port" --mode http \
+                --host example.com --timeout 20 || true
+              echo "   client said:"; sed "s/^/     /" "/tmp/c-$port.log" | tail -5
+              kill $pid 2>/dev/null; sleep 1
+            done
+          done
+
+      - name: Publish
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p analysis-bdnet/configs/dns/results
+          cp /tmp/stock.log analysis-bdnet/configs/dns/results/stock-dnstt.log 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-bdnet/configs/dns/results
+          git diff --cached --quiet && exit 0
+          git commit -q -m "dns: stock dnstt key trials [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
