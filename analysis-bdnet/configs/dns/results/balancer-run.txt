@@ -3,26 +3,26 @@ strategy      : HYBRID_SCORE (id=5)
 endpoints     : 34 resolved, 0 unresolvable
 
 -- round 1 --
-  de1.liftmeon.org               13.140.185.158   145ms  rcode=3  answers=0 bytes=41
-  de2.liftmeon.org               13.140.185.159   290ms  rcode=3  answers=0 bytes=41
-  de3.liftmeon.org               13.140.185.160   215ms  rcode=3  answers=0 bytes=41
-  de4.liftmeon.org               13.140.185.162   131ms  rcode=3  answers=0 bytes=41
-  de5.liftmeon.org               13.140.185.163   372ms  rcode=3  answers=0 bytes=41
-  de6.liftmeon.org               13.140.185.161   120ms  rcode=3  answers=0 bytes=41
-  de7.liftmeon.org               13.140.185.164   124ms  rcode=3  answers=0 bytes=41
-  de8.liftmeon.org               13.140.185.165   155ms  rcode=3  answers=0 bytes=41
-  de9.liftmeon.org               13.140.185.168   132ms  rcode=3  answers=0 bytes=41
-  de10.liftmeon.org              13.140.185.170   525ms  rcode=3  answers=0 bytes=41
-  de11.liftmeon.org              13.140.185.171   129ms  rcode=3  answers=0 bytes=41
-  de12.liftmeon.org              13.140.185.172   120ms  rcode=3  answers=0 bytes=41
+  de1.liftmeon.org               13.140.185.158   404ms  rcode=3  answers=0 bytes=41
+  de2.liftmeon.org               13.140.185.159   125ms  rcode=3  answers=0 bytes=41
+  de3.liftmeon.org               13.140.185.160   113ms  rcode=3  answers=0 bytes=41
+  de4.liftmeon.org               13.140.185.162   127ms  rcode=3  answers=0 bytes=41
+  de5.liftmeon.org               13.140.185.163   124ms  rcode=3  answers=0 bytes=41
+  de6.liftmeon.org               13.140.185.161   124ms  rcode=3  answers=0 bytes=41
+  de7.liftmeon.org               13.140.185.164   128ms  rcode=3  answers=0 bytes=41
+  de8.liftmeon.org               13.140.185.165   128ms  rcode=3  answers=0 bytes=41
+  de9.liftmeon.org               13.140.185.168   116ms  rcode=3  answers=0 bytes=41
+  de10.liftmeon.org              13.140.185.170   215ms  rcode=3  answers=0 bytes=41
+  de11.liftmeon.org              13.140.185.171   122ms  rcode=3  answers=0 bytes=41
+  de12.liftmeon.org              13.140.185.172   123ms  rcode=3  answers=0 bytes=41
   de13.liftmeon.org              13.140.185.173   114ms  rcode=3  answers=0 bytes=41
-  de14.liftmeon.org              13.140.185.174   timeout  (SocketTimeoutException)
-  de15.liftmeon.org              13.140.185.175   111ms  rcode=3  answers=0 bytes=41
-  de16.liftmeon.org              13.140.185.176   132ms  rcode=3  answers=0 bytes=41
-  de17.liftmeon.org              13.140.185.177   128ms  rcode=3  answers=0 bytes=41
-  de18.liftmeon.org              13.140.185.178   224ms  rcode=3  answers=0 bytes=41
-  de19.liftmeon.org              13.140.185.180   121ms  rcode=3  answers=0 bytes=41
-  de20.liftmeon.org              13.140.185.181   timeout  (SocketTimeoutException)
+  de14.liftmeon.org              13.140.185.174   115ms  rcode=3  answers=0 bytes=41
+  de15.liftmeon.org              13.140.185.175   118ms  rcode=3  answers=0 bytes=41
+  de16.liftmeon.org              13.140.185.176   140ms  rcode=3  answers=0 bytes=41
+  de17.liftmeon.org              13.140.185.177   117ms  rcode=3  answers=0 bytes=41
+  de18.liftmeon.org              13.140.185.178   136ms  rcode=3  answers=0 bytes=41
+  de19.liftmeon.org              13.140.185.180   113ms  rcode=3  answers=0 bytes=41
+  de20.liftmeon.org              13.140.185.181   224ms  rcode=3  answers=0 bytes=41
   173.212.232.241                173.212.232.241  timeout  (SocketTimeoutException)
   173.212.252.3                  173.212.252.3    timeout  (SocketTimeoutException)
   173.249.10.48                  173.249.10.48    timeout  (SocketTimeoutException)
@@ -39,25 +39,25 @@ endpoints     : 34 resolved, 0 unresolvable
   198.51.100.1                   198.51.100.1     timeout  (SocketTimeoutException)
 
 -- round 2 --
-  de1.liftmeon.org               13.140.185.158   111ms  rcode=3  answers=0 bytes=41
-  de2.liftmeon.org               13.140.185.159   120ms  rcode=3  answers=0 bytes=41
-  de3.liftmeon.org               13.140.185.160   126ms  rcode=3  answers=0 bytes=41
-  de4.liftmeon.org               13.140.185.162   timeout  (SocketTimeoutException)
-  de5.liftmeon.org               13.140.185.163   234ms  rcode=3  answers=0 bytes=41
-  de6.liftmeon.org               13.140.185.161   115ms  rcode=3  answers=0 bytes=41
-  de7.liftmeon.org               13.140.185.164   122ms  rcode=3  answers=0 bytes=41
-  de8.liftmeon.org               13.140.185.165   119ms  rcode=3  answers=0 bytes=41
-  de9.liftmeon.org               13.140.185.168   120ms  rcode=3  answers=0 bytes=41
-  de10.liftmeon.org              13.140.185.170   131ms  rcode=3  answers=0 bytes=41
-  de11.liftmeon.org              13.140.185.171   120ms  rcode=3  answers=0 bytes=41
-  de12.liftmeon.org              13.140.185.172   113ms  rcode=3  answers=0 bytes=41
-  de13.liftmeon.org              13.140.185.173   114ms  rcode=3  answers=0 bytes=41
-  de14.liftmeon.org              13.140.185.174   144ms  rcode=3  answers=0 bytes=41
-  de15.liftmeon.org              13.140.185.175   117ms  rcode=3  answers=0 bytes=41
-  de16.liftmeon.org              13.140.185.176   124ms  rcode=3  answers=0 bytes=41
-  de17.liftmeon.org              13.140.185.177   118ms  rcode=3  answers=0 bytes=41
-  de18.liftmeon.org              13.140.185.178   127ms  rcode=3  answers=0 bytes=41
-  de19.liftmeon.org              13.140.185.180   119ms  rcode=3  answers=0 bytes=41
+  de1.liftmeon.org               13.140.185.158   116ms  rcode=3  answers=0 bytes=41
+  de2.liftmeon.org               13.140.185.159   131ms  rcode=3  answers=0 bytes=41
+  de3.liftmeon.org               13.140.185.160   timeout  (SocketTimeoutException)
+  de4.liftmeon.org               13.140.185.162   130ms  rcode=3  answers=0 bytes=41
+  de5.liftmeon.org               13.140.185.163   145ms  rcode=3  answers=0 bytes=41
+  de6.liftmeon.org               13.140.185.161   118ms  rcode=3  answers=0 bytes=41
+  de7.liftmeon.org               13.140.185.164   119ms  rcode=3  answers=0 bytes=41
+  de8.liftmeon.org               13.140.185.165   179ms  rcode=3  answers=0 bytes=41
+  de9.liftmeon.org               13.140.185.168   134ms  rcode=3  answers=0 bytes=41
+  de10.liftmeon.org              13.140.185.170   287ms  rcode=3  answers=0 bytes=41
+  de11.liftmeon.org              13.140.185.171   121ms  rcode=3  answers=0 bytes=41
+  de12.liftmeon.org              13.140.185.172   timeout  (SocketTimeoutException)
+  de13.liftmeon.org              13.140.185.173   112ms  rcode=3  answers=0 bytes=41
+  de14.liftmeon.org              13.140.185.174   156ms  rcode=3  answers=0 bytes=41
+  de15.liftmeon.org              13.140.185.175   115ms  rcode=3  answers=0 bytes=41
+  de16.liftmeon.org              13.140.185.176   117ms  rcode=3  answers=0 bytes=41
+  de17.liftmeon.org              13.140.185.177   129ms  rcode=3  answers=0 bytes=41
+  de18.liftmeon.org              13.140.185.178   175ms  rcode=3  answers=0 bytes=41
+  de19.liftmeon.org              13.140.185.180   151ms  rcode=3  answers=0 bytes=41
   de20.liftmeon.org              13.140.185.181   timeout  (SocketTimeoutException)
   173.212.232.241                173.212.232.241  timeout  (SocketTimeoutException)
   173.212.252.3                  173.212.252.3    timeout  (SocketTimeoutException)
@@ -75,26 +75,26 @@ endpoints     : 34 resolved, 0 unresolvable
   198.51.100.1                   198.51.100.1     timeout  (SocketTimeoutException)
 
 -- round 3 --
-  de1.liftmeon.org               13.140.185.158   127ms  rcode=3  answers=0 bytes=41
-  de2.liftmeon.org               13.140.185.159   127ms  rcode=3  answers=0 bytes=41
-  de3.liftmeon.org               13.140.185.160   124ms  rcode=3  answers=0 bytes=41
-  de4.liftmeon.org               13.140.185.162   127ms  rcode=3  answers=0 bytes=41
-  de5.liftmeon.org               13.140.185.163   timeout  (SocketTimeoutException)
-  de6.liftmeon.org               13.140.185.161   130ms  rcode=3  answers=0 bytes=41
-  de7.liftmeon.org               13.140.185.164   124ms  rcode=3  answers=0 bytes=41
-  de8.liftmeon.org               13.140.185.165   118ms  rcode=3  answers=0 bytes=41
-  de9.liftmeon.org               13.140.185.168   119ms  rcode=3  answers=0 bytes=41
-  de10.liftmeon.org              13.140.185.170   122ms  rcode=3  answers=0 bytes=41
-  de11.liftmeon.org              13.140.185.171   119ms  rcode=3  answers=0 bytes=41
-  de12.liftmeon.org              13.140.185.172   135ms  rcode=3  answers=0 bytes=41
-  de13.liftmeon.org              13.140.185.173   118ms  rcode=3  answers=0 bytes=41
-  de14.liftmeon.org              13.140.185.174   156ms  rcode=3  answers=0 bytes=41
-  de15.liftmeon.org              13.140.185.175   120ms  rcode=3  answers=0 bytes=41
-  de16.liftmeon.org              13.140.185.176   124ms  rcode=3  answers=0 bytes=41
+  de1.liftmeon.org               13.140.185.158   123ms  rcode=3  answers=0 bytes=41
+  de2.liftmeon.org               13.140.185.159   135ms  rcode=3  answers=0 bytes=41
+  de3.liftmeon.org               13.140.185.160   157ms  rcode=3  answers=0 bytes=41
+  de4.liftmeon.org               13.140.185.162   130ms  rcode=3  answers=0 bytes=41
+  de5.liftmeon.org               13.140.185.163   199ms  rcode=3  answers=0 bytes=41
+  de6.liftmeon.org               13.140.185.161   127ms  rcode=3  answers=0 bytes=41
+  de7.liftmeon.org               13.140.185.164   119ms  rcode=3  answers=0 bytes=41
+  de8.liftmeon.org               13.140.185.165   122ms  rcode=3  answers=0 bytes=41
+  de9.liftmeon.org               13.140.185.168   146ms  rcode=3  answers=0 bytes=41
+  de10.liftmeon.org              13.140.185.170   157ms  rcode=3  answers=0 bytes=41
+  de11.liftmeon.org              13.140.185.171   117ms  rcode=3  answers=0 bytes=41
+  de12.liftmeon.org              13.140.185.172   123ms  rcode=3  answers=0 bytes=41
+  de13.liftmeon.org              13.140.185.173   117ms  rcode=3  answers=0 bytes=41
+  de14.liftmeon.org              13.140.185.174   174ms  rcode=3  answers=0 bytes=41
+  de15.liftmeon.org              13.140.185.175   118ms  rcode=3  answers=0 bytes=41
+  de16.liftmeon.org              13.140.185.176   111ms  rcode=3  answers=0 bytes=41
   de17.liftmeon.org              13.140.185.177   117ms  rcode=3  answers=0 bytes=41
-  de18.liftmeon.org              13.140.185.178   448ms  rcode=3  answers=0 bytes=41
-  de19.liftmeon.org              13.140.185.180   123ms  rcode=3  answers=0 bytes=41
-  de20.liftmeon.org              13.140.185.181   timeout  (SocketTimeoutException)
+  de18.liftmeon.org              13.140.185.178   124ms  rcode=3  answers=0 bytes=41
+  de19.liftmeon.org              13.140.185.180   129ms  rcode=3  answers=0 bytes=41
+  de20.liftmeon.org              13.140.185.181   126ms  rcode=3  answers=0 bytes=41
   173.212.232.241                173.212.232.241  timeout  (SocketTimeoutException)
   173.212.252.3                  173.212.252.3    timeout  (SocketTimeoutException)
   173.249.10.48                  173.249.10.48    timeout  (SocketTimeoutException)
@@ -114,24 +114,24 @@ endpoints     : 34 resolved, 0 unresolvable
   resolver                       ip                sent  lost      rtt  score  active
   de1.liftmeon.org               13.140.185.158       3     0        -   1800  true
   de2.liftmeon.org               13.140.185.159       3     0        -   1800  true
-  de3.liftmeon.org               13.140.185.160       3     0        -   1800  true
-  de4.liftmeon.org               13.140.185.162       3     1        -   1800  true
-  de5.liftmeon.org               13.140.185.163       3     1        -   1800  true
+  de3.liftmeon.org               13.140.185.160       3     1        -   1800  true
+  de4.liftmeon.org               13.140.185.162       3     0        -   1800  true
+  de5.liftmeon.org               13.140.185.163       3     0        -   1800  true
   de6.liftmeon.org               13.140.185.161       3     0        -   1800  true
   de7.liftmeon.org               13.140.185.164       3     0        -   1800  true
   de8.liftmeon.org               13.140.185.165       3     0        -   1800  true
   de9.liftmeon.org               13.140.185.168       3     0        -   1800  true
   de10.liftmeon.org              13.140.185.170       3     0        -   1800  true
   de11.liftmeon.org              13.140.185.171       3     0        -   1800  true
-  de12.liftmeon.org              13.140.185.172       3     0        -   1800  true
+  de12.liftmeon.org              13.140.185.172       3     1        -   1800  true
   de13.liftmeon.org              13.140.185.173       3     0        -   1800  true
-  de14.liftmeon.org              13.140.185.174       3     1        -   1800  true
+  de14.liftmeon.org              13.140.185.174       3     0        -   1800  true
   de15.liftmeon.org              13.140.185.175       3     0        -   1800  true
   de16.liftmeon.org              13.140.185.176       3     0        -   1800  true
   de17.liftmeon.org              13.140.185.177       3     0        -   1800  true
   de18.liftmeon.org              13.140.185.178       3     0        -   1800  true
   de19.liftmeon.org              13.140.185.180       3     0        -   1800  true
-  de20.liftmeon.org              13.140.185.181       3     3        -   1800  false
+  de20.liftmeon.org              13.140.185.181       3     1        -   1800  true
   173.212.232.241                173.212.232.241      3     3        -   1800  false
   173.212.252.3                  173.212.252.3        3     3        -   1800  false
   173.249.10.48                  173.249.10.48        3     3        -   1800  false
@@ -148,13 +148,12 @@ endpoints     : 34 resolved, 0 unresolvable
   198.51.100.1                   198.51.100.1         3     3        -   1800  false
 
 -- routing decisions the tunnel would use --
-  active pool      : 19/34
+  active pool      : 20/34
   nextKey() x6     : 13.140.185.158:53 -> 13.140.185.159:53 -> 13.140.185.160:53 -> 13.140.185.162:53 -> 13.140.185.163:53 -> 13.140.185.161:53
   selectTargets(2) : 13.140.185.158:53 + 13.140.185.159:53   (packet duplication)
-  nextForRecheck() : 13.140.185.181:53
+  nextForRecheck() : 173.212.232.241:53
 
 -- auto-disabled by the balancer (30 s timeout window) --
-  - 13.140.185.181:53 (TIMEOUT_STREAK)
   - 173.212.232.241:53 (TIMEOUT_STREAK)
   - 173.212.252.3:53 (TIMEOUT_STREAK)
   - 173.249.10.48:53 (TIMEOUT_STREAK)
@@ -170,4 +169,4 @@ endpoints     : 34 resolved, 0 unresolvable
   - 192.0.2.1:53 (TIMEOUT_STREAK)
   - 198.51.100.1:53 (TIMEOUT_STREAK)
 
-LIVE RUN PASS: 54/102 probes answered, 19 resolvers still routable
+LIVE RUN PASS: 57/102 probes answered, 20 resolvers still routable
