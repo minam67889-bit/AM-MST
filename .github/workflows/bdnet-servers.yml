@@ -42,7 +42,14 @@ jobs:
           set -euo pipefail
           gh run download "$RUN_ID" -n "$ARTIFACT" -D dl --repo "$GITHUB_REPOSITORY"
           ls -la dl
-          APK=$(find dl -name '*.apk' -size +1M | head -1)
+          # The artifact also carries the decompiled tree, and that tree embeds
+          # other APKs (SignatureKiller/origin.apk is 60 MB), so pick the file
+          # that actually contains the payload rather than the first hit.
+          APK=""
+          while read -r f; do
+            if unzip -l "$f" 2>/dev/null | grep -q ' assets/server.psi$'; then APK="$f"; break; fi
+          done < <(find dl -name '*.apk' -size +1M | sort)
+          test -n "$APK"
           echo "APK=$APK" >> "$GITHUB_ENV"
           ls -l "$APK"
 
