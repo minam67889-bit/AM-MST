@@ -1,18 +1,58 @@
     5  https://android.googlesource.com/toolchain/llvm-project
     3  http://www.
+    3  https://firebase.google.com/support/privacy/init-options.
     2  https://acme-staging-v02.api.letsencrypt.org/directoryinternal
+    2  https://developers.google.com/tink/faq/registration_errors
     2  https://android.googlesource.com/toolchain/clang
     2  https://android.googlesource.com/toolchain/llvm
     2  https://acme-v02.api.letsencrypt.org/directoryinternal
     2  https://github.com/quic-go/quic-go/wiki/Loggingreflect:
+    1  https://lh3.googleusercontent.com
+    1  https://tpc.googlesyndication.com
+    1  https://www.googletagservices.com
+    1  https://googlemobileads.com/warmup
     1  https://github.com/spf13/cobra/issues/1279
     1  https://github.com/spf13/cobra/issues/1508
+    1  https://googleads.g.doubleclick.net
+    1  https://admob-gmats.uc.r.appspot.com/
+    1  https://pagead2.googlesyndication.com
+    1  https://www.google.com/dfp/linkDevice
+    1  https://www.googleapis.com/auth/drive
+    1  https://www.googleapis.com/auth/games
     1  https://developers.google.com/protocol-buffers/docs/reference/go/faq#namespace-conflictMemory
     1  https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes
     1  https://github.com/quic-go/quic-go/wiki/LoggingDisabling
     1  https://protobuf.dev/reference/go/faq#namespace-conflictpickfirst:
     1  https://github.com/apernet
     1  https://go.dev/issue/66821):
+    1  https://www.facebook.com/adnw_logging/
+    1  http://schemas.android.com/apk/res-auto
+    1  https://www.google.com/dfp/debugSignals
+    1  https://www.google.com/dfp/inAppPreview
+    1  https://www.googleapis.com/auth/plus.me
+    1  https://developer.android.com/google/play/integrity/reference/com/google/android/play/core/integrity/model/IntegrityErrorCode.html#
+    1  https://developer.android.com/google/play/integrity/reference/com/google/android/play/core/integrity/model/StandardIntegrityErrorCode.html#
+    1  https://www.google.com/dfp/sendDebugData
+    1  https://www.googleapis.com/auth/appstate
+    1  https://www.recaptcha.net/recaptcha/api3
+    1  http://schemas.android.com/apk/res/android
+    1  https://www.googleapis.com/auth/drive.apps
+    1  https://www.googleapis.com/auth/drive.file
+    1  https://www.googleapis.com/auth/games_lite
+    1  https://www.googleapis.com/auth/plus.login
+    1  https://googleads.g.doubleclick.net/mads/gma
+    1  https://www.googleapis.com/auth/drive.appdata
+    1  https://pagead2.googlesyndication.com/mads/asp
+    1  https://www.googleapis.com/auth/userinfo.email
+    1  https://www.googleapis.com/auth/datastoremobile
+    1  https://firebaseinstallations.googleapis.com/v1/
+    1  https://www.googleapis.com/auth/games.firstparty
+    1  https://www.googleapis.com/auth/userinfo.profile
+    1  https://accounts.google.com/o/oauth2/revoke?token=
+    1  https://fundingchoicesmessages.google.com/a/consent
+    1  https://fcmregistrations.googleapis.com/v1/projects/
+    1  https://pagead2.googlesyndication.com/pagead/ping?e=2&f=1
+    1  https://support.google.com/dfp_premium/answer/7160685#push
     1  http://www-//W3C//DTD
     1  http://UA-Compatible
     1  http://style=
@@ -30,6 +70,7 @@
     1  http://www.style=
     1  http://www.C//DTD
     1  http://www.gnu.org/licenses/
+    1  https://github.com/google/gson/blob/main/Troubleshooting.md#
     1  http://s;text-align:centerfont-weight:
     1  http://html4/loose.dtd
     1  http://xt/css
@@ -37,6 +78,7 @@
     1  http://ator
     1  http://www.language=
     1  http://interested
+    1  http://schemas.android.com/tools
     1  http://imEnglish
     1  http://www.wencodeURIComponent(
     1  http://option
@@ -44,19 +86,66 @@
     1  http://www.text-decoration:underthe
     1  http://site_name
     1  https://www.World
+    1  https://imasdk.googleapis.com/admob/sdkloader/native_video.html
+    1  https://mediation.goog/mads/static/sdk/native/sdk-core-v40.html
+    1  https://developers.google.com/admob/android/test-ads#enable_test_devices
+    1  https://pagead2.googlesyndication.com/pagead/gen_204?id=gmob-apps
+    1  https://firebase.google.com/support/guides/disable-analytics
+    1  https://www.lockincomp.com/
+    1  https://github.com/google/ExoPlayer/commit/9f352434c72da527d1fa7963447c3cf680db884f
+    1  https://pagead2.googlesyndication.com/omsdk/releases/live/omsdk-v1.js
+    1  https://goo.gle/admob-interstitial-policies
+    1  https://firebase-settings.crashlytics.com/spi/v2/platforms/android/gmp/
+    1  https://youtrack.jetbrains.com/issue/KT-55980
     1  https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-Country.mmdbreceived
+    1  https://goo.gl/NAOOOI
+    1  https://pagead2.googlesyndication.com/omsdk/releases/live/omid_session_bin.js
+    1  https://googleads.g.doubleclick.net/mads/static/mad/sdk/native/native_ads.html
+    1  https://googleads.g.doubleclick.net/mads/static/sdk/native/sdk-core-android.html
+    1  https://www.googletagservices.com/activeview/js/current/lidar.js?cache=r20110914
     1  https://connectivitycheck.gstatic.com/generate_204invalid
     1  https://github.com/golang/protobuf/issues/1609):
+    1  https://firebase.google.com/docs/crashlytics/get-started?platform=android#add-plugin
+    1  https://www.googleadservices.com/pagead/conversion/app/deeplink?id_type=adid&sdk_version=
+    1  https://goo.gl/NAOOOI.
     1  https://htuilsrvhysteriaiadt-tlsiafdbaseias-authibm-cicsibm-dt-2iclpv-dmiclpv-pmiclpv-scidentifyidentityidig-muxidmgratmidotdistieee-mihieee-mmsif-matchif-rangeii-adminiiw-portimdocsvcimqstompimtc-mapimtc-mcsindx-ddsinfinityinfoexchinformerinfoseek
     1  http://dictionaryperceptionrevolutionfoundationpx;height:successfulsupportersmillenniumhis
+    1  https://www.%s.facebook.com/audience_network/server_side_rewardLPPTW
     1  http://interpreted
+    1  https://developer.android.com/reference/com/google/android/play/core/install/model/InstallErrorCode#
+    1  https://googleads.g.doubleclick.net/mads/static/mad/sdk/native/production/mraid/v3/mraid_app_banner.js
     1  https://identityif-matchif-rangeinfinityinstanceintSliceinvalid
     1  http://www.w3.org/shortcut
+    1  http://localhost
+    1  http://www.google.com
+    1  https://accounts.google.com
     1  https://api.github.com/repos/apernet/hysteria/releases/latestinternal
+    1  https://app-measurement.com/a
+    1  https://app-measurement.com/s/d
+    1  https://csi.gstatic.com/csi
+    1  https://fonts.googleapis.com
+    1  https://google.com/search?
+    1  https://login.live.com
+    1  https://login.yahoo.com
+    1  https://mediation.goog
+    1  https://play.google.com/d
+    1  https://pubads.g.doubleclick.net
+    1  https://redirector.gvt1-cn.com
+    1  https://redirector.gvt1.com
+    1  https://s0.2mdn.net
+    1  https://s1.2mdn.net
+    1  https://static.doubleclick.net
+    1  https://twitter.com
+    1  https://www.facebook.com
+    1  https://www.gstatic.com
+    1  https://www.linkedin.com
+    1  https://www.paypal.com
     1  http://www./div
     1  http://cript
+    1  https://googleads.g.doubleclick.net/mads/static/mad/sdk/native/production/mraid/v3/mraid_app_interstitial.js
     1  http://OPTIONSCreatedIM
     1  http://applicationslink
+    1  https://googleads.g.doubleclick.net/mads/static/mad/sdk/native/production/mraid/v3/mraid_app_expanded_banner.js
     1  http://addEventListenerresponsible
     1  http://.jpg|right|thumb|.js
     1  http://mathematicsmargin-top:eventually
@@ -65,7 +154,10 @@
     1  http://www.interpretation
     1  http://navigation
     1  http://convertnil
+    1  https://issuetracker.google.com/issues/241760537
     1  http://hylafaxhyper-ghyperipi-zipqdias-regibm-appibm-db2ibm-mgribm-ppsibm-resibm-ssdibm3494icad-elicg-swpideesrviec-104iee-qfxignoredillegalimgamesimsldocinfomaninfotosinnosysinspectintegerinvalidip-qsigipSliceipdr-spirtransisi-irpisis-amiso-illis
     1  http://ignoredillegalintegerinvalidipSliceiso8601issuerskeytypeld
     1  http://www.icon
     1  https://git.zx2c4.com/wireguard-tools/
+    1  http://www.apache.org/licenses/LICENSE-2.0
+    1  https://issuetracker.google.com/issues/new?component=907884&template=1466542

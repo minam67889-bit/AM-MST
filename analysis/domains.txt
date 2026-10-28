@@ -1,4 +1,4 @@
-25918  github.com
+25921  github.com
  5936  gvisor.dev
  5507  google.golang.org
  3102  golang.org
@@ -18,52 +18,86 @@
    20  eq.golang.zx2c4.com
    16  com.xray.app
    14  yaml.org
+   13  www.googleapis.com
    12  hash.github.com
    11  0github.com
    11  openssl.org
    11  xray.common.net.network
    11  idna.info
    10  bitbucket.org
+   10  androidx.work
     9  xray.core.app
+    9  android.net
     9  xray.common.net
     9  android.googlesource.com
+    8  type.googleapis.com
     8  eq.go.uber.org
     8  hash.gvisor.dev
+    7  googleads.g.doubleclick.net
+    7  www.google.com
+    6  pagead2.googlesyndication.com
     6  1github.com
     6  4github.com
     6  7github.com
     6  eq.io
+    5  org.chromium.net
     5  0.xray.app
     5  8github.com
     5  9github.com
+    5  firebase.google.com
     5  z0github.com
     5  eq.gopkg.in
+    4  developers.google.com
     4  2github.com
     4  2google.golang.org
+    4  android.app
     4  z.github.com
     4  z8github.com
+    3  schemas.android.com
+    3  developer.android.com
     3  conf.network
     3  ciphersuite.id
     3  protocol.id
     3  insecure.info
+    3  doubleclick.net
+    3  0type.googleapis.com
     3  1google.golang.org
+    3  1type.googleapis.com
     3  w3.org
+    3  javax.net
     3  apigoogle.golang.org
     3  z9github.com
+    3  debug.firebase.analytics.app
+    3  app-measurement.com
+    2  firebase-settings.crashlytics.com
+    2  www.googletagservices.com
+    2  dispatchers.io
     2  gcoffgoogle.golang.org
+    2  www.facebook.com
+    2  mobileads.google.com
+    2  www.recaptcha.net
     2  header.network
     2  godebugs.info
     2  gvisortun.net
+    2  googleadservices.com
     2  0google.golang.org
     2  1.xray.app
+    2  accounts.google.com
     2  4google.golang.org
     2  5google.golang.org
+    2  5type.googleapis.com
     2  6github.com
     2  6gvisor.dev
     2  7.xray.app
+    2  8type.googleapis.com
+    2  9type.googleapis.com
     2  acme-staging-v02.api.letsencrypt.org
     2  www.w3.org
+    2  java.net
     2  acme-v02.api.letsencrypt.org
+    2  androidx.appcompat.app
+    2  web.app
+    2  firebaseapp.com
     2  z-github.com
     2  z-google.golang.org
     2  z1github.com
@@ -71,45 +105,91 @@
     2  z6github.com
     2  vgoogle.golang.org
     2  aserndthsu.z5g29uwg.network
+    2  google.com
+    2  h.tr
+    2  play.google.com
+    2  twitter.com
+    2  www.gstatic.com
     2  runtime.link
     2  atomic.store
+    2  navigator.id
     2  hash.golang.zx2c4.com
     2  hash.google.golang.org
     2  hash.net
+    2  issuetracker.google.com
+    1  lh3.googleusercontent.com
+    1  tpc.googlesyndication.com
+    1  identitytoolkit.googleapis.com
+    1  kotlinx.coroutines.io
+    1  googlemobileads.com
+    1  com.google.firebase.auth.api.store
     1  log.com
+    1  com.google.android.gms.org
     1  com.xray.core.app
-    1  developers.google.com
+    1  admob-gmats.uc.r.appspot.com
     1  usedgithub.com
     1  fieldgithub.com
     1  protobuf.dev
     1  go.dev
     1  durationtype.googleapis.com
     1  u.in
+    1  identityplatform.googleapis.com
+    1  androidx.core.app
+    1  plus.me
+    1  frame.id
     1  ctx.id
     1  tap.info
+    1  measurement.store
+    1  googlesyndication.com
+    1  0com.google.android.gms.net
+    1  firebaseinstallations.googleapis.com
+    1  1androidx.core.app
+    1  1com.google.firebase.auth.api.gms.config.tenant.id
     1  21.xray.core.app
     1  26.xray.core.app
     1  27.xray.app
     1  2c.xray.app
     1  2gvisor.dev
+    1  2www.googleapis.com
     1  3github.com
     1  3gvisor.dev
+    1  fundingchoicesmessages.google.com
+    1  3org.chromium.net
+    1  3type.googleapis.com
+    1  4androidx.core.app
+    1  fcmregistrations.googleapis.com
+    1  4type.googleapis.com
     1  5.xray.app
+    1  5com.google.android.gms.net
+    1  5com.google.android.inputmethod.latin.dev
     1  5github.com
     1  6.xray.app
+    1  6androidx.appcompat.app
+    1  6type.googleapis.com
+    1  7androidx.work
     1  7google.golang.org
+    1  7type.googleapis.com
     1  9google.golang.org
+    1  support.google.com
     1  2fwww.in
     1  sgoogle.golang.org
     1  www.gnu.org
     1  js.id
     1  www.world
+    1  imasdk.googleapis.com
+    1  www.lockincomp.com
     1  gmail.com
+    1  eandroidx.fragment.app
+    1  gandroidx.work
+    1  com.google.android.gms.net
+    1  handroidx.appcompat.app
+    1  youtrack.jetbrains.com
     1  lg.hk
     1  maxmind.com
     1  connectivitycheck.gstatic.com
     1  chaingoogle.golang.org
     1  precv2ray.core.app.log.command.loggerservicexray.app
+    1  www.googleadservices.com
     1  z1google.golang.org
     1  z4github.com
     1  z4google.golang.org
@@ -117,15 +197,26 @@
     1  z9google.golang.org
     1  network.z5g29uwg.network
     1  aserndthsu.m0vkp6q.network
-    1  android.net
+    1  adsenseformobileapps.com
+    1  android.com
+    1  androidx.work.util.id
     1  iv.no
+    1  com.android.org
+    1  com.google.android.wearable.app
+    1  com.google.app.id
+    1  com.google.work
+    1  crashlytics.installation.id
     1  requestedgoogle.golang.org
+    1  s.facebook.com
     1  preloadv2ray.core.app
     1  managerhhb-handheldhiperscan-idhmac-sha224.hmac-sha256.hmac-sha384.hmac-sha512.host
     1  sha224.hmac-sha256.hmac-sha384.hmac-sha512.host
+    1  facebook.com
     1  handler.app
+    1  firebase.installation.id
     1  thing.org
     1  genretrucklooksvalueframe.net
+    1  gcm.n.link
     1  fp448.one
     1  xof.id
     1  dns.id
@@ -137,6 +228,8 @@
     1  logrus.info
     1  viper.jwwlogger.info
     1  grpc.listener.github.com
+    1  google-analytics.com
+    1  google.c.sender.id
     1  credentials.tlscreds.info
     1  insecure.insecuretc.info
     1  channelz.info
@@ -147,12 +240,28 @@
     1  error.in
     1  header.ipv4.id
     1  header.ipv6fragmentexthdr.id
+    1  h.ru
+    1  h.tk
     1  protobufgoogle.golang.org
     1  inputgolang.org
     1  config.no
     1  api.github.com
+    1  csi.gstatic.com
+    1  fonts.googleapis.com
+    1  login.live.com
+    1  login.yahoo.com
+    1  pubads.g.doubleclick.net
+    1  redirector.gvt1-cn.com
+    1  redirector.gvt1.com
+    1  s0.2mdn.net
+    1  s1.2mdn.net
+    1  static.doubleclick.net
+    1  www.linkedin.com
+    1  www.paypal.com
+    1  in.app
     1  reflectlite.rtype.in
     1  window.location.host
+    1  libcore.io
     1  failuregolang.zx2c4.com
     1  nilxray.app
     1  the.com
@@ -160,18 +269,20 @@
     1  net.fileaddr.network
     1  nh.fr
     1  tos.org
+    1  org.openjsse.net
     1  empty.no
     1  people.in
     1  openssh.com
     1  trafficxray.app
+    1  playgames.google.com
     1  home.nl
     1  gmx.net
+    1  securetoken.googleapis.com
     1  example.com
     1  destination.no
     1  addinboundxray.core.app
     1  isv2ray.core.app
     1  vxray.app
-    1  www.google.com
     1  time.time.in
     1  v2ray.core.app
     1  hash.golang.org
@@ -182,3 +293,5 @@
     1  test.com
     1  love.com
     1  group.id
+    1  www.apache.org
+    1  com.google.android.libraries.abuse.recaptcha.network

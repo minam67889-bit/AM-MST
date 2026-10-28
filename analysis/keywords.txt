@@ -1,9 +1,10 @@
 
-### dns (3179)
+### dns (3332)
   !*[]*conf.FakeDNSPoolElementConfig
   !*[]*dns.NameServer_PriorityDomain
   !*func() []*dns.Config_HostMapping
   !*func(*dns.Msg) (*dns.Msg, error)
+  !Lokhttp3/Dns$Companion$DnsSystem;
   !github.com/xtls/xray-core/app/dns
   "*[2]*conf.FakeDNSPoolElementConfig
   "*func(*dns.DNSKEY, []dns.RR) error
@@ -11,19 +12,27 @@
   "*map.bucket[uint16]*dns.dnsRequest
   "*map.group[dnsmessage.Class]string
   "*map.group[dnsmessage.RCode]string
+  "Lprince/udp/vpn/service/vpn/Pdnsd;
+  "getStaleDnsAllowOtherNetworkOption
   #*func(*dns.Header) ([]uint8, error)
   #*func(dns.ResponseWriter, *dns.Msg)
   #*map.bucket[dnsmessage.Class]string
   #*map.bucket[dnsmessage.RCode]string
   #Xray.Transport.Internet.Headers.DNSb
+  #getStaleDnsPersistDelayMillisOption
   #github.com/xtls/xray-core/proxy/dns
   #xray.transport.internet.headers.dns"
   $*dispatcher.DNSThenOthersSniffResult
   $*func(crypto.Signer, []dns.RR) error
   $*map.group[dnsmessage.section]string
   $EffectiveDNSResponseFragmentStoreCap
+  $Failed to receive the dns resolvers.
+  $Lprince/udp/vpn/service/vpn/Pdnsd$1;
   %*map.bucket[dnsmessage.section]string
   %*struct { F uintptr; X0 *dns.Client }
+  %Landroid/net/http/DnsOptions$Builder;
+  %Lorg/chromium/net/DnsOptions$Builder;
+  %getStaleDnsMaxExpiredTimeMillisOption
   %spdnsd: %s:
   &*func() ([]dnsmessage.Resource, error)
   &*func() []*dns.NameServer_OriginalRule
@@ -34,13 +43,17 @@
   '*func(dns.Client, policy.Manager) error
   '*func(policy.Manager, dns.Client) error
   '*map.bucket[rdns.lruKey]*rdns.cacheItem
+  'Lprince/udp/vpn/service/DNSLiteService;
   'com.xray.transport.internet.headers.dnsP
   (*func() (*dns.Msg, time.Duration, error)
   (*func() []*dns.NameServer_PriorityDomain
   (*func(dnsmessage.RCode) dnsmessage.RCode
   (*func(int, dnsmessage.RCode, bool) error
+  (Lprince/udp/vpn/service/SocksDNSService;
+  (preestablishConnectionsToStaleDnsResults
   )*func(string, dns.IPOption) []net.Address
   )github.com/xtls/xray-core/app/dns/fakedns
+  )mPreestablishConnectionsToStaleDnsResults
   **func() (*fakedns.FakeDnsPoolMulti, error)
   **func() ([]*dns.Config_HostMapping, error)
   **func(*dns.zlexer, string) *dns.ParseError
@@ -48,6 +61,8 @@
   **net.DNSError
   **rdns.request
   **struct { F uintptr; X0 *dns.dnsResolver }
+  *Broken system behaviour for dns lookup of
+  *Lorg/chromium/net/DnsOptions$Experimental;
   *[1]dns.EDNS0
   *[1]dnsmessage.Option
   *[1]dnsmessage.Question
@@ -135,24 +150,11 @@
   *dns.DNS
   *dns.DNSKEY
   *dns.DS
-  *dns.DoHNameServer
-  *dns.DomainMatcherInfo
-  *dns.DomainMatchingType
-  *dns.EDNS0
-  *dns.EDNS0_COOKIE
-  *dns.EDNS0_DAU
-  *dns.EDNS0_DHU
-  *dns.EDNS0_EDE
-  *dns.EDNS0_ESU
-  *dns.EDNS0_EXPIRE
-  *dns.EDNS0_LLQ
-  *dns.EDNS0_LOCAL
-  *dns.EDNS0_N3U
-  *dns.EDNS0_NSID
-  *dns.EDNS0_PADDING
 
-### txt (177)
+### txt (199)
   $*map[wZ49D53ek_PM.ALMJp1p5txt]string
+  (TxT
+  )-02%33)/.INVALIDATIONkbttxtsundsxtbdhicxdofiibkxnjwubttnhibmxeziszei{1>)68>+601
   *[8]wZ49D53ek_PM.ALMJp1p5txt
   *[]wZ49D53ek_PM.ALMJp1p5txt
   *reflect.makeFuncCtxt
@@ -168,6 +170,8 @@
   /root/go/pkg/mod/github.com/txthinking/socks5@v0.0.0-20220212043548-414499347d4a/util.go
   /root/go/pkg/mod/github.com/txthinking/x@v0.0.0-20210326105829-476fab902fbe/dial.go
   /root/go/pkg/mod/github.com/txthinking/x@v0.0.0-20210326105829-476fab902fbe/pool.go
+  2DALgc8JJTxTXlKdrEx8TMLlTIu8rM
+  7<30>76ntXhdXbicXdfucXq5Xubcbtn`iXbifekbcF\p]JXN]KJKpNKNTxTBDHICxBICxDFUCxBIFEKBC
   ;=xtXt^
   > addr= alloc base  code= ctxt: curg= free  goid  jobs= list= m->p= max=  min=  next= null  p->m= prev= span=!!bool!!null# EOF
   Ag5txteDyWx.go
@@ -177,6 +181,7 @@
   CMS_signed_add1_attr_by_txt
   CMS_unsigned_add1_attr_by_txt
   EVP_PKEY_add1_attr_by_txt
+  F3cHIEtQAherQEaTxdWKmXUpP0iQmTxt
   G2r_V2NTXT.go
   I8bUtxT.go
   JLrz5TxTWN7.go
@@ -190,10 +195,15 @@
   OguTXtwb8ava.go
   Q6JstXtYjXc.go
   QvtXThuEm4.go
+  RTTXt1XGjQ7lc0JJN4k
   RequiresTXTransportChecksum
+  RytXT
   S2uTxTRJTle.go
   TXTResource
   TXTs
+  TqJqqQyzPne5TkQERIStxTko6
+  TxTvq
+  Txt0n
   TxtO_c7c.go
   TxtRmGxBHs4K.go
   TxtVNmv8.go
@@ -201,6 +211,7 @@
   VoGURUJD.(*VtxtlPR).Error
   VoGURUJD.(*VtxtlPR).Timeout
   VoGURUJD.(*VtxtlPR).Unwrap
+  Wn3TxTRecHzs8MsCsRbpFUd8m0ZaHJcx
   X509_ATTRIBUTE_create_by_txt
   X509_NAME_ENTRY_create_by_txt
   X509_NAME_add_entry_by_txt
@@ -221,6 +232,9 @@
   dO8hDM/txtk9ew_CQR.s
   eFMR4TXtO_
   eTXtFgl.go
+  getXTextLabel
+  getXTextLabelLocations
+  getXTitle
   github.com/txthinking/runnergroup
   github.com/txthinking/socks5
   github.com/txthinking/socks5.(*Datagram).Address
@@ -273,60 +287,133 @@
   gvisor.dev/gvisor/pkg/tcpip/stack.(*Route).RequiresTXTransportChecksum
   h1:WLOPx6OY/hxtTxKV1Zrq20FtXtDEkeY00CGQm8GEa3E=
   ilAyqTXTXD.go
+  ivi5bmlMufvbQQVwtVmm5txticSTFvLZ
   kMhtxt7JX.go
   kby4tXTtt.go
   lookupTXT
+  mPivotXType
   makeFuncCtxt
+  n TxT
   net.(*Resolver).LookupTXT
   net.(*Resolver).goLookupTXT
   net.(*Resolver).lookupTXT
   next= jobs= goid sweep  B -> % util alloc free  span= prev= list=, i =  code= addr=], sp= m->p= p->m=SCHED  curg= ctxt: min=  max= bad ts(...)
+  oTXT
+  overrides.txt
   runtime.(*sigctxt).cpsr
   runtime.(*sigctxt).error
-  runtime.(*sigctxt).fault
-  runtime.(*sigctxt).fp
-  runtime.(*sigctxt).ip
-  runtime.(*sigctxt).lr
-  runtime.(*sigctxt).oldmask
-  runtime.(*sigctxt).pc
-  runtime.(*sigctxt).preparePanic
-  runtime.(*sigctxt).pushCall
-  runtime.(*sigctxt).r0
-  runtime.(*sigctxt).r1
-  runtime.(*sigctxt).r10
-  runtime.(*sigctxt).r2
-  runtime.(*sigctxt).r3
-  runtime.(*sigctxt).r4
-  runtime.(*sigctxt).r5
-  runtime.(*sigctxt).r6
-  runtime.(*sigctxt).r7
-  runtime.(*sigctxt).r8
-  runtime.(*sigctxt).r9
 
-### query (216)
+### query (386)
+  !(2)Error querying user properties
+  !PUBLISHER_SPIKE_ORIGINAL_QUERY_ID
+  "Error querying trigger uris. appId
+  "Failed to parse extra query params
+  "PREFER_MEDIA_QUERY_OVER_FORCE_DARK
+  "enableMinimalAppStartQuerySignals_
+  "gads:maximum_query_json_cache_size
+  #Error querying conditional property
+  #Error querying remote config. appId
+  #Error querying user property. appId
+  $EVENT_ID_GET_QUERY_SIGNALS_EXCEPTION
+  $FontFamily_fontProviderFallbackQuery
+  $GoogleCertificatesLookupQueryCreator
+  $Unable to query the content provider
+  $gads:timeout_query_json_cache:millis
+  $getQueryIdToAdQualityDataMapMap(...)
+  %EVENT_ID_DG_ENGINE_NULL_QUERY_SIGNALS
+  %Error querying user properties. appId
+  %Landroid/database/sqlite/SQLiteQuery;
   %d unhandled poll/select event(s) in p_recursive_query() at %s, line %d.
   %i running query threads (%i active, %i queued).
   %lu query threads spawned in total (%lu queries dropped).
+  &Database error querying filters. appId
+  &Failed to query user properties. appId
   &nbsp;</<tr><td height:2/productcountry include footer" &lt;!-- title"></jquery.</form>
+  &queryPackageSignatureVerifiedWithRetry
   ).xray.app.stats.command.QueryStatsRequest
+  )OpenGmsgHandler.parseHsdpExtraQueryParams
   **layers.MLDv1MulticastListenerQueryMessage
   **layers.MLDv2MulticastListenerQueryMessage
   *.xray.app.stats.command.QueryStatsResponse"
   *command.QueryStatsRequest
   *command.QueryStatsResponse
+  +Failed to send big query analytics payload.
+  , backendQueryId=
+  , extraQueryParams=
+  , gwsQueryId=
+  , hsdpServiceExtraQueryParams=
+  , mQuery:
+  , queryWithFlattenedBlobParams=
+  , scionQueryEventId=
+  -Database error querying filter results. appId
+  -Database error querying scoped filters. appId
+  .Error querying conditional user property value
+  .delivery_metrics_exported_to_big_query_enabled
+  /Landroid/widget/SearchView$OnQueryTextListener;
+  /com.google.android.gms.actions.extra.ITEM_QUERY
+  /com.google.android.gms.actions.extra.LIST_QUERY
+  /com.google.android.gms.actions.extra.NOTE_QUERY
   /root/splithttp-v2ray-plugin/app/src/main/go/v2ray-plugin/main/commands/all/api/stats_query.go
+  1Data loss. Error querying raw events batch. appId
+  1RtlOverlay_Widget_AppCompat_Search_DropDown_Query
+  4Error querying or deleting diagnostic signals. appId
+  4Invalid time querying expired conditional properties
+  5measurement.rb.attribution.query_parameters_to_remove
+  6Invalid time querying timed out conditional properties
+  6Invalid time querying triggered conditional properties
+  9Lcom/facebook/ads/internal/database/AdDatabaseQuery<TT;>;
+  ;Error to querying MeasurementBatch from upload_queue. appId
+  ;Error to querying MeasurementBatch from upload_queue. rowId
   <" method="post" </span></a></li>vertical-align:t/jquery.min.js">.click(function( style="padding-})();
   <p>Set debug=1 as a query parameter to export in legacy text format</p>
   =*struct { F uintptr; allowQuerySemicolonsInUse *atomic.Bool }
+  >Lcom/facebook/ads/internal/database/AdDatabaseWriteQuery<TT;>;
   >multipartmaxpartsurlmaxqueryparamswinreadlinkvolume
+  AD_INTENT_QUERY
+  AdDatabaseQuery.java
+  AdDatabaseWriteQuery.java
+  AdSpamSignal(querySignal=
   Additional section in query contains %d OPT pseudo-RRs!
   Answer from %s does not match query.
+  BOW_CACHE_WRITE_QUERY_ID
   Bad number of query records in answer from %s
+  COMMERCE_SEARCH_QUERY
+  CONTEXTUAL_QUERY_ID
+  CREATE TABLE offline_buffered_pings (timestamp INTEGER PRIMARY_KEY, gws_query_id TEXT, url TEXT, event_state INTEGER)
+  CUI_NAME_PAW_GET_QUERY_INFO
+  Capability_queryPatterns
+  Consent query parameters to Bow
+  ContentQueryWrapper.query
+  Csrb scar query result is empty
+  DatabaseQueryAsyncTask
+  DecoderQueryException
+  Did not expect uri to have query
+  EVENT_ID_MINIMAL_SIGNAL_QUERY
+  EVENT_ID_QUERY_SIGNALS
+  EVENT_ID_QUERY_SIGNAL_TIMEOUT
+  EVENT_ID_SIGNAL_QUERY
+  EXTERNAL_QUERY_ID
+  EXTRA_ITEM_QUERY
+  EXTRA_LIST_QUERY
+  EXTRA_NOTE_QUERY
+  EXTRA_QUERY
+  Error querying app. appId
+  Error querying bundles. appId
+  Error querying database.
+  Error querying events. appId
+  Error querying for table
+  Error querying raw events
+  Error querying snapshot. appId
   FlushQuery
+  FontFamily_fontProviderQuery
+  FontProvider.query
   ForceQuery
+  GFP_QUERY_ID
   GetNon_IPQuery
   GetNormalizedQuery
   GetQueryStrategy
+  GoogleCertificatesQuery
+  GoogleCertificatesQueryCreator
   HandleQueryLocked
   HandleQueryV2Locked
   IP bound to interface used for querying remote servers: %s
@@ -334,19 +421,28 @@
   Internal error: could not remove additional section from query to server %s
   IsGeneralQuery
   IsSpecificQuery
+  MEDIA_QUERY_ONLY
+  MULTI_PROCESS_QUERY
   Malformed query (nonzero Z bit).
   MembershipQuery
   MulticastListenerQuery
+  NTransportFactory is null. Skip exporting message delivery metrics to Big Query
   No query succeeded.
   NonIPQuery
   Non_IPQuery]protobuf:"bytes,3,opt,name=non_IP_query,json=nonIPQuery,proto3" json:"non_IP_query,omitempty"
   Not a reply to a standard query (opcode=%u).
   Not a standard query (opcode=%u).
   Not querying root-server %s, using cached information instead.
+  Null extraQueryParams
   Out of memory in query processing.
   Out of memory in query.
   Out of ports in the range %d-%d, dropping query!
+  PARENT_QUERY_DIMENSIONS
+  PARENT_QUERY_ID
   Pattern of the query.
+  QLcom/facebook/ads/internal/database/AdDatabaseHelper$DatabaseQueryAsyncTask<TT;>;
+  QUERY
+  QUERY_DATA
   QueriersQueryIntervalCode
   Query
   Query contains no questions.
@@ -358,102 +454,6 @@
   Query port start: %i
   Query port start: (let kernel choose)
   Query statistics from Xray.
-  Query to %s succeeded.
-  QueryIP
-  QueryStats
-  QueryStatsRequest
-  QueryStatsResponse
-  QueryStrategy
-  Randomize server query order: %s
-  RawQuery
-  Received STATUS query.
-  Received query (msg len=%u).
-  Requery decision: dflags=%s, cflags=%s, req=%i, neg=%i, timed=%i, %s=%li
-  Sending query to %s
-  Server %s returned error code: %s. Maybe does not support recursive query? Querying non-recursively.
-  SetQueryOption
-  Simple query for %s type A failed (rc: %s)
-  Simple query for root domain type NS failed (rc: %s)
-  Starting cached resolve for: %s, query %s
-  Starting simple cached resolve for: %s, query %s
-  Status socket query pending.
-  TCP query timeout: %li
-  TCP query to %s failed. Trying to use UDP.
-  TCP zero size query received.
-  The QR bit indicates this is a query, not a response!
-  The QR bit indicates this is a response, not a query.
-  Unhandled poll/select event in query_uptest() at %s, line %d.
-  Unrecoverable error encountered while processing query.
-  V2QueryMaxRespCodeToV1Delay
-  V2QueryMaxRespCodeToV2Delay
-  VLANQuery
-  W*func(context.Context, *command.QueryStatsRequest) (*command.QueryStatsResponse, error)
-  Warning: query_port_start=%i but source ports <1204 can only be used as root.
-  allowQuerySemicolonsInUse
-  bad qualifier in lean_query= option.
-  bad qualifier in query_method= option.
-  bad qualifier in query_port_start= option.
-  decodeIGMPv3MembershipQuery
-  decode_query: query truncated in qtype or qclass.
-  decode_query_additional: RDATA field in OPT record not empty!
-  decode_query_additional: Z field contains unknown nonzero bits (%04x).
-  decode_query_additional: additional section truncated in RDATA field.
-  decode_query_additional: additional section truncated in RR header.
-  decode_query_additional: ignoring record of type %s (%d).
-  decode_query_additional: ingnoring surplus OPT record.
-  decode_query_additional: name in OPT record not empty!
-  expected unsigned integer value for query_port_end option
-  generalQueryV2Timer
-  generalQueryV2TimerFiresAt
-  github.com/google/gopacket/layers.(*IGMP).decodeIGMPv3MembershipQuery
-  github.com/google/gopacket/layers.(*MLDv1MulticastListenerQueryMessage).CanDecode
-  github.com/google/gopacket/layers.(*MLDv1MulticastListenerQueryMessage).DecodeFromBytes
-  github.com/google/gopacket/layers.(*MLDv1MulticastListenerQueryMessage).IsGeneralQuery
-  github.com/google/gopacket/layers.(*MLDv1MulticastListenerQueryMessage).IsSpecificQuery
-  github.com/google/gopacket/layers.(*MLDv1MulticastListenerQueryMessage).LayerContents
-  github.com/google/gopacket/layers.(*MLDv1MulticastListenerQueryMessage).LayerPayload
-  github.com/google/gopacket/layers.(*MLDv1MulticastListenerQueryMessage).LayerType
-  github.com/google/gopacket/layers.(*MLDv1MulticastListenerQueryMessage).NextLayerType
-  github.com/google/gopacket/layers.(*MLDv1MulticastListenerQueryMessage).SerializeTo
-  github.com/google/gopacket/layers.(*MLDv1MulticastListenerQueryMessage).String
-  github.com/google/gopacket/layers.(*MLDv2MulticastListenerQueryMessage).CanDecode
-  github.com/google/gopacket/layers.(*MLDv2MulticastListenerQueryMessage).DecodeFromBytes
-  github.com/google/gopacket/layers.(*MLDv2MulticastListenerQueryMessage).LayerContents
-  github.com/google/gopacket/layers.(*MLDv2MulticastListenerQueryMessage).LayerPayload
-  github.com/google/gopacket/layers.(*MLDv2MulticastListenerQueryMessage).LayerType
-  github.com/google/gopacket/layers.(*MLDv2MulticastListenerQueryMessage).MaximumResponseDelay
-  github.com/google/gopacket/layers.(*MLDv2MulticastListenerQueryMessage).NextLayerType
-  github.com/google/gopacket/layers.(*MLDv2MulticastListenerQueryMessage).QQI
-  github.com/google/gopacket/layers.(*MLDv2MulticastListenerQueryMessage).SerializeTo
-  github.com/google/gopacket/layers.(*MLDv2MulticastListenerQueryMessage).SetMLDv2MaximumResponseDelay
-  github.com/google/gopacket/layers.(*MLDv2MulticastListenerQueryMessage).SetQQI
-  github.com/google/gopacket/layers.(*MLDv2MulticastListenerQueryMessage).String
-  github.com/google/gopacket/layers.(*MLDv2MulticastListenerQueryMessage).serializeSourceAddressesTo
-  github.com/google/gopacket/layers.decodeMLDv1MulticastListenerQuery
-  github.com/google/gopacket/layers.decodeMLDv2MulticastListenerQuery
-  github.com/xtls/xray-core/app/stats/command.(*QueryStatsRequest).Descriptor
-  github.com/xtls/xray-core/app/stats/command.(*QueryStatsRequest).Descriptor.file_app_stats_command_command_proto_rawDescGZIP.func1
-  github.com/xtls/xray-core/app/stats/command.(*QueryStatsRequest).GetPattern
-  github.com/xtls/xray-core/app/stats/command.(*QueryStatsRequest).GetReset_
-  github.com/xtls/xray-core/app/stats/command.(*QueryStatsRequest).ProtoMessage
-  github.com/xtls/xray-core/app/stats/command.(*QueryStatsRequest).ProtoReflect
-  github.com/xtls/xray-core/app/stats/command.(*QueryStatsRequest).Reset
-  github.com/xtls/xray-core/app/stats/command.(*QueryStatsRequest).String
-  github.com/xtls/xray-core/app/stats/command.(*QueryStatsResponse).Descriptor
-  github.com/xtls/xray-core/app/stats/command.(*QueryStatsResponse).Descriptor.file_app_stats_command_command_proto_rawDescGZIP.func1
-  github.com/xtls/xray-core/app/stats/command.(*QueryStatsResponse).GetStat
-  github.com/xtls/xray-core/app/stats/command.(*QueryStatsResponse).ProtoMessage
-  github.com/xtls/xray-core/app/stats/command.(*QueryStatsResponse).ProtoReflect
-  github.com/xtls/xray-core/app/stats/command.(*QueryStatsResponse).Reset
-  github.com/xtls/xray-core/app/stats/command.(*QueryStatsResponse).String
-  github.com/xtls/xray-core/app/stats/command.(*statsServer).QueryStats
-  github.com/xtls/xray-core/app/stats/command.(*statsServer).QueryStats.func1
-  github.com/xtls/xray-core/app/stats/command.(*statsServiceClient).QueryStats
-  github.com/xtls/xray-core/app/stats/command._StatsService_QueryStats_Handler
-  github.com/xtls/xray-core/app/stats/command._StatsService_QueryStats_Handler.func1
-  github.com/xtls/xray-core/infra/conf.resolveQueryStrategy
-  github.com/xtls/xray-core/main/commands/all/api.executeQueryStats
-  github.com/xtls/xray-core/transport/internet/splithttp.(*Config).GetNormalizedQuery
 
 ### qname (3)
   Cannot decompress QNAME in answer from %s
@@ -462,15 +462,28 @@
 
 ### base36 (0)
 
-### base64 (63)
+### base64 (93)
+  !Landroid/util/Base64OutputStream;
+  "exception decoding base64 string:
+  "exception encoding base64 string:
+  %Bad data URL: could not decode base64
+  &Bad data URL: only base64 is supported
+  'Lorg/spongycastle/util/encoders/Base64;
+  *Bad data URL: no ',' found for base64 data
   *base64.CorruptInputError
   *base64.Encoding
   *base64.encoder
   *func() *base64.Encoding
   *func(int32) *base64.Encoding
   *pflag.bytesBase64Value
+  .Lorg/spongycastle/util/encoders/Base64Encoder;
   /usr/local/go/src/encoding/base64/base64.go
+  0Lcom/google/android/gms/common/util/Base64Utils;
+  9Lorg/yaml/snakeyaml/external/biz/base64Coder/Base64Coder;
   ; DS HASH UNDERSTOOD: overflow packing uint64overflow packing base32overflow packing base64unexpected address typemissing port in address", missing CPU support
+  ;base64
+  =Length of Base64 encoded input string is not a multiple of 4.
+  BASE64
   BIO_f_base64
   BytesBase64
   BytesBase64P
@@ -479,17 +492,29 @@
   CTLOG_new_from_base64
   Content-Transfer-Encoding: base64%s
   Content-Transfer-Encoding: base64%s%s
+  DList of type BASE64, BASE64_URL_SAFE, or STRING_MAP is not supported
   From private key: {{.Exec}} wg -i "private key (base64.StdEncoding)"
   From private key: {{.Exec}} x25519 -i "private key (base64.RawURLEncoding)"
   FromBase64
   GetBytesBase64
+  Landroid/util/Base64;
+  NONCE_IS_NOT_BASE64
+  Nonce length is too short. The nonce must be a minimum of 16 bytes (before base64 encoding) to allow for a better security.
   SCT_new_from_base64
   ToBase64
   ToBase64OrPanic
+  [Nonce is not encoded as a base64 web-safe no-wrap string.
   bad base64 decode
+  base64
   base64 decode error
   base64 encoding
+  base64()
+  base64Url()
+  base64chars
   ct_base64_decode
+  data:image/png;base64,
+  decodeBase64
+  encodeBase64
   encoding/base64
   encoding/base64.(*CorruptInputError).Error
   encoding/base64.(*Encoding).Decode
@@ -512,6 +537,8 @@
   encoding/base64.decodedLen
   encoding/base64.init
   encoding/base64/base64.go
+  forBase64
+  fromBase64
   github.com/spf13/pflag.(*FlagSet).BytesBase64
   github.com/spf13/pflag.(*FlagSet).BytesBase64P
   github.com/spf13/pflag.(*FlagSet).BytesBase64Var
@@ -524,10 +551,13 @@
   github.com/spf13/pflag.bytesBase64ValueConv
   github.com/spf13/pflag.newBytesBase64Value
   gopkg.in/yaml%2ev3.encodeBase64
+  tNonce length is too long. The nonce must be less than 500 bytes before base64 encoding.
+  toBase64
   type:.eq.encoding/base64.Encoding
   type:.eq.encoding/base64.encoder
+  watermark_overlay_png_base64
 
-### chunk (222)
+### chunk (263)
   $*layers.errorDecoderForSCTPChunkType
   **buffer.chunk
   **struct { F uintptr; R *buffer.chunkRefs }
@@ -554,19 +584,51 @@
   /root/go/pkg/mod/gvisor.dev/gvisor@v0.0.0-20231202080848-1f7806d17489/pkg/buffer/chunk_refs.go
   /root/splithttp-v2ray-plugin/app/src/main/go/v2ray-plugin/common/crypto/chunk.go
   /usr/local/go/src/net/http/internal/chunked.go
+  5expected chunk size and optional extensions but was "
+  7Lokhttp3/internal/http1/Http1ExchangeCodec$ChunkedSink;
+  9Lokhttp3/internal/http1/Http1ExchangeCodec$ChunkedSource;
+  >Currently used to load chunks while seeking on pause D13827150
   AEADChunkSizeParser
+  Chunk.java
+  ChunkHeader
+  ChunkIndex.java
+  ChunkIterator
+  ChunkedSink
+  ChunkedSource
+  DEFAULT_CHUNK_LENGTH
+  Failed to digest chunk #
+  FixedSampleSizeRechunker.java
+  LayoutChunkResult
+  MAX_CHUNK_LENGTH
+  MediaChunk.java
+  PCannot stream a request body without chunked encoding or a known content length!
   ReadChunk
   ReadExternalChunk
   ReadWithLengthChunk
   SCTPChunk
+  Too many chunks:
+  TrueHdSampleRechunker.java
   WriteChunk
+  \Landroid/util/Pair<Ljava/lang/Long;Lcom/facebook/ads/androidx/media3/extractor/ChunkIndex;>;
   assertion failed: WITHIN_ARENA(chunk)
   assertion failed: sh_testbit(chunk, list, sh.bittable)
   beginChunk
   bytesFromFirstChunk
   chunk
+  chunkDataComplete
+  chunkHeader
   chunkHeaderAvailable
+  chunkIndex
+  chunkIterator
+  chunkOffsets
+  chunkOffsetsAreLongs
+  chunkOffsetsAtom
+  chunkOffsetsBytes
   chunkRefs
+  chunkSampleCount
+  chunkSampleCounts
+  chunkSamplesRemaining
+  chunked
   chunking
   chunks
   github.com/elazarl/goproxy.(*chunkedWriter).Close
@@ -646,46 +708,40 @@
   gvisor.dev/gvisor/pkg/buffer.(*chunk).destroy
   gvisor.dev/gvisor/pkg/buffer.(*chunk).destroy-fm
   gvisor.dev/gvisor/pkg/buffer.(*chunkRefs).DecRef
-  gvisor.dev/gvisor/pkg/buffer.(*chunkRefs).IncRef
-  gvisor.dev/gvisor/pkg/buffer.(*chunkRefs).InitRefs
-  gvisor.dev/gvisor/pkg/buffer.(*chunkRefs).LeakMessage
-  gvisor.dev/gvisor/pkg/buffer.(*chunkRefs).LogRefs
-  gvisor.dev/gvisor/pkg/buffer.(*chunkRefs).ReadRefs
-  gvisor.dev/gvisor/pkg/buffer.(*chunkRefs).RefType
-  gvisor.dev/gvisor/pkg/buffer.(*chunkRefs).StateFields
-  gvisor.dev/gvisor/pkg/buffer.(*chunkRefs).StateLoad
-  gvisor.dev/gvisor/pkg/buffer.(*chunkRefs).StateSave
-  gvisor.dev/gvisor/pkg/buffer.(*chunkRefs).StateTypeName
-  gvisor.dev/gvisor/pkg/buffer.(*chunkRefs).TryIncRef
-  gvisor.dev/gvisor/pkg/buffer.(*chunkRefs).afterLoad
-  gvisor.dev/gvisor/pkg/buffer.(*chunkRefs).afterLoad-fm
-  gvisor.dev/gvisor/pkg/buffer.getChunkPool
-  gvisor.dev/gvisor/pkg/buffer.newChunk
-  imheap.freeSpanLocked - invalid free of user arena chunkcasfrom_Gscanstatus:top gp->status is not in scan state9?
-  isUnusedUserArenaChunk
-  isUserArenaChunk
-  lastChunkOrAlloc
-  lukechampine.com/blake3/guts.CompressChunk
-  maxNumChunk
-  mheap.freeSpanLocked - invalid free of user arena chunkcasfrom_Gscanstatus:top gp->status is not in scan state
-  net/http.(*chunkWriter).Write
-  net/http.(*chunkWriter).close
-  net/http.(*chunkWriter).flush
-  net/http.(*chunkWriter).writeHeader
-  net/http.(*chunkWriter).writeHeader.func1
-  net/http.(*http2chunkWriter).Write
-  net/http.(*http2dataBuffer).bytesFromFirstChunk
-  net/http.(*http2dataBuffer).lastChunkOrAlloc
-  net/http.(*http2responseWriterState).writeChunk
-  net/http.(*transferWriter).shouldSendChunkedRequestBody
 
-### fragment (233)
+### fragment (473)
   !*func(*fragmentation.reassembler)
+  !FragmentContainerView_android_tag
+  !Landroid/app/FragmentTransaction;
+  !Removed fragment from active set
   "*func() *fragmentation.reassembler
+  "Attempting to set target fragment
+  "FragmentContainerView_android_name
+  "FragmentManager has been destroyed
+  "Please provide a non-null Fragment
+  "onPrimaryNavigationFragmentChanged
+  "visible_removing_fragment_view_tag
+  # is not associated with a Fragment.
   #*ipv4.icmpReasonFragmentationNeeded
+  #Updating retained Fragments: Added
+  $onDismiss called for DialogFragment
+  % which is not a FragmentContainerView
   %*func(*fragmentation.reassemblerList)
+  %: could not find Fragment constructor
+  %Updating retained Fragments: Removed
   &*header.IPv6SerializableFragmentExtHdr
+  &Can't change container ID of fragment
+  'SpecialEffectsController: For fragment
+  'declaringFragment.parentFragmentManager
+  'get layout inflater for DialogFragment
+  'performPrimaryNavigationFragmentChanged
+  ( is not attached to any Fragment or host
+  ( not associated with a fragment manager.
   (*ipv4.icmpv4FragmentationNeededSockError
+  ) for fragment
+  )DefaultFragmentedMp4ExtractorFactory.java
+  )onCreateDialog called for DialogFragment
+  * is already attached to a FragmentManager.
   **fragmentation.reassembler
   *[8]*fragmentation.reassembler
   *[8]fragmentation.FragmentID
@@ -706,19 +762,79 @@
   *gopacket.Fragment
   *header.IPv6FragmentExtHdr
   *layers.IPv6Fragment
+  +Can't get fragment for unexpected activity.
+  +Setting style and theme for DialogFragment
+  +getting layout inflater for DialogFragment
+  -Landroidx/fragment/app/FragmentContainerView;
+  . is not an active fragment of FragmentManager
+  . is not within a subclass of FragmentActivity.
+  . that does not belong to this FragmentManager!
+  .Can't access ViewModels from detached fragment
+  .Cleaning up state of never attached fragment:
   .xray.proxy.freedom.FragmentR
+  / as this Fragment was involved in a Transition.
+  /Activity result delivered for unknown Fragment
+  /Attempting to get retain instance for fragment
+  /Attempting to set retain instance for fragment
+  /Fragment already added and state has been saved
+  /androidx.fragment.extra.ACTIVITY_OPTIONS_BUNDLE
+  /com.google.android.gms.dynamic.IFragmentWrapper
   /root/go/pkg/mod/gvisor.dev/gvisor@v0.0.0-20231202080848-1f7806d17489/pkg/tcpip/header/ipv6_fragment.go
   /root/go/pkg/mod/gvisor.dev/gvisor@v0.0.0-20231202080848-1f7806d17489/pkg/tcpip/network/internal/fragmentation/fragmentation.go
   /root/go/pkg/mod/gvisor.dev/gvisor@v0.0.0-20231202080848-1f7806d17489/pkg/tcpip/network/internal/fragmentation/fragmentation_state_autogen.go
   /root/go/pkg/mod/gvisor.dev/gvisor@v0.0.0-20231202080848-1f7806d17489/pkg/tcpip/network/internal/fragmentation/reassembler.go
   /root/go/pkg/mod/gvisor.dev/gvisor@v0.0.0-20231202080848-1f7806d17489/pkg/tcpip/network/internal/fragmentation/reassembler_list.go
+  0 has been inflated via the <fragment> tag: id=0x
+  0Attempting to get target fragment from fragment
+  0FragmentManager has not been attached to a host.
+  0Lcom/google/android/gms/dynamic/FragmentWrapper;
+  0Must be called from main thread of fragment host
+  1: make sure class is a valid subclass of Fragment
+  1Attempting to use <fragment> tag to add fragment
+  1FragmentManager is already executing transactions
+  1Lcom/google/android/gms/dynamic/IFragmentWrapper;
+  2: calling Fragment constructor caused an exception
+  2fm.fragmentFactory.insta
+  3 has been re-attached via the <fragment> tag: id=0x
+  3 that was not found in the set of active Fragments
+  3Lcom/google/android/gms/common/ErrorDialogFragment;
+  4Attempting to get target request code from fragment
+  4Intent Sender result delivered for unknown Fragment
+  5 is not a child Fragment, it is directly attached to
   5*struct { F uintptr; R *fragmentation.Fragmentation }
+  6Clearing non-config state for saved state of Fragment
+  6DialogFragment can not be attached to a container view
+  6Lcom/google/android/gms/dynamic/IFragmentWrapper$Stub;
+  7Lcom/google/android/gms/dynamic/SupportFragmentWrapper;
   8*map[fragmentation.FragmentID]*fragmentation.reassembler
+  9Permission request result delivered for unknown Fragment
+  :Ignoring addRetainedFragment as the state is already saved
+  :Lcom/google/android/gms/common/SupportErrorDialogFragment;
+  :androidx.lifecycle.LifecycleDispatcher.report_fragment_tag
   :gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation
   =*func(*fragmentation.reassembler, *fragmentation.reassembler)
+  =Ignoring removeRetainedFragment as the state is already saved
+  > which uses a different Transition  type than other Fragments.
+  >FragmentContainerView must have an android:id to add Fragment
+  >Lcom/google/android/gms/common/api/internal/LifecycleFragment;
   ?*map.bucket[fragmentation.FragmentID]*fragmentation.reassembler
+  ?FragmentContainerView must be within a FragmentActivity to use
+  ?Operation cannot be started before fragment is in created state
+  ?SpecialEffectsController: Enqueuing add operation for fragment
+  @SpecialEffectsController: Enqueuing hide operation for fragment
+  @SpecialEffectsController: Enqueuing show operation for fragment
+  Active Fragments:
+  Added Fragments:
+  Added fragment to active set
+  Attempting to add fragment
+  Attempting to reuse fragment
+  BSpecialEffectsController: Enqueuing remove operation for fragment
   BeginFragment
   BlockFragment
+  C must share the same FragmentManager to be set as a target fragment
+  Can't add fragment
+  Can't change tag of fragment
+  Cannot create fragment
   CfPGD_O04.(*gZTzfFYEdk).HeaderBlockFragment
   CfPGD_O04.(*gZTzfFYEdk).HeaderBlockFragment.(*pSaytJjSNndL).h_5lzi0q8K0.func1
   CfPGD_O04.(*gZTzfFYEdk).HeaderBlockFragment.(*pSaytJjSNndL).h_5lzi0q8K0.func1.1
@@ -730,128 +846,91 @@
   CfPGD_O04.(*zyITXvsS0gu).HeaderBlockFragment.(*pSaytJjSNndL).h_5lzi0q8K0.func1
   CfPGD_O04.(*zyITXvsS0gu).HeaderBlockFragment.(*pSaytJjSNndL).h_5lzi0q8K0.func1.1
   CfPGD_O04.otT85jmv6.HeaderBlockFragment
+  DETECT_FRAGMENT_REUSE
+  DETECT_FRAGMENT_TAG_USAGE
+  DETECT_TARGET_FRAGMENT_USAGE
+  DETECT_WRONG_FRAGMENT_CONTAINER
+  DialogFragment
+  Discarding retained Fragment
+  Do not call dispatchConfigurationChanged() on host. Host implements OnConfigurationChangedProvider and automatically dispatches configuration changes to fragments.
+  Do not call dispatchLowMemory() on host. Host implements OnTrimMemoryProvider and automatically dispatches low memory callbacks to fragments.
+  Do not call dispatchMultiWindowModeChanged() on host. Host implements OnMultiWindowModeChangedProvider and automatically dispatches multi-window mode changes to fragments.
+  Do not call dispatchPictureInPictureModeChanged() on host. Host implements OnPictureInPictureModeChangedProvider and automatically dispatches picture-in-picture mode changes to fragments.
+  EStarting activity with a requestCode requires a FragmentActivity host
+  Eandroidx.fragment.app.FragmentViewLifecycleOwner.handleLifecycleEvent
   EndFragment
   EscapedFragment
-  Fragment
-  FragmentEprotobuf:"bytes,5,opt,name=fragment,proto3" json:"fragment,omitempty"
-  FragmentLength
-  FragmentNumber
-  FragmentOffset
-  FragmentProtoAssembler
-  Fragmented
-  GetFragment
-  HeaderBlockFragment
-  I0p5aNnsRO2.(*Ci4BQ9).EscapedFragment
-  MalformedFragmentsReceived
-  MoreFragments
-  RawFragment
-  SetFlagsFragmentOffset
-  TotalFragments
-  bufio.(*Reader).collectFragments
-  c25gvQj.(*HkauPI).EscapedFragment
-  check fragments don't overlap
-  collectFragments
-  fragment
-  fragmentation
-  getFragmentID
-  github.com/google/gopacket.(*Fragment).CanDecode
-  github.com/google/gopacket.(*Fragment).DecodeFromBytes
-  github.com/google/gopacket.(*Fragment).LayerContents
-  github.com/google/gopacket.(*Fragment).LayerPayload
-  github.com/google/gopacket.(*Fragment).LayerType
-  github.com/google/gopacket.(*Fragment).NextLayerType
-  github.com/google/gopacket.(*Fragment).Payload
-  github.com/google/gopacket.(*Fragment).SerializeTo
-  github.com/google/gopacket.(*Fragment).String
-  github.com/google/gopacket.decodeFragment
-  github.com/google/gopacket/layers.(*IPv6Fragment).LayerContents
-  github.com/google/gopacket/layers.(*IPv6Fragment).LayerPayload
-  github.com/google/gopacket/layers.(*IPv6Fragment).LayerType
-  github.com/google/gopacket/layers.decodeIPv6Fragment
-  github.com/xtls/xray-core/proxy/freedom.(*Config).GetFragment
-  github.com/xtls/xray-core/proxy/freedom.(*Fragment).Descriptor
-  github.com/xtls/xray-core/proxy/freedom.(*Fragment).Descriptor.file_proxy_freedom_config_proto_rawDescGZIP.func1
-  github.com/xtls/xray-core/proxy/freedom.(*Fragment).GetIntervalMax
-  github.com/xtls/xray-core/proxy/freedom.(*Fragment).GetIntervalMin
-  github.com/xtls/xray-core/proxy/freedom.(*Fragment).GetLengthMax
-  github.com/xtls/xray-core/proxy/freedom.(*Fragment).GetLengthMin
-  github.com/xtls/xray-core/proxy/freedom.(*Fragment).GetPacketsFrom
-  github.com/xtls/xray-core/proxy/freedom.(*Fragment).GetPacketsTo
-  github.com/xtls/xray-core/proxy/freedom.(*Fragment).ProtoMessage
-  github.com/xtls/xray-core/proxy/freedom.(*Fragment).ProtoReflect
-  github.com/xtls/xray-core/proxy/freedom.(*Fragment).Reset
-  github.com/xtls/xray-core/proxy/freedom.(*Fragment).String
-  github.com/xtls/xray-core/proxy/freedom.(*FragmentWriter).Write
-  golang.org/x/net/http2.(*ContinuationFrame).HeaderBlockFragment
-  golang.org/x/net/http2.(*HeadersFrame).HeaderBlockFragment
-  golang.org/x/net/http2.(*MetaHeadersFrame).HeaderBlockFragment
-  golang.org/x/net/http2.(*PushPromiseFrame).HeaderBlockFragment
-  golang.org/x/net/http2.MetaHeadersFrame.HeaderBlockFragment
-  gvisor.dev/gvisor/pkg/tcpip/header.(*IPv4).FragmentOffset
-  gvisor.dev/gvisor/pkg/tcpip/header.(*IPv4).SetFlagsFragmentOffset
-  gvisor.dev/gvisor/pkg/tcpip/header.(*IPv6FragmentExtHdr).FragmentOffset
-  gvisor.dev/gvisor/pkg/tcpip/header.(*IPv6FragmentExtHdr).ID
-  gvisor.dev/gvisor/pkg/tcpip/header.(*IPv6FragmentExtHdr).IsAtomic
-  gvisor.dev/gvisor/pkg/tcpip/header.(*IPv6FragmentExtHdr).More
-  gvisor.dev/gvisor/pkg/tcpip/header.(*IPv6FragmentExtHdr).Release
-  gvisor.dev/gvisor/pkg/tcpip/header.(*IPv6SerializableFragmentExtHdr).identifier
-  gvisor.dev/gvisor/pkg/tcpip/header.(*IPv6SerializableFragmentExtHdr).length
-  gvisor.dev/gvisor/pkg/tcpip/header.(*IPv6SerializableFragmentExtHdr).serializeInto
-  gvisor.dev/gvisor/pkg/tcpip/header.IPv4.FragmentOffset
-  gvisor.dev/gvisor/pkg/tcpip/header.IPv4.SetFlagsFragmentOffset
-  gvisor.dev/gvisor/pkg/tcpip/header.IPv6Fragment.FragmentOffset
-  gvisor.dev/gvisor/pkg/tcpip/header.IPv6Fragment.IsValid
-  gvisor.dev/gvisor/pkg/tcpip/header.IPv6Fragment.NextHeader
-  gvisor.dev/gvisor/pkg/tcpip/header.IPv6Fragment.TransportProtocol
-  gvisor.dev/gvisor/pkg/tcpip/header.IPv6FragmentExtHdr.FragmentOffset
-  gvisor.dev/gvisor/pkg/tcpip/header.IPv6FragmentExtHdr.ID
-  gvisor.dev/gvisor/pkg/tcpip/header.IPv6FragmentExtHdr.IsAtomic
-  gvisor.dev/gvisor/pkg/tcpip/header.IPv6FragmentExtHdr.More
-  gvisor.dev/gvisor/pkg/tcpip/header.IPv6FragmentExtHdr.Release
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*Fragmentation).Process
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*Fragmentation).Release
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*Fragmentation).Release.func1
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*Fragmentation).release
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*Fragmentation).release.(*PacketBuffer).DecRef.func1
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*Fragmentation).release.(*PacketBuffer).DecRef.func2
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*Fragmentation).releaseReassemblersLocked
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*Fragmentation).releaseReassemblersLocked-fm
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*PacketFragmenter).BuildNextFragment
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*PacketFragmenter).Release
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*PacketFragmenter).RemainingFragmentCount
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*reassembler).Next
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*reassembler).Prev
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*reassembler).SetNext
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*reassembler).SetPrev
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*reassembler).StateFields
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*reassembler).StateLoad
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*reassembler).StateSave
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*reassembler).StateTypeName
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*reassembler).checkDoneOrMark
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*reassembler).process
-  gvisor.dev/gvisor/pkg/tcpip/network/internal/fragmentation.(*reassembler).process.(*PacketBuffer).DecRef.func2
 
-### session (757)
+### session (1108)
   !*func() *dispatcher.SessionConfig
   !*func(*tls.SessionState, []uint8)
   !*map[encoding.sessionID]time.Time
   !*reality.newSessionTicketMsgTLS13
   !*shadowaead_2022.serverUDPSession
+  !AddFriendlyObstructionToAdsession
   !BuildHandshakeStateWithoutSession
+  !Session Event Type: SESSION_START
+  !com.google.firebase.sessions.Time
+  !delayJobsWithAvailableSpdySession
+  !getGoawaySessionsOnIpChangeOption
   !initLegacySessionTicketKeyRLocked
   "*func(tls.ISessionTicketExtension)
   "*func(uint16) (*mux.Session, bool)
+  ", javascriptSessionServiceEnabled=
+  "ERROR_INVALID_MULTI_FACTOR_SESSION
+  "ERROR_MISSING_MULTI_FACTOR_SESSION
+  "getSessionId failed with exception
+  "javascript_session_service_enabled
+  "mDelayJobsWithAvailableSpdySession
+  "sessionsActivityLifecycleCallbacks
   # To load completions for each session, execute once:
   # To load completions for every new session, run:
+  #No minidump data found for session
+  #Persisting fatal event for session
+  #gads:max_sessions_before_flag_reset
   $*func(*tls.ClientSessionState) error
   $*session.TrackedRequestErrorFeedback
+  $Closed all previously open sessions.
+  $Could not persist event for session
+  $Finalizing previously open sessions.
+  $Landroid/media/metrics/LogSessionId;
+  $Landroid/support/v4/media/session/a;
+  $MediaSession.QueueItem {Description=
+  $Rollout state is empty for session:
+  $getDelayJobsWithAvailableSpdySession
+  %, sessionSdkVersion=3.0.8, osVersion=
+  %Could not persist report for session
+  %Failed to call hpoaService.endSession
+  %Failed to call hsdpService.endSession
+  %Finalizing native report for session
+  %Initializing Firebase Sessions 3.0.8.
+  %No Tombstones data found for session
+  %Resetting session stitching token to
+  %gads:hsdp_service_end_session:enabled
   &*func(string, *tls.ClientSessionState)
+  &App Quality Sessions session changed:
+  &CrashlyticsReportWithSessionId{report=
+  &access$getFirebaseSessionsComponent$cp
+  &firebaseSessions/sessionDataStore.data
+  'Failed to call hpoaService.startSession
+  'gads:cui_monitoring_session_sample_rate
+  'measurement.session.engagement_interval
   (*func(tls.ISessionTicketExtension) error
   (*map.bucket[encoding.sessionID]time.Time
+  (Could not parse event files for session
+  (FORMAT_OPTIMIZATION_USER_SESSION_METRICS
+  (GOOG_OMID_JAVASCRIPT_SESSION_SERVICE_ENV
+  (Successfully logged Session Start event.
+  (android.support.customtabs.extra.SESSION
+  (com.google.firebase.sessions.ProcessData
+  (com.google.firebase.sessions.SessionData
   (github.com/xtls/xray-core/common/session
   )*func() *shadowaead_2022.serverUDPSession
   )*func(tls.QUICSessionTicketOptions) error
+  )Previous sessions could not be finalized.
+  )getMigrateSessionsOnNetworkChangeV2Option
   **func(string, *reality.ClientSessionState)
+  *Already started javascript session service
   *[1]*session.Outbound
   *[2]tls.sessionControllerState
   *[8]*list.Element[*github.com/sagernet/sing/common/cache.entry[uint64,*github.com/sagernet/sing-shadowsocks/shadowaead_2022.serverUDPSession]]
@@ -868,6 +947,7 @@
   *encoding.ServerSession
   *encoding.SessionHistory
   *encoding.sessionID
+  *firebase_sessions_sessions_restart_timeout
   *func() *list.Element[*github.com/sagernet/sing/common/cache.entry[uint64,*github.com/sagernet/sing-shadowsocks/shadowaead_2022.serverUDPSession]]
   *func() *list.List[*github.com/sagernet/sing/common/cache.entry[uint64,*github.com/sagernet/sing-shadowsocks/shadowaead_2022.serverUDPSession]]
   *func() *mux.Session
@@ -932,62 +1012,15 @@
   *tls.newSessionTicketMsgTLS13
   *tls.sessionController
   *tls.sessionControllerState
-  *tls.sessionState
-  *tls.sessionStateTLS13
-  +*func() ([]uint8, *tls.SessionState, error)
-  ,*func(int, *tls.sessionControllerState) bool
-  -*func(string) (*tls.ClientSessionState, bool)
-  /*func() ([]uint8, *reality.SessionState, error)
-  /root/go/pkg/mod/github.com/apernet/quic-go@v0.34.1-0.20230507231629-ec008b7e8473/internal/handshake/session_ticket.go
-  /root/go/pkg/mod/github.com/quic-go/quic-go@v0.46.0/internal/handshake/session_ticket.go
-  /root/go/pkg/mod/github.com/quic-go/quic-go@v0.46.0/internal/qtls/client_session_cache.go
-  /root/go/pkg/mod/github.com/refraction-networking/utls@v1.6.7/u_session_controller.go
-  /root/go/pkg/mod/github.com/refraction-networking/utls@v1.6.7/u_session_ticket.go
-  /root/splithttp-v2ray-plugin/app/src/main/go/v2ray-plugin/common/mux/session.go
-  /root/splithttp-v2ray-plugin/app/src/main/go/v2ray-plugin/common/session/context.go
-  /root/splithttp-v2ray-plugin/app/src/main/go/v2ray-plugin/common/session/session.go
-  /root/splithttp-v2ray-plugin/app/src/main/go/v2ray-plugin/features/routing/session/context.go
-  0*func(uint64, *shadowaead_2022.serverUDPSession)
-  1*func(string) (*reality.ClientSessionState, bool)
-  1*struct { F uintptr; R *encoding.SessionHistory }
-  2".xray.app.dispatcher.SessionConfigR
-  2github.com/xtls/xray-core/features/routing/session
-  6*func(func(uint64, *shadowaead_2022.serverUDPSession))
-  7*func(uint64) (*shadowaead_2022.serverUDPSession, bool)
-  ;*func(uint64, *shadowaead_2022.serverUDPSession, time.Time)
-  <div id="they wouldability ofmade up ofnoted thatclear thatargue thatto anotherchildren'spurpose offormulatedbased uponthe regionsubject ofpassengerspossession.
-  =*func(*tls.SessionState, []uint8, []uint8, []tls.PskIdentity)
-  >*func([]uint8, tls.ConnectionState) (*tls.SessionState, error)
-  >*func(tls.ConnectionState, *tls.SessionState) ([]uint8, error)
-  ?*func(*dokodemo.Config, policy.Manager, *session.Sockopt) error
-  AddSession
-  B*func(uint64) (*shadowaead_2022.serverUDPSession, time.Time, bool)
-  BeginSymmetricSession
-  ClientSessionCache
-  CloseIfNoSession
-  Cx6NBvakFqra.(*JnimSd0).HandleSessionBusy
-  Cx6NBvakFqra.(*JnimSd0).HandleSessionBusy.(*JnimSd0).HandleSessionBusy.func1.func2
-  Cx6NBvakFqra.(*JnimSd0).HandleSessionBusy.(*JnimSd0).HandleSessionBusy.func1.func3
-  Cx6NBvakFqra.(*JnimSd0).HandleSessionBusy.func1
-  Cx6NBvakFqra.(*JnimSd0).InitializeSession
-  Cx6NBvakFqra.(*JnimSd0).SessionReady
-  D7CfFXWo&toml:"SESSION_INIT_RETRY_STEP_SECONDS"
-  DcWDTHK6in/toml:"SESSION_INIT_BUSY_RETRY_INTERVAL_SECONDS"
-  EnableSessionResumption
-  F*func([]uint8, reality.ConnectionState) (*reality.SessionState, error)
-  F*func(reality.ConnectionState, *reality.SessionState) ([]uint8, error)
-  GUDM9fIvJ_8%toml:"SESSION_INIT_RETRY_MAX_SECONDS"
-  GetAppDataForSessionState
-  GetEnableSessionResumption
-  GetSession
-  GetSessionID
-  GetSessionTicket
 
-### cookie (140)
+### cookie (207)
   !*map.bucket[string][]*http.Cookie
   "ListenOverflowInvalidSynCookieRcvd
   #*func(string) (*http.Cookie, error)
   &*func(*device.MessageCookieReply) bool
+  'Lokhttp3/CookieJar$Companion$NoCookies;
+  'Lorg/apache/http/impl/cookie/DateUtils;
+  (Lcom/google/android/gms/auth/CookieUtil;
   * TheThoughseeingjerseyNews</verifyexpertinjurywidth=CookieSTART across_imagethreadnativepocketbox">
   *[8][]*http.Cookie
   *[]*http.Cookie
@@ -1005,12 +1038,27 @@
   *map[string][]*http.Cookie
   *tcpip.TCPAlwaysUseSynCookies
   *tls.CookieExtension
+  , cookiesInclude=
+  , includeCookies=
   ,*struct { Cookie []uint8 "json:\"cookie\"" }
+  ,Lcom/facebook/ads/internal/dto/AdCookieData;
+  -STARTUP_FEATURE_CONFIGURE_PARTITIONED_COOKIES
   /root/go/pkg/mod/golang.zx2c4.com/wireguard@v0.0.0-20231211153847-12269c276173/device/cookie.go
   /usr/local/go/src/net/http/cookie.go
+  0Lorg/apache/http/impl/cookie/DateParseException;
   ; COOKIE:
+  ADD_NEWTON_DEBUG_COOKIE
+  API_CLEAR_WEBVIEW_COOKIE
+  API_GET_WEBVIEW_COOKIE
+  API_SET_WEBVIEW_COOKIE
   AddCookie
   C*func([]uint8, uint32, []uint8) (*device.MessageCookieReply, error)
+  CONFIGURE_PARTITIONED_COOKIES
+  COOKIE_DOMAIN
+  COOKIE_INTERCEPT
+  COOKIE_MATCHING_GOOGLE_ID
+  COOKIE_SETTINGS
+  CT_COOKIE_PRESENT
   CfPGD_O04.(*JrN3oo).Cookies
   CfPGD_O04.(*SQtMpqgd).AddCookie
   CfPGD_O04.(*SQtMpqgd).Cookies
@@ -1018,19 +1066,63 @@
   Cookiep
   Cookies
   CookiesNamed
+  ESSENTIAL_ONLY_ID_COOKIE_ENABLED
+  ESSENTIAL_ONLY_ID_COOKIE_STRING
+  FOREIGN_COOKIE
+  GA_FROM_COOKIE
+  GET_COOKIE_INFO
+  GFP_COOKIE
+  GFP_COOKIE_ENABLED
   GODEBUG: value "output too smallallowmultiplevcshttpcookiemaxnum
+  GPID_COOKIE
+  ILorg/chromium/support_lib_boundary/WebViewCookieManagerBoundaryInterface;
+  IS_CM_COOKIELESS_REQUEST
+  IS_SELLSIDE_COOKIELESS_REQUEST
+  LThis browser is not supported or 3rd party cookies and data may be disabled.
+  Landroid/webkit/CookieManager;
   ListenOverflowSynCookieRcvd
   ListenOverflowSynCookieSent
+  Ljava/net/CookieHandler;
+  Ljava/net/CookieManager;
+  Lokhttp3/Cookie$Builder;
+  Lokhttp3/Cookie$Companion;
+  Lokhttp3/Cookie;
+  Lokhttp3/CookieJar$Companion;
+  Lokhttp3/CookieJar;
+  MULTI_COOKIE_HEADER_NAME
+  MULTI_COOKIE_VALUE_SEPARATOR
+  NoCookies
   SendHandshakeCookie
+  Set-Cookie
+  Set-Cookie-Multivalue
   SetCookies
+  THIRD_PARTY_COOKIE_ENABLED
+  ableList(cookies)
+  allowCookies_
   alwaysUseSynCookies
+  assetCookie
+  convertCookieManager
   cookie
   cookieChecker
   cookieGenerator
   cookieHash
+  cookieJar
   cookieSet
+  cookie_enabled
+  cookies_include
   createCookie
+  ct_cookie
+  fcookie
   g*struct { F uintptr; X0 *http.Client; X1 map[string][]*http.Cookie; X2 http.Header; X3 **http.Request }
+  gad_has_consent_for_cookies
+  gads:webview_cookie_url
+  getBroadcastCookie
+  getCookie
+  getCookieInfo
+  getCookieManager
+  getCookieUrl
+  getCookieValue
+  getIncludeCookiesOnIntercept
   github.com/google/gopacket/layers.(*SCTPCookieEcho).LayerContents
   github.com/google/gopacket/layers.(*SCTPCookieEcho).LayerPayload
   github.com/google/gopacket/layers.(*SCTPCookieEcho).LayerType
@@ -1072,60 +1164,8 @@
   golang.zx2c4.com/wireguard/device.(*CookieGenerator).ConsumeReply.deferwrap1
   golang.zx2c4.com/wireguard/device.(*CookieGenerator).ConsumeReply.func1
   golang.zx2c4.com/wireguard/device.(*CookieGenerator).Init
-  golang.zx2c4.com/wireguard/device.(*CookieGenerator).Init.deferwrap1
-  golang.zx2c4.com/wireguard/device.(*CookieGenerator).Init.func1
-  golang.zx2c4.com/wireguard/device.(*CookieGenerator).Init.func2
-  golang.zx2c4.com/wireguard/device.(*CookieGenerator).Init.func3
-  golang.zx2c4.com/wireguard/device.(*CookieGenerator).Lock
-  golang.zx2c4.com/wireguard/device.(*CookieGenerator).RLock
-  golang.zx2c4.com/wireguard/device.(*CookieGenerator).RLocker
-  golang.zx2c4.com/wireguard/device.(*CookieGenerator).RUnlock
-  golang.zx2c4.com/wireguard/device.(*CookieGenerator).TryLock
-  golang.zx2c4.com/wireguard/device.(*CookieGenerator).TryRLock
-  golang.zx2c4.com/wireguard/device.(*CookieGenerator).Unlock
-  golang.zx2c4.com/wireguard/device.(*Device).SendHandshakeCookie
-  golang.zx2c4.com/wireguard/device.(*MessageCookieReply).marshal
-  golang.zx2c4.com/wireguard/device.(*MessageCookieReply).unmarshal
-  golang.zx2c4.com/wireguard@v0.0.0-20250521234502-f333402bd9cb/device/cookie.go
-  gvisor.dev/gvisor/pkg/tcpip/transport/tcp.(*listenContext).cookieHash
-  gvisor.dev/gvisor/pkg/tcpip/transport/tcp.(*listenContext).createCookie
-  gvisor.dev/gvisor/pkg/tcpip/transport/tcp.(*listenContext).isCookieValid
-  icookies
-  isCookieValid
-  json:"cookie"
-  net/http.(*Cookie).String
-  net/http.(*Cookie).String.Printf.func1
-  net/http.(*Cookie).Valid
-  net/http.(*Request).AddCookie
-  net/http.(*Request).Cookie
-  net/http.(*Request).Cookies
-  net/http.(*Response).Cookies
-  net/http.(*transportRequest).AddCookie
-  net/http.(*transportRequest).Cookie
-  net/http.(*transportRequest).Cookies
-  net/http.isCookieDomainName
-  net/http.isCookieNameValid
-  net/http.parseCookieValue
-  net/http.readCookies
-  net/http.readSetCookies
-  net/http.sanitizeCookieName
-  net/http.sanitizeCookiePath
-  net/http.sanitizeCookieValue
-  net/http.transportRequest.AddCookie
-  net/http.transportRequest.Cookie
-  net/http.transportRequest.Cookies
-  net/http.validCookieDomain
-  net/http.validCookieExpires
-  net/http.validCookiePathByte
-  net/http.validCookieValueByte
-  net/http/cookie.go
-  p*struct { cookie [16]uint8; cookieSet time.Time; hasLastMAC1 bool; lastMAC1 [16]uint8; encryptionKey [32]uint8 }
-  return false;">).style.displaybecause of the document.cookie<form action="/}body{margin:0;Encyclopedia ofversion of the .createElement(name" content="</div>
-  s*struct { F uintptr; c *http.Client; icookies map[string][]*http.Cookie; ireqhdr http.Header; preq **http.Request }
-  type:.eq.golang.zx2c4.com/wireguard/device.CookieChecker
-  type:.eq.golang.zx2c4.com/wireguard/device.CookieGenerator
 
-### handshake (939)
+### handshake (966)
   !*func() handshake.ConnectionState
   !*handshake.MessageServerHelloDone
   "*chan device.QueueHandshakeElement
@@ -1134,12 +1174,19 @@
   #*handshake.MessageCertificateVerify
   #*handshake.MessageClientKeyExchange
   #*handshake.MessageServerKeyExchange
+  #Lokhttp3/Handshake$Companion$get$1;
   $*dokodemo.hasHandshakeAddressContext
   $*handshake.MessageCertificateRequest
   $*handshake.MessageHelloVerifyRequest
+  %Ljavax/net/ssl/SSLHandshakeException;
+  %mPreCryptoHandshakeIdleTimeoutSeconds
   &*func(*handshake.cipherSuite, []uint8)
+  &Lokhttp3/Handshake$peerCertificates$2;
   '*struct { F uintptr; R *tcp.handshake }
+  'getPreCryptoHandshakeIdleTimeoutSeconds
+  'setPreCryptoHandshakeIdleTimeoutSeconds
   (*func([]uint8) (*handshake.Token, error)
+  )Lokhttp3/Handshake$Companion$handshake$1;
   **func(*device.QueueHandshakeElement) error
   **tcp.handshake
   *[]handshake.Event
@@ -1193,6 +1240,7 @@
   *handshake.xorNonceAEAD
   *http.tlsHandshakeTimeoutError
   *layers.TLSHandshakeRecord
+  *mRetryPreHandshakeErrorsOnAlternateNetwork
   *network.HandshakeFailure
   *qerr.HandshakeTimeoutError
   *qtls.clientHandshakeState
@@ -1201,6 +1249,7 @@
   *quic.handshakeRunner
   *reality.clientHandshakeState
   *reality.handshakeMessage
+  *retryPreHandshakeErrorsOnNonDefaultNetwork
   *struct { F uintptr; X0 *int; X1 *[]uint8; X2 net.Conn; X3 []uint8; X4 *reality.serverHandshakeStateTLS13; X5 net.Conn; X6 *reality.Config; X7 string; X8 time.Time }L
   *struct { F uintptr; X0 net.Conn; X1 net.Conn; X2 *sync.WaitGroup; X3 *sync.Mutex; X4 *reality.serverHandshakeStateTLS13; X5 *bool; X6 *reality.Config; X7 string; X8 reality.CloseWriteConn }
   *tcp.handshake
@@ -1217,6 +1266,8 @@
   ,*func() (handshake.ShortHeaderOpener, error)
   ,*func() (handshake.ShortHeaderSealer, error)
   ,*quic.retransmissionQueueHandshakeAckHandler
+  ,getMaxTimeBeforeCryptoHandshakeSecondsOption
+  ,getRetryPreHandshakeErrorsOnAlternateNetwork
   -github.com/quic-go/quic-go/internal/handshake
   .github.com/pion/dtls/v2/pkg/protocol/handshake
   /*func([]uint8, []uint8) *handshake.xorNonceAEAD
@@ -1265,30 +1316,21 @@
   /root/go/pkg/mod/github.com/quic-go/quic-go@v0.46.0/internal/handshake/initial_aead.go
   /root/go/pkg/mod/github.com/quic-go/quic-go@v0.46.0/internal/handshake/retry.go
   /root/go/pkg/mod/github.com/quic-go/quic-go@v0.46.0/internal/handshake/token_generator.go
-  /root/go/pkg/mod/github.com/quic-go/quic-go@v0.46.0/internal/handshake/token_protector.go
-  /root/go/pkg/mod/github.com/quic-go/quic-go@v0.46.0/internal/handshake/updatable_aead.go
-  /root/go/pkg/mod/github.com/quic-go/quic-go@v0.46.0/internal/wire/handshake_done_frame.go
-  /root/go/pkg/mod/github.com/refraction-networking/utls@v1.6.7/dicttls/handshaketype.go
-  /root/go/pkg/mod/github.com/refraction-networking/utls@v1.6.7/handshake_client.go
-  /root/go/pkg/mod/github.com/refraction-networking/utls@v1.6.7/handshake_client_tls13.go
-  /root/go/pkg/mod/github.com/refraction-networking/utls@v1.6.7/handshake_messages.go
-  /root/go/pkg/mod/github.com/refraction-networking/utls@v1.6.7/handshake_server.go
-  /root/go/pkg/mod/github.com/refraction-networking/utls@v1.6.7/u_handshake_client.go
-  /root/go/pkg/mod/github.com/refraction-networking/utls@v1.6.7/u_handshake_messages.go
-  /root/go/pkg/mod/github.com/sagernet/sing@v0.5.1/common/network/handshake.go
 
-### socks (1029)
+### socks (1060)
   "*map.bucket[int]metadata.Socksaddr
   "*shadowsocks_2022.MultiUserInbound
   "*shadowsocks_2022.RelayDestination
   "*socks5.UserPassNegotiationRequest
   "type": "xray.proxy.shadowsocks.Account",
   #*shadowsocks_2022.RelayServerConfig
+  #Lorg/uproxy/tun2socks/Tun2SocksJni;
   #proxy/shadowsocks_2022/config.proto
   $*map[go.shape.int]metadata.Socksaddr
   $github.com/sagernet/sing-shadowsocks
   %*[]*shadowsocks_2022.RelayDestination
   %github.com/xtls/xray-core/proxy/socks
+  &Lprince/udp/vpn/service/vpn/Tun2Socks;
   &github.com/apernet/hysteria/app/socks5
   '*shadowsocks_2022.MultiUserServerConfig
   *[2]http.socksAuthMethod
@@ -1369,6 +1411,7 @@
   *transport.socks5UDPConn
   *websocket.proxy_socks5
   +*map.bucket[go.shape.int]metadata.Socksaddr
+  +Failed to receive the socks server address.
   +github.com/xtls/xray-core/proxy/shadowsocks
   ,*func() []*shadowsocks_2022.RelayDestination
   ,*func(*buf.Buffer, metadata.Socksaddr) error
@@ -1425,12 +1468,19 @@
   4*struct { F uintptr; R *http.socksUsernamePassword }
   4github.com/sagernet/sing-shadowsocks/shadowaead_2022
   5*func(net.Conn, metadata.Socksaddr) (net.Conn, error)
-  7*struct { F uintptr; c *net.TCPConn; s *socks5.Server }
-  ;*struct { F uintptr; .autotmp_43 *transport.socks5UDPConn }
-  <*func(*shadowsocks_2022.RelayDestination) metadata.Socksaddr
 
-### tunnel (327)
+### tunnel (406)
   "*map.group[int32]main.TunnelHandle
+  #Lprince/udp/vpn/service/vpn/Tunnel;
+  #TLS tunnel buffered too many bytes!
+  $GoogleTunnelServerIdExtensionCreator
+  %Lprince/udp/vpn/service/vpn/Tunnel$1;
+  %Lprince/udp/vpn/service/vpn/Tunnel$2;
+  &Lcom/wireguard/android/backend/Tunnel;
+  'Lprince/udp/vpn/view/TunnelRadioButton;
+  (Lprince/udp/vpn/service/vpn/TunnelState;
+  (Lprince/udp/vpn/service/vpn/TunnelUtils;
+  )Too many tunnel connections attempted: 21
   *main.TunnelHandle
   *map[int32]main.TunnelHandle
   *wireguard.Tunnel
@@ -1439,11 +1489,29 @@
   +*layers.SFlowExtendedIpv6TunnelEgressRecord
   ,*layers.SFlowExtendedIpv4TunnelIngressRecord
   ,*layers.SFlowExtendedIpv6TunnelIngressRecord
+  ,Lcom/wireguard/android/backend/Tunnel$State;
   - ExcludedApplications: optional blacklist of applications to exclude from the tunnel.
   - IncludedApplications: optional whitelist of applications to include in the tunnel.
   -*struct { key int32; elem main.TunnelHandle }
+  -Lprince/udp/vpn/service/vpn/TunnelVpnManager;
+  -Lprince/udp/vpn/service/vpn/TunnelVpnService;
+  -[Lcom/wireguard/android/backend/Tunnel$State;
+  .Lprince/udp/vpn/service/vpn/TunnelVpnSettings;
   /*[]struct { key int32; elem main.TunnelHandle }
+  /Lprince/udp/vpn/service/vpn/Tunnel$HostService;
+  /Lprince/udp/vpn/service/vpn/TunnelVpnManager$1;
+  /[Lprince/udp/vpn/service/vpn/TunnelVpnSettings;
   0*[8]struct { key int32; elem main.TunnelHandle }
+  0Lprince/udp/vpn/service/vpn/TunnelManagerHelper;
+  0Lprince/udp/vpn/service/vpn/TunnelManagerThread;
+  0Lprince/udp/vpn/service/vpn/TunnelVpnSettings$1;
+  2Lprince/udp/vpn/service/vpn/TunnelManagerThread$1;
+  2Lprince/udp/vpn/service/vpn/TunnelManagerThread$2;
+  2Lprince/udp/vpn/service/vpn/TunnelManagerThread$3;
+  6Lorg/lsposed/lsparanoid/Deobfuscator$AMTUNNELLITE$app;
+  =Lprince/udp/vpn/service/vpn/TunnelVpnManager$ManagerListener;
+  >Lprince/udp/vpn/service/vpn/TunnelManagerThread$OnStopCliente;
+  AM TUNNEL LITE
   ARQTerminalAckWaitTimeoutSecStreamResultPacketTTLSecondsexplicitTunnelProcessWorkersb
   E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/asn1/a_bitstr.c
   E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/asn1/a_d2i_fp.c
@@ -1552,43 +1620,19 @@
   E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/dsa/dsa_pmeth.c
   E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/dso/dso_dlfcn.c
   E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/dso/dso_lib.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ec2_oct.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ec2_smpl.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ec_ameth.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ec_asn1.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ec_check.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ec_curve.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ec_key.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ec_kmeth.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ec_lib.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ec_mult.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ec_oct.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ec_pmeth.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ec_print.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ecdh_ossl.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ecdsa_ossl.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ecdsa_sign.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ecdsa_vrf.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/eck_prn.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ecp_mont.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ecp_nistz256.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ecp_oct.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ecp_smpl.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/ec/ecx_meth.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/engine/eng_cnf.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/engine/eng_ctrl.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/engine/eng_dyn.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/engine/eng_fat.c
-  E:/BD NET COMPANY/AM TUNNEL LITE - BHTTP/app/src/main/cpp/openssl/crypto/engine/eng_init.c
 
-### resolver (286)
+### resolver (307)
   !*func(resolver.ResolveNowOptions)
+  !Landroid/content/ContentResolver;
   "*protoregistry.MessageTypeResolver
   "initParsedTargetAndResolverBuilder
   #*map.bucket[string]resolver.Builder
   %*func(resolver.Address, interface {})
+  %Content resolver returned null value.
   &*struct { F uintptr; R *net.Resolver }
   &EffectiveResolverUDPConnectionPoolSize
+  &Lorg/yaml/snakeyaml/resolver/Resolver;
+  (Lorg/yaml/snakeyaml/resolver/Resolver$1;
   (google.golang.org/grpc/internal/resolver
   *[1]resolver.Address
   *[8]*stack.linkResolver
@@ -1646,6 +1690,7 @@
   *struct { F uintptr; lookupGroupCtx context.Context; resolverFunc func(context.Context, string, string) ([]net.IPAddr, error); network string; host string }
   *unix.nopResolver
   +*func(balancer.SubConn, []resolver.Address)
+  +Lorg/yaml/snakeyaml/resolver/ResolverTuple;
   ,*func(resolver.Address) (interface {}, bool)
   -*func(balancer.SubConnState) resolver.Address
   -*struct { F uintptr; X0 []resolver.Endpoint }
@@ -1664,12 +1709,15 @@
   2*map[resolver.Address]resolver.addressMapEntryList
   4*func(resolver.RPCInfo) (*resolver.RPCConfig, error)
   4*map[tcpip.NetworkProtocolNumber]*stack.linkResolver
+  4, multipleProductIdGroupsResolver=null, filePurpose=
   4google.golang.org/grpc/internal/resolver/passthrough
+  5Failed to connect to dynamite module ContentResolver.
   6ResolversInlineSpecDropLogIntervalSecs
   9*map.bucket[resolver.Address]resolver.addressMapEntryList
   ;*map.bucket[tcpip.NetworkProtocolNumber]*stack.linkResolver
   =*func(context.Context, func()) (resolver.ClientStream, error)
   @*struct { F uintptr; X0 *grpc.ccResolverWrapper; X1 chan error }
+  BrowserResolver.kt
   CCAJhE0tZqj(toml:"STREAM_RESOLVER_FAILOVER_COOLDOWN"
   CollectExpiredResolverTimeouts
   Cx6NBvakFqra.(*PsV8LA).CollectExpiredResolverTimeouts
@@ -1682,13 +1730,19 @@
   ExtResolver
   HEokY9uLV0f0toml:"STREAM_RESOLVER_FAILOVER_RESEND_THRESHOLD"
   I0p5aNnsRO2.(*Ci4BQ9).ResolveReference
+  MTU_ADDED_SERVER_LOG_FORMAT = "Resolver {IP} ({DOMAIN}) added back at {TIME} (UP {UP_MTU}, DOWN {DOWN_MTU})"
+  MTU_REACTIVE_ADDED_SERVER_LOG_FORMAT = "Resolver {IP} ({DOMAIN}) added back at {TIME} after reactive recheck (UP {UP_MTU}, DOWN {DOWN_MTU})"
+  MTU_REMOVED_SERVER_LOG_FORMAT = "Resolver {IP} ({DOMAIN}) removed at {TIME} due to {CAUSE}"
   O*func([]resolver.Address, balancer.NewSubConnOptions) (balancer.SubConn, error)
   P*struct { F uintptr; X0 *grpc.ccResolverWrapper; X1 resolver.ResolveNowOptions }
+  RESOLVER_BALANCING_STRATEGY = 2
   ResolveReference
   Resolver
   ResolverError
   ResolverState
   ResolversPath
+  STREAM_RESOLVER_FAILOVER_COOLDOWN = 2.5
+  STREAM_RESOLVER_FAILOVER_RESEND_THRESHOLD = 2
   SetResolverDisabledHandler
   SetResolverDownConfirmHandler
   TDN4x7odsu"toml:"RESOLVER_BALANCING_STRATEGY"
@@ -1697,9 +1751,14 @@
   TrackResolverSend
   TrackResolverSuccess
   TypeResolver
+  WONT_TOUCH_RESOLVER
   ]*func(resolver.Target, resolver.ClientConn, resolver.BuildOptions) (resolver.Resolver, error)
   abiRegArgsType needs GC Prog, update methodValueCallFrameObjsgo package net: GODEBUG setting forcing use of Go's resolver
+  addImplicitResolver
+  addImplicitResolvers
+  contentResolver
   g*struct { F uintptr; X0 *grpc.acBalancerWrapper; X1 connectivity.State; X2 error; X3 resolver.Address }
+  getContentResolver
   getResolver
   google.golang.org/grpc.(*ClientConn).getResolver
   google.golang.org/grpc.(*ClientConn).initParsedTargetAndResolverBuilder
@@ -1713,27 +1772,8 @@
   google.golang.org/grpc.(*ccResolverWrapper).UpdateState
   google.golang.org/grpc.(*ccResolverWrapper).addChannelzTraceEvent
   google.golang.org/grpc.(*ccResolverWrapper).close
-  google.golang.org/grpc.(*ccResolverWrapper).close.func1
-  google.golang.org/grpc.(*ccResolverWrapper).resolveNow
-  google.golang.org/grpc.(*ccResolverWrapper).resolveNow.func1
-  google.golang.org/grpc.(*ccResolverWrapper).start
-  google.golang.org/grpc.(*ccResolverWrapper).start.func1
-  google.golang.org/grpc.newCCResolverWrapper
-  google.golang.org/grpc/balancer/base.(*baseBalancer).ResolverError
-  google.golang.org/grpc/balancer/pickfirst.(*pickfirstBalancer).ResolverError
-  google.golang.org/grpc/internal/balancer/gracefulswitch.(*Balancer).ResolverError
-  google.golang.org/grpc/internal/balancer/gracefulswitch.(*balancerWrapper).ResolverError
-  google.golang.org/grpc/internal/balancer/gracefulswitch.balancerWrapper.ResolverError
-  google.golang.org/grpc/internal/resolver.(*SafeConfigSelector).SelectConfig
-  google.golang.org/grpc/internal/resolver.(*SafeConfigSelector).SelectConfig.func1
-  google.golang.org/grpc/internal/resolver.(*SafeConfigSelector).UpdateConfigSelector
-  google.golang.org/grpc/internal/resolver.(*SafeConfigSelector).UpdateConfigSelector.func1
-  google.golang.org/grpc/internal/resolver.GetConfigSelector
-  google.golang.org/grpc/internal/resolver/passthrough.(*passthroughBuilder).Build
-  google.golang.org/grpc/internal/resolver/passthrough.(*passthroughBuilder).Scheme
-  google.golang.org/grpc/internal/resolver/passthrough.(*passthroughResolver).Close
 
-### mtu (180)
+### mtu (209)
   *func() *kcp.MTU
   *kcp.MTU
   *network.ReaderWithMTU
@@ -1748,11 +1788,14 @@
   /root/go/pkg/mod/github.com/apernet/quic-go@v0.34.1-0.20230507231629-ec008b7e8473/mtu_discoverer.go
   /root/go/pkg/mod/github.com/quic-go/quic-go@v0.46.0/mtu_discoverer.go
   2 .xray.transport.internet.kcp.MTUR
+  5MT7ScDMTu4Kz6rKF1fGuf9zFpYiveuh
+  8GCUdxIZzh0VfuC0yo4L0asmTu6bbOt5
   A*struct { F uintptr; f *quic.mtuFinder; size protocol.ByteCount }
   AMtUkvTLEy.go
   ApplyMTUProbeResult
   AsmWBApJM'toml:"MTU_USING_SECTION_SEPARATOR_TEXT"
   Bag1MWJvUeYj$toml:"MTU_REMOVED_SERVER_LOG_FORMAT"
+  BpOg6eE3mtuwVwvHkFgZW8n8uz2LcabH
   Bu0mTu.go
   CYvVmMtUrTo.go
   Cx6NBvakFqra.(*JnimSd0).HandleMTUResponse
@@ -1780,9 +1823,19 @@
   JYh8MTUEc093.go
   KhfuMtUk7x3.go
   LXmtuzZiXGG9.go
+  MAX_DOWNLOAD_MTU = 500
+  MAX_UPLOAD_MTU = 150
+  MIEY5GizladxFuO8LFxd2mtUm3BxYog0
+  MIN_DOWNLOAD_MTU = 100
+  MIN_UPLOAD_MTU = 38
   MTU=
   MTUOHQG_o
   MTUReactiveAddedServerLogFormatAutoDisableTimeoutWindowSecondsClientMinPingAggressiveIntervalClientMaxPacketDuplicationCountSupportedUploadCompressionTypes
+  MTU_SERVERS_FILE_FORMAT = "{IP} ({DOMAIN}) - UP: {UP_MTU} DOWN: {DOWN-MTU}"
+  MTU_TEST_PARALLELISM = 16
+  MTU_TEST_RETRIES = 2
+  MTU_TEST_TIMEOUT = 2.0
+  MTU_USING_SECTION_SEPARATOR_TEXT = ""
   MaxDownloadMTUBaseEncodeDataMTUTestTimeoutLastDispatchAtMinDownloadMTUMTUTestRetriesactualTableLog
   MtUChQ1XQ.go
   Mtu;protobuf:"bytes,1,opt,name=mtu,proto3" json:"mtu,omitempty"
@@ -1794,19 +1847,28 @@
   PackMTUProbePacket
   PmTUCQxaDP2m.go
   Pmtu
+  QBWydbCUfoNWyqRHIYB4mtuveM9uMuB5
+  QFXwLnXC9z9970ZDwGeMtu
   ReaderMTU
   RoutineReadFromTUN
   RunInitialMTUTests
+  SAVE_MTU_SERVERS_TO_FILE = false
   SetConnectionMTU
   SetMTU
   SetMtu
   SndMTU
+  T5.MTU
+  TEyMTU
   U7XCqXMtud9j.go
+  UmtUlnThENixw5hdz8sG1KFdsGmJDk97
   UpdatedMTU
+  WgbgXmtUXm5
   WriterMTU
+  XJhoLDkdhjVmtuxMZDMUmdpWx0W6G2bA
   YDGnUw9xW.(*Ag5RMspVR0z).SetMtu
   YDGnUw9xW.(*WJn_N_).SetMtu
   YDGnUw9xW.(*WJn_N_).SetMtu.deferwrap1
+  YOCU2QMTUAa74todh04RrzV4YhGHcz55
   YRPBxmTU.go
   [--tunmtu <mtu>]
   a3DMtUSADLSi.go
@@ -1817,6 +1879,7 @@
   fmt.(*fmt).fmtUnicode
   fmtUnicode
   getMTUInfo
+  getMtu
   github.com/quic-go/quic-go.(*connection).onMTUIncreased
   github.com/quic-go/quic-go.(*connection).onMTUIncreased-fm
   github.com/quic-go/quic-go.(*mtuFinder).CurrentSize
@@ -1861,31 +1924,8 @@
   golang.zx2c4.com/wireguard/device.(*Device).RoutineReadFromTUN.func2
   golang.zx2c4.com/wireguard/device.(*Device).RoutineReadFromTUN.func3
   golang.zx2c4.com/wireguard/device.(*Device).RoutineReadFromTUN.gowrap1
-  golang.zx2c4.com/wireguard/tun.(*NativeTun).MTU
-  golang.zx2c4.com/wireguard/tun.(*NativeTun).MTU.deferwrap1
-  gvisor.dev/gvisor/pkg/tcpip/header.(*ICMPv4).MTU
-  gvisor.dev/gvisor/pkg/tcpip/header.(*ICMPv4).SetMTU
-  gvisor.dev/gvisor/pkg/tcpip/header.(*ICMPv6).MTU
-  gvisor.dev/gvisor/pkg/tcpip/header.(*ICMPv6).SetMTU
-  gvisor.dev/gvisor/pkg/tcpip/header.ICMPv4.MTU
-  gvisor.dev/gvisor/pkg/tcpip/header.ICMPv4.SetMTU
-  gvisor.dev/gvisor/pkg/tcpip/header.ICMPv6.MTU
-  gvisor.dev/gvisor/pkg/tcpip/header.ICMPv6.SetMTU
-  gvisor.dev/gvisor/pkg/tcpip/link/channel.(*Endpoint).MTU
-  gvisor.dev/gvisor/pkg/tcpip/network/ipv4.(*endpoint).MTU
-  gvisor.dev/gvisor/pkg/tcpip/network/ipv4.calculateNetworkMTU
-  gvisor.dev/gvisor/pkg/tcpip/network/ipv6.(*endpoint).MTU
-  gvisor.dev/gvisor/pkg/tcpip/network/ipv6.calculateNetworkMTU
-  gvisor.dev/gvisor/pkg/tcpip/stack.(*Route).MTU
-  gvisor.dev/gvisor/pkg/tcpip/stack.(*nic).MTU
-  gvisor.dev/gvisor/pkg/tcpip/stack.nic.MTU
-  gvisor.dev/gvisor/pkg/tcpip/transport/internal/network.(*WriteContext).MTU
-  interface setmtu %s %d
-  interface setmtu %s %u
-  isMTUProbePacket
-  jlLmTu.go
 
-### packet (4229)
+### packet (4254)
   !*[8]func() gopacket.DecodingLayer
   !*[8]gopacket.EndpointTypeMetadata
   !*ackhandler.ReceivedPacketHandler
@@ -2037,14 +2077,25 @@
   *chan udpnat.packet
   *congestion.PacketNumber
 
-### encrypt (425)
+### encrypt (498)
+  !TURTLEX_ENCRYPTED_INTEREST_GROUPS
+  !app instance id encryption failed
+  !length of encrypted DEK too large
+  !sampleHasSubsampleEncryptionTable
   "*tls.EncryptedClientHelloExtension
+  "ENCRYPTED_CONTEXTUAL_REQUEST_STATE
+  "ENCRYPTED_SELLER_RENDERING_SIGNALS
+  "encryptedAdAttestationStatemement_
   $*func(protocol.EncryptionLevel) bool
+  $gads:gads:blob_encryption_public_key
   %*func(protocol.EncryptionLevel) error
   %*tls.utlsClientEncryptedExtensionsMsg
   %d error(s) occurred:%s flag redefined: %s%w, unable to decrypt%w, unable to encrypt, levelBits[level] = /gc/heap/allocs:bytes/proc/self/setgroups
+  &Resettable device id encryption failed
   '*func(protocol.EncryptionLevel) []uint8
   (*tls.GREASEEncryptedClientHelloExtension
+  (Unable to delete existing encrypted file
+  (encryption failed: bytesWritten is wrong
   **tls.utlsEncryptedExtensionsMsgExtraFields
   *cipher.cbcEncrypter
   *func() *kcp.EncryptionSeed
@@ -2060,10 +2111,15 @@
   *reality.encryptedExtensionsMsg
   *tls.QUICEncryptionLevel
   *tls.encryptedExtensionsMsg
+  , encryptedBlob=
+  , experimentIdsEncrypted=
   -*func([]uint8, protocol.EncryptionLevel) bool
   -*func(tls.QUICEncryptionLevel, []uint8) error
+  -UNENCRYPTED_PROGRAMMATIC_ACCESS_LIBRARY_NONCE
   .*func([]uint8, protocol.EncryptionLevel) error
+  .Exception encountered while encrypting bytes:
   /*func(tls.QUICEncryptionLevel, uint16, []uint8)
+  /TURTLEX_ENCRYPTED_INTEREST_GROUP_INVALID_REASON
   /root/go/pkg/mod/github.com/apernet/quic-go@v0.34.1-0.20230507231629-ec008b7e8473/internal/protocol/encryption_level.go
   /root/go/pkg/mod/github.com/quic-go/quic-go@v0.46.0/internal/protocol/encryption_level.go
   /root/splithttp-v2ray-plugin/app/src/main/go/v2ray-plugin/infra/conf/hexencrypt.go
@@ -2071,15 +2127,21 @@
   /root/udpq/app/cmd/hexencrypt.go
   2*func(logging.TimerType, protocol.EncryptionLevel)
   2+.xray.transport.internet.kcp.EncryptionSeedR
+  2gads:blob_encryption_public_key_first_hashed_bytes
   4*func(protocol.EncryptionLevel, bool) *wire.AckFrame
   5*func(protocol.EncryptionLevel, protocol.Perspective)
   8*func(*wire.CryptoFrame, protocol.EncryptionLevel) error
+  ;KeysetManager failed to initialize - unable to encrypt data
   <*func(qtls.EncryptionLevel, *qtls.CipherSuiteTLS13, []uint8)
   =*func(logging.TimerType, protocol.EncryptionLevel, time.Time)
   @*func(*wire.CryptoFrame, protocol.EncryptionLevel) (bool, error)
+  @ALTER TABLE events ADD COLUMN experiment_ids_encrypted_blob BLOB
+  @Registering HPKE Hybrid Encryption is not supported in FIPS mode
+  AD_RESPONSE_ENCRYPTION_KEY
   AES_cbc_encrypt
   AES_encrypt
   AES_set_encrypt_key
+  ARegistering ECIES Hybrid Encryption is not supported in FIPS mode
   BEncryption
   BF_cbc_encrypt
   BF_cfb64_encrypt
@@ -2094,6 +2156,7 @@
   BURWdhqKk.(*lNjYVu9).Encrypt.func1
   BURWdhqKk.(*lNjYVu9).Encrypt.func2
   BURWdhqKk.(*lNjYVu9).Encrypt.func3
+  Bencryption failed; AES-GCM-SIV tag must be 16 bytes, but got only
   CMS_EncryptedContentInfo
   CMS_EncryptedData
   CMS_EncryptedData_decrypt
@@ -2123,12 +2186,14 @@
   CRYPTO_ocb128_encrypt
   CRYPTO_ofb128_encrypt
   CRYPTO_xts128_encrypt
+  CUI_NAME_BLOB_ENCRYPTION
   Cdw9X75JAH.(*IqoN88eZ).EncryptTo
   Cdw9X75JAH.(*IqoN88eZ).EncryptTo.func1
   Cdw9X75JAH.(*IqoN88eZ).EncryptTo.func2
   Cdw9X75JAH.(*IqoN88eZ).EncryptTo.func2.1
   Cdw9X75JAH.(*IqoN88eZ).EncryptTo.func3
   Cdw9X75JAH.(*IqoN88eZ).EncryptTo.func3.1
+  DATA_ENCRYPTION_METHOD = 1
   DES_cfb64_encrypt
   DES_cfb_encrypt
   DES_ecb3_encrypt
@@ -2144,57 +2209,44 @@
   DES_ofb64_encrypt
   DES_xcbc_encrypt
   DroppedEncryptionLevel
+  ECould not generate an encryption key for reCAPTCHA - cancelling flow.
+  EFailed to generate/retrieve public encryption key for reCAPTCHA flow.
   ENCRYPTED
   ENCRYPTED PRIVATE KEY
+  ENCRYPTED:
+  ENCRYPTED_BISCOTTI_ID
+  ENCRYPTED_CPM_KEY
+  ENCRYPTED_DEVICE_ID_FOR_PLAY_ADS
+  ENCRYPTED_FIELD
+  ENCRYPTED_PII_PAYLOAD
+  ENCRYPTED_PII_PAYLOAD_KEY_ID
+  ENCRYPTED_TOP_URL
+  ENCRYPTION_KEY = "prince"
+  EVENT_ID_ENCRYPTION
   EVP_CIPHER_CTX_encrypting
   EVP_EncryptFinal
   EVP_EncryptFinal_ex
   EVP_EncryptInit
   EVP_EncryptInit_ex
-  EVP_EncryptUpdate
-  EVP_PKEY_encrypt
-  EVP_PKEY_encrypt_init
-  EVP_PKEY_encrypt_old
-  EVP_PKEY_meth_get_encrypt
-  EVP_PKEY_meth_set_encrypt
-  Encrypt
-  EncryptAndEncode
-  EncryptAndEncodeBytes
-  EncryptAndHash
-  EncryptHeader
-  EncryptTicket
-  EncryptTo
-  Encrypted
-  EncryptedData
-  EncryptedExtensionsExtensionRangeArrayGC mark terminationGC work not flushedGeoIP2-Anonymous-IPHTTP/1.0 200 OK
-  EncryptedKeyData
-  EncryptedMsg
-  Encryption
-  EncryptionIprotobuf:"bytes,3,opt,name=encryption,proto3" json:"encryption,omitempty"
-  EncryptionLevel
-  EncryptionSeed
-  GbQ_mqErYhio.(*BfBZ8xw1Qw0q).EncryptTo
-  GetEncryption
-  H*func(*wire.AckFrame, protocol.EncryptionLevel, time.Time) (bool, error)
-  HXn_TLrXHwu.(*FIh7bXgs).EncryptTo
-  HXn_TLrXHwu.(*FIh7bXgs).EncryptTo.func1
-  HXn_TLrXHwu.(*FIh7bXgs).EncryptTo.func2
-  HXn_TLrXHwu.(*FIh7bXgs).EncryptTo.func3
-  HasEncryptedKeyData
-  J*struct { secret [32]uint8; secretSet time.Time; encryptionKey [32]uint8 }
-  Java_prince_udp_vpn_utils_PUtils_pEncrypt
-  Microsoft Encrypted File System
-  NewCBCEncrypter
-  NewEncryptionWriter
-  Number of bytes in use by mcache structures.PTO timer in unexpected encryption level: %s
-  PKCS12_SAFEBAG_create_pkcs8_encrypt
 
-### chacha (132)
+### chacha (165)
   "*chacha20poly1305.chacha20poly1305
+  "Parsing ChaCha20Poly1305Key failed
+  "XWING/HKDF_SHA256/CHACHA20POLY1305
   #*chacha20poly1305.xchacha20poly1305
+  #Parsing XChaCha20Poly1305Key failed
   $golang.org/x/crypto/chacha20poly1305
+  &ChaCha20Poly1305 Parameters (variant:
+  'XChaCha20Poly1305 Parameters (variant:
+  )TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+  *Can not use ChaCha20Poly1305 in FIPS-mode.
   *chacha8rand.State
+  +Parsing ChaCha20Poly1305Parameters failed:
+  +TLS_ECDHE_PSK_WITH_CHACHA20_POLY1305_SHA256
+  +TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
   +vendor/golang.org/x/crypto/chacha20poly1305
+  ,Parsing XChaCha20Poly1305Parameters failed:
+  -TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
   /root/go/pkg/mod/golang.org/x/crypto@v0.29.0/chacha20/chacha_generic.go
   /root/go/pkg/mod/golang.org/x/crypto@v0.29.0/chacha20/chacha_noasm.go
   /root/go/pkg/mod/golang.org/x/crypto@v0.29.0/chacha20/xor.go
@@ -2217,17 +2269,38 @@
   /usr/local/go/src/vendor/golang.org/x/crypto/chacha20poly1305/chacha20poly1305.go
   /usr/local/go/src/vendor/golang.org/x/crypto/chacha20poly1305/chacha20poly1305_generic.go
   /usr/local/go/src/vendor/golang.org/x/crypto/chacha20poly1305/chacha20poly1305_noasm.go
+  1JCE does not support algorithm: ChaCha20-Poly1305
+  3ChaCha20 uses 96-bit nonces, but got a %d-bit nonce
+  5XChaCha20 uses 192-bit nonces, but got a %d-bit nonce
+  6DHKEM_X25519_HKDF_SHA256_HKDF_SHA256_CHACHA20_POLY1305
+  :DHKEM_X25519_HKDF_SHA256_HKDF_SHA256_CHACHA20_POLY1305_RAW
+  :Registering ChaCha20Poly1305 is not supported in FIPS mode
+  :type.googleapis.com/google.crypto.tink.ChaCha20Poly1305Key
+  ; only AES128_GCM_RAW, AES256_GCM_RAW, AES128_CTR_HMAC_SHA256_RAW, AES256_CTR_HMAC_SHA256_RAW XCHACHA20_POLY1305_RAW and AES256_SIV_RAW are currently supported.
+  ;Registering XChaCha20Poly1305 is not supported in FIPS mode
+  ;type.googleapis.com/google.crypto.tink.XChaCha20Poly1305Key
+  ASSUME_CHACHA20POLY1305
+  ASSUME_XCHACHA20POLY1305
   CHACHA20_POLY1305
+  CHACHA20_POLY1305_RAW
   ChaCha20
   ChaCha20-Poly1305
   ChaCha20_ctr32
   EVP_chacha20
   EVP_chacha20_poly1305
+  EWrong type URL in call to ChaCha20Poly1305ProtoSerialization.parseKey
+  FWrong type URL in call to XChaCha20Poly1305ProtoSerialization.parseKey
   IZb9HI5/chacha8.go
   IZb9HI5/chacha8_generic.go
+  JChaCha20Poly1305 key must be constructed with key of length 32 bytes, not
   JJo8zKR/chacha8.go
   JJo8zKR/chacha8_generic.go
+  KXChaCha20Poly1305 key must be constructed with key of length 32 bytes, not
+  NWrong type URL in call to ChaCha20Poly1305ProtoSerialization.parseParameters:
+  OWrong type URL in call to XChaCha20Poly1305ProtoSerialization.parseParameters:
+  TLS_CHACHA20_POLY1305_SHA256
   XCHACHA20_POLY1305
+  XCHACHA20_POLY1305_RAW
   chacha20
   chacha20-poly1305
   chacha20_poly1305_ctrl
@@ -2307,26 +2380,80 @@
   vendor/golang.org/x/crypto/chacha20poly1305.(*chacha20poly1305).NonceSize
   vendor/golang.org/x/crypto/chacha20poly1305.(*chacha20poly1305).Open
   vendor/golang.org/x/crypto/chacha20poly1305.(*chacha20poly1305).Overhead
-  vendor/golang.org/x/crypto/chacha20poly1305.(*chacha20poly1305).Seal
-  vendor/golang.org/x/crypto/chacha20poly1305.(*chacha20poly1305).open
-  vendor/golang.org/x/crypto/chacha20poly1305.(*chacha20poly1305).openGeneric
-  vendor/golang.org/x/crypto/chacha20poly1305.(*chacha20poly1305).seal
-  vendor/golang.org/x/crypto/chacha20poly1305.(*chacha20poly1305).sealGeneric
-  vendor/golang.org/x/crypto/chacha20poly1305.New
-  vendor/golang.org/x/crypto/chacha20poly1305.init
-  vendor/golang.org/x/crypto/chacha20poly1305.sliceForAppend
-  vendor/golang.org/x/crypto/chacha20poly1305.writeUint64
-  vendor/golang.org/x/crypto/chacha20poly1305.writeWithPadding
-  vendor/golang.org/x/crypto/chacha20poly1305/chacha20poly1305.go
-  vendor/golang.org/x/crypto/chacha20poly1305/chacha20poly1305_generic.go
-  vendor/golang.org/x/crypto/chacha20poly1305/chacha20poly1305_noasm.go
-  zvdvUqlGH2ht/chacha8.go
-  zvdvUqlGH2ht/chacha8_generic.go
 
-### aes (495)
+### aes (717)
+  !Can not use AES-EAX in FIPS-mode.
+  !Can not use AES-SIV in FIPS-mode.
+  !Cannot use AES-CMAC in FIPS-mode.
+  !Parsing AesEaxParameters failed:
+  !Parsing AesGcmParameters failed:
+  !Parsing AesSivParameters failed:
+  !TLS_ECDH_RSA_WITH_AES_128_CBC_SHA
+  !TLS_ECDH_RSA_WITH_AES_256_CBC_SHA
+  "Can not use AES-CMAC in FIPS-mode.
+  "Parsing AesCmacParameters failed:
+  "Parsing XAesGcmParameters failed:
+  "TLS_ECDHE_PSK_WITH_AES_128_CBC_SHA
+  "TLS_ECDHE_PSK_WITH_AES_256_CBC_SHA
+  "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+  "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA
+  "TLS_ECDH_anon_WITH_AES_128_CBC_SHA
+  "TLS_ECDH_anon_WITH_AES_256_CBC_SHA
+  "Unknown AesEaxParameters.Variant:
+  "Unknown AesGcmParameters.Variant:
+  "Unknown AesSivParameters.Variant:
+  #AES key size must be 16 or 32 bytes
+  #TLS_DHE_DSS_WITH_AES_128_CBC_SHA256
+  #TLS_DHE_DSS_WITH_AES_128_GCM_SHA256
+  #TLS_DHE_DSS_WITH_AES_256_CBC_SHA256
+  #TLS_DHE_DSS_WITH_AES_256_GCM_SHA384
+  #TLS_DHE_RSA_WITH_AES_128_CBC_SHA256
+  #TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
+  #TLS_DHE_RSA_WITH_AES_256_CBC_SHA256
+  #TLS_DHE_RSA_WITH_AES_256_GCM_SHA384
+  #TLS_DH_anon_WITH_AES_128_CBC_SHA256
+  #TLS_DH_anon_WITH_AES_128_GCM_SHA256
+  #TLS_DH_anon_WITH_AES_256_CBC_SHA256
+  #TLS_DH_anon_WITH_AES_256_GCM_SHA384
+  #TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA
+  #TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA
+  $AesCtrHmacAead Parameters (variant:
+  $Parsing AesGcmSivParameters failed:
+  $TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA
+  $TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA
+  $TLS_ECDH_RSA_WITH_AES_128_CBC_SHA256
+  $TLS_ECDH_RSA_WITH_AES_128_GCM_SHA256
+  $TLS_ECDH_RSA_WITH_AES_256_CBC_SHA384
+  $TLS_ECDH_RSA_WITH_AES_256_GCM_SHA384
+  $XAES_256_GCM_160_BIT_NONCE_NO_PREFIX
+  $XAES_256_GCM_192_BIT_NONCE_NO_PREFIX
+  %TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256
+  %TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+  %TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384
+  %TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+  %Unknown AesGcmSivParameters.Variant:
+  %aesbLastUpdateTimeWindowsEpochMicros_
   &*ciphersuite.TLSPskWithAes128GcmSha256
+  &Cipher does not implement AES GCM SIV.
+  &ECIES_P256_HKDF_HMAC_SHA256_AES128_GCM
+  &TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA256
+  &TLS_ECDH_ECDSA_WITH_AES_128_GCM_SHA256
+  &TLS_ECDH_ECDSA_WITH_AES_256_CBC_SHA384
+  &TLS_ECDH_ECDSA_WITH_AES_256_GCM_SHA384
+  'AesCmacKey size wrong, must be 32 bytes
+  'TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256
+  'TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+  'TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384
+  'TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
   (*ciphersuite.TLSEcdheRsaWithAes256CbcSha
+  (192 bit AES EAX Parameters are not valid
+  (192 bit AES GCM Parameters are not valid
+  (;  +"19/:-&1/ *1,<!9=+1-&+8<! 1-"'-%+*tg||w~mesfqzms|vmp`}eawm~}qy{|umgbvsfwvPCXXSZIAWBU^IWXRITDYAESIYB^SDIBYYZTWDIUZ_U]xkpp{rai
+  (Invalid tag size for AesCmacParameters:
+  )Parsing AesCtrHmacAeadParameters failed:
   **ciphersuite.TLSEcdheEcdsaWithAes256CbcSha
+  *ECIES_P256_HKDF_HMAC_SHA256_AES128_GCM_RAW
+  *Unknown AesCtrHmacAeadParameters.Variant:
   *aes.Block
   *aes.CTR
   *aes.KeySizeError
@@ -2342,6 +2469,15 @@
   +*ciphersuite.TLSEcdheRsaWithAes256GcmSha384
   -*ciphersuite.TLSEcdheEcdsaWithAes128GcmSha256
   -*ciphersuite.TLSEcdheEcdsaWithAes256GcmSha384
+  -Unknown AesCmacParametersParameters.Variant:
+  -byte AES key, and
+  .AesEaxJce only supports 16 byte tag size, not
+  .DHKEM_P256_HKDF_SHA256_HKDF_SHA256_AES_128_GCM
+  .DHKEM_P256_HKDF_SHA256_HKDF_SHA256_AES_256_GCM
+  .DHKEM_P384_HKDF_SHA384_HKDF_SHA384_AES_128_GCM
+  .DHKEM_P384_HKDF_SHA384_HKDF_SHA384_AES_256_GCM
+  .DHKEM_P521_HKDF_SHA512_HKDF_SHA512_AES_128_GCM
+  .DHKEM_P521_HKDF_SHA512_HKDF_SHA512_AES_256_GCM
   /root/go/pkg/mod/github.com/pion/dtls/v2@v2.2.4/internal/ciphersuite/aes_128_ccm.go
   /root/go/pkg/mod/github.com/pion/dtls/v2@v2.2.4/internal/ciphersuite/aes_256_ccm.go
   /root/go/pkg/mod/github.com/pion/dtls/v2@v2.2.4/internal/ciphersuite/aes_ccm.go
@@ -2361,121 +2497,45 @@
   /usr/local/go/src/crypto/aes/block.go
   /usr/local/go/src/crypto/aes/cipher.go
   /usr/local/go/src/crypto/aes/cipher_generic.go
-  A2lIAES.go
-  AES for ARMv4, CRYPTOGAMS by <appro@openssl.org>
-  AES-128-CBC
-  AES-128-CBC-HMAC-SHA1
-  AES-128-CBC-HMAC-SHA256
-  AES-128-CFB
-  AES-128-CFB1
-  AES-128-CFB8
-  AES-128-CTR
-  AES-128-ECB
-  AES-128-OCB
-  AES-128-OFB
-  AES-128-XTS
-  AES-192-CBC
-  AES-192-CBC-HMAC-SHA1
-  AES-192-CBC-HMAC-SHA256
-  AES-192-CFB
-  AES-192-CFB1
-  AES-192-CFB8
-  AES-192-CTR
-  AES-192-ECB
-  AES-192-OCB
-  AES-192-OFB
-  AES-256-CBC
-  AES-256-CBC-HMAC-SHA1
-  AES-256-CBC-HMAC-SHA256
-  AES-256-CFB
-  AES-256-CFB1
-  AES-256-CFB8
-  AES-256-CTR
-  AES-256-ECB
-  AES-256-OCB
-  AES-256-OFB
-  AES-256-XTS
-  AES128
-  AES128_GCM
-  AES192
-  AES256
-  AES_128_GCM
-  AES_256_GCM
-  AES_decrypt
-  AES_set_decrypt_key
-  AES_set_enc2dec_key
-  AES_unwrap_key
-  AES_wrap_key
-  AESmu1.go
-  AeSA2U.go
-  AesCcm
-  AesKey
-  AesggAWPCxJ.go
-  BaesosTa.go
-  Bit-sliced AES for NEON, CRYPTOGAMS by <appro@openssl.org>
-  BzzLTIH2aesU.go
-  CSaEsfr.go
-  D*struct { F uintptr; X0 *[]uint8; X1 *uint8; X2 *m2aeS6zP6.decFunc }
-  EAESS8kTraAi.go
-  EAvaesWR1X
-  EVP_aes_128_cbc
-  EVP_aes_128_cbc_hmac_sha1
-  EVP_aes_128_cbc_hmac_sha256
-  EVP_aes_128_ccm
-  EVP_aes_128_cfb1
-  EVP_aes_128_cfb128
-  EVP_aes_128_cfb8
-  EVP_aes_128_ctr
-  EVP_aes_128_ecb
-  EVP_aes_128_gcm
-  EVP_aes_128_ocb
-  EVP_aes_128_ofb
-  EVP_aes_128_wrap
-  EVP_aes_128_wrap_pad
-  EVP_aes_128_xts
-  EVP_aes_192_cbc
-  EVP_aes_192_ccm
-  EVP_aes_192_cfb1
-  EVP_aes_192_cfb128
-  EVP_aes_192_cfb8
-  EVP_aes_192_ctr
-  EVP_aes_192_ecb
-  EVP_aes_192_gcm
-  EVP_aes_192_ocb
-  EVP_aes_192_ofb
-  EVP_aes_192_wrap
-  EVP_aes_192_wrap_pad
-  EVP_aes_256_cbc
-  EVP_aes_256_cbc_hmac_sha1
-  EVP_aes_256_cbc_hmac_sha256
-  EVP_aes_256_ccm
-  EVP_aes_256_cfb1
-  EVP_aes_256_cfb128
-  EVP_aes_256_cfb8
-  EVP_aes_256_ctr
-  EVP_aes_256_ecb
-  EVP_aes_256_gcm
-  EVP_aes_256_ocb
-  EVP_aes_256_ofb
-  EVP_aes_256_wrap
-  EVP_aes_256_wrap_pad
-  EVP_aes_256_xts
-  EaEs4YKKyNE.go
-  HTAEswwr5.go
-  Hwk5okYwAEs.go
-  I2aESdabje.go
-  IaeSuBgR8.go
-  J93LLwAesl1.go
-  KgHW8TUN.gOGFiNGgVf.h43G7gaes
-  Kt3aEsv4W7h.go
-  R0fBqFZaEScB.go
-  RSAES-OAEP
-  RaesRD2b8KG.go
-  STcUaESJ_9.go
-  TLSEcdheEcdsaWithAes128GcmSha256
-  TLSEcdheEcdsaWithAes256CbcSha
+  0DHKEM_X25519_HKDF_SHA256_HKDF_SHA256_AES_128_GCM
+  0DHKEM_X25519_HKDF_SHA256_HKDF_SHA256_AES_256_GCM
+  0type.googleapis.com/google.crypto.tink.AesEaxKey
+  0type.googleapis.com/google.crypto.tink.AesGcmKey
+  0type.googleapis.com/google.crypto.tink.AesSivKey
+  1ECIES_P256_COMPRESSED_HKDF_HMAC_SHA256_AES128_GCM
+  1Registering AES EAX is not supported in FIPS mode
+  1Registering AES SIV is not supported in FIPS mode
+  1type.googleapis.com/google.crypto.tink.AesCmacKey
+  1type.googleapis.com/google.crypto.tink.XAesGcmKey
+  2AES GCM SIV cipher is not available or is invalid.
+  2DHKEM_P256_HKDF_SHA256_HKDF_SHA256_AES_128_GCM_RAW
+  2DHKEM_P256_HKDF_SHA256_HKDF_SHA256_AES_256_GCM_RAW
+  2DHKEM_P384_HKDF_SHA384_HKDF_SHA384_AES_128_GCM_RAW
+  2DHKEM_P384_HKDF_SHA384_HKDF_SHA384_AES_256_GCM_RAW
+  2DHKEM_P521_HKDF_SHA512_HKDF_SHA512_AES_128_GCM_RAW
+  2DHKEM_P521_HKDF_SHA512_HKDF_SHA512_AES_256_GCM_RAW
+  2ECIES_P256_HKDF_HMAC_SHA256_AES128_CTR_HMAC_SHA256
+  2Registering AES CMAC is not supported in FIPS mode
+  3Lcom/google/android/gms/internal/measurement/zzaes;
+  3Only version 0 keys inner AES CTR keys are accepted
+  3type.googleapis.com/google.crypto.tink.AesGcmSivKey
+  4DHKEM_X25519_HKDF_SHA256_HKDF_SHA256_AES_128_GCM_RAW
+  4DHKEM_X25519_HKDF_SHA256_HKDF_SHA256_AES_256_GCM_RAW
+  5ECIES_P256_COMPRESSED_HKDF_HMAC_SHA256_AES128_GCM_RAW
+  5Registering AES GCM SIV is not supported in FIPS mode
+  6ECIES_P256_HKDF_HMAC_SHA256_AES128_CTR_HMAC_SHA256_RAW
+  8type.googleapis.com/google.crypto.tink.AesCtrHmacAeadKey
+  9Lcom/google/android/gms/internal/firebase-auth-api/zzaes;
+  :Wrong type URL in call to AesSivParameters.parseParameters
+  ;Wrong type URL in call to AesEaxProtoSerialization.parseKey
+  ;Wrong type URL in call to AesGcmProtoSerialization.parseKey
+  <Wrong type URL in call to AesCmacProtoSerialization.parseKey
+  <Wrong type URL in call to AesSivParameters.parseParameters:
+  <Wrong type URL in call to XAesGcmProtoSerialization.parseKey
 
-### xor (154)
+### xor (183)
+  #Status XOR exception should be null
+  $xorEnd requires a.length >= b.length
   *qtls.xorNonceAEAD
   *reality.xorNonceAEAD
   *tls.xorNonceAEAD
@@ -2484,10 +2544,20 @@
   /usr/local/go/src/crypto/subtle/xor.go
   /usr/local/go/src/crypto/subtle/xor_generic.go
   /usr/local/go/src/vendor/golang.org/x/crypto/sha3/xor.go
+  0WEexOrIiLXDlCjHBxNry1dxuPi8TFF2
+  1SaDU7XNnaCqvThqNLYAxOryFS3l42O
+  4Lorg/checkerframework/checker/index/qual/IndexOrLow;
+  5Lorg/checkerframework/checker/index/qual/IndexOrHigh;
+  8QrvwtFNh8hPD4XoRidnoD
+  =Lorg/checkerframework/checker/fenum/qual/SwingBoxOrientation;
+  ?=*710!2109!=27=5ZXORTUDU^CODZODVTM^V^UOD\IZUNWZIROBNL[F@APAJW[PG[BCPJCJBJA[" 7*,-<3"07&
+  BITWISE_XOR
   BUPCOZ.(*R5dOBWV1Jl).XORKeyStream
   BUPCOZ.(*R5dOBWV1Jl).XORKeyStream.func1
   BUPCOZ.(*R5dOBWV1Jl).XORKeyStream.func2
   BUPCOZ.(*R5dOBWV1Jl).XORKeyStream.func3
+  CcFxoRZkmmrsHogpG32kApsQp2TYxNNh
+  GSdjqXXoR7tmBXEcQx0Yi2E
   GwheRnghgo.(*TzZ6rce2_K).XORKeyStream
   GwheRnghgo.(*TzZ6rce2_K).XORKeyStream.func1
   GwheRnghgo.(*TzZ6rce2_K).XORKeyStream.func1.1
@@ -2514,6 +2584,10 @@
   HXWW2kdISDDg.(*j_Y6y2YAyRut).XORKeyStream
   HXWW2kdISDDg.(*j_Y6y2YAyRut).XORKeyStream.func1
   HXWW2kdISDDg.(*j_Y6y2YAyRut).XORKeyStream.func2
+  Hash1 = 2GY6AiSFxORI6lKMvO5HWml9bUy9km6OVmXvFO7OWWE=
+  Hash1 = EJPVbNZmtaH4a8OKgdFCL9bVGHQCpV/XoRu9UcEOi04=
+  Hash1 = OLtOmqUpHjDseL/smLGa1THrGjg/7G0kRcoIxoRgt38=
+  Hash1 = iNBoseywixOrH61jlBnQ2XL7/Zh80Z+hMp7IgAkj9kQ=
   HgTfi0_xoRBB.go
   HoXor2hWPtS3
   JN13IzNXoR.go
@@ -2521,7 +2595,9 @@
   RwIuTemt.(*ImE4UVPo2).XORKeyStream.func1
   RwIuTemt.(*ImE4UVPo2).XORKeyStream.func2
   RwIuTemt.(*ImE4UVPo2).XORKeyStream.func3
+  SOFQxOre1ZQqrgpFIrPfi6IMKTKD0s
   TVxORIKjX_.go
+  Th8eXEW1PrBlLKXoRy9UyAyDQ9tQjuPK
   V9fTuY.(*Iv6JLRJkh3).XORKeyStream
   V9fTuY.(*Iv6JLRJkh3).XORKeyStream.func1
   V9fTuY.(*Iv6JLRJkh3).XORKeyStream.func1.1
@@ -2541,6 +2617,7 @@
   V9fTuY.(*Iv6JLRJkh3).XORKeyStreamAt.func2
   V9fTuY.(*Iv6JLRJkh3).XORKeyStreamAt.func2.1
   V9fTuY.(*Iv6JLRJkh3).XORKeyStreamAt.func2.2
+  VThat combination of buffers, offsets and length to xor result in out-of-bond accesses.
   VaJTAE9s.(*OHXC7M).XORKeyStream
   VaJTAE9s.(*OHXC7M).XORKeyStream.func1
   VaJTAE9s.(*OHXC7M).XORKeyStream.func2
@@ -2549,12 +2626,17 @@
   VaJTAE9s.(*OHXC7M).XORKeyStream.func3.1
   VfhEM8TXOR4.go
   WoNyxIgJ8xy.agyyXorZ3C2
+  WvXOrP2Pule709zdu
   XORKeyStream
   XORKeyStreamAt
   XxoRZJg_zJ.go
+  Ztslnazxor8je3yQ
+  ]NUU^WDXTVVTUDZXORMROBDTUDHOTKIZAAJCPL@BB@APNKPLC@\J{hssxqb~rpprsb|yb~qrnxb~qt~vxy
   _Z10xorWithKeyRKNSt6__ndk112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE
+  a7WpfUfSeSK3qdCMwJm40hXORQEICpVd
   aj2YfEfz.(*wPyrJLHO4).yTGem1JxOR
   aj2YfEfz.(*wPyrJLHO4).yTGem1JxOR.func1
+  bB8pCNLXoRooIlg3oPZENNRQorRGEH
   baMeGXor.go
   c4RXOrlxr
   cEriIw8XORq.go
@@ -2580,9 +2662,11 @@
   crypto/tls.(*xorNonceAEAD).Overhead
   crypto/tls.(*xorNonceAEAD).Seal
   crypto/tls.(*xorNonceAEAD).explicitNonceLen
+  dBimmGt7g4heT7CXoRBe25ieDEtLBdAn
   eAWglCXORV.go
   fCjUaxOrJt.go
   gZxORWhR70.go
+  getColumnIndexOrThrow
   github.com/cloudflare/circl/internal/sha3.xorIn
   github.com/quic-go/qtls-go1-20.(*xorNonceAEAD).NonceSize
   github.com/quic-go/qtls-go1-20.(*xorNonceAEAD).Open
@@ -2600,32 +2684,6 @@
   github.com/xtls/reality.(*xorNonceAEAD).Seal
   github.com/xtls/reality.(*xorNonceAEAD).explicitNonceLen
   github.com/xtls/xray-core/infra/conf.xorWithKey
-  github.com/xtls/xray-core/transport/internet/kcp.xorbkd
-  github.com/xtls/xray-core/transport/internet/kcp.xorfwd
-  go4.org/netipx.uint128.xor
-  iCfO2R7GK7T.(*dtHmMUDAYf06).XORKeyStream
-  iCfO2R7GK7T.dtHmMUDAYf06.XORKeyStream
-  iP3Fb9bHzbM.(*HJ39RhvZsD).c4RXOrlxr
-  iP3Fb9bHzbM.(*HJ39RhvZsD).c4RXOrlxr-fm
-  iP3Fb9bHzbM.(*HJ39RhvZsD).c4RXOrlxr.func1
-  ku6TxOriG0.go
-  lswjHUXoRlI.go
-  main.xorWithKey
-  math/big.(*Int).Xor
-  math/big.nat.xor
-  net/netip.uint128.xor
-  rmxaG1XoRdIZ.go
-  slices.(*xorshift).Next
-  sort.(*xorshift).Next
-  tW2XoR1jD5L.go
-  type:.eq.crypto/tls.xorNonceAEAD
-  type:.eq.github.com/quic-go/qtls-go1-20.xorNonceAEAD
-  type:.eq.github.com/refraction-networking/utls.xorNonceAEAD
-  type:.eq.github.com/xtls/reality.xorNonceAEAD
-  vendor/golang.org/x/crypto/sha3.xorIn
-  xORsM_A8u
-  xwwHdD_9.(*XcXplBVhJ6U).XORKeyStream
-  xwwHdD_9.(*XcXplBVhJ6U).XORKeyStream.func1
 
 ### zstd (213)
   "github.com/klauspost/compress/zstd
@@ -2779,13 +2837,25 @@
   github.com/klauspost/compress/zstd.(*sequenceDecs).decodeSync
   github.com/klauspost/compress/zstd.(*sequenceDecs).execute
 
-### lz4 (19)
+### lz4 (35)
+  BvaU1dA3vF4hXYIjQV5InfWnSlZ4OmYy
   Cot6lz4P93tq.go
   D59VCLz4.go
   EyREgby8.IaaR8nlLz4
+  HAyBDUSIlz45orPJ7SvTyDzH
+  Hash1 = +JQqWgK8pLh2ESpVi3vES0PhgQDaj/c0NfPQsLz4eFo=
+  Hash1 = MBb/YC6weyEAd8UyYTvRXocdAHGYDdVLZ4iLP0YsfFk=
+  J2VIIiQ12N46iucbAIsllz4rrLWVfcOQ
+  JSegO1TQToLz4SD5sG2
+  LZ40;
+  LZ4;
   LlZ434I2f5B.go
+  Lz40;
+  Lz4;
+  Lz4xSMhIvLrTjJnzClIMi9mdhGC
   PcVp2Lz4Sm.go
   SLiM9gFLz461.go
+  T`i.qPlZ4!
   ZG1icdalZ4g.go
   dkRLz49SN3W.go
   grlz4JY_ZC_R
@@ -2793,20 +2863,28 @@
   jlz4jCaIm5v
   jrLz41TCb.go
   lZ4uRAfq2Ye.go
+  lp14kmTG7oLZ4mKyt2MZy
   lz4: invalid source or destination buffer too short
   osidDirLenKeyposvaltypptrescerrlogkeyappdevintnilEOFPWD../udpn/aLZ4OFFtcp::1SunMonTueWedThuFriSatJanFebMarAprMayJunJulAugSepOctNovDecUTC
+  rFWNIwCjo2C9c8Lz4hkUOVf
   syscall.GTwxIwlZ4w
   tzkEafhmw.(*gnQWdz).dQfuLz4q_DX
   tzkEafhmw.(*gnQWdz).dQfuLz4q_DX.func1
   wZJkVIjOlZ4.go
+  wlXrbCoONy6aNPfJSLZ4JGG9g8lWOQWJ
+  yGgrkdZmF4YTWBTE5Y1t3ZIKmd0Zglz4
 
-### compress (567)
+### compress (601)
   !*tls.utlsCompressedCertificateMsg
+  !compressed point has wrong length
   !github.com/klauspost/compress/fse
+  #gads:request_compression_min_length
   #github.com/klauspost/compress/huff0
   %*func(*flate.compressor, []uint8) int
   &*map.bucket[string]encoding.Compressor
   &*tls.CompressionMethodsJSONUnmarshaler
+  (Landroid/graphics/Bitmap$CompressFormat;
+  )gads:request_compression_exception_params
   *[1]tls.CertCompressionAlgo
   *[8]*protocol.CompressionMethod
   *[8]encoding.Compressor
@@ -2829,6 +2907,10 @@
   *protocol.CompressionMethodID
   *tls.CertCompressionAlgo
   *tls.UtlsCompressCertExtension
+  , useCompression=
+  ,Uploading data. app, uncompressed size, data
+  .gzip compression failed, sending uncompressed.
+  /For CURVE25519 EcPointFormat must be compressed
   /blockTypeRawblockTypeRLEblockTypeCompressedblockTypeReserved  is in a tiny block with other (possibly long-lived) values
   /root/go/pkg/mod/github.com/gorilla/websocket@v1.5.3/compression.go
   /root/go/pkg/mod/github.com/klauspost/compress@v1.17.8/fse/bitreader.go
@@ -2857,7 +2939,10 @@
   /usr/local/go/src/compress/gzip/gunzip.go
   /usr/local/go/src/compress/gzip/gzip.go
   /usr/local/go/src/compress/zlib/reader.go
+  8Didn't read enough bytes during decompression. expected=
   =*map[protocol.CompressionMethodID]*protocol.CompressionMethod
+  >PROTOCOL_ERROR: FLAG_COMPRESSED without SETTINGS_COMPRESS_DATA
+  >[sgtm] Uploading data from app. row_id, url, uncompressed size
   AQcFbj3_v.(*EDc2dIo3kqG).Decompress1X
   AQcFbj3_v.(*EDc2dIo3kqG).Decompress1X.func1
   AQcFbj3_v.(*EDc2dIo3kqG).Decompress4X
@@ -2871,11 +2956,15 @@
   AQcFbj3_v.(*EDc2dIo3kqG).Decompress4X.func7
   AQcFbj3_v.(*EDc2dIo3kqG).Decompress4X.func8
   AQcFbj3_v.(*EDc2dIo3kqG).Decompress4X.func9
+  BError closing HTTP compressed POST connection output stream. appId
   BytesCompressed
   CMS_CompressedData
   CMS_CompressedData_it
   CMS_compress
   CMS_uncompress
+  COMPRESSED
+  COMPRESSION_ERROR
+  COMPRESSION_MIN_SIZE = 120
   CipherSuites_Remove_RandomCiphersFakeDelegatedCredentialsExtensionCompressionMethodsJSONUnmarshalerhttp2write100ContinueHeadersFrame
   ClientAdvertisedCompressors
   Compress
@@ -2888,6 +2977,9 @@
   CompressionMethod
   CompressionMethods
   D*map.bucket[protocol.CompressionMethodID]*protocol.CompressionMethod
+  DIAGNOSTIC_PROFILE_IS_COMPRESSED
+  DOWNLOAD_COMPRESSION_TYPE = 0
+  DO_NOT_USE_CRUNCHY_UNCOMPRESSED
   Decompress
   Decompress1X
   Decompress4X
@@ -2900,26 +2992,32 @@
   EC_POINT_set_compressed_coordinates_GFp
   EnableCompression
   EnableWriteCompression
+  G[sgtm] Uploading data from upload queue. appId, uncompressed size, data
   GbQ_mqErYhio.(*SeLf5tI5).CompressTo
   GbQ_mqErYhio.(*SeLf5tI5).Decompress
   Generator (compressed):
   Generator (uncompressed):
+  IPV6_HEX_COMPRESSED_PATTERN
   J4yrm7jK.(*EIBIfxh).CompressMessageTo
   J4yrm7jK.(*EIBIfxh).CompressTo
   J4yrm7jK.(*EIBIfxh).CompressTo.func1
   J4yrm7jK.(*EIBIfxh).Decompress
   J4yrm7jK.(*EIBIfxh).Decompress.func1
   J4yrm7jK.(*EIBIfxh).DecompressMessage
+  LEGACY_UNCOMPRESSED
   RFeZck4MA.(*Auf4JKk).CompressBlock
   ReadCompressionMethods
   RecvCompress
   SendCompress
   SetCompressionLevel
   SetSendCompress
+  UNCOMPRESSED
+  UPLOAD_COMPRESSION_TYPE = 0
   Uncompress
   Uncompressed
   UncompressedSet
   UnmarshalCompressed
+  allowCompression_
   bytesCompressed
   certCompressionAlgs
   clientAdvertisedCompressors
@@ -2927,32 +3025,8 @@
   cms_CompressedData_init_bio
   compress
   compress/flate
-  compress/flate.(*CorruptInputError).Error
-  compress/flate.(*InternalError).Error
-  compress/flate.(*Writer).Close
-  compress/flate.(*Writer).Flush
-  compress/flate.(*Writer).Reset
-  compress/flate.(*Writer).Write
-  compress/flate.(*byFreq).Len
-  compress/flate.(*byFreq).Less
-  compress/flate.(*byFreq).Swap
-  compress/flate.(*byFreq).sort
-  compress/flate.(*byLiteral).Len
-  compress/flate.(*byLiteral).Less
-  compress/flate.(*byLiteral).Swap
-  compress/flate.(*byLiteral).sort
-  compress/flate.(*compressor).close
-  compress/flate.(*compressor).deflate
-  compress/flate.(*compressor).encSpeed
-  compress/flate.(*compressor).fillDeflate
-  compress/flate.(*compressor).fillStore
-  compress/flate.(*compressor).fillWindow
-  compress/flate.(*compressor).findMatch
-  compress/flate.(*compressor).init
-  compress/flate.(*compressor).initDeflate
-  compress/flate.(*compressor).reset
 
-### doh (90)
+### doh (100)
   !*http2.duplicatePseudoHeaderError
   !UpdateChecksumPseudoHeaderAddress
   %*http.http2duplicatePseudoHeaderError
@@ -2962,14 +3036,21 @@
   *lEdOhu2dnr.Zk8shOybX8qt
   *lEdOhu2dnr.decFunc
   *layers.tcpipPseudoHeader
+  1kYj9up9VehuFRcMC7DoHBWV3d6qFcAR
+  3JpGgMVfhEKs4h1tr8RMzDA7DOHokops
+  6I9g8nXMnNi7m6K4b5mCrAODOHazff2B
+  CTVBuEwwodohpQOP7b4j4
   CfPGD_O04.pSaytJjSNndL.iADoHVxnd
   CfPGD_O04.pSaytJjSNndL.iADoHVxnd.func1
   DOhH41MLZ.go
   DoHPath
+  DoHttpRequestTask.java
   DoHzja.go
   Doh2iq9ymNCW
+  DpQgfHKG4p5pCdVinSvBTdOHrb0c0NRB
   E*struct { F uintptr; X0 *[]uint8; X1 *uint8; X2 *lEdOhu2dnr.decFunc }
   ErF7dDOh.go
+  Fayncfk/ncfhabja{/ynczj5/Niqfknc'fidohu'qfkrb='Iqsjjst}:x{~:yo
   FoOQI08.EDOhX81d0r
   FoOQI08.EDOhX81d0r.EDOhX81d0r.func1.func2
   FoOQI08.EDOhX81d0r.func1
@@ -2997,8 +3078,10 @@
   QyX17ckb.(*OYEVEsWrP).isKG50DoHqRY.func1
   RDDOh9c.go
   XGDoHRKQr.go
+  axBiQb0Rj1DOhL8QGkD5Lmk
   csgJdoHohI3E.go
   dOHQ1Ta.go
+  dOHUBH@UFWOBUhPIBU
   doHTTPRequest
   doHTTPRequest4
   doHelloRetryRequest
@@ -3026,6 +3109,7 @@
   gvisor.dev/gvisor/pkg/tcpip/header.UDP.UpdateChecksumPseudoHeaderAddress
   gvisor.dev/gvisor/pkg/tcpip/stack.(*Route).PseudoHeaderChecksum
   iADoHVxnd
+  iidxtu}r|dohdvh..#/9.*5?9#9$(.=/&&+'1&"=71+'0?+"1&'=;:
   isKG50DoHqRY
   llSMDOH.go
   m2qi1dOHidM.go
@@ -3044,7 +3128,7 @@
   vHPDohu.go
   yHiWDohfb.go
 
-### dot (154)
+### dot (188)
   !*layers.Dot11DataQOSDataCFAckPoll
   !*layers.Dot11InformationElementID
   !*layers.Dot11LinkAdapationControl
@@ -3053,7 +3137,10 @@
   !*layers.Dot11MgmtReassociationReq
   "*layers.Dot11MgmtReassociationResp
   #*layers.Dot11DataQOSCFAckPollNoData
+  %material_clock_hand_center_dot_radius
   (ZdOt
+  (btn_radio_to_on_mtrl_dot_group_animation
+  )btn_radio_to_off_mtrl_dot_group_animation
   *[8]layers.Dot11Type
   *[]layers.Dot11Type
   *[]wire.Dot
@@ -3118,9 +3205,15 @@
   /github.com/spf13/viper/internal/encoding/dotenv
   /root/go/pkg/mod/github.com/spf13/viper@v1.15.0/internal/encoding/dotenv/codec.go
   /root/go/pkg/mod/github.com/spf13/viper@v1.15.0/internal/encoding/dotenv/map_utils.go
+  2$i$a$-apply-SplitBrowseHelper$showSplitView$dots$1
+  2NY5ANPTvwBPWrnTgdotgLNYCmp8
+  4fHxCa0vWIAizdOtLSYViH6HX8wZM136
+  8$i$a$-apply-SplitBrowseHelper$showSplitView$dotsParams$1
   <jVdqexecerrdothttp2debugrsa1024mincrypto/rsacrypto/tlswinsymlinkx509rsacrtt
   A7dRDOTv0WB.go
   BdoTle.go
+  DOTBp+n g9
+  DOTTED
   DOtL7U.go
   DoTF7fha.go
   Dot11Ctrl
@@ -3130,20 +3223,40 @@
   DotReader
   DotdXHOiX.go
   Dots
+  ELorg/checkerframework/checker/signature/qual/DotSeparatedIdentifiers;
   FXUIDotUWX.go
   FsFDotJpRRPA.go
   G9fAEM.hdZPI6LFDOTH
+  Hash1 = CE9T4JrQgHDOTSO148r1MWt7E/quiN98i5MmlKYlblI=
+  Hash1 = kH6y5fDot9Dkj8PBJ18/yPhdaQHqWUY4+5/M6Ig2LEY=
+  Hash1 = mJU/IaJt6lATi/fjrzdgkxtONSl7doTU58usFweTi0E=
+  IXlSBRmtDoTZUwhzIwgkgymkT50eT72S
   IqotZhzrdOtM.go
   ItOqPpDOt.go
+  LOWER_CASE_WITH_DOTS
   N12_GLOBAL__N_116itanium_demangle9DotSuffixE
   OSZVar28KDoT.go
+  Ogl6Bd85LgnoQ5rv529h8eZh0doTaT4v
+  PositionDots.java
+  QfRSCgXdOTNJYzcBVbNAL0t7GjPIPusf
   ReadDotBytes
   ReadDotLines
+  SJN5rebrF3WLAsOm1fkdotQMSgQRMUzH
   System DavidcancertablesprovedApril reallydriveritem">more">boardscolorscampusfirst || [];media.guitarfinishwidth:showedOther .php" assumelayerswilsonstoresreliefswedenCustomeasily your String
   T7DOt13MtNY.go
+  TLorg/checkerframework/checker/signature/qual/DotSeparatedIdentifiersOrPrimitiveType;
+  XaW4WsxvrFpxNTQkFH5Kkth2dot66Zv2
   bDOTVn.go
   closeDot
+  dotImage
+  dotImageParams
+  dotIndex
+  dotRadius
+  dotSize
+  dots
+  dotsParams
   e7ti8DoTE3Ti.go
+  eDoT
   encoding/json.stateDot
   encoding/json.stateDot0
   github.com/cloudflare/circl/pke/kyber/kyber1024/internal.PolyDotHat
@@ -3164,53 +3277,31 @@
   iTkTFdOtw1xX.go
   ihK2kCDoti.go
   isDot
+  lastDotIndex
   main.wfjWzreDOTu
-  math/bits.DotoPh6
-  nLTB0u0.bdOtbGO7rk
-  ndebidopruebatoledoten
-  ndots
-  net/textproto.(*Reader).DotReader
-  net/textproto.(*Reader).ReadDotBytes
-  net/textproto.(*Reader).ReadDotLines
-  net/textproto.(*Reader).closeDot
-  net/textproto.(*dotReader).Read
-  newDot
-  newDotZ
-  oCpdOtVF75O.go
-  opDottZsQl.go
-  os.endsWithDot
-  qxXitDOTrb.go
-  r8GZbfdOt9.go
-  reflect.dotgoW2FB
-  runtime.(*functype).dotdotdot
-  runtime.panicdottypeE
-  runtime.panicdottypeI
-  runtime.panicnildottype
-  ta`tf/oo]keexecerrdothttp2debugcrypto/tlswinsymlink
-  text/template/parse.(*DotNode).Copy
-  text/template/parse.(*DotNode).Position
-  text/template/parse.(*DotNode).String
-  text/template/parse.(*DotNode).Type
-  text/template/parse.(*DotNode).tree
-  text/template/parse.(*DotNode).writeTo
-  text/template/parse.(*Tree).newDot
-  text/template/parse.DotNode.Position
 
-### udp (976)
+### udp (1024)
   !*func(func(uint64, *udpnat.conn))
   !*map.bucket[layers.UDPPort]string
   "*func(uint64) (*udpnat.conn, bool)
   "*map.bucket[layers.RUDPPort]string
   "*struct { F uintptr; X0 *udp.Hub }
+  "Lprince/udp/vpn/core/MainReceiver;
+  "Lprince/udp/vpn/service/WGService;
   #*map[uint32]chan *lFu5lI.udpMessage
+  #Lprince/udp/vpn/service/PDRService;
   #transport/internet/udp/config.proto
   $*map[inbound.connID]*inbound.udpConn
   $*map[tun.udpFlowKey][]tun.udpGROItem
   %*map.bucket[layers.UDPLitePort]string
+  %Lprince/udp/vpn/activities/UDPClient;
+  %Lprince/udp/vpn/service/SuperService;
+  %Lprince/udp/vpn/service/vpn/VpnUtils;
   %github.com/xtls/xray-core/common/xudp
   &*func(uint64, *udpnat.conn, time.Time)
   &*map.bucket[uint32]chan *cs.udpMessage
   &*struct { F uintptr; R *udp.endpoint }
+  &Lprince/udp/vpn/view/MaterialEditText;
   &github.com/sagernet/sing/common/udpnat
   '*struct { F uintptr; R *udp.Forwarder }
   )*func([]uint8) (int, *net.UDPAddr, error)
@@ -3223,6 +3314,8 @@
   *<-chan *cs.udpMessage
   *<-chan *lFu5lI.udpMessage
   *CruojtrNw.UDPRelay
+  *Lprince/udp/vpn/activities/SplashActivity;
+  *Lprince/udp/vpn/activities/UDPApplication;
   *[1]cs.udpMessage
   *[1]lFu5lI.udpMessage
   *[8]*inbound.udpConn
@@ -3338,36 +3431,57 @@
   *udpnat.DirectBackWriter
   *udpnat.Handler
   *udpnat.Service[go.shape.uint64]
-  *udpnat.Service[uint64]
-  *udpnat.conn
-  +*map.bucket[inbound.connID]*inbound.udpConn
-  +*struct { F uintptr; R *inbound.udpWorker }
-  ,*struct { F uintptr; X0 *inbound.udpWorker }
-  -*func(uint64) (*udpnat.conn, time.Time, bool)
-  --udpgw-connection-buffer-size
-  --udpgw-max-connections
-  --udpgw-remote-server-addr
 
-### vpn (36)
+### vpn (89)
+  "Filtro de Apps: Vpn ativada para "
+  #Failed to receive the Vpn Settings.
+  %Filtro de Apps: Vpn desativada para "
+  1Y8AJD0wDjMc9jtVVPnZ14pSQIsLBm5S
+  1z7bJiu6sIQ4w4e4OAYhOvPnvUYdbbgv
   Asx3Pvpny9.go
   BD NET VPN
   BVPnZeSRdV.go
+  C9gBfAnfslWjb6MmPGJedCbgsvPnDQHc
   Dbi_luTxvpn.go
   DevPnmO.go
   FGq3EOvPnl.go
+  Failed to establish VPN
   FtaVPN96E.go
   GvPNXbdQSmD0.go
   IsAnonymousVPN
   IsPbbVpNxs.go
   J1gvPnsaNbz.go
+  JntNhgZ58kYFXbwiJ6hzeVdvPNGn00kF
+  Landroid/net/VpnService$Builder;
+  Landroid/net/VpnService;
+  NET_CAPABILITY_NOT_VPN
   QY_SvPNR.go
   QemVPNuZRs9.go
   S9SrhCoVpnCb.go
+  TRANSPORT_VPN
+  UNABLE_TO_START_VPN
   V3AdhSvpn4Gw.go
+  VPN service running
+  VPN: Ignoring multicast route:
+  VPN_INTERFACE_NETMASK
+  VPN_NOT_AUTHORIZED
+  VPN_SETTINGS
+  VpNhG2Rjt
+  adeventToVpnOffMs_
+  android:establish_vpn_manager
+  android:establish_vpn_service
+  b3FjBYI8XOmFEVpNdTc0
   badvpn_set_nonblocking failed
+  broadcastVpnStart
+  eSOB9m8mFypWeq5nKDrSkAbj2mlVPN2
   fvPNdKIbLWH.go
+  gL3vpNNuLDSggEd0nYEJjHTxA4n6887
   gLSSbVPnwlFv.go
+  getVpnService
   i5_VPnGCY2G.go
+  isActiveVpn
+  isServiceVpnRunning
+  j82AvX7B8A16DzVk8Gq1uvpNrrFgPLHx
   jni/badvpn/base/BLog.h
   jni/badvpn/system/BConnection_unix.c
   jni/badvpn/system/BReactor_badvpn.c
@@ -3375,14 +3489,37 @@
   jni/badvpn/system/BTime.h
   jni/badvpn/system/BUnixSignal.c
   jni/badvpn/tuntap/BTap.c
+  kvssjmIOMrWVMwuQ1zprvpNUtXH75TG
   l5fzCVpNbnW.go
+  mVpnInterfaceFileDescriptor
+  mVpnIpAddress
+  mVpnNetMask
   maxminddb:"is_anonymous_vpn"
   ncd_net_backend_badvpn
   network create %u vpn 1
   network create %u vpn 1 1
+  newVpnServiceBuilder
+  nmk1i7vNQUMlLTVPnMJLcVhB6M
   oFkw6AvPnBdh.go
+  onVpnEstablished
+  p(_T"vpn
+  qZEBvpK5WM51NnTYZj9Wv9V85vPNkfCF
+  r(#TUvpn
+  startVpn
+  stopVpn
   svpNWZGk4ww.go
+  timeSinceVpnOnMs_
   vPNZFI2REud.go
+  val$vpnInterfaceFileDescriptor
+  val$vpnIpAddress
+  val$vpnIpV6Address
+  val$vpnNetMask
+  vpn@
+  vpnSettings
+  vpnSignal_
+  vpnT
+  vpnU
+  w6RNWVPnpt8IhazXmAfz20BbrQs66CSP
   x9MvpnJ.go
   x_l3oKpvpn
 
@@ -3394,19 +3531,36 @@
 
 ### shadowsocks (0)
 
-### wireguard (819)
+### wireguard (865)
   !*wireguard.promiscuousModeHandler
+  !Lcom/wireguard/crypto/Curve25519;
+  !Lcom/wireguard/crypto/Key$Format;
   !golang.zx2c4.com/wireguard/device
   !golang.zx2c4.com/wireguard/replay
   !golang.zx2c4.com/wireguard/tai64n
+  "Lcom/wireguard/config/InetNetwork;
+  "Lcom/wireguard/util/NonNullForAll;
+  "[Lcom/wireguard/crypto/Key$Format;
+  #Lcom/wireguard/config/InetEndpoint;
+  #Lcom/wireguard/config/Peer$Builder;
   #golang.zx2c4.com/wireguard/rwcancel
+  $Lcom/wireguard/config/InetAddresses;
+  %Lcom/wireguard/config/Config$Builder;
+  %Lcom/wireguard/config/ParseException;
   &*wireguard.DeviceConfig_DomainStrategy
+  &Lcom/wireguard/android/util/RootShell;
   &golang.zx2c4.com/wireguard/ratelimiter
+  'Lcom/wireguard/android/backend/Backend;
+  (Lcom/wireguard/config/Interface$Builder;
+  )Lcom/wireguard/android/backend/GoBackend;
+  )Lcom/wireguard/config/BadConfigException;
+  )Lcom/wireguard/crypto/KeyFormatException;
   )Xray.Transport.Internet.Headers.Wireguardb
   )github.com/xtls/xray-core/proxy/wireguard
   )xray.transport.internet.headers.wireguard"
   **struct { F uintptr; R *wireguard.Server }
   *<-chan *wireguard.netReadInfo
+  *Lcom/wireguard/android/backend/Statistics;
   *[]*conf.WireGuardPeerConfig
   *[]*wireguard.PeerConfig
   *chan *wireguard.netReadInfo
@@ -3429,10 +3583,14 @@
   *wireguard.netReadInfo
   *wireguard.routingInfo
   *wireguard.x
+  +Lcom/wireguard/android/util/ToolsInstaller;
   ,*struct { F uintptr; X0 *wireguard.netBind }
   -*func() wireguard.DeviceConfig_DomainStrategy
   -com.xray.transport.internet.headers.wireguardP
   .*func() *wireguard.DeviceConfig_DomainStrategy
+  .Lcom/wireguard/android/backend/WgQuickBackend;
+  .Lcom/wireguard/crypto/KeyFormatException$Type;
+  /[Lcom/wireguard/crypto/KeyFormatException$Type;
   /data/data/com.wireguard.android/cache/wireguard
   /data/data/com.wireguard.android/cache/wireguard/
   /data/data/com.wireguard.android/cache/wireguard/%s.sock
@@ -3474,14 +3632,28 @@
   /root/splithttp-v2ray-plugin/app/src/main/go/v2ray-plugin/proxy/wireguard/wireguard.go
   /root/splithttp-v2ray-plugin/app/src/main/go/v2ray-plugin/transport/internet/headers/wireguard/config.pb.go
   /root/splithttp-v2ray-plugin/app/src/main/go/v2ray-plugin/transport/internet/headers/wireguard/wireguard.go
+  0Lcom/wireguard/android/backend/BackendException;
+  0Lcom/wireguard/android/util/SharedLibraryLoader;
+  0Lcom/wireguard/config/BadConfigException$Reason;
+  1Lcom/wireguard/config/BadConfigException$Section;
+  1[Lcom/wireguard/config/BadConfigException$Reason;
   1transport/internet/headers/wireguard/config.proto
   2 .xray.proxy.wireguard.PeerConfigR
   21.xray.proxy.wireguard.DeviceConfig.DomainStrategyR
+  2Lcom/wireguard/config/BadConfigException$Location;
+  2[Lcom/wireguard/config/BadConfigException$Section;
+  3[Lcom/wireguard/config/BadConfigException$Location;
   3github.com/xtls/xray-core/proxy/wireguard/gvisortun
+  4Lcom/wireguard/android/backend/Statistics$PeerStats;
+  7Lcom/wireguard/android/backend/BackendException$Reason;
+  8[Lcom/wireguard/android/backend/BackendException$Reason;
+  9Lcom/wireguard/android/util/RootShell$RootShellException;
   :*atomic.Pointer[golang.zx2c4.com/wireguard/device.Keypair]
   :*struct { F uintptr; X0 wireguard.promiscuousModeHandler }
   <*func(<-chan *wireguard.netReadInfo, *wireguard.netEndpoint)
   >github.com/xtls/xray-core/transport/internet/headers/wireguard
+  @Lcom/wireguard/android/util/RootShell$RootShellException$Reason;
+  A[Lcom/wireguard/android/util/RootShell$RootShellException$Reason;
   Appends a configuration file to a WireGuard interface
   Applies a configuration file to a WireGuard interface
   Error: %s is not a WireGuard interface
@@ -3493,58 +3665,23 @@
   Java_com_wireguard_android_backend_GoBackend_wgTurnOn
   Java_com_wireguard_android_backend_GoBackend_wgVersion
   K*struct { F uintptr; X0 wireguard.promiscuousModeHandler; X1 *stack.Stack }
+  Lcom/wireguard/config/Attribute;
+  Lcom/wireguard/config/Config;
+  Lcom/wireguard/config/Interface;
+  Lcom/wireguard/config/Peer;
+  Lcom/wireguard/crypto/Key;
+  Lcom/wireguard/crypto/KeyPair;
   Shows the current configuration of a given WireGuard interface, for use with `setconf'
   Synchronizes a configuration file to a WireGuard interface
+  WireGuard/RootShell
+  WireGuard/SharedLibraryLoader
+  WireGuard/ToolsInstaller
+  WireGuard/WgQuickBackend
   WireguardConfigB
   Xray.Proxy.WireGuardb
   Z)github.com/xtls/xray-core/proxy/wireguard
   Z>github.com/xtls/xray-core/transport/internet/headers/wireguard
-  ^-A (.* --comment "wireguard rule
-  com.wireguard.android
-  com.xray.proxy.wireguardP
-  github.com/xtls/xray-core/infra/conf.(*WireGuardConfig).Build
-  github.com/xtls/xray-core/infra/conf.(*WireGuardPeerConfig).Build
-  github.com/xtls/xray-core/infra/conf.(*WireguardAuthenticator).Build
-  github.com/xtls/xray-core/infra/conf.ParseWireGuardKey
-  github.com/xtls/xray-core/infra/conf.WireguardAuthenticator.Build
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).Descriptor
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).Descriptor.file_proxy_wireguard_config_proto_rawDescGZIP.func1
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).GetDomainStrategy
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).GetEndpoint
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).GetIsClient
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).GetNoKernelTun
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).GetNumWorkers
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).GetPeers
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).GetReserved
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).GetSecretKey
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).ProtoMessage
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).ProtoReflect
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).Reset
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).String
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).createTun
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).fallbackIP4
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).fallbackIP6
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).hasFallback
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).preferIP4
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig).preferIP6
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig_DomainStrategy).Descriptor
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig_DomainStrategy).Enum
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig_DomainStrategy).EnumDescriptor
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig_DomainStrategy).Number
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig_DomainStrategy).String
-  github.com/xtls/xray-core/proxy/wireguard.(*DeviceConfig_DomainStrategy).Type
-  github.com/xtls/xray-core/proxy/wireguard.(*Handler).Process
-  github.com/xtls/xray-core/proxy/wireguard.(*Handler).Process.Close.func6
-  github.com/xtls/xray-core/proxy/wireguard.(*Handler).Process.OnSuccess.func7
-  github.com/xtls/xray-core/proxy/wireguard.(*Handler).Process.func1
-  github.com/xtls/xray-core/proxy/wireguard.(*Handler).Process.func2
-  github.com/xtls/xray-core/proxy/wireguard.(*Handler).Process.func2.2
-  github.com/xtls/xray-core/proxy/wireguard.(*Handler).Process.func2.UpdateActivity.func1
-  github.com/xtls/xray-core/proxy/wireguard.(*Handler).Process.func2.UpdateActivity.func1.1
-  github.com/xtls/xray-core/proxy/wireguard.(*Handler).Process.func3
-  github.com/xtls/xray-core/proxy/wireguard.(*Handler).Process.func3.2
-  github.com/xtls/xray-core/proxy/wireguard.(*Handler).Process.func3.UpdateActivity.func1
-  github.com/xtls/xray-core/proxy/wireguard.(*Handler).Process.func3.UpdateActivity.func1.1
+  [Lcom/wireguard/crypto/Key;
 
 ### openvpn (0)
 
@@ -3559,11 +3696,12 @@
   non-authoritative
   server not authoritative for zone
 
-### cname (57)
+### cname (63)
   *goech.InvalidPublicNameLenError
   *ipv6.NICNameFromID
   CNAME
   CNAMEResource
+  CName must consist of letters, digits or _ (underscores). Type, name
   FindNICNameFromID
   LookupCNAME
   NICNameFromID
@@ -3587,10 +3725,14 @@
   __%[1]s_debug "${FUNCNAME[0]}: the completions are: ${out}"
   cNAMERecord
   cname
+  codecName
+  createByCodecName
+  firstCodecName
   follow_cname_chain: record too long
   funcName
   funcnameOffset
   funcnametab
+  getProcessSpecificName
   github.com/OmarTariq612/goech.(*InvalidPublicNameLenError).Error
   github.com/OmarTariq612/goech.InvalidPublicNameLenError.Error
   github.com/pkg/errors.funcname
@@ -3606,6 +3748,7 @@
   net.cgoLookupIPCNAME
   net.cgoLookupIPCNAME.func1
   net.parseCNAMEFromResources
+  processSpecificName
   rINRfgmrv0gk.(*Dgj6AtlVyOe).CNAMEResource
   reflect.funcName
   runtime.(*moduledata).funcName
@@ -3620,7 +3763,7 @@
 
 ### edns (0)
 
-### tcp (5074)
+### tcp (5090)
   !*[8]tcpip.TransportProtocolNumber
   !*func() (tcpip.FullAddress, bool)
   !*func() []tcpip.AddressWithPrefix
@@ -3688,6 +3831,7 @@
   '*struct { F uintptr; R *tcp.Forwarder }
   '*struct { F uintptr; X0 *tcp.Listener }
   '*struct { F uintptr; X0 *tcp.endpoint }
+  ( TCP
   (*func() (tcpip.FullAddress, tcpip.Error)
   (*func(tcpip.Address) (bool, tcpip.Error)
   (*func(tcpip.MonotonicTime) time.Duration
@@ -3770,22 +3914,33 @@
   *faketcp.tcpFlow
   *func() (*net.TCPConn, bool)
   *func() (*net.TCPConn, error)
-  *func() ([]tcpip.Address, error)
 
-### stream (2109)
+### stream (2376)
   !*[8]quic.streamControlFrameGetter
   !*flowcontrol.StreamFlowController
   !*flowcontrol.streamFlowController
   !*func() (quic.sendStreamI, error)
+  !Ljavax/crypto/CipherOutputStream;
+  !ReusableBufferedOutputStream.java
   "*quic.sendStreamResetStreamHandler
+  "Ljava/net/URLStreamHandlerFactory;
+  "TYPE_CONTINUATION streamId changed
   #*func(*wire.ResetStreamFrame) error
   #*map.bucket[string]*grpc.StreamDesc
   #*map[uint32]*http.http2clientStream
   #EffectiveStreamQueueInitialCapacity
+  #Ljava/util/zip/InflaterInputStream;
   $*map.bucket[uint32]*http.http2stream
   $*map.bucket[uint32]*transport.Stream
   $*map[protocol.StreamNum]quic.streamI
+  $Ljava/io/ObjectInputStream$GetField;
+  $Ljava/util/zip/DeflaterOutputStream;
+  $Lokhttp3/internal/http2/Http2Stream;
+  $getDisableBidirectionalStreamsOption
   %*struct { F uintptr; s *quic.stream }
+  %Ljava/io/ObjectOutputStream$PutField;
+  %[Lokhttp3/internal/http2/Http2Stream;
+  %com.google.protobuf.CodedOutputStream
   %s &wire.MaxStreamsFrame{Type: uni, MaxStreamNum: %d}
   %s &wire.StreamsBlockedFrame{Type: bidi, MaxStreams: %d}
   %s &wire.StreamsBlockedFrame{Type: uni, MaxStreams: %d}
@@ -3795,11 +3950,19 @@
   &*reflection.v1AlphaServerStreamAdapter
   &*struct { F uintptr; R *http2.stream }
   &*struct { F uintptr; X0 *quic.stream }
+  &Landroid/net/http/BidirectionalStream;
+  &Lorg/chromium/net/BidirectionalStream;
+  &SampleStreamBufferingInfoProvider.java
+  ') but did not reach end of stream, had
   '*func() (*internet.StreamConfig, error)
   '*map.bucket[protocol.StreamID]struct {}
   '*map.bucket[uint32]*transport.outStream
   '*map[protocol.StreamID]quic.sendStreamI
+  'PROTOCOL_ERROR: TYPE_DATA streamId == 0
+  'TYPE_RST_STREAM unexpected error code:
   (*map[protocol.StreamNum]quic.sendStreamI
+  (Lorg/yaml/snakeyaml/reader/StreamReader;
+  ) and stream length (
   )*map[protocol.StreamID]*http3.datagrammer
   )*struct { F uintptr; R *quic.sendStream }
   )*struct { F uintptr; m *quic.streamsMap }
@@ -3812,6 +3975,10 @@
   **struct { F uintptr; R *wire.StreamFrame }
   **struct { F uintptr; R quic.streamSender }
   **struct { F uintptr; X0 *quic.streamsMap }
+  *Lorg/chromium/net/impl/InputStreamChannel;
+  *Lorg/yaml/snakeyaml/events/StreamEndEvent;
+  *Lorg/yaml/snakeyaml/tokens/StreamEndToken;
+  *PROTOCOL_ERROR: TYPE_HEADERS streamId == 0
   *[1]grpc.StreamClientInterceptor
   *[1]grpc.StreamServerInterceptor
   *[1]protocol.StreamNum
@@ -3899,64 +4066,116 @@
   *grpc.StreamClientInterceptor
   *grpc.StreamDesc
   *grpc.StreamHandler
-  *grpc.StreamServerInfo
-  *grpc.StreamServerInterceptor
-  *grpc.Streamer
-  *grpc.addrConnStream
-  *grpc.clientStream
-  *grpc.serverStream
-  *grpc.streamKey
-  *grpc.streamReader
-  *http.http2OpenStreamOptions
-  *http.http2RSTStreamFrame
-  *http.http2StreamError
-  *http.http2clientStream
-  *http.http2stream
-  *http.http2streamState
-  *http2.OpenStreamOptions
-  *http2.RSTStreamFrame
-  *http2.StreamError
-  *http2.clientStream
-  *http2.stream
-  *http2.streamState
-  *http3.RequestStream
-  *http3.Stream
-  *http3.StreamCreator
-  *http3.StreamType
 
-### sequence (74)
+### sequence (168)
+  "ParseFlowSequenceEntryMappingValue
+  "parseBlockNodeOrIndentlessSequence
+  $this$DelimitedRangesSequence
+  'ImpressionSequences(impressionSequence=
+  'Lorg/yaml/snakeyaml/nodes/SequenceNode;
+  'gads:enable_impression_sequence:enabled
+  (This sequence can be consumed only once.
+  (end should be < than charSequence length
   *layers.BFDAuthSequenceNumber
+  *start should be < than charSequence length
   *yaml.yaml_sequence_style_t
+  +Ljava/lang/Class<Ljava/lang/CharSequence;>;
+  , formatImpressionSequence=
+  , sequenceNumber=
+  , slotFormatImpressionSequence=
+  ,Lorg/yaml/snakeyaml/events/SequenceEndEvent;
+  -Expected escape sequence to continue, got EOF
+  .Lorg/yaml/snakeyaml/events/SequenceStartEvent;
+  0Lorg/yaml/snakeyaml/tokens/FlowSequenceEndToken;
+  2Lorg/yaml/snakeyaml/tokens/FlowSequenceStartToken;
+  3Lorg/yaml/snakeyaml/tokens/BlockSequenceStartToken;
+  4Lcom/google/common/collect/Lists$CharSequenceAsList;
+  8Lorg/checkerframework/checker/index/qual/HasSubsequence;
+  ;Lorg/yaml/snakeyaml/emitter/Emitter$ExpectFlowSequenceItem;
+  <Lorg/yaml/snakeyaml/emitter/Emitter$ExpectBlockSequenceItem;
+  =Lorg/yaml/snakeyaml/parser/ParserImpl$ParseFlowSequenceEntry;
+  >Lorg/yaml/snakeyaml/constructor/Constructor$ConstructSequence;
+  >Lorg/yaml/snakeyaml/parser/ParserImpl$ParseBlockSequenceEntry;
+  @Lorg/yaml/snakeyaml/emitter/Emitter$ExpectFirstFlowSequenceItem;
+  ALorg/yaml/snakeyaml/emitter/Emitter$ExpectFirstBlockSequenceItem;
   ASN1_SEQUENCE
   ASN1_SEQUENCE_ANY
   ASN1_SEQUENCE_ANY_it
   ASN1_SEQUENCE_it
   ASN1_TYPE_pack_sequence
   ASN1_TYPE_unpack_sequence
+  AppStats(sequenceNumber=
+  BLorg/yaml/snakeyaml/parser/ParserImpl$ParseFlowSequenceFirstEntry;
+  BlockSequenceStart
+  CHAR_SEQUENCE_CREATOR
+  CLorg/yaml/snakeyaml/parser/ParserImpl$ParseBlockSequenceFirstEntry;
+  CLorg/yaml/snakeyaml/parser/ParserImpl$ParseIndentlessSequenceEntry;
   CalibrationSequence
+  Char sequence is empty.
+  ConstructSequence
   EejZ6i2.(*N0VXb9_PRX).HasPendingSequence
   EejZ6i2.(*N0VXb9_PRX).HasPendingSequence.deferwrap1
   EndSequence
+  ExpectBlockSequenceItem
+  ExpectFirstBlockSequenceItem
+  ExpectFirstFlowSequenceItem
+  ExpectFlowSequenceItem
+  FileSequenceFetchResult.java
+  FlowSequenceEnd
+  FlowSequenceStart
+  GLorg/yaml/snakeyaml/parser/ParserImpl$ParseFlowSequenceEntryMappingEnd;
+  GLorg/yaml/snakeyaml/parser/ParserImpl$ParseFlowSequenceEntryMappingKey;
   GetSequenceIdWithinCall
   HasPendingSequence
+  ILorg/yaml/snakeyaml/parser/ParserImpl$ParseFlowSequenceEntryMappingValue;
+  Invalid escape sequence
+  Ljava/lang/CharSequence;
+  M; Please override getSequencePropertyName() to specify which property to use.
   MessageSequence
   Netscape Certificate Sequence
+  Omeasurement.audience.use_bundle_end_timestamp_for_non_sequence_property_filters
   OriginalSendSequenceNumber
   P*struct { items_data []yaml.yaml_node_item_t; style yaml.yaml_sequence_style_t }
+  ParseBlockSequenceEntry
+  ParseBlockSequenceFirstEntry
+  ParseFlowSequenceEntry
+  ParseFlowSequenceEntryMappingEnd
+  ParseFlowSequenceEntryMappingKey
+  ParseFlowSequenceFirstEntry
+  ParseIndentlessSequenceEntry
+  RecordFileSequence.java
   ReplySendSequenceNumber
   SEQUENCE
   Sequence
+  SequenceEnd
   SequenceIdWithinCall~protobuf:"varint,3,opt,name=sequence_id_within_call,json=sequenceIdWithinCall,proto3" json:"sequence_id_within_call,omitempty"
   SequenceNumber
   SequenceNumberFlag
+  SequenceStart
+  SequenceableLoader.java
   SetSequence
   SetSequenceNumber
+  Unterminated escape sequence
+  YLjava/util/List<Lcom/facebook/ads/internal/eventstorage/record/FileSequenceFetchResult;>;
+  [Ljava/lang/CharSequence;
   activeSequenceNumber
+  applySequence
+  checkEmptySequence
+  composeSequenceNode
+  constructSequence
+  constructSequenceStep2
+  coroutineSequence
   d2i_ASN1_SEQUENCE_ANY
   decodeSequences
   decodeTypeSequence
   encoding/asn1.parseSequenceOf
   executeSequences
+  expectBlockSequence
+  expectFlowSequence
+  fetchFlowSequenceEnd
+  fetchFlowSequenceStart
+  getCharSequence
+  getSequencePropertyName
   github.com/magiconair/properties.(*lexer).scanEscapeSequence
   github.com/pelletier/go-toml.isOtherSequence
   github.com/pelletier/go-toml.isTreeSequence
@@ -3987,20 +4206,20 @@
   i2d_ASN1_SEQUENCE_ANY
   invalid path escape sequence#}
   isAssignedSequenceNumber
+  java.lang.CharSequence
+  kotlin.CharSequence
   nsCertSequence
+  numSequenceParameterSets
   prepareSequences
+  putCharSequence
+  putCharSequenceArray
+  recordSequenceStart
+  representSequence
   scanEscapeSequence
   sequence
   sequence length mismatch
-  sequence not constructed
-  sequence or set needs config
-  sequenceIdWithinCall
-  sequenceNumber
-  sequence_context
-  sequence_id_within_call
-  sequence_style
 
-### ack (2620)
+### ack (4627)
   !*[8]*stack.transportProtocolState
   !*[8]stack.queuedTransportProtocol
   !*[]stack.DuplicateAddressDetector
@@ -4014,11 +4233,77 @@
   !*stack.DADCheckAddressDisposition
   !*stack.neighborCachelockNameIndex
   !*stack.neighborEntrylockNameIndex
+  !AD_INTENTS_ENABLE_UNFILL_FALLBACK
+  !AppCompatTheme_editTextBackground
+  !CUI_NAME_SDKINIT_ACTIVITY_TRACKER
+  !ConnectionProgressReportCallbacks
+  !Could not get package signature:
+  !DecagonRequestParcel(packageName=
+  !EVENT_ID_FALLBACK_INIT_OBFUSCATOR
+  !GOOGLE_SERVICES_FRAMEWORK_PACKAGE
+  !InterstitialCallbacksAdapter.java
+  !Lorg/chromium/net/Proxy$Callback;
+  !MaterialButton_android_background
+  !MaterialButton_backgroundTintMode
+  !MaterialTimePicker_backgroundTint
+  !MenuView_android_headerBackground
+  !NavigationView_android_background
+  !SnackbarLayout_backgroundTintMode
+  !TextInputLayout_boxBackgroundMode
+  !The package name cannot be empty.
+  !VideoProgressQuartileTracker.java
+  !abc_action_bar_stacked_max_height
+  !abc_cab_background_top_mtrl_alpha
+  !access$getBackgroundDispatcher$cp
+  !android.media.metadata.NUM_TRACKS
+  !appcompat_dialog_background_inset
+  !backend_name = ? and priority = ?
+  !background_floating_material_dark
+  !com.google.example.invalidpackage
+  !fastScrollHorizontalTrackDrawable
+  !fcm_fallback_notification_channel
+  !gad:min_background_worker_threads
+  !m3_elevated_chip_background_color
+  !measurement.upload.backoff_period
+  !mtrl_choice_chip_background_color
+  !mtrl_popupmenu_background_overlay
+  !mtrl_switch_track_decoration_path
+  !mtrl_switch_track_decoration_tint
+  !mtrl_switch_track_viewport_height
+  !package info is not set correctly
+  !possibleInterTrackGroupSelections
+  !saveAllState: adding back stack #
   "*[4]stack.TransportProtocolFactory
   "*[8]stack.DuplicateAddressDetector
   "*func() stack.NetworkEndpointStats
   "*func(stack.ipTableslockNameIndex)
   "*stack.endpointsByNIClockNameIndex
+  ", hsdpServiceTargetAppPackageName=
+  ", isAmazonFireAdIdLimitAdTracking=
+  "Cannot rename file across backends
+  "EVENT_ID_FALLBACK_TO_ADSHIELD1_NPE
+  "Error checking backfill conditions
+  "Error retrieving app package info.
+  "Expecting a valid ISignInCallbacks
+  "JS_3P_APP_PACKAGE_NAME_NOT_ALLOWED
+  "Landroid/media/AudioTrack$Builder;
+  "Landroid/view/ActionMode$Callback;
+  "MaterialAlertDialog_backgroundTint
+  "MaterialSwitch_trackDecorationTint
+  "TextInputLayout_boxBackgroundColor
+  "Widget_Material3_Snackbar_TextView
+  "Widget_MaterialComponents_Snackbar
+  "abc_ic_arrow_drop_right_black_24dp
+  "background_floating_material_light
+  "design_default_color_on_background
+  "design_snackbar_padding_horizontal
+  "error checking package certificate
+  "fromPackageAndModuleExperimentalPi
+  "getTokenRefactor__blocked_packages
+  "lambda$executeOnFallbackExecutor$9
+  "material_slider_active_track_color
+  "registerActivityLifecycleCallbacks
+  "selectableItemBackgroundBorderless
   # Call _init_completion from the bash-completion package
   # Join the flag back if we have an equal sign flag
   # Macs have bash3 for which the bash-completion package doesn't include
@@ -4034,6 +4319,40 @@
   #*map.bucket[string]*trojan.Fallback
   #*stack.delegatingQueueingDiscipline
   #*stack.multiCounterNICNeighborStats
+  #, isTransparentBackgroundSupported=
+  #AndroidApplicationInfo(packageName=
+  #AppCompatTheme_actionModeBackground
+  #Application going to the background
+  #Cannot register backend, name empty
+  #Client package name cannot be null!
+  #Failed to unpack UserInfo from JSON
+  #FloatingActionButton_backgroundTint
+  #InvalidAudioTrackTimestampException
+  #Landroid/app/SharedElementCallback;
+  #Landroid/content/pm/PackageManager;
+  #Landroid/webkit/WebBackForwardList;
+  #PopupWindow_android_popupBackground
+  #Processor stopping background work
+  #Setting storage consent for package
+  #SnackbarLayout_actionTextColorAlpha
+  #SnackbarLayout_maxActionInlineWidth
+  #TRANSACTION_extraCallbackWithResult
+  #ViewBackgroundHelper_backgroundTint
+  #Widget_Material3_Snackbar_FullWidth
+  #android.intent.action.PACKAGE_ADDED
+  #android.media.metadata.TRACK_NUMBER
+  #force_cronet_java_fallback_provider
+  #gads:preload_app_open_in_background
+  #m3_button_background_color_selector
+  #m3_navigation_item_background_color
+  #m3_slider_active_track_color_legacy
+  #m3_snackbar_action_text_color_alpha
+  #mNonfinalUserCallbackExceptionCount
+  #measurement.upload.blacklist_public
+  #mtrl_btn_snackbar_margin_horizontal
+  #mtrl_navigation_bar_item_background
+  #registerBestMatchingNetworkCallback
+  #setMediaPlaybackRequiresUserGesture
   #vendor/golang.org/x/net/http2/hpack
   $*func(stack.routeStacklockNameIndex)
   $*func(time.Time) ackhandler.SendMode
@@ -4041,128 +4360,40 @@
   $*stack.LinkResolvableNetworkEndpoint
   $*stack.ReachabilityConfirmationFlags
   $*stack.cleanupEndpointslockNameIndex
-  %*interface { GoPackagePath() string }
-  %*stack.multiPortEndpointlockNameIndex
-  %s &wire.AckFrame{LargestAcked: %d, LowestAcked: %d, DelayTime: %s%s}
-  &*func() (ackhandler.Frame, bool, bool)
-  &*func() stack.LinkEndpointCapabilities
-  &*func([]wire.AckRange) []wire.AckRange
-  &*func(func(stack.Target) stack.Target)
-  &*func(stack.TableID, bool) stack.Table
-  &*func(stack.addressStatelockNameIndex)
-  &*func(uint32, *kcp.AckSegment, uint32)
-  &*map.bucket[hpack.pairNameValue]uint64
-  &*map[stack.TransportEndpoint]struct {}
-  &*stack.AddressableEndpointStateOptions
-  &*stack.MulticastRouteOutgoingInterface
-  &*stack.addressableEndpointStateRWMutex
-  &*stack.transportEndpointslockNameIndex
-  '*func() (*hpack.Encoder, *bytes.Buffer)
-  '*func(func(stack.AddressEndpoint) bool)
-  '*func(stack.TableID, stack.Table, bool)
-  '*func(stack.neighborCachelockNameIndex)
-  '*func(stack.neighborEntrylockNameIndex)
-  '*map.bucket[string]qpack.indexAndValues
-  '*map[string]map[string]*trojan.Fallback
-  'google.golang.org/grpc/internal/backoff
-  (*[]stack.MulticastRouteOutgoingInterface
-  (*func(stack.endpointsByNIClockNameIndex)
-  (*map[stack.TransportEndpointID]struct {}
-  (*map[string]map[string]*inbound.Fallback
-  (*struct { F uintptr; R *stack.IPTables }
-  (function(){background-image: url(/a></li><li><a href="h
-  (github.com/xtls/xray-core/proxy/loopback
-  (rest of stack elided)
-  (types from different packages)%s %f %f %f %f %f %f %f %f %f %f%v already implements proto.Enum-~
-  )*[]map[string]map[string]*trojan.Fallback
-  )*func() (blackhole.ResponseConfig, error)
-  )*stack.MulticastForwardingEventDispatcher
-  )*stack.MulticastForwardingNetworkEndpoint
-  )*stack.MulticastForwardingNetworkProtocol
-  )github.com/xtls/xray-core/proxy/blackhole
-  **[8]map[string]map[string]*trojan.Fallback
-  **[]map[string]map[string]*inbound.Fallback
-  **func() ([]header.SACKBlock, seqnum.Value)
-  **func(stack.cleanupEndpointslockNameIndex)
-  **quic.retransmissionQueueAppDataAckHandler
-  **quic.retransmissionQueueInitialAckHandler
-  **stack.ConnTrack
-  **stack.conn
-  **stack.neighborEntry
-  **stack.transportDemuxer
-  **stack.tuple
-  *[1]*ackhandler.Frame
-  *[1]*stack.addressState
-  *[1]ackhandler.Frame
-  *[256]*hpack.node
-  *[256]hpack.node
-  *[2]stack.NetworkProtocolFactory
-  *[2]state.internalCallback
-  *[3]stack.Rule
-  *[3]stack.Table
-  *[4]runtime.stackfreelist
-  *[4]stack.Rule
-  *[4]stack.headerInfo
-  *[5]stack.Rule
-  *[6]header.SACKBlock
-  *[8]*inbound.Fallback
-  *[8]*refs.stackKey
-  *[8]*stack.addressState
-  *[8]*stack.endpointsByNIC
-  *[8]*stack.multiPortEndpoint
-  *[8]*stack.neighborEntry
-  *[8]*stack.nic
-  *[8]*stack.transportEndpoints
-  *[8]*trojan.Fallback
-  *[8]hpack.pairNameValue
-  *[8]map[string]*inbound.Fallback
-  *[8]map[string]*trojan.Fallback
-  *[8]qpack.indexAndValues
-  *[8]stack.NICInfo
-  *[8]stack.NetworkEndpoint
-  *[8]stack.NetworkEndpointStats
-  *[8]stack.NetworkProtocol
-  *[8]stack.TransportEndpoint
-  *[8]stack.TransportEndpointID
-  *[8]stack.groBucket
-  *[8]stack.protocolIDs
-  *[]*ackhandler.Frame
-  *[]*conf.TrojanInboundFallback
-  *[]*conf.VLessInboundFallback
-  *[]*hpack.node
-  *[]*inbound.Fallback
-  *[]*refs.stackKey
-  *[]*stack.addressState
-  *[]*stack.endpointsByNIC
-  *[]*stack.multiPortEndpoint
-  *[]*stack.neighborEntry
-  *[]*stack.nic
-  *[]*stack.transportEndpoints
-  *[]*stack.transportProtocolState
-  *[]*trojan.Fallback
-  *[]ackhandler.Frame
-  *[]ackhandler.interval
-  *[]header.SACKBlock
-  *[]hpack.HeaderField
-  *[]hpack.node
-  *[]hpack.pairNameValue
-  *[]map[string]*inbound.Fallback
-  *[]map[string]*trojan.Fallback
-  *[]qpack.HeaderField
-  *[]qpack.indexAndValues
-  *[]runtime.StackRecord
+  $Application process is in background
+  $Background event processing time, ms
+  $BaseProgressIndicator_trackThickness
+  $DROP INDEX contexts_backend_priority
+  $Landroid/content/ComponentCallbacks;
+  $Landroid/net/http/CallbackException;
+  $Lorg/chromium/net/CallbackException;
+  $Lorg/chromium/net/cronet_fallback/R;
+  $Lorg/yaml/snakeyaml/util/ArrayStack;
+  $Lorg/yaml/snakeyaml/util/ArrayStack<
 
-### verify (298)
+### verify (344)
+  " digest of contents did not verify
+  #verifyGooglePlayServicesIsAvailable
   *ipv4.optionUsageVerify
   *qtls.certificateVerifyMsg
   *reality.certificateVerifyMsg
   *tls.certificateVerifyMsg
   *x509.VerifyOptions
+  -isUserVerifyingPlatformAuthenticatorAvailable
   /usr/local/go/src/crypto/x509/verify.go
+  /verifyAssertion
+  /verifyCustomToken
+  /verifyPassword
+  /verifyPhoneNumber
+  1Ed25519VerifyJce requires the Conscrypt provider.
+  2is_user_verifying_platform_authenticator_available
+  7Failed to verify columns on table that was just created
   8*func(x509.VerifyOptions) ([][]*x509.Certificate, error)
+  :com.google.firebase.auth.internal.VERIFY_ASSERTION_REQUEST
   ASN1_item_verify
   ASN1_verify
   AUTHORITY_VERIFY
+  Ais_user_verifying_platform_authenticator_available_for_credential
   Be6LtP.(*EtXz0lVZAC9U).Verify
   Be6LtP.(*EtXz0lVZAC9U).Verify.func1
   Be6LtP.(*EtXz0lVZAC9U).VerifyHostname
@@ -4200,6 +4431,10 @@
   EVP_PKEY_verify_recover
   EVP_PKEY_verify_recover_init
   EVP_VerifyFinal
+  Failed to parse/verify signer #
+  Failed to verify
+  Failed to verify program
+  Failed to verify signatures
   GRBU2uPI4U.(*BXloH9auh).Verify
   InsecureServerNameToVerify
   InsecureSkipTimeVerify
@@ -4220,6 +4455,7 @@
   RSA_verify_ASN1_OCTET_STRING
   RSA_verify_PKCS1_PSS
   RSA_verify_PKCS1_PSS_mgf1
+  Room cannot verify the data integrity. Looks like you've changed schema but forgot to update the version number. You can simply fix this by increasing the version number.
   SCT_CTX_verify
   TLS 1.3, client CertificateVerify
   TLS 1.3, server CertificateVerify
@@ -4227,10 +4463,28 @@
   TS_VERIFY_CTX_new
   UI_add_verify_string
   UI_dup_verify_string
+  USER_VERIFY_ALL
+  USER_VERIFY_EYEPRINT
+  USER_VERIFY_FACEPRINT
+  USER_VERIFY_FINGERPRINT
+  USER_VERIFY_HANDPRINT
+  USER_VERIFY_LOCATION
+  USER_VERIFY_NONE
+  USER_VERIFY_PASSCODE
+  USER_VERIFY_PATTERN
+  USER_VERIFY_PRESENCE
+  USER_VERIFY_VOICEPRINT
   UdLSEqTwNN.(*EjmWl3sQ0X).Verify
   VERIFY
+  VERIFY_AND_CHANGE_EMAIL
+  VERIFY_EMAIL
+  VERIFY_PIN_JS
+  VERIFY_PIN_NATIVE
+  VERIFY_PIN_TOTAL
   Verify
   Verify failure
+  Verify that the adapter was registered for the correct type.
+  VerifyAssertionRequestCreator
   VerifyConnection
   VerifyData
   VerifyHostname
@@ -4268,43 +4522,17 @@
   X509_VERIFY_PARAM_new
   X509_VERIFY_PARAM_set1
   X509_VERIFY_PARAM_set1_email
-  X509_VERIFY_PARAM_set1_host
-  X509_VERIFY_PARAM_set1_ip
-  X509_VERIFY_PARAM_set1_ip_asc
-  X509_VERIFY_PARAM_set1_name
-  X509_VERIFY_PARAM_set1_policies
-  X509_VERIFY_PARAM_set_auth_level
-  X509_VERIFY_PARAM_set_depth
-  X509_VERIFY_PARAM_set_flags
-  X509_VERIFY_PARAM_set_hostflags
-  X509_VERIFY_PARAM_set_inh_flags
-  X509_VERIFY_PARAM_set_purpose
-  X509_VERIFY_PARAM_set_time
-  X509_VERIFY_PARAM_set_trust
-  X509_VERIFY_PARAM_table_cleanup
-  X509_verify
-  X509_verify_cert
-  XbUfRmlM8F.(*xws12ASb).Verify
-  ajzw85OYL.(*bxke9zSl7j).Verify
-  bTXuDl3tH_tu.(*pEmSHeLSX).Verify
-  bTXuDl3tH_tu.(*pEmSHeLSX).Verify.F5CQHkt.func1
-  c448_ed448_verify
-  c448_ed448_verify_prehash
-  certificate verify error
-  cms_Receipt_verify
-  cms_signerinfo_verify_cert
-  content verify error
-  crl verify failure
-  crypto/ecdsa.Verify
-  crypto/ecdsa.VerifyASN1
-  crypto/ecdsa.VerifyASN1.p224.func1
-  crypto/ecdsa.VerifyASN1.p224.func1.1
-  crypto/ecdsa.VerifyASN1.p256.func2
-  crypto/ecdsa.VerifyASN1.p256.func2.1
-  crypto/ecdsa.VerifyASN1.p384.func3
-  crypto/ecdsa.VerifyASN1.p384.func3.1
 
-### codec (350)
+### codec (442)
+  !SynchronousMediaCodecAdapter.java
+  #MediaCodecRendererMetaParameters.kt
+  $MediaCodecInitializationException.kt
+  %Landroid/media/MediaCodec$BufferInfo;
+  %Landroid/media/MediaCodec$CryptoInfo;
+  %Lokhttp3/internal/http/ExchangeCodec;
+  &shouldReInitCodecUponSurfaceSetFailure
+  )Landroid/media/MediaCodec$CodecException;
+  *Landroid/media/MediaCodec$CryptoException;
   *encoding.Codec
   *encoding.CodecV2
   *grpc.baseCodec
@@ -4317,6 +4545,10 @@
   *proto.codecV2
   *toml.Codec
   *yaml.Codec
+  +Lokhttp3/internal/http1/Http1ExchangeCodec;
+  +Lokhttp3/internal/http2/Http2ExchangeCodec;
+  -Landroid/media/MediaCodec$CryptoInfo$Pattern;
+  /Lokhttp3/internal/http/ExchangeCodec$Companion;
   /root/go/pkg/mod/github.com/spf13/viper@v1.15.0/internal/encoding/hcl/codec.go
   /root/go/pkg/mod/github.com/spf13/viper@v1.15.0/internal/encoding/ini/codec.go
   /root/go/pkg/mod/github.com/spf13/viper@v1.15.0/internal/encoding/javaproperties/codec.go
@@ -4338,8 +4570,41 @@
   /root/go/pkg/mod/google.golang.org/protobuf@v1.35.2/internal/impl/codec_map_go112.go
   /root/go/pkg/mod/google.golang.org/protobuf@v1.35.2/internal/impl/codec_message.go
   /root/go/pkg/mod/google.golang.org/protobuf@v1.35.2/internal/impl/codec_tables.go
+  0Landroid/media/MediaCodecInfo$AudioCapabilities;
+  0Landroid/media/MediaCodecInfo$CodecCapabilities;
+  0Landroid/media/MediaCodecInfo$CodecProfileLevel;
+  0Landroid/media/MediaCodecInfo$VideoCapabilities;
+  1[Landroid/media/MediaCodecInfo$CodecProfileLevel;
+  2Landroid/media/MediaCodec$OnFrameRenderedListener;
+  5Lokhttp3/internal/http1/Http1ExchangeCodec$Companion;
+  5Lokhttp3/internal/http2/Http2ExchangeCodec$Companion;
+  :Lokhttp3/internal/http1/Http1ExchangeCodec$AbstractSource;
+  ;Lokhttp3/internal/http1/Http1ExchangeCodec$KnownLengthSink;
+  =Lokhttp3/internal/http1/Http1ExchangeCodec$FixedLengthSource;
+  ?Lokhttp3/internal/http1/Http1ExchangeCodec$UnknownLengthSource;
+  ALandroid/media/MediaCodecInfo$VideoCapabilities$PerformancePoint;
+  CodecKey
+  CodecMaxValues
+  CodecMetadata
+  CodecSpecificDataUtil.java
   DecodeCisco2
   EncodeCaller)json:"callerEncoder" yaml:"callerEncoder"
+  Landroid/media/MediaCodec;
+  Landroid/media/MediaCodecInfo;
+  Landroid/media/MediaCodecList;
+  MediaCodecAdapter.java
+  MediaCodecAudioRenderer.java
+  MediaCodecInfo.java
+  MediaCodecListCompat
+  MediaCodecListCompatV16
+  MediaCodecListCompatV21
+  MediaCodecPool.java
+  MediaCodecPoolOptimized
+  MediaCodecRenderer.java
+  MediaCodecSelector.java
+  MediaCodecSetting.java
+  MediaCodecUtil.java
+  MediaCodecVideoRenderer.java
   NSt6__ndk112codecvt_baseE
   NSt6__ndk114__codecvt_utf8IDiEE
   NSt6__ndk114__codecvt_utf8IDsEE
@@ -4361,6 +4626,19 @@
   NSt6__ndk17codecvtIDsc9mbstate_tEE
   NSt6__ndk17codecvtIcc9mbstate_tEE
   NSt6__ndk17codecvtIwc9mbstate_tEE
+  PLcom/facebook/ads/androidx/media3/exoplayer/mediacodec/MediaCodecRenderer$Api31;
+  QLcom/facebook/ads/androidx/media3/exoplayer/mediacodec/MediaCodecAdapter$Factory;
+  SLjava/util/List<Landroid/media/MediaCodecInfo$VideoCapabilities$PerformancePoint;>;
+  WLcom/facebook/ads/androidx/media3/exoplayer/mediacodec/MediaCodecAdapter$Configuration;
+  XLjava/util/List<Lcom/facebook/ads/androidx/media3/exoplayer/mediacodec/MediaCodecInfo;>;
+  YLcom/facebook/ads/androidx/media3/exoplayer/mediacodec/MediaCodecUtil$ScoreProvider<TT;>;
+  ZLcom/facebook/ads/androidx/media3/exoplayer/mediacodec/MediaCodecRenderer$KeepCodecResult;
+  ZLjava/util/Set<Lcom/facebook/ads/androidx/media3/exoplayer/mediacodec/MediaCodecAdapter;>;
+  [Landroid/media/MediaCodecInfo;
+  \Lcom/facebook/ads/androidx/media3/exoplayer/mediacodec/SynchronousMediaCodecAdapter$Factory;
+  ]Ljava/util/ArrayList<Lcom/facebook/ads/androidx/media3/exoplayer/mediacodec/MediaCodecInfo;>;
+  _Lcom/facebook/ads/androidx/media3/exoplayer/mediacodec/MediaCodecRenderer$ReconfigurationState;
+  _Ljava/util/Iterator<Lcom/facebook/ads/androidx/media3/exoplayer/mediacodec/MediaCodecAdapter;>;
   _ZNKSt6__ndk114__codecvt_utf8IDiE10do_unshiftER9mbstate_tPcS4_RS4_
   _ZNKSt6__ndk114__codecvt_utf8IDiE11do_encodingEv
   _ZNKSt6__ndk114__codecvt_utf8IDiE13do_max_lengthEv
@@ -4396,67 +4674,8 @@
   _ZNKSt6__ndk115__codecvt_utf16IDiLb1EE5do_inER9mbstate_tPKcS5_RS5_PDiS7_RS7_
   _ZNKSt6__ndk115__codecvt_utf16IDiLb1EE6do_outER9mbstate_tPKDiS5_RS5_PcS7_RS7_
   _ZNKSt6__ndk115__codecvt_utf16IDiLb1EE9do_lengthER9mbstate_tPKcS5_j
-  _ZNKSt6__ndk115__codecvt_utf16IDsLb0EE10do_unshiftER9mbstate_tPcS4_RS4_
-  _ZNKSt6__ndk115__codecvt_utf16IDsLb0EE11do_encodingEv
-  _ZNKSt6__ndk115__codecvt_utf16IDsLb0EE13do_max_lengthEv
-  _ZNKSt6__ndk115__codecvt_utf16IDsLb0EE16do_always_noconvEv
-  _ZNKSt6__ndk115__codecvt_utf16IDsLb0EE5do_inER9mbstate_tPKcS5_RS5_PDsS7_RS7_
-  _ZNKSt6__ndk115__codecvt_utf16IDsLb0EE6do_outER9mbstate_tPKDsS5_RS5_PcS7_RS7_
-  _ZNKSt6__ndk115__codecvt_utf16IDsLb0EE9do_lengthER9mbstate_tPKcS5_j
-  _ZNKSt6__ndk115__codecvt_utf16IDsLb1EE10do_unshiftER9mbstate_tPcS4_RS4_
-  _ZNKSt6__ndk115__codecvt_utf16IDsLb1EE11do_encodingEv
-  _ZNKSt6__ndk115__codecvt_utf16IDsLb1EE13do_max_lengthEv
-  _ZNKSt6__ndk115__codecvt_utf16IDsLb1EE16do_always_noconvEv
-  _ZNKSt6__ndk115__codecvt_utf16IDsLb1EE5do_inER9mbstate_tPKcS5_RS5_PDsS7_RS7_
-  _ZNKSt6__ndk115__codecvt_utf16IDsLb1EE6do_outER9mbstate_tPKDsS5_RS5_PcS7_RS7_
-  _ZNKSt6__ndk115__codecvt_utf16IDsLb1EE9do_lengthER9mbstate_tPKcS5_j
-  _ZNKSt6__ndk115__codecvt_utf16IwLb0EE10do_unshiftER9mbstate_tPcS4_RS4_
-  _ZNKSt6__ndk115__codecvt_utf16IwLb0EE11do_encodingEv
-  _ZNKSt6__ndk115__codecvt_utf16IwLb0EE13do_max_lengthEv
-  _ZNKSt6__ndk115__codecvt_utf16IwLb0EE16do_always_noconvEv
-  _ZNKSt6__ndk115__codecvt_utf16IwLb0EE5do_inER9mbstate_tPKcS5_RS5_PwS7_RS7_
-  _ZNKSt6__ndk115__codecvt_utf16IwLb0EE6do_outER9mbstate_tPKwS5_RS5_PcS7_RS7_
-  _ZNKSt6__ndk115__codecvt_utf16IwLb0EE9do_lengthER9mbstate_tPKcS5_j
-  _ZNKSt6__ndk115__codecvt_utf16IwLb1EE10do_unshiftER9mbstate_tPcS4_RS4_
-  _ZNKSt6__ndk115__codecvt_utf16IwLb1EE11do_encodingEv
-  _ZNKSt6__ndk115__codecvt_utf16IwLb1EE13do_max_lengthEv
-  _ZNKSt6__ndk115__codecvt_utf16IwLb1EE16do_always_noconvEv
-  _ZNKSt6__ndk115__codecvt_utf16IwLb1EE5do_inER9mbstate_tPKcS5_RS5_PwS7_RS7_
-  _ZNKSt6__ndk115__codecvt_utf16IwLb1EE6do_outER9mbstate_tPKwS5_RS5_PcS7_RS7_
-  _ZNKSt6__ndk115__codecvt_utf16IwLb1EE9do_lengthER9mbstate_tPKcS5_j
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IDiE10do_unshiftER9mbstate_tPcS4_RS4_
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IDiE11do_encodingEv
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IDiE13do_max_lengthEv
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IDiE16do_always_noconvEv
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IDiE5do_inER9mbstate_tPKcS5_RS5_PDiS7_RS7_
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IDiE6do_outER9mbstate_tPKDiS5_RS5_PcS7_RS7_
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IDiE9do_lengthER9mbstate_tPKcS5_j
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IDsE10do_unshiftER9mbstate_tPcS4_RS4_
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IDsE11do_encodingEv
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IDsE13do_max_lengthEv
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IDsE16do_always_noconvEv
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IDsE5do_inER9mbstate_tPKcS5_RS5_PDsS7_RS7_
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IDsE6do_outER9mbstate_tPKDsS5_RS5_PcS7_RS7_
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IDsE9do_lengthER9mbstate_tPKcS5_j
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IwE10do_unshiftER9mbstate_tPcS4_RS4_
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IwE11do_encodingEv
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IwE13do_max_lengthEv
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IwE16do_always_noconvEv
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IwE5do_inER9mbstate_tPKcS5_RS5_PwS7_RS7_
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IwE6do_outER9mbstate_tPKwS5_RS5_PcS7_RS7_
-  _ZNKSt6__ndk120__codecvt_utf8_utf16IwE9do_lengthER9mbstate_tPKcS5_j
-  _ZNKSt6__ndk17codecvtIDic9mbstate_tE10do_unshiftERS1_PcS4_RS4_
-  _ZNKSt6__ndk17codecvtIDic9mbstate_tE11do_encodingEv
-  _ZNKSt6__ndk17codecvtIDic9mbstate_tE13do_max_lengthEv
-  _ZNKSt6__ndk17codecvtIDic9mbstate_tE16do_always_noconvEv
-  _ZNKSt6__ndk17codecvtIDic9mbstate_tE5do_inERS1_PKcS5_RS5_PDiS7_RS7_
-  _ZNKSt6__ndk17codecvtIDic9mbstate_tE6do_outERS1_PKDiS5_RS5_PcS7_RS7_
-  _ZNKSt6__ndk17codecvtIDic9mbstate_tE9do_lengthERS1_PKcS5_j
-  _ZNKSt6__ndk17codecvtIDsc9mbstate_tE10do_unshiftERS1_PcS4_RS4_
-  _ZNKSt6__ndk17codecvtIDsc9mbstate_tE11do_encodingEv
-  _ZNKSt6__ndk17codecvtIDsc9mbstate_tE13do_max_lengthEv
 
-### cipher (514)
+### cipher (542)
   !*[]goech.HpkeSymmetricCipherSuite
   !*layers.TLSChangeCipherSpecRecord
   !CipherSuites_Remove_RandomCiphers
@@ -4466,8 +4685,10 @@
   $*func([]uint8) (cipher.Block, error)
   $*func(int, int) (cipher.AEAD, error)
   %*map.bucket[go.shape.int]cipher.Block
+  %At least one cipher suite is required
   &*func(*qtls.CipherSuiteTLS13, []uint8)
   (*func(cipher.Block) (cipher.AEAD, error)
+  )Decryption failed (ciphertext too short).
   *[12]dtls.CipherSuite
   *[16]cipher.gcmFieldElement
   *[17]*tls.CipherSuite
@@ -4511,6 +4732,7 @@
   *map.bucket[int]cipher.Block
   *map[go.shape.int]cipher.Block
   *map[int]cipher.Block
+  *no cipher suites for cleartext connections
   *protocol.ChangeCipherSpec
   *qtls.CipherSuiteTLS13
   *qtls.cipherSuite
@@ -4529,9 +4751,11 @@
   *tls.cipherSuiteTLS13
   *tls.sortableCipher
   *tls.sortableCiphers
+  +Invalid ciphertext (output prefix mismatch)
   ,IPv6 field has value >=2^16Invalid cipher suite id: %dNAF digits must fit in int8Reuse of exported var name:Run '%v --help' for usage.
   ,github.com/pion/dtls/v2/internal/ciphersuite
   .github.com/pion/dtls/v2/pkg/crypto/ciphersuite
+  /Lokhttp3/CipherSuite$Companion$ORDER_BY_NAME$1;
   /memory/classes/metadata/other:bytes0123456789abcdefghijklmnopqrstuvwxyz444089209850062616169452667236328125CipherSuite has not been initializedCompletion ended with directive: %s
   /root/go/pkg/mod/github.com/pion/dtls/v2@v2.2.4/cipher_suite.go
   /root/go/pkg/mod/github.com/pion/dtls/v2@v2.2.4/internal/ciphersuite/ciphersuite.go
@@ -4565,6 +4789,7 @@
   CandidateCipherSuites
   ChangeCipherSpec
   Cipher
+  Cipher didn't write full block
   CipherLen
   CipherName
   CipherSuite
@@ -4573,7 +4798,11 @@
   CipherSuites
   CipherSuitesaprotobuf:"bytes,9,opt,name=cipher_suites,json=cipherSuites,proto3" json:"cipher_suites,omitempty"
   CipherType
+  Ciphertext is too short
+  Ciphertext is too short.
+  Ciphertext too short.
   CiphertextSize
+  ConnectionSpec(cipherSuites=
   Data Encipherment
   Decipher Only
   ENCIPHERMENT
@@ -4597,43 +4826,48 @@
   EVP_CIPHER_CTX_iv
   EVP_CIPHER_CTX_iv_length
   EVP_CIPHER_CTX_iv_noconst
-  EVP_CIPHER_CTX_key_length
-  EVP_CIPHER_CTX_new
-  EVP_CIPHER_CTX_nid
-  EVP_CIPHER_CTX_num
-  EVP_CIPHER_CTX_original_iv
-  EVP_CIPHER_CTX_rand_key
-  EVP_CIPHER_CTX_reset
-  EVP_CIPHER_CTX_set_app_data
-  EVP_CIPHER_CTX_set_cipher_data
-  EVP_CIPHER_CTX_set_flags
 
-### nonce (104)
+### nonce (125)
+  !PROGRAMMATIC_ACCESS_LIBRARY_NONCE
+  "Missing required properties: nonce
+  $The nonce length (in bytes) must be
   '*ip.ExtendIfNonceEqualLockedDisposition
   *header.NDPNonceOption
   *qtls.prefixNonceAEAD
   *reality.prefixNonceAEAD
   *tls.prefixNonceAEAD
   BN_generate_dsa_nonce
+  ERROR_MISSING_OR_INVALID_NONCE
   ERuWVVEr.(*goZXRC1).NonceSize
   ExtendIfNonceEqualLocked
   HXWW2kdISDDg.(*rKcNXK0).NonceSize
+  IntegrityTokenRequest{nonce=
   Jkt0xNeHwih.(*naxtjZMQHYa).NonceSize
   KOZgO5kVP.(*eGwcFIF1).NonceSize
   M1zkd2jw.(*c3ODBkF).NonceSize
   M1zkd2jw.(*ygeO47i).NonceSize
+  MISSING_OR_INVALID_NONCE
+  NONCE_TOO_LONG
+  NONCE_TOO_SHORT
   NewNonce
   Nonce
   NonceGenerator
   NonceSize
+  Null nonce
   OCSP Nonce
   QyX17ckb.(*bcNJZC).NonceSize
   QyX17ckb.(*bpsx8mU).NonceSize
+  Retry with a longer nonce.
+  Retry with a shorter nonce.
+  Retry with correct nonce format.
   SetNonce
   TS_REQ_set_nonce
   TS_TST_INFO_set_nonce
+  TURTLEX_AUCTION_NONCE
+  The request does not contain a valid nonce. This can occur if the SHA-256 hash of the provided raw nonce does not match the hashed nonce in the ID token payload.
   aj2YfEfz.(*wPyrJLHO4).NonceSize
   baseNonce
+  base_nonce
   calcNonce
   crypto/tls.(*halfConn).explicitNonceLen
   crypto/tls.(*prefixNonceAEAD).NonceSize
@@ -4644,6 +4878,8 @@
   d2i_ocsp_nonce
   error retrieving nonce
   explicitNonceLen
+  getIdTokenNonce
+  getNonce
   github.com/cloudflare/circl/hpke.(*AEAD).NonceSize
   github.com/cloudflare/circl/hpke.(*encdecContext).NonceSize
   github.com/cloudflare/circl/hpke.(*encdecContext).calcNonce
@@ -4691,9 +4927,11 @@
   lfm06g.qGa2rYWLOUM.NonceSize
   ncd_runonce
   nonce
+  nonce length must be 12 bytes.
   nonce mismatch
   nonce not returned
   nonce4
+  nonce=
   nonceBuf
   nonceMask
   nonceSize
@@ -4704,6 +4942,8 @@
   rand_drbg_get_nonce
   rand_pool_add_nonce_data
   sendNonce
+  setIdTokenNonce
+  setNonce
   shutdownOnce
   too little nonce requested
   too much nonce requested
@@ -4714,7 +4954,7 @@
   type:.eq.github.com/xtls/reality.prefixNonceAEAD
   v3_ocsp_nonce
 
-### key (3116)
+### key (4339)
   !*func() (*ecdh.PrivateKey, error)
   !*func(*kyber1024.PrivateKey) bool
   !*func(device.NoisePublicKey) bool
@@ -4724,6 +4964,30 @@
   !*struct { key uint64; elem bool }
   !*struct { key uint8; elem uint8 }
   !*tls.PSKKeyExchangeModesExtension
+  !Cannot build without key material
+  !Creating new keys is not allowed.
+  !DATA_PROCESSING_OPTIONS_STATE_KEY
+  !Encapsulated key has wrong length
+  !Invalid encoded public key length
+  !Invalid encoded public key prefix
+  !KEY_BATTERY_NOT_LOW_PROXY_ENABLED
+  !KEY_STORAGE_NOT_LOW_PROXY_ENABLED
+  !Landroid/text/method/KeyListener;
+  !Landroid/view/View$OnKeyListener;
+  !Ljava/security/KeyStoreException;
+  !Ljava/security/interfaces/RSAKey;
+  !Ljavax/crypto/spec/SecretKeySpec;
+  !Lorg/yaml/snakeyaml/events/Event;
+  !Lorg/yaml/snakeyaml/nodes/NodeId;
+  !Lorg/yaml/snakeyaml/tokens/Token;
+  !Only 32 byte key size is accepted
+  !Parsing KmsAeadKeyFormat failed:
+  !Parsing RsaSsaPssPublicKey failed
+  !SpecializedLogSiteKey{ delegate='
+  !getResidentKeyRequirementAsString
+  !get_or_generate_device_public_key
+  !invalid key id: not a JSON number
+  !serviceMissingResolutionIntentKey
   "*[]struct { key int; elem string }
   "*[]struct { key string; elem int }
   "*[]struct { key uint8; elem bool }
@@ -4735,7 +4999,22 @@
   "*func(uint16) reality.keyAgreement
   "*map.bucket[filedesc.pathKey][]int
   "*map.bucket[logrus.fieldKey]string
+  "ERROR_PASSKEY_ENROLLMENT_NOT_FOUND
+  "Invalid encoded private key length
+  "Invalid encoded private key prefix
+  "KEY_BATTERY_CHARGING_PROXY_ENABLED
+  "LegacyKmsAead Parameters (keyUri:
+  "Lorg/yaml/snakeyaml/DumperOptions;
+  "Lorg/yaml/snakeyaml/LoaderOptions;
+  "Lorg/yaml/snakeyaml/parser/Parser;
+  "No key manager found for key type
+  "Parsing RsaSsaPssPrivateKey failed
+  "PublicKeyCredentialRpEntityCreator
   "UnimplementedPreSharedKeyExtension
+  "[Lorg/yaml/snakeyaml/nodes/NodeId;
+  "can't read keyset; the pref value
+  "clearKeys: unable to process key:
+  "setPasskeyJsonSignInRequestOptions
   # - TabCompleteNext (default windows style - on each key press the next option is displayed)
   # You set the mode with Set-PSReadLineKeyHandler -Key Tab -Function <mode>
   #*[8]struct { key int; elem string }
@@ -4749,6 +5028,20 @@
   #*struct { key string; elem string }
   #*struct { key string; elem uint16 }
   #*struct { key string; elem uint64 }
+  #Action[clear]: empty key at index:
+  #DATA_PROCESSING_OPTIONS_COUNTRY_KEY
+  #Encoded public key byte length for
+  #Invalid private key for public key.
+  #Ljava/security/InvalidKeyException;
+  #Ljava/security/spec/EncodedKeySpec;
+  #Lorg/yaml/snakeyaml/JavaBeanDumper;
+  #Lorg/yaml/snakeyaml/JavaBeanLoader;
+  #Parsing KmsEnvelopeAeadKey failed:
+  #Parsing RsaSsaPkcs1PublicKey failed
+  #The key length in bytes must be 32.
+  #dekParametersForNewKeys must be set
+  #zero_party_api_authenticate_passkey
+  $ bytes; key must have 32 or 64 bytes
   $*[8]struct { key string; elem bool }
   $*[8]struct { key uint64; elem bool }
   $*[8]struct { key uint8; elem uint8 }
@@ -4757,9 +5050,36 @@
   $*struct { key string; elem []uint8 }
   $*struct { key uint16; elem []uint8 }
   $*struct { pragma.NoUnkeyedLiterals }
+  $Encoded private key byte length for
+  $Given private key's length is not 32
+  $Given public key's length is not 32.
+  $KEY_COMPONENT_ACTIVITY_LAUNCHED_KEYS
+  $Landroid/view/KeyboardShortcutGroup;
+  $Ljava/security/spec/ECPublicKeySpec;
+  $Lorg/yaml/snakeyaml/TypeDescription;
+  $Lorg/yaml/snakeyaml/emitter/Emitter;
+  $Lorg/yaml/snakeyaml/events/Event$ID;
+  $Lorg/yaml/snakeyaml/nodes/NodeTuple;
+  $Lorg/yaml/snakeyaml/scanner/Scanner;
+  $Lorg/yaml/snakeyaml/tokens/KeyToken;
+  $Lorg/yaml/snakeyaml/tokens/TagToken;
+  $Lorg/yaml/snakeyaml/tokens/TagTuple;
+  $Lorg/yaml/snakeyaml/tokens/Token$ID;
+  $Lorg/yaml/snakeyaml/util/UriEncoder;
   $Mode = (Get-PSReadLineKeyHandler | Where-Object {$_.Key -eq "Tab" }).Function
+  $Parsing RsaSsaPkcs1PrivateKey failed
   $PinnedPeerCertificatePublicKeySha256
   $PinnedPeerCertificatePublicKeySha256+json:"pinnedPeerCertificatePublicKeySha256"
+  $PublicKeyCredentialDescriptorCreator
+  $PublicKeyCredentialParametersCreator
+  $PublicKeyCredentialUserEntityCreator
+  $Value of the primary key is not set.
+  $com.google.firebase.auth.KEY_API_KEY
+  $getPublicKeyCredentialRequestOptions
+  $invalid key id: not a JSON primitive
+  $invalid keyset: key must be an array
+  $same_app_key_p13n_disabled_platforms
+  $setPublicKeyCredentialRequestOptions
   %*[]struct { key string; elem string }
   %*[]struct { key string; elem uint16 }
   %*[]struct { key string; elem uint64 }
@@ -4775,93 +5095,13 @@
   %*struct { key string; elem []string }
   %12sPublic Key Algorithm:
   %12sUnable to load Public Key
-  %s PRIVATE KEY
-  %s: Key is not the correct length or format
-  %s: Trailing characters found after key
-  %sUint64DELETESTREET, got %s: %sexec: IsWeakSyntaxNumberIsListMapKeyFieldsOneofsValuesOutputGoTypevarintSTRINGswitchGOMIPSpower8GOWASM%s.v%dregabiGOARCHgrpclb
-  %spending ASN.1 child too longpresenting for challenge: %wprivate key not found for %sprocess_virtual_memory_bytesprotocol driver not attachedr
-  &#9;&gt;&lt;'\''(?:)("'/) = ) m=*%#v*/20*/21*/22*/23*/53*/80+Inf,r2=--%s-1.0-Inf-inf-tls...:...`.INF.Inf.NAN.NaN.crt.css.exe.gif.htm.inf.jpg.key.mjs.nan.pdf.png.svg.xml00000x%x1080127.3125: p=:%d
-  &*[8]struct { key string; elem string }
-  &*[8]struct { key string; elem uint16 }
-  &*[8]struct { key string; elem uint64 }
-  &*[]struct { key string; elem []uint8 }
-  &*[]struct { key uint16; elem []uint8 }
-  &*func() (*boring.PublicKeyECDH, error)
-  &*func(*device.Keypair) *device.Keypair
-  &*func([]uint8) (kem.PrivateKey, error)
-  &*func([]uint8) (sign.PublicKey, error)
-  &*func(tls.PreSharedKeyExtension) error
-  &*func(types.KeyExchangeAlgorithm) bool
-  &*map.bucket[http.cancelKey]func(error)
-  &*map.bucket[tls.CurveID]kem.PrivateKey
-  &*map[profile.sampleKey]*profile.Sample
-  &*struct { key string; elem struct {} }
-  &*struct { key uint16; elem struct {} }
-  '"'netTTLPortChanLineSenditemlineflagkeysdatanormtyp_mainjsonhelp%v
-  '*[8]struct { key string; elem []uint8 }
-  '*[8]struct { key uint16; elem []uint8 }
-  '*[]struct { key string; elem []string }
-  '*func(*ecdh.PrivateKey) *ecdh.PublicKey
-  '*func(*ecdh.PublicKey) ([]uint8, error)
-  '*func([]uint8) (*ecdh.PublicKey, error)
-  '*func([]uint8) (sign.PrivateKey, error)
-  '*map.bucket[tls.CurveID]*ecdh.PublicKey
-  '*map[device.NoisePublicKey]*device.Peer
-  '*struct { F uintptr; X0 x509.KeyUsage }
-  '*struct { key string; elem net.byName }
-  '*tls.UnimplementedPreSharedKeyExtension
-  'GetPinnedPeerCertificatePublicKeySha256
-  'SendKeepalivesToPeersWithCurrentKeypair
-  (*[8]struct { key string; elem []string }
-  (*[]struct { key string; elem struct {} }
-  (*[]struct { key uint16; elem struct {} }
-  (*func([]uint8) (*ecdh.PrivateKey, error)
-  (*func(acl.cacheKey, acl.cacheValue) bool
-  (*func(string) (crypto.PrivateKey, error)
-  (*func(tls.CurveID) (kem.PublicKey, bool)
-  (*map.bucket[tls.CurveID]*ecdh.PrivateKey
-  (*map[profile.mappingKey]*profile.Mapping
-  (*struct { key uint32; elem []*abi.Type }
-  (TEST_ENG_OPENSSL_PKEY)Loading Private key %s
-  (TEST_ENG_OPENSSL_RC4) test_init_key() called
-  )*[8]struct { key string; elem struct {} }
-  )*[8]struct { key uint16; elem struct {} }
-  )*[]struct { key string; elem net.byName }
-  )*func(device.NoisePublicKey) *device.Peer
-  )*func(tls.CurveID) (kem.PrivateKey, bool)
-  )*struct { key string; elem interface {} }
-  )pinned_peer_certificate_public_key_sha256
-  **[8]struct { key string; elem net.byName }
-  **[]struct { key uint32; elem []*abi.Type }
-  **func(acl.cacheKey) (acl.cacheValue, bool)
-  **func(io.Reader) (*ecdh.PrivateKey, error)
-  **func(io.Reader) (*ecdh.PrivateKey, error)B
-  **func(tls.CurveID) (*ecdh.PublicKey, bool)
-  **map[profile.functionKey]*profile.Function
-  **map[profile.locationKey]*profile.Location
-  **struct { key int32; elem unsafe.Pointer }
-  **struct { key unsafe.Pointer; elem int32 }@
-  *[0]*device.Keypair
-  *[1]*ast.ObjectKey
-  *[1]qtls.keyShare
-  *[1]qtls.ticketKey
-  *[1]reality.keyShare
-  *[1]reality.ticketKey
-  *[1]tls.KeyShare
-  *[1]tls.keyShare
-  *[1]tls.ticketKey
-  *[1]x509.ExtKeyUsage
-  *[2]tls.KeyShare
-  *[3]tls.KeyShare
-  *[8]*ecdh.PrivateKey
-  *[8]*ecdh.PublicKey
-  *[8]*ini.Key
-  *[8]acl.cacheKey
-  *[8]certmagic.KeyInfo
-  *[8]device.NoisePublicKey
-  *[8]filedesc.pathKey
-  *[8]http.cancelKey
-  *[8]http.connectMethodKey
-  *[8]intern.key
-  *[8]kem.PrivateKey
-  *[8]kem.PublicKey
+  %Error serializing key/value metadata.
+  %GMSG clear local storage keys handler
+  %KEY_COMPONENT_ACTIVITY_PENDING_RESULT
+  %KEY_COMPONENT_ACTIVITY_REGISTERED_RCS
+  %Lcom/facebook/ads/ExtraHints$Keyword;
+  %Ljava/security/spec/ECPrivateKeySpec;
+  %Ljava/security/spec/RSAPublicKeySpec;
+  %Lorg/yaml/snakeyaml/emitter/Emitable;
+  %Lorg/yaml/snakeyaml/events/NodeEvent;
+  %Lorg/yaml/snakeyaml/nodes/AnchorNode;

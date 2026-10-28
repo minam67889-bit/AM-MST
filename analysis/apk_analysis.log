@@ -135,3 +135,152 @@ domains: 184  urls: 71  classes: 0
   *[8]*rdns.request
   *[8]dns.DomainMatchingType
   *[8]dns.Handler
++ ls -l amtunnel.apk
+-rw-r--r-- 1 runner runner 22445510 Oct 28 15:53 amtunnel.apk
++ extras=
++ read -r split
++ '[' -n apks/split-1.apk ']'
++ extras=' --extra-apk apks/split-1.apk'
++ read -r split
++ '[' -n apks/split-2.apk ']'
++ extras=' --extra-apk apks/split-1.apk --extra-apk apks/split-2.apk'
++ read -r split
++ '[' -n apks/split-3.apk ']'
++ extras=' --extra-apk apks/split-1.apk --extra-apk apks/split-2.apk --extra-apk apks/split-3.apk'
++ read -r split
++ '[' -n apks/split-4.apk ']'
++ extras=' --extra-apk apks/split-1.apk --extra-apk apks/split-2.apk --extra-apk apks/split-3.apk --extra-apk apks/split-4.apk'
++ read -r split
++ python3 tools/apk_analysis.py --apk amtunnel.apk --extra-apk apks/split-1.apk --extra-apk apks/split-2.apk --extra-apk apks/split-3.apk --extra-apk apks/split-4.apk --out analysis
+{
+  "apk": "amtunnel.apk",
+  "size": 22445510,
+  "sha256": "636f96d211266bb592d47ff0f63cb886e332cb312c99ef0fb48572c180065aed",
+  "entries": 2273,
+  "dex": [
+    "classes.dex",
+    "classes2.dex",
+    "classes3.dex"
+  ],
+  "native_libs": [],
+  "res_raw": [
+    "res/raw/dnslite_local",
+    "res/raw/firebase_common_keep.xml",
+    "res/raw/firebase_crashlytics_keep.xml",
+    "res/raw/pdnsd_local"
+  ],
+  "native_libs_extra": 15,
+  "raw_strings": 610485,
+  "strings_per_dex": {
+    "classes.dex": 112735,
+    "classes2.dex": 12594,
+    "classes3.dex": 216
+  }
+}
+domains: 297  urls: 163  classes: 7031
++ echo '--- domains found ---'
+--- domains found ---
++ head -40 analysis/domains.txt
+25921  github.com
+ 5936  gvisor.dev
+ 5507  google.golang.org
+ 3102  golang.org
+  830  golang.zx2c4.com
+  662  go.uber.org
+  559  gopkg.in
+  536  eq.github.com
+  131  eq.gvisor.dev
+  122  xray.app
+   97  eq.google.golang.org
+   87  go4.org
+   68  eq.golang.org
+   55  eq.net
+   35  lukechampine.com
+   34  transport.link
+   21  net.network
+   20  eq.golang.zx2c4.com
+   16  com.xray.app
+   14  yaml.org
+   13  www.googleapis.com
+   12  hash.github.com
+   11  0github.com
+   11  openssl.org
+   11  xray.common.net.network
+   11  idna.info
+   10  bitbucket.org
+   10  androidx.work
+    9  xray.core.app
+    9  android.net
+    9  xray.common.net
+    9  android.googlesource.com
+    8  type.googleapis.com
+    8  eq.go.uber.org
+    8  hash.gvisor.dev
+    7  googleads.g.doubleclick.net
+    7  www.google.com
+    6  pagead2.googlesyndication.com
+    6  1github.com
+    6  4github.com
++ echo '--- protocol hints ---'
+--- protocol hints ---
++ head -60 analysis/keywords.txt
+
+### dns (3332)
+  !*[]*conf.FakeDNSPoolElementConfig
+  !*[]*dns.NameServer_PriorityDomain
+  !*func() []*dns.Config_HostMapping
+  !*func(*dns.Msg) (*dns.Msg, error)
+  !Lokhttp3/Dns$Companion$DnsSystem;
+  !github.com/xtls/xray-core/app/dns
+  "*[2]*conf.FakeDNSPoolElementConfig
+  "*func(*dns.DNSKEY, []dns.RR) error
+  "*map.bucket[dnsmessage.Type]string
+  "*map.bucket[uint16]*dns.dnsRequest
+  "*map.group[dnsmessage.Class]string
+  "*map.group[dnsmessage.RCode]string
+  "Lprince/udp/vpn/service/vpn/Pdnsd;
+  "getStaleDnsAllowOtherNetworkOption
+  #*func(*dns.Header) ([]uint8, error)
+  #*func(dns.ResponseWriter, *dns.Msg)
+  #*map.bucket[dnsmessage.Class]string
+  #*map.bucket[dnsmessage.RCode]string
+  #Xray.Transport.Internet.Headers.DNSb
+  #getStaleDnsPersistDelayMillisOption
+  #github.com/xtls/xray-core/proxy/dns
+  #xray.transport.internet.headers.dns"
+  $*dispatcher.DNSThenOthersSniffResult
+  $*func(crypto.Signer, []dns.RR) error
+  $*map.group[dnsmessage.section]string
+  $EffectiveDNSResponseFragmentStoreCap
+  $Failed to receive the dns resolvers.
+  $Lprince/udp/vpn/service/vpn/Pdnsd$1;
+  %*map.bucket[dnsmessage.section]string
+  %*struct { F uintptr; X0 *dns.Client }
+  %Landroid/net/http/DnsOptions$Builder;
+  %Lorg/chromium/net/DnsOptions$Builder;
+  %getStaleDnsMaxExpiredTimeMillisOption
+  %spdnsd: %s:
+  &*func() ([]dnsmessage.Resource, error)
+  &*func() []*dns.NameServer_OriginalRule
+  &*struct { F uintptr; X0 *dns.Handler }
+  &*struct { F uintptr; r rdns.Resolver }
+  &github.com/xtls/xray-core/features/dns
+  &vendor/golang.org/x/net/dns/dnsmessage
+  '*func(dns.Client, policy.Manager) error
+  '*func(policy.Manager, dns.Client) error
+  '*map.bucket[rdns.lruKey]*rdns.cacheItem
+  'Lprince/udp/vpn/service/DNSLiteService;
+  'com.xray.transport.internet.headers.dnsP
+  (*func() (*dns.Msg, time.Duration, error)
+  (*func() []*dns.NameServer_PriorityDomain
+  (*func(dnsmessage.RCode) dnsmessage.RCode
+  (*func(int, dnsmessage.RCode, bool) error
+  (Lprince/udp/vpn/service/SocksDNSService;
+  (preestablishConnectionsToStaleDnsResults
+  )*func(string, dns.IPOption) []net.Address
+  )github.com/xtls/xray-core/app/dns/fakedns
+  )mPreestablishConnectionsToStaleDnsResults
+  **func() (*fakedns.FakeDnsPoolMulti, error)
+  **func() ([]*dns.Config_HostMapping, error)
+  **func(*dns.zlexer, string) *dns.ParseError
+  **func([]uint8, *dns.TSIG) ([]uint8, error)
