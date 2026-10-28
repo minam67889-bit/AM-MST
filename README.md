@@ -43,8 +43,9 @@ APK as a build artifact **and** publishes it as a GitHub Release.
 
 ### Download the APK
 
-Grab the newest `amtunnel-mst-debug-*.apk` from the
-[Releases page](https://github.com/minam67889-bit/AM-MST/releases). It is a
+Grab the newest `amtunnel-mst-*.apk` from the
+[Releases page](https://github.com/minam67889-bit/AM-MST/releases/latest)
+(latest verified build: `amtunnel-mst-71f365a.apk`, 962,646 bytes). It is a
 debug-signed build (install with `adb install -r <file>.apk`); a release-signed
 APK is built automatically when the signing secrets are configured.
 

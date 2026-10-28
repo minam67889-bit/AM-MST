@@ -1,5 +1,8 @@
 # Implemented / verified / blocked
 
+Prebuilt APK: <https://github.com/minam67889-bit/AM-MST/releases/latest>
+(`amtunnel-mst-*.apk`, debug-signed).
+
 Last verified end-to-end in CI run **40713951951** (`Live DNS-tunnel integration: success`,
 `Unit tests + APK: success`).
 
@@ -29,7 +32,9 @@ Last verified end-to-end in CI run **40713951951** (`Live DNS-tunnel integration
 | Failover to another resolver without reconnect | Verified | `test3`: relay A killed mid-session → `resolver=…:35235 switches=1 recoveries=0 timeouts=1`, HTTP still flowed |
 | Session recovery after session loss | Implemented | `MasterDnsTransport.recoverSession`, retriggered by 4 consecutive failures; not exercised by CI |
 | Adaptive scan scheduling | Implemented | `ScanScheduler` (interval logic unit-adjacent, not time-tested) |
-| Android UI (connect, resolvers, scan, diagnostics) | Implemented | compiles into a 955 KB debug APK (`:app:assembleDebug`); no emulator in this environment |
+| Android UI (connect, resolvers, scan, diagnostics) | Implemented | compiles into the shipped debug APK; UI behaviour itself is not device-tested |
+| Debug APK produced by CI | Verified (structure) | 962,646 B, `sha256 4e9c0f2858c11e6788fe81c664611ab457db55e5c672fbb4ccb7753a6f2b24cd`; `aapt2` checks: debug applicationId, INTERNET, FOREGROUND_SERVICE, `TunnelVpnService` + `android.net.VpnService` filter, launcher activity, minSdk 26 / targetSdk 34; transport classes found in `classes7.dex` |
+| APK installs and runs on a device | **Not verified** | no Android device, emulator or ADB in this environment |
 | Foreground `VpnService` lifecycle, `protect()` | Implemented | compiles; no on-device run available |
 | DNS-mode tun capture (DNS over tunnel) | Implemented | `IpPacket` + `DnsTunnelRelay`; not exercised on a device |
 | Full-device TCP routing (tun2socks) | Blocked (by design) | would require a userland TCP/IP stack or a native tun2socks library; not shipped. SOCKS5 proxy mode is the verified traffic path |
