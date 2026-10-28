@@ -1,5 +1,29 @@
 # DNS: the servers, the two algorithms, and the connection test
 
+## خلاصه به فارسی
+
+* **سرورهای DNS استخراج شد:** ۲۰ دامنه‌ی SlowDNS (`de1.liftmeon.org` …
+  `de20.liftmeon.org`)، ۱۰۰ آی‌پی FastDNS، و ۷۲۵ آی‌پی UDPQ — هم از باندل
+  داخل APK و هم از باندل زنده‌ی خودِ اپ روی گیت‌هاب، با عدد یکسان.
+* **الگوریتم خودشان بازسازی شد:** کانفیگ `config.json` که اپ می‌نویسد
+  (`server` رمز‌شده با `pEncrypt`، `validate=1`، `confuse=3`، `rx/tx`،
+  `retry=1/1s`، پنجره‌ها) و هم `pdnsd` با بلوک `server {}` برای هر دامنه و
+  `PDNSD_TYPE` که پیش‌فرضش `tcp_only` است.
+* **تست اتصال واقعی انجام شد** (از رانر گیت‌هاب، چون سندباکس اجازه‌ی UDP/53
+  نمی‌دهد):
+  * الگوریتم خودشان با پیش‌فرض `tcp_only`: **۰ از ۲۰** — همه TCP/53 را رد
+    کردند؛ یعنی پیش‌فرضِ اپ روی این شبکه کلاً کار نمی‌کند.
+  * همین الگوریتم با `udp_only`: **۱۹ از ۲۰** — پس کلاینتشان سالم است و فقط
+    پیش‌فرضش غلط است.
+  * الگوریتم ما: **۱۷ از ۲۰ در ۶ ثانیه** (به‌جای ۱۶ ثانیه) چون همه با هم
+    فرستاده می‌شوند؛ FastDNS ۰/۱۰۰ (بی‌صدا، طبیعی است)؛ UDPQ **۱۹۶ از ۷۲۵**.
+  * بالانسرِ واقعیِ کاتلین (`MasterBalancer.kt`): ۲۰ از ۳۴ مسیر زنده ماند و
+    **۱۴ سرور مرده** (از جمله دو آدرس کنترلی که وجود ندارند) خودکار parked شدند.
+* **چیزی که هنوز مانده:** کلید عمومی dnstt (`-pubkey`) و سکرت SlowDNS. تا
+  نبودنشان «تونل بالا آمدن» قابل اثبات نیست؛ فقط «سرور جواب می‌دهد» اثبات شد.
+
+---
+
 The target of this pass is the DNS path only: pull the DNS servers out of
 BD NET, prove that *their* client algorithm and *our* client algorithm both
 work, and take a real connection test — theirs first, ours second.
