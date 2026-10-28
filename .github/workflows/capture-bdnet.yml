@@ -55,13 +55,18 @@ jobs:
           api-level: 30
           target: default
           arch: arm64-v8a
-          profile: pixel_2
+          profile: pixel
+          emulator-boot-timeout: 2400
           disable-animations: true
           emulator-options: >-
-            -no-window -no-snapshot -gpu swiftshader_indirect -noaudio
-            -no-boot-anim -camera-back none -camera-front none -memory 2048
+            -no-window -no-snapshot -gpu off -noaudio -no-boot-anim
+            -camera-back none -camera-front none -memory 2048 -no-metrics
+            -partition-size 2048
           script: |
             set -uo pipefail
+            echo "=== boot state ==="
+            adb shell getprop sys.boot_completed || true
+            adb shell getprop ro.product.cpu.abi || true
             adb root || true
             adb wait-for-device
             adb shell settings put global window_animation_scale 0 || true
