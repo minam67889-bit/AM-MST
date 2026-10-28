@@ -63,23 +63,26 @@ jobs:
       - name: Head to head - their transport vs our balancer (SlowDNS, 20 hosts)
         continue-on-error: true
         run: |
+          set -o pipefail
           python3 tools/bdnet_dns.py compare analysis-bdnet/configs/dns/servers.json \
             --mode slowdns --timeout "${{ inputs.timeout || '6' }}" --show 20 \
-            --out /tmp/compare.json | tee /tmp/compare.txt
+            --out /tmp/compare.json 2>&1 | tee /tmp/compare.txt
 
       - name: FastDNS reachability (100 dnstt endpoints, UDP/53)
         continue-on-error: true
         run: |
+          set -o pipefail
           python3 tools/bdnet_dns.py mine analysis-bdnet/configs/dns/servers.json \
             --mode fastdns --timeout 5 --workers 100 --show 12 \
-            --out /tmp/ours-fastdns.json | tee /tmp/ours-fastdns.txt
+            --out /tmp/ours-fastdns.json 2>&1 | tee /tmp/ours-fastdns.txt
 
       - name: UDPQ pool reachability (725 endpoints, UDP 6000-19999)
         continue-on-error: true
         run: |
+          set -o pipefail
           python3 tools/bdnet_dns.py mine analysis-bdnet/configs/dns/servers.json \
             --mode udpq --timeout 3 --workers 128 --show 12 \
-            --out /tmp/ours-udpq.json | tee /tmp/ours-udpq.txt
+            --out /tmp/ours-udpq.json 2>&1 | tee /tmp/ours-udpq.txt
 
       - name: Summary
         run: |
@@ -116,6 +119,8 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p analysis-bdnet/configs/dns/results
+          ls -l /tmp > analysis-bdnet/configs/dns/results/manifest.txt 2>&1 || true
+          python3 -V >> analysis-bdnet/configs/dns/results/manifest.txt 2>&1 || true
           for f in compare ours-fastdns ours-udpq; do
             cp "/tmp/$f.json" analysis-bdnet/configs/dns/results/ 2>/dev/null || true
           done
