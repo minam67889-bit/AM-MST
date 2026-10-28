@@ -1,16 +1,16 @@
 host                             ip                port       ms  result
-173.249.53.105                   173.249.53.105      53   5001.9  FAIL TimeoutError
-173.249.15.5                     173.249.15.5        53   5002.5  FAIL TimeoutError
-38.242.206.163                   38.242.206.163      53   5004.2  FAIL TimeoutError
-38.242.252.156                   38.242.252.156      53   5004.3  FAIL TimeoutError
-192.145.37.229                   192.145.37.229      53   5004.4  FAIL TimeoutError
-207.180.235.227                  207.180.235.227     53   5004.4  FAIL TimeoutError
-80.190.82.17                     80.190.82.17        53   5004.5  FAIL TimeoutError
-38.242.154.171                   38.242.154.171      53   5004.5  FAIL TimeoutError
-173.212.232.241                  173.212.232.241     53   5004.6  FAIL TimeoutError
-80.190.81.180                    80.190.81.180       53   5004.6  FAIL TimeoutError
-80.190.81.235                    80.190.81.235       53   5004.6  FAIL TimeoutError
-86.48.2.98                       86.48.2.98          53   5004.6  FAIL TimeoutError
+192.145.37.229                   192.145.37.229      53   5000.5  FAIL TimeoutError
+185.196.21.114                   185.196.21.114      53   5001.4  FAIL TimeoutError
+173.249.53.105                   173.249.53.105      53   5001.7  FAIL TimeoutError
+173.249.48.107                   173.249.48.107      53   5002.0  FAIL TimeoutError
+173.249.15.5                     173.249.15.5        53   5002.1  FAIL TimeoutError
+38.242.193.15                    38.242.193.15       53   5004.3  FAIL TimeoutError
+38.242.241.185                   38.242.241.185      53   5004.4  FAIL TimeoutError
+38.242.153.188                   38.242.153.188      53   5004.4  FAIL TimeoutError
+38.242.128.161                   38.242.128.161      53   5004.5  FAIL TimeoutError
+38.242.244.95                    38.242.244.95       53   5004.5  FAIL TimeoutError
+38.242.244.97                    38.242.244.97       53   5004.5  FAIL TimeoutError
+80.190.81.179                    80.190.81.179       53   5004.5  FAIL TimeoutError
 ... and 88 more
 
 0/100 answered over UDP/53 in 5.03s (all in flight at once)
