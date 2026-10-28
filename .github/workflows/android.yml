@@ -38,57 +38,6 @@ jobs:
           gradle :core:test :integration:compileTestKotlin :app:assembleDebug \
             --continue --no-daemon --stacktrace 2>&1 | tee -a build.log
 
-      - name: Publish build diagnostics (read via API when job logs are unreachable)
-        if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          python3 - <<'PY'
-          import json, os, urllib.request
-          errors = []
-          import glob, xml.etree.ElementTree as ET
-          for path in glob.glob("*/build/test-results/test/*.xml"):
-              try:
-                  tree = ET.parse(path)
-              except Exception:
-                  continue
-              for case in tree.iter("testcase"):
-                  for fail in list(case.iter("failure")) + list(case.iter("error")):
-                      msg = (fail.get("message") or "")[:400].replace("\n", " ")
-                      errors.append(f"TEST FAILED: {case.get('classname')}.{case.get('name')} :: {msg}")
-          tail = "(no build.log)"
-          if os.path.exists("build.log"):
-              with open("build.log", encoding="utf-8", errors="replace") as fh:
-                  full = fh.read()
-              tail = full[-20000:]
-              for line in full.splitlines():
-                  low = line.strip()
-                  if (low.startswith("e: ")
-                          or "error: " in low
-                          or "Unresolved reference" in low
-                          or low.startswith("> Task") and "FAILED" in low
-                          or low.startswith("* What went wrong")):
-                      errors.append(line[:500])
-          summary = "\n".join(errors[:120]) + "\n\n---- tail ----\n" + tail
-          payload = {
-              "name": "gradle-output",
-              "head_sha": os.environ["GITHUB_SHA"],
-              "status": "completed",
-              "conclusion": "neutral",
-              "output": {"title": "Gradle output tail", "summary": summary[:65000]},
-          }
-          req = urllib.request.Request(
-              f"https://api.github.com/repos/{os.environ['GITHUB_REPOSITORY']}/check-runs",
-              data=json.dumps(payload).encode(),
-              method="POST",
-              headers={
-                  "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
-                  "Accept": "application/vnd.github+json",
-                  "Content-Type": "application/json",
-              },
-          )
-          print("check-run status:", urllib.request.urlopen(req).status)
-          PY
 
       - name: Build release APK (signed if secrets are present)
         env:
@@ -105,13 +54,15 @@ jobs:
 
       - name: Verify APK contents
         run: |
+          {
+          set -x
           set -o pipefail
           APK=app/build/outputs/apk/debug/app-debug.apk
-          AAPT2=$(ls "$ANDROID_HOME"/build-tools/*/aapt2 | sort -V | tail -1)
+          AAPT2=$(ls "${ANDROID_HOME:-/usr/local/lib/android/sdk}"/build-tools/*/aapt2 | sort -V | tail -1)
           echo "using $AAPT2"
           "$AAPT2" dump badging "$APK" | tee apk-badging.txt
           "$AAPT2" dump xmltree --file AndroidManifest.xml "$APK" > apk-manifest.txt
-          check() { grep -q -- "$1" apk-badging.txt apk-manifest.txt || { echo "FAILED: $2"; exit 1; }; echo "ok: $2"; }
+          check() { grep -q -- "$1" apk-badging.txt apk-manifest.txt || { echo "error: APK check failed - $2"; exit 1; }; echo "ok: $2"; }
           check "package: name='io.amtunnel.app.debug'" "debug applicationId present"
           check "android.permission.INTERNET" "INTERNET permission"
           check "TunnelVpnService" "VpnService declared"
@@ -119,14 +70,21 @@ jobs:
           check "MainActivity" "launcher activity"
           check "sdkVersion:'26'" "minSdk 26"
           check "targetSdkVersion:'34'" "targetSdk 34"
-          unzip -p "$APK" classes.dex | strings | grep -c "io/amtunnel/core/transport/MasterDnsTransport" \
-            || { echo "FAILED: transport classes are not in the APK"; exit 1; }
+          if ! unzip -l "$APK" | grep -q "classes.*\\.dex"; then
+            echo "error: APK contains no dex"; exit 1
+          fi
+          found=0
+          for dex in $(unzip -Z1 "$APK" | grep -E "^classes[0-9]*\\.dex$"); do
+            if unzip -p "$APK" "$dex" | strings | grep -q "MasterDnsTransport"; then found=1; fi
+          done
+          if [ "$found" -ne 1 ]; then echo "error: transport classes are not in the APK"; exit 1; fi
           echo "ok: client transport packaged into the APK"
+          } 2>&1 | tee -a build.log
           {
             echo "### APK verification"
             echo ""
             echo '```'
-            head -5 apk-badging.txt
+            head -5 apk-badging.txt 2>/dev/null
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
@@ -187,6 +145,54 @@ jobs:
             echo "- Debug APK: $(ls -1 app/build/outputs/apk/debug/*.apk 2>/dev/null || echo 'not produced')"
             echo "- Unit tests: $(grep -h 'tests=' core/build/test-results/test/*.xml 2>/dev/null | sed -E 's/.*tests="([0-9]+)".*failures="([0-9]+)".*/tests=\1 failures=\2/' | head -1)"
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish build diagnostics (job logs are unreachable from the agent)
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import glob, json, os, urllib.request, xml.etree.ElementTree as ET
+          errors = []
+          for path in glob.glob("*/build/test-results/test/*.xml"):
+              try:
+                  tree = ET.parse(path)
+              except Exception:
+                  continue
+              for case in tree.iter("testcase"):
+                  for fail in list(case.iter("failure")) + list(case.iter("error")):
+                      msg = (fail.get("message") or "")[:400].replace("\n", " ")
+                      errors.append(f"TEST FAILED: {case.get('classname')}.{case.get('name')} :: {msg}")
+          tail = "(no build.log)"
+          if os.path.exists("build.log"):
+              with open("build.log", encoding="utf-8", errors="replace") as fh:
+                  content = fh.read()
+              # keep only lines that look like problems, plus a short tail
+              interesting = [
+                  line for line in content.splitlines()
+                  if line.startswith(("e:", "error:", "FAILED", "FAILURE", "ok:", "using ", "package:", "sdkVersion", "BUILD"))
+              ]
+              tail = "\n".join(interesting[-120:]) + "\n---- raw tail ----\n" + content[-8000:]
+          summary = "\n".join(errors[:60]) + "\n\n" + tail
+          payload = {
+              "name": "gradle-output",
+              "head_sha": os.environ["GITHUB_SHA"],
+              "status": "completed",
+              "conclusion": "neutral",
+              "output": {"title": "Gradle build diagnostics", "summary": summary[:65000]},
+          }
+          req = urllib.request.Request(
+              f"https://api.github.com/repos/{os.environ['GITHUB_REPOSITORY']}/check-runs",
+              data=json.dumps(payload).encode(),
+              method="POST",
+              headers={
+                  "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
+                  "Accept": "application/vnd.github+json",
+                  "Content-Type": "application/json",
+              },
+          )
+          print("check-run status:", urllib.request.urlopen(req).status)
+          PY
 
   integration:
     name: Live DNS-tunnel integration
