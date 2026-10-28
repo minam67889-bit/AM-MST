@@ -65,6 +65,6 @@ analysis/app-sources/sources_prince/dastan/vpn/service/vpn/TunnelManagerHelper.j
 + echo '--- strings that look like a tunnel config ---'
 --- strings that look like a tunnel config ---
 + grep -rhoE '(slowdns|dnstt)[^ "'\'']{0,60}' analysis/app-sources
-+ head -20
 + sort -u
++ head -20
 + true

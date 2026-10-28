@@ -15,14 +15,14 @@
 + echo '== assets/server.psi -> assets_server.psi 103253 bytes'
 == assets/server.psi -> assets_server.psi 103253 bytes
 + head -c 240 analysis/assets/assets_server.psi
-+ head -4
 + tr -cd '[:print:]\n'
++ head -4
 658656b071665526d505d0d525d626e0d1663576c555c08545d626b0113615761505e0d5f5d636e0c1361526d50500d575d616b011362576c505e0d535d616e071364526e505108545d626e0c1660526a555c0d5f58696e031361576d505a0d5e5d626e0d1666576a505b0d5259626f571762536b545b085+ strings -n 6 analysis/assets/assets_server.psi
 + head -40
 + strings -n 6 analysis/assets/assets_server.psi
 + grep -oiE '[a-z0-9][a-z0-9.-]+\.(com|net|org|io|ir|app|dev|xyz|online|site|top|fun|club|shop|live|icu|me|co)'
-+ head -40
 + sort -u
++ head -40
 + true
 ++ wc -l
 + echo '-- hosts in asset: 0'
@@ -40,8 +40,8 @@
 + echo '== assets/sorter.json -> assets_sorter.json 414920 bytes'
 == assets/sorter.json -> assets_sorter.json 414920 bytes
 + head -c 240 analysis/assets/assets_sorter.json
-+ tr -cd '[:print:]\n'
 + head -4
++ tr -cd '[:print:]\n'
 jXelaC1VUYqQh+amLrCYhzlKv4wfOX8ZAIjTMlwVU9c08AgC6w1IrXdy1qRtxctCSnCRmCSfcfK4sT02+i9cI8Kv08dhJ0b+DuI4S47Fq4ohWHZwYRxfijHa+JIPVjo6qSxKoqOUKLiFb9uCZ2rxQEjkmuAGmyHQLzyGbADRQIJ5Tp4ofRaNbi4Ql1tT8YKuLZi9oVnIYR0jqUWBnr3kCAi1DrMZG+7rpPimpyxlmJ9ND+yt+ strings -n 6 analysis/assets/assets_sorter.json
 + head -40
 + strings -n 6 analysis/assets/assets_sorter.json
@@ -135,8 +135,8 @@ java/sources/defpackage/C0407Pi.java:64:        android.util.Log.d("DNSUtil", "E
 java/sources/ads_mobile_sdk/mx2.java:8:    public static final /* synthetic */ InterfaceC0706aA[] b = {F20.d(mx2.class, "serverSideVerificationOptions", "getServerSideVerificationOptions()Lcom/google/android/libraries/ads/mobile/sdk/rewarded/ServerSideVerificationOptions;")};
 java/sources/dastan/prince/bdfreevpn/R.java:4859:        public static final int server_list_dialog = 0x7f0a02a0;
 + :
-+ grep -viE '/(androidx|com/google|com/facebook|kotlin|okhttp3|okio)/'
 + grep -rlE 'HttpURLConnection|OkHttpClient|openConnection|new URL\(|getAssets\(|server\.psi' java '--include=*.java'
++ grep -viE '/(androidx|com/google|com/facebook|kotlin|okhttp3|okio)/'
 + head -40
 + read -r f
 + echo '##### java/sources/org/chromium/net/CronetEngine.java'
