@@ -1,0 +1,337 @@
+	,!HF
+	IyD	h	h
+    IP addresses (with an optional CIDR mask) to be set for the interface.
+  - Address: may be specified one or more times and contains one or more
+  - DNS: an optional DNS server to use while the device is up.
+  - ExcludedApplications: optional blacklist of applications to exclude from the tunnel.
+  - IncludedApplications: optional whitelist of applications to include in the tunnel.
+  - MTU: an optional MTU for the interface; if unspecified, auto-calculated.
+  CONFIG_FILE is a configuration file, whose filename is the interface name
+  It is to be readable by wg(8)'s `setconf' sub-command, with the exception
+  See wg-quick(8) for more info and examples.
+  configuration found at:
+  followed by `.conf'. Otherwise, INTERFACE is an interface name, with
+  of the following additions to the [Interface] section, which are handled by
+  this program:
+ #PF!F*F
+ /proc/self/fd/0
+ FIF2F
+!	LxD|D
+"	h	h
+"HBF"IxDyD
+"IyD	h	h
+"]K{D
+"aK{D
+"xD.IyD	h	h
+$H\FxD
+%s/%s.conf
+%u-%u
+%u-99999
+%xDyD	h	h
+'%s' 
+(^[0-9.]+$)|(^.*:.*$)
+(` h(
+(none)
+(yDPF{D
+,!FxD
+--help
+.ARM.attributes
+.ARM.exidx
+.ARM.extab
+.comment
+.data
+.dynamic
+.dynstr
+.dynsym
+.gnu.hash
+.gnu.version
+.gnu.version_r
+.got.plt
+.init_array
+.interp
+.note.android.ident
+.rel.dyn
+.rel.plt
+.relro_padding
+.rodata
+.shstrtab
+.text
+/?([a-zA-Z0-9_=+.-]{1,15})\.conf$
+/data/misc/wireguard /data/data/com.wireguard.android/files
+/data/system/packages.list
+/system/bin/linker
+0` F*F
+0`(h(
+0xc([0-9a-f]+)/0xcffff lookup 
+12077973
+1F*FhF
+1FcHxD
+1IyD	h	h
+4`,`	
+9HAFJFxD
+<HIFxD
+=I FyD
+=IyD	h
+>HIFxD
+?HIFxD
+ACCEPT
+AIBinder_Class_define
+AIBinder_associateClass
+AIBinder_decStrong
+AIBinder_dump
+AIBinder_ping
+AIBinder_prepareTransaction
+AIBinder_transact
+AParcel_delete
+AParcel_getDataPosition
+AParcel_readBool
+AParcel_readStatusHeader
+AParcel_setDataPosition
+AParcel_writeInt32
+AParcel_writeString
+AParcel_writeStringArray
+AServiceManager_getService
+AStatus_delete
+AStatus_getExceptionCode
+AStatus_getMessage
+AStatus_getServiceSpecificError
+AStatus_getStatus
+AStatus_isOk
+Address=
+Android
+Android (12027248, +pgo, +bolt, +lto, +mlgo, based on r522817) clang version 18.0.1 (https://android.googlesource.com/toolchain/llvm-project d8003a456d14a3deb8054cdaa529ffbf02d9b262)
+C2.09
+CALLING_PACKAGE
+DIyD	h
+Error: %s
+Error: %s already exists
+Error: %s is not a WireGuard interface
+Error: Regex compilation error
+Error: The config file must be a valid interface name, followed by .conf
+Error: Unable to find configuration file at `%s'
+Error: Unable to find configuration file for `%s' in:
+Error: Unable to open package list
+Error: asprintf
+Error: calloc
+Error: could not call ndc
+Error: exception code: %d%s%s
+Error: fputs
+Error: fstat
+Error: getline
+Error: malloc
+Error: on_create called on proxy object
+Error: on_destroy called on proxy object
+Error: on_transact called on a proxy object
+Error: only one of ExcludedApplications and IncludedApplications may be specified, but not both
+Error: popen
+Error: service specific exception code: %d%s%s
+Error: strdup
+Error: transaction failed: %d
+Error: unable to create network cache
+Error: unable to import AIBinder_Class_define from libbinder_ndk.so
+Error: unable to import AIBinder_associateClass from libbinder_ndk.so
+Error: unable to import AIBinder_decStrong from libbinder_ndk.so
+Error: unable to import AIBinder_dump from libbinder_ndk.so
+Error: unable to import AIBinder_ping from libbinder_ndk.so
+Error: unable to import AIBinder_prepareTransaction from libbinder_ndk.so
+Error: unable to import AIBinder_transact from libbinder_ndk.so
+Error: unable to import AParcel_delete from libbinder_ndk.so
+Error: unable to import AParcel_getDataPosition from libbinder_ndk.so
+Error: unable to import AParcel_readBool from libbinder_ndk.so
+Error: unable to import AParcel_readStatusHeader from libbinder_ndk.so
+Error: unable to import AParcel_setDataPosition from libbinder_ndk.so
+Error: unable to import AParcel_writeInt32 from libbinder_ndk.so
+Error: unable to import AParcel_writeString from libbinder_ndk.so
+Error: unable to import AParcel_writeStringArray from libbinder_ndk.so
+Error: unable to import AServiceManager_getService from libbinder_ndk.so
+Error: unable to import AStatus_delete from libbinder_ndk.so
+Error: unable to import AStatus_getExceptionCode from libbinder_ndk.so
+Error: unable to import AStatus_getMessage from libbinder_ndk.so
+Error: unable to import AStatus_getServiceSpecificError from libbinder_ndk.so
+Error: unable to import AStatus_getStatus from libbinder_ndk.so
+Error: unable to import AStatus_isOk from libbinder_ndk.so
+Error: unable to set DNS servers through Binder: %d
+Error: vasprintf
+ExcludedApplications=
+F	h	h2
+F F)F
+F!HxD
+F$L$I~D|DyD
+F(F1F
+F)H*I"FxDyD
+F*HyDRFxD
+F+H+NxD~D
+F+HxD
+F,HxD
+F1HxD
+FVHxD
+FYH|DYIYJxDYKyD&hzD{D
+FnHoJ1FxD
+F{H|I
+F}D F
+H!FxD
+HAF"FKFxD
+HF)F"F
+HFAF*F
+HI0FRF
+HIFxD
+HJF)hxD
+H}DxD
+I FyD
+I(FyD
+IF|D"h
+IPFyD
+IhF"FyD
+IncludedApplications=
+IxDyD
+IxDyD	h	h*
+IyD	h
+IyD	h	h
+IyD	x
+JEFxD
+JxDzD
+KJLIzDyD
+LHLIxDyD
+Linker: LLD 18.0.1
+LxD}D|D
+L~D|D(F1FJF
+N!xDh
+N~D0F
+PFYF2FKF
+PF{DO
+SH)FxD
+Usage: %s [ up | down ] [ CONFIG_FILE | INTERFACE ]
+Warning: `%s' is world accessible
+XFIFRF+F
+XFQF2F
+[#] %s
+[#] <binder>::dnsResolver->createNetworkCache(%u)
+[#] <binder>::dnsResolver->setResolverConfiguration(%u, [%s], [%s], %d, %d, %d, %d, %d, %d, [], [])
+[$] su -p -c 
+[FxD2F
+[I[HyDxD	h
+[Interface]
+^-A (.* --comment "wireguard rule 
+^[a-zA-Z0-9_=+.-]{1,15}$
+^\[?([a-z0-9:.]+)\]?:[0-9]+$
+__cxa_atexit
+__errno
+__libc_init
+__stack_chk_fail
+__stack_chk_guard
+__system_property_get
+__vsnprintf_chk
+aF HxD
+aeabi
+ah0F "
+am broadcast -a com.wireguard.android.action.REFRESH_TUNNEL_STATES com.wireguard.android
+android.net.IDnsResolver
+asprintf
+calloc
+com.wireguard.android
+default
+dev ([^ ]+)
+dlopen
+dlsym
+dnsresolver
+execvp
+fclose
+fileno
+fopen
+fprintf
+fputs
+fstat
+fwrite
+getenv
+getline
+getpid
+getuid
+hSHxDC
+hTHxD
+hUHxDy
+hVHxD
+hVHxDI
+hWHxD
+hWHxD1
+hXHxD
+hXHxD7
+hYHxD
+heIyD
+hxD)h
+hyD{D
+h}D{D
+h~D}D
+interface ipv6 %s enable
+interface setcfg %s '%s' %u
+interface setmtu %s %d
+interface setmtu %s %u
+ip -6 addr add '%s' dev %s
+ip -o link show dev %s
+ip -o route get %s
+ip -o route show %s
+ip link add %s type wireguard
+ip link del %s
+ip link set down dev %s
+ip link set up dev %s
+ip link show dev %s 2>/dev/null
+ip rule show
+ip6tables -D %s
+ip6tables -I INPUT 1 -p udp --dport %u -j %s -m comment --comment "wireguard rule %s"
+ip6tables -I OUTPUT 1 -m mark --mark 0x20000 -j ACCEPT -m comment --comment "wireguard rule %s"
+ip6tables-save
+iptables -D %s
+iptables -I INPUT 1 -p udp --dport %u -j ACCEPT -m comment --comment "wireguard rule %s"
+iptables -I OUTPUT 1 -m mark --mark 0x20000 -j ACCEPT -m comment --comment "wireguard rule %s"
+iptables-save
+libbinder_ndk.so
+libc.so
+libdl.so
+libm.so
+malloc
+mtu ([0-9]+)
+network create %u vpn 1
+network create %u vpn 1 1
+network destroy %lu
+network interface add %u %s
+network route add %u %s %s
+network users add %u %s
+oIehyD(F
+pI(FyD
+pIyD	h	h
+pclose
+perror
+popen
+printf
+putchar
+qsort
+rI(FyD
+random
+regcomp
+regexec
+regfree
+resolver setnetdns %u '%s' %s
+ro.build.version.sdk
+srandom
+strcasecmp
+strcat
+strchr
+strcmp
+strdup
+strlen
+strncasecmp
+strncat
+strncmp
+strtok
+strtoul
+system
+tI(FyD
+vasprintf
+vprintf
+wIehyD(F
+wg set %s fwmark 0x20000
+wg setconf 
+wg show %s allowed-ips
+wg show %s endpoints
+wg show %s listen-port
+wg show interfaces
+{IXF*F

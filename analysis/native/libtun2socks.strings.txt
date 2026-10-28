@@ -1,0 +1,1078 @@
+	 `c F
+	$M}D
+	H	IxD	J
+	H!F+FxD
+	}D(x
+  	hAb]
+            [--syslog-facility <string>]
+            [--syslog-ident <string>]
+        (logger=syslog?
+        )
+        --netif-ipaddr <ipaddr>
+        --netif-netmask <ipnetmask>
+        --socks-server-addr <addr>
+        [--append-source-to-username]
+        [--channel-loglevel <channel-name> <0-5/none/error/warning/notice/info/debug>] ...
+        [--dnsgw <dns_gateway_address>]
+        [--fake-proc]
+        [--help]
+        [--logger <stdout/syslog>]
+        [--loglevel <0-5/none/error/warning/notice/info/debug>]
+        [--netif-ip6addr <addr>]
+        [--password <password>]
+        [--password-file <file>]
+        [--pid <pid_file>]
+        [--sock <sock_file>]
+        [--tunfd <fd>]
+        [--tunmtu <mtu>]
+        [--udpgw-connection-buffer-size <number>]
+        [--udpgw-max-connections <number>]
+        [--udpgw-remote-server-addr <addr>]
+        [--udpgw-transparent-dns]
+        [--username <username>]
+        [--version]
+    %s
+  a0J
+ !xDz
+ (`PF
+ )F"F
+ FAFn"
+ H I!JxD!KyD
+ H!I!JxD!KyD
+ IBFp
+ Shah
+ `c F
+ h*F0``h@h
+ hH` F
+ hv5F
+ pG	h1
+ pv@F)F
+ yD	h
+ yD	h	
+ yDH`@
+!	JzD
+! F*F
+!!P F
+!!P(h`
+!!v`a
+!%P F
+!+FzD
+!0JCF~DzD0F
+!1C "
+!F("0F
+!H!I"JxD"KyD
+!I FyD
+!SFzD
+![FzD
+!afa0F
+!bAF3F
+!chzD
+!k h!
+!k hA
+!n#FzD(F
+"(D``
+")hxD
+"/KxDyD
+"DIxDyD
+"Fph)D
+"H#I#JxD#KyD
+"H]#"IxD"JyD
+"`h(`
+"bcyD	h
+"xIxD
+"yD	h
+#	IxD	JyD
+#	hzD
+# s(F]
+#H#I$JxD$KyD
+#H#IxD#J$KyD
+#H#IxDyD
+#H$I$JxD$KyD
+#H$IxDyD
+#IxD#JyD
+#xD$h"h
+#xDzD
+#yD	h
+$J%H%IzD
+%05d (%s %s): 
+%H%I&JxD&KyD
+%JzD"
+%JzD/
+%MIxDyD
+%s(%s): %s
+%s: %s
+%s: lwip assertion failure: %s
+%s: requires an argument
+%s: requires two arguments
+%s: wrong argument
+%s: wrong channel argument
+%s: wrong loglevel argument
+%s:%d Assertion failed
+%u.%u.%u.%u
+%x:%x:%x:%x:%x:%x:%x:%x
+&&`(F
+&E!hh
+&H&I'JxD'KyD
+&kFyD
+&zD(F#Ffa
+&zD+F
+'H'I(JxD(KyD
+'H(IxDyD
+'IyD	h
+'N~DqhAE
+(	)F2FHF
+(F1F"F
+(F:!KF
+(FIFBF
+(H(I)JxD)KyD
+(`ib 
+(h != NULL) && (t != NULL) (programmer violates API)
+(none)
+(x4F<
+(yD	h
+(yD	h'
+)F#FzD
+)H)I*JxD*KyD
+)H)IxDyD
+)H*I*JxD*KyD
+)H*IxD*J*KyD
+)hA`(0
+*H*I+JxD+KyD
+*H*IxD*J+KyD
+*K(Ha
+*hAF``
+*khc`
++H+I,JxD,KyD
++H,JxDzD
++IyD	h
++JzD F
++|DcF
+,H,IxDyD
+,H-I-JxD-KyD
+,H-I-JxD-KyD-MzD{D
+-%`yD	h
+--append-source-to-username
+--channel-loglevel
+--dnsgw
+--fake-proc
+--help
+--logger
+--loglevel
+--netif-ip6addr
+--netif-ipaddr
+--netif-ipaddr is required
+--netif-netmask
+--netif-netmask is required
+--password
+--password and --password-file cannot both be given
+--password-file
+--pid
+--sock
+--sock is required
+--socks-server-addr
+--socks-server-addr is required
+--syslog-facility
+--syslog-ident
+--tunfd
+--tunmtu
+--udpgw-connection-buffer-size
+--udpgw-max-connections
+--udpgw-remote-server-addr
+--udpgw-transparent-dns
+--username
+--version
+-LF[FxD
+-hZHxD
+-yD	h
+.ARM.attributes
+.ARM.exidx
+.ARM.extab
+.H.I/JxD/KyD
+.comment
+.data
+.data.rel.ro
+.dynamic
+.dynstr
+.dynsym
+.fini_array
+.gnu.hash
+.gnu.version
+.gnu.version_r
+.init_array
+.interp
+.note.android.ident
+.note.gnu.build-id
+.note.gnu.gold-version
+.preinit_array
+.rel.dyn
+.rel.plt
+.rodata
+.shstrtab
+.text
+/dev/net/tun
+/dev/null
+/system/bin/linker
+0 F*F
+0!F"F
+0Daibj
+0Fqh"h
+0H1I1JxD1KyD
+0HIFxD
+0``<JE
+0`b i!F
+0s5hE
+0v5F4F
+1 !FRF
+1AbpG
+1D@h 1
+1`(h D(`
+1hKFzD@F
+2 !FRF
+2@{DF
+2FC	@F
+2FC	HF
+2H3I3JxD3KyD
+2L2M|D2K}D$h{D
+3B	@F]
+3H4I4JxD4KyD
+5594570
+5`@Fee
+5hXIjF(F
+6H)F3FxD
+6IyD	h	h
+7H7I8JxD8KyD
+8H8I9JxD9KyD
+9 !FRF
+9H9I:JxD:KyD
+;H<I<JxD<KyD
+;JzDI
+<H<I=JxD=KyD
+=H=I>JxD>KyD
+=H=IxDyD
+>H>I?JxD?KyD
+>hCAB
+@F)FKF
+@F)F]
+@F:!+F
+@yDueO
+A	(F]
+AFJF0D
+AFh`HF
+ARM v7
+Address format is a.b.c.d:port (IPv4) or [addr]:port (IPv6).
+Android
+Android (5220042 based on r346389c) clang version 8.0.7 (https://android.googlesource.com/toolchain/clang b55f2d4ebfd35bf643d27dbca1bb228957008617) (https://android.googlesource.com/toolchain/llvm 3c393fe7a7e13b0fba4ac75a01aa683d7a5b11cd) (based on LLVM 8.0.7svn)
+BAlloc failed
+BAllocArray failed
+BArpProbe
+BConnection
+BConnection_Init failed
+BConnector_Init failed
+BDHCPClient
+BDHCPClientCore
+BDatagram
+BEncryption
+BInputProcess
+BJzD1
+BLockReactor
+BNetwork
+BNetwork_GlobalInit failed
+BPredicate
+BProcess
+BReactor
+BReactor_AddFileDescriptor failed
+BReactor_Init failed
+BRealloc failed
+BSSLConnection
+BSignal
+BSignal initializing
+BSignal_Init failed
+BSocksClient
+BSocksClient_Init failed
+BTap_Init2 failed
+BThreadSignal
+BThreadWork
+BTime
+BUnixSignal
+BUnixSignal_Init failed
+BXFYF@
+BadVPN tun2socks 1.999.127
+BhrE	
+CLOCK_MONOTONIC is not available. Timers will be confused by clock changes.
+CLOSED
+CLOSE_WAIT
+CLOSING
+Calling epoll_wait
+Can't move over header in packet
+Copyright (C) 2010 Ambroz Bizjak <ambrop7@gmail.com>
+D!j h
+DEBUG
+DH!FxD
+DPReceive
+DPRelay
+DataProto
+DatagramPeerIO
+Dispatching file descriptor
+Dispatching signal
+Dispatching timer
+EI(FyD
+ERROR
+ESTABLISHED
+Entering event loop
+Exiting event loop, exit code %d
+F	HxD
+F	J	LK
+F	hAE
+F F(!
+F!F"h
+F"H#I#KxDyD{D
+F#FzD(F
+F$IxDyD
+F%HxD
+F(66h
+F(F1F
+F(FyD
+F)HxD
+F*HmFxD
+F.H/I
+F/HxD
+F1F@F
+F1FCF F
+F1HxD
+F2F(3
+F2F(F
+F2H2L
+F3J~D
+F:!3FO
+F=H=IxDyD
+F@F2F
+F@H@J
+FAF0F
+FAFJF(F
+FFpF/
+FFpFPE	
+FH!FxD
+FIHxD
+FIN_WAIT_1
+FIN_WAIT_2
+FJzD6
+FPF !
+FTHxD
+FUHxD
+FVHxD
+F[FzDPF
+F_HxD
+Failed to initialize syslog logger
+Failed to parse arguments
+Failed to process arguments
+FhF !
+FiFxD
+FragmentProtoAssembler
+FrameDecider
+Free TCP connections
+FxD$!
+FxD8!
+F~Dqh
+G#H1FSFxD
+G&H1FSFxD
+G&hpY
+G0x[FLF
+G1x[F
+GI(FyD
+GoHxD
+Got already expired timers
+H	IxD	J	KyD
+H	h*hxD>
+H!F*FxD
+H!F+FxD
+H!FxD
+H)F#FxD
+H*F#FxD
+H1jxD
+HAF3FxD
+HF!F"F
+HIFRFxD
+HMFxD
+HhMJMINKzDyD
+HhpE<
+Hn&xD%
+HxD@h
+I FyD
+I&FxD
+I(FyD
+II(FyD
+IIyD	h
+IkFyD
+Invalid pid file
+IxDyD
+IxDyD!c
+IxDyD=
+IyD	h
+IyDIh
+J!`xD
+J@0zD
+JxDzD
+JxD{DafzDO
+JyDzD	h
+JzDPF
+JzDSh
+KI(FyD
+KK1)I F
+LAST_ACK
+LISTEN
+LineBuffer
+Listener
+LxD|D
+L|D F
+M	h x
+MI(FyD
+MyD}D
+N !FRF
+NCDBuildProgram
+NCDConfigParser
+NCDConfigTokenizer
+NCDIfConfig
+NCDInterfaceMonitor
+NCDModuleIndex
+NCDModuleProcess
+NCDPlaceholderDb
+NCDRequest
+NCDRequestClient
+NCDRfkillMonitor
+NCDUdevCache
+NCDUdevManager
+NCDUdevMonitor
+NCDUdevMonitorParser
+NCDVal
+NCDValGenerator
+NCDValParser
+NOTICE
+NXF "~D1F
+No init function given
+NxD{Daf~D
+N~D0x
+OHPIxDyD
+OI(FyD
+P)F X]
+P0@F!F
+PIFBF
+PRStreamSink
+PRStreamSource
+PacketProtoDecoder
+PacketProtoDecoder_Init failed
+PacketProtoFlow_Init failed
+PasswordListener
+PeerChat
+Pp`0r
+PzD%PA
+QF FO
+QI(FyD
+RST not expected here!
+Reactor failed to initialize
+Reactor freeing
+Reactor initializing
+SFPE8
+SI(FyD
+SJzD-
+SOCKS closed
+SOCKS error
+SOCKS up
+SPProtoDecoder
+SYN_RCVD
+SYN_SENT
+ServerConnection
+SinglePacketBuffer_Init failed
+SocksUdpGwClient
+SocksUdpGwClient_Init failed
+StreamPeerIO
+Sx]+J
+TCP timer
+TIME_WAIT
+UDP/IPv6: from device %d bytes
+UDP/IPv6: from udpgw %d bytes
+UDP/IPv6: packet is too large
+UDP: from DNS %d bytes
+UDP: from device %d bytes
+UDP: from udprelay %d bytes
+UDP: packet is too large
+UDP: to DNS %d bytes
+UdpGwClient
+UdpGwClient_ConnectServer failed
+Usage:
+VI(FyD
+VJzD<
+WARNING
+XI(FyD
+Y !FRF
+Z !FRF
+ZF@F)FO
+ZF@Fo
+[F F,F
+[FJF-
+[H!FxD
+[I(FyD
+\ yD	h
+]I(FyD
+__aeabi_memclr
+__aeabi_memclr4
+__aeabi_memclr8
+__aeabi_memcpy
+__aeabi_memcpy4
+__aeabi_memmove
+__aeabi_memset4
+__android_log_print
+__cmsg_nxthdr
+__cxa_atexit
+__errno
+__gnu_Unwind_Find_exidx
+__libc_init
+__stack_chk_fail
+__stack_chk_guard
+`I(FyD
+`Khjh
+`S`Kh
+`Uh3h
+`pGpG
+`qDaD
+a0a0jO
+a1F*F
+aQ"P F
+a`HaIxDyD
+abort
+accept
+accept failed
+accept() failed: %s (sock = %d)
+accepted
+address not supported
+aeabi
+ahbi	
+already timed out while trying again
+ancil_recv_fd: %s (sock = %d)
+authpriv
+b*IxDyD
+bI(FyD
+b_strdup failed
+bad pbuf type
+badvpn_set_nonblocking failed
+bind failed
+bind() failed: %s (sock = %d)
+bpGBk
+bqiQb
+build_unix_address failed
+bxDyD
+c xf`
+can't queue data, but all data was confirmed !?!
+cannot set non-blocking
+chdir
+check fragments don't overlap
+check p->payload + p->len does not overflow pbuf
+check that first pbuf can hold icmp 6message
+check that first pbuf can hold icmp message
+check that first pbuf can hold struct ip6_hdr
+check that first pbuf can hold struct ip_hdr
+check that first pbuf can hold struct tcp_hdr
+check that first pbuf can hold struct the ICMP header
+client
+client closed
+client error (%d)
+client reports server error
+clock_gettime
+close
+close failed
+closelog
+connect
+connect failed
+connected
+connection failed
+dH)F2FxD
+daemon
+debug
+decoder error
+device MTU is too large for UDP
+device error
+device fd reports error?
+device read: input failed
+device read: packet too large
+device read: pbuf_alloc failed
+device write: send packet
+device: received packet
+did not copy all data
+discarding connection
+dladdr
+dnsgw addr: BAddr_Parse2 failed
+dnsgw addr: must be an IPv4 address
+don't call tcp_abort/tcp_abandon for listen-pcbs
+don't call tcp_output for listen-pcbs
+don't call tcp_recved for listen-pcbs
+dostest_attacker
+dostest_server
+eI(FyD
+ehAF``HF
+entering event loop
+epoll_create
+epoll_create failed
+epoll_ctl
+epoll_ctl failed: %d
+epoll_wait
+epoll_wait interrupted
+epoll_wait returned %d file descriptors
+epoll_wait timed out
+error
+error configuring device
+error getting MTU
+error opening device
+error: packet too large
+exiting
+failed to read password file
+fclose
+fcntl
+fd error event
+fflush
+flooder
+fopen
+fprintf
+fread
+freeaddrinfo
+fwrite
+gI(FyD
+getaddrinfo
+getsockopt
+getsockopt failed
+gettimeofday
+gold 1.12
+got IPv6 packet from udpgw but IPv6 is disabled
+grow < max_u16_t
+h	h F
+h	h(F
+h	h@h
+h	hBh
+h!FxD
+h"mHh
+h(FJl
+h(h$I
+h)F"F
+h)i0D
+h+J	h
+h,N*L~D
+h.FSh
+hAF3F
+hA`1i
+hAa1i
+hAh@{	
+hAp0F
+hIhRh	
+hJj!F
+hUFxD
+ha4HZFxD
+hh!F	
+hhH`!Fh
+hzD+h
+hzD0x
+hzD{D
+hzD{D"
+hzD{D&
+hzD{D,
+hzD{D6
+hzD{D:
+h}D|DS
+iXHxD
+icmp6_send_response
+icmp_input
+icmp_input: copying to new pbuf failed
+icmp_input: moving p->payload to ip header failed
+icmp_input: restoring original p->payload failed
+icmp_send_response
+inconsistend oversize vs. len
+increment_magnitude <= p->len
+initializing BadVPN tun2socks 1.999.127
+insane offset!
+inseg.p != NULL
+invalid number of authentication methods
+invalid socket state for err callback
+invalid socket state for poll
+invalid socket state for recv callback
+invalid socket state for sent callback
+invalid username/password length
+ioctl
+ip6_output
+ip6_output_if
+ip6_reass
+ip6_reass: moving p->payload to ip6 header failed
+ip6_reass_free: moving p->payload to ip6 header failed
+ip6_reass_free_complete_datagram
+ip_frag
+ip_output
+ip_output_if
+ip_reass_chain_frag_into_datagram_and_validate
+ip_reass_dequeue_datagram
+ip_reass_free_complete_datagram
+ip_reass_pbufcount >= clen
+ipfrag_free_pbuf_custom
+j!F*F
+j0	h	h&f
+j8k}k
+jHkIxDyD
+jI(FyD
+jni/badvpn/base/BLog.h
+jni/badvpn/system/BConnection_unix.c
+jni/badvpn/system/BReactor_badvpn.c
+jni/badvpn/system/BSignal.c
+jni/badvpn/system/BTime.h
+jni/badvpn/system/BUnixSignal.c
+jni/badvpn/tun2socks/tun2socks.c
+jni/badvpn/tuntap/BTap.c
+keepalive
+l0F)F"F
+libc.so
+libdl.so
+liblog.so
+libm.so
+listen
+listen failed
+listen() failed: %s (sock = %d)
+listener accept: BSocksClient_Init failed
+listener accept: malloc failed
+listener_accept_func
+local0
+local1
+local2
+local3
+local4
+local5
+local6
+local7
+lwip init
+malloc
+malloc failed
+memcmp
+missing header
+missing ipv4 address
+missing ipv6 address
+ncd_alias
+ncd_arithmetic
+ncd_assert
+ncd_backtrack
+ncd_blocker
+ncd_buffer
+ncd_call2
+ncd_choose
+ncd_concat
+ncd_daemon
+ncd_depend
+ncd_depend_scope
+ncd_dynamic_depend
+ncd_exit
+ncd_explode
+ncd_file
+ncd_file_open
+ncd_foreach
+ncd_from_string
+ncd_getargs
+ncd_getenv
+ncd_if
+ncd_imperative
+ncd_implode
+ncd_index
+ncd_list
+ncd_load_module
+ncd_log
+ncd_log_msg
+ncd_logical
+ncd_multidepend
+ncd_net_backend_badvpn
+ncd_net_backend_rfkill
+ncd_net_backend_waitdevice
+ncd_net_backend_waitlink
+ncd_net_backend_wpa_supplicant
+ncd_net_dns
+ncd_net_iptables
+ncd_net_ipv4_addr
+ncd_net_ipv4_addr_in_network
+ncd_net_ipv4_arp_probe
+ncd_net_ipv4_dhcp
+ncd_net_ipv4_route
+ncd_net_ipv6_addr
+ncd_net_ipv6_addr_in_network
+ncd_net_ipv6_route
+ncd_net_ipv6_wait_dynamic_addr
+ncd_net_up
+ncd_net_watch_interfaces
+ncd_netmask
+ncd_ondemand
+ncd_parse
+ncd_print
+ncd_process_manager
+ncd_reboot
+ncd_ref
+ncd_regex_match
+ncd_request
+ncd_run
+ncd_runonce
+ncd_sleep
+ncd_socket
+ncd_spawn
+ncd_strcmp
+ncd_substr
+ncd_sys_evdev
+ncd_sys_request_client
+ncd_sys_request_server
+ncd_sys_start_process
+ncd_sys_watch_directory
+ncd_sys_watch_input
+ncd_sys_watch_usb
+ncd_timer
+ncd_to_string
+ncd_try
+ncd_value
+ncd_valuemetic
+ncd_var
+nd6_free_q
+need unchained pbuf
+net.typeblog.socks
+netif func init
+netif func output: no space left
+netif ip6addr: incorrect
+netif ipaddr: BIPAddr_Resolve failed
+netif ipaddr: must be an IPv4 address
+netif netmask: BIPAddr_Resolve failed
+netif netmask: must be an IPv4 address
+netif_add
+netif_add failed
+new_rcv_ann_wnd <= 0xffff
+no authentication
+no buffer for data !?!
+no events detected?
+no previous fragment, this must be the first fragment!
+notice
+nsskey
+offset_from <= p_from->len
+offset_to <= p_to->len
+ooseq segments leaking
+openlog
+out of buffer
+oversize == 0
+p != NULL
+p#FzD
+p->ref == 1
+p->tot_len == p->len
+p->tot_len == p->len (of last pbuf in chain)
+p->tot_len == p->len + q->tot_len
+pG	HxD
+p_to != NULL
+packet is too large, cannot send to udpgw
+password authentication
+password reply has unknown version
+password reply is negative
+pbuf too short!
+pbuf_alloc
+pbuf_alloc: bad pbuf layer
+pbuf_alloc: erroneous type
+pbuf_alloc: pbuf q->payload properly aligned
+pbuf_alloced_custom
+pbuf_alloced_custom: bad pbuf layer
+pbuf_cat
+pbuf_copy
+pbuf_copy() does not allow packet queues!
+pbuf_copy: target not big enough to hold source
+pbuf_copy_partial
+pbuf_copy_partial: invalid buf
+pbuf_copy_partial: invalid dataptr
+pbuf_dechain
+pbuf_free
+pbuf_free: p->ref > 0
+pbuf_free: sane type
+pbuf_header
+pbuf_header failed
+pbuf_realloc
+pbuf_realloc: p != NULL
+pbuf_realloc: q != NULL
+pbuf_realloc: sane p->type
+pbuf_take
+pbuf_take: invalid buf
+pbuf_take: invalid dataptr
+pbuf_take: invalid pbuf
+pbufs_freed + clen <= 0xffff
+pc->custom_free_function != NULL
+pcb->accept != NULL
+pcb->flags & TF_RXCLOSED
+pcb->refused_data == NULL
+pcb->snd_queuelen > 0
+pcb->snd_queuelen >= pbuf_clen(next->p)
+pcb->state == LISTEN (called for wrong pcb?)
+pcr != NULL
+perror
+phcFrF
+pipe failed
+prctl
+prev != ipr
+prev->next == ipr
+prev_seg != NULL
+printf
+proto=%u,ifindex=%d,htype=eth,ptype=%d,addr=%02x:%02x:%02x:%02x:%02x:%02x
+pthread_mutex_destroy
+pthread_mutex_init
+pthread_mutex_lock
+pthread_mutex_unlock
+q != NULL
+q->p != NULL
+qI$ yD	h
+r->p != NULL
+raise
+read failed (%d)
+realloc
+received fd = %d
+received hello
+received password reply
+received reply header
+received reply rest
+recv failed
+recvmsg
+rem_len < max_u16_t
+remote udpgw server addr: BAddr_Parse2 failed
+removing after SOCKS went down
+removing after client went down
+reply has unknown address type
+reply not successful
+rhyD	h
+s'IxD'JyD
+sanity check
+sanity check linked list
+seg->tcphdr not aligned
+send failed
+send password
+sendmsg
+sent hello
+sent request
+server
+server didn't accept any authentication method
+set nonblocking failed
+setsid
+setsockopt
+setsockopt failed
+setsockopt(SO_REUSEADDR) failed
+sigaction
+sigaction failed
+sigaddset
+sigemptyset
+sigismember
+sigprocmask
+sigprocmask block failed
+size overflow
+snprintf
+socket
+socket failed
+socket() failed: %s (socket sock = %d)
+socks server addr: BAddr_Parse2 failed
+sprintf
+stdout
+strcmp
+strcpy
+strerror
+strlen
+strncpy
+strtol
+sys_timeout
+sys_timeout: timeout != NULL, pool MEMP_SYS_TIMEOUT is empty
+syslog
+tHh `L`
+tcp_abandon
+tcp_bind
+tcp_bind: can only bind in state CLOSED
+tcp_bind_if: can only bind in state CLOSED
+tcp_bind_to_netif
+tcp_bind_to_netif failed
+tcp_close failed (%d)
+tcp_close_shutdown
+tcp_connect
+tcp_connect: can only connect from state CLOSED
+tcp_connect: cannot connect pcb bound to netif
+tcp_enqueue_flags
+tcp_enqueue_flags: check that first pbuf can hold optlen
+tcp_enqueue_flags: invalid queue length
+tcp_enqueue_flags: invalid segment length
+tcp_enqueue_flags: need either TCP_SYN or TCP_FIN in flags (programmer violates API)
+tcp_err
+tcp_input
+tcp_input: TIME-WAIT pcb->state == TIME-WAIT
+tcp_input: active pcb->state != CLOSED
+tcp_input: active pcb->state != LISTEN
+tcp_input: active pcb->state != TIME-WAIT
+tcp_input: pcb->next != pcb (after cache)
+tcp_input: pcb->next != pcb (before cache)
+tcp_input: pcb->state != CLOSED
+tcp_listen failed
+tcp_listen: pcb already connected
+tcp_listen_with_backlog
+tcp_new failed
+tcp_new_ip6 failed
+tcp_output
+tcp_output failed (%d)
+tcp_output_alloc_header
+tcp_pbuf_prealloc
+tcp_pcb_remove
+tcp_poll
+tcp_process
+tcp_receive
+tcp_receive: ooseq tcplen > rcv_wnd
+tcp_receive: segment not trimmed correctly to ooseq queue
+tcp_receive: segment not trimmed correctly to rcv_wnd
+tcp_receive: tcplen > rcv_wnd
+tcp_receive: valid queue length
+tcp_receive: wrong state
+tcp_recv
+tcp_recved
+tcp_recved: len would wrap rcv_wnd
+tcp_rst_impl
+tcp_sent
+tcp_slowtmr
+tcp_slowtmr: TIME-WAIT pcb->state == TIME-WAIT
+tcp_slowtmr: active pcb->state != CLOSED
+tcp_slowtmr: active pcb->state != LISTEN
+tcp_slowtmr: active pcb->state != TIME-WAIT
+tcp_slowtmr: first pcb == tcp_active_pcbs
+tcp_slowtmr: first pcb == tcp_tw_pcbs
+tcp_slowtmr: middle tcp != tcp_active_pcbs
+tcp_slowtmr: middle tcp != tcp_tw_pcbs
+tcp_update_rcv_ann_wnd
+tcp_write
+tcp_write failed (%d)
+tcp_write: arg == NULL (programmer violates API)
+tcp_write: cannot concatenate when pcb->unsent is empty
+tcp_write: check that first pbuf can hold the complete seglen
+tcp_write: no pbufs on queue => both queues empty
+tcp_write: pbufs on queue => at least one queue non-empty
+tcp_write: valid queue length
+tcp_write_checks
+tearing down
+termination requested
+this needs a pbuf in one piece!
+too much data
+tun2socks
+u0F)F
+udpgw
+umask
+unacked segments leaking
+unknown conid
+unknown option: %s
+unlink
+unlink existing socket failed
+unlink socket failed
+unsent segments leaking
+unsent_oversize mismatch (pcb->unsent is NULL)
+username given but password not given
+validate_datagram:datagram end!=datagram len
+validate_datagram:next_pbuf!=NULL
+vsnprintf
+waiting until buffered data is sent to client
+waiting untill buffered data is sent to SOCKS
+warning
+write
+written %d expected %d
+wrong remote address
+wrong version
+xJzD=
+xPFAF
+yD	hQ
+{I(FyD
+}D)FQ
+~I(FyD

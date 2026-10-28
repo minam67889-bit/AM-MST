@@ -1,0 +1,23 @@
+	Use EDNS in outgoing queries: %s
+Cannot decompress QNAME in answer from %s
+No remaining authoritative name servers to try in authority section from %s.
+Query contains OPT pseudosection: EDNS udp size = %u, flag DO=%u
+Query contains non-zero EDNS rcode (%d)!
+Query contains unsupported EDNS version %d!
+Reply from %s contains OPT pseudosection: EDNS version = %u, udp size = %u, flag DO=%u
+Reply from %s contains unexpected EDNS rcode %u (%s)!
+Server %s returned error code: %s. Maybe cannot handle EDNS? Querying with empty additional section.
+bad qualifier in edns_query= option.
+be authoritative
+compress_name: length increased
+compress_name: name too long
+decompress_name: Bit-string labels not supported.
+decompress_name: compressed name extends outside data field.
+decompress_name: compressed name extends outside message.
+decompress_name: decompressed name larger than %u bytes.
+decompress_name: offset points outside message.
+decompress_name: too many offsets in compressed name.
+decompress_name: unsupported label type.
+edns_query
+non-authoritative
+server not authoritative for zone
