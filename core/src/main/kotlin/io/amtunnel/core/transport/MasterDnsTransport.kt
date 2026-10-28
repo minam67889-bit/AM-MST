@@ -357,7 +357,12 @@ class MasterDnsTransport(
                 retransmitDue()
                 maybePing()
                 maybeRecheckResolvers()
-                if (consecutiveTotalFailures >= 4 && isReady) {
+                // A re-handshake only helps when the *server* lost our session.
+                // With a healthy pool around, timeouts mean "this resolver is
+                // bad", so the balancer handles it and the session stays.
+                val usableResolvers = balancer?.activeCount ?: 0
+                val noPool = balancer == null || usableResolvers <= 1
+                if (consecutiveTotalFailures >= 4 && noPool && isReady) {
                     if (!recoverSession()) continue
                 }
                 val item = outbox.poll(50, java.util.concurrent.TimeUnit.MILLISECONDS) ?: continue
@@ -448,7 +453,13 @@ class MasterDnsTransport(
             if (state == TransportState.READY) state = TransportState.DEGRADED
             // Stream-level failover: after N resends (and past the cooldown)
             // move only that stream, leaving the rest of the traffic alone.
-            if (item.frame.streamId != 0) balancer?.noteStreamResend(item.frame.streamId)
+            if (item.frame.streamId != 0) {
+                balancer?.noteStreamResend(item.frame.streamId)
+                // Drop the sticky route so the very next attempt is chosen by
+                // the strategy (which already excludes parked resolvers)
+                // instead of retrying the resolver that just timed out.
+                balancer?.clearStream(item.frame.streamId)
+            }
             if (consecutiveEndpointFailures >= 2) {
                 val previous = activeEndpointKey
                 activeEndpointKey = null
