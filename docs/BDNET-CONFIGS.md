@@ -1,152 +1,108 @@
-# BD NET — extracted configuration surface
+# BD NET — where the servers actually come from
 
-> Lives in `docs/` on purpose: the CI job rebuilds `analysis-bdnet/` from scratch
-> on every run, so hand-written notes must sit outside it. Generated data:
-> `analysis-bdnet/obfuscation/`.
+Target: `dastan.prince.bdfreevpn`, versionCode 106, `PrinceBuild106`
+(`BDNET.VPN v106 Mod.zip`).
 
-Target: `dastan.prince.bdfreevpn`, versionCode 106, `PrinceBuild106` (the archive
-`BDNET.VPN v106 Mod.zip`, package label "BD NET").
+> **Correction.** An earlier revision of this file concluded that BD NET ships no
+> server list. That conclusion was drawn from a *partial* jadx dump (364 files
+> committed out of the full tree) and it was wrong. The app does load servers
+> automatically, from the endpoints listed in §2. What is recorded below is what
+> the full tree actually shows.
 
-Everything below is produced by the CI job in `.github/workflows/analyze-apk.yml`
-(step **Decrypt LSParanoid strings**) and committed to this folder, so it can be
-re-derived from the APK at any time rather than being taken on trust.
+## 1. String deobfuscation (still solved)
 
-## 1. How the strings were recovered
+BD NET is packed with [LSParanoid](https://github.com/LSPosed/LSParanoid). The
+generated class `org.lsposed.lsparanoid.Deobfuscator$BDNETVPN$app` holds a
+41 966-character ciphertext table (6 chunks: 5 × 8 191 + 1 011) and
+`getString(long)` derives both the offset and the XOR stream from the id.
 
-BD NET is obfuscated with [LSParanoid](https://github.com/LSPosed/LSParanoid). The
-packer moves every string literal into one generated class
-(`org.lsposed.lsparanoid.Deobfuscator$BDNETVPN$app`) that stores a 6-chunk,
-41 966-character ciphertext table (5 × 8 191 + 1 011) and exposes `getString(long id)`.
-
-The id is not an index: the table offset is derived from the id through
-`RandomHelper.seed`/`RandomHelper.next`, and the characters are XORed with that
-same stream. Recovering the table therefore needs the exact integer semantics of
-the JVM (`short` rotations, 64-bit wrap-around, unsigned shifts).
-
-Two false starts, both fixed:
-
-| Attempt | Result | Cause |
-| --- | --- | --- |
-| Compile jadx's `DeobfuscatorHelper.java` and call it reflectively | 1 993 × `InvocationTargetException` | jadx rewrites the mask `0xffff0000` as `-65536`; inside a `long` that sign-extends and keeps bits above 31, so the computed index leaves the array |
-| Compile LSParanoid's upstream sources instead | works, but needs a JVM + javac in CI and silently depends on the app's obfuscator release | — |
-
-The shipped solution is `tools/lsparanoid_decode.py`: a literal port of the
-obfuscator's own `RandomHelper`, `DeobfuscatorHelper` **and `StringRegistryImpl`
-encoder**. `--selftest` encodes a known corpus (including a 9 000-character string
-that spans two chunks and a non-ASCII string), decrypts it, and compares — so the
-port proves itself before it touches the app's data:
+jadx mangles `DeobfuscatorHelper` (it rewrites `0xffff0000` as `-65536`, which
+sign-extends inside a `long`), so replaying the decompiled helper on a JVM threw
+`InvocationTargetException` for all 1 993 ids. `tools/lsparanoid_decode.py` is a
+literal port of `RandomHelper` + `DeobfuscatorHelper` + the `StringRegistryImpl`
+encoder; `--selftest` encodes a corpus, decrypts it and compares, so the port is
+proven rather than assumed.
 
 ```
-$ python3 tools/lsparanoid_decode.py --selftest
 SELFTEST PASS (7/7 strings, 2 chunk(s), multi-chunk=yes)
+chunks=6 chunk_attrs=41966 ids=1992 decoded=1992 errors=0
 ```
 
-Full run:
+Output: `analysis-bdnet/obfuscation/decrypted.txt` (1 992 ids, 1 851 non-empty).
+
+## 2. Where the servers come from — the real answer
+
+The string table contains the config bundle URL twice:
 
 ```
-chunks=6 chunk_chars=41966 ids=1992 decoded=1992 errors=0
+https://raw.githubusercontent.com/panigbatanc/BDNET2023/main/JSONDEC2025
 ```
 
-Output: [`../analysis-bdnet/obfuscation/decrypted.txt`](../analysis-bdnet/obfuscation/decrypted.txt) — 1 992 ids,
-1 851 non-empty plaintext strings. Hosts in
-[`../analysis-bdnet/obfuscation/decrypted-hosts.txt`](../analysis-bdnet/obfuscation/decrypted-hosts.txt).
+`defpackage/AbstractC0482Sf` is the constants holder. Its static initialiser
+resolves four strings and parks `a = 7878` beside them:
 
-## 2. What the plaintext contains
-
-### Network endpoints (complete list)
-
-| String | Meaning |
+| id | value |
 | --- | --- |
-| `https://raw.githubusercontent.com/panigbatanc/BDNET2023/main/JSONDEC2025` | Psiphon **RemoteServerListUrl** (set into the Psiphon config by `ca/psiphon/PsiphonTunnel.java`) |
-| `https://s3.amazonaws.com//psiphon/web/mjr4-p23r-puwl/server_list_compressed` | Psiphon upstream server list (fallback) |
-| `https://t.me/bdnetvpn` | developer Telegram channel |
-| `https://raw.githubusercontent.com/vpnmarket/dialog15/refs/heads/main/BD%20106` | in-app announcement dialog for this build (fetched from the source tree, not the string table) |
+| `-163397067700107` | the bundle URL above |
+| `-163710600312715` | `https://t.me/bdnetvpn` |
+| `-163805089593227` | `5FED785CA69AEC41CE2C925E8C8A5A738A6DE276` |
+| `-163981183252363` | `B8B496A532852A50C2F992200DD8E2C43A8844F4` |
 
-Fetched for inspection: the `BD 106` file is an announcement JSON
-(`title`/`description`/`download` → `tg://resolve?domain=VPNbaz`), **not** a server
-config. `JSONDEC2025` is 469 KB of base64 that decodes to 351 KB of high-entropy
-data — a Psiphon-encrypted server list, not a plaintext config.
+That repository (`panigbatanc/BDNET2023`, same author as the app) holds a bundle
+per mode — the mode names match the app's own engine selectors (`UDPQ`,
+`FASTDNS`, `SLOWDNS`, Xray, SSH, Psiphon):
 
-### Protocol engines shipped
+| file | bytes | mode |
+| --- | --- | --- |
+| `JSONDNSTT` | 617 081 | dnstt / UDPQ |
+| `JSONFASTDNS` | 154 125 | FastDNS (`libxdnstt`) |
+| `JSONXRAY` | 215 297 | Xray / Shadowsocks / VLESS |
+| `JSONNOCIPHER` | 582 445 | un-ciphered variant |
+| `JSONFWPUNCHER` | 325 001 | FWPuncher |
+| `JSONSPLITNEWERA` | 582 445 | split tunnelling |
+| `JSONDEC2025` | 469 153 | current build's pointer |
+| `JSONKYLE`, `AGITTY2025`, `JSONSEPT2025`, `JSONAUG2025`, `JSON061424`, `JSONSEPT132024`, `JSONSPLIT2024`, `JSONXRAYNOV29` | — | monthly rotations |
 
-The string table names the tunnel types the UI can select; the APK's native
-libraries implement them. All of them carry Go symbols, i.e. upstream Go engines
-statically linked into `.so` files:
+The same bundle set is mirrored in the author's other apps (`UrsaNetPRO`,
+`Omanova2024`), so these are shared, rotated config drops — not per-app secrets.
 
-| UI value | Engine | Native library | Wire evidence |
-| --- | --- | --- | --- |
-| `SSH` | SSH + tun2socks | `libtun2socks.so` | `SSH_HOST`, `SSH_PORT`, `SSH Authenticating...` |
-| `UDPQ` | dnstt-style DNS tunnel | `libudpq.so`, `libudpqtwo.so` | 375× `edns`, 25× `base32`, 8× `noise`, 3× `smux`, 2× `kcp` |
-| `SLOWDNS` | **pdnsd** DNS forwarder | `libpdnsd.so` | `server { label=… ip=… }` config template in `Pdnsd.java` |
-| `FASTDNS` | dnstt variant | `libxdnstt.so`, `libdns.so`, `libsuperdns.so` | `noise` ×12, `kcp` ×15, `base32`, `Failed to run DNSTT!` |
-| `OVPN` | OpenVPN | bundled binary | `openvpn_userreq`, `openvpn_newstat` |
-| `PSIPHON` | Psiphon tunnel core | `ca.psiphon.PsiphonTunnel` | `psiphonVpnStartBroadcast`, `Psiphon Running` |
-| `SHADOWSOCKS` / `VLESS` | Xray 1.8.13 | bundled | full Xray JSON templates in the string table |
+Bundled fallback inside the APK: `assets/server.psi` (51 626 bytes, encoded in a
+hex alphabet) and `assets/sorter.json` (311 188 bytes). `sorter.json` is
+referenced from many call sites in the dex.
 
-Important detail: BD NET's "SlowDNS" is **not** dnstt. `Pdnsd.java` writes a
-`pdnsd.conf` (`server { label=…; ip=<resolver>; port=53; }`) and runs `libpdnsd`
-as a local DNS forwarder for tun2socks. The dnstt-style code lives in
-`libudpq` / `libxdnstt`, which the strings call `UDPQ` and `FASTDNS`.
+## 3. The blocker: how the bundles are ciphered
 
-### The configuration *fields* (i.e. what a BD NET "config" actually is)
+Base64-decoding a bundle yields high-entropy bytes of arbitrary length
+(`JSONDNSTT` 462 808 ≡ 8 mod 16, `sorter.json` 311 188 ≡ 4 mod 16) with **zero
+repeated 16-byte blocks**. That rules out AES-ECB over the whole blob and points
+at a stream cipher or an AEAD (nonce ‖ ciphertext ‖ tag).
 
-`defpackage/C0223If.java` is the settings model. It reads
-`SharedPreferences` — every value is user- or import-supplied:
+The one AES helper in the app is `smalihelper/heIran.decrypt`:
 
-| Key | Default in the app |
-| --- | --- |
-| `SSH_HOST` | `""` |
-| `SSH_PORT` | `0` |
-| `SNI` | `""` |
-| `PROXY_HOST` | `""` |
-| `DNS_SERVERS_NEW` | `"1.1.1.1;1.0.0.1"` |
-| `DNS_FORWARD` | `false` |
-| `AUTO_SELECT_SERVER` | `"true"` |
-| `USE_HOST_SNI` | `false` |
-| `TUNNEL_TYPE` | `0` |
-| `PDNSD_TYPE` | *(null → compiled-in query method)* |
-| `DNS_POSITION_NEW`, `SERVER_SELECTED_POSITION` | `0` |
-| `RECONNECT_SECONDS` | `"false"` |
-| `APPS_NEW` | *(empty set)* |
+```java
+key  = new SecretKeySpec(SHA-256(password).digest(), "AES");  // AES-256
+Cipher.getInstance("AES");                                    // AES/ECB/PKCS5
+cipher.init(DECRYPT_MODE, key);
+return new String(cipher.doFinal(Base64.decode(text, 0)));
+```
 
-Additional keys present in the model: `NETWORK_MESSAGE`, `NETWORK_SELECTED_NAME`,
-`BackQuery`, `isFastDns`, `isSlowDns`, `isUdpSet`, `isSshSet`, `isOvpnSet`,
-`isPsiphonSet`, `isXRaySet`.
+Tested against the bundles with both 40-hex secrets (as text, as raw bytes, as
+AES-128/192/256 keys, at 16 offsets) — no plaintext. It also has **no callers** in
+the dex, so it is dead code from the repack, not the config path. The real
+decryption therefore lives in native code or in a class jadx dropped from the
+decompile (the constants have no Java consumer at all).
 
-So a BD NET config is a bundle of *these fields* — imported through
-`ImportTweakActivity` (`content://` / `file://` intent) or typed in the
-"Custom Tweak" dialog (`name`, `message`, `mode`, `type`, payload, `SNI`,
-proxy host/port, expiry). It is not a URL that can be downloaded and it is not
-baked into the APK.
+## 4. What is still true
 
-## 3. What is *not* in the app — verified, not assumed
-
-There is no hidden server list and no dnstt key in this APK. Evidence:
-
-1. **String table** — 1 851 strings: zero hostnames other than the three above,
-   zero 64-hex-digit Noise public keys, no `*.ir` / `*.fun` / `*.online` server
-   domain, and no `dnstt`/`pubkey`/`resolver` literal.
-2. **Native libraries** — the only 64-hex strings in `libdns.so` /
-   `libxdnstt.so` are Go generic type-shape hashes
-   (`sync/atomic.(*XXiWi1I[go.shape.<64 hex>]).Load`), not keys. The remaining
-   "domains" in `native/*.domains.txt` are Go symbol fragments (`4roIqmw4E.String.fun`).
-3. **Defaults** — every connection field defaults to `""` or `0`; only the
-   resolver list has a value, and it is Cloudflare/Google, not BD NET infrastructure.
-4. **No assets** — the APK ships no JSON/config asset (`assets/sorter.json` is a
-   JSON key-sorting helper for the Xray config builder).
-
-## 4. Consequence for our client
-
-* Our MasterDnsVPN-style engine needs a `(domain, server public key, resolvers)`
-  triple. BD NET supplies `resolvers` (default `1.1.1.1;1.0.0.1`, user-editable,
-  semicolon separated) and nothing else.
-* The `UDPQ`/`FASTDNS` engines are dnstt-family, so a BD NET config *is*
-  wire-compatible with our `docs/DNSTT-PLAN.md` transport — but only once a
-  config file supplies the domain and the 32-byte server key. Those are
-  distributed by the developer (Telegram `t.me/bdnetvpn`), not embedded.
-* Therefore "extract BD NET's configs" yields the app's endpoints and the exact
-  field list above. It does not yield a usable server: this build genuinely does
-  not contain one, and the app cannot connect until the user imports a tweak.
+* Every connection *setting* (`SSH_HOST`, `SNI`, `PROXY_HOST`, `TUNNEL_TYPE`,
+  `PDNSD_TYPE`, …) still defaults to `""`/`0` in `defpackage/C0223If`; the
+  servers themselves arrive from the bundles above, not from those prefs.
+* Resolver default remains `1.1.1.1;1.0.0.1` (`DNS_SERVERS_NEW`).
+* Endpoints not related to servers: `https://t.me/bdnetvpn`,
+  `https://t.me/anty_filter`, the Psiphon remote list
+  (`raw.githubusercontent.com/panigbatanc/BDNET2023/main/JSONDEC2025` is passed to
+  Psiphon as *RemoteServerListUrl* in one place), and the in-app announcement
+  `https://raw.githubusercontent.com/vpnmarket/dialog15/refs/heads/main/BD%20106`.
 
 ## 5. Reproduce
 
@@ -154,11 +110,11 @@ There is no hidden server list and no dnstt key in this APK. Evidence:
 python3 tools/lsparanoid_decode.py --selftest
 python3 tools/lsparanoid_decode.py \
   --java 'analysis-bdnet/obfuscation/Deobfuscator$BDNETVPN$app.java' \
-  --scan analysis-bdnet/sources/sources \
-  --out analysis-bdnet/obfuscation/decrypted.txt \
-  --hosts-out analysis-bdnet/obfuscation/decrypted-hosts.txt
+  --scan java --out analysis-bdnet/obfuscation/decrypted.txt
 ```
 
-The same two commands run in GitHub Actions on every push (step *Decrypt
-LSParanoid strings*), against the freshly downloaded APK, so the committed
-output is always regenerable.
+CI also commits, per run: `analysis-bdnet/assets/` (every bundled asset that
+could be a server list, with `strings` and hostname extract), and
+`analysis-bdnet/hunt/` (all URL literals, App Engine/Firebase identifiers,
+server-list vocabulary, cipher sites, Base64 decode sites, and the smali
+surrounding the config constants).
