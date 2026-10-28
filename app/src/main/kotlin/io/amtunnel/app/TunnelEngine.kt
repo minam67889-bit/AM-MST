@@ -15,8 +15,11 @@ import io.amtunnel.core.net.DnsTunnelRelay
 import io.amtunnel.core.net.SocketProtector
 import io.amtunnel.core.net.Socks5Server
 import io.amtunnel.core.transport.EncryptionMethod
-import io.amtunnel.core.transport.HealthResolverSelector
+import io.amtunnel.core.transport.BalancerResolverSelector
+import io.amtunnel.core.transport.BalancingStrategy
+import io.amtunnel.core.transport.MasterBalancer
 import io.amtunnel.core.transport.MasterDnsTransport
+import io.amtunnel.core.transport.ResolverSelector
 import io.amtunnel.core.transport.StaticResolverSelector
 import io.amtunnel.core.transport.TransportState
 import io.amtunnel.core.transport.TransportStats
@@ -47,6 +50,8 @@ class TunnelEngine(private val context: Context) {
     private val starting = AtomicBoolean(false)
 
     @Volatile private var transport: MasterDnsTransport? = null
+    @Volatile var balancer: MasterBalancer? = null
+        private set
     @Volatile private var socks: Socks5Server? = null
     @Volatile private var scheduler: ScanScheduler? = null
     @Volatile private var scanner: ResolverScanner = ResolverScanner(
@@ -106,6 +111,11 @@ class TunnelEngine(private val context: Context) {
         encryptionKey = s.encryptionKey,
         uploadMtu = s.uploadMtu,
         downloadMtu = s.downloadMtu,
+        packetDuplication = s.packetDuplication,
+        balancingStrategy = s.balancingStrategy,
+        streamFailoverThreshold = s.streamFailoverThreshold,
+        autoDisableTimedOutResolvers = s.autoDisableResolvers,
+        autoDisableWindowMs = s.autoDisableWindowSeconds * 1_000L,
     )
 
     // ---------------------------------------------------------------- resolvers
@@ -222,12 +232,30 @@ class TunnelEngine(private val context: Context) {
                     "${enabled.size} candidate resolver(s)",
             )
 
-            val selector = if (s.autoFailover) {
-                HealthResolverSelector(monitor)
+            // MasterDnsVPN-style stack: the balancer owns strategy, scoring,
+            // auto-disable and stream-sticky failover. Wire format untouched.
+            val config = buildConfig(s)
+            val newBalancer = MasterBalancer(
+                strategy = BalancingStrategy.fromId(config.balancingStrategy),
+            ).apply {
+                failoverThreshold = config.streamFailoverThreshold
+                failoverCooldownMs = config.streamFailoverCooldownMs
+                autoDisableEnabled = config.autoDisableTimedOutResolvers
+                autoDisableWindowMs = config.autoDisableWindowMs
+                recheckInactiveEnabled = config.recheckInactiveResolvers
+                setResolvers(enabled)
+                onResolverDisabled = { key, reason ->
+                    log.warn("balancer", "resolver \$key parked (\$reason) - pool now \$activeCount")
+                }
+                onResolverReenabled = { key -> log.info("balancer", "resolver \$key is back") }
+            }
+            val selector: ResolverSelector = if (s.autoFailover) {
+                BalancerResolverSelector(newBalancer)
             } else {
                 StaticResolverSelector(enabled.first())
             }
-            val newTransport = MasterDnsTransport(buildConfig(s), selector, log, protector)
+            val newTransport = MasterDnsTransport(config, selector, log, protector)
+            balancer = newBalancer
             transport = newTransport
 
             if (!newTransport.start(timeoutMs = 20_000)) {
@@ -253,6 +281,7 @@ class TunnelEngine(private val context: Context) {
     }
 
     fun stop() {
+        balancer = null
         runCatching { scheduler?.stop() }
         scheduler = null
         runCatching { socks?.stop() }
@@ -261,6 +290,9 @@ class TunnelEngine(private val context: Context) {
         transport = null
         notifyStateChanged()
     }
+
+    /** Per-resolver live scoring rows for the diagnostics screen. */
+    fun balancerRows(): List<MasterBalancer.BalancerRow> = balancer?.snapshot() ?: emptyList()
 
     fun dnsRelay(): DnsTunnelRelay = DnsTunnelRelay({ transport }, log, settings.upstreamDns, 53)
 

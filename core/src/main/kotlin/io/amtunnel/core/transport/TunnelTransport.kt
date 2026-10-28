@@ -51,6 +51,15 @@ interface TunnelStream {
 interface ResolverSelector {
     /** Resolvers ordered best-first. */
     fun ranked(): List<ResolverEndpoint>
+
+    /** One resolver for the next packet (balancing strategy lives here). */
+    fun next(excluded: Set<String> = emptySet()): ResolverEndpoint? =
+        ranked().firstOrNull { it.key !in excluded }
+
+    /** N distinct resolvers for a duplicated packet. */
+    fun targets(count: Int, excluded: Set<String> = emptySet()): List<ResolverEndpoint> =
+        ranked().filter { it.key !in excluded }.take(count.coerceAtLeast(1))
+
     fun reportSuccess(endpoint: ResolverEndpoint, rttMs: Long)
     fun reportFailure(endpoint: ResolverEndpoint, reason: String)
     fun notifyResolverChanged(endpoint: ResolverEndpoint?) {}
@@ -63,6 +72,30 @@ class HealthResolverSelector(private val monitor: ResolverHealthMonitor) : Resol
 
     override fun reportFailure(endpoint: ResolverEndpoint, reason: String) =
         monitor.reportRuntimeFailure(endpoint, reason)
+}
+
+/**
+ * Bridges the ported MasterDnsVPN balancer to the transport. All strategy and
+ * scoring logic lives in [MasterBalancer]; this only translates endpoints.
+ */
+class BalancerResolverSelector(val balancer: MasterBalancer) : ResolverSelector {
+    override fun ranked(): List<ResolverEndpoint> = balancer.activeEndpoints()
+
+    override fun next(excluded: Set<String>): ResolverEndpoint? =
+        balancer.nextKey(excluded)?.let { balancer.endpointFor(it) }
+
+    override fun targets(count: Int, excluded: Set<String>): List<ResolverEndpoint> =
+        balancer.selectTargets(count, excluded).mapNotNull { balancer.endpointFor(it) }
+
+    override fun reportSuccess(endpoint: ResolverEndpoint, rttMs: Long) =
+        balancer.reportSuccess(endpoint.key, rttMs)
+
+    /** Routes through the auto-disable rule, not just a loss counter. */
+    override fun reportFailure(endpoint: ResolverEndpoint, reason: String) {
+        balancer.reportTimeout(endpoint.key)
+    }
+
+    override fun notifyResolverChanged(endpoint: ResolverEndpoint?) {}
 }
 
 /** Fixed single-resolver selector (manual mode, matches the original app UX). */

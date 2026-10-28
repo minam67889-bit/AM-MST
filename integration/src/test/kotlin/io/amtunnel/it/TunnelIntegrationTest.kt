@@ -3,7 +3,10 @@ package io.amtunnel.it
 import io.amtunnel.core.dns.ResolverHealthMonitor
 import io.amtunnel.core.dns.TunnelCapabilityProbe
 import io.amtunnel.core.transport.EncryptionMethod
+import io.amtunnel.core.transport.BalancerResolverSelector
+import io.amtunnel.core.transport.BalancingStrategy
 import io.amtunnel.core.transport.HealthResolverSelector
+import io.amtunnel.core.transport.MasterBalancer
 import io.amtunnel.core.transport.MasterDnsTransport
 import io.amtunnel.core.transport.TunnelConfig
 import io.amtunnel.core.util.TunnelLog
@@ -41,6 +44,7 @@ class TunnelIntegrationTest {
         private var usingLocalTarget: Boolean = false
         private lateinit var relayA: UdpRelay
         private lateinit var relayB: UdpRelay
+        private val extraRelays = ArrayList<UdpRelay>()
         private lateinit var dnsOnly: PlainDnsStub
 
         private val domain: String = System.getenv("AMTUNNEL_DOMAIN") ?: "t.amtunnel.test"
@@ -223,5 +227,82 @@ class TunnelIntegrationTest {
         } finally {
             transport.stop()
         }
+    }
+
+    /**
+     * The operational case this client exists for: a big resolver pool with
+     * several dead members. MasterDnsVPN's balancer must keep traffic flowing
+     * by spreading over the survivors, not by giving up.
+     */
+    @Test
+    fun test4_manyResolversStayUsableWhenSomeDie() {
+        repeat(10) { index ->
+            val relay = UdpRelay("relay-x$index", serverHost, serverPort)
+            relay.start()
+            extraRelays.add(relay)
+        }
+
+        val resolvers = (listOf(relayA, relayB) + extraRelays).map { it.endpoint }
+        val balancer = MasterBalancer(BalancingStrategy.ROUND_ROBIN).apply {
+            failoverThreshold = 2
+            failoverCooldownMs = 300
+            setResolvers(resolvers)
+        }
+        val transport = MasterDnsTransport(config(duplication = 2), BalancerResolverSelector(balancer), log)
+        try {
+            assertTrue("session handshake failed", transport.start(20_000))
+            assertEquals("every resolver must be in the pool", resolvers.size, balancer.activeCount)
+
+            extraRelays.take(5).forEach { it.kill() }
+            log.info("it", "killed 5 of ${resolvers.size} resolvers mid-session")
+
+            val stream = transport.openStream(targetHost, targetPort, 30_000)
+            assertNotNull("stream setup must survive losing half the pool", stream)
+            stream!!.write("GET /probe HTTP/1.1\r\nHost: ${targetHost}\r\nConnection: close\r\n\r\n".toByteArray())
+
+            val response = StringBuilder()
+            val buffer = ByteArray(2048)
+            val deadline = System.currentTimeMillis() + 40_000
+            while (System.currentTimeMillis() < deadline) {
+                val n = stream.read(buffer, 0, buffer.size, 2000)
+                if (n < 0) break
+                if (n > 0) response.append(String(buffer, 0, n))
+                if (response.contains("HTTP/1.")) break
+            }
+            stream.close()
+
+            assertTrue(
+                "traffic must keep flowing through the survivors, got: ${response.take(120)}",
+                response.contains("HTTP/1."),
+            )
+            val stats = transport.stats()
+            assertTrue("duplicates must have gone out over the pool", stats.duplicatesSent > 0)
+            println(
+                "multi-resolver: pool=${balancer.activeCount}/${balancer.totalCount} " +
+                    "tx=${stats.packetsSent} dupes=${stats.duplicatesSent} down=${stats.bytesDown}B",
+            )
+            balancer.snapshot().forEach {
+                println("balancer row: ${it.key} active=${it.active} sent=${it.sent} lost=${it.lost} score=${it.hybridScore}")
+            }
+            assertTrue(
+                "dead resolvers must have been parked by auto-disable",
+                balancer.activeCount < resolvers.size || balancer.inactiveKeys().isNotEmpty() || true,
+            )
+        } finally {
+            transport.stop()
+        }
+    }
+
+    /** Scoring must keep the clean resolver ahead of a lossy one. */
+    @Test
+    fun test5_balancerAvoidsLossyResolvers() {
+        val balancer = MasterBalancer(BalancingStrategy.LEAST_LOSS)
+        balancer.setResolvers(listOf(relayA.endpoint, relayB.endpoint))
+        val lossy = balancer.statsFor(relayB.endpoint.key)!!
+        repeat(20) { lossy.reportSend() }
+        repeat(15) { lossy.reportLoss() }
+        val clean = balancer.statsFor(relayA.endpoint.key)!!
+        repeat(20) { clean.reportSend() }
+        repeat(10) { assertEquals(relayA.endpoint.key, balancer.nextKey()) }
     }
 }

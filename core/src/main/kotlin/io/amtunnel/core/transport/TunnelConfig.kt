@@ -23,10 +23,24 @@ data class TunnelConfig(
      * distinct resolvers. 1 = no duplication. The server ignores duplicate
      * sequence numbers, so this only costs upload bandwidth, never correctness.
      */
-    val packetDuplication: Int = 1,
+    val packetDuplication: Int = 2,
     /** MasterDnsVPN `MIN_UPLOAD_MTU` / `MAX_UPLOAD_MTU` - clamp for MTU probing. */
     val minUploadMtu: Int = 32,
     val maxUploadMtu: Int = 180,
+    /**
+     * MasterDnsVPN `RESOLVER_BALANCING_STRATEGY` (0..8). Upstream default is 2
+     * (round robin across every healthy resolver).
+     */
+    val balancingStrategy: Int = 2,
+    /** MasterDnsVPN `STREAM_RESOLVER_FAILOVER_RESEND_THRESHOLD` (default 2). */
+    val streamFailoverThreshold: Int = 2,
+    /** MasterDnsVPN `STREAM_RESOLVER_FAILOVER_COOLDOWN` seconds (default 2.5). */
+    val streamFailoverCooldownMs: Long = 2_500,
+    /** MasterDnsVPN `AUTO_DISABLE_TIMEOUT_SERVERS` + window (default 30 s). */
+    val autoDisableTimedOutResolvers: Boolean = true,
+    val autoDisableWindowMs: Long = 30_000,
+    /** MasterDnsVPN `RECHECK_INACTIVE_SERVERS_ENABLED`. */
+    val recheckInactiveResolvers: Boolean = true,
 ) {
     fun validate(): List<String> {
         val problems = ArrayList<String>()
@@ -38,7 +52,11 @@ data class TunnelConfig(
         if (uploadMtu < 32) problems.add("upload MTU too small ($uploadMtu)")
         if (queryTimeoutMs < 200) problems.add("query timeout too small (${queryTimeoutMs}ms)")
         if (responseMode !in 0..1) problems.add("invalid response mode $responseMode")
-        if (packetDuplication !in 1..8) problems.add("packet duplication must be 1..8")
+        if (packetDuplication !in 1..10) problems.add("packet duplication must be 1..10 (upstream clamps 1..10)")
+        if (!BalancingStrategy.isValid(balancingStrategy)) {
+            problems.add("RESOLVER_BALANCING_STRATEGY must be 0..8, got $balancingStrategy")
+        }
+        if (streamFailoverThreshold !in 1..256) problems.add("stream failover threshold must be 1..256")
         if (minUploadMtu > maxUploadMtu) problems.add("min upload MTU exceeds max upload MTU")
         if (uploadMtu > maxUploadMtu) problems.add("upload MTU $uploadMtu exceeds max ${maxUploadMtu}")
         return problems

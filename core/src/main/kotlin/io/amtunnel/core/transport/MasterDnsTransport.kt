@@ -35,6 +35,10 @@ class MasterDnsTransport(
     private val protector: SocketProtector = SocketProtector.Noop,
 ) : TunnelTransport {
 
+    /** Present when the caller supplied [BalancerResolverSelector]. */
+    val balancer: MasterBalancer? =
+        (selector as? BalancerResolverSelector)?.balancer
+
     private val session = TunnelSession(config, log, protector)
     private val streams = ConcurrentHashMap<Int, DnsTunnelStream>()
     private val outbox = PriorityBlockingQueue<Outbound>()
@@ -62,6 +66,7 @@ class MasterDnsTransport(
     @Volatile private var consecutiveEndpointFailures = 0
     @Volatile private var consecutiveTotalFailures = 0
     @Volatile private var lastPingMs = 0L
+    @Volatile private var lastRecheckMs = 0L
     private val sequence = AtomicLong()
     private val streamIdCounter = AtomicInteger(java.security.SecureRandom().nextInt(0x4000) + 1)
 
@@ -351,6 +356,7 @@ class MasterDnsTransport(
             try {
                 retransmitDue()
                 maybePing()
+                maybeRecheckResolvers()
                 if (consecutiveTotalFailures >= 4 && isReady) {
                     if (!recoverSession()) continue
                 }
@@ -388,11 +394,11 @@ class MasterDnsTransport(
     private fun duplicateToAlternates(frame: VpnFrame, primary: ResolverEndpoint) {
         val copies = config.packetDuplication - 1
         if (copies <= 0) return
-        val alternates = selector.ranked()
-            .asSequence()
+        // The balancer picks the extra paths, like upstream SelectTargets: the
+        // primary is the sticky stream resolver, the rest are the best others.
+        val alternates = selector.targets(copies + 1, emptySet())
             .filter { it.key != primary.key }
             .take(copies)
-            .toList()
         for (alternate in alternates) {
             duplicates.incrementAndGet()
             duplicateExecutor.execute {
@@ -406,7 +412,7 @@ class MasterDnsTransport(
     }
 
     private fun transmit(item: Outbound) {
-        val endpoint = pickEndpoint()
+        val endpoint = pickEndpoint(item.frame.streamId)
         if (endpoint == null) {
             failStream(item, "no usable resolver")
             return
@@ -415,6 +421,7 @@ class MasterDnsTransport(
             duplicateToAlternates(item.frame, endpoint)
         }
         sent.incrementAndGet()
+        selector.notifyResolverChanged(endpoint)
         try {
             val exchange = session.exchange(item.frame, endpoint, config.queryTimeoutMs)
             responses.incrementAndGet()
@@ -437,6 +444,9 @@ class MasterDnsTransport(
             val reason = e.message ?: e.javaClass.simpleName
             selector.reportFailure(endpoint, reason)
             if (state == TransportState.READY) state = TransportState.DEGRADED
+            // Stream-level failover: after N resends (and past the cooldown)
+            // move only that stream, leaving the rest of the traffic alone.
+            if (item.frame.streamId != 0) balancer?.noteStreamResend(item.frame.streamId)
             if (consecutiveEndpointFailures >= 2) {
                 val previous = activeEndpointKey
                 activeEndpointKey = null
@@ -452,6 +462,7 @@ class MasterDnsTransport(
     }
 
     private fun failStream(item: Outbound, reason: String) {
+        if (item.frame.streamId != 0) balancer?.clearStream(item.frame.streamId)
         item.ackSpec?.let { spec ->
             pending.remove(spec)
             streams[spec.streamId]?.let { stream ->
@@ -631,20 +642,66 @@ class MasterDnsTransport(
         }
     }
 
-    private fun pickEndpoint(): ResolverEndpoint? {
-        val ranked = selector.ranked()
-        if (ranked.isEmpty()) return null
-        val currentKey = activeEndpointKey
-        if (currentKey != null) {
-            val current = ranked.firstOrNull { it.key == currentKey }
-            if (current != null) return current
-            switches.incrementAndGet()
+    /**
+     * Resolver selection is delegated to the [selector]; a
+     * [BalancerResolverSelector] applies the MasterDnsVPN strategy (round robin
+     * by default) instead of pinning one box.
+     *
+     * Stream traffic is sticky: a stream keeps its resolver until it has to
+     * fail over, so packets of one stream do not arrive out of order at the
+     * server just because the balancer rotated.
+     */
+    private fun pickEndpoint(streamId: Int = 0): ResolverEndpoint? {
+        val balancer = balancer
+        if (balancer != null && streamId != 0) {
+            balancer.preferredForKey(streamId)?.let { key ->
+                balancer.endpointFor(key)?.let { endpoint ->
+                    noteEndpoint(endpoint)
+                    return endpoint
+                }
+            }
         }
-        val best = ranked.first()
-        activeEndpointKey = best.key
-        selector.notifyResolverChanged(best)
-        log.debug("transport", "using resolver ${best.key}")
-        return best
+        val chosen = selector.next(emptySet()) ?: return null
+        if (activeEndpointKey != null && chosen.key != activeEndpointKey) switches.incrementAndGet()
+        noteEndpoint(chosen)
+        return chosen
+    }
+
+    private fun noteEndpoint(endpoint: ResolverEndpoint) {
+        if (endpoint.key != activeEndpointKey) {
+            activeEndpointKey = endpoint.key
+            selector.notifyResolverChanged(endpoint)
+            log.debug("transport", "using resolver ${endpoint.key}")
+        }
+    }
+
+    /**
+     * `RECHECK_INACTIVE_SERVERS_ENABLED`: probe one parked resolver with a PING
+     * and put it back only if it answers, so a dead resolver costs one probe
+     * per interval instead of being rotated at random.
+     */
+    private fun maybeRecheckResolvers() {
+        val balancer = balancer ?: return
+        if (!config.recheckInactiveResolvers) return
+        val now = System.currentTimeMillis()
+        if (now - lastRecheckMs < 1_000) return
+        lastRecheckMs = now
+        val key = balancer.nextForRecheck(now) ?: return
+        val endpoint = balancer.endpointFor(key) ?: return
+        val frame = VpnFrame(
+            sessionId = session.sessionId,
+            packetType = PacketType.PING,
+            sessionCookie = session.sessionCookie,
+            payload = ByteArray(0),
+        )
+        try {
+            val exchange = session.exchange(frame, endpoint, minOf(config.queryTimeoutMs, 1_500))
+            balancer.reportSuccess(key, exchange.rttMs)
+            balancer.reactivate(key)
+            log.info("transport", "resolver $key answered a recheck - back in the pool")
+        } catch (_: Exception) {
+            log.debug("transport", "recheck: $key still down")
+        }
     }
 
     companion object {
