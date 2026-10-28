@@ -1,43 +1,49 @@
-total 148
--rw-r--r-- 1 runner runner 138795 Oct 28 18:39 Deobfuscator$BDNETVPN$app.java
--rw-r--r-- 1 runner runner   1019 Oct 28 18:39 DeobfuscatorHelper.java
--rw-r--r-- 1 runner runner    373 Oct 28 18:39 Obfuscate.java
--rw-r--r-- 1 runner runner    754 Oct 28 18:39 RandomHelper.java
---- DeobfuscatorHelper head ---
-package org.lsposed.lsparanoid;
-
-/* loaded from: classes2.dex */
-public class DeobfuscatorHelper {
-    public static final int MAX_CHUNK_LENGTH = 8191;
-
-    private DeobfuscatorHelper() {
-    }
-
-    private static long getCharAt(int i, String[] strArr, long j) {
-        return (strArr[i / MAX_CHUNK_LENGTH].charAt(i % MAX_CHUNK_LENGTH) << 32) ^ RandomHelper.next(j);
-    }
-
-    public static String getString(long j, String[] strArr) {
-        long next = RandomHelper.next(RandomHelper.seed(4294967295L & j));
-        long j2 = (next >>> 32) & 65535;
-        long next2 = RandomHelper.next(next);
-        int i = (int) (((j >>> 32) ^ j2) ^ ((next2 >>> 16) & (-65536)));
-        long charAt = getCharAt(i, strArr, next2);
-        int i2 = (int) ((charAt >>> 32) & 65535);
-        char[] cArr = new char[i2];
-        for (int i3 = 0; i3 < i2; i3++) {
-            charAt = getCharAt(i + i3 + 1, strArr, charAt);
-            cArr[i3] = (char) ((charAt >>> 32) & 65535);
-        }
-        return new String(cArr);
-    }
-}
-call-site literals: 1992
--100016235313035
--100084954789771
--100127904462731
--100188034004875
--100192328972171
-obfuscated app class: org.lsposed.lsparanoid.Deobfuscator$BDNETVPN$app
-decrypted lines: 1993
---- hosts found in the decrypted table ---
+chunks class: java/sources/org/lsposed/lsparanoid/Deobfuscator$BDNETVPN$app.java
+smali ids: 2010
+SELFTEST PASS (7/7 strings, 2 chunk(s), multi-chunk=yes)
+wrote analysis/obfuscation/decrypted.txt (1995 lines)
+wrote analysis/obfuscation/decrypted-hosts.txt (2 hosts)
+chunks=6 ids=1992 decoded=1992 errors=0
+URL https://raw.githubusercontent.com/panigbatanc/BDNET2023/main/JSONDEC2025
+URL https://s3.amazonaws.com//psiphon/web/mjr4-p23r-puwl/server_list_compressed
+URL https://t.me/bdnetvpn
+HOST raw.githubusercontent.com
+HOST s3.amazonaws.com
+--- sample ---
+# LSParanoid string table - decrypted by tools/lsparanoid_decode.py
+# chunks=6 chunk_chars=41966 ids=1992
+# decoded=1992 errors=0
+-179301331597195	112.0.5625.15
+-179245497022347	99.0.4844.51
+-179189662447499	94.0.4606.81
+-179151007741835	621.4.40
+-179112353036171	620.2.30
+-179073698330507	614.9.22
+-179035043624843	611.3.11
+-179004978853771	537.81
+-178974914082699	537.80
+-178914784540555	110.0.5481.30
+-178858949965707	98.0.4758.80
+-178803115390859	95.0.4638.54
+-178747280816011	93.0.4577.82
+-178687151273867	88.0.4324.182
+-178648496568203	620.1.20
+-178609841862539	612.8.12
+-178571187156875	610.2.10
+-178541122385803	537.79
+-178511057614731	537.78
+-178480992843659	537.77
+-178459518007179	97.0
+-178438043170699	96.0
+-178416568334219	93.0
+-178395093497739	92.0
+-178373618661259	74.0
+-178352143824779	89.0
+-178330668988299	91.0
+--- endpoints ---
+https://raw.githubusercontent.com/panigbatanc/BDNET2023/main/JSONDEC2025
+https://s3.amazonaws.com//psiphon/web/mjr4-p23r-puwl/server_list_compressed
+https://t.me/bdnetvpn
+--- hosts ---
+raw.githubusercontent.com
+s3.amazonaws.com

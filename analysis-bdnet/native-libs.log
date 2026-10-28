@@ -470,8 +470,8 @@ extracted lib/arm64-v8a/libxdnstt.so (16587328 B, zipfile)
 6k.AdV33aHvMisR.Size.fun
 6k.fun
 + grep -iE 'qname|base36|base64|chunk|fragment|session|cookie|handshake|socks|mtu|packet|sequence|checksum|encrypt|decrypt|xor|chacha|aes|tunnel|resolver|authoritative|txt|edns|compress' analysis/native/libxdnstt.strings.txt
-+ head -200
 + grep -vE '^(__|_ZN|_Z)'
++ head -200
 grep: write error: Broken pipe
 grep: write error: Broken pipe
 + true
@@ -482,32 +482,32 @@ grep: write error: Broken pipe
 + ls -l analysis/native/
 + head -40
 total 5852
--rw-r--r-- 1 runner runner    9289 Oct 28 18:39 libdns.domains.txt
--rw-r--r-- 1 runner runner    8623 Oct 28 18:39 libdns.keywords.txt
--rw-r--r-- 1 runner runner  440169 Oct 28 18:39 libdns.strings.txt
--rw-r--r-- 1 runner runner      45 Oct 28 18:39 libpdnsd.domains.txt
--rw-r--r-- 1 runner runner    1092 Oct 28 18:39 libpdnsd.keywords.txt
--rw-r--r-- 1 runner runner   32390 Oct 28 18:39 libpdnsd.strings.txt
--rw-r--r-- 1 runner runner      35 Oct 28 18:39 libtun2socks.domains.txt
--rw-r--r-- 1 runner runner    1280 Oct 28 18:39 libtun2socks.keywords.txt
--rw-r--r-- 1 runner runner   16635 Oct 28 18:39 libtun2socks.strings.txt
--rw-r--r-- 1 runner runner   23325 Oct 28 18:39 libudpq.domains.txt
--rw-r--r-- 1 runner runner   37223 Oct 28 18:39 libudpq.keywords.txt
--rw-r--r-- 1 runner runner 2046032 Oct 28 18:39 libudpq.strings.txt
--rw-r--r-- 1 runner runner   22896 Oct 28 18:39 libudpqtwo.domains.txt
--rw-r--r-- 1 runner runner   28381 Oct 28 18:39 libudpqtwo.keywords.txt
--rw-r--r-- 1 runner runner 1794883 Oct 28 18:39 libudpqtwo.strings.txt
--rw-r--r-- 1 runner runner   28948 Oct 28 18:39 libxdnstt.domains.txt
--rw-r--r-- 1 runner runner   29648 Oct 28 18:39 libxdnstt.keywords.txt
--rw-r--r-- 1 runner runner 1421391 Oct 28 18:39 libxdnstt.strings.txt
+-rw-r--r-- 1 runner runner    9289 Oct 28 18:46 libdns.domains.txt
+-rw-r--r-- 1 runner runner    8623 Oct 28 18:46 libdns.keywords.txt
+-rw-r--r-- 1 runner runner  440169 Oct 28 18:46 libdns.strings.txt
+-rw-r--r-- 1 runner runner      45 Oct 28 18:46 libpdnsd.domains.txt
+-rw-r--r-- 1 runner runner    1092 Oct 28 18:46 libpdnsd.keywords.txt
+-rw-r--r-- 1 runner runner   32390 Oct 28 18:46 libpdnsd.strings.txt
+-rw-r--r-- 1 runner runner      35 Oct 28 18:46 libtun2socks.domains.txt
+-rw-r--r-- 1 runner runner    1280 Oct 28 18:46 libtun2socks.keywords.txt
+-rw-r--r-- 1 runner runner   16635 Oct 28 18:46 libtun2socks.strings.txt
+-rw-r--r-- 1 runner runner   23325 Oct 28 18:46 libudpq.domains.txt
+-rw-r--r-- 1 runner runner   37223 Oct 28 18:46 libudpq.keywords.txt
+-rw-r--r-- 1 runner runner 2046032 Oct 28 18:46 libudpq.strings.txt
+-rw-r--r-- 1 runner runner   22896 Oct 28 18:46 libudpqtwo.domains.txt
+-rw-r--r-- 1 runner runner   28381 Oct 28 18:46 libudpqtwo.keywords.txt
+-rw-r--r-- 1 runner runner 1794883 Oct 28 18:46 libudpqtwo.strings.txt
+-rw-r--r-- 1 runner runner   28948 Oct 28 18:46 libxdnstt.domains.txt
+-rw-r--r-- 1 runner runner   29648 Oct 28 18:46 libxdnstt.keywords.txt
+-rw-r--r-- 1 runner runner 1421391 Oct 28 18:46 libxdnstt.strings.txt
 + echo '=== libs in bundle ==='
 === libs in bundle ===
 + for apk in apks/*.apk
 + echo '-- apks/base.apk'
 -- apks/base.apk
 + unzip -Z1 apks/base.apk
-+ head -30
 + grep '\.so$'
++ head -30
 lib/arm64-v8a/libSignatureKiller.so
 lib/arm64-v8a/libdatastore_shared_counter.so
 lib/arm64-v8a/libdns.so
