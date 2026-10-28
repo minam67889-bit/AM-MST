@@ -1,0 +1,200 @@
+	LookupTXT
+	cookieSet
+	handshake
+	lookupTXT
+	morebuf={pc:: no frame (sp=runtime: frame ts set in timertraceback stuckruntime.gopanicunexpected kindhandshakeZeroed476837158203125invalid argSize<invalid Value>invalid pointer,M3.2.0,M11.1.0jstmpllitinterptarinsecurepathx509keypairleafx509usepolicieszipinsecurepathreflectlite.Set Go fipsinfo 
+ (types from different scopes)failed to get system page sizeruntime: found in object at *( in prepareForSweep; sweepgen /cpu/classes/total:cpu-seconds/gc/cycles/automatic:gc-cycles/sched/pauses/total/gc:seconds/sync/mutex/wait/total:seconds/godebug/non-default-behavior/runtime: epollctl failed with panic called with nil argumentcheckdead: inconsistent countsrunqputslow: queue is not fullruntime: bad pointer in frame invalid pointer found on stack locals stack map entries for abi mismatch detected between runtime: impossible type kind unsafe.Slice: len out of rangeunquoted key %q must be quotedinserting unknown address type227373675443232059478759765625MapIter.Key called before Nextreflect: Elem of invalid type trailing garbage after addressGODEBUG: unknown cpu feature "sync: inconsistent mutex statesync: unlock of unlocked mutexreflect: Len of non-array typefips: invalid self-test name: subtle.XORBytes: dst too shortcrypto/ecdh: mismatched curvesfips140: verification mismatch.lib section in a.out corruptedcannot assign requested addressfmt: unknown base; can't happenslice bounds out of range [:%x]slice bounds out of range [%x:]SIGSEGV: segmentation violationinternal error - misuse of itab) not in usable address space: runtime: cannot allocate memorycheckmark found unmarked object/memory/classes/heap/free:bytes/memory/classes/os-stacks:bytespacer: sweep done at heap size non in-use span in unswept listcasgstatus: bad incoming valuesresetspinning: not a spinning mruntime: profBuf already closedfatal: bad g in signal handler
+ *nettrace.LookupIPAltResolverKey
+ max=scav  ptr ] = (trap:init  ms, fault and  tab= top=[...], fp:path	.func1562578125int16int32int64uint8arrayslice (at no IPClassMarchAprilfcntlvfpv4idivaGreekP-256hangupkillederrno StringFormat[]bytestringnetdnsdomaingophertelnetreturn.locallisten.onionndots:ip+netsocketacceptremovesysmontimersefenceselect, not object next= jobs= goid sweep  B -> % util alloc free  span= prev= list=, i =  code= addr=], sp= m->p= p->m=SCHED  curg= ctxt: min=  max= bad ts(...)
+ stack=[ minLC=  maxpc= 	stack=[ minutes status= etypes mac1----cookie--endpointRemoving/dev/tunnil Pool48828125strconv.parsing ParseIntClassANYQuestionThursdaySaturdayFebruaryNovemberDecembertime.UTC%!Month(overflowgo/typesnet/httpgo/buildtlsmlkem#fips140CTR_DRBGSHA2-256SHA2-512interruptbus errorcontinued method: (MISSING)%!(EXTRA files,dnsdns,filesipv6-icmp_outboundlocalhostattempts:no-reloadraw-writetimerSendpollCacheprofBlockstackpoolhchanLeafwbufSpansGC (idle)mSpanDeadinittracescavtracepanicwaitchan sendpreemptedcoroutinesignal 32signal 33signal 34signal 35signal 36signal 37signal 38signal 39signal 40signal 41signal 42signal 43signal 44signal 45signal 46signal 47signal 48signal 49signal 50signal 51signal 52signal 53signal 54signal 55signal 56signal 57signal 58signal 59signal 60signal 61signal 62signal 63signal 64copystackLINUX_2.6interface ms cpu,  (forced) wbuf1.n= wbuf2.n= s.limit= s.state= B work ( B exp.)  marked   unmarked in use)
+ timersAnyAuthenticatedPacketSent
+"*chacha20poly1305.chacha20poly1305
+"*chan device.QueueHandshakeElement
+"*map.group[int32]main.TunnelHandle
+"`19531259765625invaliduintptrChanDir Value>::ffff:no portnil keyanswersTuesdayJanuaryOctober-070000Z070000, time.accept4aarch64os/execfips140runtimetls3desAES-CBCno anodeGoStringnetedns0[::1]:53notfoundtryagaincontinue_gatewayunixgramtimeout:trust-adfile+netaddress raw-readscavengepollDescsynctesttraceBufdeadlockraceFinipanicnilcgocheckrunnable is not  pointer, errno=BAD RANK status unknown(trigger= npages= nalloc= nfreed=) errno=runtime.[signal reflect. newval= mcount= bytes, trap    error   oldmask r0      r1      r2      r3      r4      r5      r6      r7      r8      r9      r10     fp      ip      sp      lr      pc      cpsr    fault   
+#*chacha20poly1305.xchacha20poly1305
+$golang.org/x/crypto/chacha20poly1305
+$timersAnyAuthenticatedPacketReceived
+%timersAnyAuthenticatedPacketTraversal
+&*struct { F uintptr; R *net.Resolver }
+*aes.Block
+*aes.CTR
+*aes.KeySizeError
+*aes.block
+*aes.blockExpanded
+*chacha8rand.State
+*device.CookieChecker
+*device.CookieGenerator
+*device.Handshake
+*device.MessageCookieReply
+*device.QueueHandshakeElement
+*device.handshakeQueue
+*device.handshakeState
+*ipv4.PacketConn
+*ipv6.PacketConn
+*main.TunnelHandle
+*map[int32]main.TunnelHandle
+*net.PacketConn
+*net.Resolver
+*reflect.makeFuncCtxt
+*struct { retransmitHandshake *device.Timer; sendKeepalive *device.Timer; newHandshake *device.Timer; zeroKeyMaterial *device.Timer; persistentKeepalive *device.Timer; handshakeAttempts atomic.Uint32; needAnotherKeepalive atomic.Bool; sentLastMinuteHandshake atomic.Bool }
+, size = , tail = newosprocrecover:  not in [ctxt != 0, oldval=, newval= threads=: status= blocked= lockedg=atomicor8 runtime= sigcode= m->curg=(unknown)total < 0traceback} stack=[ gp.goid= lockedm=fwmark=%derrno=0
+-*struct { key int32; elem main.TunnelHandle }
+/*[]struct { key int32; elem main.TunnelHandle }
+/*struct { device tun.Device; mtu atomic.Int32 }
+/cpu/classes/idle:cpu-seconds/cpu/classes/user:cpu-seconds/gc/heap/allocs-by-size:bytes/gc/stack/starting-size:bytesgc done but gcphase != _GCoffruntime: p.gcMarkWorkerMode= scanobject of a noscan objectruntime: marking free object addspecial on invalid pointerruntime: summary max pages = runtime: levelShift[level] = doRecordGoroutineProfile gp1=runtime: eventfd failed with runtime: sudog with non-nil centersyscall inconsistent bp entersyscall inconsistent sp gfput: bad status (not Gdead)LockOSThread nesting overflowsemacquire not on the G stackruntime: split stack overflowstring concatenation too longinvalid function symbol tabletrace: reading after shutdownruntime: traceback stuck. pc=tried to trace dead goroutineruntime: impossible type kindremoving unknown address typeFailed to decode cookie reply%v - Sending keepalive packetRoutine: TUN reader - startedRoutine: TUN reader - stoppedfailed to set private_key: %wfailed to set listen_port: %wfailed to create new peer: %wpersistent_keepalive_intervalfailed to set endpoint %v: %winvalid ip header version: %dtcp header len is invalid: %d45474735088646411895751953125Time.UnmarshalBinary: no databufio.Scanner: token too longFIPS 140-3 self-test failed: FIPS 140-3 self-test passed: poly1305: unexpected overflowcrypto/aes: invalid key size WireGuard/GoBackend/StacktraceCreateUnmonitoredTUNFromFD: %vinappropriate ioctl for devicesocket operation on non-socketprotocol wrong type for socketcalled entry on non-entry nodeassignment to entry in nil mapSIGUSR1: user-defined signal 1SIGUSR2: user-defined signal 2SIGVTALRM: virtual alarm clockSIGPROF: profiling alarm clockruntime: bad g in cgocallback
+0*[8]struct { key int32; elem main.TunnelHandle }
+0*struct { F uintptr; X0 *device.handshakeQueue }
+244140625ParseUintcomplex64invalid nreflect: funcargs(bad indirInterfacemissing ] parsing ClassINETAuthorityquestionsrwxrwxrwxWednesdaySeptember-07:00:00Z07:00:00v7atomicsmath/randtlsrsakexInheritedBigEndiand.nx != 0cSHAKE128IpcSet: %vowner diedterminated(BADINDEX)%!(NOVERB)/etc/hosts  netGo = myhostname.localhostunixpacketnameservergetsockoptnetlinkribsetsockopt/dev/stdininvalid FDpidfd_openpidfd_waitnotifyListprofInsertstackLargeNot workermSpanInUseGOMAXPROCSstop tracedisablethpinvalidptrschedtracesemacquiredebug call/dev/null
+BeginSymmetricSession
+BytesCompressed
+Checksum
+Cookie
+Decrypt
+Encrypt
+Failed to decode initiation messagefailed to get MTU of TUN device: %wip header version: %d, GSO type: %d1776356839400250464677810668945312588817841970012523233890533447265625ryuFtoaFixed32 called with prec > 9too many Questions to pack (>65535)2006-01-02T15:04:05.999999999Z07:00non-positive interval for NewTickerfile type does not support deadlinecrypto/blake2s: cannot marshal MACsencoding/hex: odd length hex stringchacha20: output smaller than inputsha3: invalid hash state identifierP256 point is the point at infinityaccessing a corrupted shared librarylfstack node allocated from the heap) is larger than maximum page size (runtime: invalid typeBitsBulkBarrieruncaching span but s.allocCount == 0/memory/classes/metadata/other:bytes/sched/pauses/stopping/other:secondsuser arena span is on the wrong listruntime: marked free object in span runtime: unblock on closing polldescruntime: inconsistent write deadlineruntime: netpoll: eventfd ready for runtime: sudog with non-nil waitlinkruntime: mcall called on m->g0 stackfatal: recursive switchToCrashStack
+FlushStagedPackets
+Interface closed, ignored requested state %sInterface state was %s, requested %s, now %s%v - Failed to create initiation message: %v%v - Failed to send handshake initiation: %vfailed to set update only, invalid value: %vmult128bitPow10: power of 10 is out of rangereflect: funcLayout with interface receiver  using value obtained using unexported fieldinsufficient data for calculated length typecrypto/sha256: invalid hash state identifiercannot send after transport endpoint shutdowntransitioning GC to the same state as before?produced a trigger greater than the heap goaltried to run scavenger from another goroutineruntime: failed mSpanList.remove span.npages=exitsyscall: syscall frame is no longer validunsafe.String: ptr is nil and len is not zeroruntime: cannot connect to /dev/socket/logdw
+J*struct { secret [32]uint8; secretSet time.Time; encryptionKey [32]uint8 }
+ListenPacket
+NewIndexForHandshake
+PacketConn
+Resolver
+RoutineDecryption
+RoutineEncryption
+RoutineHandshake
+RoutineReadFromTUN
+SendHandshakeCookie
+SendHandshakeInitiation
+SendHandshakeResponse
+SendStagedPackets
+SetChecksum
+SetEndpointFromPacket
+StagePackets
+TXTResource
+Trouble determining MTU, assuming default: %vreflect: nil type passed to Type.AssignableToreflect: internal error: invalid method indexcontext: internal error: missing cancel errorparsing/packing of this section has completedblake2s: a key is required for a 128-bit hashcrypto/blake2s: invalid hash state identifierbufio.Scanner: Read returned impossible countslice bounds out of range [:%x] with length %ypanicwrap: unexpected string after type name: memory reservation exceeds address space limittried to park scavenger from another goroutinereleased less than one physical page of memorysysGrow bounds not aligned to pallocChunkBytesruntime: failed to create new OS thread (have runtime: panic before malloc heap initialized
+XORKeyStream
+XORKeyStreamAt
+Y*struct { F uintptr; X0 *conn.StdNetBind; X1 *ipv4.PacketConn; X2 *net.UDPConn; X3 bool }
+Y*struct { F uintptr; X0 *conn.StdNetBind; X1 *ipv6.PacketConn; X2 *net.UDPConn; X3 bool }
+accessed data from freed user arena runtime: wrong goroutine in newstackruntime: invalid pc-encoded table f=timer moved between synctest bubblesstrings.Builder.Grow: negative count%v - Failed to send data packets: %vfailed to get peer by public key: %wfailed to get name of TUN device: %w444089209850062616169452667236328125ryuFtoaFixed64 called with prec > 180123456789abcdefghijklmnopqrstuvwxyzmethod ABI and value ABI don't alignTime.UnmarshalBinary: invalid lengthcrypto/cipher: input not full blocksinvalid pattern syntax (+ after -): chacha20: wrong HChaCha20 nonce sizevalue too large for defined data typecannot exec a shared library directlyoperation not possible due to RF-killruntime: allocation size out of range) is smaller than minimum page size (/cpu/classes/gc/mark/idle:cpu-secondssetprofilebucket: profile already setfailed to reserve page summary memory_cgo_notify_runtime_init_done missingfatal: concurrent switchToCrashStack
+bad file descriptortoo many open filesdirectory not emptydevice not a streamdisk quota exceededillegal instructionstopped (tty input)reflect.Value.IsNilreflect.Value.Floatparsenetlinkmessagecriterion too shortstrongFromWeakQueueGC mark terminationsync.WaitGroup.WaitSIGTRAP: trace trapwait for debug callcgocall unavailablepanicwrap: no ( in panicwrap: no ) in  called using nil *unknown wait reasonnotesleep not on g0GC work not flushedunaligned sysUnused/gc/scan/heap:bytes/gc/heap/goal:bytes/gc/heap/live:bytesbad kind in runfinqmarkroot: bad indexnwait > work.nprocs, gp->atomicstatus=marking free object KiB work (eager),  [controller reset]mspan.sweep: state=sysMemStat overflowbad sequence numberpanic during mallocpanic holding locksmissing deferreturnunexpected gp.parampanic during panic
+bufio.(*Reader).collectFragments
+bytesCompressed
+cgo argument has Go pointer to unpinned Go pointermallocgc called with gcphase == _GCmarkterminationrecursive call during initialization - linker skewattempt to execute system stack code on user stackIPv4 packet with disallowed source address from %vIPv6 packet with disallowed source address from %vchacha20: SetCounter attempted to rollback counterlimiterEvent.stop: invalid limiter event type foundpotentially overlapping in-use allocations detectedfatal: systemstack called from unexpected goroutinegodebug: Value of name not listed in godebugs.All: runtime: cannot disable permissions in address spaceruntime.SetFinalizer: pointer not in allocated blockruntime: use of FixAlloc_Alloc before FixAlloc_Init
+cgoCtxt
+chacha8
+checkSum
+collectFragments
+cookie
+cookieChecker
+cookieGenerator
+crypto/internal/fips140/aes
+crypto/internal/fips140/aes.(*Block).BlockSize
+crypto/internal/fips140/aes.(*CBCDecrypter).CryptBlocks
+crypto/internal/fips140/aes.(*CBCEncrypter).CryptBlocks
+crypto/internal/fips140/aes.(*CTR).XORKeyStream
+crypto/internal/fips140/aes.(*CTR).XORKeyStreamAt
+crypto/internal/fips140/aes.(*KeySizeError).Error
+crypto/internal/fips140/aes.(*blockExpanded).roundKeysSize
+crypto/internal/fips140/aes.EncryptBlockInternal
+crypto/internal/fips140/aes.KeySizeError.Error
+crypto/internal/fips140/aes.New
+crypto/internal/fips140/aes.NewCBCDecrypter
+crypto/internal/fips140/aes.NewCBCEncrypter
+crypto/internal/fips140/aes.NewCTR
+crypto/internal/fips140/aes.RoundToBlock
+crypto/internal/fips140/aes.add128
+crypto/internal/fips140/aes.cryptBlocksDec
+crypto/internal/fips140/aes.cryptBlocksDecGeneric
+crypto/internal/fips140/aes.cryptBlocksEnc
+crypto/internal/fips140/aes.cryptBlocksEncGeneric
+crypto/internal/fips140/aes.ctrBlocks
+crypto/internal/fips140/aes.ctrBlocks1
+crypto/internal/fips140/aes.ctrBlocks2
+crypto/internal/fips140/aes.ctrBlocks4
+crypto/internal/fips140/aes.ctrBlocks8
+crypto/internal/fips140/aes.decryptBlock
+crypto/internal/fips140/aes.decryptBlockGeneric
+crypto/internal/fips140/aes.encryptBlock
+crypto/internal/fips140/aes.encryptBlockGeneric
+crypto/internal/fips140/aes.expandKeyGeneric
+crypto/internal/fips140/aes.init.0
+crypto/internal/fips140/aes.init.0.func1
+crypto/internal/fips140/aes.newBlock
+crypto/internal/fips140/aes.newBlockExpanded
+crypto/internal/fips140/aes.newCTR
+crypto/internal/fips140/aes.newOutlined
+crypto/internal/fips140/aes.rotw
+crypto/internal/fips140/aes.subw
+crypto/internal/fips140/aes/aes.go
+crypto/internal/fips140/aes/aes_generic.go
+crypto/internal/fips140/aes/aes_noasm.go
+crypto/internal/fips140/aes/cast.go
+crypto/internal/fips140/aes/cbc.go
+crypto/internal/fips140/aes/cbc_noasm.go
+crypto/internal/fips140/aes/ctr.go
+crypto/internal/fips140/aes/ctr_noasm.go
+crypto/internal/fips140/aes/gcm.(*CMAC).MAC
+crypto/internal/fips140/aes/gcm.(*CMAC).deriveSubkeys
+crypto/internal/fips140/aes/gcm.(*CounterKDF).DeriveKey
+crypto/internal/fips140/aes/gcm.NewCMAC
+crypto/internal/fips140/aes/gcm.NewCounterKDF
+crypto/internal/fips140/aes/gcm.init
+crypto/internal/fips140/aes/gcm.init.0
+crypto/internal/fips140/aes/gcm.init.0.func1
+crypto/internal/fips140/aes/gcm.shiftLeft
+crypto/internal/fips140/aes/gcm/cast.go
+crypto/internal/fips140/aes/gcm/cmac.go
+crypto/internal/fips140/aes/gcm/ctrkdf.go
+crypto/internal/fips140/aes/gcm/gcm.go
+crypto/internal/fips140/aes/gcm/ghash.go
+crypto/internal/fips140/sha256.(*Digest).checkSum
+crypto/internal/fips140/sha512.(*Digest).checkSum
+crypto/internal/fips140/subtle.XORBytes
+crypto/internal/fips140/subtle.xorBytes
+crypto/internal/fips140/subtle.xorLoop[go.shape.uint8]
+crypto/internal/fips140/subtle.xorLoop[go.shape.uintptr]
+crypto/internal/fips140/subtle/xor.go
+crypto/internal/fips140/subtle/xor_generic.go
+decryption
+encryption
+encryptionKey
+fmt.(*fmt).fmtUnicode
+fmtUnicode
+found bad pointer in Go heap (incorrect use of unsafe or cgo?)limiterEvent.stop: found wrong event in p's limiter event slotslice length too short to convert to array or pointer to arrayruntime: internal error: misuse of lockOSThread/unlockOSThreadreflect: reflect.Value.Pointer on an invalid notinheap pointerinternal/sync.HashTrieMap: ran out of hash bits while iteratinginternal/sync.HashTrieMap: ran out of hash bits while insertinggo package net: GODEBUG setting forcing use of the Go resolver
+goLookupTXT
+golang.org/x/crypto/blake2s.checkSum
+golang.org/x/crypto/chacha20.(*Cipher).SetCounter
+golang.org/x/crypto/chacha20.(*Cipher).XORKeyStream
+golang.org/x/crypto/chacha20.(*Cipher).xorKeyStreamBlocks
+golang.org/x/crypto/chacha20.(*Cipher).xorKeyStreamBlocksGeneric
+golang.org/x/crypto/chacha20.HChaCha20
+golang.org/x/crypto/chacha20.NewUnauthenticatedCipher
+golang.org/x/crypto/chacha20.addXor
+golang.org/x/crypto/chacha20.hChaCha20
+golang.org/x/crypto/chacha20.newUnauthenticatedCipher
+golang.org/x/crypto/chacha20.quarterRound
+golang.org/x/crypto/chacha20poly1305.(*chacha20poly1305).Open
+golang.org/x/crypto/chacha20poly1305.(*chacha20poly1305).Seal
+golang.org/x/crypto/chacha20poly1305.(*chacha20poly1305).open
+golang.org/x/crypto/chacha20poly1305.(*chacha20poly1305).openGeneric
+golang.org/x/crypto/chacha20poly1305.(*chacha20poly1305).seal
+golang.org/x/crypto/chacha20poly1305.(*chacha20poly1305).sealGeneric
+golang.org/x/crypto/chacha20poly1305.(*xchacha20poly1305).Open
+golang.org/x/crypto/chacha20poly1305.(*xchacha20poly1305).Seal
+golang.org/x/crypto/chacha20poly1305.New
+golang.org/x/crypto/chacha20poly1305.NewX
+golang.org/x/crypto/chacha20poly1305.sliceForAppend
+golang.org/x/crypto/chacha20poly1305.writeUint64
+golang.org/x/crypto/chacha20poly1305.writeWithPadding
+golang.org/x/crypto@v0.38.0/chacha20/chacha_generic.go
+golang.org/x/crypto@v0.38.0/chacha20/chacha_noasm.go
+golang.org/x/crypto@v0.38.0/chacha20/xor.go
+golang.org/x/crypto@v0.38.0/chacha20poly1305/chacha20poly1305.go
+golang.org/x/crypto@v0.38.0/chacha20poly1305/chacha20poly1305_generic.go
+golang.org/x/crypto@v0.38.0/chacha20poly1305/chacha20poly1305_noasm.go
+golang.org/x/crypto@v0.38.0/chacha20poly1305/xchacha20poly1305.go
+golang.org/x/net/ipv4.(*PacketConn).Close
+golang.org/x/net/ipv4.(*PacketConn).LocalAddr
+golang.org/x/net/ipv4.(*PacketConn).Lock

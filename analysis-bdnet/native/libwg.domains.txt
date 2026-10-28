@@ -1,0 +1,2 @@
+android.googlesource.com
+git.zx2c4.com

@@ -1,0 +1,460 @@
+	H*F	IxDyDw
+ 	 8	
+  %s: %s
+  `0F/!
+ )F2F
+ 2F.#
+ F!F*F
+ F)F"F
+ J F K)FzD{D
+ XF)F
+ YFRF
+ ZF.#
+ `P`T`
+ x0((
+!0`(F
+!:(!p!
+!H"F!IxDyD
+!h "T
+!|DxD
+!~DKHxD
+"#FxD
+"@Q@P@
+"@Q@P@#
+"@Q@P@$
+"@Q@P@%
+"CFxD
+"H#MxD}D
+"J F"K)FzD{D
+"iF(F
+"pIxDyD/
+"xDCF
+#0F)F
+$J F$K)FzD{D
+%.2f 
+%H*F%IxDyD
+%KxDa
+%llu	
+%llu	%llu	
+%s	%llu
+%s	%llu	%llu
+%s	%u
+%s	off
+%s received, 
+%s sent
+%s%llu 
+%s/%d
+%s/%u%c
+%s: Key is not the correct length or format
+%s: Trailing characters found after key
+%s: `%s'
+%s: `%s'. Trying again in %.2f seconds...
+%s:%s
+%zDcF
+&H&IxD+hyD
+&H&JxD
+&J F&K)FzD{D
+((FJFA
+(0F*FA
+(F)F"F
+(F1F*F
+(HBF(IxDyD
+(J F(K)FzD{D
+(hidden)
+(none)
+(none)	
+(x[(#
+(x[(@
+(yD	h	h
+(yD	h	h/
+* !2h
+*1h$11`\F4
+*I+KyD
+*J F*K)FzD{D
+,2}xDyD
+,A#!w
+,H,IxDyD
+,I@F"FyD
+,M F,J-K}DzD{D)F
+,xD	h
+--help
+--version
+.ARM.attributes
+.ARM.exidx
+.ARM.extab
+.H/IxDyD6
+.HZF.IxDyD
+.IyD	h	h
+.comment
+.data
+.data.rel.ro
+.dynamic
+.dynstr
+.dynsym
+.gnu.hash
+.gnu.version
+.gnu.version_r
+.got.plt
+.interp
+.note.android.ident
+.rel.dyn
+.rel.plt
+.relro_padding
+.rodata
+.shstrtab
+.sock
+.text
+/data/data/com.wireguard.android/cache/wireguard/
+/data/data/com.wireguard.android/cache/wireguard/%s.sock
+/dev/urandom
+/system/bin/linker
+0F!FZF
+0F1F"F
+0L1M|D}D
+1$(F)F
+1% F!F
+1.0.20250521
+12077973
+1F~HxD
+2H2F2IxDyD
+2H2IxDyD
+2H3IxDyD
+2W3 *cp
+3CpN~D*
+3I0FyD
+5I0FyD
+7I0FyD
+9H9IxDyD
+9I0FyD
+;I0FyD
+=I0FyD
+>H1FxD
+>I@FyD
+@	HxD
+@FIFRF
+@I0FyD
+@IyD	h	h
+@K@Q@`
+@S@b@]
+@s@r@
+A peer is missing a public key
+AllowedIP is not in the correct format: `%s'
+AllowedIPs = 
+AllowedIPs=
+Android
+Android (12027248, +pgo, +bolt, +lto, +mlgo, based on r522817) clang version 18.0.1 (https://android.googlesource.com/toolchain/llvm-project d8003a456d14a3deb8054cdaa529ffbf02d9b262)
+Appends a configuration file to a WireGuard interface
+Applies a configuration file to a WireGuard interface
+Available subcommands:
+B@X@[
+BHBNxD~D1F
+BI0FyD
+C2.09
+Change the current configuration, add peers, remove peers, or change peers
+Configuration parsing error
+Consider setting the umask to 077 and trying again.
+D)FBF
+D1FBF
+D^x[.
+ELEMFH|D}DxD
+Endpoint = %s:%s
+Endpoint = [%s]:%s
+Endpoint=
+F	h "
+F#HyD
+F0FyD
+F1H1IxDyD
+F7JxDzD`
+F@F[F
+FHFAF*F
+FLHyDxD
+Fh!xD
+FjHxD
+Found trailing character in key file: `%c'
+FwMark = 0x%x
+FwMark=
+Fwmark is neither 0/off nor 0-0xffffffff: `%s'
+FyHxD
+Generates a new preshared key and writes it to stdout
+Generates a new private key and writes it to stdout
+H!FxD
+H)FxD
+HAFxD
+HF:!A
+H|D}DxD
+H}DxD
+I F*F
+I FyD
+I#FxDyD
+I0FyD
+I@FEFyD
+I@FRFyD
+I@FyD
+IHF	"yD
+IHFyD
+Invalid argument: %s
+Invalid configuration
+Invalid length key in key file
+Invalid parameter: `%s'
+Invalid subcommand: `%s'
+IxDyD
+IyD	h	h
+IyD F
+JH!F*FxD
+JyDzD
+K)FzD{D
+K@FIF
+Key is not the correct length or format: `%s'
+KxD{D
+LIyD	h	h
+Line unrecognized: `%s'
+Linker: LLD 18.0.1
+ListenPort = %u
+ListenPort=
+MM!F}D
+NI0FyD
+Neither IPv4 nor IPv6 address found: `%s'
+NxD}D~D
+N}D~D
+PI0FyD
+PI@FyD
+Peer allocation
+Persistent keepalive interval is neither 0/off nor 1-65535: `%s'
+PersistentKeepalive = %u
+PersistentKeepalive=
+PresharedKey = %s
+PresharedKey=
+PrivateKey = %s
+PrivateKey=
+Public key allocation
+PublicKey = %s
+PublicKey=
+Q@P@(
+RI0FyD
+Reads a private key from stdin and writes a public key to stdout
+SI0FyD
+Shows the current configuration and device information
+Shows the current configuration of a given WireGuard interface, for use with `setconf'
+Synchronizes a configuration file to a WireGuard interface
+T`2hsP
+UI0FyD
+Unable to access interface
+Unable to access interface %s: %s
+Unable to find matching brace of endpoint: `%s'
+Unable to find port of endpoint: `%s'
+Unable to list interfaces
+Unable to modify interface
+Unable to parse IP address: `%s'
+Unable to parse WG_ENDPOINT_RESOLUTION_RETRIES: `%s'
+Unable to parse empty endpoint
+Unable to parse empty port
+Unable to retrieve current interface configuration
+Usage: %s %s
+Usage: %s %s <interface>
+Usage: %s %s <interface> <configuration filename>
+Usage: %s %s <interface> [listen-port <port>] [fwmark <mark>] [private-key <file path>] [peer <base64 public key> [remove] [preshared-key <file path>] [endpoint <ip>:<port>] [persistent-keepalive <interval seconds>] [allowed-ips [+|-]<ip1>/<cidr1>[,[+|-]<ip2>/<cidr2>]...] ]...
+Usage: %s %s { <interface> | all | interfaces } [public-key | private-key | listen-port | fwmark | peers | preshared-keys | endpoints | allowed-ips | latest-handshakes | transfer | persistent-keepalive | dump]
+Usage: %s <cmd> [<args>]
+WG_COLOR_MODE
+WG_ENDPOINT_RESOLUTION_RETRIES
+WG_HIDE_KEYS
+WHJFWIxDyD
+Warning: AllowedIP has nonzero host part: %s/%s
+Warning: writing to world accessible file.
+XFrFtF
+XInhyD0F
+YHG"YIxDyD
+You may pass `--help' to any of these subcommands to view usage.
+ZHxD	
+[%s]:%s
+[0m%u%s
+[0m: 
+[0m: %s
+[0m: %u
+[0m: 0x%x
+[1mallowed ips
+[1mendpoint
+[1mfwmark
+[1minterface
+[1mlatest handshake
+[1mlistening port
+[1mpeer
+[1mpersistent keepalive
+[1mpreshared key
+[1mprivate key
+[1mpublic key
+[1mtransfer
+[31mSystem clock wound backward; connection problems may ensue.
+[32m%s
+[33m%s
+[36m/
+[36mB
+[36mGiB
+[36mKiB
+[36mMiB
+[36mTiB
+[36mday%s
+[36mhour%s
+[36mminute%s
+[36msecond%s
+[36myear%s
+[Interface]
+[Peer]
+__cxa_atexit
+__errno
+__libc_init
+__open_2
+__read_chk
+__stack_chk_fail
+__stack_chk_guard
+__strchr_chk
+__strncpy_chk2
+__vsnprintf_chk
+`(F:!&
+`H1F*}xD
+`IHFyD
+aI@FyD
+aIyD	h	h
+addconf
+aeabi
+allowed-ips
+allowed_ip
+allowed_ip=%s%s/%d
+always
+c% F!F
+calloc
+close
+closedir
+connect
+endpoint
+endpoint=%s:%s
+endpoint=[%s]:%s
+endpoints
+errno
+every 
+fclose
+fdopen
+ferror
+fflush
+fileno
+fopen
+fprintf
+fputc
+fputs
+fread
+freeaddrinfo
+fstat
+ftell
+fwmark
+fwmark=%u
+fwrite
+gH!FxD
+gI(FyD
+gai_strerror
+genkey
+genpsk
+get=1
+getaddrinfo
+getenv
+getline
+getnameinfo
+getrandom
+getsockname
+i #"})F
+ifH{DfI
+inet_ntop
+inet_pton
+infinity
+interfaces
+isatty
+ixD"}yD
+jF xB
+jHxD`
+kHkMxD}D
+lHmIxDyDo
+last_handshake_time_nsec
+last_handshake_time_sec
+latest-handshakes
+libc.so
+libdl.so
+libm.so
+listen-port
+listen_port
+listen_port=%u
+mH!FxD
+malloc
+memcmp
+memcpy
+memset
+never
+nh;I0FyD
+oHQFxD
+opendir
+peers
+perror
+persistent-keepalive
+persistent_keepalive_interval
+persistent_keepalive_interval=%u
+preshared-key
+preshared-keys
+preshared_key
+preshared_key=%s
+printf
+private-key
+private_key
+private_key=%s
+pubkey
+public-key
+public_key
+public_key=%s
+putchar
+qsort
+readdir
+realloc
+recvmsg
+remove
+remove=true
+replace_allowed_ips=true
+replace_peers=true
+rx_bytes
+sH)FxD
+sendto
+set=1
+setconf
+showconf
+socket
+strcasecmp
+strchr
+strcmp
+strdup
+strerror
+strlen
+strncasecmp
+strncmp
+strncpy
+strrchr
+strsep
+strtoll
+strtoul
+strtoull
+syncconf
+syscall
+sysconf
+th\IyD F
+transfer
+tx_bytes
+unlink
+usleep
+vasprintf
+version
+vfprintf
+wN%F%
+wireguard
+wireguard-tools v%s - https://git.zx2c4.com/wireguard-tools/
+xD{D`
+xK@F1F
+yDFh0F
+|D3`5
+|H2D+
+|H}M}NxD}D~D
+~IHFyD
