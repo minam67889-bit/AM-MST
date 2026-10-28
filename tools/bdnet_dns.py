@@ -117,17 +117,30 @@ def dns_packet(name: str, qtype: int = 16, tid: int | None = None) -> bytes:
 
 
 def tcp_dns(server: tuple[str, int], pkt: bytes, timeout: float) -> bytes:
+    """One DNS-over-TCP exchange, with a hard deadline.
+
+    A tunnel endpoint that answers the length prefix and then stalls would
+    otherwise keep us in `recv` for many multiples of `timeout`, which is
+    exactly what a dead-but-listening resolver looks like.
+    """
+    deadline = time.monotonic() + timeout
     with socket.create_connection(server, timeout=timeout) as s:
         s.sendall(struct.pack(">H", len(pkt)) + pkt)
         head = s.recv(2)
         if len(head) < 2:
             raise OSError("short read")
         want = struct.unpack(">H", head)[0]
+        if want == 0 or want > 65535:
+            raise OSError(f"bogus length {want}")
         buf = b""
         while len(buf) < want:
-            chunk = s.recv(want - len(buf))
+            left = deadline - time.monotonic()
+            if left <= 0:
+                raise TimeoutError("deadline")
+            s.settimeout(left)
+            chunk = s.recv(min(want - len(buf), 4096))
             if not chunk:
-                break
+                raise OSError("closed early")
             buf += chunk
         return buf
 
