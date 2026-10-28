@@ -59,6 +59,8 @@ jobs:
             echo "APK_URL=$APK_URL"
             echo "OUT_DIR=$OUT_DIR"
           } >> "$GITHUB_ENV"
+          # never let one APK's report contaminate another's
+          rm -rf analysis
 
       - name: Download the APK
         continue-on-error: true
@@ -201,7 +203,9 @@ jobs:
             exit 1
           }
           mv apks/base.apk.tmp amtunnel.apk
-          rm -f apks/base.apk 2>/dev/null || true
+          if [ ! -f apks/base.apk ] || ! cmp -s apks/base.apk amtunnel.apk; then
+            cp amtunnel.apk apks/base.apk
+          fi
           echo "--- all APKs in the bundle ---"
           for f in apks/*.apk; do
             printf '%10s  dex=%s  so=%s  %s\n' "$(stat -c%s "$f")" \
@@ -316,7 +320,8 @@ jobs:
           exec > >(tee -a analysis/native-libs.log) 2>&1
           set -uxo pipefail
           mkdir -p analysis/native
-          for apk in apks/*.apk; do
+          for apk in apks/*.apk amtunnel.apk; do
+            [ -f "$apk" ] || continue
             abi_label=$(basename "$apk" .apk)
             for lib in $(unzip -Z1 "$apk" | grep -E '\.so$' | grep -Ei 'dns|pdns|udpq|tun2socks|wg|super' || true); do
               base=$(basename "$lib" .so)
