@@ -14,7 +14,7 @@ artifact id: 12845051663
 + file art/a.zip
 art/a.zip: Zip archive data, at least v2.0 to extract, compression method=deflate
 + ls -l art/a.zip
--rw-r--r-- 1 runner runner 67635843 Oct 28 22:39 art/a.zip
+-rw-r--r-- 1 runner runner 67635843 Oct 28 22:44 art/a.zip
 + file art/a.zip
 + grep -qi zip
 + unzip -o -q art/a.zip -d art/x
