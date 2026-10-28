@@ -254,4 +254,51 @@ class BalancerTest {
         val sample = (1..1000).map { balancer.nextKey()!! }
         assertEquals("a thousand resolvers must all be reachable", 1000, sample.distinct().size)
     }
+
+    @Test
+    fun `auto disable parks a resolver whose whole window timed out`() {
+        val balancer = MasterBalancer(BalancingStrategy.ROUND_ROBIN, seed = 41)
+        balancer.autoDisableEnabled = true
+        // 5 s window keeps the observation requirement at the base 34 for a
+        // pool of 10 (upstream scales it by the window).
+        balancer.autoDisableWindowMs = 5_000
+        balancer.autoDisableMinActive = 2
+        balancer.setResolvers(pool(10))
+        val victim = "10.0.0.1:53"
+        val now = 1_000_000L
+        repeat(40) { step ->
+            balancer.reportSend(victim)
+            balancer.reportTimeout(victim, now + step * 10L)
+        }
+        assertFalse("a resolver that lost 100% of its window must be parked", balancer.isActive(victim))
+        assertTrue("the rest of the pool must stay usable", balancer.activeCount >= 9)
+    }
+
+    @Test
+    fun `auto disable never empties a small pool`() {
+        val balancer = MasterBalancer()
+        balancer.autoDisableWindowMs = 5_000
+        balancer.setResolvers(pool(3))
+        val now = 2_000_000L
+        pool(3).forEach { resolver ->
+            repeat(80) { step ->
+                balancer.reportSend(resolver.key)
+                balancer.reportTimeout(resolver.key, now + step * 10L)
+            }
+        }
+        assertTrue("upstream never prunes pools of three or fewer", balancer.activeCount >= 2)
+    }
+
+    @Test
+    fun `a parked resolver returns after a successful recheck`() {
+        val balancer = MasterBalancer()
+        balancer.recheckInactiveEnabled = true
+        balancer.recheckIntervalMs = 0
+        balancer.setResolvers(pool(6))
+        balancer.setActive("10.0.0.2:53", false)
+        val due = balancer.nextForRecheck(nowMs = 10_000)
+        assertEquals("10.0.0.2:53", due)
+        balancer.reactivate("10.0.0.2:53")
+        assertTrue(balancer.isActive("10.0.0.2:53"))
+    }
 }

@@ -242,7 +242,9 @@ class TunnelIntegrationTest {
             extraRelays.add(relay)
         }
 
-        val resolvers = (listOf(relayA, relayB) + extraRelays).map { it.endpoint }
+        // Fresh relays only: relay A was killed by the failover test, and a
+        // closed DatagramSocket reports port -1.
+        val resolvers = extraRelays.map { it.endpoint }
         val balancer = MasterBalancer(BalancingStrategy.ROUND_ROBIN).apply {
             failoverThreshold = 2
             failoverCooldownMs = 300
@@ -284,9 +286,11 @@ class TunnelIntegrationTest {
             balancer.snapshot().forEach {
                 println("balancer row: ${it.key} active=${it.active} sent=${it.sent} lost=${it.lost} score=${it.hybridScore}")
             }
+            val rows = balancer.snapshot()
+            assertTrue("all traffic must be attributed to some resolver", rows.any { it.sent > 0 })
             assertTrue(
-                "dead resolvers must have been parked by auto-disable",
-                balancer.activeCount < resolvers.size || balancer.inactiveKeys().isNotEmpty() || true,
+                "the balancer must have measured losses on the dead ones",
+                rows.any { it.lost > 0 },
             )
         } finally {
             transport.stop()

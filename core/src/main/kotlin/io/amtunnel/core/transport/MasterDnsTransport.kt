@@ -401,6 +401,7 @@ class MasterDnsTransport(
             .take(copies)
         for (alternate in alternates) {
             duplicates.incrementAndGet()
+            selector.reportSend(alternate)
             duplicateExecutor.execute {
                 try {
                     session.exchange(frame, alternate, config.queryTimeoutMs)
@@ -421,6 +422,7 @@ class MasterDnsTransport(
             duplicateToAlternates(item.frame, endpoint)
         }
         sent.incrementAndGet()
+        selector.reportSend(endpoint)
         selector.notifyResolverChanged(endpoint)
         try {
             val exchange = session.exchange(item.frame, endpoint, config.queryTimeoutMs)

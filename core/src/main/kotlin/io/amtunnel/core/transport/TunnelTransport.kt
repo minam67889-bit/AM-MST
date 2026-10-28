@@ -60,6 +60,9 @@ interface ResolverSelector {
     fun targets(count: Int, excluded: Set<String> = emptySet()): List<ResolverEndpoint> =
         ranked().filter { it.key !in excluded }.take(count.coerceAtLeast(1))
 
+    /** One packet handed to this resolver (needed for the loss ratio). */
+    fun reportSend(endpoint: ResolverEndpoint) {}
+
     fun reportSuccess(endpoint: ResolverEndpoint, rttMs: Long)
     fun reportFailure(endpoint: ResolverEndpoint, reason: String)
     fun notifyResolverChanged(endpoint: ResolverEndpoint?) {}
@@ -86,6 +89,8 @@ class BalancerResolverSelector(val balancer: MasterBalancer) : ResolverSelector 
 
     override fun targets(count: Int, excluded: Set<String>): List<ResolverEndpoint> =
         balancer.selectTargets(count, excluded).mapNotNull { balancer.endpointFor(it) }
+
+    override fun reportSend(endpoint: ResolverEndpoint) = balancer.reportSend(endpoint.key)
 
     override fun reportSuccess(endpoint: ResolverEndpoint, rttMs: Long) =
         balancer.reportSuccess(endpoint.key, rttMs)
