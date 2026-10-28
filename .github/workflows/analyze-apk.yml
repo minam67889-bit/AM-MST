@@ -401,6 +401,55 @@ jobs:
             echo "no LSParanoid chunks class in this build"
           fi
 
+      - name: Hunt bundled server lists and config code
+        continue-on-error: true
+        run: |
+          exec > >(tee -a "$OUT_DIR/config-hunt.log") 2>&1
+          set -uxo pipefail
+          mkdir -p "$OUT_DIR/assets" "$OUT_DIR/hunt"
+
+          # 1. Bundled assets that could carry a server list.
+          unzip -l amtunnel.apk | awk '{print $4}' \
+            | grep -iE '^assets/.*\.(psi|json|url|txt|conf|cfg|dat|db|bin)$' \
+            | grep -viE 'audience_network|SignatureKiller|flags/' > /tmp/assetlist.txt || true
+          while read -r a; do
+            [ -n "$a" ] || continue
+            out="$OUT_DIR/assets/$(echo "$a" | tr '/' '_')"
+            unzip -p amtunnel.apk "$a" > "$out" 2>/dev/null || true
+            echo "== $a -> $(basename "$out") $(wc -c < "$out") bytes"
+            head -c 240 "$out" | tr -cd '[:print:]\n' | head -4
+          done < /tmp/assetlist.txt
+
+          # 2. Every URL literal in the FULL decompile (the local dump was partial).
+          grep -rhoE '(https?|wss?|tg)://[A-Za-z0-9._~:/?#@!$&()*+,;=%-]{4,200}' java --include=*.java 2>/dev/null \
+            | sort -u > "$OUT_DIR/hunt/urls-full.txt" || true
+          echo "url literals: $(wc -l < "$OUT_DIR/hunt/urls-full.txt")"
+          head -60 "$OUT_DIR/hunt/urls-full.txt"
+
+          # 3. Where the App Engine bucket string is used.
+          grep -rn "appspot\|google_storage_bucket" java --include=*.java 2>/dev/null \
+            | head -40 > "$OUT_DIR/hunt/appspot-usage.txt" || true
+          cat "$OUT_DIR/hunt/appspot-usage.txt"
+
+          # 4. Server-list vocabulary anywhere in the tree.
+          grep -rn -iE "serverlist|server_list|getServers|loadServers|serversJson|listServers|rawServers" \
+            java --include=*.java 2>/dev/null | head -80 > "$OUT_DIR/hunt/server-words.txt" || true
+          echo "server-word hits: $(wc -l < "$OUT_DIR/hunt/server-words.txt")"
+          head -40 "$OUT_DIR/hunt/server-words.txt"
+
+          # 5. Bodies of the classes that actually open sockets or read the assets.
+          : > "$OUT_DIR/hunt/network-code.txt"
+          grep -rlE "HttpURLConnection|OkHttpClient|openConnection|new URL\(|getAssets\(|server\.psi" \
+            java --include=*.java 2>/dev/null | grep -viE '/(androidx|com/google|com/facebook|kotlin|okhttp3|okio)/' \
+            | head -40 | while read -r f; do
+              echo "##### $f" >> "$OUT_DIR/hunt/network-code.txt"
+              sed -n '1,140p' "$f" >> "$OUT_DIR/hunt/network-code.txt"
+            done
+          echo "network-code lines: $(wc -l < "$OUT_DIR/hunt/network-code.txt")"
+
+          # 6. What the app asks its own backend for (strings near http).
+          grep -rn -B3 -A3 '"http' java --include=*.java 2>/dev/null | head -60 > "$OUT_DIR/hunt/http-literals.txt" || true
+
       - name: Mine native DNS-tunnel libraries
         continue-on-error: true
         run: |
