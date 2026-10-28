@@ -3,216 +3,172 @@
 Target: `dastan.prince.bdfreevpn`, versionCode 106, `PrinceBuild106`
 (`BDNET.VPN v106 Mod.zip`).
 
-> **Correction.** An earlier revision of this file concluded that BD NET ships no
-> server list. That conclusion was drawn from a *partial* jadx dump (364 files
-> committed out of the full tree) and it was wrong. The app does load servers
-> automatically, from the endpoints listed in §2. What is recorded below is what
-> the full tree actually shows.
->
-> **Update.** The bundle cipher is now solved as well: the bundled
-> `assets/server.psi` decrypts to 18 live Psiphon server entries. See §3.
+> **Both ciphers are now solved.** BD NET ships its whole server catalogue
+> inside **`assets/sorter.json`**, an XXTEA-encrypted JSON bundle, and every
+> host inside it is separately `hex(xor(…))`-obfuscated. That is why the app
+> connects with no tweak, no account and no manual entry: nothing is fetched at
+> runtime, the servers are already in the APK. Everything below is reproduced
+> by `tools/bdnet_sorter.py` and `tools/bdnet_decrypt.py`.
 
-## 1. String deobfuscation (still solved)
+## 1. String deobfuscation (LSParanoid)
 
-BD NET is packed with [LSParanoid](https://github.com/LSPosed/LSParanoid). The
-generated class `org.lsposed.lsparanoid.Deobfuscator$BDNETVPN$app` holds a
-41 966-character ciphertext table (6 chunks: 5 × 8 191 + 1 011) and
-`getString(long)` derives both the offset and the XOR stream from the id.
-
-jadx mangles `DeobfuscatorHelper` (it rewrites `0xffff0000` as `-65536`, which
-sign-extends inside a `long`), so replaying the decompiled helper on a JVM threw
-`InvocationTargetException` for all 1 993 ids. `tools/lsparanoid_decode.py` is a
-literal port of `RandomHelper` + `DeobfuscatorHelper` + the `StringRegistryImpl`
-encoder; `--selftest` encodes a corpus, decrypts it and compares, so the port is
-proven rather than assumed.
+`org.lsposed.lsparanoid.Deobfuscator$BDNETVPN$app` holds a 41 966-character
+ciphertext table (6 chunks) and `getString(long)` derives offset and XOR stream
+from the id. `tools/lsparanoid_decode.py` is a literal port of `RandomHelper` +
+`DeobfuscatorHelper` + the `StringRegistryImpl` encoder, with `--selftest`.
 
 ```
 SELFTEST PASS (7/7 strings, 2 chunk(s), multi-chunk=yes)
 chunks=6 chunk_attrs=41966 ids=1992 decoded=1992 errors=0
 ```
 
-Output: `analysis-bdnet/obfuscation/decrypted.txt` (1 992 ids, 1 851 non-empty).
+Output: `analysis-bdnet/obfuscation/decrypted.txt` (1 841 non-empty strings).
 
-## 2. Where the servers come from — the real answer
+## 2. The config bundles
 
-The string table contains the config bundle URL twice:
+Two kinds of bundle exist, and they are **not** the same format:
 
-```
-https://raw.githubusercontent.com/panigbatanc/BDNET2023/main/JSONDEC2025
-```
-
-`defpackage/AbstractC0482Sf` is the constants holder. Its static initialiser
-resolves four strings and parks `a = 7878` beside them:
-
-| id | value |
-| --- | --- |
-| `-163397067700107` | the bundle URL above |
-| `-163710600312715` | `https://t.me/bdnetvpn` |
-| `-163805089593227` | `5FED785CA69AEC41CE2C925E8C8A5A738A6DE276` |
-| `-163981183252363` | `B8B496A532852A50C2F992200DD8E2C43A8844F4` |
-
-That repository (`panigbatanc/BDNET2023`, same author as the app) holds a bundle
-per mode — the mode names match the app's own engine selectors (`UDPQ`,
-`FASTDNS`, `SLOWDNS`, Xray, SSH, Psiphon):
-
-| file | bytes | mode |
+| payload | wrapper | cipher |
 | --- | --- | --- |
-| `JSONDNSTT` | 617 081 | dnstt / UDPQ |
-| `JSONFASTDNS` | 154 125 | FastDNS (`libxdnstt`) |
-| `JSONXRAY` | 215 297 | Xray / Shadowsocks / VLESS |
-| `JSONNOCIPHER` | 582 445 | un-ciphered variant |
-| `JSONFWPUNCHER` | 325 001 | FWPuncher |
-| `JSONSPLITNEWERA` | 582 445 | split tunnelling |
-| `JSONDEC2025` | 469 153 | current build's pointer |
-| `JSONKYLE`, `AGITTY2025`, `JSONSEPT2025`, `JSONAUG2025`, `JSON061424`, `JSONSEPT132024`, `JSONSPLIT2024`, `JSONXRAYNOV29` | — | monthly rotations |
+| `assets/sorter.json` | base64 → 311 188 bytes | **XXTEA**, key `...\|...` |
+| `assets/server.psi` | 103 253 ASCII hex chars | **hex + 12-byte XOR** (`pDecrypt`) |
+| `JSONDEC2025`, `JSONDNSTT`, `JSONFASTDNS`, … (GitHub) | base64 | **XXTEA**, same key |
 
-The same bundle set is mirrored in the author's other apps (`UrsaNetPRO`,
-`Omanova2024`), so these are shared, rotated config drops — not per-app secrets.
-
-Bundled server list inside the APK: `assets/server.psi` — 103 253 ASCII hex
-characters that decrypt to **18 Psiphon SSH/OSSH server entries**, solved in §3.
-`assets/sorter.json` (311 188 bytes base64) is referenced from many call sites
-but is not a server list.
-
-## 3. Solved: `assets/server.psi` holds 18 Psiphon server entries
-
-`TunnelVpnManagerPsi.startPsiphon()` is the zero-input path — the mode that
-connects with nothing typed in:
+### 2.1 The XXTEA layer (`AbstractC4569ym`)
 
 ```java
-string = loadServerDat(this.mContext, "server.psi");   // asset text, UTF-8
-m_tunnel.startTunneling(PUtils.pDecrypt(this.mContext, string));
+String c(String s, String key) {
+    return new String(b(W80.m(s), key.getBytes("UTF-8")), "UTF-8");   // b() = XXTEA decrypt
+}
 ```
 
-`loadServerDat` is `S50.D(context, str)`; the charset id `-95609598867339`
-decodes to `UTF-8`, and `-95639663638411` decodes to `server.psi`. `pDecrypt`
-is the native function in `libputils.so` (`0x147ef8`), whose body is
-`hexToString` → `xorWithKey` → `new String(bytes)`.
+* `W80.m` is base64 decode.
+* `b()` is textbook XXTEA (decrypt loop, `sum` counting down) with a
+  **non-standard delta**: `-1638454863` = `0x9E5729B1`, not `0x9E3779B9`.
+* The key is `AbstractC4569ym.a`, id `-164539529000843` = `...|...` — seven
+  characters, zero-padded to 16 bytes by `g(bArr2, false)`.
+* No PKCS padding: the plaintext length rides in the last 32-bit word, and
+  `f(v, true)` rejects it unless `4n-7 ≤ len ≤ 4n-4`.
 
-The asset defeats the naive reading of that chain, which is why earlier
-attempts produced junk. The working layer stack, verified byte-for-byte:
+Decrypting `assets/sorter.json` yields 311 183 bytes of JSON with keys
+`Payloads`, `Free_servers`, `HopPayload`, `DualConnectPayload`, `SSLPayload`,
+`CDNCerts`, `SRanges`, `CDNHosts`, `FrontHosts`, `BackHosts`, `SIPs`,
+`BlockedApps`, `PdnsdType`, `Version`, `UDPVersion`, `Changelogs`.
 
-| step | operation | size |
-| --- | --- | --- |
-| 0 | `assets/server.psi` as shipped: ASCII hex, odd length | 103 253 chars |
-| 1 | drop the first char (header nibble) | 103 252 chars |
-| 2 | hex-decode | 51 626 bytes |
-| 3 | XOR with the 12-byte `.rodata:0xbfb77` key **starting at offset 9** | 51 626 chars, 99.965 % printable ASCII |
-| 4 | the result is 19 newline-separated hex lines | — |
-| 5 | hex-decode each line | canonical Psiphon entries |
+### 2.2 The per-field layer
 
-The key lives at file offset == vaddr `0xbfb77` (`.rodata` starts at
-`0x0b8ef0`, length `0x436bc`), with no relocation:
+Every host-ish string inside that JSON is `hex(xor(text))` with the same
+12-byte key the native `xorWithKey` uses, cycle starting at **offset 0**:
 
 ```
 34 25 50 64 58 63 68 3e 66 6b 50 5d        "4%PdXch>fkP]"
 ```
 
-Step 3 needs that constant *rotated left by 9*: `6b 50 5d 34 25 50 64 58 63 68
-3e 66` (`kP]4%PdXch>f`). That is not a guess — the twelve rotations were swept
-and only this one lifts the printable ratio from ~68 % to 99.965 %, and only
-this one yields JSON. Rotations at offset 0 (what the disassembly literally
-does) and at any other phase produce binary noise.
+Sweeping all twelve rotations over 1 017 host fields gives
+`offset 0 → 97.0 %` characters inside `[a-z0-9.-_]`, every other rotation
+≤ 43 %. `[sip]`, `[cdnh]`, `[sr]` and `auto` are placeholders that the app
+expands into `SIPs`, `CDNHosts`, `SRanges` and Psiphon's own list.
 
-Credit where due: `pDecrypt` itself is not the weak link, the **framing** is.
-The payload carries one extra leading nibble, so `hexToString` on the raw
-string is offset by half a byte for the whole file.
+### 2.3 `assets/server.psi` (Psiphon fallback)
 
-Step 5 output is the Psiphon `EncodeServerEntry` text form:
+Different cipher — the native `pDecrypt` — and a half-byte framing bug in the
+payload itself:
+
+| step | operation | size |
+| --- | --- | --- |
+| 0 | as shipped: ASCII hex, odd length | 103 253 chars |
+| 1 | drop the first char (header nibble) | 103 252 chars |
+| 2 | hex-decode | 51 626 bytes |
+| 3 | XOR with the `.rodata:0xbfb77` key **rotated left by 9** | 99.965 % printable |
+| 4 | 19 newline-separated hex lines | — |
+| 5 | hex-decode each line | `0 0 0 0 {json}` Psiphon entries |
+
+18 of 19 lines are complete Psiphon SSH/OSSH entries with their own
+credentials; line 0 is a truncated fragment (the asset starts mid-entry).
+
+## 3. The recovered catalogue
+
+All of this is in `analysis-bdnet/configs/` — `bundled/` from the v106 APK,
+`current/` from the live `JSONDEC2025` (bundle version 56).
+
+### 3.1 SlowDNS — 20 real tunnel domains
 
 ```
-0 0 0 0 {"capabilities":["ssh-api-requests","SSH","OSSH",...],
-         "configurationVersion":0,"ipAddress":"139.59.194.137",
-         "meekCookieEncryptionPublicKey":"...","sshHostKey":"...",
-         "sshObfuscatedPort":53,"sshPassword":"<64 hex>",
-         "sshPort":22,"sshUsername":"psiphon_ssh_<16 hex>",
-         "tag":"<44 char base64>"}
+de1.liftmeon.org   …   de20.liftmeon.org
 ```
+(category `ocsslowdns`, engine `libdns` / `pdnsd`, `PdnsdType=tcp_only`)
 
-18 of the 19 lines parse as complete JSON. Line 0 is a tail fragment
-(`...","sshObfuscatedPort":554,...`) — the asset itself starts mid-entry, a
-defect in whoever generated it; it is dropped rather than guessed at.
+### 3.2 FastDNS — 100 IPv4 endpoints
 
-### 3.1 The recovered servers
+`173.212.232.241`, `173.212.252.3`, `173.249.10.48`, … (`libxdnstt`)
 
-`analysis-bdnet/configs/psiphon_entries.txt` (+ `.json`, + `.hex.txt`), produced
-by `tools/bdnet_decrypt.py`, which re-derives the rotation and fails closed:
+### 3.3 UDPQ — 725 IPv4 endpoints
 
-| # | ip | region | ssh | obfuscated | provider |
-| --- | --- | --- | --- | --- | --- |
-| 1 | `139.59.194.137` | SG | 22 | 53 | `6F1EC65541D53546` |
-| 2 | `108.165.21.18` | CA | 22 | 53 | `1E9F53D88A07EDCC` |
-| 3 | `108.165.21.70` | CA | 22 | 53 | `1E9F53D88A07EDCC` |
-| 4 | `108.165.21.226` | CA | 22 | 53 | `1E9F53D88A07EDCC` |
-| 5 | `108.165.21.185` | CA | 22 | 554 | `1E9F53D88A07EDCC` |
-| 6 | `108.165.21.213` | CA | 22 | 554 | `1E9F53D88A07EDCC` |
-| 7 | `108.165.21.59` | CA | 22 | 53 | `1E9F53D88A07EDCC` |
-| 8 | `108.165.21.179` | CA | 22 | 53 | `1E9F53D88A07EDCC` |
-| 9 | `172.105.79.225` | DE | 22 | 53 | `66FA5AFE5F394DE1` |
-| 10 | `172.234.227.18` | US | 22 | 554 | `66FA5AFE5F394DE1` |
-| 11 | `172.234.178.218` | FR | 22 | 554 | `66FA5AFE5F394DE1` |
-| 12 | `151.243.14.61` | DE | 22 | 53 | `2A3E40141CD41783` |
-| 13 | `151.243.14.99` | DE | 22 | 53 | `2A3E40141CD41783` |
-| 14 | `151.243.14.113` | DE | 22 | 53 | `2A3E40141CD41783` |
-| 15 | `151.243.14.214` | DE | 22 | 53 | `2A3E40141CD41783` |
-| 16 | `185.218.23.208` | CA | 22 | 53 | `1E9F53D88A07EDCC` |
-| 17 | `185.218.23.46` | CA | 22 | 53 | `1E9F53D88A07EDCC` |
-| 18 | `185.218.23.115` | CA | 22 | 53 | `1E9F53D88A07EDCC` |
+`161.97.73.205`, `161.97.73.250`, `109.123.242.174`, … (`libudpq`)
 
-Each entry carries its own `sshUsername`/`sshPassword` pair, so these are
-working, self-contained Psiphon SSH/OSSH endpoints — no account needed.
+### 3.4 KP / SSH — 10 pools of SNI hosts
 
-### 3.2 What is *not* in the APK
+`kp.txt` holds 1 500+ hostnames in the `us1.relatrix.world`,
+`sv1.cyverntech.live`, `pa1.cyphernode.fit`, `de1.scholarmatrix.art`,
+`lv1.securevaultworks.club`, `ar1.vaultfrontier.live`, `mor1.keycoretech.online`,
+`ice1.lockciphertech.live`, `uk1.paperpulseresearch.live`,
+`eu1.ironvaultresearch.us` families. In the v106 build the same slots carried
+`1:1505@.livingforwardtoday.com`-style entries.
 
-The zero-input path is **Psiphon only**. There is no bundled SlowDNS / dnstt /
-UDPQ server domain or public key anywhere: the only two non-code assets are
-`server.psi` (above) and `sorter.json`, and `res/raw` holds just
-`psiphon_config` (177 B) and `pdnsd_local` (293 B). The dnstt/UDPQ/Xray engines
-take their `host:port`, SNI and key from the settings store
-(`C0223If`: `SSH_HOST`, `SNI`, `PROXY_HOST`, `TUNNEL_TYPE`, `PDNSD_TYPE`), i.e.
-from a config file the user imports — that is why a SlowDNS "tweak" is needed
-while Psiphon "just works".
+### 3.5 CDN fronting — 1 000 hostnames
 
-## 4. The remote bundles are a different cipher
+`cdnhosts.txt` (`1001freefonts.com`, `1news.az`, …) plus `CF Global`
+`d34s3y8bmu8jw7.cloudfront.net` and `V2Ray` `*.sullycdn.space`.
 
-Base64-decoding a bundle yields high-entropy bytes (`JSONDNSTT` 462 808 ≡ 8
-mod 16, `sorter.json` 311 188 ≡ 4 mod 16) with **zero repeated 16-byte blocks**.
-Swept against the recovered key at all 12 rotations, on the raw bytes, on the
-base64 text, after a hex decode, with 0–2 leading chars trimmed: no hit. They
-are not produced by `pDecrypt`, and they are not needed for Psiphon mode.
+### 3.6 Proxy IPs — 1 840 addresses
 
-The one AES helper in the app is `smalihelper/heIran.decrypt`
-(`AES/ECB/PKCS5`, key = SHA-256 of a password). It has **no callers** in the dex.
+`sips.txt`, the pool that `Normal Global` / `XRay Global` / `SS Global`
+expand `[sip]` into.
 
-## 5. What is still true
+### 3.7 Psiphon — 18 SSH/OSSH entries
 
-* Every connection *setting* (`SSH_HOST`, `SNI`, `PROXY_HOST`, `TUNNEL_TYPE`,
-  `PDNSD_TYPE`, …) defaults to `""`/`0` in `defpackage/C0223If`.
-* Resolver default remains `1.1.1.1;1.0.0.1` (`DNS_SERVERS_NEW`).
-* Endpoints not related to servers: `https://t.me/bdnetvpn`,
-  `https://t.me/anty_filter`, the Psiphon remote list
-  (`https://s3.amazonaws.com//psiphon/web/mjr4-p23r-puwl/server_list_compressed`,
-  the stock Psiphon list, wired to `RemoteServerListUrl`), and the in-app
-  announcement
-  `https://raw.githubusercontent.com/vpnmarket/dialog15/refs/heads/main/BD%20106`
-  (`AbstractC0482Sf`, whose `7878` constant is the announcement port, not a
-  tunnel port).
+`psiphon_entries.txt`: 139.59.194.137 (SG), 108.165.21.x (CA, 7),
+172.105.79.225 / 172.234.227.18 / 172.234.178.218 (DE/US/FR),
+151.243.14.x (DE, 4), 185.218.23.x (CA, 3). Each carries `sshUsername`,
+`sshPassword`, `sshHostKey`, `signature`, `region`.
 
-## 6. Reproduce
+### 3.8 Payloads — 262 trick definitions
+
+`payloads.json`: name, category, port, query, `isHostSni`, `isHostResolve`,
+`tlsVersion`, `reconnectSeconds`. The `payload`/`sausage` blobs inside are
+obfuscated with a *different* key and are deliberately left undecoded.
+
+## 4. What is still unknown
+
+The SlowDNS engines need a **dnstt public key** (64 hex) next to the domain.
+It is not in the string table (1 841 strings, zero 64-hex literals), not in the
+bundles, and not in the native `strings` dumps — the Go binaries take it as a
+`-pubkey` argument, so it is passed from Java at call time. Finding the caller
+is the next step; until then the domains are known but not yet usable as dnstt
+peers.
+
+The Psiphon entries, by contrast, are complete: host, port, user, password and
+signature all recovered.
+
+## 5. Reproduce
 
 ```
 # string table
 python3 tools/lsparanoid_decode.py --selftest
-python3 tools/lsparanoid_decode.py \
-  --java 'analysis-bdnet/obfuscation/Deobfuscator$BDNETVPN$app.java' \
-  --scan java --out analysis-bdnet/obfuscation/decrypted.txt
 
-# server list
+# bundled catalogue (v106)
+python3 tools/bdnet_sorter.py analysis-bdnet/assets/assets_sorter.json \
+  -o analysis-bdnet/configs/bundled --json
+
+# live catalogue (JSONDEC2025, bundle version 56)
+python3 tools/bdnet_sorter.py analysis-bdnet/configs/JSONDEC2025.b64 \
+  -o analysis-bdnet/configs/current --json
+
+# Psiphon fallback
 python3 tools/bdnet_decrypt.py analysis-bdnet/assets/assets_server.psi \
   -o analysis-bdnet/configs --json
 ```
 
-CI: `.github/workflows/bdnet-servers.yml` re-downloads the analysed APK
-artifact, extracts `assets/server.psi`, runs the decryptor, asserts 18 entries
-and uploads them. `analyze-apk.yml` still commits `analysis-bdnet/assets/`
-(asset dumps + `strings` + hostname extract) and `analysis-bdnet/hunt/`.
+`.github/workflows/bdnet-configs.yml` re-downloads the live bundle with the API,
+decrypts it, runs the self-test (SlowDNS/FastDNS/CDN spot checks plus entry
+counts) and uploads the result.
