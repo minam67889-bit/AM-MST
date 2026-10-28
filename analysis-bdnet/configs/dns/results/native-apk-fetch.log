@@ -1,0 +1,119 @@
++ mkdir -p art libs
++ APK=
+++ gh run list --workflow=analyze-apk.yml --status success --limit 1 --json databaseId --jq '.[0].databaseId'
++ RUN=40752547864
++ echo 'analysis run: 40752547864'
+analysis run: 40752547864
+++ gh api /repos/minam67889-bit/AM-MST/actions/runs/40752547864/artifacts --jq '.artifacts[] | select(.name=="amtunnel-apk-analysis") | .id'
+++ head -1
++ ART=12845051663
++ echo 'artifact id: 12845051663'
+artifact id: 12845051663
++ '[' -n 12845051663 ']'
++ gh api /repos/minam67889-bit/AM-MST/actions/artifacts/12845051663/zip
++ file art/a.zip
+art/a.zip: Zip archive data, at least v2.0 to extract, compression method=deflate
++ ls -l art/a.zip
+-rw-r--r-- 1 runner runner 67635843 Oct 28 22:15 art/a.zip
++ file art/a.zip
++ grep -qi zip
++ unzip -o -q art/a.zip -d art/x
+++ find art/x -name '*.apk'
+++ head -1
++ APK=art/x/amtunnel.apk
++ '[' -z art/x/amtunnel.apk ']'
++ '[' -z art/x/amtunnel.apk ']'
++ echo APK=art/x/amtunnel.apk
+APK=art/x/amtunnel.apk
++ '[' -n art/x/amtunnel.apk ']'
++ echo APK=art/x/amtunnel.apk
++ unzip -l art/x/amtunnel.apk
++ grep -E 'lib/.*\.so'
++ head -20
+    21184  2026-06-24 02:09   lib/arm64-v8a/libSignatureKiller.so
+     7112  1981-01-01 01:01   lib/arm64-v8a/libdatastore_shared_counter.so
+  5126496  1981-01-01 01:01   lib/arm64-v8a/libdns.so
+  8392576  1981-01-01 01:01   lib/arm64-v8a/libfwpuncher.so
+ 17999336  1981-01-01 01:01   lib/arm64-v8a/libgojni.so
+   215632  1981-01-01 01:01   lib/arm64-v8a/libpdnsd.so
+  3193912  1981-01-01 01:01   lib/arm64-v8a/libputils.so
+     5512  1981-01-01 01:01   lib/arm64-v8a/libtoolChecker.so
+   160232  1981-01-01 01:01   lib/arm64-v8a/libtun2socks.so
+   196344  1981-01-01 01:01   lib/arm64-v8a/libtunpsi.so
+ 19989720  1981-01-01 01:01   lib/arm64-v8a/libudpq.so
+ 17928600  1981-01-01 01:01   lib/arm64-v8a/libudpqtwo.so
+ 16587328  1981-01-01 01:01   lib/arm64-v8a/libxdnstt.so
+ 29180304  1981-01-01 01:01   lib/arm64-v8a/libxray.so
++ unzip -o -j art/x/amtunnel.apk 'lib/arm64-v8a/*' -d libs
+Archive:  art/x/amtunnel.apk
+  inflating: libs/libSignatureKiller.so  
+file #2 (lib/arm64-v8a/libdatastore_shared_counter.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libdatastore_shared_counter.so  
+file #3 (lib/arm64-v8a/libdns.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libdns.so          
+file #4 (lib/arm64-v8a/libfwpuncher.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libfwpuncher.so    
+file #5 (lib/arm64-v8a/libgojni.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libgojni.so        
+file #6 (lib/arm64-v8a/libpdnsd.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libpdnsd.so        
+file #7 (lib/arm64-v8a/libputils.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libputils.so       
+file #8 (lib/arm64-v8a/libtoolChecker.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libtoolChecker.so  
+file #9 (lib/arm64-v8a/libtun2socks.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libtun2socks.so    
+file #10 (lib/arm64-v8a/libtunpsi.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libtunpsi.so       
+file #11 (lib/arm64-v8a/libudpq.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libudpq.so         
+file #12 (lib/arm64-v8a/libudpqtwo.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libudpqtwo.so      
+file #13 (lib/arm64-v8a/libxdnstt.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libxdnstt.so       
+file #14 (lib/arm64-v8a/libxray.so):
+         mismatch between local and central GPF bit 11 ("UTF-8"),
+         continuing with central flag (IsUTF8 = 0)
+  inflating: libs/libxray.so         
++ true
++ chmod +x libs/libSignatureKiller.so libs/libdatastore_shared_counter.so libs/libdns.so libs/libfwpuncher.so libs/libgojni.so libs/libpdnsd.so libs/libputils.so libs/libtoolChecker.so libs/libtun2socks.so libs/libtunpsi.so libs/libudpq.so libs/libudpqtwo.so libs/libxdnstt.so libs/libxray.so
++ ls -l libs
+total 116244
+-rwxr-xr-x 1 runner runner    21184 Jun 24 02:09 libSignatureKiller.so
+-rwxr-xr-x 1 runner runner     7112 Jan  1  1981 libdatastore_shared_counter.so
+-rwxr-xr-x 1 runner runner  5126496 Jan  1  1981 libdns.so
+-rwxr-xr-x 1 runner runner  8392576 Jan  1  1981 libfwpuncher.so
+-rwxr-xr-x 1 runner runner 17999336 Jan  1  1981 libgojni.so
+-rwxr-xr-x 1 runner runner   215632 Jan  1  1981 libpdnsd.so
+-rwxr-xr-x 1 runner runner  3193912 Jan  1  1981 libputils.so
+-rwxr-xr-x 1 runner runner     5512 Jan  1  1981 libtoolChecker.so
+-rwxr-xr-x 1 runner runner   160232 Jan  1  1981 libtun2socks.so
+-rwxr-xr-x 1 runner runner   196344 Jan  1  1981 libtunpsi.so
+-rwxr-xr-x 1 runner runner 19989720 Jan  1  1981 libudpq.so
+-rwxr-xr-x 1 runner runner 17928600 Jan  1  1981 libudpqtwo.so
+-rwxr-xr-x 1 runner runner 16587328 Jan  1  1981 libxdnstt.so
+-rwxr-xr-x 1 runner runner 29180304 Jan  1  1981 libxray.so
