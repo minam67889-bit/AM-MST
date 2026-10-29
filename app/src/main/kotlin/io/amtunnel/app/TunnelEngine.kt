@@ -13,6 +13,7 @@ import io.amtunnel.core.dns.ScanScheduler
 import io.amtunnel.core.dns.ScanSummary
 import io.amtunnel.core.net.DnsTunnelRelay
 import io.amtunnel.core.net.SocketProtector
+import io.amtunnel.core.net.Socks5Relay
 import io.amtunnel.core.net.Socks5Server
 import io.amtunnel.core.transport.EncryptionMethod
 import io.amtunnel.core.transport.BalancerResolverSelector
@@ -53,6 +54,8 @@ class TunnelEngine(private val context: Context) {
     @Volatile var balancer: MasterBalancer? = null
         private set
     @Volatile private var socks: Socks5Server? = null
+    @Volatile private var relay: Socks5Relay? = null
+    @Volatile private var bd: BdNativeClient? = null
     @Volatile private var scheduler: ScanScheduler? = null
     @Volatile private var scanner: ResolverScanner = ResolverScanner(
         monitor, log, TunnelConfig(domain = "invalid"), SocketProtector.Noop,
@@ -74,7 +77,16 @@ class TunnelEngine(private val context: Context) {
 
     val resolvers: List<ResolverEndpoint> get() = resolverList.toList()
 
-    val isRunning: Boolean get() = transport?.isReady == true
+    /** BD NET mode ignores the DNS transport entirely. */
+    val isBdMode: Boolean get() = settings.engineMode == AppSettings.ENGINE_BD_NATIVE
+
+    val isRunning: Boolean
+        get() = if (isBdMode) (bd?.isRunning == true) else transport?.isReady == true
+
+    /** Which BD server the live tunnel is attached to, when in BD mode. */
+    val bdHost: String? get() = bd?.activeHost
+
+    val bdAvailable: Boolean get() = BdNativeClient(context, log).available()
 
     val isScanning: Boolean get() = scanner.isRunning
 
@@ -270,6 +282,9 @@ class TunnelEngine(private val context: Context) {
         if (!starting.compareAndSet(false, true)) return false
         try {
             val s = settings
+            if (s.engineMode == AppSettings.ENGINE_BD_NATIVE) {
+                return startBdNative(s)
+            }
             val problems = buildConfig(s).validate()
             if (problems.isNotEmpty()) {
                 log.error("engine", "configuration rejected: ${problems.joinToString("; ")}")
@@ -335,7 +350,62 @@ class TunnelEngine(private val context: Context) {
         }
     }
 
+    /**
+     * BD NET mode: their client owns the wire, we own the local proxy.
+     *
+     * `libxdnstt.so` -> 127.0.0.1:<bdLocalPort>  (raw forwarder, SOCKS5 that
+     *                   lives at the far end of the tunnel)
+     * [Socks5Relay]  -> 127.0.0.1:<socksPort>    (clean, no-auth, for the VPN
+     *                   service or any local app)
+     */
+    private fun startBdNative(s: AppSettings): Boolean {
+        val client = BdNativeClient(context, log)
+        if (!client.available()) {
+            log.error("engine", "BD client binary missing - this build was made without it")
+            return false
+        }
+        val hosts = AppSettings.bdHostList(s.bdHosts)
+        if (hosts.isEmpty()) {
+            log.error("engine", "no BD server hosts configured")
+            return false
+        }
+        log.info("engine", "BD NET mode: ${hosts.size} candidate server(s), zone ${s.bdZonePrefix}<host>")
+        val started = client.start(
+            BdNativeClient.Config(
+                hosts = hosts,
+                zonePrefix = s.bdZonePrefix,
+                report = s.bdReport,
+                pubkey = s.bdPubkey,
+                localPort = s.bdLocalPort,
+                utls = s.bdUtls,
+            ),
+        )
+        if (!started) {
+            log.error("engine", "BD NET mode: none of the ${hosts.size} server(s) answered")
+            return false
+        }
+        bd = client
+        if (s.socksEnabled) {
+            val bridge = Socks5Relay(
+                upstreamHost = "127.0.0.1",
+                upstreamPort = s.bdLocalPort,
+                upstreamUser = s.bdUpstreamUser,
+                upstreamPass = s.bdUpstreamPass,
+                log = log,
+                listenPort = s.socksPort,
+            )
+            if (bridge.start()) relay = bridge
+            else log.error("engine", "could not open the local SOCKS5 bridge on ${s.socksPort}")
+        }
+        notifyStateChanged()
+        return true
+    }
+
     fun stop() {
+        runCatching { relay?.stop() }
+        relay = null
+        runCatching { bd?.stop() }
+        bd = null
         balancer = null
         runCatching { scheduler?.stop() }
         scheduler = null
@@ -352,6 +422,9 @@ class TunnelEngine(private val context: Context) {
     fun dnsRelay(): DnsTunnelRelay = DnsTunnelRelay({ transport }, log, settings.upstreamDns, 53)
 
     fun transportOrNull(): TunnelTransport? = transport
+
+    /** Raw log tail of the BD client, for the diagnostics screen. */
+    fun bdTail(): List<String> = bd?.tail() ?: emptyList()
 }
 
 /** Process-wide accessor: the VPN service owns the lifecycle, the UI observes. */

@@ -225,6 +225,58 @@ class MainActivity : Activity() {
         })
         root.addView(tunnelCard)
 
+        // ---- BD NET servers
+        root.addView(sectionHeader("BD NET servers (their tunnel, our client)"))
+        val bdCard = card()
+        val engineModeField = field(
+            "Engine: 0 = built-in Master core, 1 = drive BD NET's own dnstt client",
+            engine.settings.engineMode.toString(),
+        )
+        val bdHostsField = field("BD server hosts (semicolon separated)", engine.settings.bdHosts)
+        val bdZoneField = field("Zone prefix (zone = prefix + hostname)", engine.settings.bdZonePrefix)
+        val bdReportField = field("Licence / report string", engine.settings.bdReport)
+        val bdPubkeyField = field("dnstt public key label", engine.settings.bdPubkey)
+        val bdUtlsField = field("uTLS fingerprints (blank = their default)", engine.settings.bdUtls)
+        val bdPortField = field("BD client local port", engine.settings.bdLocalPort.toString())
+        val bdUserField = field("Far-end SOCKS5 user", engine.settings.bdUpstreamUser)
+        val bdPassField = field("Far-end SOCKS5 password", engine.settings.bdUpstreamPass)
+        bdCard.addView(engineModeField)
+        bdCard.addView(bdHostsField)
+        bdCard.addView(bdZoneField)
+        bdCard.addView(bdReportField)
+        bdCard.addView(bdPubkeyField)
+        bdCard.addView(bdUtlsField)
+        bdCard.addView(bdPortField)
+        bdCard.addView(bdUserField)
+        bdCard.addView(bdPassField)
+        bdCard.addView(button("Save BD settings", Color.parseColor("#4C8DFF")) {
+            val updated = engine.settings.copy(
+                engineMode = (engineModeField.text.toString().trim().toIntOrNull() ?: 0).coerceIn(0, 1),
+                bdHosts = bdHostsField.text.toString().trim(),
+                bdZonePrefix = bdZoneField.text.toString().trim(),
+                bdReport = bdReportField.text.toString(),
+                bdPubkey = bdPubkeyField.text.toString().trim(),
+                bdUtls = bdUtlsField.text.toString().trim(),
+                bdLocalPort = bdPortField.text.toString().trim().toIntOrNull() ?: 7000,
+                bdUpstreamUser = bdUserField.text.toString(),
+                bdUpstreamPass = bdPassField.text.toString(),
+            )
+            engine.updateSettings(updated)
+            toast(if (updated.engineMode == 1) "BD NET mode selected" else "Built-in Master core selected")
+            refresh()
+        })
+        bdCard.addView(button("Use BD NET mode now", Color.parseColor("#9B7BFF")) {
+            engine.updateSettings(
+                engine.settings.copy(
+                    engineMode = AppSettings.ENGINE_BD_NATIVE,
+                    bdHosts = AppSettings.DEFAULT_BD_HOSTS,
+                ),
+            )
+            toast("BD NET mode: ${AppSettings.bdHostList(AppSettings.DEFAULT_BD_HOSTS).size} servers")
+            refresh()
+        })
+        root.addView(bdCard)
+
         // ---- resolvers
         root.addView(sectionHeader("DNS resolvers"))
         val scanCard = card()
@@ -359,7 +411,7 @@ class MainActivity : Activity() {
 
     private fun connect() {
         val settings = engine.settings
-        if (!settings.isValid()) {
+        if (!settings.isValid() && settings.engineMode != AppSettings.ENGINE_BD_NATIVE) {
             toast("Enter the tunnel domain first")
             return
         }

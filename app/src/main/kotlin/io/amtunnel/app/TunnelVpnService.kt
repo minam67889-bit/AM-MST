@@ -46,6 +46,7 @@ class TunnelVpnService : VpnService() {
 
     private lateinit var engine: TunnelEngine
     private var tun: ParcelFileDescriptor? = null
+    private var tun2socks: Process? = null
     private var tunReader: Thread? = null
     private val running = AtomicBoolean(false)
     private val dnsExecutor = Executors.newFixedThreadPool(4)
@@ -78,7 +79,9 @@ class TunnelVpnService : VpnService() {
                     Thread({
                         val ok = engine.start()
                         if (ok) {
-                            if (engine.settings.dnsMode) {
+                            if (engine.isBdMode) {
+                                establishFullTun()
+                            } else if (engine.settings.dnsMode) {
                                 establishTun()
                             }
                             updateNotification(buildConnectedText())
@@ -97,8 +100,11 @@ class TunnelVpnService : VpnService() {
     }
 
     private fun buildConnectedText(): String {
-        val stats = engine.stats()
         val socks = if (engine.settings.socksEnabled) "SOCKS5 on 127.0.0.1:${engine.socksPort()}" else "no proxy"
+        if (engine.isBdMode) {
+            return "BD NET via ${engine.bdHost ?: "?"} • $socks"
+        }
+        val stats = engine.stats()
         return "Connected via ${stats.currentResolver} • $socks"
     }
 
@@ -120,6 +126,8 @@ class TunnelVpnService : VpnService() {
         tunReader = null
         runCatching { tun?.close() }
         tun = null
+        runCatching { tun2socks?.destroy() }
+        tun2socks = null
         runCatching { dnsExecutor.shutdownNow() }
         runCatching { engine.stop() }
         runCatching { stopForeground(android.app.Service.STOP_FOREGROUND_REMOVE) }
@@ -177,6 +185,71 @@ class TunnelVpnService : VpnService() {
             }
         }
         engine.log.info("vpn", "tun reader stopped")
+    }
+
+    // ------------------------------------------------- BD mode: whole-device tun
+
+    /**
+     * Route everything through the relay.
+     *
+     * The tun is handed to BD NET's own `libtun2socks.so` (badvpn 1.999.127,
+     * shipped in their APK) with `--tunfd`, and it dials our local SOCKS5
+     * bridge, which forwards into their tunnel. This is the same arrangement
+     * their app uses; the difference is that the SOCKS credentials live in our
+     * settings instead of being fixed in their config.
+     */
+    private fun establishFullTun() {
+        if (tun != null) return
+        val bin = java.io.File(applicationInfo.nativeLibraryDir, "libtun2socks.so")
+        if (!bin.exists()) {
+            engine.log.warn("vpn", "libtun2socks.so is not in this build - whole-device VPN unavailable")
+            return
+        }
+        val descriptor = try {
+            Builder()
+                .setSession("AM Tunnel MST")
+                .setMtu(1500)
+                .addAddress("10.111.222.2", 32)
+                .addDnsServer("1.1.1.1")
+                .addDnsServer("8.8.8.8")
+                .addRoute("0.0.0.0", 0)
+                .addDisallowedApplication(packageName)
+                .establish()
+        } catch (e: Exception) {
+            engine.log.error("vpn", "could not establish tun: ${e.message}")
+            null
+        }
+        if (descriptor == null) {
+            engine.log.error("vpn", "tun establishment returned null (permission missing?)")
+            return
+        }
+        val command = listOf(
+            bin.absolutePath,
+            "--tunfd", descriptor.fd.toString(),
+            "--tunmtu", "1500",
+            "--netif-ipaddr", "10.111.222.2",
+            "--netif-netmask", "255.255.255.0",
+            "--socks-server-addr", "127.0.0.1:${engine.socksPort()}",
+            "--loglevel", "info",
+        )
+        val proc = try {
+            ProcessBuilder(command).redirectErrorStream(true).start()
+            // Keep the descriptor owned by the child: we only close our copy on shutdown.
+        } catch (e: Exception) {
+            engine.log.error("vpn", "could not start tun2socks: ${e.message}")
+            return
+        }
+        tun2socks = proc
+        tun = descriptor
+        engine.log.info("vpn", "whole-device tunnel up (tun fd ${descriptor.fd} -> socks 127.0.0.1:${engine.socksPort()})")
+        Thread({
+            runCatching {
+                proc.inputStream.bufferedReader().useLines { lines ->
+                    lines.forEach { line -> if (line.isNotBlank()) engine.log.debug("tun2socks", line) }
+                }
+            }
+            engine.log.warn("vpn", "tun2socks exited")
+        }, "tun2socks-log").apply { isDaemon = true }.start()
     }
 
     // ------------------------------------------------------------- notification

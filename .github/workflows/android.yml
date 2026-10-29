@@ -37,6 +37,31 @@ jobs:
         with:
           gradle-version: "8.9"
 
+      - name: BD NET client libraries
+        # Their tunnel binaries are what make BD's servers reachable at all: a
+        # dnstt fork with a KEM handshake (libxdnstt) and badvpn tun2socks. They
+        # are copied out of the public APK artifact at build time and are not
+        # committed to this repository.
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          mkdir -p app/src/main/jniLibs/arm64-v8a art
+          run=$(gh run list --workflow=analyze-apk.yml --status success --limit 1 \
+                  --json databaseId --jq '.[0].databaseId')
+          art=$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$run/artifacts" \
+                  --jq '.artifacts[] | select(.name=="amtunnel-apk-analysis") | .id' | head -1)
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$art/zip" > art/bd.zip
+          unzip -o -q art/bd.zip -d art/bd
+          apk=$(find art/bd -name '*.apk' | head -1)
+          echo "BD APK: $apk"
+          [ -z "$apk" ] && exit 0
+          for lib in libxdnstt.so libtun2socks.so; do
+            unzip -o -j "$apk" "lib/arm64-v8a/$lib" -d app/src/main/jniLibs/arm64-v8a > /dev/null
+          done
+          ls -l app/src/main/jniLibs/arm64-v8a
+
       - name: Compile all modules, run unit tests, build debug APK
         run: |
           set -o pipefail

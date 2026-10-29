@@ -48,6 +48,15 @@ android {
     lint {
         abortOnError = false
     }
+
+    // The BD NET client binaries (libxdnstt.so, libtun2socks.so) are copied in
+    // by CI before the build; they must stay uncompressed so the app can exec
+    // them straight out of nativeLibraryDir.
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
 }
 
 dependencies {
