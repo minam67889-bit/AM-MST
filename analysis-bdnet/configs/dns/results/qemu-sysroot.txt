@@ -62,18 +62,18 @@ IMGDIR=/usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a
 + ls -l /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a
 + head
 total 3202888
--rw-r--r-- 1 runner runner    1686439 Oct 29 00:07 NOTICE.txt
--rw-r--r-- 1 runner runner        121 Oct 29 00:07 advancedFeatures.ini
--rw-r--r-- 1 runner runner       2232 Oct 29 00:07 build.prop
--rwxr-xr-x 1 runner runner    7748096 Oct 29 00:07 kernel-qemu
--rwxr-xr-x 1 runner runner    7748096 Oct 29 00:07 kernel-ranchu
--rw-r--r-- 1 runner runner      18469 Oct 29 00:07 package.xml
--rw-r--r-- 1 runner runner    1455579 Oct 29 00:07 ramdisk.img
--rw-r--r-- 1 runner runner        175 Oct 29 00:07 source.properties
--rw-r--r-- 1 runner runner 2684354560 Oct 29 00:07 system.img
+-rw-r--r-- 1 runner runner    1686439 Oct 29 00:13 NOTICE.txt
+-rw-r--r-- 1 runner runner        121 Oct 29 00:13 advancedFeatures.ini
+-rw-r--r-- 1 runner runner       2232 Oct 29 00:13 build.prop
+-rwxr-xr-x 1 runner runner    7748096 Oct 29 00:13 kernel-qemu
+-rwxr-xr-x 1 runner runner    7748096 Oct 29 00:13 kernel-ranchu
+-rw-r--r-- 1 runner runner      18469 Oct 29 00:13 package.xml
+-rw-r--r-- 1 runner runner    1455579 Oct 29 00:13 ramdisk.img
+-rw-r--r-- 1 runner runner        175 Oct 29 00:13 source.properties
+-rw-r--r-- 1 runner runner 2684354560 Oct 29 00:13 system.img
 + IMGFILE=/usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
 + ls -l /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
--rw-r--r-- 1 runner runner 2684354560 Oct 29 00:07 /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
+-rw-r--r-- 1 runner runner 2684354560 Oct 29 00:13 /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
 + mkdir -p sysroot/system/bin sysroot/system/lib64
 + sudo modprobe loop
 + sudo mount -o loop,ro /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img /mnt
@@ -99,7 +99,7 @@ media
 + head -30
 sysroot/system/bin:
 total 908
--rwxr-xr-x 1 runner root 926936 Oct 29 00:07 linker64
+-rwxr-xr-x 1 runner root 926936 Oct 29 00:13 linker64
 
 sysroot/system/lib64:
 total 100624

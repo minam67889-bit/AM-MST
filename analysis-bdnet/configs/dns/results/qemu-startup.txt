@@ -1,5 +1,5 @@
 + date -u
-Thu Oct 29 00:07:47 UTC 2026
+Thu Oct 29 00:13:54 UTC 2026
 + qemu-aarch64-static --version
 + head -1
 qemu-aarch64 version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)
@@ -126,9 +126,9 @@ Known TLS fingerprints for -utls are:
 + for flag in -h --help -version
 + echo '===== libdns -h'
 ===== libdns -h
-+ head -30
 + timeout 25 qemu-aarch64-static libs/libdns.so -h
-2026/10/29 00:07:50 FastDNS v1.2 | Client
++ head -30
+2026/10/29 00:13:55 FastDNS v1.2 | Client
 Usage of libs/libdns.so:
   -listen string
     	Local Server Address (default "127.0.0.1:7777")
@@ -143,7 +143,7 @@ Usage of libs/libdns.so:
 ===== libdns --help
 + timeout 25 qemu-aarch64-static libs/libdns.so --help
 + head -30
-2026/10/29 00:07:50 FastDNS v1.2 | Client
+2026/10/29 00:13:55 FastDNS v1.2 | Client
 Usage of libs/libdns.so:
   -listen string
     	Local Server Address (default "127.0.0.1:7777")
@@ -158,7 +158,7 @@ Usage of libs/libdns.so:
 ===== libdns -version
 + timeout 25 qemu-aarch64-static libs/libdns.so -version
 + head -30
-2026/10/29 00:07:50 FastDNS v1.2 | Client
+2026/10/29 00:13:55 FastDNS v1.2 | Client
 flag provided but not defined: -version
 Usage of libs/libdns.so:
   -listen string
