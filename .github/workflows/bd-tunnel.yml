@@ -78,33 +78,21 @@ jobs:
           sudo chown -R "$USER" sysroot
           ls sysroot/system/bin sysroot/system/lib64 | head
 
-      - name: "Who authenticates? symbols, strings and the SOCKS routine"
+      - name: "What flags do the two clients actually take?"
         run: |
-          exec > >(tee /tmp/symbols.txt) 2>&1
+          exec > >(tee /tmp/flags.txt) 2>&1
           set +e
-          echo "=== is the Go binary stripped?"
-          file libs/libxdnstt.so
-          readelf -S libs/libxdnstt.so 2>/dev/null | grep -E "symtab|gopclntab|debug|text" | head
-          echo "=== symbols with socks/auth/username/password in the name"
-          nm -C libs/libxdnstt.so 2>/dev/null | grep -iE "socks|auth|username|password|proxy" | head -40
-          echo "=== pure lowercase words of 6..16 chars (candidate baked-in secrets)"
-          strings -n 5 libs/libxdnstt.so | grep -xE "[a-z]{6,16}" | sort -u > /tmp/words.txt
-          wc -l /tmp/words.txt; head -120 /tmp/words.txt | tr '\n' ' '; echo
-          echo "=== words that are NOT in the standard Go/English dictionary-ish list"
-          grep -vxE "abcdef|abcdefgh|localhost|password|username|function|interface|structure|overflow|dispatch|template|document|complete|response|request|directory|protocol|security|certificate|signature|algorithm|transport|conn|session|buffer|header|method|status|string|number|error|regexp|random|shared|buffer|stream|active|closed|listen|accept|finish|filter|source|target|update|previous|current|default|invalid|missing|unsupported|unknown|expected|received|available|truncated|multiple|single|length|values|fields|types|checked|created|changed|deleted|removed|opened|writes|reads|empty|false|true|nil|void" /tmp/words.txt | head -100 | tr '\n' ' '; echo
-          echo "=== disassemble the authenticator if the symbol survived"
-          for sym in $(nm libs/libxdnstt.so 2>/dev/null | grep -iE "\.(Authenticate|Username|Password)$" | awk '{print $1}' | head -4); do
-            echo "--- function at $sym"
-            objdump -d --start-address=0x$sym --stop-address=$((0x$sym + 0x180)) libs/libxdnstt.so 2>/dev/null | head -60
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          for lib in libxdnstt libdns; do
+            echo "================= $lib -h"
+            timeout 20 qemu-aarch64-static "libs/$lib.so" -h 2>&1 | head -45
+            echo "================= $lib --help"
+            timeout 20 qemu-aarch64-static "libs/$lib.so" --help 2>&1 | head -25
+            echo "================= flag-looking strings inside $lib"
+            strings -n 3 "libs/$lib.so" | grep -xE "-[a-zA-Z][a-zA-Z0-9-]{1,18}" | sort -u | head -40
           done
-          echo "=== raw .rodata neighbourhood of the words that look like passwords"
-          for w in $(head -200 /tmp/words.txt); do
-            off=$(grep -aob "$w" libs/libxdnstt.so | head -1 | cut -d: -f1)
-            [ -z "$off" ] && continue
-          done
-          echo "=== any two adjacent distinct words (user then pass) in rodata"
-          strings -n 6 -t d libs/libxdnstt.so | grep -xE "[0-9]+ [a-z]{6,16}" | awk '{print $1, $2}' | head -400 > /tmp/wordoff.txt
-          wc -l /tmp/wordoff.txt
+          echo "================= does libdns parse the JSON config?"
+          strings -n 6 libs/libdns.so | grep -iE "recv_window|confuse|validate|socks5|retry_interval|config.json|config" | head -25
 
       - name: "Real traffic through BD's tunnel"
         run: |
@@ -174,7 +162,7 @@ jobs:
         run: |
           mkdir -p analysis-bdnet/configs/dns/results
           cp /tmp/bd-tunnel.txt analysis-bdnet/configs/dns/results/bd-tunnel.txt 2>/dev/null || true
-          cp /tmp/symbols.txt analysis-bdnet/configs/dns/results/bd-symbols.txt 2>/dev/null || true
+          cp /tmp/flags.txt analysis-bdnet/configs/dns/results/bd-flags.txt 2>/dev/null || true
           cp /tmp/bd-tunnel.txt /tmp/last-run.txt
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
