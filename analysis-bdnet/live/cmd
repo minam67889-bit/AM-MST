@@ -1,6 +1,13 @@
 export QEMU_LD_PREFIX="$PWD/sysroot"
-echo "=== libdns with a bogus flag (Go prints every flag) ==="
-timeout 20 qemu-aarch64-static libs/libdns.so -zzz 2>&1 | head -40
-echo "=== libdns --help ==="
-timeout 20 qemu-aarch64-static libs/libdns.so --help 2>&1 | head -20
-# nonce=1793279174862912183
+for t in 13.140.185.158:53 173.249.10.48:53 de1.liftmeon.org:53; do
+  echo "===== tunnel $t"
+  timeout 70 qemu-aarch64-static libs/libdns.so -tunnel "$t" -listen 127.0.0.1:7777 -report "BD NET VPN" > /tmp/ld.out 2>&1 &
+  pid=$!
+  sleep 6
+  echo "--- listeners"; ss -lntup 2>/dev/null | grep 7777 || echo "  none"
+  echo "--- client said"; head -3 /tmp/ld.out
+  echo "--- curl no-auth"; timeout 25 curl -sS --max-time 20 -x socks5h://127.0.0.1:7777 -o /dev/null -w "  http=%{http_code}\n" http://example.com/ 2>&1 | head -3
+  echo "--- curl with bd pair"; timeout 25 curl -sS --max-time 20 -x socks5h://tanginaka:wagditokupal@127.0.0.1:7777 -o /dev/null -w "  http=%{http_code}\n" http://example.com/ 2>&1 | head -3
+  kill $pid 2>/dev/null; wait $pid 2>/dev/null
+done
+# nonce=1793279188839066384
