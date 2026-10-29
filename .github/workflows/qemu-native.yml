@@ -41,7 +41,7 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq qemu-user-static libc6-arm64-cross \
-            gcc-aarch64-linux-gnu unzip binutils file
+            gcc-aarch64-linux-gnu unzip binutils file dnsutils
           qemu-aarch64-static --version | head -1
           aarch64-linux-gnu-gcc --version | head -1
 
@@ -137,65 +137,90 @@ jobs:
           set +x
           echo "done"
 
-      - name: "their FastDNS client - licensed run against a sweep of endpoints"
-        run: |
-          exec > >(tee /tmp/xdnstt-run.txt) 2>&1
-          set +e
-          export QEMU_LD_PREFIX="$PWD/sysroot"
-          for host in 173.212.232.241 173.249.10.48 185.196.21.114 173.212.252.3 192.145.37.229; do
-            port=$((7400 + RANDOM % 300))
-            echo "========== $host"
-            timeout 120 qemu-aarch64-static libs/libxdnstt.so \
-              -udp "$host:53" -report "BD NET VPN" -pubkey prince \
-              "sd-$host" "127.0.0.1:$port" > /tmp/c.log 2>&1 &
-            pid=$!
-            for i in $(seq 1 20); do
-              ss -ltn 2>/dev/null | grep -q ":$port" && { echo "listener up after ${i}s"; break; }
-              sleep 1
-            done
-            ss -ltn 2>/dev/null | grep -q ":$port" || echo "no listener"
-            for mode in socks http raw; do
-              timeout 60 python3 tools/tunnel_probe.py "127.0.0.1:$port" --mode $mode \
-                --timeout 25 --wait 3 || true
-            done
-            echo "--- client log"
-            tail -20 /tmp/c.log
-            kill $pid 2>/dev/null
-            sleep 2
-          done
-
-      - name: "their SlowDNS client on 127.0.0.1:7777 - push real traffic"
+      - name: "libdns: is 127.0.0.1:7777 a DNS listener, not a proxy?"
         run: |
           exec > >(tee /tmp/libdns-run.txt) 2>&1
           set +e
           export QEMU_LD_PREFIX="$PWD/sysroot"
-          for host in 13.140.185.158 13.140.185.165 13.140.185.181; do
-            ENC=$(python3 -c "import sys; sys.path.insert(0,'tools'); import bdnet_dns as b; print(b.p_encrypt('$host:53'))")
-            echo "========== $host  enc=$ENC"
-            timeout 240 qemu-aarch64-static libs/libdns.so \
-              -tunnel "$ENC" -report "BD NET VPN" > /tmp/d.log 2>&1 &
+          host=13.140.185.158
+          ENC=$(python3 -c "import sys; sys.path.insert(0,'tools'); import bdnet_dns as b; print(b.p_encrypt('$host:53'))")
+          echo "== host $host enc=$ENC"
+          timeout 200 qemu-aarch64-static libs/libdns.so \
+            -tunnel "$ENC" -report "BD NET VPN" > /tmp/d.log 2>&1 &
+          pid=$!
+          sleep 12
+          echo "--- log"; cat /tmp/d.log
+          echo "--- sockets (tcp AND udp)"; ss -ltnup 2>/dev/null | head -30
+          echo "--- /proc/net/udp"; cat /proc/net/udp /proc/net/udp6 2>/dev/null | head -20
+          echo "--- DNS query over UDP to 7777"
+          timeout 25 dig +time=12 +tries=1 @127.0.0.1 -p 7777 example.com A 2>&1 | head -20
+          echo "--- DNS query over TCP to 7777"
+          timeout 25 dig +tcp +time=12 +tries=1 @127.0.0.1 -p 7777 example.com A 2>&1 | head -20
+          echo "--- python raw UDP DNS on 7777"
+          timeout 30 python3 - <<'PY' || true
+          import socket, struct, random
+          qid = random.randrange(65535)
+          q = struct.pack(">HHHHHH", qid, 0x0100, 1, 0, 0, 0) + b"\x07example\x03com\x00" + struct.pack(">HH", 1, 1)
+          s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM); s.settimeout(20)
+          try:
+              s.sendto(q, ("127.0.0.1", 7777))
+              data, _ = s.recvfrom(4096)
+              print(f"UDP 7777 answered {len(data)} bytes rcode={data[3] & 15} answers={struct.unpack('>H', data[6:8])[0]}")
+              print(data[:80].hex())
+          except Exception as exc:
+              print("UDP 7777:", type(exc).__name__, exc)
+          PY
+          echo "--- log after queries"; cat /tmp/d.log
+          kill $pid 2>/dev/null
+
+      - name: "xdnstt: does it actually put packets on the wire under qemu?"
+        run: |
+          exec > >(tee /tmp/strace.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          timeout 40 qemu-aarch64-static -strace libs/libxdnstt.so \
+            -udp 173.212.232.241:53 -report "BD NET VPN" -pubkey prince \
+            sd-173.212.232.241 127.0.0.1:7500 2>&1 | grep -E "sendto|recvfrom|connect|socket" | head -40
+          echo "--- how many sends, how many receives"
+          timeout 40 qemu-aarch64-static -strace libs/libxdnstt.so \
+            -udp 173.212.232.241:53 -report "BD NET VPN" -pubkey prince \
+            sd-173.212.232.241 127.0.0.1:7501 > /tmp/st.log 2>&1
+          echo "sendto:  $(grep -c sendto /tmp/st.log)"
+          echo "recvfrom: $(grep -c recvfrom /tmp/st.log)"
+          grep -c "recvfrom(.*= 4[0-9])" /tmp/st.log 2>/dev/null || true
+          tail -5 /tmp/st.log
+
+      - name: "xdnstt: domain matrix - which zone does the server answer?"
+        run: |
+          exec > >(tee /tmp/domains.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          host=173.212.232.241
+          for zone in "sd-$host" "$host" "sd-amtunnel" "sd-bdnet" "sd-prince" \
+                      "sd-vpn" "sd-tunnel" "sd-fastdns" "sd-liftmeon" "sd-de1" \
+                      "sd-princebdfreevpn" "sd-bdfreevpn" "sd-$host.vpn"; do
+            port=$((7500 + RANDOM % 300))
+            echo "===== zone=$zone"
+            timeout 40 qemu-aarch64-static libs/libxdnstt.so \
+              -udp "$host:53" -report "BD NET VPN" -pubkey prince "$zone" "127.0.0.1:$port" \
+              > /tmp/z.log 2>&1 &
             pid=$!
-            for i in $(seq 1 30); do
-              ss -ltn 2>/dev/null | grep -q ":7777" && { echo "7777 listening after ${i}s"; break; }
-              sleep 1
-            done
-            ss -ltnp 2>/dev/null | grep 7777 || echo "no listener on 7777"
-            echo "--- client log"; cat /tmp/d.log
-            echo "--- SOCKS5 on 7777"
-            timeout 70 python3 tools/tunnel_probe.py 127.0.0.1:7777 --mode socks --timeout 45 || true
-            echo "--- HTTP proxy on 7777"
-            timeout 70 python3 tools/tunnel_probe.py 127.0.0.1:7777 --mode http --host example.com --timeout 45 || true
-            echo "--- curl through it as an HTTP proxy"
-            timeout 70 curl -sS -m 60 -x http://127.0.0.1:7777 http://example.com -o /tmp/page.html \
-              -w "curl http_code=%{http_code} size=%{size_download}\n" || true
-            head -c 300 /tmp/page.html 2>/dev/null; echo
-            echo "--- curl through it as a SOCKS5 proxy"
-            timeout 70 curl -sS -m 60 --socks5-hostname 127.0.0.1:7777 http://example.com -o /tmp/page2.html \
-              -w "curl socks http_code=%{http_code} size=%{size_download}\n" || true
-            head -c 300 /tmp/page2.html 2>/dev/null; echo
-            echo "--- client log after traffic"; cat /tmp/d.log
+            sleep 6
+            python3 - "$port" <<'PY' | sed 's/^/    /'
+          import socket, sys, time
+          port = int(sys.argv[1])
+          try:
+              s = socket.create_connection(("127.0.0.1", port), timeout=4)
+              s.sendall(b"GET / HTTP/1.0\r\nHost: example.com\r\n\r\n")
+              s.settimeout(14)
+              data = s.recv(512)
+              print(f"TCP probe got {len(data)} bytes: {data[:60]!r}")
+          except Exception as exc:
+              print(f"TCP probe: {type(exc).__name__}: {exc}")
+          PY
+            echo "    client log:"; sed 's/^/      /' /tmp/z.log | tail -6
             kill $pid 2>/dev/null
-            sleep 3
+            sleep 1
           done
 
       - name: "Is the gate keyed on -report?"
@@ -228,7 +253,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p analysis-bdnet/configs/dns/results
-          for f in apk sysroot startup xdnstt-run libdns-run xdnstt libdns report-matrix; do
+          for f in apk sysroot startup xdnstt-run libdns-run xdnstt libdns report-matrix strace domains; do
             [ -f "/tmp/$f.txt" ] && cp "/tmp/$f.txt" "analysis-bdnet/configs/dns/results/qemu-$f.txt"
             [ -f "/tmp/$f.log" ] && cp "/tmp/$f.log" "analysis-bdnet/configs/dns/results/qemu-$f.log"
           done
