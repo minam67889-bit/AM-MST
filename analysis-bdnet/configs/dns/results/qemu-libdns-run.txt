@@ -1,36 +1,72 @@
 ========== 13.140.185.158  enc=05167e556c53460f5e5e7e6c011d6a516b
---- log
-2026/10/29 00:29:30 FastDNS v1.2 | Client
-2026/10/29 00:29:30 Licensed to BD NET VPN
-2026/10/29 00:29:30 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 00:29:30 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.158:53
---- listeners
-State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
-LISTEN 0      4096      127.0.0.54:53        0.0.0.0:*          
-LISTEN 0      4096   127.0.0.53%lo:53        0.0.0.0:*          
-LISTEN 0      4096         0.0.0.0:22        0.0.0.0:*          
-LISTEN 0      4096            [::]:22           [::]:*          
+no listener on 7777
+--- client log
+2026/10/29 00:42:53 FastDNS v1.2 | Client
+2026/10/29 00:42:53 Licensed to BD NET VPN
+2026/10/29 00:42:53 NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:42:53 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.158:53
+--- SOCKS5 on 7777
+PROBE FAIL: nothing listening on 127.0.0.1:7777 ([Errno 111] Connection refused)
+--- HTTP proxy on 7777
+PROBE FAIL: nothing listening on 127.0.0.1:7777 ([Errno 111] Connection refused)
+--- curl through it as an HTTP proxy
+curl: (7) Failed to connect to 127.0.0.1 port 7777 after 0 ms: Couldn't connect to server
+curl http_code=000 size=0
+
+--- curl through it as a SOCKS5 proxy
+curl: (7) Failed to connect to 127.0.0.1 port 7777 after 0 ms: Couldn't connect to server
+curl socks http_code=000 size=0
+
+--- client log after traffic
+2026/10/29 00:42:53 FastDNS v1.2 | Client
+2026/10/29 00:42:53 Licensed to BD NET VPN
+2026/10/29 00:42:53 NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:42:53 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.158:53
 ========== 13.140.185.165  enc=05167e556c53460f5e5e7e6c02106a516b
---- log
-2026/10/29 00:29:52 FastDNS v1.2 | Client
-2026/10/29 00:29:52 Licensed to BD NET VPN
-2026/10/29 00:29:52 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 00:29:52 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.165:53
---- listeners
-State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
-LISTEN 0      4096      127.0.0.54:53        0.0.0.0:*          
-LISTEN 0      4096   127.0.0.53%lo:53        0.0.0.0:*          
-LISTEN 0      4096         0.0.0.0:22        0.0.0.0:*          
-LISTEN 0      4096            [::]:22           [::]:*          
+no listener on 7777
+--- client log
+2026/10/29 00:43:26 FastDNS v1.2 | Client
+2026/10/29 00:43:26 Licensed to BD NET VPN
+2026/10/29 00:43:26 NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:43:26 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.165:53
+--- SOCKS5 on 7777
+PROBE FAIL: nothing listening on 127.0.0.1:7777 ([Errno 111] Connection refused)
+--- HTTP proxy on 7777
+PROBE FAIL: nothing listening on 127.0.0.1:7777 ([Errno 111] Connection refused)
+--- curl through it as an HTTP proxy
+curl: (7) Failed to connect to 127.0.0.1 port 7777 after 0 ms: Couldn't connect to server
+curl http_code=000 size=0
+
+--- curl through it as a SOCKS5 proxy
+curl: (7) Failed to connect to 127.0.0.1 port 7777 after 0 ms: Couldn't connect to server
+curl socks http_code=000 size=0
+
+--- client log after traffic
+2026/10/29 00:43:26 FastDNS v1.2 | Client
+2026/10/29 00:43:26 Licensed to BD NET VPN
+2026/10/29 00:43:26 NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:43:26 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.165:53
 ========== 13.140.185.181  enc=05167e556c53460f5e5e7e6c0c146a516b
---- log
-2026/10/29 00:30:14 FastDNS v1.2 | Client
-2026/10/29 00:30:14 Licensed to BD NET VPN
-2026/10/29 00:30:14 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 00:30:14 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.181:53
---- listeners
-State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
-LISTEN 0      4096      127.0.0.54:53        0.0.0.0:*          
-LISTEN 0      4096   127.0.0.53%lo:53        0.0.0.0:*          
-LISTEN 0      4096         0.0.0.0:22        0.0.0.0:*          
-LISTEN 0      4096            [::]:22           [::]:*          
+no listener on 7777
+--- client log
+2026/10/29 00:44:00 FastDNS v1.2 | Client
+2026/10/29 00:44:00 Licensed to BD NET VPN
+2026/10/29 00:44:00 NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:44:00 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.181:53
+--- SOCKS5 on 7777
+PROBE FAIL: nothing listening on 127.0.0.1:7777 ([Errno 111] Connection refused)
+--- HTTP proxy on 7777
+PROBE FAIL: nothing listening on 127.0.0.1:7777 ([Errno 111] Connection refused)
+--- curl through it as an HTTP proxy
+curl: (7) Failed to connect to 127.0.0.1 port 7777 after 0 ms: Couldn't connect to server
+curl http_code=000 size=0
+
+--- curl through it as a SOCKS5 proxy
+curl: (7) Failed to connect to 127.0.0.1 port 7777 after 0 ms: Couldn't connect to server
+curl socks http_code=000 size=0
+
+--- client log after traffic
+2026/10/29 00:44:00 FastDNS v1.2 | Client
+2026/10/29 00:44:00 Licensed to BD NET VPN
+2026/10/29 00:44:00 NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:44:00 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.181:53

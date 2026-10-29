@@ -6,9 +6,9 @@ RAW probe -> FAIL in 25.0s: 0 B:
 --- client log
 Licensed to BD NET VPN
 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 00:23:00 uTLS fingerprint iOS 14
-2026/10/29 00:23:00 effective MTU 131
-2026/10/29 00:23:00 begin session 369b3f18
+2026/10/29 00:36:22 uTLS fingerprint Firefox 105
+2026/10/29 00:36:22 effective MTU 131
+2026/10/29 00:36:22 begin session f577ba0f
 ========== 173.249.10.48
 listener up after 2s
 SOCKS probe -> FAIL in 25.0s: no SOCKS5 greeting (silence)
@@ -17,9 +17,9 @@ RAW probe -> FAIL in 25.0s: 0 B:
 --- client log
 Licensed to BD NET VPN
 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 00:24:18 uTLS fingerprint Firefox 120
-2026/10/29 00:24:18 effective MTU 132
-2026/10/29 00:24:18 begin session cb46af10
+2026/10/29 00:37:40 uTLS fingerprint iOS 13
+2026/10/29 00:37:40 effective MTU 132
+2026/10/29 00:37:40 begin session 09a7f235
 ========== 185.196.21.114
 listener up after 2s
 SOCKS probe -> FAIL in 25.0s: no SOCKS5 greeting (silence)
@@ -28,9 +28,9 @@ RAW probe -> FAIL in 25.0s: 0 B:
 --- client log
 Licensed to BD NET VPN
 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 00:25:36 uTLS fingerprint Chrome 120
-2026/10/29 00:25:36 effective MTU 132
-2026/10/29 00:25:36 begin session d3507872
+2026/10/29 00:38:59 uTLS fingerprint Firefox 120
+2026/10/29 00:38:59 effective MTU 132
+2026/10/29 00:38:59 begin session 05896486
 ========== 173.212.252.3
 listener up after 2s
 SOCKS probe -> FAIL in 25.0s: no SOCKS5 greeting (silence)
@@ -39,9 +39,9 @@ RAW probe -> FAIL in 25.0s: 0 B:
 --- client log
 Licensed to BD NET VPN
 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 00:26:54 uTLS fingerprint Chrome 120
-2026/10/29 00:26:54 effective MTU 132
-2026/10/29 00:26:54 begin session 852a05a5
+2026/10/29 00:40:17 uTLS fingerprint Randomized-ALPN 0
+2026/10/29 00:40:17 effective MTU 132
+2026/10/29 00:40:17 begin session cf3f512b
 ========== 192.145.37.229
 listener up after 2s
 SOCKS probe -> FAIL in 25.0s: no SOCKS5 greeting (silence)
@@ -50,6 +50,6 @@ RAW probe -> FAIL in 25.0s: 0 B:
 --- client log
 Licensed to BD NET VPN
 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 00:28:12 uTLS fingerprint Randomized-ALPN 0
-2026/10/29 00:28:12 effective MTU 132
-2026/10/29 00:28:12 begin session 5d0e45f8
+2026/10/29 00:41:35 uTLS fingerprint Chrome 120
+2026/10/29 00:41:35 effective MTU 132
+2026/10/29 00:41:35 begin session 48a0308d
