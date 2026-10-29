@@ -1,32 +1,29 @@
-========== live tunnel through 13.140.185.158 (port 7000)
-========== dead host 173.212.232.241 for comparison (port 7001)
-LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=2950,fd=6))
-LISTEN 0      4096       127.0.0.1:7001      0.0.0.0:*    users:(("qemu-aarch64-st",pid=2949,fd=6))
-  session id seen in the live log: none
---- timing: live tunnel (7000)
-  no-auth            : greeting 0502 in 288.0 ms, auth 2d in 0.0 ms
-  no-auth            : greeting 0502 in 279.4 ms, auth 2d in 0.0 ms
-  no-auth            : greeting 0502 in 279.7 ms, auth 2d in 0.0 ms
-  tanginaka/wagditokupal: greeting 0502 in 283.8 ms, auth 01ff in 142.3 ms
-  tanginaka/wagditokupal: greeting 0502 in 276.4 ms, auth 01ff in 166.8 ms
-  prince/prince: greeting 0502 in 144.2 ms, auth 01ff in 280.5 ms
-  prince/prince: greeting 0502 in 280.3 ms, auth 01ff in 278.7 ms
---- timing: dead tunnel (7001) -- anything answered here is purely local
-  no-auth            : TimeoutError('timed out')
-  no-auth            : TimeoutError('timed out')
-  no-auth            : TimeoutError('timed out')
-  tanginaka/wagditokupal: TimeoutError('timed out')
-  tanginaka/wagditokupal: TimeoutError('timed out')
-  prince/prince: TimeoutError('timed out')
-  prince/prince: TimeoutError('timed out')
---- client log
- = 0x0000400048ac3000
---- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2950, si_uid=1001} ---
---- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2950, si_uid=1001} ---
- = 0
- = 0
- = 0
- = 0
- = 0
-grep: write error: Broken pipe
---- packets live: sendto=170 recvwithdata=156
+=== libtun2socks CLI surface
+grep: unrecognized option '--[a-z-]{3,24}'
+Usage: grep [OPTION]... PATTERNS [FILE]...
+Try 'grep --help' for more information.
+=== strings that could be a user/pass pair (lowercase words, 6..16)
+accept accepted authpriv closelog connect device exiting fclose flooder fprintf freeaddrinfo fwrite getaddrinfo getsockopt gettimeofday keepalive listen listener malloc memcmp memcpy memmove memset notice nsskey openlog options perror quitting realloc recvmsg setsid sigaction sigaddset sigemptyset sigismember sigprocmask socket sprintf stdout strcmp strcpy strerror strlen strncpy strtol syslog unlink vsnprintf warning 
+================= zone=sd-de1.liftmeon.org  target=13.140.185.158:53  local=7101
+LISTEN 0      4096       127.0.0.1:7101      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3143,fd=6))
+    noauth : 05ff/2d in 182 ms
+    creds  : 0502/01ff in 798 ms
+================= zone=sd-de1  target=13.140.185.158:53  local=7102
+LISTEN 0      4096       127.0.0.1:7102      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3161,fd=6))
+    noauth : TimeoutError('timed out')
+    creds  : TimeoutError('timed out')
+================= zone=de1.liftmeon.org  target=13.140.185.158:53  local=7103
+LISTEN 0      4096       127.0.0.1:7103      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3181,fd=6))
+    noauth : TimeoutError('timed out')
+    creds  : TimeoutError('timed out')
+================= zone=sd-aog1.liftmeon.org  target=13.140.185.158:53  local=7104
+LISTEN 0      4096       127.0.0.1:7104      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3198,fd=6))
+    noauth : TimeoutError('timed out')
+    creds  : TimeoutError('timed out')
+================= zone=sd-aog1  target=13.140.185.158:53  local=7105
+LISTEN 0      4096       127.0.0.1:7105      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3220,fd=6))
+    noauth : TimeoutError('timed out')
+    creds  : TimeoutError('timed out')
+================= a full HTTP fetch attempt through each zone
+  zone=sd-de1.liftmeon.org http=000 bytes=0 time=0.289801
+  zone=sd-de1 http=000 bytes=0 time=55.002358
