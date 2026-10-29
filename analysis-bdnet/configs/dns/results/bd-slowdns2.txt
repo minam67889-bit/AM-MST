@@ -1,0 +1,101 @@
+=== how does libdns take its config?
+-b+JH(
+-cE
+-d(
+-fL
+-h+
+-h/8
+-hm8
+-i$8
+-i,
+-i,8
+-il
+-j+
+-kA
+-l34
+-mB:t
+-n<9.)&MQx`Q=>)
+-n>
+-nJ
+-qd
+-qfcW
+-r}
+-t)r
+-thread limit
+-xl
+-y_
+negative shift amountsystem goroutine waitconcurrent map writes/gc/heap/allocs:bytesruntime: work.nwait=  previous allocCount=, levelBits[level] = runtime: searchIdx = defer on system stackpanic on system stackasync stack too large_cgo_unsetenv missingstartm: m is spinningstartlockedm: m has pfindrunnable: wrong ppreempt at unknown pcreleasep: invalid argcheckdead: runnable gruntime: newstack at runtime: newstack sp=runtime: confused by  pcHeader.textStart= timer data corruption0
+omanual span allocation called with non-manually-managed typeaddr range base and limit are not in the same memory segmentruntime: failed to configure profiling timer; timer_settime(runtime: malformed profBuf buffer - tag and data out of syncg[ Z
+MarshalJSON
+UnmarshalJSON
+SetKeepAliveConfig
+json:"-"
+runtime.lfnodeValidate
+pSd2MmFz3F.(*VoAYbMvoJ).SetKeepAliveConfig
+hE1JSON.go
+=== the app's own template (from its LSParanoid table)
+{"server":"%s","validate":"%s","confuse":"%s","rx":%s,"tx":%s,"retry":%s,"retry_interval":1,
+ "socks5":{"listen":"%s"},"recv_window_conn":%s,"recv_window":%s,"report":"%s"}
+--- libdns -config /tmp/c.json   (rx=1 tx=196608 retry=3 windows=196608/196608)
+    listeners:
+      none on 7777
+    client said:
+    syscalls: sendto=0 recv=0
+    socks5 probe:
+       ConnectionRefusedError(111, 'Connection 
+--- libdns -config /tmp/c.json   (rx=3 tx=1 retry=196608 windows=196608/196608)
+    listeners:
+      none on 7777
+    client said:
+    syscalls: sendto=0 recv=0
+    socks5 probe:
+       ConnectionRefusedError(111, 'Connection 
+--- libdns -config /tmp/c.json   (rx=1 tx=65536 retry=3 windows=65536/65536)
+    listeners:
+      none on 7777
+    client said:
+    syscalls: sendto=0 recv=0
+    socks5 probe:
+       ConnectionRefusedError(111, 'Connection 
+--- libdns -c /tmp/c.json   (rx=1 tx=196608 retry=3 windows=196608/196608)
+    listeners:
+      none on 7777
+    client said:
+    syscalls: sendto=0 recv=0
+    socks5 probe:
+       ConnectionRefusedError(111, 'Connection 
+--- libdns -c /tmp/c.json   (rx=3 tx=1 retry=196608 windows=196608/196608)
+    listeners:
+      none on 7777
+    client said:
+    syscalls: sendto=0 recv=0
+    socks5 probe:
+       ConnectionRefusedError(111, 'Connection 
+--- libdns -c /tmp/c.json   (rx=1 tx=65536 retry=3 windows=65536/65536)
+    listeners:
+      none on 7777
+    client said:
+    syscalls: sendto=0 recv=0
+    socks5 probe:
+       ConnectionRefusedError(111, 'Connection 
+--- libdns /tmp/c.json   (rx=1 tx=196608 retry=3 windows=196608/196608)
+    listeners:
+      none on 7777
+    client said:
+    syscalls: sendto=0 recv=0
+    socks5 probe:
+       ConnectionRefusedError(111, 'Connection 
+--- libdns /tmp/c.json   (rx=3 tx=1 retry=196608 windows=196608/196608)
+    listeners:
+      none on 7777
+    client said:
+    syscalls: sendto=0 recv=0
+    socks5 probe:
+       ConnectionRefusedError(111, 'Connection 
+--- libdns /tmp/c.json   (rx=1 tx=65536 retry=3 windows=65536/65536)
+    listeners:
+      none on 7777
+    client said:
+    syscalls: sendto=0 recv=0
+    socks5 probe:
+       ConnectionRefusedError(111, 'Connection 
