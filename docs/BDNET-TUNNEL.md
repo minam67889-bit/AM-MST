@@ -76,7 +76,16 @@ the local process:
 `sendto`/`recvfrom` counts under `-strace` agree: 172 queries sent, 158
 responses with payload for a 60-second session.
 
-## 5. What is still open: the far end wants a password
+## 5. RESOLVED - the far end wants a password, and we have it
+
+> **Update (2026-10-29): solved.** The pair in their string table is a decoy;
+> their patched `libxray.so` substitutes `tanginakaba` / `hackpamoregago` at
+> runtime. Captured by proxying their client, then verified from a plain socket
+> client: `auth 0100`, `CONNECT granted`, `HTTP 200` from example.com,
+> `api.telegram.org` 302 through our relay on 127.0.0.1:1080, and the same
+> proxy reachable from another host on the LAN. Full write-up with numbers:
+> [`docs/SLOWDNS.md`](SLOWDNS.md). The text below is the state of the evidence
+> before that capture, kept because it is what made the capture necessary.
 
 The SOCKS5 at the far end of the tunnel offers **only** RFC 1929
 username/password:
