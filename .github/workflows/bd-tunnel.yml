@@ -186,6 +186,23 @@ jobs:
           done
           exit 0
 
+      - name: "What is actually on the other side of the tunnel?"
+        run: |
+          exec > >(tee /tmp/far-end.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          timeout 240 qemu-aarch64-static libs/libxdnstt.so \
+            -udp 13.140.185.158:53 -report "BD NET VPN" -pubkey prince \
+            sd-de1.liftmeon.org 127.0.0.1:7600 \
+            > /tmp/fe.out 2>/tmp/fe.err &
+          pid=$!
+          sleep 12
+          echo "=== client said ==="
+          head -5 /tmp/fe.out
+          python3 tools/far_end_probe.py 7600 --wait 8
+          kill $pid 2>/dev/null; wait $pid 2>/dev/null
+          exit 0
+
       - name: Publish
         if: always()
         continue-on-error: true
