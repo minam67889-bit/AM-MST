@@ -146,6 +146,46 @@ jobs:
           done
           exit 0
 
+      - name: "SlowDNS v2: the client that takes a JSON config and opens SOCKS5 on 7777"
+        run: |
+          exec > >(tee /tmp/slowdns2.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          echo "=== how does libdns take its config?"
+          strings -n 3 libs/libdns.so | grep -e '^-[a-z]' | sort -u | head -30
+          strings -n 6 libs/libdns.so | grep -iE "config|recv_window|confuse|validate|socks5|json" | head -20
+          echo "=== the app's own template (from its LSParanoid table)"
+          cat <<'JSON'
+          {"server":"%s","validate":"%s","confuse":"%s","rx":%s,"tx":%s,"retry":%s,"retry_interval":1,
+           "socks5":{"listen":"%s"},"recv_window_conn":%s,"recv_window":%s,"report":"%s"}
+          JSON
+          for args in "-config /tmp/c.json" "-c /tmp/c.json" "/tmp/c.json"; do
+            for vals in "1 196608 3 196608 196608" "3 1 196608 196608 196608" "1 65536 3 65536 65536"; do
+              set -- $vals
+              cat > /tmp/c.json <<JSON
+          {"server":"13.140.185.158:53","validate":"v2","confuse":"","rx":$1,"tx":$2,"retry":$3,"retry_interval":1,"socks5":{"listen":"127.0.0.1:7777"},"recv_window_conn":$4,"recv_window":$5,"report":"BD NET VPN"}
+          JSON
+              echo "--- libdns $args   (rx=$1 tx=$2 retry=$3 windows=$4/$5)"
+              timeout 25 qemu-aarch64-static -strace libs/libdns.so $args > /tmp/ld.out 2>/tmp/ld.err &
+              lpid=$!
+              sleep 9
+              echo "    listeners:"; ss -lntup 2>/dev/null | grep -E ":7777" || echo "      none on 7777"
+              echo "    client said:"; head -4 /tmp/ld.out | sed 's/^/      /'
+              echo "    syscalls: sendto=$(grep -c sendto /tmp/ld.err) recv=$(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/ld.err)"
+              echo "    socks5 probe:"
+              python3 - <<'PY'
+          import socket
+          try:
+              s = socket.create_connection(("127.0.0.1", 7777), 3); s.settimeout(4)
+              s.sendall(b"\x05\x01\x00"); print("      greeting ->", s.recv(2).hex()); s.close()
+          except Exception as e:
+              print("      ", repr(e)[:40])
+          PY
+              kill $lpid 2>/dev/null; wait $lpid 2>/dev/null
+            done
+          done
+          exit 0
+
       - name: Publish
         if: always()
         continue-on-error: true
@@ -153,6 +193,7 @@ jobs:
           mkdir -p analysis-bdnet/configs/dns/results
           cp /tmp/bd-tunnel.txt analysis-bdnet/configs/dns/results/bd-tunnel.txt 2>/dev/null || true
           cp /tmp/flags.txt analysis-bdnet/configs/dns/results/bd-flags.txt 2>/dev/null || true
+          cp /tmp/slowdns2.txt analysis-bdnet/configs/dns/results/bd-slowdns2.txt 2>/dev/null || true
           cp /tmp/bd-tunnel.txt /tmp/last-run.txt
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
