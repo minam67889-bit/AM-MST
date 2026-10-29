@@ -1,0 +1,17 @@
+================= 13.140.185.158  (zone sd-de1.liftmeon.org)
+LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=2857,fd=6))
+curl: (97) User was rejected by the SOCKS5 server (1 255).
+  http://example.com/ -> http=000 bytes=0 time=0.924400
+curl: (97) User was rejected by the SOCKS5 server (1 255).
+  http://neverssl.com/ -> http=000 bytes=0 time=0.427889
+curl: (97) User was rejected by the SOCKS5 server (1 255).
+  https://example.com/ -> http=000 bytes=0 time=0.427707
+--- client log
+--- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2857, si_uid=1001} ---
+ = 0
+ = 0
+ = 0
+ = 0
+ = 0
+grep: write error: Broken pipe
+--- packets: sendto=69 recvwithdata=61
