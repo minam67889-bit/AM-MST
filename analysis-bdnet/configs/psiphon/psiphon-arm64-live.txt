@@ -1,0 +1,28 @@
+=== start Thu Oct 29 12:30:45 UTC 2026 ===
+SOCKS5 listening after 5s
+=== notices ===
+{"data":{"message":"Config migration: migration already completed"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.461Z"}
+{"data":{"message":"DeviceRegion: '' from ''"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.469Z"}
+{"data":{"message":"applied [2] parameters with tag ''"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.476Z"}
+{"data":{"message":"NetworkLatencyMultiplier Min/Max/Lambda: 1.000000/3.000000/2.000000"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.477Z"}
+{"data":{"buildInfo":{"buildDate":"","buildRepo":"","buildRev":"","goVersion":"","valuesRev":"none"}},"noticeType":"BuildInfo","timestamp":"2026-10-29T12:30:45.480Z"}
+{"data":{"sessionId":"7fb186a8761e009f0f9206b3acf639bb"},"noticeType":"SessionId","timestamp":"2026-10-29T12:30:45.488Z"}
+{"data":{"ID":"WIRED+[redacted]"},"noticeType":"NetworkID","timestamp":"2026-10-29T12:30:45.496Z"}
+{"data":{"port":1080},"noticeType":"ListeningSocksProxyPort","timestamp":"2026-10-29T12:30:45.519Z"}
+{"data":{"port":8080},"noticeType":"ListeningHttpProxyPort","timestamp":"2026-10-29T12:30:45.520Z"}
+{"data":{"message":"running tunneled DSL fetcher"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.523Z"}
+{"data":{"message":"running untunneled DSL fetcher"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.524Z"}
+{"data":{"message":"start establishing"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.524Z"}
+{"data":{"message":"Memory metrics at psiphon.(*Controller).startEstablishing#2561: goroutines 14 | objects 4595 | alloc 1013.0K | inuse 3.1M | sys 16.5M | cumulative 7906 1.6M"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.559Z"}
+{"data":{"message":"ServerEntryIterator.reset: entries 0, dial params 0, moved-to-front 0; durations: move-to-front 257.162µs, entries 55.492µs, total 916.601µs"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.562Z"}
+{"data":{"message":"tactics request aborted: no capable servers"},"noticeType":"Warning","timestamp":"2026-10-29T12:30:45.564Z"}
+{"data":{"message":"ServerEntryIterator.reset: entries 0, dial params 0, moved-to-front 0; durations: move-to-front 19.509µs, entries 7.01µs, total 246.116µs"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.569Z"}
+{"data":{"count":0,"duration":"575.434µs","initialCount":0,"initialLimitTunnelProtocols":[],"initialLimitTunnelProtocolsCandidateCount":0,"limitTunnelDialPortNumbers":{},"limitTunnelProtocols":[],"region":"","replayCandidateCount":10},"noticeType":"CandidateServers","timestamp":"2026-10-29T12:30:45.569Z"}
+{"data":{"message":"completed server entry iteration"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.570Z"}
+{"data":{"regions":[]},"noticeType":"AvailableEgressRegions","timestamp":"2026-10-29T12:30:45.570Z"}
+{"data":{"message":"untunneled DSL fetch failed: psiphon.runUntunneledDSLFetcher#98: psiphon.runUntunneledDSLFetcher.func1#62: psiphon.(*InproxyBrokerClientManager).GetBrokerClient#150: psiphon.(*InproxyBrokerClientManager).reset#298: psiphon.NewInproxyBrokerClientInstance#388: no broker specs"},"noticeType":"Error","timestamp":"2026-10-29T12:30:45.573Z"}
+=== through the proxy ===
+curl: (97) Can't complete SOCKS5 connection to example.com. (1)
+http=000 bytes=0 time=0.005261
+head: cannot open '/tmp/body2.txt' for reading: No such file or directory
+

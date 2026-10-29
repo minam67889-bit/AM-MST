@@ -1,0 +1,83 @@
+=== start Thu Oct 29 12:30:31 UTC 2026 ===
+SOCKS5 listening after 5s
+Netid State  Recv-Q Send-Q  Local Address:Port Peer Address:PortProcess                                 
+udp   UNCONN 0      0          127.0.0.54:53        0.0.0.0:*                                           
+udp   UNCONN 0      0       127.0.0.53%lo:53        0.0.0.0:*                                           
+udp   UNCONN 0      0      10.1.0.89%eth0:68        0.0.0.0:*                                           
+udp   UNCONN 0      0           127.0.0.1:323       0.0.0.0:*                                           
+udp   UNCONN 0      0               [::1]:323          [::]:*                                           
+tcp   LISTEN 0      4096        127.0.0.1:1080      0.0.0.0:*    users:(("psiphon-amd64",pid=8891,fd=7))
+tcp   LISTEN 0      4096       127.0.0.54:53        0.0.0.0:*                                           
+tcp   LISTEN 0      4096          0.0.0.0:22        0.0.0.0:*                                           
+tcp   LISTEN 0      4096    127.0.0.53%lo:53        0.0.0.0:*                                           
+=== notices so far ===
+{"data":{"message":"Config migration: need migration"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
+{"data":{"message":"Config migration: 0/0 notice files successfully migrated"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
+{"data":{"message":"DeviceRegion: '' from ''"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
+{"data":{"message":"applied [2] parameters with tag ''"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
+{"data":{"message":"NetworkLatencyMultiplier Min/Max/Lambda: 1.000000/3.000000/2.000000"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.070Z"}
+{"data":{"message":"Config migration: psiphon.(*Config).Commit#2222: psiphon.DoFileMigration#244: (psiphon.boltdb) old path does not exist"},"noticeType":"Warning","timestamp":"2026-10-29T12:30:31.070Z"}
+{"data":{"message":"Config migration: psiphon.(*Config).Commit#2222: psiphon.DoFileMigration#244: (psiphon.boltdb.lock) old path does not exist"},"noticeType":"Warning","timestamp":"2026-10-29T12:30:31.070Z"}
+{"data":{"message":"Config migration: 0/2 legacy files successfully migrated"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.070Z"}
+{"data":{"message":"Config migration: completed"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.070Z"}
+{"data":{"buildInfo":{"buildDate":"","buildRepo":"","buildRev":"","goVersion":"","valuesRev":"none"}},"noticeType":"BuildInfo","timestamp":"2026-10-29T12:30:31.070Z"}
+{"data":{"sessionId":"6251dac3b79c5f3cd97e6eef188a2d6c"},"noticeType":"SessionId","timestamp":"2026-10-29T12:30:31.074Z"}
+{"data":{"ID":"WIRED+[redacted]"},"noticeType":"NetworkID","timestamp":"2026-10-29T12:30:31.075Z"}
+{"data":{"port":1080},"noticeType":"ListeningSocksProxyPort","timestamp":"2026-10-29T12:30:31.076Z"}
+{"data":{"port":8080},"noticeType":"ListeningHttpProxyPort","timestamp":"2026-10-29T12:30:31.076Z"}
+{"data":{"message":"running tunneled DSL fetcher"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.076Z"}
+{"data":{"message":"running untunneled DSL fetcher"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.076Z"}
+{"data":{"message":"start establishing"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.076Z"}
+{"data":{"message":"Memory metrics at psiphon.(*Controller).startEstablishing#2561: goroutines 14 | objects 4613 | alloc 1.0M | inuse 3.0M | sys 16.8M | cumulative 8254 1.6M"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"message":"ServerEntryIterator.reset: entries 0, dial params 0, moved-to-front 0; durations: move-to-front 2.103µs, entries 691ns, total 9.524µs"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"message":"tactics request aborted: no capable servers"},"noticeType":"Warning","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"message":"ServerEntryIterator.reset: entries 0, dial params 0, moved-to-front 0; durations: move-to-front 921ns, entries 321ns, total 20.61µs"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"message":"completed server entry iteration"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"count":0,"duration":"37.526µs","initialCount":0,"initialLimitTunnelProtocols":[],"initialLimitTunnelProtocolsCandidateCount":0,"limitTunnelDialPortNumbers":{},"limitTunnelProtocols":[],"region":"","replayCandidateCount":10},"noticeType":"CandidateServers","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"message":"untunneled DSL fetch failed: psiphon.runUntunneledDSLFetcher#98: psiphon.runUntunneledDSLFetcher.func1#62: psiphon.(*InproxyBrokerClientManager).GetBrokerClient#150: psiphon.(*InproxyBrokerClientManager).reset#298: psiphon.NewInproxyBrokerClientInstance#388: no broker specs"},"noticeType":"Error","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"regions":[]},"noticeType":"AvailableEgressRegions","timestamp":"2026-10-29T12:30:31.078Z"}
+=== through the proxy ===
+--- https://example.com/
+curl: (97) Can't complete SOCKS5 connection to example.com. (1)
+http=000 bytes=0 time=0.000448
+head: cannot open '/tmp/body.txt' for reading: No such file or directory
+
+--- https://api.telegram.org/
+curl: (97) Can't complete SOCKS5 connection to api.telegram.org. (1)
+http=000 bytes=0 time=0.000321
+head: cannot open '/tmp/body.txt' for reading: No such file or directory
+
+--- https://www.google.com/generate_204
+curl: (97) Can't complete SOCKS5 connection to www.google.com. (1)
+http=000 bytes=0 time=0.000300
+head: cannot open '/tmp/body.txt' for reading: No such file or directory
+
+=== notices at the end ===
+{"data":{"message":"Config migration: need migration"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
+{"data":{"message":"Config migration: 0/0 notice files successfully migrated"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
+{"data":{"message":"DeviceRegion: '' from ''"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
+{"data":{"message":"applied [2] parameters with tag ''"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
+{"data":{"message":"NetworkLatencyMultiplier Min/Max/Lambda: 1.000000/3.000000/2.000000"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.070Z"}
+{"data":{"message":"Config migration: psiphon.(*Config).Commit#2222: psiphon.DoFileMigration#244: (psiphon.boltdb) old path does not exist"},"noticeType":"Warning","timestamp":"2026-10-29T12:30:31.070Z"}
+{"data":{"message":"Config migration: psiphon.(*Config).Commit#2222: psiphon.DoFileMigration#244: (psiphon.boltdb.lock) old path does not exist"},"noticeType":"Warning","timestamp":"2026-10-29T12:30:31.070Z"}
+{"data":{"message":"Config migration: 0/2 legacy files successfully migrated"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.070Z"}
+{"data":{"message":"Config migration: completed"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.070Z"}
+{"data":{"buildInfo":{"buildDate":"","buildRepo":"","buildRev":"","goVersion":"","valuesRev":"none"}},"noticeType":"BuildInfo","timestamp":"2026-10-29T12:30:31.070Z"}
+{"data":{"sessionId":"6251dac3b79c5f3cd97e6eef188a2d6c"},"noticeType":"SessionId","timestamp":"2026-10-29T12:30:31.074Z"}
+{"data":{"ID":"WIRED+[redacted]"},"noticeType":"NetworkID","timestamp":"2026-10-29T12:30:31.075Z"}
+{"data":{"port":1080},"noticeType":"ListeningSocksProxyPort","timestamp":"2026-10-29T12:30:31.076Z"}
+{"data":{"port":8080},"noticeType":"ListeningHttpProxyPort","timestamp":"2026-10-29T12:30:31.076Z"}
+{"data":{"message":"running tunneled DSL fetcher"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.076Z"}
+{"data":{"message":"running untunneled DSL fetcher"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.076Z"}
+{"data":{"message":"start establishing"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.076Z"}
+{"data":{"message":"Memory metrics at psiphon.(*Controller).startEstablishing#2561: goroutines 14 | objects 4613 | alloc 1.0M | inuse 3.0M | sys 16.8M | cumulative 8254 1.6M"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"message":"ServerEntryIterator.reset: entries 0, dial params 0, moved-to-front 0; durations: move-to-front 2.103µs, entries 691ns, total 9.524µs"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"message":"tactics request aborted: no capable servers"},"noticeType":"Warning","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"message":"ServerEntryIterator.reset: entries 0, dial params 0, moved-to-front 0; durations: move-to-front 921ns, entries 321ns, total 20.61µs"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"message":"completed server entry iteration"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"count":0,"duration":"37.526µs","initialCount":0,"initialLimitTunnelProtocols":[],"initialLimitTunnelProtocolsCandidateCount":0,"limitTunnelDialPortNumbers":{},"limitTunnelProtocols":[],"region":"","replayCandidateCount":10},"noticeType":"CandidateServers","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"message":"untunneled DSL fetch failed: psiphon.runUntunneledDSLFetcher#98: psiphon.runUntunneledDSLFetcher.func1#62: psiphon.(*InproxyBrokerClientManager).GetBrokerClient#150: psiphon.(*InproxyBrokerClientManager).reset#298: psiphon.NewInproxyBrokerClientInstance#388: no broker specs"},"noticeType":"Error","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"regions":[]},"noticeType":"AvailableEgressRegions","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"message":"psiphon.(*SocksProxy).serve.func1#163: psiphon.(*SocksProxy).socksConnectionHandler#120: psiphon.(*Controller).dial#2115: no active tunnels"},"noticeType":"LocalProxyError","timestamp":"2026-10-29T12:30:36.155Z"}
+{"data":{"message":"psiphon.(*SocksProxy).serve.func1#163: psiphon.(*SocksProxy).socksConnectionHandler#120: psiphon.(*Controller).dial#2115: no active tunnels","repeats":1},"noticeType":"LocalProxyError","timestamp":"2026-10-29T12:30:36.162Z"}
+=== done Thu Oct 29 12:30:36 UTC 2026 ===
