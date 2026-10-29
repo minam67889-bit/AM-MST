@@ -141,3 +141,28 @@ cat analysis-bdnet/configs/dns/results/bd-tunnel.txt
 The job is deliberately short: it does not touch the app, only BD's binaries,
 so a claim about "a byte through their tunnel" can be re-checked in five
 minutes.
+
+## Update: what the far end actually is (run `40871242773`)
+
+`tools/far_end_probe.py` sent ten shapes through a live tunnel on
+`sd-de1.liftmeon.org` (`analysis-bdnet/configs/dns/results/bd-far-end.txt`):
+
+| shape | reply | reading |
+|---|---|---|
+| `05 01 00` (offer no-auth only) | `05 ff` | it refuses to run without authentication |
+| `05 03 00 01 02` (offer 0/1/2) | `05 02` | it selects username/password |
+| `04 01 00 50 01 01 01 01 00 usr 00` (SOCKS4a) | `00 5b` | it speaks SOCKS4 too, and rejects that too |
+| `GET http://example.com/ HTTP/1.0` | nothing, EOF | not an HTTP proxy |
+| TLS ClientHello prefix | nothing, EOF | not a TLS endpoint |
+| auth bytes alone, no greeting | nothing, EOF | it really wants the greeting first |
+| greeting+auth+CONNECT in one write | `05 02 01 ff` | same refusal, faster |
+| `05 01 00` + CONNECT by IP | `05 ff` | same |
+
+So the far end is a dual-stack SOCKS server (SOCKS4 + SOCKS5) with a user
+database we do not have. It is not a protocol mismatch on our side: the same
+bytes in the same order are refused, one round trip later, every time.
+
+The credentials BD's own Xray config uses — `tanginaka` / `wagditokupal`,
+`analysis-bdnet/obfuscation/decrypted.txt` line 256 — are among the pairs that
+come back `01 ff`. That is the wall, and it is recorded here rather than
+papered over.
