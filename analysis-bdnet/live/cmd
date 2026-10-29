@@ -1,5 +1,4 @@
-S=/tmp/src/sources/prince
-echo "=== files with outbounds ==="; grep -rln "outbounds" $S | head -10
-echo "=== files mentioning 7000 ==="; grep -rln "127.0.0.1:7000\|\"7000\"" $S | head -10
-echo "=== files with sd- ==="; grep -rln "sd-" $S | head -10
-# nonce=1793279384806385926
+F=/tmp/src/sources/prince/dastan/vpn/service/XRayDNSService.java
+echo "count: $(grep -c "127.0.0.1:7000" $F)"
+sed -n "424,440p" $F | cat -A | sed -e "s/\\$$//" | cut -c1-220
+# nonce=1793279398340522918
