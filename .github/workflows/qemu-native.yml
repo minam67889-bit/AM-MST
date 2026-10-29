@@ -78,39 +78,40 @@ jobs:
           exec > >(tee /tmp/sysroot.txt) 2>&1
           set +e
           set -x
-          # glibc cannot satisfy bionic's versioned symbols (LIBC / LIBC_N), so
-          # pull /system/bin/linker64 and /system/lib64 straight out of a real
-          # arm64 system image instead of faking it.
-          sudo apt-get install -y -qq android-sdk-libsparse-utils e2fsprogs curl
-          IDX=$(curl -sSL https://dl.google.com/android/repository/sys-img/android/sys-img2-1.xml)
-          echo "$IDX" | grep -o 'sys-img/android/arm64-v8a-[0-9]*_r[0-9]*\.zip' | sort -u | tail -5
-          IMG=$(echo "$IDX" | grep -o 'sys-img/android/arm64-v8a-[0-9]*_r[0-9]*\.zip' | sort -u | tail -1)
-          echo "chosen: $IMG"
-          curl -sSL -o /tmp/sysimg.zip "https://dl.google.com/android/repository/$IMG"
-          ls -l /tmp/sysimg.zip
-          unzip -o -q /tmp/sysimg.zip -d /tmp/sysimg || true
-          ls -l /tmp/sysimg | head
-          IMGFILE=$(find /tmp/sysimg -name 'system.img' | head -1)
-          echo "system image: $IMGFILE"
-          mkdir -p sysroot
-          sudo modprobe loop 2>/dev/null || true
-          sudo mount -o loop,ro "$IMGFILE" sysroot && echo "mounted" || echo "mount failed, trying debugfs"
-          if ! ls sysroot/bin/linker64 > /dev/null 2>&1; then
-            RAW=/tmp/system.raw.img
-            simg2img "$IMGFILE" "$RAW" 2>/dev/null || cp "$IMGFILE" "$RAW"
-            mkdir -p sysroot2
-            # debugfs can pull single files without mounting
+          # glibc cannot satisfy bionic's versioned symbols (LIBC / LIBC_N).
+          # Get the real /system/bin/linker64 + /system/lib64 from an old, plain
+          # ext4 arm64 system image (API 24 - no dynamic-partition super.img).
+          sudo apt-get install -y -qq android-sdk-libsparse-utils e2fsprogs unzip
+          export ANDROID_HOME=${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}
+          echo "ANDROID_HOME=$ANDROID_HOME"; ls "$ANDROID_HOME" 2>/dev/null | head
+          SDKMANAGER=$(command -v sdkmanager || echo "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager")
+          echo "sdkmanager=$SDKMANAGER"
+          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1
+          "$SDKMANAGER" "system-images;android-24;default;arm64-v8a" 2>&1 | tail -5
+          IMGDIR=$(find "$ANDROID_HOME" -type d -path '*android-24*arm64-v8a*' | head -1)
+          echo "IMGDIR=$IMGDIR"; ls -l "$IMGDIR" 2>/dev/null | head
+          IMGFILE="$IMGDIR/system.img"
+          ls -l "$IMGFILE" 2>/dev/null
+          mkdir -p sysroot/system/bin sysroot/system/lib64
+          sudo modprobe loop 2>/dev/null
+          if sudo mount -o loop,ro "$IMGFILE" /mnt; then
+            echo "mounted"; ls /mnt | head
+            sudo cp /mnt/bin/linker64 sysroot/system/bin/ 2>/dev/null
+            sudo cp -a /mnt/lib64/*.so sysroot/system/lib64/ 2>/dev/null
+            sudo umount /mnt
+          else
+            echo "mount failed; debugfs"
+            sudo chmod 644 "$IMGFILE"
+            debugfs -R "ls -l /" "$IMGFILE" 2>&1 | head -20
             for f in bin/linker64 lib64/libc.so lib64/libdl.so lib64/libm.so lib64/liblog.so \
-                     lib64/libstdc++.so lib64/libc++.so lib64/libnetd_client.so lib64/libandroid.so; do
-              mkdir -p "sysroot2/$(dirname "$f")"
-              debugfs -R "dump /$f /home/runner/work/_x" "$RAW" > /dev/null 2>&1 && \
-                sudo mv /home/runner/work/_x "sysroot2/$f" 2>/dev/null || true
+                     lib64/libstdc++.so lib64/libc++.so lib64/libnetd_client.so lib64/libcrypto.so; do
+              debugfs -R "dump /$f /tmp/x.bin" "$IMGFILE" > /dev/null 2>&1 && \
+                sudo mv /tmp/x.bin "sysroot/system/$f" && echo "got $f"
             done
-            sudo chown -R "$USER" sysroot2 2>/dev/null || true
-            rm -rf sysroot; mv sysroot2 sysroot
           fi
-          ls -l sysroot/bin sysroot/lib64 2>/dev/null | head -20
-          file sysroot/bin/linker64 2>/dev/null || true
+          sudo chown -R "$USER" sysroot
+          ls -l sysroot/system/bin sysroot/system/lib64 | head -30
+          file sysroot/system/bin/linker64 2>/dev/null
 
       - name: "Does it start at all?"
         run: |
