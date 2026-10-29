@@ -83,66 +83,61 @@ jobs:
           exec > >(tee /tmp/bd-tunnel.txt) 2>&1
           set +e
           export QEMU_LD_PREFIX="$PWD/sysroot"
-          cat > /tmp/probe.py <<'PY'
-          import itertools, socket, sys, base64
+          cat > /tmp/timed.py <<'PY'
+          import socket, sys, time
           port = int(sys.argv[1])
-          words = ["tanginaka", "wagditokupal", "prince", "BD NET VPN", "sd-de1.liftmeon.org",
-                   "de1.liftmeon.org", "bdfreevpn", "prince", ""]
-          def attempt(u, p):
+          def timed(name, user, pwd):
               try:
-                  s = socket.create_connection(("127.0.0.1", port), 3); s.settimeout(3)
+                  t0 = time.time()
+                  s = socket.create_connection(("127.0.0.1", port), 3); s.settimeout(6)
                   s.sendall(b"\x05\x02\x00\x02")
-                  if s.recv(2) != b"\x05\x02":
-                      s.close(); return b"no-method"
-                  u_, p_ = u.encode(), p.encode()
-                  s.sendall(bytes([1, len(u_)]) + u_ + bytes([len(p_)]) + p_)
-                  r = s.recv(2); s.close(); return r
+                  hello = s.recv(2)
+                  t1 = time.time()
+                  if hello != b"\x05\x02":
+                      s.close(); print(f"  {name}: greeting {hello!r} after {1000*(t1-t0):.1f} ms"); return
+                  if user is not None:
+                      u, p = user.encode(), pwd.encode()
+                      s.sendall(bytes([1, len(u)]) + u + bytes([len(p)]) + p)
+                      r = s.recv(2)
+                  else:
+                      r = b"-"
+                  t2 = time.time()
+                  s.close()
+                  print(f"  {name}: greeting {hello.hex()} in {1000*(t1-t0):.1f} ms, "
+                        f"auth {r.hex() if isinstance(r, bytes) else r} in {1000*(t2-t1):.1f} ms")
               except Exception as e:
-                  return repr(e).encode()[:16]
-          seen = set()
-          for u, p in itertools.chain(zip(words, words),
-                                      zip(words, words[1:] + words[:1]),
-                                      zip(words, words[::-1])):
-              if (u, p) in seen: continue
-              seen.add((u, p))
-              r = attempt(u, p)
-              print(f"  user={u!r:24s} pass={p!r:24s} -> {r!r}", flush=True)
-              if r == b"\x01\x00":
-                  print("  *** ACCEPTED ***")
+                  print(f"  {name}: {e!r}")
+          for _ in range(3):
+              timed("no-auth            ", None, None)
+          for pair in (("tanginaka", "wagditokupal"), ("prince", "prince")):
+              for _ in range(2):
+                  timed(f"{pair[0]}/{pair[1]}", *pair)
+          for tok in sys.argv[2:]:
+              for u, p in ((tok, tok), (tok, ""), ("", tok), ("prince", tok), (tok, "prince")):
+                  timed(f"session {u!r}/{p!r}", u, p)
           PY
-          for host in $BD_HOSTS; do
-            echo "================= $host  (zone sd-de1.liftmeon.org)"
-            timeout 200 qemu-aarch64-static -strace libs/libxdnstt.so \
-              -udp "$host:53" -report "BD NET VPN" -pubkey prince \
-              sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/c.out 2>/tmp/c.err &
-            pid=$!
-            sleep 9
-            ss -lntp 2>/dev/null | grep 7000 || echo "  (no listener on 7000)"
-            sudo timeout 90 tcpdump -i any -n -s 0 -w /tmp/cap.pcap "udp port 53" > /tmp/tcpdump.log 2>&1 &
-            td=$!
-            sleep 2
-            echo "--- SOCKS5 auth matrix on 7000"
-            python3 /tmp/probe.py 7000
-            echo "--- one real curl, for the record"
-            timeout 60 curl -sS -m 55 --socks5-hostname "tanginaka:wagditokupal@127.0.0.1:7000" \
-              -o /tmp/page.html -w "  http://example.com/ -> http=%{http_code} bytes=%{size_download}\n" \
-              http://example.com/ 2>&1 | tail -1
-            sudo kill $td 2>/dev/null; wait $td 2>/dev/null
-            echo "--- what went out on the wire"
-            sudo tcpdump -r /tmp/cap.pcap -n 2>/dev/null | head -12
-            echo "--- does the credential itself travel inside the tunnel?"
-            for token in tanginaka wagditokupal; do
-              b64=$(printf %s "$token" | base64 -w0)
-              n=$(sudo tcpdump -r /tmp/cap.pcap -A -n 2>/dev/null | grep -c "$b64")
-              echo "  $token (base64 $b64) appears in $n packet(s)"
-            done
-            echo "--- qnames seen (first 10)"
-            sudo tcpdump -r /tmp/cap.pcap -A -n 2>/dev/null | tr -c '[:print:]\n' '.' \
-              | grep -oE "[a-z0-9-]+\.[a-z0-9.-]+liftmeon[a-z.]*|[a-z0-9-]{6,63}\.(sd|de)" | head -10
-            echo "--- client log"; grep -avE "^[0-9]+ " /tmp/c.err | head -6
-            echo "--- packets: sendto=$(grep -c sendto /tmp/c.err) recvwithdata=$(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/c.err)"
-            kill $pid 2>/dev/null; wait $pid 2>/dev/null
-          done
+          LIVE=$(echo $BD_HOSTS | awk '{print $1}')
+          echo "========== live tunnel through $LIVE (port 7000)"
+          timeout 200 qemu-aarch64-static -strace libs/libxdnstt.so \
+            -udp "$LIVE:53" -report "BD NET VPN" -pubkey prince \
+            sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/c.out 2>/tmp/c.err &
+          pid=$!
+          echo "========== dead host 173.212.232.241 for comparison (port 7001)"
+          timeout 200 qemu-aarch64-static -strace libs/libxdnstt.so \
+            -udp 173.212.232.241:53 -report "BD NET VPN" -pubkey prince \
+            sd-173.212.232.241 127.0.0.1:7001 > /tmp/d.out 2>/tmp/d.err &
+          dpid=$!
+          sleep 14
+          ss -lntp 2>/dev/null | grep -E ":700[01]" || echo "  (no listeners)"
+          session=$(grep -oE "begin stream [0-9a-f]+" /tmp/c.err | head -1 | awk '{print $3}')
+          echo "  session id seen in the live log: ${session:-none}"
+          echo "--- timing: live tunnel (7000)"
+          python3 /tmp/timed.py 7000 ${session:-}
+          echo "--- timing: dead tunnel (7001) -- anything answered here is purely local"
+          python3 /tmp/timed.py 7001
+          echo "--- client log"; grep -avE "^[0-9]+ " /tmp/c.err | head -8
+          echo "--- packets live: sendto=$(grep -c sendto /tmp/c.err) recvwithdata=$(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/c.err)"
+          kill $pid $dpid 2>/dev/null; wait $pid $dpid 2>/dev/null
           exit 0
 
       - name: Publish
