@@ -60,26 +60,28 @@ jobs:
           set +e
           timeout 1500 apktool d -f --no-res -o smali art/bdnet.apk 2>&1 | tail -3
           ls -d smali* 2>/dev/null
-          cf=$(find smali* -path '*/defpackage/C0223If.smali' | head -1)
+          cf=$(grep -rl -- "-0x8ec2d82d778bL" smali* 2>/dev/null | head -1)
           echo "class file: $cf"
-          echo "========== C0223If.smali (key id per method)"
+          desc=$(grep -m1 '^\.class' "$cf" | sed 's/^.*L/defpackage\//; s/;$//')
+          echo "descriptor: L$desc;"
+          echo "========== the preference class (key id per method)"
           cat "$cf"
           echo "========== which methods exist"
           grep -E '^\.method' "$cf"
           echo "========== who calls them"
           for m in $(grep -oE '^\.method public final [a-zA-Z0-9_]+\(\)Ljava/lang/String;' "$cf" \
                      | sed 's/.*final //; s/()Ljava\/lang\/String;//'); do
-            n=$(grep -rl -- "C0223If;->$m()Ljava/lang/String;" smali* 2>/dev/null | wc -l)
+            n=$(grep -rl -- "L$desc;->$m()Ljava/lang/String;" smali* 2>/dev/null | wc -l)
             [ "$n" = "0" ] && continue
             echo "--- getter $m() called by $n class(es)"
-            grep -rl -- "C0223If;->$m()Ljava/lang/String;" smali* 2>/dev/null | head -8
+            grep -rl -- "L$desc;->$m()Ljava/lang/String;" smali* 2>/dev/null | head -8
           done
           for m in $(grep -oE '^\.method public final [a-zA-Z0-9_]+\(Ljava/lang/String;\)V' "$cf" \
                      | sed 's/.*final //; s/(Ljava\/lang\/String;)V//'); do
-            n=$(grep -rl -- "C0223If;->$m(Ljava/lang/String;)V" smali* 2>/dev/null | wc -l)
+            n=$(grep -rl -- "L$desc;->$m(Ljava/lang/String;)V" smali* 2>/dev/null | wc -l)
             [ "$n" = "0" ] && continue
             echo "--- setter $m(String) called by $n class(es)"
-            grep -rl -- "C0223If;->$m(Ljava/lang/String;)V" smali* 2>/dev/null | head -8
+            grep -rl -- "L$desc;->$m(Ljava/lang/String;)V" smali* 2>/dev/null | head -8
           done
           echo "========== every class that mentions the two keys by id"
           for mag in 8ec2d82d778b 8ffad82d778b; do
@@ -91,8 +93,8 @@ jobs:
         run: |
           exec > >(tee /tmp/decompile.txt) 2>&1
           set +e
-          classes=$(grep -oE 'smali[^/]*/defpackage/([A-Za-z0-9_$]+)\.smali' /tmp/writers.txt \
-                    | sed 's#.*/##; s/\.smali$//' | grep -v '^C0223If$' | sort -u | head -18)
+          classes=$(grep -oE 'sa?m?l?i?[^ ]*/defpackage/[A-Za-z0-9_$]+\.smali' /tmp/writers.txt \
+                    | sed 's#.*/##; s/\.smali$//' | grep -vx 'If' | sort -u | head -18)
           echo "candidates: $classes"
           mkdir -p out
           for cls in $classes; do
@@ -118,8 +120,8 @@ jobs:
             n=$((n+1))
             cp "$f" "analysis-bdnet/configs/caller-$n-$(basename "$f")" 2>/dev/null || true
           done
-          cf=$(find smali* -path '*/defpackage/C0223If.smali' | head -1)
-          [ -n "$cf" ] && cp "$cf" analysis-bdnet/configs/C0223If.smali
+          cf=$(grep -rl -- "-0x8ec2d82d778bL" smali* 2>/dev/null | head -1)
+          [ -n "$cf" ] && cp "$cf" analysis-bdnet/configs/prefclass.smali
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add analysis-bdnet/configs
