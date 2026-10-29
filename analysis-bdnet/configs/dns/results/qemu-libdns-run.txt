@@ -1,72 +1,48 @@
-========== 13.140.185.158  enc=05167e556c53460f5e5e7e6c011d6a516b
-no listener on 7777
---- client log
-2026/10/29 00:42:53 FastDNS v1.2 | Client
-2026/10/29 00:42:53 Licensed to BD NET VPN
-2026/10/29 00:42:53 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 00:42:53 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.158:53
---- SOCKS5 on 7777
-PROBE FAIL: nothing listening on 127.0.0.1:7777 ([Errno 111] Connection refused)
---- HTTP proxy on 7777
-PROBE FAIL: nothing listening on 127.0.0.1:7777 ([Errno 111] Connection refused)
---- curl through it as an HTTP proxy
-curl: (7) Failed to connect to 127.0.0.1 port 7777 after 0 ms: Couldn't connect to server
-curl http_code=000 size=0
+== host 13.140.185.158 enc=05167e556c53460f5e5e7e6c011d6a516b
+--- log
+2026/10/29 09:06:35 FastDNS v1.2 | Client
+2026/10/29 09:06:35 Licensed to BD NET VPN
+2026/10/29 09:06:35 NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 09:06:35 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.158:53
+--- sockets (tcp AND udp)
+Netid State  Recv-Q Send-Q  Local Address:Port Peer Address:PortProcess                                   
+udp   UNCONN 0      0           127.0.0.1:7777      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3191,fd=3))
+udp   UNCONN 0      0          127.0.0.54:53        0.0.0.0:*                                             
+udp   UNCONN 0      0       127.0.0.53%lo:53        0.0.0.0:*                                             
+udp   UNCONN 0      0      10.1.0.23%eth0:68        0.0.0.0:*                                             
+udp   UNCONN 0      0           127.0.0.1:323       0.0.0.0:*                                             
+udp   UNCONN 0      0               [::1]:323          [::]:*                                             
+tcp   LISTEN 0      4096          0.0.0.0:22        0.0.0.0:*                                             
+tcp   LISTEN 0      4096    127.0.0.53%lo:53        0.0.0.0:*                                             
+tcp   LISTEN 0      4096       127.0.0.54:53        0.0.0.0:*                                             
+tcp   LISTEN 0      4096             [::]:22           [::]:*                                             
+--- /proc/net/udp
+   sl  local_address rem_address   st tx_queue rx_queue tr tm->when retrnsmt   uid  timeout inode ref pointer drops            
+ 2852: 0100007F:1E61 00000000:0000 07 00000000:00000000 00:00000000 00000000  1001        0 23661 2 0000000000000000 0         
+ 3320: 3600007F:0035 00000000:0000 07 00000000:00000000 00:00000000 00000000   991        0 7565 2 0000000000000000 0          
+ 3320: 3500007F:0035 00000000:0000 07 00000000:00000000 00:00000000 00000000   991        0 7563 2 0000000000000000 0          
+ 3335: 1700010A:0044 00000000:0000 07 00000000:00000000 00:00000000 00000000   998        0 3050 2 0000000000000000 0          
+ 3590: 0100007F:0143 00000000:0000 07 00000000:00000000 00:00000000 00000000     0        0 11353 2 0000000000000000 0         
+  sl  local_address                         remote_address                        st tx_queue rx_queue tr tm->when retrnsmt   uid  timeout inode ref pointer drops
+ 3590: 00000000000000000000000001000000:0143 00000000000000000000000000000000:0000 07 00000000:00000000 00:00000000 00000000     0        0 11354 2 0000000000000000 0
+--- DNS query over UDP to 7777
+;; communications error to 127.0.0.1#7777: timed out
 
---- curl through it as a SOCKS5 proxy
-curl: (7) Failed to connect to 127.0.0.1 port 7777 after 0 ms: Couldn't connect to server
-curl socks http_code=000 size=0
-
---- client log after traffic
-2026/10/29 00:42:53 FastDNS v1.2 | Client
-2026/10/29 00:42:53 Licensed to BD NET VPN
-2026/10/29 00:42:53 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 00:42:53 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.158:53
-========== 13.140.185.165  enc=05167e556c53460f5e5e7e6c02106a516b
-no listener on 7777
---- client log
-2026/10/29 00:43:26 FastDNS v1.2 | Client
-2026/10/29 00:43:26 Licensed to BD NET VPN
-2026/10/29 00:43:26 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 00:43:26 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.165:53
---- SOCKS5 on 7777
-PROBE FAIL: nothing listening on 127.0.0.1:7777 ([Errno 111] Connection refused)
---- HTTP proxy on 7777
-PROBE FAIL: nothing listening on 127.0.0.1:7777 ([Errno 111] Connection refused)
---- curl through it as an HTTP proxy
-curl: (7) Failed to connect to 127.0.0.1 port 7777 after 0 ms: Couldn't connect to server
-curl http_code=000 size=0
-
---- curl through it as a SOCKS5 proxy
-curl: (7) Failed to connect to 127.0.0.1 port 7777 after 0 ms: Couldn't connect to server
-curl socks http_code=000 size=0
-
---- client log after traffic
-2026/10/29 00:43:26 FastDNS v1.2 | Client
-2026/10/29 00:43:26 Licensed to BD NET VPN
-2026/10/29 00:43:26 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 00:43:26 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.165:53
-========== 13.140.185.181  enc=05167e556c53460f5e5e7e6c0c146a516b
-no listener on 7777
---- client log
-2026/10/29 00:44:00 FastDNS v1.2 | Client
-2026/10/29 00:44:00 Licensed to BD NET VPN
-2026/10/29 00:44:00 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 00:44:00 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.181:53
---- SOCKS5 on 7777
-PROBE FAIL: nothing listening on 127.0.0.1:7777 ([Errno 111] Connection refused)
---- HTTP proxy on 7777
-PROBE FAIL: nothing listening on 127.0.0.1:7777 ([Errno 111] Connection refused)
---- curl through it as an HTTP proxy
-curl: (7) Failed to connect to 127.0.0.1 port 7777 after 0 ms: Couldn't connect to server
-curl http_code=000 size=0
-
---- curl through it as a SOCKS5 proxy
-curl: (7) Failed to connect to 127.0.0.1 port 7777 after 0 ms: Couldn't connect to server
-curl socks http_code=000 size=0
-
---- client log after traffic
-2026/10/29 00:44:00 FastDNS v1.2 | Client
-2026/10/29 00:44:00 Licensed to BD NET VPN
-2026/10/29 00:44:00 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 00:44:00 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.181:53
+; <<>> DiG 9.18.39-0ubuntu0.24.04.8-Ubuntu <<>> +time=12 +tries=1 @127.0.0.1 -p 7777 example.com A
+; (1 server found)
+;; global options: +cmd
+;; no servers could be reached
+--- DNS query over TCP to 7777
+;; Connection to 127.0.0.1#7777(127.0.0.1) for example.com failed: connection refused.
+;; no servers could be reached
+--- python raw UDP DNS on 7777
+UDP 7777: TimeoutError timed out
+--- log after queries
+2026/10/29 09:06:35 FastDNS v1.2 | Client
+2026/10/29 09:06:35 Licensed to BD NET VPN
+2026/10/29 09:06:35 NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 09:06:35 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.158:53
+2026/10/29 09:06:47 Client connected: 127.0.0.1:56913
+2026/10/29 09:06:47 Server.EncoderDecode: Dns2Udp.decode: invalid DNS message length
+2026/10/29 09:06:59 Client connected: 127.0.0.1:48476
+2026/10/29 09:06:59 Server.EncoderDecode: Dns2Udp.decode: invalid DNS message length

@@ -1,0 +1,104 @@
+===== zone=sd-173.212.232.241
+    TCP probe: TimeoutError: timed out
+    client log:
+      Licensed to BD NET VPN
+      NOTE: Using this app into unlicensed software/application will result into legal action
+      2026/10/29 09:08:40 uTLS fingerprint Randomized-ALPN 0
+      2026/10/29 09:08:40 effective MTU 131
+      2026/10/29 09:08:40 begin session a01c4c4c
+===== zone=173.212.232.241
+    TCP probe: TimeoutError: timed out
+    client log:
+      Licensed to BD NET VPN
+      NOTE: Using this app into unlicensed software/application will result into legal action
+      2026/10/29 09:09:01 uTLS fingerprint Firefox 120
+      2026/10/29 09:09:01 effective MTU 133
+      2026/10/29 09:09:01 begin session 0998a8f1
+===== zone=sd-amtunnel
+    TCP probe: TimeoutError: timed out
+    client log:
+      Licensed to BD NET VPN
+      NOTE: Using this app into unlicensed software/application will result into legal action
+      2026/10/29 09:09:22 uTLS fingerprint Chrome 120
+      2026/10/29 09:09:22 effective MTU 135
+      2026/10/29 09:09:22 begin session 55db528f
+===== zone=sd-bdnet
+    TCP probe: TimeoutError: timed out
+    client log:
+      Licensed to BD NET VPN
+      NOTE: Using this app into unlicensed software/application will result into legal action
+      2026/10/29 09:09:43 uTLS fingerprint Firefox 120
+      2026/10/29 09:09:43 effective MTU 137
+      2026/10/29 09:09:43 begin session fa315689
+===== zone=sd-prince
+    TCP probe: TimeoutError: timed out
+    client log:
+      Licensed to BD NET VPN
+      NOTE: Using this app into unlicensed software/application will result into legal action
+      2026/10/29 09:10:04 uTLS fingerprint Firefox 120
+      2026/10/29 09:10:04 effective MTU 137
+      2026/10/29 09:10:04 begin session 05118bc6
+===== zone=sd-vpn
+    TCP probe: TimeoutError: timed out
+    client log:
+      Licensed to BD NET VPN
+      NOTE: Using this app into unlicensed software/application will result into legal action
+      2026/10/29 09:10:25 uTLS fingerprint Chrome 120
+      2026/10/29 09:10:25 effective MTU 138
+      2026/10/29 09:10:25 begin session c69d909e
+===== zone=sd-tunnel
+    TCP probe: TimeoutError: timed out
+    client log:
+      Licensed to BD NET VPN
+      NOTE: Using this app into unlicensed software/application will result into legal action
+      2026/10/29 09:10:46 uTLS fingerprint Firefox 120
+      2026/10/29 09:10:46 effective MTU 137
+      2026/10/29 09:10:46 begin session dfd1e842
+===== zone=sd-fastdns
+    TCP probe: TimeoutError: timed out
+    client log:
+      Licensed to BD NET VPN
+      NOTE: Using this app into unlicensed software/application will result into legal action
+      2026/10/29 09:11:07 uTLS fingerprint Chrome 102
+      2026/10/29 09:11:07 effective MTU 136
+      2026/10/29 09:11:07 begin session bdd29f21
+===== zone=sd-liftmeon
+    TCP probe: TimeoutError: timed out
+    client log:
+      Licensed to BD NET VPN
+      NOTE: Using this app into unlicensed software/application will result into legal action
+      2026/10/29 09:11:28 uTLS fingerprint Randomized-ALPN 0
+      2026/10/29 09:11:28 effective MTU 135
+      2026/10/29 09:11:28 begin session 55c1e501
+===== zone=sd-de1
+    TCP probe: TimeoutError: timed out
+    client log:
+      Licensed to BD NET VPN
+      NOTE: Using this app into unlicensed software/application will result into legal action
+      2026/10/29 09:11:49 uTLS fingerprint Chrome 102
+      2026/10/29 09:11:49 effective MTU 138
+      2026/10/29 09:11:49 begin session 9253b988
+===== zone=sd-princebdfreevpn
+    TCP probe: TimeoutError: timed out
+    client log:
+      Licensed to BD NET VPN
+      NOTE: Using this app into unlicensed software/application will result into legal action
+      2026/10/29 09:12:10 uTLS fingerprint Randomized-ALPN 0
+      2026/10/29 09:12:10 effective MTU 131
+      2026/10/29 09:12:10 begin session 1b547b4a
+===== zone=sd-bdfreevpn
+    TCP probe: TimeoutError: timed out
+    client log:
+      Licensed to BD NET VPN
+      NOTE: Using this app into unlicensed software/application will result into legal action
+      2026/10/29 09:12:31 uTLS fingerprint Firefox 120
+      2026/10/29 09:12:31 effective MTU 135
+      2026/10/29 09:12:31 begin session f689fe6b
+===== zone=sd-173.212.232.241.vpn
+    TCP probe: TimeoutError: timed out
+    client log:
+      Licensed to BD NET VPN
+      NOTE: Using this app into unlicensed software/application will result into legal action
+      2026/10/29 09:12:52 uTLS fingerprint Chrome 120
+      2026/10/29 09:12:52 effective MTU 128
+      2026/10/29 09:12:52 begin session f0ef3a17
