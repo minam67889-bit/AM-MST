@@ -1,9 +1,7 @@
 export QEMU_LD_PREFIX="$PWD/sysroot"
-sed -i "s/^USER, PASS = .*/USER, PASS = b\"tanginakaba\", b\"hackpamoregago\"/" /tmp/s5.py
-grep -n "^USER" /tmp/s5.py
-K=$(pgrep -f "libxdnst[t].so"); echo "old client pids: $K"; [ -n "$K" ] && kill $K; sleep 2
+pkill -f "^qemu-aarch64-static"; sleep 2; echo "left: $(pgrep -cf "^qemu-aarch64-static")"
 setsid nohup qemu-aarch64-static libs/libxdnstt.so -udp 13.140.185.158:53 -report "BD NET VPN" -pubkey prince sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/tun2.log 2>&1 < /dev/null &
 sleep 7
 echo "=== example.com"; timeout 60 python3 /tmp/s5.py example.com 80
 echo "=== tun log"; tail -3 /tmp/tun2.log
-# nonce=1793279553079236272
+# nonce=1793279563357501895
