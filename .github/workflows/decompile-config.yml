@@ -1,11 +1,13 @@
 name: Decompile the server-selection code
 
-# The one thing still unknown is what the app puts in argv: `f.b()` feeds
-# `-udp <host>:53`, and `"sd-" + f.l()` is the dnstt zone. Everything else about
-# the native run is already reproduced (linker, licence string, pubkey).
+# Two things were still unknown: which preference feeds `-udp <host>:53`
+# (`f.b()` = BackQuery) and which one becomes the dnstt zone, `"sd-" + f.l()`
+# (= SSH_HOST). This job answers both from the APK itself:
 #
-# Reading that from raw smali is painful, so this job decompiles the APK with
-# jadx in CI and publishes just the classes that matter.
+#   1. baksmali the APK and grep for the exact long ids, so we see every
+#      call site that writes those two preferences and, more importantly, the
+#      value handed to them when a DNS server is picked;
+#   2. jadx just the classes that turn out interesting.
 
 on:
   workflow_dispatch:
@@ -20,7 +22,7 @@ permissions:
 jobs:
   decompile:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
 
@@ -43,82 +45,77 @@ jobs:
           unzip -o -q art/a.zip -d art/x
           cp "$(find art/x -name '*.apk' | head -1)" art/bdnet.apk
           ls -l art/bdnet.apk
-          echo "== what the analysis artifact already carries"
-          find art/x -maxdepth 3 -type d | head -20
-          find art/x -name 'C0223If.java' -o -name 'C0223If.smali' | head
 
-      - name: Who writes BackQuery and SSH_HOST?
+      - name: Tooling
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq apktool
+          curl -sSL -o /tmp/jadx.zip \
+            https://github.com/skylot/jadx/releases/download/v1.5.0/jadx-1.5.0.zip
+          unzip -q /tmp/jadx.zip -d /tmp/jadx
+          chmod +x /tmp/jadx/bin/jadx
+          /tmp/jadx/bin/jadx --version
+
+      - name: baksmali and find the call sites
         run: |
           exec > >(tee /tmp/writers.txt) 2>&1
           set +e
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq apktool
           timeout 1500 apktool d -f --no-res -o smali art/bdnet.apk 2>&1 | tail -3
-          ls smali* 2>/dev/null | head
-          for pair in "BackQuery:0xffff713d27d28875" "SSH_HOST:0xffff700527d28875" \
-                      "PROXY_HOST:0xffff6f8b27d28875"; do
-            name=${pair%%:*}; hex=${pair##*:}
-            dec=$((16#${hex#0x}))
-            signed=$(python3 -c "print($dec - (1<<64) if $dec >= (1<<63) else $dec)")
-            echo "========== $name  ($signed)"
-            grep -rn -- "-0x$(printf '%x' $(( (1<<64) - (hex & 0 )) ))L" /dev/null 2>/dev/null
-            echo "--- smali hits (decimal constant)"
-            grep -rln "const-wide v[0-9]*, $signed" smali* 2>/dev/null | head -5
-            grep -rln -- "-$((0))" /dev/null 2>/dev/null
-            grep -rln "${signed}L" smali* 2>/dev/null | head -5
-            grep -rn "$hex" smali* 2>/dev/null | head -5
+          ls -d smali* 2>/dev/null
+          # a negative long id shows up in smali as -0x<magnitude>L
+          for pair in "BackQuery:8ec2d82d778b" "SSH_HOST:8ffad82d778b" \
+                      "PROXY_HOST:9074d82d778b" "isFastDns:8eacd82d778b" \
+                      "isSlowDns:8ea2d82d778b"; do
+            name=${pair%%:*}; mag=${pair##*:}
+            echo "========== $name  (-0x${mag}L)"
+            hits=$(grep -rl -e "-0x${mag}L" smali* 2>/dev/null | head -12)
+            echo "$hits"
+            for h in $hits; do
+              echo "--- $h"
+              grep -n -B8 -A14 -e "-0x${mag}L" "$h" | head -60
+            done
           done
-          echo "========== ZT.q (the setter helper)"
-          find smali* -name 'ZT.smali' | head -2
+          echo "========== the preference helper ZT.q"
           f=$(find smali* -name 'ZT.smali' | head -1)
-          [ -n "$f" ] && sed -n '1,80p' "$f"
+          echo "$f"
+          [ -n "$f" ] && sed -n '1,60p' "$f"
+          echo "========== classes touching the server list"
+          grep -rl "SERVER_SELECTED_POSITION\|Free_servers" smali*/defpackage 2>/dev/null | head -10
 
-
-          set -euo pipefail
-          curl -sSL -o jadx.zip \
-            https://github.com/skylot/jadx/releases/download/v1.5.0/jadx-1.5.0.zip
-          unzip -q jadx.zip -d jadx
-          chmod +x jadx/bin/jadx
-          jadx/bin/jadx --version
-
-      - name: Decompile just what we need
-        run: |
-          set +e
-          mkdir -p out
-          # --no-res keeps this fast; the app's logic lives in defpackage + prince
-          timeout 3000 jadx/bin/jadx -d out --no-res --threads-count 4 art/bdnet.apk \
-            --single-class defpackage.C0223If 2>&1 | tail -5
-          find out -name '*.java' | head -20
-          ls -la out/sources/defpackage 2>/dev/null | head
-
-      - name: Publish the interesting methods
+      - name: jadx the interesting classes
         run: |
           exec > >(tee /tmp/decompile.txt) 2>&1
           set +e
-          mkdir -p analysis-bdnet/configs
-          f=$(find out -name 'C0223If.java' | head -1)
-          echo "== C0223If: $f"
-          if [ -n "$f" ]; then
-            cp "$f" analysis-bdnet/configs/C0223If.java
-            echo "--- b() l() j() m() n() o() r() t()"
-            grep -n -A 12 "public .* b()\|public .* l()\|public .* j()\|public .* m()\|public .* n()\|public .* o()\|public .* r()\|public .* t()" "$f" | head -160
-          fi
-          echo
-          echo "== every string the XRay service feeds to argv"
-          grep -n "arrayList.add\|new ProcessBuilder" analysis-bdnet/app-sources/sources_prince/dastan/vpn/service/XRayDNSService.java | head -20
+          classes=$(grep -oE "smali[^/]*/defpackage/([A-Za-z0-9_]+)\.smali" /tmp/writers.txt \
+                    | sed 's#.*/##; s/\.smali$//' | sort -u | head -12)
+          echo "candidates: $classes"
+          mkdir -p out
+          for cls in $classes C0223If; do
+            timeout 600 /tmp/jadx/bin/jadx -d "out/$cls" --no-res art/bdnet.apk \
+              --single-class "defpackage.$cls" 2>&1 | tail -2
+          done
+          find out -name '*.java' | head -20
+          for f in $(find out -name '*.java'); do
+            echo "===== $f"
+            grep -n -A14 "public final void .*(String str)\|public final String [a-z]()" "$f" | head -50
+          done
 
       - name: Publish
         if: always()
         continue-on-error: true
         run: |
           mkdir -p analysis-bdnet/configs
-          cp /tmp/decompile.txt analysis-bdnet/configs/decompile.txt 2>/dev/null || true
-          cp /tmp/writers.txt analysis-bdnet/configs/writers.txt 2>/dev/null || true
+          for f in writers decompile; do
+            cp "/tmp/$f.txt" "analysis-bdnet/configs/$f.txt" 2>/dev/null || true
+          done
+          for f in $(find out -name '*.java' 2>/dev/null | head -15); do
+            cp "$f" "analysis-bdnet/configs/$(basename "$f")" 2>/dev/null || true
+          done
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add analysis-bdnet/configs
           git diff --cached --quiet && { echo "nothing new"; exit 0; }
-          git commit -q -m "dns: decompiled server-selection class [skip ci]"
+          git commit -q -m "dns: decompiled server-selection code [skip ci]"
           for i in 1 2 3; do
             git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
               git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
