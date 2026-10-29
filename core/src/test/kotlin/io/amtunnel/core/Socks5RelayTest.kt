@@ -4,14 +4,17 @@ import io.amtunnel.core.net.Socks5Relay
 import io.amtunnel.core.util.TunnelLog
 import java.io.DataInputStream
 import java.io.OutputStream
+import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.ServerSocket
 import java.net.Socket
+import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import java.util.concurrent.atomic.AtomicReference
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Test
 
 /**
  * The local proxy that carries the SlowDNS tunnel, tested against a stub that
@@ -31,53 +34,58 @@ import kotlin.test.assertTrue
  */
 class Socks5RelayTest {
 
+    private fun readByte(input: DataInputStream): Int = input.readUnsignedByte().toInt()
+
     private class StubFarEnd(val user: String, val pass: String) {
-        val server = ServerSocket(0, 8, java.net.InetAddress.getByName("127.0.0.1"))
+        val server = ServerSocket(0, 8, InetAddress.getByName("127.0.0.1"))
         val port: Int get() = server.localPort
-        val seenUser = java.util.concurrent.atomic.AtomicReference<String>()
-        val seenPass = java.util.concurrent.atomic.AtomicReference<String>()
-        val seenTarget = java.util.concurrent.atomic.AtomicReference<String>()
+        val seenUser = AtomicReference<String>()
+        val seenPass = AtomicReference<String>()
+        val seenTarget = AtomicReference<String>()
         val done = CountDownLatch(1)
+        val failure = AtomicReference<String>()
 
         fun start() = Thread({
-            runCatching {
+            try {
                 server.accept().use { c ->
                     c.soTimeout = 10_000
                     val input = DataInputStream(c.getInputStream())
                     val out = c.getOutputStream()
 
-                    assertEquals(5, input.readUnsignedByte())
-                    val methods = ByteArray(input.readUnsignedByte()).also { input.readFully(it) }
-                    assertTrue(methods.any { it.toInt() == 2 }, "relay must offer user/pass")
+                    check(input.readUnsignedByte().toInt() == 5) { "no socks version" }
+                    val methods = ByteArray(input.readUnsignedByte().toInt()).also { input.readFully(it) }
+                    check(methods.any { it.toInt() == 2 }) { "relay did not offer user/pass" }
                     out.write(byteArrayOf(5, 2)); out.flush()
 
-                    val version = input.readUnsignedByte()
-                    val ulen = input.readUnsignedByte()
+                    val version = input.readUnsignedByte().toInt()
+                    val ulen = input.readUnsignedByte().toInt()
                     val u = ByteArray(ulen).also { input.readFully(it) }.toString(Charsets.UTF_8)
-                    val plen = input.readUnsignedByte()
+                    val plen = input.readUnsignedByte().toInt()
                     val p = ByteArray(plen).also { input.readFully(it) }.toString(Charsets.UTF_8)
-                    seenUser.set(u); seenPass.set(p)
+                    seenUser.set(u)
+                    seenPass.set(p)
                     val ok = version == 1 && u == user && p == pass
                     out.write(byteArrayOf(1, if (ok) 0 else 0xFF.toByte())); out.flush()
-                    if (ok) {
-                        assertEquals(5, input.readUnsignedByte())
-                        assertEquals(1, input.readUnsignedByte())
-                        input.readUnsignedByte()
-                        assertEquals(3, input.readUnsignedByte())
-                        val hostLen = input.readUnsignedByte()
-                        val host = ByteArray(hostLen).also { input.readFully(it) }.toString(Charsets.US_ASCII)
-                        val tport = (input.readUnsignedByte() shl 8) or input.readUnsignedByte()
-                        seenTarget.set("$host:$tport")
-                        out.write(byteArrayOf(5, 0, 0, 1, 0, 0, 0, 0, 0, 0)); out.flush()
-                        // echo one plaintext line back, like an HTTP server would
-                        val buffer = ByteArray(256)
-                        val n = input.read(buffer)
-                        if (n > 0) out.write("HTTP/1.0 200 OK\r\n\r\n".toByteArray())
-                        out.flush()
-                    }
+                    if (!ok) return@use
+
+                    check(input.readUnsignedByte().toInt() == 5)
+                    check(input.readUnsignedByte().toInt() == 1)
+                    input.readUnsignedByte()
+                    check(input.readUnsignedByte().toInt() == 3)
+                    val hostLen = input.readUnsignedByte().toInt()
+                    val host = ByteArray(hostLen).also { input.readFully(it) }.toString(Charsets.US_ASCII)
+                    val tport = (input.readUnsignedByte().toInt() shl 8) or input.readUnsignedByte().toInt()
+                    seenTarget.set("$host:$tport")
+                    out.write(byteArrayOf(5, 0, 0, 1, 0, 0, 0, 0, 0, 0)); out.flush()
+                    val buffer = ByteArray(256)
+                    if (input.read(buffer) > 0) out.write("HTTP/1.0 200 OK\r\n\r\n".toByteArray())
+                    out.flush()
                 }
+            } catch (e: Throwable) {
+                failure.set(e.toString())
+            } finally {
+                done.countDown()
             }
-            done.countDown()
         }, "stub-far-end").apply { isDaemon = true }.start()
     }
 
@@ -92,11 +100,11 @@ class Socks5RelayTest {
     }
 
     @Test
-    fun `logs in upstream and hands the client a no-auth proxy`() {
+    fun logsInUpstreamAndHandsTheClientANoAuthProxy() {
         val far = StubFarEnd("tanginakaba", "hackpamoregago")
         far.start()
         val log = TunnelLog()
-        val notices = java.util.concurrent.CopyOnWriteArrayList<String>()
+        val notices = CopyOnWriteArrayList<String>()
         val relay = Socks5Relay(
             upstreamHost = "127.0.0.1",
             upstreamPort = far.port,
@@ -106,7 +114,7 @@ class Socks5RelayTest {
             listenPort = 0,
             onNotice = { notices.add(it) },
         )
-        assertTrue(relay.start(), "relay must bind: ${log.dump()}")
+        assertTrue("relay must bind: ${log.dump()}", relay.start())
 
         Socket().use { client ->
             client.connect(InetSocketAddress("127.0.0.1", relay.port), 5_000)
@@ -115,35 +123,36 @@ class Socks5RelayTest {
             val out: OutputStream = client.getOutputStream()
 
             out.write(byteArrayOf(5, 1, 0)); out.flush()          // we ask for no auth
-            assertEquals(5, input.readUnsignedByte())
-            assertEquals(0, input.readUnsignedByte(), "relay must accept us without credentials")
+            assertEquals(5, readByte(input).toLong())
+            assertEquals("relay must accept us without credentials", 0, readByte(input).toLong())
 
             val host = "example.com".toByteArray(Charsets.US_ASCII)
             out.write(byteArrayOf(5, 1, 0, 3, host.size.toByte(), *host, 0, 80)); out.flush()
-            assertEquals(5, input.readUnsignedByte())
-            assertEquals(0, input.readUnsignedByte(), "CONNECT must succeed: ${log.dump()}")
+            assertEquals(5, readByte(input).toLong())
+            assertEquals("CONNECT must succeed: ${log.dump()}", 0, readByte(input).toLong())
 
             out.write("GET / HTTP/1.0\r\n\r\n".toByteArray()); out.flush()
             assertEquals("HTTP/1.0 200 OK", readLine(input))
         }
 
-        assertTrue(far.done.await(5, TimeUnit.SECONDS), "far end never finished")
+        assertTrue("far end never finished", far.done.await(5, TimeUnit.SECONDS))
+        assertEquals("stub failure", null, far.failure.get())
         assertEquals("tanginakaba", far.seenUser.get())
         assertEquals("hackpamoregago", far.seenPass.get())
         assertEquals("example.com:80", far.seenTarget.get())
         assertTrue(
-            notices.any { it.contains("accepted the login") },
             "the UI has to be able to show that the far end took the login: $notices",
+            notices.any { it.contains("accepted the login") },
         )
         relay.stop()
     }
 
     @Test
-    fun `a rejected login never lets the client through`() {
+    fun aRejectedLoginNeverLetsTheClientThrough() {
         val far = StubFarEnd("tanginakaba", "hackpamoregago")
         far.start()
         val log = TunnelLog()
-        val notices = java.util.concurrent.CopyOnWriteArrayList<String>()
+        val notices = CopyOnWriteArrayList<String>()
         val relay = Socks5Relay(
             upstreamHost = "127.0.0.1",
             upstreamPort = far.port,
@@ -153,7 +162,7 @@ class Socks5RelayTest {
             listenPort = 0,
             onNotice = { notices.add(it) },
         )
-        assertTrue(relay.start(), "relay must bind")
+        assertTrue("relay must bind", relay.start())
 
         Socket().use { client ->
             client.connect(InetSocketAddress("127.0.0.1", relay.port), 5_000)
@@ -161,15 +170,15 @@ class Socks5RelayTest {
             val input = DataInputStream(client.getInputStream())
             val out: OutputStream = client.getOutputStream()
             out.write(byteArrayOf(5, 1, 0)); out.flush()
-            input.readUnsignedByte(); input.readUnsignedByte()
+            readByte(input); readByte(input)
             val host = "example.com".toByteArray(Charsets.US_ASCII)
             out.write(byteArrayOf(5, 1, 0, 3, host.size.toByte(), *host, 0, 80)); out.flush()
-            assertEquals(5, input.readUnsignedByte())
-            assertTrue(input.readUnsignedByte() != 0, "a refused login must not become a granted CONNECT")
+            assertEquals(5, readByte(input).toLong())
+            assertTrue("a refused login must not become a granted CONNECT", readByte(input) != 0)
         }
         assertTrue(
-            notices.any { it.contains("rejected") },
             "the user has to see why nothing works: $notices",
+            notices.any { it.contains("rejected") },
         )
         relay.stop()
     }
