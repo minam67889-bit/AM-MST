@@ -47,8 +47,33 @@ jobs:
           find art/x -maxdepth 3 -type d | head -20
           find art/x -name 'C0223If.java' -o -name 'C0223If.smali' | head
 
-      - name: jadx
+      - name: Who writes BackQuery and SSH_HOST?
         run: |
+          exec > >(tee /tmp/writers.txt) 2>&1
+          set +e
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq apktool
+          timeout 1500 apktool d -f --no-res -o smali art/bdnet.apk 2>&1 | tail -3
+          ls smali* 2>/dev/null | head
+          for pair in "BackQuery:0xffff713d27d28875" "SSH_HOST:0xffff700527d28875" \
+                      "PROXY_HOST:0xffff6f8b27d28875"; do
+            name=${pair%%:*}; hex=${pair##*:}
+            dec=$((16#${hex#0x}))
+            signed=$(python3 -c "print($dec - (1<<64) if $dec >= (1<<63) else $dec)")
+            echo "========== $name  ($signed)"
+            grep -rn -- "-0x$(printf '%x' $(( (1<<64) - (hex & 0 )) ))L" /dev/null 2>/dev/null
+            echo "--- smali hits (decimal constant)"
+            grep -rln "const-wide v[0-9]*, $signed" smali* 2>/dev/null | head -5
+            grep -rln -- "-$((0))" /dev/null 2>/dev/null
+            grep -rln "${signed}L" smali* 2>/dev/null | head -5
+            grep -rn "$hex" smali* 2>/dev/null | head -5
+          done
+          echo "========== ZT.q (the setter helper)"
+          find smali* -name 'ZT.smali' | head -2
+          f=$(find smali* -name 'ZT.smali' | head -1)
+          [ -n "$f" ] && sed -n '1,80p' "$f"
+
+
           set -euo pipefail
           curl -sSL -o jadx.zip \
             https://github.com/skylot/jadx/releases/download/v1.5.0/jadx-1.5.0.zip
@@ -88,6 +113,7 @@ jobs:
         run: |
           mkdir -p analysis-bdnet/configs
           cp /tmp/decompile.txt analysis-bdnet/configs/decompile.txt 2>/dev/null || true
+          cp /tmp/writers.txt analysis-bdnet/configs/writers.txt 2>/dev/null || true
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add analysis-bdnet/configs
