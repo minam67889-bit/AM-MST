@@ -1,17 +1,65 @@
 ================= 13.140.185.158  (zone sd-de1.liftmeon.org)
-LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=2857,fd=6))
-curl: (97) User was rejected by the SOCKS5 server (1 255).
-  http://example.com/ -> http=000 bytes=0 time=0.924400
-curl: (97) User was rejected by the SOCKS5 server (1 255).
-  http://neverssl.com/ -> http=000 bytes=0 time=0.427889
-curl: (97) User was rejected by the SOCKS5 server (1 255).
-  https://example.com/ -> http=000 bytes=0 time=0.427707
+LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3358,fd=6))
+--- SOCKS5 auth matrix on 7000
+  user='tanginaka'              pass='tanginaka'              -> b'\x01\xff'
+  user='wagditokupal'           pass='wagditokupal'           -> b'\x01\xff'
+  user='prince'                 pass='prince'                 -> b'\x01\xff'
+  user='BD NET VPN'             pass='BD NET VPN'             -> b'\x01\xff'
+  user='sd-de1.liftmeon.org'    pass='sd-de1.liftmeon.org'    -> b'\x01\xff'
+  user='de1.liftmeon.org'       pass='de1.liftmeon.org'       -> b'\x01\xff'
+  user='bdfreevpn'              pass='bdfreevpn'              -> b'\x01\xff'
+  user=''                       pass=''                       -> b'\x01\xff'
+  user='tanginaka'              pass='wagditokupal'           -> b'\x01\xff'
+  user='wagditokupal'           pass='prince'                 -> b'\x01\xff'
+  user='prince'                 pass='BD NET VPN'             -> b'\x01\xff'
+  user='BD NET VPN'             pass='sd-de1.liftmeon.org'    -> b'\x01\xff'
+  user='sd-de1.liftmeon.org'    pass='de1.liftmeon.org'       -> b'\x01\xff'
+  user='de1.liftmeon.org'       pass='bdfreevpn'              -> b'\x01\xff'
+  user='bdfreevpn'              pass='prince'                 -> b'\x01\xff'
+  user='prince'                 pass=''                       -> b'\x01\xff'
+  user=''                       pass='tanginaka'              -> b'\x01\xff'
+  user='tanginaka'              pass=''                       -> b'\x01\xff'
+  user='prince'                 pass='bdfreevpn'              -> b'\x01\xff'
+  user='BD NET VPN'             pass='de1.liftmeon.org'       -> b'\x01\xff'
+  user='de1.liftmeon.org'       pass='BD NET VPN'             -> b'\x01\xff'
+  user='prince'                 pass='wagditokupal'           -> b'\x01\xff'
+--- one real curl, for the record
+  http://example.com/ -> http=000 bytes=0
+--- what went out on the wire
+10:41:56.478050 eth0  Out IP 10.1.0.117.41891 > 13.140.185.158.53: 5190+ [1au] TXT? xazcyuetu5mz7y2r2mrbugj5nl4fcacaadbsqaaaaiaaaaacaaaaaaqaaaaaaga.sd-de1.liftmeon.org. (112)
+10:41:56.478058 enP45256s1 Out IP 10.1.0.117.41891 > 13.140.185.158.53: 5190+ [1au] TXT? xazcyuetu5mz7y2r2mrbugj5nl4fcacaadbsqaaaaiaaaaacaaaaaaqaaaaaaga.sd-de1.liftmeon.org. (112)
+10:41:56.478590 eth0  Out IP 10.1.0.117.41891 > 13.140.185.158.53: 57999+ [1au] TXT? xazcyuetu5mz7y6frvudagj5nl4fcacaadbsqaaaamaaaaacaaaaagaaaaagk3u.c2jzyqbmsb62xlwngwjxpd522tl32li2fmm.sd-de1.liftmeon.org. (148)
+10:41:56.478593 enP45256s1 Out IP 10.1.0.117.41891 > 13.140.185.158.53: 57999+ [1au] TXT? xazcyuetu5mz7y6frvudagj5nl4fcacaadbsqaaaamaaaaacaaaaagaaaaagk3u.c2jzyqbmsb62xlwngwjxpd522tl32li2fmm.sd-de1.liftmeon.org. (148)
+10:41:56.496017 eth0  Out IP 10.1.0.117.41891 > 13.140.185.158.53: 46246+ [1au] TXT? xazcyuetu5mz7y7a3wcrugj5nl4fcacaadksqaaaaqaaaaacaaaaaaqaaaaaaga.sd-de1.liftmeon.org. (112)
+10:41:56.496021 enP45256s1 Out IP 10.1.0.117.41891 > 13.140.185.158.53: 46246+ [1au] TXT? xazcyuetu5mz7y7a3wcrugj5nl4fcacaadksqaaaaqaaaaacaaaaaaqaaaaaaga.sd-de1.liftmeon.org. (112)
+10:41:56.496516 eth0  Out IP 10.1.0.117.41891 > 13.140.185.158.53: 27448+ [1au] TXT? xazcyuetu5mz7y2avc6tagj5nl4fcacaadksqaaaauaaaaacaaaaagaaaaahpoc.2cntiruzgrzq75gledvgssmgfgpai75qeru.sd-de1.liftmeon.org. (148)
+10:41:56.496520 enP45256s1 Out IP 10.1.0.117.41891 > 13.140.185.158.53: 27448+ [1au] TXT? xazcyuetu5mz7y2avc6tagj5nl4fcacaadksqaaaauaaaaacaaaaagaaaaahpoc.2cntiruzgrzq75gledvgssmgfgpai75qeru.sd-de1.liftmeon.org. (148)
+10:41:56.499920 eth0  Out IP 10.1.0.117.41891 > 13.140.185.158.53: 16711+ [1au] TXT? xazcyuetu5mz7y3eav5rugj5nl4fcacaadmsqaaaayaaaaacaaaaaaqaaaaaaha.sd-de1.liftmeon.org. (112)
+10:41:56.499925 enP45256s1 Out IP 10.1.0.117.41891 > 13.140.185.158.53: 16711+ [1au] TXT? xazcyuetu5mz7y3eav5rugj5nl4fcacaadmsqaaaayaaaaacaaaaaaqaaaaaaha.sd-de1.liftmeon.org. (112)
+10:41:56.500327 eth0  Out IP 10.1.0.117.41891 > 13.140.185.158.53: 61214+ [1au] TXT? xazcyuetu5mz7y76bzmtigj5nl4fcacaadmsqaaaa4aaaaacaaaaahaaaaaadt3.wy7wngssn55cnfrl6pwyksrunkaw6saqisaxpufic.sd-de1.liftmeon.org. (154)
+10:41:56.500330 enP45256s1 Out IP 10.1.0.117.41891 > 13.140.185.158.53: 61214+ [1au] TXT? xazcyuetu5mz7y76bzmtigj5nl4fcacaadmsqaaaa4aaaaacaaaaahaaaaaadt3.wy7wngssn55cnfrl6pwyksrunkaw6saqisaxpufic.sd-de1.liftmeon.org. (154)
+--- does the credential itself travel inside the tunnel?
+  tanginaka (base64 dGFuZ2luYWth) appears in 0 packet(s)
+  wagditokupal (base64 d2FnZGl0b2t1cGFs) appears in 0 packet(s)
+--- qnames seen (first 10)
+xazcyuetu5mz7y2r2mrbugj5nl4fcacaadbsqaaaaiaaaaacaaaaaaqaaaaaaga.sd-de1.liftmeon.org.
+xazcyuetu5mz7y2r2mrbugj5nl4fcacaadbsqaaaaiaaaaacaaaaaaqaaaaaaga.sd-de1.liftmeon.org.......
+xazcyuetu5mz7y2r2mrbugj5nl4fcacaadbsqaaaaiaaaaacaaaaaaqaaaaaaga.sd-de1.liftmeon.org.
+xazcyuetu5mz7y2r2mrbugj5nl4fcacaadbsqaaaaiaaaaacaaaaaaqaaaaaaga.sd-de1.liftmeon.org.......
+xazcyuetu5mz7y6frvudagj5nl4fcacaadbsqaaaamaaaaacaaaaagaaaaagk3u.c2jzyqbmsb62xlwngwjxpd522tl32li2fmm.sd-de1.liftmeon.org.
+c2jzyqbmsb62xlwngwjxpd522tl32li2fmm.sd-de1.liftmeon.org.......
+xazcyuetu5mz7y6frvudagj5nl4fcacaadbsqaaaamaaaaacaaaaagaaaaagk3u.c2jzyqbmsb62xlwngwjxpd522tl32li2fmm.sd-de1.liftmeon.org.
+c2jzyqbmsb62xlwngwjxpd522tl32li2fmm.sd-de1.liftmeon.org.......
+xazcyuetu5mz7y7a3wcrugj5nl4fcacaadksqaaaaqaaaaacaaaaaaqaaaaaaga.sd-de1.liftmeon.org.
+xazcyuetu5mz7y7a3wcrugj5nl4fcacaadksqaaaaqaaaaacaaaaaaqaaaaaaga.sd-de1.liftmeon.org.......
+grep: write error: Broken pipe
+tr: write error: Broken pipe
 --- client log
---- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2857, si_uid=1001} ---
  = 0
  = 0
+--- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=3358, si_uid=1001} ---
  = 0
  = 0
  = 0
 grep: write error: Broken pipe
---- packets: sendto=69 recvwithdata=61
+--- packets: sendto=424 recvwithdata=350
