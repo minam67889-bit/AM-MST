@@ -1,4 +1,7 @@
-setsid nohup bash -c "mkdir -p /tmp/jadx && cd /tmp/jadx && curl -sSL -o j.zip https://github.com/skylot/jadx/releases/download/v1.5.0/jadx-1.5.0.zip && unzip -q -o j.zip && chmod +x bin/jadx && echo ok > /tmp/jadx.ok" > /tmp/jadx.log 2>&1 < /dev/null &
-sleep 2
-echo "=== libxdnstt auth-ish strings ==="; strings -n 5 libs/libxdnstt.so | grep -iE "socks5|username|password|auth|proxy" | head -25; echo "=== end ==="
-# nonce=1793279140703294467
+ls -l /tmp/jadx.ok 2>/dev/null; tail -2 /tmp/jadx.log; ls art 2>/dev/null | head -3; APK=$(find art -name "*.apk" | head -1); echo "APK=$APK"
+if [ -f /tmp/jadx/bin/jadx ] && [ ! -d /tmp/src ]; then
+  setsid nohup /tmp/jadx/bin/jadx -d /tmp/src --no-res --threads-count 4 "$APK" > /tmp/jadxrun.log 2>&1 < /dev/null &
+  echo "decompile started"
+fi
+sleep 3; tail -3 /tmp/jadxrun.log 2>/dev/null
+# nonce=1793279156075704947
