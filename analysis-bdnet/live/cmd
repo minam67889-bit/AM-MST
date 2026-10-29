@@ -1,4 +1,2 @@
-F=/tmp/src/sources/prince/dastan/vpn/service/XRayDNSService.java
-wc -l $F
-python3 /tmp/res.py $F | grep -n "xdnstt\|-pubkey\|-udp\|-report\|socks\|PUtils.pEncrypt\|user\|pass" | head -40
-# nonce=1793279305564621424
+python3 /tmp/res.py /tmp/src/sources/prince/dastan/vpn/service/XRayDNSService.java | sed -n "395,470p"
+# nonce=1793279314299831997
