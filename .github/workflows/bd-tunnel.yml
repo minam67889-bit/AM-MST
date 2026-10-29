@@ -99,57 +99,67 @@ jobs:
           exec > >(tee /tmp/bd-tunnel.txt) 2>&1
           set +e
           export QEMU_LD_PREFIX="$PWD/sysroot"
-          echo "=== libtun2socks CLI surface"
-          strings -n 3 libs/libtun2socks.so | grep -xE "--[a-z-]{3,24}" | sort -u | head -30
-          echo "=== strings that could be a user/pass pair (lowercase words, 6..16)"
-          strings -n 6 libs/libtun2socks.so | grep -xE "[a-z]{6,16}" | sort -u | tr '\n' ' '; echo
-          cat > /tmp/zoneprobe.py <<'PY'
-          import socket, sys, time
+          cat > /tmp/pair.py <<'PY'
+          import socket, sys
           port = int(sys.argv[1])
-          def once(prep, payload):
-              t0 = time.time()
+          def attempt(u, pw):
               try:
-                  s = socket.create_connection(("127.0.0.1", port), 3); s.settimeout(6)
-                  s.sendall(prep)
-                  r1 = s.recv(2)
-                  if payload:
-                      s.sendall(payload); r2 = s.recv(2)
-                  else:
-                      r2 = b"-"
-                  s.close()
-                  return f"{r1.hex()}/{r2.hex() if isinstance(r2, bytes) else r2} in {1000*(time.time()-t0):.0f} ms"
+                  s = socket.create_connection(("127.0.0.1", port), 3); s.settimeout(5)
+                  s.sendall(b"\x05\x02\x00\x02")
+                  if s.recv(2) != b"\x05\x02":
+                      s.close(); return b"no-0x02"
+                  ub, pb = u.encode(), pw.encode()
+                  s.sendall(bytes([1, len(ub)]) + ub + bytes([len(pb)]) + pb)
+                  r = s.recv(2); s.close(); return r
               except Exception as e:
-                  return f"{e!r}"
-          u, p = b"tanginaka", b"wagditokupal"
-          creds = bytes([1, len(u)]) + u + bytes([len(p)]) + p
-          print(f"    noauth : {once(b'\x05\x01\x00', None)}")
-          print(f"    creds  : {once(b'\x05\x02\x00\x02', creds)}")
+                  return repr(e).encode()[:12]
+          pairs = [("wagditokupal", "tanginaka"), ("tanginaka", "wagditokupal"),
+                   ("tanginaka", "tanginaka"), ("wagditokupal", "wagditokupal"),
+                   ("bdfreevpn", "bdfreevpn"), ("prince", "prince"),
+                   ("liftmeon", "liftmeon"), ("de1", "de1"), ("aog", "aog"),
+                   ("prince", "tanginaka"), ("tanginaka", "prince"),
+                   ("bdfree", "bdfree"), ("bdnet", "bdnet"), ("princevpn", "princevpn"),
+                   ("bdfreevpn", "prince"), ("prince", "bdfreevpn"),
+                   ("dastan", "dastan"), ("tanginaka", "bdfreevpn")]
+          for u, pw in pairs:
+              print(f"    {u}/{pw} -> {attempt(u, pw)!r}", flush=True)
           PY
-          i=0
-          for zone in sd-de1.liftmeon.org sd-de1 de1.liftmeon.org sd-aog1.liftmeon.org sd-aog1; do
-            i=$((i+1)); port=$((7100+i))
-            echo "================= zone=$zone  target=13.140.185.158:53  local=$port"
-            timeout 120 qemu-aarch64-static libs/libxdnstt.so \
-              -udp 13.140.185.158:53 -report "BD NET VPN" -pubkey prince \
-              "$zone" 127.0.0.1:$port > /tmp/z$i.out 2>/tmp/z$i.err &
+          echo "========== de1: credential candidates (reversed pair first)"
+          timeout 200 qemu-aarch64-static libs/libxdnstt.so \
+            -udp 13.140.185.158:53 -report "BD NET VPN" -pubkey prince \
+            sd-de1.liftmeon.org 127.0.0.1:7310 > /tmp/a.out 2>/tmp/a.err &
+          pid=$!
+          sleep 11
+          python3 /tmp/pair.py 7310
+          echo "--- no-auth greeting as a sanity check"
+          python3 - <<'PY'
+          import socket
+          s = socket.create_connection(("127.0.0.1", 7310), 3); s.settimeout(5)
+          s.sendall(b"\x05\x01\x00"); print("    noauth ->", s.recv(2).hex()); s.close()
+          PY
+          kill $pid 2>/dev/null; wait $pid 2>/dev/null
+          echo
+          echo "========== every de*.liftmeon.org endpoint: what answers on the far end?"
+          for n in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20; do
+            h=$(getent hosts de$n.liftmeon.org | awk '{print $1}' | head -1)
+            [ -z "$h" ] && { echo "  de$n -> no DNS"; continue; }
+            port=$((7400 + n))
+            timeout 40 qemu-aarch64-static libs/libxdnstt.so \
+              -udp "$h:53" -report "BD NET VPN" -pubkey prince \
+              "sd-de$n.liftmeon.org" 127.0.0.1:$port > /tmp/s$n.out 2>/tmp/s$n.err &
             pid=$!
-            sleep 11
-            ss -lntp 2>/dev/null | grep ":$port" | head -1
-            python3 /tmp/zoneprobe.py $port
-            kill $pid 2>/dev/null; wait $pid 2>/dev/null
-          done
-          echo "================= a full HTTP fetch attempt through each zone"
-          i=0
-          for zone in sd-de1.liftmeon.org sd-de1; do
-            i=$((i+1)); port=$((7200+i))
-            timeout 150 qemu-aarch64-static libs/libxdnstt.so \
-              -udp 13.140.185.158:53 -report "BD NET VPN" -pubkey prince \
-              "$zone" 127.0.0.1:$port > /tmp/y$i.out 2>/tmp/y$i.err &
-            pid=$!
-            sleep 11
-            timeout 60 curl -sS -m 55 --socks5-hostname "tanginaka:wagditokupal@127.0.0.1:$port" \
-              -o /tmp/page.html -w "  zone=$zone http=%{http_code} bytes=%{size_download} time=%{time_total}\n" \
-              http://example.com/ 2>&1 | tail -1
+            sleep 10
+            res=$(python3 - <<PY
+          import socket
+          try:
+              s = socket.create_connection(("127.0.0.1", $port), 3); s.settimeout(5)
+              s.sendall(b"\x05\x01\x00")
+              r = s.recv(2).hex(); s.close(); print(r)
+          except Exception as e:
+              print(repr(e)[:24])
+          PY
+            )
+            echo "  de$n ($h) -> far end says $res"
             kill $pid 2>/dev/null; wait $pid 2>/dev/null
           done
           exit 0
