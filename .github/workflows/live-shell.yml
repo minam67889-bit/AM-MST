@@ -1,0 +1,93 @@
+name: Live shell (BD NET binaries on a machine with real internet and qemu)
+
+# The sandbox can only reach github.com / api.github.com, and CI logs are not
+# readable from there. So both ends meet on an issue: a comment starting with
+# "RUN:" is a command, the runner answers with "OUT:<id>". That makes it
+# possible to poke at BD NET's own binaries interactively instead of waiting
+# ten minutes per question.
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue:
+        description: "Issue number that carries the commands"
+        required: false
+        default: "1"
+      minutes:
+        description: "How long to stay online"
+        required: false
+        default: "55"
+  push:
+    paths:
+      - ".github/workflows/live-shell.yml"
+      - "tools/live_shell.sh"
+
+permissions:
+  contents: write
+  issues: write
+  actions: read
+
+concurrency:
+  group: live-shell-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  shell:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq qemu-user-static unzip binutils file dnsutils curl jq
+
+      - name: BD NET's binaries
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set +e
+          mkdir -p art libs
+          run=$(gh run list --workflow=analyze-apk.yml --status success --limit 1 \
+                  --json databaseId --jq '.[0].databaseId')
+          art=$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$run/artifacts" \
+                  --jq '.artifacts[] | select(.name=="amtunnel-apk-analysis") | .id' | head -1)
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$art/zip" > art/a.zip
+          unzip -o -q art/a.zip -d art/x
+          apk=$(find art -name '*.apk' | head -1)
+          echo "APK=$apk"
+          unzip -o -j "$apk" 'lib/arm64-v8a/*' -d libs > /dev/null
+          chmod +x libs/* 2>/dev/null
+          ls -l libs | head -20
+
+      - name: Bionic sysroot (for their Go binaries)
+        run: |
+          set +e
+          export ANDROID_HOME=${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}
+          SDKMANAGER=$(command -v sdkmanager || echo "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager")
+          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1
+          "$SDKMANAGER" "system-images;android-24;default;arm64-v8a" 2>&1 | tail -2
+          IMGDIR=$(find "$ANDROID_HOME" -type d -path '*android-24*arm64-v8a*' | head -1)
+          IMGFILE="$IMGDIR/system.img"
+          mkdir -p sysroot/system/bin sysroot/system/lib64
+          if sudo mount -o loop,ro "$IMGFILE" /mnt; then
+            sudo cp /mnt/bin/linker64 sysroot/system/bin/
+            sudo cp -a /mnt/lib64/*.so sysroot/system/lib64/
+            sudo umount /mnt
+          else
+            sudo chmod 644 "$IMGFILE"
+            for f in bin/linker64 lib64/libc.so lib64/libdl.so lib64/libm.so lib64/liblog.so; do
+              debugfs -R "dump /$f /tmp/x.bin" "$IMGFILE" > /dev/null 2>&1 && sudo mv /tmp/x.bin "sysroot/system/$f"
+            done
+          fi
+          sudo chown -R "$USER" sysroot
+          ls sysroot/system/bin sysroot/system/lib64 | head
+
+      - name: Stay online and answer commands
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          chmod +x tools/live_shell.sh
+          tools/live_shell.sh "$GITHUB_REPOSITORY" "${{ inputs.issue || '1' }}" \
+            "$(( ${{ inputs.minutes || 55 }} * 60 ))"
