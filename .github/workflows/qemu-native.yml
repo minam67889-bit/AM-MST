@@ -190,38 +190,73 @@ jobs:
           grep -c "recvfrom(.*= 4[0-9])" /tmp/st.log 2>/dev/null || true
           tail -5 /tmp/st.log
 
-      - name: "xdnstt: domain matrix - which zone does the server answer?"
+      - name: "reply path: can the client receive at all? (local mock DNS)"
         run: |
-          exec > >(tee /tmp/domains.txt) 2>&1
+          exec > >(tee /tmp/replypath.txt) 2>&1
           set +e
           export QEMU_LD_PREFIX="$PWD/sysroot"
-          host=173.212.232.241
-          for zone in "sd-$host" "$host" "sd-amtunnel" "sd-bdnet" "sd-prince" \
-                      "sd-vpn" "sd-tunnel" "sd-fastdns" "sd-liftmeon" "sd-de1" \
-                      "sd-princebdfreevpn" "sd-bdfreevpn" "sd-$host.vpn"; do
-            port=$((7500 + RANDOM % 300))
-            echo "===== zone=$zone"
-            timeout 40 qemu-aarch64-static libs/libxdnstt.so \
-              -udp "$host:53" -report "BD NET VPN" -pubkey prince "$zone" "127.0.0.1:$port" \
-              > /tmp/z.log 2>&1 &
-            pid=$!
-            sleep 6
-            python3 - "$port" <<'PY' | sed 's/^/    /'
-          import socket, sys, time
-          port = int(sys.argv[1])
-          try:
-              s = socket.create_connection(("127.0.0.1", port), timeout=4)
-              s.sendall(b"GET / HTTP/1.0\r\nHost: example.com\r\n\r\n")
-              s.settimeout(14)
-              data = s.recv(512)
-              print(f"TCP probe got {len(data)} bytes: {data[:60]!r}")
-          except Exception as exc:
-              print(f"TCP probe: {type(exc).__name__}: {exc}")
+          # A resolver that always answers. If the client cannot even hear this
+          # one, every "silent server" result so far is a qemu artefact.
+          cat > /tmp/mockdns.py <<'PY'
+          import socket, struct, sys, threading, time
+          port = int(sys.argv[1]); hits = []
+          def answer(pkt):
+              qt = pkt[12:]
+              end = 0
+              while qt[end] != 0: end += qt[end] + 1
+              qname = qt[:end + 1]; qtail = qt[end + 1:end + 5]
+              tid = pkt[:2]
+              rr = b"\xc0\x0c" + struct.pack(">HHIH", 16, 1, 60, 12) + b"\x0bmockreply01"
+              return tid + b"\x81\x80" + struct.pack(">HHHH", 1, 1, 0, 0) + qname + qtail + rr
+          s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+          s.bind(("127.0.0.1", port)); s.settimeout(0.5)
+          deadline = time.time() + 90
+          while time.time() < deadline:
+              try:
+                  data, peer = s.recvfrom(4096)
+              except socket.timeout:
+                  continue
+              hits.append(len(data))
+              s.sendto(answer(data), peer)
+              print(f"mock got {len(data)} B, answered", flush=True)
+          print(f"mock total queries: {len(hits)}", flush=True)
           PY
-            echo "    client log:"; sed 's/^/      /' /tmp/z.log | tail -6
-            kill $pid 2>/dev/null
-            sleep 1
+          python3 /tmp/mockdns.py 5399 > /tmp/mock.log 2>&1 &
+          mock=$!
+          sleep 1
+          echo "=== client against the local mock (must receive)"
+          timeout 30 qemu-aarch64-static -strace libs/libxdnstt.so \
+            -udp 127.0.0.1:5399 -report "BD NET VPN" -pubkey prince \
+            sd-mock.local 127.0.0.1:7600 > /tmp/mockrun.log 2>&1
+          echo "sendto:   $(grep -c sendto /tmp/mockrun.log)"
+          echo "recvfrom: $(grep -c recvfrom /tmp/mockrun.log)"
+          echo "recvfrom with data: $(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/mockrun.log)"
+          grep -E "recvfrom\(.*\) = [0-9]+$" /tmp/mockrun.log | head -3
+          echo "--- mock side"; cat /tmp/mock.log
+          kill $mock 2>/dev/null
+
+          echo
+          echo "=== client against 8.8.8.8 (always answers, wrong zone)"
+          timeout 25 qemu-aarch64-static -strace libs/libxdnstt.so \
+            -udp 8.8.8.8:53 -report "BD NET VPN" -pubkey prince \
+            sd-8.8.8.8 127.0.0.1:7601 > /tmp/gog.log 2>&1
+          echo "sendto:   $(grep -c sendto /tmp/gog.log)"
+          echo "recvfrom with data: $(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/gog.log)"
+
+          echo
+          echo "=== libdns: does it forward to its upstream and receive?"
+          ENC=$(python3 -c "import sys; sys.path.insert(0,'tools'); import bdnet_dns as b; print(b.p_encrypt('13.140.185.158:53'))")
+          timeout 60 qemu-aarch64-static -strace libs/libdns.so \
+            -tunnel "$ENC" -report "BD NET VPN" > /tmp/ld.log 2>&1 &
+          pid=$!
+          sleep 8
+          for i in 1 2 3; do
+            timeout 6 dig +time=3 +tries=1 @127.0.0.1 -p 7777 example.com A > /tmp/dig.log 2>&1
+            sleep 2
           done
+          echo "libdns sendto:   $(grep -c sendto /tmp/ld.log)"
+          echo "libdns received: $(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/ld.log)"
+          kill $pid 2>/dev/null
 
       - name: "Is the gate keyed on -report?"
         run: |
@@ -253,7 +288,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p analysis-bdnet/configs/dns/results
-          for f in apk sysroot startup xdnstt-run libdns-run xdnstt libdns report-matrix strace domains; do
+          for f in apk sysroot startup xdnstt-run libdns-run xdnstt libdns report-matrix strace replypath; do
             [ -f "/tmp/$f.txt" ] && cp "/tmp/$f.txt" "analysis-bdnet/configs/dns/results/qemu-$f.txt"
             [ -f "/tmp/$f.log" ] && cp "/tmp/$f.log" "analysis-bdnet/configs/dns/results/qemu-$f.log"
           done
