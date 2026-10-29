@@ -211,6 +211,7 @@ jobs:
           cp /tmp/bd-tunnel.txt analysis-bdnet/configs/dns/results/bd-tunnel.txt 2>/dev/null || true
           cp /tmp/flags.txt analysis-bdnet/configs/dns/results/bd-flags.txt 2>/dev/null || true
           cp /tmp/slowdns2.txt analysis-bdnet/configs/dns/results/bd-slowdns2.txt 2>/dev/null || true
+          cp /tmp/far-end.txt analysis-bdnet/configs/dns/results/bd-far-end.txt 2>/dev/null || true
           cp /tmp/bd-tunnel.txt /tmp/last-run.txt
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
