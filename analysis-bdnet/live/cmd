@@ -1,15 +1,15 @@
-export QEMU_LD_PREFIX="$PWD/sysroot"; chmod +x libs/*.so 2>/dev/null
-cat > /tmp/x.json <<EOF
-{"dns":{"hosts":{"domain:googleapis.cn":"googleapis.com"},"servers":["1.1.1.1"]},"inbounds":[{"listen":"127.0.0.1","port":"10808","protocol":"socks","settings":{"auth":"noauth","udp":true,"userLevel":8},"sniffing":{"destOverride":["http","tls"],"enabled":true},"tag":"socks"}],"log":{"loglevel":"debug"},"outbounds":[{"protocol":"socks","settings":{"servers":[{"address":"127.0.0.1","port":7000,"users":[{"user":"tanginaka","pass":"wagditokupal"}]}]},"streamSettings":{"network":"tcp","security":"none","tlsSettings":{}},"tag":"proxy"},{"protocol":"freedom","tag":"direct"}],"routing":{"domainStrategy":"IPIfNonMatch","rules":[{"ip":["1.1.1.1"],"outboundTag":"proxy","port":"53","type":"field"}]}}
+export QEMU_LD_PREFIX="$PWD/sysroot"
+echo 'aW1wb3J0IHNvY2tldCwgdGhyZWFkaW5nLCBzeXMKTElTVEVOID0gNzAwMQpVUCA9IDcwMDAKZGVmIHBpcGUoYSwgYiwgdGFnLCBidWYpOgogICAgdHJ5OgogICAgICAgIHdoaWxlIFRydWU6CiAgICAgICAgICAgIGQgPSBhLnJlY3YoNjU1MzYpCiAgICAgICAgICAgIGlmIG5vdCBkOgogICAgICAgICAgICAgICAgYnJlYWsKICAgICAgICAgICAgaWYgdGFnID09ICJDPlMiOgogICAgICAgICAgICAgICAgYnVmLmFwcGVuZChkKQogICAgICAgICAgICB0cnk6IGIuc2VuZGFsbChkKQogICAgICAgICAgICBleGNlcHQgT1NFcnJvcjogYnJlYWsKICAgIGV4Y2VwdCBPU0Vycm9yOgogICAgICAgIHBhc3MKICAgIGZpbmFsbHk6CiAgICAgICAgdHJ5OiBiLnNodXRkb3duKHNvY2tldC5TSFVUX1dSKQogICAgICAgIGV4Y2VwdCBPU0Vycm9yOiBwYXNzCmRlZiBoYW5kbGUoYyk6CiAgICBidWYgPSBbXQogICAgdHJ5OgogICAgICAgIHUgPSBzb2NrZXQuY3JlYXRlX2Nvbm5lY3Rpb24oKCIxMjcuMC4wLjEiLCBVUCksIDgpCiAgICBleGNlcHQgT1NFcnJvciBhcyBlOgogICAgICAgIHByaW50KCJ1cHN0cmVhbSBmYWlsIiwgZSwgZmx1c2g9VHJ1ZSk7IGMuY2xvc2UoKTsgcmV0dXJuCiAgICB0MSA9IHRocmVhZGluZy5UaHJlYWQodGFyZ2V0PXBpcGUsIGFyZ3M9KHUsIGMsICJVPkMiLCBidWYpLCBkYWVtb249VHJ1ZSkKICAgIHQyID0gdGhyZWFkaW5nLlRocmVhZCh0YXJnZXQ9cGlwZSwgYXJncz0oYywgdSwgIkM+UyIsIGJ1ZiksIGRhZW1vbj1UcnVlKQogICAgdDEuc3RhcnQoKTsgdDIuc3RhcnQoKTsgdDEuam9pbigpOyB0Mi5qb2luKCkKICAgIHByaW50KCJDTElFTlQtPlVQU1RSRUFNIEJZVEVTOiIsIHJlcHIoYiIiLmpvaW4oYnVmKSksIGZsdXNoPVRydWUpCiAgICBjLmNsb3NlKCk7IHUuY2xvc2UoKQpzID0gc29ja2V0LnNvY2tldCgpOyBzLnNldHNvY2tvcHQoc29ja2V0LlNPTF9TT0NLRVQsIHNvY2tldC5TT19SRVVTRUFERFIsIDEpCnMuYmluZCgoIjEyNy4wLjAuMSIsIExJU1RFTikpOyBzLmxpc3RlbigxNikKcHJpbnQoIm1pdG0gb24iLCBMSVNURU4sICItPiIsIFVQLCBmbHVzaD1UcnVlKQp3aGlsZSBUcnVlOgogICAgYywgXyA9IHMuYWNjZXB0KCkKICAgIHRocmVhZGluZy5UaHJlYWQodGFyZ2V0PWhhbmRsZSwgYXJncz0oYywpLCBkYWVtb249VHJ1ZSkuc3RhcnQoKQo=' | base64 -d > /tmp/mitm.py
+cat > /tmp/x2.json <<EOF
+{"inbounds":[{"listen":"127.0.0.1","port":"10808","protocol":"socks","settings":{"auth":"noauth","udp":false},"tag":"socks"}],"log":{"loglevel":"warning"},"outbounds":[{"protocol":"socks","settings":{"servers":[{"address":"127.0.0.1","port":7001,"users":[{"user":"tanginaka","pass":"wagditokupal"}]}]},"streamSettings":{"network":"tcp","security":"none","tlsSettings":{}},"tag":"proxy"}]}
 EOF
-setsid nohup qemu-aarch64-static libs/libxdnstt.so -udp 13.140.185.158:53 -report "BD NET VPN" -pubkey prince sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/tun.log 2>&1 < /dev/null &
-sleep 6
-echo "--- dnstt log"; tail -3 /tmp/tun.log
-setsid nohup qemu-aarch64-static libs/libxray.so run -c /tmp/x.json > /tmp/xray.log 2>&1 < /dev/null &
-sleep 12
-echo "--- xray log"; tail -25 /tmp/xray.log
-echo "--- curl through xray"
-timeout 40 curl -sS --max-time 35 -x socks5h://127.0.0.1:10808 -o /dev/null -w "example http=%{http_code} bytes=%{size_download}\n" http://example.com/ 2>&1 | head -5
-echo "--- tun log after"; tail -5 /tmp/tun.log
-pkill -f libxray.so; pkill -f libxdnstt.so; true
-# nonce=1793279457214691353
+setsid nohup qemu-aarch64-static libs/libxdnstt.so -udp 13.140.185.158:53 -report 'BD NET VPN' -pubkey prince sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/tun.log 2>&1 < /dev/null &
+setsid nohup python3 /tmp/mitm.py > /tmp/mitm.log 2>&1 < /dev/null &
+sleep 7
+setsid nohup qemu-aarch64-static libs/libxray.so run -c /tmp/x2.json > /tmp/xray2.log 2>&1 < /dev/null &
+sleep 10
+timeout 40 curl -sS --max-time 35 -x socks5h://127.0.0.1:10808 -o /dev/null -w 'http=%{http_code} bytes=%{size_download}\n' http://example.com/ 2>&1 | head -3
+sleep 2
+echo '=== MITM LOG ==='; cat /tmp/mitm.log
+pkill -f libxray.so; pkill -f libxdnstt.so; pkill -f mitm.py; true
+# nonce=1793279496773023594
