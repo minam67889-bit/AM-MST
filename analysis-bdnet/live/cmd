@@ -1,3 +1,6 @@
-ls -la "/tmp/src/sources/org/lsposed/lsparanoid/" 2>/dev/null | head
-D=$(ls /tmp/src/sources/org/lsposed/lsparanoid/Deobfuscator*app*.java 2>/dev/null | head -1); echo "FILE=$D"; wc -c "$D" 2>/dev/null
-# nonce=1793279362783129702
+D="/tmp/src/sources/org/lsposed/lsparanoid/Deobfuscator\$BDNETVPN\$app.java"
+head -30 "$D" | cut -c1-200
+echo "=== head of helper ==="; head -40 /tmp/src/sources/org/lsposed/lsparanoid/DeobfuscatorHelper.java
+echo "=== interesting string fields ==="
+grep -oE "\"[^\"]*\"" "$D" | grep -iE "sock|user|pass|7000|sd-|liftmeon|tunnel" | sort -u | head -60
+# nonce=1793279372569098485
