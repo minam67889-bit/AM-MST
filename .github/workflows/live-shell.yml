@@ -89,5 +89,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           chmod +x tools/live_shell.sh
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           tools/live_shell.sh "$GITHUB_REPOSITORY" "${{ inputs.issue || '1' }}" \
-            "$(( ${{ inputs.minutes || 55 }} * 60 ))"
+            "${GITHUB_REF_NAME}" "$(( ${{ inputs.minutes || 55 }} * 60 ))"
