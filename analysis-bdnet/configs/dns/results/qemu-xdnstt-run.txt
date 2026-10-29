@@ -1,9 +1,55 @@
-== host 173.212.232.241
-no listener on 7000
-== client log
-2026/10/29 00:13:55 You are not allowed to use this app!
-PROBE FAIL: nothing listening on 127.0.0.1:7000 ([Errno 111] Connection refused)
-PROBE FAIL: nothing listening on 127.0.0.1:7000 ([Errno 111] Connection refused)
-PROBE FAIL: nothing listening on 127.0.0.1:7000 ([Errno 111] Connection refused)
-== client log after the probes
-2026/10/29 00:13:55 You are not allowed to use this app!
+========== 173.212.232.241
+listener up after 2s
+SOCKS probe -> FAIL in 25.0s: no SOCKS5 greeting (silence)
+HTTP probe -> FAIL in 25.0s: no response
+RAW probe -> FAIL in 25.0s: 0 B: 
+--- client log
+Licensed to BD NET VPN
+NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:23:00 uTLS fingerprint iOS 14
+2026/10/29 00:23:00 effective MTU 131
+2026/10/29 00:23:00 begin session 369b3f18
+========== 173.249.10.48
+listener up after 2s
+SOCKS probe -> FAIL in 25.0s: no SOCKS5 greeting (silence)
+HTTP probe -> FAIL in 25.0s: no response
+RAW probe -> FAIL in 25.0s: 0 B: 
+--- client log
+Licensed to BD NET VPN
+NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:24:18 uTLS fingerprint Firefox 120
+2026/10/29 00:24:18 effective MTU 132
+2026/10/29 00:24:18 begin session cb46af10
+========== 185.196.21.114
+listener up after 2s
+SOCKS probe -> FAIL in 25.0s: no SOCKS5 greeting (silence)
+HTTP probe -> FAIL in 25.0s: no response
+RAW probe -> FAIL in 25.0s: 0 B: 
+--- client log
+Licensed to BD NET VPN
+NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:25:36 uTLS fingerprint Chrome 120
+2026/10/29 00:25:36 effective MTU 132
+2026/10/29 00:25:36 begin session d3507872
+========== 173.212.252.3
+listener up after 2s
+SOCKS probe -> FAIL in 25.0s: no SOCKS5 greeting (silence)
+HTTP probe -> FAIL in 25.0s: no response
+RAW probe -> FAIL in 25.0s: 0 B: 
+--- client log
+Licensed to BD NET VPN
+NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:26:54 uTLS fingerprint Chrome 120
+2026/10/29 00:26:54 effective MTU 132
+2026/10/29 00:26:54 begin session 852a05a5
+========== 192.145.37.229
+listener up after 2s
+SOCKS probe -> FAIL in 25.0s: no SOCKS5 greeting (silence)
+HTTP probe -> FAIL in 25.0s: no response
+RAW probe -> FAIL in 25.0s: 0 B: 
+--- client log
+Licensed to BD NET VPN
+NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:28:12 uTLS fingerprint Randomized-ALPN 0
+2026/10/29 00:28:12 effective MTU 132
+2026/10/29 00:28:12 begin session 5d0e45f8

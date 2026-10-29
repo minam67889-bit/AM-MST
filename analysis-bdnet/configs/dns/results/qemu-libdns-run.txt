@@ -1,17 +1,36 @@
-== 13.140.185.158 encrypted=05167e556c53460f5e5e7e6c011d6a516b
-== log
-2026/10/29 00:14:33 FastDNS v1.2 | Client
-2026/10/29 00:14:33 You are not allowed to use this app!
-== listening ports
+========== 13.140.185.158  enc=05167e556c53460f5e5e7e6c011d6a516b
+--- log
+2026/10/29 00:29:30 FastDNS v1.2 | Client
+2026/10/29 00:29:30 Licensed to BD NET VPN
+2026/10/29 00:29:30 NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:29:30 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.158:53
+--- listeners
 State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
-LISTEN 0      4096         0.0.0.0:22        0.0.0.0:*          
 LISTEN 0      4096      127.0.0.54:53        0.0.0.0:*          
 LISTEN 0      4096   127.0.0.53%lo:53        0.0.0.0:*          
+LISTEN 0      4096         0.0.0.0:22        0.0.0.0:*          
 LISTEN 0      4096            [::]:22           [::]:*          
-== port 53 open, probing
-PROBE FAIL: nothing listening on 127.0.0.1:53 ([Errno 111] Connection refused)
-PROBE FAIL: nothing listening on 127.0.0.1:53 ([Errno 111] Connection refused)
-DNS query through the tunnel: no answer
-== log after probes
-2026/10/29 00:14:33 FastDNS v1.2 | Client
-2026/10/29 00:14:33 You are not allowed to use this app!
+========== 13.140.185.165  enc=05167e556c53460f5e5e7e6c02106a516b
+--- log
+2026/10/29 00:29:52 FastDNS v1.2 | Client
+2026/10/29 00:29:52 Licensed to BD NET VPN
+2026/10/29 00:29:52 NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:29:52 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.165:53
+--- listeners
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+LISTEN 0      4096      127.0.0.54:53        0.0.0.0:*          
+LISTEN 0      4096   127.0.0.53%lo:53        0.0.0.0:*          
+LISTEN 0      4096         0.0.0.0:22        0.0.0.0:*          
+LISTEN 0      4096            [::]:22           [::]:*          
+========== 13.140.185.181  enc=05167e556c53460f5e5e7e6c0c146a516b
+--- log
+2026/10/29 00:30:14 FastDNS v1.2 | Client
+2026/10/29 00:30:14 Licensed to BD NET VPN
+2026/10/29 00:30:14 NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:30:14 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.181:53
+--- listeners
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+LISTEN 0      4096      127.0.0.54:53        0.0.0.0:*          
+LISTEN 0      4096   127.0.0.53%lo:53        0.0.0.0:*          
+LISTEN 0      4096         0.0.0.0:22        0.0.0.0:*          
+LISTEN 0      4096            [::]:22           [::]:*          
