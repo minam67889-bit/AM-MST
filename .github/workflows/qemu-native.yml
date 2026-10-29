@@ -164,7 +164,7 @@ jobs:
             sleep 2
           done
 
-      - name: "their SlowDNS client - licensed run"
+      - name: "their SlowDNS client on 127.0.0.1:7777 - push real traffic"
         run: |
           exec > >(tee /tmp/libdns-run.txt) 2>&1
           set +e
@@ -172,14 +172,30 @@ jobs:
           for host in 13.140.185.158 13.140.185.165 13.140.185.181; do
             ENC=$(python3 -c "import sys; sys.path.insert(0,'tools'); import bdnet_dns as b; print(b.p_encrypt('$host:53'))")
             echo "========== $host  enc=$ENC"
-            timeout 120 qemu-aarch64-static libs/libdns.so \
+            timeout 240 qemu-aarch64-static libs/libdns.so \
               -tunnel "$ENC" -report "BD NET VPN" > /tmp/d.log 2>&1 &
             pid=$!
-            sleep 20
-            echo "--- log"; cat /tmp/d.log
-            echo "--- listeners"; ss -ltn 2>/dev/null | head
+            for i in $(seq 1 30); do
+              ss -ltn 2>/dev/null | grep -q ":7777" && { echo "7777 listening after ${i}s"; break; }
+              sleep 1
+            done
+            ss -ltnp 2>/dev/null | grep 7777 || echo "no listener on 7777"
+            echo "--- client log"; cat /tmp/d.log
+            echo "--- SOCKS5 on 7777"
+            timeout 70 python3 tools/tunnel_probe.py 127.0.0.1:7777 --mode socks --timeout 45 || true
+            echo "--- HTTP proxy on 7777"
+            timeout 70 python3 tools/tunnel_probe.py 127.0.0.1:7777 --mode http --host example.com --timeout 45 || true
+            echo "--- curl through it as an HTTP proxy"
+            timeout 70 curl -sS -m 60 -x http://127.0.0.1:7777 http://example.com -o /tmp/page.html \
+              -w "curl http_code=%{http_code} size=%{size_download}\n" || true
+            head -c 300 /tmp/page.html 2>/dev/null; echo
+            echo "--- curl through it as a SOCKS5 proxy"
+            timeout 70 curl -sS -m 60 --socks5-hostname 127.0.0.1:7777 http://example.com -o /tmp/page2.html \
+              -w "curl socks http_code=%{http_code} size=%{size_download}\n" || true
+            head -c 300 /tmp/page2.html 2>/dev/null; echo
+            echo "--- client log after traffic"; cat /tmp/d.log
             kill $pid 2>/dev/null
-            sleep 2
+            sleep 3
           done
 
       - name: "Is the gate keyed on -report?"
