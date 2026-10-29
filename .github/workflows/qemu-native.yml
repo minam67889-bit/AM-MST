@@ -292,6 +292,37 @@ jobs:
             echo "tcp zone=$zone sendto=$(grep -c sendto /tmp/zt.log) recvfrom_data=$(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/zt.log)"
           done
 
+      - name: "tunnel: the SlowDNS host answers, so push real traffic through it"
+        run: |
+          exec > >(tee /tmp/tunnel.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          for host in 13.140.185.158 13.140.185.159 13.140.185.160; do
+            port=7000
+            echo "================= $host"
+            timeout 150 qemu-aarch64-static -strace libs/libxdnstt.so \
+              -udp "$host:53" -report "BD NET VPN" -pubkey prince \
+              sd-de1.liftmeon.org 127.0.0.1:$port > /tmp/tun.log 2>&1 &
+            pid=$!
+            sleep 6
+            echo "--- listeners"; ss -lntp 2>/dev/null | grep -E ":7000" || echo "   (nothing on 7000)"
+            echo "--- client log (first 25 lines)"
+            head -25 /tmp/tun.log
+            for attempt in 1 2 3; do
+              echo "--- curl attempt $attempt via socks5h"
+              timeout 40 curl -sS -m 35 -x "socks5h://127.0.0.1:$port" \
+                -o /tmp/page.html -w "http=%{http_code} bytes=%{size_download} time=%{time_total}\n" \
+                http://example.com/ 2>&1 | tail -3
+              head -c 200 /tmp/page.html 2>/dev/null; echo
+              [ -s /tmp/page.html ] && break
+              sleep 5
+            done
+            echo "--- sendto/recvfrom: $(grep -c sendto /tmp/tun.log) / $(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/tun.log)"
+            echo "--- last 12 log lines"
+            tail -12 /tmp/tun.log
+            kill $pid 2>/dev/null; wait $pid 2>/dev/null
+          done
+
       - name: "Is the gate keyed on -report?"
         run: |
           exec > >(tee /tmp/report-matrix.txt) 2>&1
@@ -322,7 +353,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p analysis-bdnet/configs/dns/results
-          for f in apk sysroot startup xdnstt-run libdns-run xdnstt libdns report-matrix strace replypath zones; do
+          for f in apk sysroot startup xdnstt-run libdns-run xdnstt libdns report-matrix strace replypath zones tunnel; do
             [ -f "/tmp/$f.txt" ] && cp "/tmp/$f.txt" "analysis-bdnet/configs/dns/results/qemu-$f.txt"
             [ -f "/tmp/$f.log" ] && cp "/tmp/$f.log" "analysis-bdnet/configs/dns/results/qemu-$f.log"
           done
