@@ -1,7 +1,52 @@
 export QEMU_LD_PREFIX="$PWD/sysroot"
-pkill -f "^qemu-aarch64-static"; sleep 2; echo "left: $(pgrep -cf "^qemu-aarch64-static")"
-setsid nohup qemu-aarch64-static libs/libxdnstt.so -udp 13.140.185.158:53 -report "BD NET VPN" -pubkey prince sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/tun2.log 2>&1 < /dev/null &
+cat > /tmp/s5b.py <<PY
+import socket, sys, time
+USER, PASS = b"tanginakaba", b"hackpamoregago"
+def rd(s,n):
+    b=b""
+    while len(b)<n:
+        d=s.recv(n-len(b))
+        if not d: raise SystemExit("eof")
+        b+=d
+    return b
+def conn(port=7000):
+    s=socket.create_connection(("127.0.0.1",port),10); s.settimeout(60)
+    s.sendall(b"\x05\x01\x02"); rd(s,2)
+    s.sendall(bytes([1,len(USER)])+USER+bytes([len(PASS)])+PASS); return s
+def open_tcp(host,port):
+    s=conn(); h=host.encode()
+    s.sendall(b"\x05\x01\x00\x03"+bytes([len(h)])+h+port.to_bytes(2,"big"))
+    rep=rd(s,4)
+    if rep[3]==1: rd(s,6)
+    elif rep[3]==3: rd(s,rd(s,1)[0]+2)
+    else: rd(s,18)
+    return s,rep
+t0=time.time()
+s,rep=open_tcp("api.telegram.org",443); print("telegram connect", rep.hex(), f"{(time.time()-t0)*1000:.0f}ms")
+s.close()
+# throughput: 200 KB from a speed endpoint over plain HTTP
+s,rep=open_tcp("speed.hetzner.de",80)
+s.sendall(b"GET /static/static.bin HTTP/1.1\r\nHost: speed.hetzner.de\r\nConnection: close\r\nRange: bytes=0-204799\r\n\r\n")
+got=0; t1=time.time(); head=b""
+while True:
+    try: d=s.recv(65536)
+    except socket.timeout: break
+    if not d: break
+    if len(head)<80: head+=d[:80-len(head)]
+    got+=len(d)
+    if got>400000 or time.time()-t1>120: break
+dt=time.time()-t1
+print("first line:", head.split(b"\r\n")[0])
+print(f"downloaded {got} bytes in {dt:.1f}s -> {got*8/dt/1000:.1f} kbit/s")
+PY
+pkill -f "^qemu-aarch64-static"; sleep 2
+setsid nohup qemu-aarch64-static libs/libxdnstt.so -udp 13.140.185.158:53 -report "BD NET VPN" -pubkey prince sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/tun3.log 2>&1 < /dev/null &
 sleep 7
-echo "=== example.com"; timeout 60 python3 /tmp/s5.py example.com 80
-echo "=== tun log"; tail -3 /tmp/tun2.log
-# nonce=1793279563357501895
+timeout 200 python3 /tmp/s5b.py
+echo "--- try second server"
+pkill -f "^qemu-aarch64-static"; sleep 2
+setsid nohup qemu-aarch64-static libs/libxdnstt.so -udp 13.140.185.181:53 -report "BD NET VPN" -pubkey prince sd-de20.liftmeon.org 127.0.0.1:7000 > /tmp/tun4.log 2>&1 < /dev/null &
+sleep 7
+timeout 60 python3 /tmp/s5.py api.telegram.org 443 2>&1 | head -4
+tail -2 /tmp/tun4.log
+# nonce=1793279586394312389
