@@ -1,3 +1,2 @@
-F=/tmp/src/sources/prince/dastan/vpn/service/XRayDNSService.java
-python3 /tmp/res.py $F | grep -n "libxray\|--config\|-config\|ProcessBuilder\|config.json\|pEncrypt\|q =" | head -20
-# nonce=1793279332283013402
+python3 /tmp/res.py /tmp/src/sources/prince/dastan/vpn/service/XRayDNSService.java | sed -n "300,360p"
+# nonce=1793279338773291987
