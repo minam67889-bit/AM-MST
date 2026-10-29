@@ -1,0 +1,12 @@
+=== res/raw/psiphon_config ===
+{
+    "PropagationChannelId": "FFFFFFFFFFFFFFFF",
+    "SponsorId": "FFFFFFFFFFFFFFFF",
+    "LocalHttpProxyPort": 8080,
+    "LocalSocksProxyPort": 10801,
+    "EgressRegion": ""
+}
+=== psiphon_resources ===
+ 17999336  1981-01-01 01:01   lib/arm64-v8a/libgojni.so
+      177  1981-01-01 01:01   res/raw/psiphon_config
+      324  1981-01-01 01:01   res/xml/ca_psiphon_psiphontunnel_backup_rules.xml
