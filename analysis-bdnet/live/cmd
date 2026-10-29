@@ -1,4 +1,15 @@
-F=/tmp/src/sources/prince/dastan/vpn/service/XRayDNSService.java
-echo "count: $(grep -c "127.0.0.1:7000" $F)"
-sed -n "424,440p" $F | cat -A | sed -e "s/\\$$//" | cut -c1-220
-# nonce=1793279398340522918
+export QEMU_LD_PREFIX="$PWD/sysroot"; chmod +x libs/*.so 2>/dev/null
+cat > /tmp/x.json <<EOF
+{"dns":{"hosts":{"domain:googleapis.cn":"googleapis.com"},"servers":["1.1.1.1"]},"inbounds":[{"listen":"127.0.0.1","port":"10808","protocol":"socks","settings":{"auth":"noauth","udp":true,"userLevel":8},"sniffing":{"destOverride":["http","tls"],"enabled":true},"tag":"socks"}],"log":{"loglevel":"debug"},"outbounds":[{"protocol":"socks","settings":{"servers":[{"address":"127.0.0.1","port":7000,"users":[{"user":"tanginaka","pass":"wagditokupal"}]}]},"streamSettings":{"network":"tcp","security":"none","tlsSettings":{}},"tag":"proxy"},{"protocol":"freedom","tag":"direct"}],"routing":{"domainStrategy":"IPIfNonMatch","rules":[{"ip":["1.1.1.1"],"outboundTag":"proxy","port":"53","type":"field"}]}}
+EOF
+setsid nohup qemu-aarch64-static libs/libxdnstt.so -udp 13.140.185.158:53 -report "BD NET VPN" -pubkey prince sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/tun.log 2>&1 < /dev/null &
+sleep 6
+echo "--- dnstt log"; tail -3 /tmp/tun.log
+setsid nohup qemu-aarch64-static libs/libxray.so run -c /tmp/x.json > /tmp/xray.log 2>&1 < /dev/null &
+sleep 12
+echo "--- xray log"; tail -25 /tmp/xray.log
+echo "--- curl through xray"
+timeout 40 curl -sS --max-time 35 -x socks5h://127.0.0.1:10808 -o /dev/null -w "example http=%{http_code} bytes=%{size_download}\n" http://example.com/ 2>&1 | head -5
+echo "--- tun log after"; tail -5 /tmp/tun.log
+pkill -f libxray.so; pkill -f libxdnstt.so; true
+# nonce=1793279457214691353
