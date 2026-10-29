@@ -1,2 +1,6 @@
-tail -3 /tmp/jadxrun.log; echo "---"; ls /tmp/src 2>/dev/null | head; du -sh /tmp/src 2>/dev/null
-# nonce=1793279224743734729
+S=/tmp/src/sources
+echo "=== who mentions xdnstt ==="; grep -rn "xdnstt" $S --include=*.java | head -8 | cut -c1-180
+echo "=== tanginaka ==="; grep -rn "tanginaka\|wagditokupal" $S --include=*.java | head -5 | cut -c1-180
+echo "=== VPN SHARE ==="; grep -rln "VPN SHARE" $S | head -5
+echo "=== socks5 classes of theirs ==="; grep -rln "socks5" $S/prince 2>/dev/null | head -10
+# nonce=1793279234905666495
