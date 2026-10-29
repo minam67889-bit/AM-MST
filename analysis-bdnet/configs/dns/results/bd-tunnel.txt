@@ -1,43 +1,26 @@
-========== de1: credential candidates (reversed pair first)
-    wagditokupal/tanginaka -> b'\x01\xff'
-    tanginaka/wagditokupal -> b'\x01\xff'
-    tanginaka/tanginaka -> b'\x01\xff'
-    wagditokupal/wagditokupal -> b'\x01\xff'
-    bdfreevpn/bdfreevpn -> b'\x01\xff'
-    prince/prince -> b'\x01\xff'
-    liftmeon/liftmeon -> b'\x01\xff'
-    de1/de1 -> b'\x01\xff'
-    aog/aog -> b'\x01\xff'
-    prince/tanginaka -> b'\x01\xff'
-    tanginaka/prince -> b'\x01\xff'
-    bdfree/bdfree -> b'\x01\xff'
-    bdnet/bdnet -> b'\x01\xff'
-    princevpn/princevpn -> b'\x01\xff'
-    bdfreevpn/prince -> b'\x01\xff'
-    prince/bdfreevpn -> b'\x01\xff'
-    dastan/dastan -> b'\x01\xff'
-    tanginaka/bdfreevpn -> b'\x01\xff'
---- no-auth greeting as a sanity check
-    noauth -> 05ff
-
-========== every de*.liftmeon.org endpoint: what answers on the far end?
-  de1 (13.140.185.158) -> far end says 05ff
-  de2 (13.140.185.159) -> far end says 05ff
-  de3 (13.140.185.160) -> far end says 05ff
-  de4 (13.140.185.162) -> far end says 05ff
-  de5 (13.140.185.163) -> far end says 05ff
-  de6 (13.140.185.161) -> far end says 05ff
-  de7 (13.140.185.164) -> far end says 05ff
-  de8 (13.140.185.165) -> far end says 05ff
-  de9 (13.140.185.168) -> far end says 05ff
-  de10 (13.140.185.170) -> far end says 05ff
-  de11 (13.140.185.171) -> far end says 05ff
-  de12 (13.140.185.172) -> far end says 05ff
-  de13 (13.140.185.173) -> far end says 05ff
-  de14 (13.140.185.174) -> far end says 05ff
-  de15 (13.140.185.175) -> far end says 05ff
-  de16 (13.140.185.176) -> far end says 05ff
-  de17 (13.140.185.177) -> far end says 05ff
-  de18 (13.140.185.178) -> far end says 05ff
-  de19 (13.140.185.180) -> far end says 05ff
-  de20 (13.140.185.181) -> far end says 05ff
+================= 13.140.185.158
+    plain          -> b'\x01\xff'
+    hex user       -> b'\x01\xff'
+    hex both       -> b'\x01\xff'
+    b64 both       -> b'\x01\xff'
+    upper          -> b'\x01\xff'
+    report+prince  -> b'\x01\xff'
+    prince+report  -> b'\x01\xff'
+    zone+pair      -> b'\x01\xff'
+    user=report    -> b'\x01\xff'
+    pass=report    -> b'\x01\xff'
+    empty user     -> b'\x01\xff'
+    empty pass     -> b'\x01\xff'
+================= 13.140.185.159
+    plain          -> b'\x01\xff'
+    hex user       -> b'\x01\xff'
+    hex both       -> b'\x01\xff'
+    b64 both       -> b'\x01\xff'
+    upper          -> b'\x01\xff'
+    report+prince  -> b'\x01\xff'
+    prince+report  -> b'\x01\xff'
+    zone+pair      -> b'\x01\xff'
+    user=report    -> b'\x01\xff'
+    pass=report    -> b'\x01\xff'
+    empty user     -> b'\x01\xff'
+    empty pass     -> b'\x01\xff'
