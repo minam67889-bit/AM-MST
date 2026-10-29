@@ -258,6 +258,40 @@ jobs:
           echo "libdns received: $(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/ld.log)"
           kill $pid 2>/dev/null
 
+      - name: "zone: the hostnames the app actually lists (de1.liftmeon.org …)"
+        run: |
+          exec > >(tee /tmp/zones.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          echo "=== is the SlowDNS server reachable at all at the DNS level?"
+          for h in 13.140.185.158 de1.liftmeon.org; do
+            echo "--- dig @$h example.com"
+            timeout 8 dig +time=3 +tries=1 @$h example.com A 2>&1 | grep -E "status:|ANSWER:|connection timed out" | head -3
+            echo "--- dig @$h sd-de1.liftmeon.org"
+            timeout 8 dig +time=3 +tries=1 @$h sd-de1.liftmeon.org A 2>&1 | grep -E "status:|ANSWER:" | head -3
+          done
+          echo
+          echo "=== xdnstt handshake per zone (recvfrom > 0 == the server heard us)"
+          for target in 13.140.185.158 de1.liftmeon.org; do
+            for zone in sd-de1.liftmeon.org de1.liftmeon.org sd-de1 de1; do
+              port=$((7700 + RANDOM % 200))
+              timeout 22 qemu-aarch64-static -strace libs/libxdnstt.so \
+                -udp "$target:53" -report "BD NET VPN" -pubkey prince \
+                "$zone" 127.0.0.1:$port > /tmp/z.log 2>&1
+              s=$(grep -c sendto /tmp/z.log); r=$(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/z.log)
+              echo "target=$target zone=$zone -> sendto=$s recvfrom_data=$r"
+              [ "$r" -gt 0 ] && { echo "   *** HEARD BACK ***"; grep -E 'recvfrom\(.*\) = [0-9]+$' /tmp/z.log | head -3; }
+            done
+          done
+          echo
+          echo "=== and TCP:53 once, in case the zone lives there"
+          for zone in sd-de1.liftmeon.org de1.liftmeon.org; do
+            timeout 15 qemu-aarch64-static -strace libs/libxdnstt.so \
+              -tcp 13.140.185.158:53 -report "BD NET VPN" -pubkey prince \
+              "$zone" 127.0.0.1:7900 > /tmp/zt.log 2>&1
+            echo "tcp zone=$zone sendto=$(grep -c sendto /tmp/zt.log) recvfrom_data=$(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/zt.log)"
+          done
+
       - name: "Is the gate keyed on -report?"
         run: |
           exec > >(tee /tmp/report-matrix.txt) 2>&1
@@ -288,7 +322,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p analysis-bdnet/configs/dns/results
-          for f in apk sysroot startup xdnstt-run libdns-run xdnstt libdns report-matrix strace replypath; do
+          for f in apk sysroot startup xdnstt-run libdns-run xdnstt libdns report-matrix strace replypath zones; do
             [ -f "/tmp/$f.txt" ] && cp "/tmp/$f.txt" "analysis-bdnet/configs/dns/results/qemu-$f.txt"
             [ -f "/tmp/$f.log" ] && cp "/tmp/$f.log" "analysis-bdnet/configs/dns/results/qemu-$f.log"
           done
