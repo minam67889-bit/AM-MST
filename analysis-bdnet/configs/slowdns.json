@@ -1,0 +1,572 @@
+{
+  "$schema_note": "Everything measured/extracted for BD NET's SlowDNS (dnstt) path. No secrets beyond the service-wide SOCKS login that the app itself sends.",
+  "generated": "2026-10-29T15:48:44Z",
+  "source": "decompiled dastan.prince.bdfreevpn (SocksDNSService.java, XRayDNSService.java, servers.json) + live runs on GitHub Actions with their own arm64 binaries",
+  "verified": {
+    "tunnel_up": true,
+    "http_200_example_com": true,
+    "https_api_telegram_org": "302",
+    "download": "524288 B in 4.05 s (129 KB/s)",
+    "servers_confirmed": [
+      "sd-de1.liftmeon.org",
+      "sd-de20.liftmeon.org"
+    ],
+    "evidence": [
+      "docs/SLOWDNS.md",
+      "analysis-bdnet/configs/dns/results/bd-far-end.txt"
+    ]
+  },
+  "engine": {
+    "mode": "slowdns (dnstt over DNS/UDP)",
+    "app_engine_mode": 1,
+    "binary": {
+      "name": "libxdnstt.so",
+      "size": 16587328,
+      "abi": "arm64-v8a",
+      "interpreter": "/system/bin/linker64 (bionic)",
+      "origin": "lib/arm64-v8a/libxdnstt.so inside BD NET's public APK",
+      "upstream": "dnstt client fork (KEM handshake, extra -report licence gate)"
+    },
+    "argv": {
+      "template": [
+        "<libxdnstt.so>",
+        "-udp",
+        "<server-ip>:53",
+        "-report",
+        "BD NET VPN",
+        "-pubkey",
+        "prince",
+        "sd-<host>",
+        "127.0.0.1:7000"
+      ],
+      "notes": [
+        "-report MUST be exactly 'BD NET VPN' (the app label); anything else and the client stays silent",
+        "the zone is the literal prefix 'sd-' + the hostname BD lists (NOT sd-<ip>)",
+        "no SOCKS flag exists: the local end is a raw TCP forwarder to the far end",
+        "optional -utls <fp> (e.g. Chrome 120); default was 'uTLS fingerprint Chrome 120'"
+      ],
+      "example": [
+        "libxdnstt.so",
+        "-udp",
+        "13.140.185.158:53",
+        "-report",
+        "BD NET VPN",
+        "-pubkey",
+        "prince",
+        "sd-de1.liftmeon.org",
+        "127.0.0.1:7000"
+      ]
+    },
+    "ports": {
+      "dns_upstream": 53,
+      "local_forwarder": 7000,
+      "far_end_socks5": "unknown port on the far side (reached through the tunnel)",
+      "app_local_no_auth_socks5": 1080,
+      "fastdns_local_listen": 7777,
+      "fastdns_app_socks5_listen": 10802
+    },
+    "mtu": {
+      "effective": "130-138",
+      "logged": "effective MTU 130",
+      "note": "chosen by the client per handshake"
+    },
+    "session": {
+      "id_format": "8 hex chars, e.g. 7fe260a3",
+      "streams": "one TCP stream per SOCKS5 connection (begin stream <sid>:<n>)"
+    },
+    "report_string": "BD NET VPN",
+    "pubkey_label": "prince"
+  },
+  "far_end": {
+    "what_it_is": "dual-stack SOCKS server (SOCKS4a + SOCKS5) with a fixed user database, reached through the tunnel",
+    "socks5": {
+      "methods_offered_by_far_end": [
+        "0x02 username/password"
+      ],
+      "no_auth_result": "05 ff (rejected)",
+      "auth": {
+        "username": "tanginakaba",
+        "password": "hackpamoregago",
+        "username_len": 11,
+        "password_len": 14,
+        "greeting_hex": "050102",
+        "auth_packet_hex": "010b74616e67696e616b6162610e6861636b70616d6f72656761676f",
+        "accepted_reply_hex": "0100",
+        "client_greeting_hex": "050102",
+        "server_method_reply_hex": "0502",
+        "full_login_sequence_hex": "050102 | 0502 | 010b74616e67696e616b6162610e6861636b70616d6f72656761676f | 0100"
+      },
+      "connect": {
+        "template_hex": "05010003<len><host-utf8><port-be16>",
+        "success_reply_hex": "05000001<4-byte-bind><2-byte-port>",
+        "atyp_supported": [
+          1,
+          3,
+          4
+        ],
+        "udp_associate": "not tested / not offered by our relay"
+      },
+      "decoy_pair": {
+        "username": "tanginaka",
+        "password": "wagditokupal",
+        "why": "appears in BD's own Xray template and string table but the far end rejects it (01 ff); their libxray substitutes the real pair at runtime"
+      }
+    },
+    "socks4a": {
+      "connect_reply_seen": "00 5b (request rejected)",
+      "note": "speaks SOCKS4 too; also refuses without valid userid"
+    },
+    "not_http": true,
+    "not_tls": true
+  },
+  "servers": {
+    "count": 20,
+    "list": [
+      {
+        "host": "de1.liftmeon.org",
+        "ip": "13.140.185.158",
+        "zone": "sd-de1.liftmeon.org",
+        "udp": "13.140.185.158:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.158:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de1.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c011d6a516b"
+      },
+      {
+        "host": "de2.liftmeon.org",
+        "ip": "13.140.185.159",
+        "zone": "sd-de2.liftmeon.org",
+        "udp": "13.140.185.159:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.159:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de2.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c011c6a516b"
+      },
+      {
+        "host": "de3.liftmeon.org",
+        "ip": "13.140.185.160",
+        "zone": "sd-de3.liftmeon.org",
+        "udp": "13.140.185.160:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.160:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de3.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c02156a516b"
+      },
+      {
+        "host": "de4.liftmeon.org",
+        "ip": "13.140.185.162",
+        "zone": "sd-de4.liftmeon.org",
+        "udp": "13.140.185.162:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.162:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de4.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c02176a516b"
+      },
+      {
+        "host": "de5.liftmeon.org",
+        "ip": "13.140.185.163",
+        "zone": "sd-de5.liftmeon.org",
+        "udp": "13.140.185.163:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.163:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de5.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c02166a516b"
+      },
+      {
+        "host": "de6.liftmeon.org",
+        "ip": "13.140.185.161",
+        "zone": "sd-de6.liftmeon.org",
+        "udp": "13.140.185.161:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.161:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de6.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c02146a516b"
+      },
+      {
+        "host": "de7.liftmeon.org",
+        "ip": "13.140.185.164",
+        "zone": "sd-de7.liftmeon.org",
+        "udp": "13.140.185.164:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.164:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de7.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c02116a516b"
+      },
+      {
+        "host": "de8.liftmeon.org",
+        "ip": "13.140.185.165",
+        "zone": "sd-de8.liftmeon.org",
+        "udp": "13.140.185.165:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.165:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de8.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c02106a516b"
+      },
+      {
+        "host": "de9.liftmeon.org",
+        "ip": "13.140.185.168",
+        "zone": "sd-de9.liftmeon.org",
+        "udp": "13.140.185.168:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.168:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de9.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c021d6a516b"
+      },
+      {
+        "host": "de10.liftmeon.org",
+        "ip": "13.140.185.170",
+        "zone": "sd-de10.liftmeon.org",
+        "udp": "13.140.185.170:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.170:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de10.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c03156a516b"
+      },
+      {
+        "host": "de11.liftmeon.org",
+        "ip": "13.140.185.171",
+        "zone": "sd-de11.liftmeon.org",
+        "udp": "13.140.185.171:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.171:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de11.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c03146a516b"
+      },
+      {
+        "host": "de12.liftmeon.org",
+        "ip": "13.140.185.172",
+        "zone": "sd-de12.liftmeon.org",
+        "udp": "13.140.185.172:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.172:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de12.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c03176a516b"
+      },
+      {
+        "host": "de13.liftmeon.org",
+        "ip": "13.140.185.173",
+        "zone": "sd-de13.liftmeon.org",
+        "udp": "13.140.185.173:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.173:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de13.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c03166a516b"
+      },
+      {
+        "host": "de14.liftmeon.org",
+        "ip": "13.140.185.174",
+        "zone": "sd-de14.liftmeon.org",
+        "udp": "13.140.185.174:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.174:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de14.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c03116a516b"
+      },
+      {
+        "host": "de15.liftmeon.org",
+        "ip": "13.140.185.175",
+        "zone": "sd-de15.liftmeon.org",
+        "udp": "13.140.185.175:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.175:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de15.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c03106a516b"
+      },
+      {
+        "host": "de16.liftmeon.org",
+        "ip": "13.140.185.176",
+        "zone": "sd-de16.liftmeon.org",
+        "udp": "13.140.185.176:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.176:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de16.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c03136a516b"
+      },
+      {
+        "host": "de17.liftmeon.org",
+        "ip": "13.140.185.177",
+        "zone": "sd-de17.liftmeon.org",
+        "udp": "13.140.185.177:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.177:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de17.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c03126a516b"
+      },
+      {
+        "host": "de18.liftmeon.org",
+        "ip": "13.140.185.178",
+        "zone": "sd-de18.liftmeon.org",
+        "udp": "13.140.185.178:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.178:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de18.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c031d6a516b"
+      },
+      {
+        "host": "de19.liftmeon.org",
+        "ip": "13.140.185.180",
+        "zone": "sd-de19.liftmeon.org",
+        "udp": "13.140.185.180:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.180:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de19.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c0c156a516b"
+      },
+      {
+        "host": "de20.liftmeon.org",
+        "ip": "13.140.185.181",
+        "zone": "sd-de20.liftmeon.org",
+        "udp": "13.140.185.181:53",
+        "argv_tail": [
+          "-udp",
+          "13.140.185.181:53",
+          "-report",
+          "BD NET VPN",
+          "-pubkey",
+          "prince",
+          "sd-de20.liftmeon.org",
+          "127.0.0.1:7000"
+        ],
+        "server_xor_hex": "05167e556c53460f5e5e7e6c0c146a516b"
+      }
+    ]
+  },
+  "local_proxy": {
+    "purpose": "clean no-auth SOCKS5 for Telegram/apps/tun2socks; it logs in to the far end for the client",
+    "listen": "127.0.0.1:1080 (0.0.0.0:1080 when LAN share is on)",
+    "upstream": "127.0.0.1:7000 (the dnstt forwarder)",
+    "relay_greeting_hex": "05020002",
+    "telegram_test": "Telegram -> Settings -> Data and Storage -> Proxy -> SOCKS5 127.0.0.1 : 1080 (leave user/pass empty)",
+    "lan_share_test": "curl -x socks5h://<phone-ip>:1080 http://example.com/"
+  },
+  "tun2socks": {
+    "binary": {
+      "name": "libtun2socks.so",
+      "size": 160232,
+      "upstream": "badvpn 1.999.127"
+    },
+    "argv": [
+      "libtun2socks.so",
+      "--tunfd",
+      "<fd>",
+      "--tunmtu",
+      "1500",
+      "--netif-ipaddr",
+      "10.111.222.2",
+      "--netif-netmask",
+      "255.255.255.0",
+      "--socks-server-addr",
+      "127.0.0.1:1080",
+      "--loglevel",
+      "info"
+    ],
+    "optional_flags": [
+      "--udpgw-remote-server-addr",
+      "--udpgw-max-connections",
+      "--udpgw-transparent-dns"
+    ],
+    "note": "tun must addDisallowedApplication(the app) so the tunnel client's own DNS packets do not re-enter the tun"
+  },
+  "fastdns_udpq": {
+    "note": "BD's other DNS mode (libdns.so = 'FastDNS v1.2 | Client'); different protocol, same family. Included because it was extracted alongside SlowDNS.",
+    "binary": {
+      "name": "libdns.so",
+      "size": 5126496
+    },
+    "argv_flags": {
+      "-listen": "local Server Address (default 127.0.0.1:7777)",
+      "-report": "Reporting Name (default 'App Name')",
+      "-tunnel": "Relay Server Address (default 127.0.0.1:53)"
+    },
+    "argv_example": [
+      "libdns.so",
+      "-tunnel",
+      "<pEncrypt(server-ip:53)>",
+      "-report",
+      "BD NET VPN"
+    ],
+    "config_json_template": {
+      "server": "<xor_hex(ip:53)>",
+      "validate": "1",
+      "confuse": "1",
+      "rx": 3,
+      "tx": 3,
+      "retry": -1,
+      "retry_interval": 1,
+      "socks5": {
+        "listen": "127.0.0.1:10802"
+      },
+      "recv_window_conn": 196608,
+      "recv_window": 491520,
+      "report": "BD NET VPN"
+    },
+    "launch": [
+      "libudpq.so",
+      "client",
+      "--config",
+      "<filesDir>/config.json"
+    ],
+    "note_app_passes_encrypted_tunnel": "SocksDNSService passes pEncrypt(ip:53) to -tunnel and a JS-object-like config built from the same template"
+  },
+  "obfuscation": {
+    "algorithm": "hex(text XOR repeating-key)",
+    "key_hex": "342550645863683e666b505d",
+    "key_ascii": "4%PdXch>fkP]",
+    "encrypt_example": {
+      "plain": "13.140.185.158:53",
+      "hex": "05167e556c53460f5e5e7e6c011d6a516b"
+    },
+    "hosts_blob_example": {
+      "hex_prefix": "5040614a340a0e4a0b0e3f331a4a220363070d0c",
+      "decodes_to": "de1.liftmeon.org;de2.lif"
+    },
+    "used_by": [
+      "pEncrypt/pDecrypt in libputils.so (also obscures server hostnames in servers.json)"
+    ]
+  },
+  "reproduction_commands": [
+    "qemu-aarch64-static libs/libxdnstt.so -udp 13.140.185.158:53 -report 'BD NET VPN' -pubkey prince sd-de1.liftmeon.org 127.0.0.1:7000",
+    "curl -x socks5h://127.0.0.1:1080 http://example.com/",
+    "curl -x socks5h://127.0.0.1:1080 https://api.telegram.org/",
+    "python3 tools/far_end_probe.py 7000"
+  ],
+  "limits": [
+    "the SOCKS login is service-wide: if BD rotates it, auth starts returning 01 ff and the new pair must be re-captured (proxy their libxray -> their dnstt port)",
+    "TCP only through the relay (no UDP ASSOCIATE); Telegram falls back to TCP",
+    "speed is DNS-tunnel speed: ~129 KB/s down measured, fine for pages/Telegram, not for video",
+    "binaries come from BD's public APK at build time, they are not committed"
+  ]
+}
