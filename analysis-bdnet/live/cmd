@@ -1,8 +1,9 @@
-export QEMU_LD_PREFIX="$PWD/sysroot"; echo 'aW1wb3J0IHNvY2tldCwgc3lzLCB0aW1lCkhPU1QsIFBPUlQgPSAiMTI3LjAuMC4xIiwgNzAwMApVU0VSLCBQQVNTID0gYiJ0YW5naW5ha2EiLCBiImhhY2twYW1vcmVnYWdvIgpkZWYgcmQocywgbik6CiAgICBiID0gYiIiCiAgICB3aGlsZSBsZW4oYikgPCBuOgogICAgICAgIGQgPSBzLnJlY3YobiAtIGxlbihiKSkKICAgICAgICBpZiBub3QgZDogcmFpc2UgU3lzdGVtRXhpdChmImVvZiBhZnRlciB7YiFyfSIpCiAgICAgICAgYiArPSBkCiAgICByZXR1cm4gYgp0YXJnZXQgPSBzeXMuYXJndlsxXTsgdHBvcnQgPSBpbnQoc3lzLmFyZ3ZbMl0pCnMgPSBzb2NrZXQuY3JlYXRlX2Nvbm5lY3Rpb24oKEhPU1QsIFBPUlQpLCAxMCk7IHMuc2V0dGltZW91dCgzMCkKdDAgPSB0aW1lLnRpbWUoKQpzLnNlbmRhbGwoYiJceDA1XHgwMVx4MDIiKTsgcHJpbnQoIm1ldGhvZDoiLCByZChzLDIpLmhleCgpKQpzLnNlbmRhbGwoYnl0ZXMoWzEsbGVuKFVTRVIpXSkrVVNFUitieXRlcyhbbGVuKFBBU1MpXSkrUEFTUyk7IHByaW50KCJhdXRoOiIsIHJkKHMsMikuaGV4KCksIGYieyh0aW1lLnRpbWUoKS10MCkqMTAwMDouMGZ9bXMiKQpoID0gdGFyZ2V0LmVuY29kZSgpCnMuc2VuZGFsbChiIlx4MDVceDAxXHgwMFx4MDMiK2J5dGVzKFtsZW4oaCldKStoK3Rwb3J0LnRvX2J5dGVzKDIsImJpZyIpKQpyZXAgPSByZChzLDQpOyBwcmludCgicmVwbHk6IiwgcmVwLmhleCgpLCAiYXR5cCIsIHJlcFszXSkKaWYgcmVwWzNdID09IDE6IHJkKHMsIDYpCmVsaWYgcmVwWzNdID09IDM6IHJkKHMsIHJkKHMsMSlbMF0gKyAyKQplbHNlOiByZChzLCAxOCkKaWYgcmVwWzFdICE9IDA6IHJhaXNlIFN5c3RlbUV4aXQoImNvbm5lY3QgZmFpbGVkIikKcHJpbnQoInR1bm5lbCB1cCBpbiIsIGYieyh0aW1lLnRpbWUoKS10MCkqMTAwMDouMGZ9bXMiKQpzLnNlbmRhbGwoZiJHRVQgLyBIVFRQLzEuMVxyXG5Ib3N0OiB7dGFyZ2V0fVxyXG5Db25uZWN0aW9uOiBjbG9zZVxyXG5cclxuIi5lbmNvZGUoKSkKZGF0YSA9IGIiIgp3aGlsZSBUcnVlOgogICAgZCA9IHMucmVjdig2NTUzNikKICAgIGlmIG5vdCBkOiBicmVhawogICAgZGF0YSArPSBkCiAgICBpZiBsZW4oZGF0YSkgPiA0MDAwOiBicmVhawpwcmludCgiZ290IiwgbGVuKGRhdGEpLCAiYnl0ZXM6IiwgZGF0YVs6MTIwXS5yZXBsYWNlKGIiXHJcbiIsIGIiIHwgIikpCg==' | base64 -d > /tmp/s5.py
-setsid nohup qemu-aarch64-static libs/libxdnstt.so -udp 13.140.185.158:53 -report 'BD NET VPN' -pubkey prince sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/tun.log 2>&1 < /dev/null &
+export QEMU_LD_PREFIX="$PWD/sysroot"
+sed -i "s/^USER, PASS = .*/USER, PASS = b\"tanginakaba\", b\"hackpamoregago\"/" /tmp/s5.py
+grep -n "^USER" /tmp/s5.py
+K=$(pgrep -f "libxdnst[t].so"); echo "old client pids: $K"; [ -n "$K" ] && kill $K; sleep 2
+setsid nohup qemu-aarch64-static libs/libxdnstt.so -udp 13.140.185.158:53 -report "BD NET VPN" -pubkey prince sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/tun2.log 2>&1 < /dev/null &
 sleep 7
-echo '=== example.com'; timeout 60 python3 /tmp/s5.py example.com 80
-echo '=== api.telegram.org'; timeout 60 python3 /tmp/s5.py api.telegram.org 443 2>&1 | head -5
-echo '=== tun log'; tail -3 /tmp/tun.log
-pkill -f libxdnstt.so; true
-# nonce=1793279528817994842
+echo "=== example.com"; timeout 60 python3 /tmp/s5.py example.com 80
+echo "=== tun log"; tail -3 /tmp/tun2.log
+# nonce=1793279553079236272
