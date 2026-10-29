@@ -1,0 +1,139 @@
+name: Psiphon engine probe
+
+# BD NET ships Psiphon's tunnel core as `libgojni.so` plus a 102-byte
+# `res/raw/psiphon_config`. Psiphon needs no account and no server of ours,
+# which is exactly the shape of "install, press connect, it works" the user
+# asked for. This job answers two questions:
+#
+#   1. what is actually inside their psiphon_config, and what URLs / public
+#      keys are compiled into libgojni.so?
+#   2. can we build psiphon-tunnel-core's ConsoleClient for android arm64 so a
+#      real SOCKS5 proxy on 127.0.0.1:1080 is possible?
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/psiphon-probe.yml"
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: psiphon-probe-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Pull the APK
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -uo pipefail
+          mkdir -p art
+          RUN=$(gh run list --workflow=analyze-apk.yml --limit 5 \
+                  --json databaseId,conclusion --jq '[.[]|select(.conclusion=="success")][0].databaseId')
+          echo "analysis run: $RUN"
+          gh run download "$RUN" -n amtunnel-apk-analysis -D art -R "$GITHUB_REPOSITORY" || true
+          ls -l art/amtunnel.apk || { echo "apk missing"; exit 1; }
+
+      - name: What is in their Psiphon config
+        run: |
+          set +e
+          OUT=analysis-bdnet/configs/psiphon
+          mkdir -p "$OUT"
+          echo "=== res/raw/psiphon_config ===" | tee "$OUT/psiphon-config.txt"
+          unzip -p art/amtunnel.apk res/raw/psiphon_config | tee -a "$OUT/psiphon-config.txt" | head -c 2000
+          echo | tee -a "$OUT/psiphon-config.txt"
+
+          echo "=== psiphon_resources ===" | tee -a "$OUT/psiphon-config.txt"
+          unzip -l art/amtunnel.apk | grep -iE 'psiphon|gojni' | tee -a "$OUT/psiphon-config.txt"
+
+          echo "=== urls and keys inside libgojni.so ===" | tee "$OUT/libgojni-strings.txt"
+          unzip -p art/amtunnel.apk lib/arm64-v8a/libgojni.so > /tmp/libgojni.so
+          ls -l /tmp/libgojni.so
+          strings -n 8 /tmp/libgojni.so | grep -iE 'https?://[a-z0-9./_-]*(psiphon|s3\.amazonaws|psiph)' | sort -u | head -40 | tee -a "$OUT/libgojni-strings.txt"
+          echo "--- server list signature keys ---" | tee -a "$OUT/libgojni-strings.txt"
+          strings -n 40 /tmp/libgojni.so | grep -E '^[A-Za-z0-9+/]{40,}={0,2}$' | head -10 | tee -a "$OUT/libgojni-strings.txt"
+          echo "--- RemoteServerList / config keys ---" | tee -a "$OUT/libgojni-strings.txt"
+          strings -n 6 /tmp/libgojni.so | grep -E 'RemoteServerList|PropagationChannelId|SponsorId|ClientPlatform|LocalSocksProxyPort|DataStoreDirectory|EmitDiagnosticNotices' | sort -u | head -30 | tee -a "$OUT/libgojni-strings.txt"
+          echo "--- version ---" | tee -a "$OUT/libgojni-strings.txt"
+          strings -n 4 /tmp/libgojni.so | grep -E '^[0-9]+\.[0-9]+\.[0-9]+$' | sort -u | tail -10 | tee -a "$OUT/libgojni-strings.txt"
+
+      - name: Commit what we found
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-bdnet/configs/psiphon || true
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "analysis: BD NET's psiphon config and the URLs inside libgojni [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
+
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - name: Build ConsoleClient for android arm64
+        run: |
+          set +e
+          OUT=analysis-bdnet/configs/psiphon
+          mkdir -p "$OUT"
+          {
+            echo "=== go version ==="
+            go version
+            echo "=== clone ==="
+            git clone --depth 1 --branch v2.0.42 \
+              https://github.com/Psiphon-Labs/psiphon-tunnel-core /tmp/psiphon 2>&1 | tail -3
+            cd /tmp/psiphon || exit 1
+            echo "=== build linux/arm64 (runs on android: static go binary) ==="
+            time CGO_ENABLED=0 GOOS=linux GOARCH=arm64 \
+              go build -trimpath -o /tmp/psiphon-arm64 ./ConsoleClient 2>&1 | tail -25
+            echo "=== result ==="
+            ls -l /tmp/psiphon-arm64
+            file /tmp/psiphon-arm64
+          } > "$OUT/consoleclient-build.txt" 2>&1
+          tail -30 "$OUT/consoleclient-build.txt"
+
+      - name: Commit the build report
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-bdnet/configs/psiphon || true
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "analysis: does psiphon-tunnel-core ConsoleClient build for android arm64? [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
+
+      - name: Keep the binary for the next job
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: psiphon-arm64
+          path: /tmp/psiphon-arm64
+          retention-days: 14
+          if-no-files-found: warn
