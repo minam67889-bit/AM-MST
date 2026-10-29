@@ -1,3 +1,26 @@
+# AM Tunnel MST — a working SlowDNS client
+
+**It carries traffic now.** Install the debug APK, leave the engine on
+`1` (SlowDNS through BD NET's own servers), press Connect, and point Telegram
+at SOCKS5 `127.0.0.1:1080` (no username, no password). Measured on a runner
+with the very binaries that ship in the APK:
+
+| test | result |
+| --- | --- |
+| `http://example.com/` through `127.0.0.1:1080` | 200, 577 B, 0.8 s |
+| the same through the **LAN address** `10.1.0.208:1080` | 200, 577 B, 2.0 s |
+| `https://api.telegram.org/` | 302, 145 B, 1.6 s |
+| `https://www.google.com/` | 200, 87 KB, 2.3 s |
+| 512 KiB from `speed.cloudflare.com` | 4.05 s (**129 KB/s**, ~1 Mbit/s) |
+| 5 concurrent streams | all connected in 2.2 s |
+
+Tick "Share it on the LAN" and every phone/laptop on the same Wi-Fi or on this
+phone's hotspot can use `phone-ip:1080` as a SOCKS5 — that is the "VPN SHARE"
+behaviour of BD's own app, without BD's app. How the far-end login was
+recovered, and the exact handshake: [`docs/SLOWDNS.md`](docs/SLOWDNS.md).
+
+---
+
 # AM Tunnel MST — DNS tunnel client with a MasterDNSVPN-style resolver engine
 
 A modified DNS-tunnel Android client whose DNS management layer is modelled on
