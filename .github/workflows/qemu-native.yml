@@ -203,12 +203,37 @@ jobs:
           kill $pid 2>/dev/null || true
           cat /tmp/libdns-run.txt
 
+      - name: "Is the gate keyed on -report?"
+        run: |
+          exec > >(tee /tmp/report-matrix.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          AAPT=$(ls "$ANDROID_HOME"/build-tools/*/aapt2 2>/dev/null | tail -1)
+          echo "aapt2=$AAPT"
+          APK=$(find art -name '*.apk' | head -1)
+          [ -n "$AAPT" ] && "$AAPT" dump badging "$APK" 2>/dev/null | grep -E "application-label|package: name" | head -5
+          for rep in "BD NET" "BDNET" "BD NET VPN" "prince" "bdfreevpn" \
+                     "dastan.prince.bdfreevpn" "BD" "" "VPN" "BdNet"; do
+            echo "===== report=[$rep]"
+            timeout 20 qemu-aarch64-static libs/libxdnstt.so -udp 173.212.232.241:53 \
+              -report "$rep" -pubkey prince sd-173.212.232.241 127.0.0.1:7311 2>&1 | head -4
+          done
+          echo "===== no -report at all"
+          timeout 20 qemu-aarch64-static libs/libxdnstt.so -udp 173.212.232.241:53 \
+            -pubkey prince sd-173.212.232.241 127.0.0.1:7312 2>&1 | head -4
+          echo "===== slowdns with report variants"
+          ENC=$(python3 -c "import sys; sys.path.insert(0,'tools'); import bdnet_dns as b; print(b.p_encrypt('13.140.185.158:53'))")
+          for rep in "BD NET" "BDNET" "prince"; do
+            echo "===== libdns report=[$rep]"
+            timeout 20 qemu-aarch64-static libs/libdns.so -tunnel "$ENC" -report "$rep" 2>&1 | head -4
+          done
+
       - name: Publish
         if: always()
         continue-on-error: true
         run: |
           mkdir -p analysis-bdnet/configs/dns/results
-          for f in apk sysroot startup xdnstt-run libdns-run xdnstt libdns; do
+          for f in apk sysroot startup xdnstt-run libdns-run xdnstt libdns report-matrix; do
             [ -f "/tmp/$f.txt" ] && cp "/tmp/$f.txt" "analysis-bdnet/configs/dns/results/qemu-$f.txt"
             [ -f "/tmp/$f.log" ] && cp "/tmp/$f.log" "analysis-bdnet/configs/dns/results/qemu-$f.log"
           done
