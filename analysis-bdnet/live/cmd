@@ -1,2 +1,8 @@
-timeout 200 curl -sS --max-time 180 -x socks5h://127.0.0.1:1080 -o /dev/null -w "cf 512KiB -> http=%{http_code} bytes=%{size_download} t=%{time_total}s speed=%{speed_download}B/s\n" "https://speed.cloudflare.com/__down?bytes=524288"
-# nonce=1793279923135936416
+export GH_TOKEN=$(cat /proc/1/environ 2>/dev/null >/dev/null; echo $GITHUB_TOKEN)
+run=40880422934; repo=minam67889-bit/AM-MST
+art=$(curl -s -H "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/$repo/actions/runs/$run/artifacts" | python3 -c "import json,sys; d=json.load(sys.stdin); print([a[\"id\"] for a in d[\"artifacts\"] if a[\"name\"]==\"amtunnel-mst-debug-apk\"][0])")
+echo "artifact $art"
+curl -sL -H "Authorization: Bearer $GH_TOKEN" "https://api.github.com/repos/$repo/actions/artifacts/$art/zip" -o /tmp/apk.zip
+ls -l /tmp/apk.zip
+mkdir -p /tmp/apkx && cd /tmp/apkx && unzip -o -q /tmp/apk.zip && A=$(find . -name "*.apk" | head -1) && echo "apk=$A" && unzip -l "$A" | grep -E "lib/arm64-v8a|psiphon" | head -20
+# nonce=1793280197318294009
