@@ -1,13 +1,2 @@
-export QEMU_LD_PREFIX="$PWD/sysroot"
-pkill -f "^qemu-aarch64-static"; pkill -f "^python3 /tmp/share.py"; sleep 2
-setsid nohup qemu-aarch64-static libs/libxdnstt.so -udp 13.140.185.158:53 -report "BD NET VPN" -pubkey prince sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/tun6.log 2>&1 < /dev/null &
-setsid nohup python3 /tmp/share.py 7000 1080 > /tmp/share6.log 2>&1 < /dev/null &
-sleep 7
-echo "--- 1 MiB download (range request)"
-timeout 200 curl -sS --max-time 180 -x socks5h://127.0.0.1:1080 -r 0-1048575 -o /tmp/dl.bin -w "http=%{http_code} bytes=%{size_download} t=%{time_total}s speed=%{speed_download}B/s\n" http://speedtest.tele2.net/10MB.zip
-echo "--- https sites"
-for u in https://api.telegram.org/ https://www.google.com/ https://api.github.com/ ; do
-  timeout 90 curl -sS --max-time 80 -x socks5h://127.0.0.1:1080 -o /dev/null -w "$u -> %{http_code} %{size_download}B %{time_total}s\n" "$u"
-done
-echo "--- relay log"; cat /tmp/share6.log
-# nonce=1793279819065741027
+timeout 200 curl -sS --max-time 180 -x socks5h://127.0.0.1:1080 -o /dev/null -w "cf 512KiB -> http=%{http_code} bytes=%{size_download} t=%{time_total}s speed=%{speed_download}B/s\n" "https://speed.cloudflare.com/__down?bytes=524288"
+# nonce=1793279923135936416
