@@ -229,7 +229,7 @@ class MainActivity : Activity() {
         root.addView(sectionHeader("BD NET servers (their tunnel, our client)"))
         val bdCard = card()
         val engineModeField = field(
-            "Engine: 0 = built-in Master core, 1 = drive BD NET's own dnstt client",
+            "Engine: 0 = built-in Master core, 1 = BD NET's dnstt client, 2 = Psiphon (no account)",
             engine.settings.engineMode.toString(),
         )
         val bdHostsField = field("BD server hosts (semicolon separated)", engine.settings.bdHosts)
@@ -240,6 +240,7 @@ class MainActivity : Activity() {
         val bdPortField = field("BD client local port", engine.settings.bdLocalPort.toString())
         val bdUserField = field("Far-end SOCKS5 user", engine.settings.bdUpstreamUser)
         val bdPassField = field("Far-end SOCKS5 password", engine.settings.bdUpstreamPass)
+        val psiphonRegionField = field("Psiphon exit region (blank = fastest)", engine.settings.psiphonRegion)
         bdCard.addView(engineModeField)
         bdCard.addView(bdHostsField)
         bdCard.addView(bdZoneField)
@@ -249,9 +250,10 @@ class MainActivity : Activity() {
         bdCard.addView(bdPortField)
         bdCard.addView(bdUserField)
         bdCard.addView(bdPassField)
+        bdCard.addView(psiphonRegionField)
         bdCard.addView(button("Save BD settings", Color.parseColor("#4C8DFF")) {
             val updated = engine.settings.copy(
-                engineMode = (engineModeField.text.toString().trim().toIntOrNull() ?: 0).coerceIn(0, 1),
+                engineMode = (engineModeField.text.toString().trim().toIntOrNull() ?: 0).coerceIn(0, 2),
                 bdHosts = bdHostsField.text.toString().trim(),
                 bdZonePrefix = bdZoneField.text.toString().trim(),
                 bdReport = bdReportField.text.toString(),
@@ -260,9 +262,16 @@ class MainActivity : Activity() {
                 bdLocalPort = bdPortField.text.toString().trim().toIntOrNull() ?: 7000,
                 bdUpstreamUser = bdUserField.text.toString(),
                 bdUpstreamPass = bdPassField.text.toString(),
+                psiphonRegion = psiphonRegionField.text.toString().trim().uppercase(),
             )
             engine.updateSettings(updated)
-            toast(if (updated.engineMode == 1) "BD NET mode selected" else "Built-in Master core selected")
+            toast(
+                when (updated.engineMode) {
+                    AppSettings.ENGINE_BD_NATIVE -> "BD NET mode selected"
+                    AppSettings.ENGINE_PSIPHON -> "Psiphon mode selected"
+                    else -> "Built-in Master core selected"
+                },
+            )
             refresh()
         })
         bdCard.addView(button("Test the far end (one CONNECT through the relay)", Color.parseColor("#6B7785")) {
@@ -270,6 +279,16 @@ class MainActivity : Activity() {
                 val verdict = testFarEnd()
                 handler.post { toast(verdict); refresh() }
             }, "far-end-test").start()
+        })
+        bdCard.addView(button("Use Psiphon now (no account, works on its own)", Color.parseColor("#37D67A")) {
+            engine.updateSettings(
+                engine.settings.copy(
+                    engineMode = AppSettings.ENGINE_PSIPHON,
+                    psiphonRegion = psiphonRegionField.text.toString().trim().uppercase(),
+                ),
+            )
+            toast("Psiphon mode: SOCKS5 will listen on 127.0.0.1:${engine.settings.socksPort}")
+            refresh()
         })
         bdCard.addView(button("Use BD NET mode now", Color.parseColor("#9B7BFF")) {
             engine.updateSettings(
@@ -452,7 +471,10 @@ class MainActivity : Activity() {
 
     private fun connect() {
         val settings = engine.settings
-        if (!settings.isValid() && settings.engineMode != AppSettings.ENGINE_BD_NATIVE) {
+        if (!settings.isValid() &&
+            settings.engineMode != AppSettings.ENGINE_BD_NATIVE &&
+            settings.engineMode != AppSettings.ENGINE_PSIPHON
+        ) {
             toast("Enter the tunnel domain first")
             return
         }
@@ -588,9 +610,13 @@ class MainActivity : Activity() {
         val state = stats.state
         val bdMode = engine.isBdMode
         val bdUp = bdMode && engine.isRunning
+        val psiMode = engine.isPsiphonMode
+        val psiUp = psiMode && engine.isRunning
         statusText.text = when {
             bdMode && bdUp -> "BD tunnel up"
             bdMode -> "BD tunnel down"
+            psiMode && psiUp -> "Psiphon tunnel up"
+            psiMode -> "Psiphon tunnel down"
             TunnelVpnService.isActive && state == TransportState.READY -> "Connected"
             state == TransportState.INITIALIZING -> "Connecting…"
             state == TransportState.RECOVERING -> "Recovering…"
@@ -602,6 +628,8 @@ class MainActivity : Activity() {
             when {
                 bdMode && bdUp -> Color.parseColor("#F5A623")
                 bdMode -> danger
+                psiMode && psiUp -> accent
+                psiMode -> danger
                 state == TransportState.READY -> accent
                 state == TransportState.DEGRADED || state == TransportState.RECOVERING ||
                     state == TransportState.INITIALIZING -> Color.parseColor("#F5A623")
@@ -615,7 +643,14 @@ class MainActivity : Activity() {
         } else {
             "socks off"
         }
-        detailText.text = if (bdMode) buildString {
+        detailText.text = if (psiMode) buildString {
+            appendLine("engine    Psiphon tunnel core (psiphon-tunnel-core v2.0.42, ours)")
+            appendLine("server    picked from Psiphon's public list (no account, no login)")
+            appendLine("socks     127.0.0.1:${engine.settings.socksPort}   http 127.0.0.1:${engine.settings.socksPort + 1}")
+            appendLine("tunnel    ${engine.psiphonProtocol().ifEmpty { "connecting…" }}   exit ${engine.psiphonRegion().ifEmpty { "?" }}")
+            appendLine("region    ${engine.settings.psiphonRegion.ifEmpty { "automatic" }}")
+            append("test      point Telegram (or anything) at 127.0.0.1:${engine.settings.socksPort}")
+        } else if (bdMode) buildString {
             appendLine("engine    BD NET client (libxdnstt.so, theirs)")
             appendLine("server    ${engine.bdHost ?: "-"}   zone ${engine.settings.bdZonePrefix}<host>")
             appendLine("local     ${socksLine}  ->  BD port ${engine.settings.bdLocalPort}")
@@ -632,7 +667,11 @@ class MainActivity : Activity() {
             append(engine.sessionDebug())
         }
 
-        connectButton.text = if (bdMode) "Connect (BD NET)" else "Connect"
+        connectButton.text = when {
+            bdMode -> "Connect (BD NET)"
+            psiMode -> "Connect (Psiphon)"
+            else -> "Connect"
+        }
         connectButton.isEnabled = !TunnelVpnService.isActive
         disconnectButton.isEnabled = TunnelVpnService.isActive || state != TransportState.IDLE
 

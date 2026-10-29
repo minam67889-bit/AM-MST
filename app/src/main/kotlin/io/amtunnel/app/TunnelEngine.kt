@@ -56,6 +56,7 @@ class TunnelEngine(private val context: Context) {
     @Volatile private var socks: Socks5Server? = null
     @Volatile private var relay: Socks5Relay? = null
     @Volatile private var bd: BdNativeClient? = null
+    @Volatile private var psiphon: PsiphonClient? = null
     @Volatile private var scheduler: ScanScheduler? = null
     @Volatile private var scanner: ResolverScanner = ResolverScanner(
         monitor, log, TunnelConfig(domain = "invalid"), SocketProtector.Noop,
@@ -80,8 +81,14 @@ class TunnelEngine(private val context: Context) {
     /** BD NET mode ignores the DNS transport entirely. */
     val isBdMode: Boolean get() = settings.engineMode == AppSettings.ENGINE_BD_NATIVE
 
+    val isPsiphonMode: Boolean get() = settings.engineMode == AppSettings.ENGINE_PSIPHON
+
     val isRunning: Boolean
-        get() = if (isBdMode) (bd?.isRunning == true) else transport?.isReady == true
+        get() = when {
+            isBdMode -> bd?.isRunning == true
+            isPsiphonMode -> psiphon?.isRunning == true
+            else -> transport?.isReady == true
+        }
 
     /** One line the UI can show about the last thing the far end said. */
     @Volatile
@@ -290,6 +297,9 @@ class TunnelEngine(private val context: Context) {
             if (s.engineMode == AppSettings.ENGINE_BD_NATIVE) {
                 return startBdNative(s)
             }
+            if (s.engineMode == AppSettings.ENGINE_PSIPHON) {
+                return startPsiphon(s)
+            }
             val problems = buildConfig(s).validate()
             if (problems.isNotEmpty()) {
                 log.error("engine", "configuration rejected: ${problems.joinToString("; ")}")
@@ -407,11 +417,40 @@ class TunnelEngine(private val context: Context) {
         return true
     }
 
+    /**
+     * Psiphon needs no domain, no resolver list and no account: the binary
+     * fetches Psiphon's own server list and lands a no-auth SOCKS5 on the
+     * configured port, which is exactly what the acceptance test asked for.
+     */
+    private fun startPsiphon(s: AppSettings): Boolean {
+        val client = PsiphonClient(context, log)
+        if (!client.available()) {
+            log.error("engine", "Psiphon engine binary missing - this build was made without it")
+            return false
+        }
+        val ok = client.start(
+            PsiphonClient.Config(
+                socksPort = s.socksPort,
+                httpPort = if (s.socksPort == 65535) 65534 else s.socksPort + 1,
+                region = s.psiphonRegion,
+            ),
+        )
+        if (!ok) {
+            log.error("engine", "Psiphon engine did not open 127.0.0.1:${s.socksPort}")
+            return false
+        }
+        psiphon = client
+        notifyStateChanged()
+        return true
+    }
+
     fun stop() {
         runCatching { relay?.stop() }
         relay = null
         runCatching { bd?.stop() }
         bd = null
+        runCatching { psiphon?.stop() }
+        psiphon = null
         balancer = null
         runCatching { scheduler?.stop() }
         scheduler = null
@@ -431,6 +470,13 @@ class TunnelEngine(private val context: Context) {
 
     /** Raw log tail of the BD client, for the diagnostics screen. */
     fun bdTail(): List<String> = bd?.tail() ?: emptyList()
+
+    /** Raw notice tail of the Psiphon engine, for the diagnostics screen. */
+    fun psiphonTail(): List<String> = psiphon?.tail() ?: emptyList()
+
+    fun psiphonProtocol(): String = psiphon?.activeProtocol ?: ""
+
+    fun psiphonRegion(): String = psiphon?.activeRegion ?: ""
 }
 
 /** Process-wide accessor: the VPN service owns the lifecycle, the UI observes. */

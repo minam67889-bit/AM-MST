@@ -28,7 +28,8 @@ data class AppSettings(
     // ---- BD NET mode -------------------------------------------------------
     /**
      * 0 = our own Master core (DNS tunnel built in this repo),
-     * 1 = drive BD NET's own dnstt client against BD's servers.
+     * 1 = drive BD NET's own dnstt client against BD's servers,
+     * 2 = run Psiphon's tunnel core (the engine BD NET ships, no account).
      */
     val engineMode: Int = 0,
     val bdHosts: String = DEFAULT_BD_HOSTS,
@@ -39,6 +40,10 @@ data class AppSettings(
     val bdLocalPort: Int = 7000,
     val bdUpstreamUser: String = "tanginaka",
     val bdUpstreamPass: String = "wagditokupal",
+
+    // ---- Psiphon mode ------------------------------------------------------
+    /** Exit region ("US", "GB", ...); blank lets Psiphon pick the fastest. */
+    val psiphonRegion: String = "",
 ) {
     fun isValid(): Boolean = domain.isNotBlank()
 
@@ -47,6 +52,7 @@ data class AppSettings(
 
         const val ENGINE_MASTER = 0
         const val ENGINE_BD_NATIVE = 1
+        const val ENGINE_PSIPHON = 2
 
         /**
          * The SlowDNS hosts BD NET bundles (config key `Free_servers` ->
@@ -85,6 +91,7 @@ data class AppSettings(
                 bdLocalPort = p.getInt("bd_local_port", 7000),
                 bdUpstreamUser = p.getString("bd_upstream_user", "tanginaka") ?: "tanginaka",
                 bdUpstreamPass = p.getString("bd_upstream_pass", "wagditokupal") ?: "wagditokupal",
+                psiphonRegion = p.getString("psiphon_region", "") ?: "",
             )
         }
 
@@ -115,6 +122,7 @@ data class AppSettings(
                 putInt("bd_local_port", settings.bdLocalPort)
                 putString("bd_upstream_user", settings.bdUpstreamUser)
                 putString("bd_upstream_pass", settings.bdUpstreamPass)
+                putString("psiphon_region", settings.psiphonRegion)
             }.apply()
         }
     }
