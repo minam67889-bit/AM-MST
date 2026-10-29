@@ -1,0 +1,147 @@
+name: Psiphon live tunnel
+
+# Two things are already known: BD NET ships Psiphon's own engine
+# (`libgojni.so`) with the placeholder sponsor config Psiphon accepts, and
+# psiphon-tunnel-core's ConsoleClient cross-compiles to a static aarch64 ELF.
+#
+# This job proves the missing piece: does a real SOCKS5 proxy come up on
+# 127.0.0.1:1080 and carry traffic to the open internet and to Telegram?
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/psiphon-live.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: psiphon-live-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - name: Build ConsoleClient for linux/amd64 and android arm64
+        run: |
+          set +e
+          git clone --depth 1 --branch v2.0.42 \
+            https://github.com/Psiphon-Labs/psiphon-tunnel-core /tmp/psiphon 2>&1 | tail -2
+          cd /tmp/psiphon || exit 1
+          CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags "-s -w" -o /tmp/psiphon-amd64 ./ConsoleClient
+          echo "amd64: $(ls -l /tmp/psiphon-amd64 2>/dev/null | awk '{print $5}') bytes"
+          CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -trimpath -ldflags "-s -w" -o /tmp/psiphon-arm64 ./ConsoleClient
+          echo "arm64: $(ls -l /tmp/psiphon-arm64 2>/dev/null | awk '{print $5}') bytes"
+          file /tmp/psiphon-arm64
+          echo "=== what flags does it take ==="
+          /tmp/psiphon-amd64 -help 2>&1 | head -20
+
+      - name: Run it and ask for a web page
+        run: |
+          set +e
+          OUT=analysis-bdnet/configs/psiphon
+          mkdir -p "$OUT"
+          cat > /tmp/psiphon.json <<'JSON'
+          {
+            "DataStoreDirectory": "/tmp/psiphon-data",
+            "PropagationChannelId": "FFFFFFFFFFFFFFFF",
+            "SponsorId": "FFFFFFFFFFFFFFFF",
+            "EgressRegion": "",
+            "ClientPlatform": "Android",
+            "ClientVersion": "1",
+            "LocalSocksProxyPort": 1080,
+            "LocalHttpProxyPort": 8080,
+            "EmitDiagnosticNotices": true,
+            "DisableLocalSocksProxy": false
+          }
+          JSON
+          mkdir -p /tmp/psiphon-data
+          exec > >(tee /tmp/psiphon-live.txt) 2>&1
+          echo "=== start $(date -u) ==="
+          /tmp/psiphon-amd64 -config /tmp/psiphon.json > /tmp/psiphon.log 2>&1 &
+          PID=$!
+          for i in $(seq 1 60); do
+            sleep 5
+            if ss -lnt 2>/dev/null | grep -q ':1080'; then echo "SOCKS5 listening after $((i*5))s"; break; fi
+            if ! kill -0 $PID 2>/dev/null; then echo "client exited early"; break; fi
+          done
+          ss -lntup 2>/dev/null | head -10
+          echo "=== notices so far ==="
+          tail -40 /tmp/psiphon.log
+          echo "=== through the proxy ==="
+          for url in https://example.com/ https://api.telegram.org/ https://www.google.com/generate_204; do
+            echo "--- $url"
+            curl -sS --max-time 45 -x socks5h://127.0.0.1:1080 -o /tmp/body.txt -w 'http=%{http_code} bytes=%{size_download} time=%{time_total}\n' "$url"
+            head -c 200 /tmp/body.txt; echo
+          done
+          echo "=== notices at the end ==="
+          tail -60 /tmp/psiphon.log
+          kill $PID 2>/dev/null
+          echo "=== done $(date -u) ==="
+          exit 0
+
+      - name: Same thing, the binary we would actually ship (arm64 under qemu)
+        run: |
+          set +e
+          OUT=analysis-bdnet/configs/psiphon
+          mkdir -p "$OUT"
+          sudo apt-get update -qq && sudo apt-get install -y -qq qemu-user-static
+          rm -rf /tmp/psiphon-data2 && mkdir -p /tmp/psiphon-data2
+          sed 's#/tmp/psiphon-data#/tmp/psiphon-data2#' /tmp/psiphon.json > /tmp/psiphon2.json
+          exec > >(tee /tmp/psiphon-arm64.txt) 2>&1
+          echo "=== start $(date -u) ==="
+          qemu-aarch64-static /tmp/psiphon-arm64 -config /tmp/psiphon2.json > /tmp/psiphon-arm.log 2>&1 &
+          PID=$!
+          for i in $(seq 1 60); do
+            sleep 5
+            if ss -lnt 2>/dev/null | grep -q ':1080'; then echo "SOCKS5 listening after $((i*5))s"; break; fi
+            if ! kill -0 $PID 2>/dev/null; then echo "client exited early"; break; fi
+          done
+          echo "=== notices ==="
+          tail -40 /tmp/psiphon-arm.log
+          echo "=== through the proxy ==="
+          curl -sS --max-time 60 -x socks5h://127.0.0.1:1080 -o /tmp/body2.txt \
+            -w 'http=%{http_code} bytes=%{size_download} time=%{time_total}\n' https://example.com/
+          head -c 200 /tmp/body2.txt; echo
+          kill $PID 2>/dev/null
+          exit 0
+
+      - name: Commit the verdict
+        if: always()
+        run: |
+          mkdir -p analysis-bdnet/configs/psiphon
+          cp /tmp/psiphon-live.txt analysis-bdnet/configs/psiphon/psiphon-live.txt 2>/dev/null || true
+          cp /tmp/psiphon-arm64.txt analysis-bdnet/configs/psiphon/psiphon-arm64-live.txt 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-bdnet/configs/psiphon || true
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "analysis: psiphon engine, live tunnel and SOCKS5 test [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
+
+      - name: Keep the binaries
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: psiphon-consoleclient
+          path: |
+            /tmp/psiphon-arm64
+            /tmp/psiphon-amd64
+            /tmp/psiphon-live.txt
+          retention-days: 14
+          if-no-files-found: warn
