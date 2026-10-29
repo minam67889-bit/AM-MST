@@ -1,4 +1,2 @@
-echo 'aW1wb3J0IHJlLCBzeXMKdGFiID0ge30KZm9yIGxpbmUgaW4gb3BlbigiYW5hbHlzaXMtYmRuZXQvb2JmdXNjYXRpb24vZGVjcnlwdGVkLnR4dCIsIGVuY29kaW5nPSJ1dGYtOCIsIGVycm9ycz0icmVwbGFjZSIpOgogICAgaWYgbGluZS5zdGFydHN3aXRoKCIjIik6CiAgICAgICAgY29udGludWUKICAgIHBhcnRzID0gbGluZS5yc3RyaXAoIlxuIikuc3BsaXQoIlx0IiwgMSkKICAgIGlmIGxlbihwYXJ0cykgPT0gMjoKICAgICAgICB0YWJbcGFydHNbMF0uc3RyaXAoKV0gPSBwYXJ0c1sxXQpwYXRoID0gc3lzLmFyZ3ZbMV0KdGV4dCA9IG9wZW4ocGF0aCwgZW5jb2Rpbmc9InV0Zi04IiwgZXJyb3JzPSJyZXBsYWNlIikucmVhZCgpCmRlZiByZXAobSk6CiAgICB2ID0gdGFiLmdldChtLmdyb3VwKDEpLCAiPz8iICsgbS5ncm91cCgxKSkKICAgIHJldHVybiAnIicgKyB2LnJlcGxhY2UoIlxcIiwgIlxcXFwiKS5yZXBsYWNlKCciJywgJ1xcIicpICsgJyInCnRleHQgPSByZS5zdWIocidnZXRTdHJpbmdcKCgtP1xkKylMP1wpJywgcmVwLCB0ZXh0KQpzeXMuc3Rkb3V0LndyaXRlKHRleHQpCg==' | base64 -d > /tmp/res.py
-F=/tmp/src/sources/prince/dastan/vpn/service/SocksDNSService.java
-wc -l $F; echo '================'; python3 /tmp/res.py $F | head -220
-# nonce=1793279262100825553
+python3 /tmp/res.py /tmp/src/sources/prince/dastan/vpn/service/SocksDNSService.java | sed -n "220,420p"
+# nonce=1793279271449938276
