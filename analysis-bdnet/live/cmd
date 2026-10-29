@@ -1,52 +1,13 @@
 export QEMU_LD_PREFIX="$PWD/sysroot"
-cat > /tmp/s5b.py <<PY
-import socket, sys, time
-USER, PASS = b"tanginakaba", b"hackpamoregago"
-def rd(s,n):
-    b=b""
-    while len(b)<n:
-        d=s.recv(n-len(b))
-        if not d: raise SystemExit("eof")
-        b+=d
-    return b
-def conn(port=7000):
-    s=socket.create_connection(("127.0.0.1",port),10); s.settimeout(60)
-    s.sendall(b"\x05\x01\x02"); rd(s,2)
-    s.sendall(bytes([1,len(USER)])+USER+bytes([len(PASS)])+PASS); return s
-def open_tcp(host,port):
-    s=conn(); h=host.encode()
-    s.sendall(b"\x05\x01\x00\x03"+bytes([len(h)])+h+port.to_bytes(2,"big"))
-    rep=rd(s,4)
-    if rep[3]==1: rd(s,6)
-    elif rep[3]==3: rd(s,rd(s,1)[0]+2)
-    else: rd(s,18)
-    return s,rep
-t0=time.time()
-s,rep=open_tcp("api.telegram.org",443); print("telegram connect", rep.hex(), f"{(time.time()-t0)*1000:.0f}ms")
-s.close()
-# throughput: 200 KB from a speed endpoint over plain HTTP
-s,rep=open_tcp("speed.hetzner.de",80)
-s.sendall(b"GET /static/static.bin HTTP/1.1\r\nHost: speed.hetzner.de\r\nConnection: close\r\nRange: bytes=0-204799\r\n\r\n")
-got=0; t1=time.time(); head=b""
-while True:
-    try: d=s.recv(65536)
-    except socket.timeout: break
-    if not d: break
-    if len(head)<80: head+=d[:80-len(head)]
-    got+=len(d)
-    if got>400000 or time.time()-t1>120: break
-dt=time.time()-t1
-print("first line:", head.split(b"\r\n")[0])
-print(f"downloaded {got} bytes in {dt:.1f}s -> {got*8/dt/1000:.1f} kbit/s")
-PY
-pkill -f "^qemu-aarch64-static"; sleep 2
-setsid nohup qemu-aarch64-static libs/libxdnstt.so -udp 13.140.185.158:53 -report "BD NET VPN" -pubkey prince sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/tun3.log 2>&1 < /dev/null &
+echo 'aW1wb3J0IHNvY2tldCwgdGhyZWFkaW5nLCBzeXMKVVA9KCIxMjcuMC4wLjEiLCBpbnQoc3lzLmFyZ3ZbMV0pIGlmIGxlbihzeXMuYXJndik+MSBlbHNlIDcwMDApCkxQT1JUPWludChzeXMuYXJndlsyXSkgaWYgbGVuKHN5cy5hcmd2KT4yIGVsc2UgMTA4MApVU0VSLFBBU1M9YiJ0YW5naW5ha2FiYSIsYiJoYWNrcGFtb3JlZ2FnbyIKZGVmIHJkKHMsbik6CiAgICBiPWIiIgogICAgd2hpbGUgbGVuKGIpPG46CiAgICAgICAgZD1zLnJlY3Yobi1sZW4oYikpCiAgICAgICAgaWYgbm90IGQ6IHJhaXNlIE9TRXJyb3IoImVvZiIpCiAgICAgICAgYis9ZAogICAgcmV0dXJuIGIKZGVmIHB1bXAoYSxiKToKICAgIHRyeToKICAgICAgICB3aGlsZSBUcnVlOgogICAgICAgICAgICBkPWEucmVjdig2NTUzNikKICAgICAgICAgICAgaWYgbm90IGQ6IGJyZWFrCiAgICAgICAgICAgIGIuc2VuZGFsbChkKQogICAgZXhjZXB0IE9TRXJyb3I6IHBhc3MKICAgIGZpbmFsbHk6CiAgICAgICAgdHJ5OiBiLnNodXRkb3duKHNvY2tldC5TSFVUX1dSKQogICAgICAgIGV4Y2VwdCBPU0Vycm9yOiBwYXNzCmRlZiBoYW5kbGUoYyk6CiAgICB0cnk6CiAgICAgICAgYy5zZXR0aW1lb3V0KDEyMCkKICAgICAgICBoZHI9cmQoYywyKQogICAgICAgIGlmIGhkclswXSE9NTogYy5jbG9zZSgpOyByZXR1cm4KICAgICAgICByZChjLGhkclsxXSkKICAgICAgICBjLnNlbmRhbGwoYiJceDA1XHgwMCIpCiAgICAgICAgcmVxPXJkKGMsNCkKICAgICAgICBjbWQsYXR5cD1yZXFbMV0scmVxWzNdCiAgICAgICAgaWYgYXR5cD09MTogaG9zdD1zb2NrZXQuaW5ldF9udG9hKHJkKGMsNCkpCiAgICAgICAgZWxpZiBhdHlwPT0zOiBob3N0PXJkKGMscmQoYywxKVswXSkuZGVjb2RlKCkKICAgICAgICBlbHNlOiBob3N0PXNvY2tldC5pbmV0X250b3Aoc29ja2V0LkFGX0lORVQ2LHJkKGMsMTYpKQogICAgICAgIHBvcnQ9aW50LmZyb21fYnl0ZXMocmQoYywyKSwiYmlnIikKICAgICAgICB1PXNvY2tldC5jcmVhdGVfY29ubmVjdGlvbihVUCwxMCk7IHUuc2V0dGltZW91dCgxMjApCiAgICAgICAgdS5zZW5kYWxsKGIiXHgwNVx4MDFceDAyIik7IHJkKHUsMikKICAgICAgICB1LnNlbmRhbGwoYnl0ZXMoWzEsbGVuKFVTRVIpXSkrVVNFUitieXRlcyhbbGVuKFBBU1MpXSkrUEFTUykKICAgICAgICBpZiByZCh1LDIpWzFdIT0wOiBjLnNlbmRhbGwoYiJceDA1XHgwNVx4MDBceDAxXHgwMFx4MDBceDAwXHgwMFx4MDBceDAwIik7IGMuY2xvc2UoKTsgcmV0dXJuCiAgICAgICAgaGI9aG9zdC5lbmNvZGUoKQogICAgICAgIHUuc2VuZGFsbChieXRlcyhbNSwxLDAsMyxsZW4oaGIpXSkraGIrcG9ydC50b19ieXRlcygyLCJiaWciKSkKICAgICAgICByZXA9cmQodSw0KQogICAgICAgIGlmIHJlcFsxXSE9MDogYy5zZW5kYWxsKGIiXHgwNVx4MDVceDAwXHgwMSIrYiJceDAwIio2KTsgYy5jbG9zZSgpOyByZXR1cm4KICAgICAgICBpZiByZXBbM109PTE6IHJkKHUsNikKICAgICAgICBlbGlmIHJlcFszXT09MzogcmQodSxyZCh1LDEpWzBdKzIpCiAgICAgICAgZWxzZTogcmQodSwxOCkKICAgICAgICBjLnNlbmRhbGwoYiJceDA1XHgwMFx4MDBceDAxIitiIlx4MDAiKjYpCiAgICAgICAgdD10aHJlYWRpbmcuVGhyZWFkKHRhcmdldD1wdW1wLGFyZ3M9KHUsYyksZGFlbW9uPVRydWUpOyB0LnN0YXJ0KCkKICAgICAgICBwdW1wKGMsdSk7IHQuam9pbig1KQogICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgIHByaW50KCJoYW5kbGVyOiIsZSxmbHVzaD1UcnVlKQogICAgZmluYWxseToKICAgICAgICB0cnk6IGMuY2xvc2UoKQogICAgICAgIGV4Y2VwdCBPU0Vycm9yOiBwYXNzCnM9c29ja2V0LnNvY2tldCgpOyBzLnNldHNvY2tvcHQoc29ja2V0LlNPTF9TT0NLRVQsc29ja2V0LlNPX1JFVVNFQUREUiwxKQpzLmJpbmQoKCIwLjAuMC4wIixMUE9SVCkpOyBzLmxpc3Rlbig2NCkKcHJpbnQoZiJzaGFyZSByZWxheSAwLjAuMC4wOntMUE9SVH0gLT4ge1VQfSIsZmx1c2g9VHJ1ZSkKd2hpbGUgVHJ1ZToKICAgIGMsXz1zLmFjY2VwdCgpOyB0aHJlYWRpbmcuVGhyZWFkKHRhcmdldD1oYW5kbGUsYXJncz0oYywpLGRhZW1vbj1UcnVlKS5zdGFydCgpCg==' | base64 -d > /tmp/share.py
+pkill -f '^qemu-aarch64-static'; sleep 2
+setsid nohup qemu-aarch64-static libs/libxdnstt.so -udp 13.140.185.158:53 -report 'BD NET VPN' -pubkey prince sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/tun5.log 2>&1 < /dev/null &
+setsid nohup python3 /tmp/share.py 7000 1080 > /tmp/share.log 2>&1 < /dev/null &
 sleep 7
-timeout 200 python3 /tmp/s5b.py
-echo "--- try second server"
-pkill -f "^qemu-aarch64-static"; sleep 2
-setsid nohup qemu-aarch64-static libs/libxdnstt.so -udp 13.140.185.181:53 -report "BD NET VPN" -pubkey prince sd-de20.liftmeon.org 127.0.0.1:7000 > /tmp/tun4.log 2>&1 < /dev/null &
-sleep 7
-timeout 60 python3 /tmp/s5.py api.telegram.org 443 2>&1 | head -4
-tail -2 /tmp/tun4.log
-# nonce=1793279586394312389
+IP=$(hostname -I | awk '{print $1}'); echo "lan ip: $IP"
+echo '--- example.com via loopback relay'; timeout 60 curl -sS --max-time 50 -x socks5h://127.0.0.1:1080 -o /dev/null -w 'http=%{http_code} bytes=%{size_download} t=%{time_total}s\n' http://example.com/
+echo '--- example.com via LAN ip relay'; timeout 60 curl -sS --max-time 50 -x socks5h://$IP:1080 -o /dev/null -w 'http=%{http_code} bytes=%{size_download} t=%{time_total}s\n' http://example.com/
+echo '--- api.telegram.org (https)'; timeout 90 curl -sS --max-time 80 -x socks5h://127.0.0.1:1080 -o /dev/null -w 'http=%{http_code} bytes=%{size_download} t=%{time_total}s\n' https://api.telegram.org/
+echo '--- web.telegram.org (https)'; timeout 90 curl -sS --max-time 80 -x socks5h://127.0.0.1:1080 -o /dev/null -w 'http=%{http_code} bytes=%{size_download} t=%{time_total}s\n' https://web.telegram.org/
+echo '--- share log'; cat /tmp/share.log
+# nonce=1793279689928159087
