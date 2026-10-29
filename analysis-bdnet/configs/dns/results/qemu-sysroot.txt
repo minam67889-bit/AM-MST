@@ -62,25 +62,25 @@ IMGDIR=/usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a
 + ls -l /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a
 + head
 total 3202888
--rw-r--r-- 1 runner runner    1686439 Oct 29 09:19 NOTICE.txt
--rw-r--r-- 1 runner runner        121 Oct 29 09:19 advancedFeatures.ini
--rw-r--r-- 1 runner runner       2232 Oct 29 09:19 build.prop
--rwxr-xr-x 1 runner runner    7748096 Oct 29 09:19 kernel-qemu
--rwxr-xr-x 1 runner runner    7748096 Oct 29 09:19 kernel-ranchu
--rw-r--r-- 1 runner runner      18469 Oct 29 09:19 package.xml
--rw-r--r-- 1 runner runner    1455579 Oct 29 09:19 ramdisk.img
--rw-r--r-- 1 runner runner        175 Oct 29 09:19 source.properties
--rw-r--r-- 1 runner runner 2684354560 Oct 29 09:19 system.img
+-rw-r--r-- 1 runner runner    1686439 Oct 29 09:38 NOTICE.txt
+-rw-r--r-- 1 runner runner        121 Oct 29 09:38 advancedFeatures.ini
+-rw-r--r-- 1 runner runner       2232 Oct 29 09:38 build.prop
+-rwxr-xr-x 1 runner runner    7748096 Oct 29 09:38 kernel-qemu
+-rwxr-xr-x 1 runner runner    7748096 Oct 29 09:38 kernel-ranchu
+-rw-r--r-- 1 runner runner      18469 Oct 29 09:38 package.xml
+-rw-r--r-- 1 runner runner    1455579 Oct 29 09:38 ramdisk.img
+-rw-r--r-- 1 runner runner        175 Oct 29 09:38 source.properties
+-rw-r--r-- 1 runner runner 2684354560 Oct 29 09:38 system.img
 + IMGFILE=/usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
 + ls -l /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
--rw-r--r-- 1 runner runner 2684354560 Oct 29 09:19 /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
+-rw-r--r-- 1 runner runner 2684354560 Oct 29 09:38 /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
 + mkdir -p sysroot/system/bin sysroot/system/lib64
 + sudo modprobe loop
 + sudo mount -o loop,ro /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img /mnt
 + echo mounted
 mounted
-+ head
 + ls /mnt
++ head
 app
 bin
 build.prop
@@ -99,7 +99,7 @@ media
 + head -30
 sysroot/system/bin:
 total 908
--rwxr-xr-x 1 runner root 926936 Oct 29 09:21 linker64
+-rwxr-xr-x 1 runner root 926936 Oct 29 09:39 linker64
 
 sysroot/system/lib64:
 total 100624

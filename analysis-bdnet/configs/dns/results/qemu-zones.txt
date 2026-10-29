@@ -1,0 +1,43 @@
+=== is the SlowDNS server reachable at all at the DNS level?
+--- dig @13.140.185.158 example.com
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 23695
+;; flags: qr; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+--- dig @13.140.185.158 sd-de1.liftmeon.org
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 60447
+;; flags: qr aa; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+--- dig @de1.liftmeon.org example.com
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 57847
+;; flags: qr; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+--- dig @de1.liftmeon.org sd-de1.liftmeon.org
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 64169
+;; flags: qr aa; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+
+=== xdnstt handshake per zone (recvfrom > 0 == the server heard us)
+target=13.140.185.158 zone=sd-de1.liftmeon.org -> sendto=24 recvfrom_data=23
+   *** HEARD BACK ***
+3712 recvfrom(5,274879332352,4096,0,274878351972,274878352084) = 277
+3712 recvfrom(5,274880880640,4096,0,274878351972,274878352084) = 0
+3712 recvfrom(5,274880884736,4096,0,274878351972,274878352084) = 90
+target=13.140.185.158 zone=de1.liftmeon.org -> sendto=44 recvfrom_data=43
+   *** HEARD BACK ***
+3731 recvfrom(5,274881232896,4096,0,274878351972,274878352084) = 109
+3731 recvfrom(5,274880577536,4096,0,274878351972,274878352084) = 184
+3731 recvfrom(5,274880581632,4096,0,274878351972,274878352084) = 226
+target=13.140.185.158 zone=sd-de1 -> sendto=41 recvfrom_data=40
+   *** HEARD BACK ***
+3747 recvfrom(5,274879963136,4096,0,274878347876,274878347988) = 99
+3747 recvfrom(5,274880757760,4096,0,274878347876,274878347988) = 174
+3747 recvfrom(5,274880761856,4096,0,274878347876,274878347988) = 216
+target=13.140.185.158 zone=de1 -> sendto=43 recvfrom_data=43
+   *** HEARD BACK ***
+3763 recvfrom(5,274879758336,4096,0,274878347876,274878347988) = 96
+3763 nanosleep(70369963418216,0,0,0,1000,10000000)3763 recvfrom(5,274881249280,4096,0,274878347876,274878347988) = 171
+3763 recvfrom(5,274881253376,4096,0,274878347876,274878347988) = 213
+target=de1.liftmeon.org zone=sd-de1.liftmeon.org -> sendto=8 recvfrom_data=0
+target=de1.liftmeon.org zone=de1.liftmeon.org -> sendto=8 recvfrom_data=0
+target=de1.liftmeon.org zone=sd-de1 -> sendto=8 recvfrom_data=0
+target=de1.liftmeon.org zone=de1 -> sendto=8 recvfrom_data=0
+
+=== and TCP:53 once, in case the zone lives there
+tcp zone=sd-de1.liftmeon.org sendto=0 recvfrom_data=0
+tcp zone=de1.liftmeon.org sendto=0 recvfrom_data=0

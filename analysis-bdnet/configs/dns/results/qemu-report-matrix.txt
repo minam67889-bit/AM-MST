@@ -3,40 +3,40 @@ package: name='dastan.prince.bdfreevpn' versionCode='106' versionName='PrinceBui
 application-label:'BD NET VPN'
 application-label-fa:'BD NET VPN'
 ===== report=[BD NET]
-2026/10/29 09:24:35 You are not allowed to use this app!
+2026/10/29 09:44:44 You are not allowed to use this app!
 ===== report=[BDNET]
-2026/10/29 09:24:36 You are not allowed to use this app!
+2026/10/29 09:44:45 You are not allowed to use this app!
 ===== report=[BD NET VPN]
 Licensed to BD NET VPN
 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 09:24:36 uTLS fingerprint Firefox 120
-2026/10/29 09:24:36 effective MTU 131
+2026/10/29 09:44:46 uTLS fingerprint Chrome 120
+2026/10/29 09:44:46 effective MTU 131
 ===== report=[prince]
-2026/10/29 09:24:37 You are not allowed to use this app!
+2026/10/29 09:44:46 You are not allowed to use this app!
 ===== report=[bdfreevpn]
-2026/10/29 09:24:38 You are not allowed to use this app!
+2026/10/29 09:44:47 You are not allowed to use this app!
 ===== report=[dastan.prince.bdfreevpn]
-2026/10/29 09:24:38 You are not allowed to use this app!
+2026/10/29 09:44:47 You are not allowed to use this app!
 ===== report=[BD]
-2026/10/29 09:24:39 You are not allowed to use this app!
+2026/10/29 09:44:48 You are not allowed to use this app!
 ===== report=[]
 Usage:
   libs/libxdnstt.so [-doh URL|-dot ADDR|-udp ADDR] -pubkey-file PUBKEYFILE DOMAIN LOCALADDR
 
 Examples:
 ===== report=[VPN]
-2026/10/29 09:24:40 You are not allowed to use this app!
+2026/10/29 09:44:49 You are not allowed to use this app!
 ===== report=[BdNet]
-2026/10/29 09:24:41 You are not allowed to use this app!
+2026/10/29 09:44:50 You are not allowed to use this app!
 ===== no -report at all
-2026/10/29 09:24:41 You are not allowed to use this app!
+2026/10/29 09:44:50 You are not allowed to use this app!
 ===== slowdns with report variants
 ===== libdns report=[BD NET]
-2026/10/29 09:24:42 FastDNS v1.2 | Client
-2026/10/29 09:24:42 You are not allowed to use this app!
+2026/10/29 09:44:51 FastDNS v1.2 | Client
+2026/10/29 09:44:51 You are not allowed to use this app!
 ===== libdns report=[BDNET]
-2026/10/29 09:24:42 FastDNS v1.2 | Client
-2026/10/29 09:24:42 You are not allowed to use this app!
+2026/10/29 09:44:51 FastDNS v1.2 | Client
+2026/10/29 09:44:51 You are not allowed to use this app!
 ===== libdns report=[prince]
-2026/10/29 09:24:42 FastDNS v1.2 | Client
-2026/10/29 09:24:42 You are not allowed to use this app!
+2026/10/29 09:44:51 FastDNS v1.2 | Client
+2026/10/29 09:44:51 You are not allowed to use this app!

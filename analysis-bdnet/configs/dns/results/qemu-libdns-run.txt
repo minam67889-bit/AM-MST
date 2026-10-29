@@ -1,30 +1,30 @@
 == host 13.140.185.158 enc=05167e556c53460f5e5e7e6c011d6a516b
 --- log
-2026/10/29 09:21:11 FastDNS v1.2 | Client
-2026/10/29 09:21:11 Licensed to BD NET VPN
-2026/10/29 09:21:11 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 09:21:11 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.158:53
+2026/10/29 09:39:47 FastDNS v1.2 | Client
+2026/10/29 09:39:47 Licensed to BD NET VPN
+2026/10/29 09:39:47 NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 09:39:47 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.158:53
 --- sockets (tcp AND udp)
-Netid State  Recv-Q Send-Q   Local Address:Port Peer Address:PortProcess                                   
-udp   UNCONN 0      0            127.0.0.1:7777      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3406,fd=3))
-udp   UNCONN 0      0           127.0.0.54:53        0.0.0.0:*                                             
-udp   UNCONN 0      0        127.0.0.53%lo:53        0.0.0.0:*                                             
-udp   UNCONN 0      0      10.1.0.222%eth0:68        0.0.0.0:*                                             
-udp   UNCONN 0      0            127.0.0.1:323       0.0.0.0:*                                             
-udp   UNCONN 0      0                [::1]:323          [::]:*                                             
-tcp   LISTEN 0      4096     127.0.0.53%lo:53        0.0.0.0:*                                             
-tcp   LISTEN 0      4096        127.0.0.54:53        0.0.0.0:*                                             
-tcp   LISTEN 0      4096           0.0.0.0:22        0.0.0.0:*                                             
-tcp   LISTEN 0      4096              [::]:22           [::]:*                                             
+Netid State  Recv-Q Send-Q  Local Address:Port Peer Address:PortProcess                                   
+udp   UNCONN 0      0           127.0.0.1:7777      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3504,fd=3))
+udp   UNCONN 0      0          127.0.0.54:53        0.0.0.0:*                                             
+udp   UNCONN 0      0       127.0.0.53%lo:53        0.0.0.0:*                                             
+udp   UNCONN 0      0      10.1.1.13%eth0:68        0.0.0.0:*                                             
+udp   UNCONN 0      0           127.0.0.1:323       0.0.0.0:*                                             
+udp   UNCONN 0      0               [::1]:323          [::]:*                                             
+tcp   LISTEN 0      4096       127.0.0.54:53        0.0.0.0:*                                             
+tcp   LISTEN 0      4096          0.0.0.0:22        0.0.0.0:*                                             
+tcp   LISTEN 0      4096    127.0.0.53%lo:53        0.0.0.0:*                                             
+tcp   LISTEN 0      4096             [::]:22           [::]:*                                             
 --- /proc/net/udp
    sl  local_address rem_address   st tx_queue rx_queue tr tm->when retrnsmt   uid  timeout inode ref pointer drops            
- 6977: 0100007F:1E61 00000000:0000 07 00000000:00000000 00:00000000 00000000  1001        0 21840 2 0000000000000000 0         
- 7445: 3600007F:0035 00000000:0000 07 00000000:00000000 00:00000000 00000000   991        0 5428 2 0000000000000000 0          
- 7445: 3500007F:0035 00000000:0000 07 00000000:00000000 00:00000000 00000000   991        0 5426 2 0000000000000000 0          
- 7460: DE00010A:0044 00000000:0000 07 00000000:00000000 00:00000000 00000000   998        0 8525 2 0000000000000000 0          
- 7715: 0100007F:0143 00000000:0000 07 00000000:00000000 00:00000000 00000000     0        0 5895 2 0000000000000000 0          
+ 5276: 0100007F:1E61 00000000:0000 07 00000000:00000000 00:00000000 00000000  1001        0 21057 2 0000000000000000 0         
+ 5744: 3600007F:0035 00000000:0000 07 00000000:00000000 00:00000000 00000000   991        0 7194 2 0000000000000000 0          
+ 5744: 3500007F:0035 00000000:0000 07 00000000:00000000 00:00000000 00000000   991        0 7192 2 0000000000000000 0          
+ 5759: 0D01010A:0044 00000000:0000 07 00000000:00000000 00:00000000 00000000   998        0 4790 2 0000000000000000 0          
+ 6014: 0100007F:0143 00000000:0000 07 00000000:00000000 00:00000000 00000000     0        0 8346 2 0000000000000000 0          
   sl  local_address                         remote_address                        st tx_queue rx_queue tr tm->when retrnsmt   uid  timeout inode ref pointer drops
- 7715: 00000000000000000000000001000000:0143 00000000000000000000000000000000:0000 07 00000000:00000000 00:00000000 00000000     0        0 5896 2 0000000000000000 0
+ 6014: 00000000000000000000000001000000:0143 00000000000000000000000000000000:0000 07 00000000:00000000 00:00000000 00000000     0        0 8347 2 0000000000000000 0
 --- DNS query over UDP to 7777
 ;; communications error to 127.0.0.1#7777: timed out
 
@@ -38,11 +38,11 @@ tcp   LISTEN 0      4096              [::]:22           [::]:*
 --- python raw UDP DNS on 7777
 UDP 7777: TimeoutError timed out
 --- log after queries
-2026/10/29 09:21:11 FastDNS v1.2 | Client
-2026/10/29 09:21:11 Licensed to BD NET VPN
-2026/10/29 09:21:11 NOTE: Using this app into unlicensed software/application will result into legal action
-2026/10/29 09:21:11 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.158:53
-2026/10/29 09:21:23 Client connected: 127.0.0.1:55777
-2026/10/29 09:21:23 Server.EncoderDecode: Dns2Udp.decode: invalid DNS message length
-2026/10/29 09:21:35 Client connected: 127.0.0.1:42417
-2026/10/29 09:21:35 Server.EncoderDecode: Dns2Udp.decode: invalid DNS message length
+2026/10/29 09:39:47 FastDNS v1.2 | Client
+2026/10/29 09:39:47 Licensed to BD NET VPN
+2026/10/29 09:39:47 NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 09:39:47 Starting client on 127.0.0.1:7777 tunneling to 13.140.185.158:53
+2026/10/29 09:39:59 Client connected: 127.0.0.1:55816
+2026/10/29 09:39:59 Server.EncoderDecode: Dns2Udp.decode: invalid DNS message length
+2026/10/29 09:40:11 Client connected: 127.0.0.1:41350
+2026/10/29 09:40:11 Server.EncoderDecode: Dns2Udp.decode: invalid DNS message length
