@@ -137,71 +137,50 @@ jobs:
           set +x
           echo "done"
 
-      - name: "their FastDNS client: -udp host:53 -pubkey prince sd-<host> 127.0.0.1:7000"
+      - name: "their FastDNS client - licensed run against a sweep of endpoints"
         run: |
+          exec > >(tee /tmp/xdnstt-run.txt) 2>&1
           set +e
-          set -uo pipefail
           export QEMU_LD_PREFIX="$PWD/sysroot"
-          : > /tmp/xdnstt-run.txt
-          echo "== host $FASTDNS_HOST" >> /tmp/xdnstt-run.txt
-          timeout 180 qemu-aarch64-static libs/libxdnstt.so \
-            -udp "$FASTDNS_HOST:53" -report BDNET -pubkey prince \
-            "sd-$FASTDNS_HOST" 127.0.0.1:7000 > /tmp/xdnstt.log 2>&1 &
-          pid=$!
-          for i in $(seq 1 20); do
-            ss -ltn 2>/dev/null | grep -q ":7000" && { echo "listener up after ${i}s" >> /tmp/xdnstt-run.txt; break; }
-            sleep 1
+          for host in 173.212.232.241 173.249.10.48 185.196.21.114 173.212.252.3 192.145.37.229; do
+            port=$((7400 + RANDOM % 300))
+            echo "========== $host"
+            timeout 120 qemu-aarch64-static libs/libxdnstt.so \
+              -udp "$host:53" -report "BD NET VPN" -pubkey prince \
+              "sd-$host" "127.0.0.1:$port" > /tmp/c.log 2>&1 &
+            pid=$!
+            for i in $(seq 1 20); do
+              ss -ltn 2>/dev/null | grep -q ":$port" && { echo "listener up after ${i}s"; break; }
+              sleep 1
+            done
+            ss -ltn 2>/dev/null | grep -q ":$port" || echo "no listener"
+            for mode in socks http raw; do
+              timeout 60 python3 tools/tunnel_probe.py "127.0.0.1:$port" --mode $mode \
+                --timeout 25 --wait 3 || true
+            done
+            echo "--- client log"
+            tail -20 /tmp/c.log
+            kill $pid 2>/dev/null
+            sleep 2
           done
-          ss -ltnp 2>/dev/null | grep 7000 >> /tmp/xdnstt-run.txt || echo "no listener on 7000" >> /tmp/xdnstt-run.txt
-          echo "== client log" >> /tmp/xdnstt-run.txt
-          cat /tmp/xdnstt.log >> /tmp/xdnstt-run.txt
-          for mode in socks http raw; do
-            timeout 70 python3 tools/tunnel_probe.py 127.0.0.1:7000 --mode $mode \
-              --timeout 30 --wait 5 >> /tmp/xdnstt-run.txt 2>&1 || true
-          done
-          echo "== client log after the probes" >> /tmp/xdnstt-run.txt
-          cat /tmp/xdnstt.log >> /tmp/xdnstt-run.txt
-          kill $pid 2>/dev/null || true
-          cat /tmp/xdnstt-run.txt
 
-      - name: "their SlowDNS client: -tunnel <pEncrypt(ip:53)> -report BDNET"
+      - name: "their SlowDNS client - licensed run"
         run: |
+          exec > >(tee /tmp/libdns-run.txt) 2>&1
           set +e
-          set -uo pipefail
           export QEMU_LD_PREFIX="$PWD/sysroot"
-          ENC=$(python3 -c "import sys; sys.path.insert(0,'tools'); import bdnet_dns as b; print(b.p_encrypt('${SLOWDNS_HOST}:53'))")
-          : > /tmp/libdns-run.txt
-          echo "== $SLOWDNS_HOST encrypted=$ENC" >> /tmp/libdns-run.txt
-          timeout 180 qemu-aarch64-static libs/libdns.so \
-            -tunnel "$ENC" -report BDNET > /tmp/libdns.log 2>&1 &
-          pid=$!
-          sleep 30
-          echo "== log" >> /tmp/libdns-run.txt; cat /tmp/libdns.log >> /tmp/libdns-run.txt
-          echo "== listening ports" >> /tmp/libdns-run.txt
-          ss -ltnp 2>/dev/null >> /tmp/libdns-run.txt
-          for port in 53 7000 1080 1081 8080 9050 9000 1053 5353 8053; do
-            if ss -ltn 2>/dev/null | grep -q ":$port "; then
-              echo "== port $port open, probing" >> /tmp/libdns-run.txt
-              timeout 45 python3 tools/tunnel_probe.py "127.0.0.1:$port" --mode socks --timeout 20 >> /tmp/libdns-run.txt 2>&1 || true
-              timeout 45 python3 tools/tunnel_probe.py "127.0.0.1:$port" --mode http --timeout 20 >> /tmp/libdns-run.txt 2>&1 || true
-              timeout 45 python3 - "$port" <<'PY' >> /tmp/libdns-run.txt 2>&1 || true
-          import socket, sys, struct, random
-          port = int(sys.argv[1])
-          q = struct.pack(">HHHHHH", random.randrange(65535), 0x0100, 1, 0, 0, 0)
-          q += b"\x07example\x03com\x00" + struct.pack(">HH", 1, 1)
-          s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM); s.settimeout(15)
-          s.sendto(q, ("127.0.0.1", port))
-          try:
-              data, _ = s.recvfrom(4096)
-              print(f"DNS query through the tunnel returned {len(data)} bytes: {data[:40].hex()}")
-          except socket.timeout:
-              print("DNS query through the tunnel: no answer")
-          PY
-            fi
+          for host in 13.140.185.158 13.140.185.165 13.140.185.181; do
+            ENC=$(python3 -c "import sys; sys.path.insert(0,'tools'); import bdnet_dns as b; print(b.p_encrypt('$host:53'))")
+            echo "========== $host  enc=$ENC"
+            timeout 120 qemu-aarch64-static libs/libdns.so \
+              -tunnel "$ENC" -report "BD NET VPN" > /tmp/d.log 2>&1 &
+            pid=$!
+            sleep 20
+            echo "--- log"; cat /tmp/d.log
+            echo "--- listeners"; ss -ltn 2>/dev/null | head
+            kill $pid 2>/dev/null
+            sleep 2
           done
-          echo "== log after probes" >> /tmp/libdns-run.txt; cat /tmp/libdns.log >> /tmp/libdns-run.txt
-          kill $pid 2>/dev/null || true
-          cat /tmp/libdns-run.txt
 
       - name: "Is the gate keyed on -report?"
         run: |
