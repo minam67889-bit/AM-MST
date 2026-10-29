@@ -1,6 +1,5 @@
 S=/tmp/src/sources
-echo "=== who mentions xdnstt ==="; grep -rn "xdnstt" $S --include=*.java | head -8 | cut -c1-180
-echo "=== tanginaka ==="; grep -rn "tanginaka\|wagditokupal" $S --include=*.java | head -5 | cut -c1-180
-echo "=== VPN SHARE ==="; grep -rln "VPN SHARE" $S | head -5
-echo "=== socks5 classes of theirs ==="; grep -rln "socks5" $S/prince 2>/dev/null | head -10
-# nonce=1793279234905666495
+echo "=== libtun2socks options ==="; strings -n 4 libs/libtun2socks.so | grep -iE "socks|udpgw|tunfd" | head -25
+echo "=== who passes --socks-server-addr ==="; grep -rln "socks-server-addr" $S --include=*.java | head -5
+echo "=== classes that exec something ==="; grep -rln "Runtime.getRuntime().exec\|ProcessBuilder" $S/prince 2>/dev/null | head -15
+# nonce=1793279248862948353
