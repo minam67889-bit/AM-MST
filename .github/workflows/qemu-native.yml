@@ -73,35 +73,44 @@ jobs:
           chmod +x libs/* 2>/dev/null || true
           ls -l libs
 
-      - name: "Sysroot - glibc loader plus bionic stubs"
+      - name: "Sysroot - real bionic, taken from an arm64 Android image"
         run: |
-          set -euo pipefail
-          mkdir -p sysroot/system/bin sysroot/system/lib64
-          ln -sf /usr/aarch64-linux-gnu/lib/ld-linux-aarch64.so.1 sysroot/system/bin/linker64
-          for lib in libc.so.6 libdl.so.2 libm.so.6 libpthread.so.0 librt.so.1; do
-            ln -sf "/usr/aarch64-linux-gnu/lib/$lib" "sysroot/system/lib64/${lib%%.so*}.so"
-          done
-          cat > /tmp/stubs.c <<'EOF'
-          #include <stdarg.h>
-          #include <stdio.h>
-          #include <string.h>
-          int __android_log_print(int p, const char *t, const char *f, ...) {
-            va_list a; va_start(a, f); if (t) fprintf(stderr, "%s: ", t);
-            vfprintf(stderr, f, a); fputc('\n', stderr); va_end(a); return 0; }
-          int __android_log_write(int p, const char *t, const char *s) {
-            fprintf(stderr, "%s: %s\n", t ? t : "android", s); return 0; }
-          int __android_log_vprint(int p, const char *t, const char *f, va_list a) {
-            vfprintf(stderr, f, a); return 0; }
-          int __android_log_assert(const char *c, const char *t, const char *f, ...) {
-            va_list a; va_start(a, f); vfprintf(stderr, f, a); va_end(a); return 0; }
-          void android_set_abort_message(const char *m) {
-            fprintf(stderr, "abort: %s\n", m ? m : ""); }
-          int __system_property_get(const char *n, char *v) { strcpy(v, ""); return 0; }
-          int __system_property_find(const char *n) { return -1; }
-          EOF
-          aarch64-linux-gnu-gcc -shared -fPIC -O1 -o sysroot/system/lib64/liblog.so /tmp/stubs.c
-          cp sysroot/system/lib64/liblog.so sysroot/system/lib64/libandroid.so
-          ls -l sysroot/system/lib64
+          exec > >(tee /tmp/sysroot.txt) 2>&1
+          set +e
+          set -x
+          # glibc cannot satisfy bionic's versioned symbols (LIBC / LIBC_N), so
+          # pull /system/bin/linker64 and /system/lib64 straight out of a real
+          # arm64 system image instead of faking it.
+          sudo apt-get install -y -qq android-sdk-libsparse-utils e2fsprogs curl
+          IDX=$(curl -sSL https://dl.google.com/android/repository/sys-img/android/sys-img2-1.xml)
+          echo "$IDX" | grep -o 'sys-img/android/arm64-v8a-[0-9]*_r[0-9]*\.zip' | sort -u | tail -5
+          IMG=$(echo "$IDX" | grep -o 'sys-img/android/arm64-v8a-[0-9]*_r[0-9]*\.zip' | sort -u | tail -1)
+          echo "chosen: $IMG"
+          curl -sSL -o /tmp/sysimg.zip "https://dl.google.com/android/repository/$IMG"
+          ls -l /tmp/sysimg.zip
+          unzip -o -q /tmp/sysimg.zip -d /tmp/sysimg || true
+          ls -l /tmp/sysimg | head
+          IMGFILE=$(find /tmp/sysimg -name 'system.img' | head -1)
+          echo "system image: $IMGFILE"
+          mkdir -p sysroot
+          sudo modprobe loop 2>/dev/null || true
+          sudo mount -o loop,ro "$IMGFILE" sysroot && echo "mounted" || echo "mount failed, trying debugfs"
+          if ! ls sysroot/bin/linker64 > /dev/null 2>&1; then
+            RAW=/tmp/system.raw.img
+            simg2img "$IMGFILE" "$RAW" 2>/dev/null || cp "$IMGFILE" "$RAW"
+            mkdir -p sysroot2
+            # debugfs can pull single files without mounting
+            for f in bin/linker64 lib64/libc.so lib64/libdl.so lib64/libm.so lib64/liblog.so \
+                     lib64/libstdc++.so lib64/libc++.so lib64/libnetd_client.so lib64/libandroid.so; do
+              mkdir -p "sysroot2/$(dirname "$f")"
+              debugfs -R "dump /$f /home/runner/work/_x" "$RAW" > /dev/null 2>&1 && \
+                sudo mv /home/runner/work/_x "sysroot2/$f" 2>/dev/null || true
+            done
+            sudo chown -R "$USER" sysroot2 2>/dev/null || true
+            rm -rf sysroot; mv sysroot2 sysroot
+          fi
+          ls -l sysroot/bin sysroot/lib64 2>/dev/null | head -20
+          file sysroot/bin/linker64 2>/dev/null || true
 
       - name: "Does it start at all?"
         run: |
@@ -114,8 +123,7 @@ jobs:
           aarch64-linux-gnu-gcc -o /tmp/t /tmp/t.c
           timeout 15 qemu-aarch64-static -L /usr/aarch64-linux-gnu /tmp/t; echo "trivial via cross loader exit=$?"
           export QEMU_LD_PREFIX="$PWD/sysroot"
-          export LD_LIBRARY_PATH="$PWD/sysroot/system/lib64"
-          ls -l sysroot/system/bin sysroot/system/lib64
+          ls -l sysroot/bin sysroot/lib64
           aarch64-linux-gnu-gcc -o /tmp/td /tmp/t.c
           timeout 15 qemu-aarch64-static -L "$PWD/sysroot" /tmp/td; echo "trivial shimmed exit=$?"
           for bin in libxdnstt libdns; do
@@ -133,7 +141,6 @@ jobs:
           set +e
           set -uo pipefail
           export QEMU_LD_PREFIX="$PWD/sysroot"
-          export LD_LIBRARY_PATH="$PWD/sysroot/system/lib64"
           : > /tmp/xdnstt-run.txt
           echo "== host $FASTDNS_HOST" >> /tmp/xdnstt-run.txt
           timeout 180 qemu-aarch64-static libs/libxdnstt.so \
@@ -161,7 +168,6 @@ jobs:
           set +e
           set -uo pipefail
           export QEMU_LD_PREFIX="$PWD/sysroot"
-          export LD_LIBRARY_PATH="$PWD/sysroot/system/lib64"
           ENC=$(python3 -c "import sys; sys.path.insert(0,'tools'); import bdnet_dns as b; print(b.p_encrypt('${SLOWDNS_HOST}:53'))")
           : > /tmp/libdns-run.txt
           echo "== $SLOWDNS_HOST encrypted=$ENC" >> /tmp/libdns-run.txt
@@ -201,7 +207,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p analysis-bdnet/configs/dns/results
-          for f in apk startup xdnstt-run libdns-run xdnstt libdns; do
+          for f in apk sysroot startup xdnstt-run libdns-run xdnstt libdns; do
             [ -f "/tmp/$f.txt" ] && cp "/tmp/$f.txt" "analysis-bdnet/configs/dns/results/qemu-$f.txt"
             [ -f "/tmp/$f.log" ] && cp "/tmp/$f.log" "analysis-bdnet/configs/dns/results/qemu-$f.log"
           done
