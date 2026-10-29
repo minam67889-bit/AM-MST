@@ -1,5 +1,5 @@
 + date -u
-Thu Oct 29 00:01:57 UTC 2026
+Thu Oct 29 00:07:47 UTC 2026
 + qemu-aarch64-static --version
 + head -1
 qemu-aarch64 version 8.2.2 (Debian 1:8.2.2+ds-0ubuntu1.18)
@@ -11,11 +11,8 @@ trivial via cross loader exit=0
 + export QEMU_LD_PREFIX=/home/runner/work/AM-MST/AM-MST/sysroot
 + QEMU_LD_PREFIX=/home/runner/work/AM-MST/AM-MST/sysroot
 + ls -l sysroot/bin sysroot/lib64
-sysroot/bin:
-total 0
-
-sysroot/lib64:
-total 0
+ls: cannot access 'sysroot/bin': No such file or directory
+ls: cannot access 'sysroot/lib64': No such file or directory
 + aarch64-linux-gnu-gcc -o /tmp/td /tmp/t.c
 + timeout 15 qemu-aarch64-static -L /home/runner/work/AM-MST/AM-MST/sysroot /tmp/td
 qemu-aarch64-static: Could not open '/lib/ld-linux-aarch64.so.1': No such file or directory
@@ -27,49 +24,150 @@ trivial shimmed exit=255
 ===== libxdnstt -h
 + timeout 25 qemu-aarch64-static libs/libxdnstt.so -h
 + head -30
-qemu-aarch64-static: Could not open '/system/bin/linker64': No such file or directory
-+ echo '[pipeline exit 255 0]'
-[pipeline exit 255 0]
+Usage:
+  libs/libxdnstt.so [-doh URL|-dot ADDR|-udp ADDR] -pubkey-file PUBKEYFILE DOMAIN LOCALADDR
+
+Examples:
+  libs/libxdnstt.so -doh https://resolver.example/dns-query -pubkey-file server.pub t.example.com 127.0.0.1:7000
+  libs/libxdnstt.so -dot resolver.example:853 -pubkey-file server.pub t.example.com 127.0.0.1:7000
+
+  -doh string
+    	URL of DoH resolver
+  -dot string
+    	address of DoT resolver
+  -pubkey string
+    	server public key (64 hex digits)
+  -pubkey-file string
+    	read server public key from file
+  -report string
+    	Reporting Name (default "App Name")
+  -udp string
+    	address of UDP DNS resolver
+  -utls string
+    	choose TLS fingerprint from weighted distribution (default "4*random,3*Firefox_120,1*Firefox_105,3*Chrome_120,1*Chrome_102,1*iOS_14,1*iOS_13")
+
+Known TLS fingerprints for -utls are:
+  none random Firefox Firefox_55 Firefox_56 Firefox_63 Firefox_65
+  Firefox_99 Firefox_102 Firefox_105 Firefox_120 Chrome Chrome_58
+  Chrome_62 Chrome_70 Chrome_72 Chrome_83 Chrome_87 Chrome_96 Chrome_100
+  Chrome_102 Chrome_120 iOS iOS_11_1 iOS_12_1 iOS_13 iOS_14
++ echo '[pipeline exit 0 0]'
+[pipeline exit 0 0]
 + for flag in -h --help -version
 + echo '===== libxdnstt --help'
 ===== libxdnstt --help
-+ head -30
 + timeout 25 qemu-aarch64-static libs/libxdnstt.so --help
-qemu-aarch64-static: Could not open '/system/bin/linker64': No such file or directory
-+ echo '[pipeline exit 255 0]'
-[pipeline exit 255 0]
++ head -30
+Usage:
+  libs/libxdnstt.so [-doh URL|-dot ADDR|-udp ADDR] -pubkey-file PUBKEYFILE DOMAIN LOCALADDR
+
+Examples:
+  libs/libxdnstt.so -doh https://resolver.example/dns-query -pubkey-file server.pub t.example.com 127.0.0.1:7000
+  libs/libxdnstt.so -dot resolver.example:853 -pubkey-file server.pub t.example.com 127.0.0.1:7000
+
+  -doh string
+    	URL of DoH resolver
+  -dot string
+    	address of DoT resolver
+  -pubkey string
+    	server public key (64 hex digits)
+  -pubkey-file string
+    	read server public key from file
+  -report string
+    	Reporting Name (default "App Name")
+  -udp string
+    	address of UDP DNS resolver
+  -utls string
+    	choose TLS fingerprint from weighted distribution (default "4*random,3*Firefox_120,1*Firefox_105,3*Chrome_120,1*Chrome_102,1*iOS_14,1*iOS_13")
+
+Known TLS fingerprints for -utls are:
+  none random Firefox Firefox_55 Firefox_56 Firefox_63 Firefox_65
+  Firefox_99 Firefox_102 Firefox_105 Firefox_120 Chrome Chrome_58
+  Chrome_62 Chrome_70 Chrome_72 Chrome_83 Chrome_87 Chrome_96 Chrome_100
+  Chrome_102 Chrome_120 iOS iOS_11_1 iOS_12_1 iOS_13 iOS_14
++ echo '[pipeline exit 0 0]'
+[pipeline exit 0 0]
 + for flag in -h --help -version
 + echo '===== libxdnstt -version'
 ===== libxdnstt -version
 + timeout 25 qemu-aarch64-static libs/libxdnstt.so -version
 + head -30
-qemu-aarch64-static: Could not open '/system/bin/linker64': No such file or directory
-+ echo '[pipeline exit 255 0]'
-[pipeline exit 255 0]
+flag provided but not defined: -version
+Usage:
+  libs/libxdnstt.so [-doh URL|-dot ADDR|-udp ADDR] -pubkey-file PUBKEYFILE DOMAIN LOCALADDR
+
+Examples:
+  libs/libxdnstt.so -doh https://resolver.example/dns-query -pubkey-file server.pub t.example.com 127.0.0.1:7000
+  libs/libxdnstt.so -dot resolver.example:853 -pubkey-file server.pub t.example.com 127.0.0.1:7000
+
+  -doh string
+    	URL of DoH resolver
+  -dot string
+    	address of DoT resolver
+  -pubkey string
+    	server public key (64 hex digits)
+  -pubkey-file string
+    	read server public key from file
+  -report string
+    	Reporting Name (default "App Name")
+  -udp string
+    	address of UDP DNS resolver
+  -utls string
+    	choose TLS fingerprint from weighted distribution (default "4*random,3*Firefox_120,1*Firefox_105,3*Chrome_120,1*Chrome_102,1*iOS_14,1*iOS_13")
+
+Known TLS fingerprints for -utls are:
+  none random Firefox Firefox_55 Firefox_56 Firefox_63 Firefox_65
+  Firefox_99 Firefox_102 Firefox_105 Firefox_120 Chrome Chrome_58
+  Chrome_62 Chrome_70 Chrome_72 Chrome_83 Chrome_87 Chrome_96 Chrome_100
+  Chrome_102 Chrome_120 iOS iOS_11_1 iOS_12_1 iOS_13 iOS_14
++ echo '[pipeline exit 2 0]'
+[pipeline exit 2 0]
 + for bin in libxdnstt libdns
 + for flag in -h --help -version
 + echo '===== libdns -h'
 ===== libdns -h
-+ timeout 25 qemu-aarch64-static libs/libdns.so -h
 + head -30
-qemu-aarch64-static: Could not open '/system/bin/linker64': No such file or directory
-+ echo '[pipeline exit 255 0]'
-[pipeline exit 255 0]
++ timeout 25 qemu-aarch64-static libs/libdns.so -h
+2026/10/29 00:07:50 FastDNS v1.2 | Client
+Usage of libs/libdns.so:
+  -listen string
+    	Local Server Address (default "127.0.0.1:7777")
+  -report string
+    	Reporting Name (default "App Name")
+  -tunnel string
+    	Relay Server Address (default "127.0.0.1:53")
++ echo '[pipeline exit 0 0]'
+[pipeline exit 0 0]
 + for flag in -h --help -version
 + echo '===== libdns --help'
 ===== libdns --help
 + timeout 25 qemu-aarch64-static libs/libdns.so --help
 + head -30
-qemu-aarch64-static: Could not open '/system/bin/linker64': No such file or directory
-+ echo '[pipeline exit 255 0]'
-[pipeline exit 255 0]
+2026/10/29 00:07:50 FastDNS v1.2 | Client
+Usage of libs/libdns.so:
+  -listen string
+    	Local Server Address (default "127.0.0.1:7777")
+  -report string
+    	Reporting Name (default "App Name")
+  -tunnel string
+    	Relay Server Address (default "127.0.0.1:53")
++ echo '[pipeline exit 0 0]'
+[pipeline exit 0 0]
 + for flag in -h --help -version
 + echo '===== libdns -version'
 ===== libdns -version
-+ head -30
 + timeout 25 qemu-aarch64-static libs/libdns.so -version
-qemu-aarch64-static: Could not open '/system/bin/linker64': No such file or directory
-+ echo '[pipeline exit 255 0]'
-[pipeline exit 255 0]
++ head -30
+2026/10/29 00:07:50 FastDNS v1.2 | Client
+flag provided but not defined: -version
+Usage of libs/libdns.so:
+  -listen string
+    	Local Server Address (default "127.0.0.1:7777")
+  -report string
+    	Reporting Name (default "App Name")
+  -tunnel string
+    	Relay Server Address (default "127.0.0.1:53")
++ echo '[pipeline exit 2 0]'
+[pipeline exit 2 0]
 + set +x
 done

@@ -1,9 +1,9 @@
 == host 173.212.232.241
 no listener on 7000
 == client log
-qemu-aarch64-static: Could not open '/system/bin/linker64': No such file or directory
+2026/10/29 00:07:51 You are not allowed to use this app!
 PROBE FAIL: nothing listening on 127.0.0.1:7000 ([Errno 111] Connection refused)
 PROBE FAIL: nothing listening on 127.0.0.1:7000 ([Errno 111] Connection refused)
 PROBE FAIL: nothing listening on 127.0.0.1:7000 ([Errno 111] Connection refused)
 == client log after the probes
-qemu-aarch64-static: Could not open '/system/bin/linker64': No such file or directory
+2026/10/29 00:07:51 You are not allowed to use this app!
