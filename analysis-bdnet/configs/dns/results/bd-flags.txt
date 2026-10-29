@@ -1,0 +1,86 @@
+================= libxdnstt -h
+Usage:
+  libs/libxdnstt.so [-doh URL|-dot ADDR|-udp ADDR] -pubkey-file PUBKEYFILE DOMAIN LOCALADDR
+
+Examples:
+  libs/libxdnstt.so -doh https://resolver.example/dns-query -pubkey-file server.pub t.example.com 127.0.0.1:7000
+  libs/libxdnstt.so -dot resolver.example:853 -pubkey-file server.pub t.example.com 127.0.0.1:7000
+
+  -doh string
+    	URL of DoH resolver
+  -dot string
+    	address of DoT resolver
+  -pubkey string
+    	server public key (64 hex digits)
+  -pubkey-file string
+    	read server public key from file
+  -report string
+    	Reporting Name (default "App Name")
+  -udp string
+    	address of UDP DNS resolver
+  -utls string
+    	choose TLS fingerprint from weighted distribution (default "4*random,3*Firefox_120,1*Firefox_105,3*Chrome_120,1*Chrome_102,1*iOS_14,1*iOS_13")
+
+Known TLS fingerprints for -utls are:
+  none random Firefox Firefox_55 Firefox_56 Firefox_63 Firefox_65
+  Firefox_99 Firefox_102 Firefox_105 Firefox_120 Chrome Chrome_58
+  Chrome_62 Chrome_70 Chrome_72 Chrome_83 Chrome_87 Chrome_96 Chrome_100
+  Chrome_102 Chrome_120 iOS iOS_11_1 iOS_12_1 iOS_13 iOS_14
+================= libxdnstt --help
+Usage:
+  libs/libxdnstt.so [-doh URL|-dot ADDR|-udp ADDR] -pubkey-file PUBKEYFILE DOMAIN LOCALADDR
+
+Examples:
+  libs/libxdnstt.so -doh https://resolver.example/dns-query -pubkey-file server.pub t.example.com 127.0.0.1:7000
+  libs/libxdnstt.so -dot resolver.example:853 -pubkey-file server.pub t.example.com 127.0.0.1:7000
+
+  -doh string
+    	URL of DoH resolver
+  -dot string
+    	address of DoT resolver
+  -pubkey string
+    	server public key (64 hex digits)
+  -pubkey-file string
+    	read server public key from file
+  -report string
+    	Reporting Name (default "App Name")
+  -udp string
+    	address of UDP DNS resolver
+  -utls string
+    	choose TLS fingerprint from weighted distribution (default "4*random,3*Firefox_120,1*Firefox_105,3*Chrome_120,1*Chrome_102,1*iOS_14,1*iOS_13")
+
+Known TLS fingerprints for -utls are:
+  none random Firefox Firefox_55 Firefox_56 Firefox_63 Firefox_65
+  Firefox_99 Firefox_102 Firefox_105 Firefox_120 Chrome Chrome_58
+================= flag-looking strings inside libxdnstt
+grep: invalid option -- '['
+Usage: grep [OPTION]... PATTERNS [FILE]...
+Try 'grep --help' for more information.
+================= libdns -h
+2026/10/29 10:54:02 FastDNS v1.2 | Client
+Usage of libs/libdns.so:
+  -listen string
+    	Local Server Address (default "127.0.0.1:7777")
+  -report string
+    	Reporting Name (default "App Name")
+  -tunnel string
+    	Relay Server Address (default "127.0.0.1:53")
+================= libdns --help
+2026/10/29 10:54:03 FastDNS v1.2 | Client
+Usage of libs/libdns.so:
+  -listen string
+    	Local Server Address (default "127.0.0.1:7777")
+  -report string
+    	Reporting Name (default "App Name")
+  -tunnel string
+    	Relay Server Address (default "127.0.0.1:53")
+================= flag-looking strings inside libdns
+grep: invalid option -- '['
+Usage: grep [OPTION]... PATTERNS [FILE]...
+Try 'grep --help' for more information.
+================= does libdns parse the JSON config?
+negative shift amountsystem goroutine waitconcurrent map writes/gc/heap/allocs:bytesruntime: work.nwait=  previous allocCount=, levelBits[level] = runtime: searchIdx = defer on system stackpanic on system stackasync stack too large_cgo_unsetenv missingstartm: m is spinningstartlockedm: m has pfindrunnable: wrong ppreempt at unknown pcreleasep: invalid argcheckdead: runnable gruntime: newstack at runtime: newstack sp=runtime: confused by  pcHeader.textStart= timer data corruption0
+omanual span allocation called with non-manually-managed typeaddr range base and limit are not in the same memory segmentruntime: failed to configure profiling timer; timer_settime(runtime: malformed profBuf buffer - tag and data out of syncg[ Z
+SetKeepAliveConfig
+runtime.lfnodeValidate
+pSd2MmFz3F.(*VoAYbMvoJ).SetKeepAliveConfig

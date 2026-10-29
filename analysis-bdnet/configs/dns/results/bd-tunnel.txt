@@ -1,16 +1,16 @@
 ========== live tunnel through 13.140.185.158 (port 7000)
 ========== dead host 173.212.232.241 for comparison (port 7001)
-LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3009,fd=6))
-LISTEN 0      4096       127.0.0.1:7001      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3008,fd=6))
+LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=2950,fd=6))
+LISTEN 0      4096       127.0.0.1:7001      0.0.0.0:*    users:(("qemu-aarch64-st",pid=2949,fd=6))
   session id seen in the live log: none
 --- timing: live tunnel (7000)
-  no-auth            : greeting 0502 in 255.4 ms, auth 2d in 0.0 ms
-  no-auth            : greeting 0502 in 248.5 ms, auth 2d in 0.0 ms
-  no-auth            : greeting 0502 in 243.1 ms, auth 2d in 0.0 ms
-  tanginaka/wagditokupal: greeting 0502 in 243.7 ms, auth 01ff in 477.3 ms
-  tanginaka/wagditokupal: greeting 0502 in 240.5 ms, auth 01ff in 243.4 ms
-  prince/prince: greeting 0502 in 246.7 ms, auth 01ff in 246.3 ms
-  prince/prince: greeting 0502 in 127.8 ms, auth 01ff in 125.6 ms
+  no-auth            : greeting 0502 in 288.0 ms, auth 2d in 0.0 ms
+  no-auth            : greeting 0502 in 279.4 ms, auth 2d in 0.0 ms
+  no-auth            : greeting 0502 in 279.7 ms, auth 2d in 0.0 ms
+  tanginaka/wagditokupal: greeting 0502 in 283.8 ms, auth 01ff in 142.3 ms
+  tanginaka/wagditokupal: greeting 0502 in 276.4 ms, auth 01ff in 166.8 ms
+  prince/prince: greeting 0502 in 144.2 ms, auth 01ff in 280.5 ms
+  prince/prince: greeting 0502 in 280.3 ms, auth 01ff in 278.7 ms
 --- timing: dead tunnel (7001) -- anything answered here is purely local
   no-auth            : TimeoutError('timed out')
   no-auth            : TimeoutError('timed out')
@@ -20,13 +20,13 @@ LISTEN 0      4096       127.0.0.1:7001      0.0.0.0:*    users:(("qemu-aarch64-
   prince/prince: TimeoutError('timed out')
   prince/prince: TimeoutError('timed out')
 --- client log
---- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=3009, si_uid=1001} ---
---- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=3009, si_uid=1001} ---
+ = 0x0000400048ac3000
+--- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2950, si_uid=1001} ---
+--- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=2950, si_uid=1001} ---
  = 0
  = 0
---- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=3009, si_uid=1001} ---
---- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=3009, si_uid=1001} ---
+ = 0
  = 0
  = 0
 grep: write error: Broken pipe
---- packets live: sendto=172 recvwithdata=158
+--- packets live: sendto=170 recvwithdata=156
