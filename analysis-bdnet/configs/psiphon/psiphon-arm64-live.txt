@@ -1,28 +1,46 @@
-=== start Thu Oct 29 12:30:45 UTC 2026 ===
+=== start Thu Oct 29 12:34:46 UTC 2026 ===
 SOCKS5 listening after 5s
 === notices ===
-{"data":{"message":"Config migration: migration already completed"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.461Z"}
-{"data":{"message":"DeviceRegion: '' from ''"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.469Z"}
-{"data":{"message":"applied [2] parameters with tag ''"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.476Z"}
-{"data":{"message":"NetworkLatencyMultiplier Min/Max/Lambda: 1.000000/3.000000/2.000000"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.477Z"}
-{"data":{"buildInfo":{"buildDate":"","buildRepo":"","buildRev":"","goVersion":"","valuesRev":"none"}},"noticeType":"BuildInfo","timestamp":"2026-10-29T12:30:45.480Z"}
-{"data":{"sessionId":"7fb186a8761e009f0f9206b3acf639bb"},"noticeType":"SessionId","timestamp":"2026-10-29T12:30:45.488Z"}
-{"data":{"ID":"WIRED+[redacted]"},"noticeType":"NetworkID","timestamp":"2026-10-29T12:30:45.496Z"}
-{"data":{"port":1080},"noticeType":"ListeningSocksProxyPort","timestamp":"2026-10-29T12:30:45.519Z"}
-{"data":{"port":8080},"noticeType":"ListeningHttpProxyPort","timestamp":"2026-10-29T12:30:45.520Z"}
-{"data":{"message":"running tunneled DSL fetcher"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.523Z"}
-{"data":{"message":"running untunneled DSL fetcher"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.524Z"}
-{"data":{"message":"start establishing"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.524Z"}
-{"data":{"message":"Memory metrics at psiphon.(*Controller).startEstablishing#2561: goroutines 14 | objects 4595 | alloc 1013.0K | inuse 3.1M | sys 16.5M | cumulative 7906 1.6M"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.559Z"}
-{"data":{"message":"ServerEntryIterator.reset: entries 0, dial params 0, moved-to-front 0; durations: move-to-front 257.162µs, entries 55.492µs, total 916.601µs"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.562Z"}
-{"data":{"message":"tactics request aborted: no capable servers"},"noticeType":"Warning","timestamp":"2026-10-29T12:30:45.564Z"}
-{"data":{"message":"ServerEntryIterator.reset: entries 0, dial params 0, moved-to-front 0; durations: move-to-front 19.509µs, entries 7.01µs, total 246.116µs"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.569Z"}
-{"data":{"count":0,"duration":"575.434µs","initialCount":0,"initialLimitTunnelProtocols":[],"initialLimitTunnelProtocolsCandidateCount":0,"limitTunnelDialPortNumbers":{},"limitTunnelProtocols":[],"region":"","replayCandidateCount":10},"noticeType":"CandidateServers","timestamp":"2026-10-29T12:30:45.569Z"}
-{"data":{"message":"completed server entry iteration"},"noticeType":"Info","timestamp":"2026-10-29T12:30:45.570Z"}
-{"data":{"regions":[]},"noticeType":"AvailableEgressRegions","timestamp":"2026-10-29T12:30:45.570Z"}
-{"data":{"message":"untunneled DSL fetch failed: psiphon.runUntunneledDSLFetcher#98: psiphon.runUntunneledDSLFetcher.func1#62: psiphon.(*InproxyBrokerClientManager).GetBrokerClient#150: psiphon.(*InproxyBrokerClientManager).reset#298: psiphon.NewInproxyBrokerClientInstance#388: no broker specs"},"noticeType":"Error","timestamp":"2026-10-29T12:30:45.573Z"}
+{"data":{"message":"Memory metrics at psiphon.(*Controller).startEstablishing#2561: goroutines 14 | objects 5100 | alloc 1.0M | inuse 3.0M | sys 16.9M | cumulative 11031 1.9M"},"noticeType":"Info","timestamp":"2026-10-29T12:34:46.603Z"}
+{"data":{"message":"Memory metrics at psiphon.GetTactics#211: goroutines 16 | objects 5064 | alloc 1.0M | inuse 3.1M | sys 16.9M | cumulative 13963 2.2M"},"noticeType":"Info","timestamp":"2026-10-29T12:34:46.617Z"}
+{"data":{"message":"ServerEntryIterator.reset: entries 430, dial params 0, moved-to-front 0; durations: move-to-front 688.507µs, entries 1.918059ms, total 4.079845ms"},"noticeType":"Info","timestamp":"2026-10-29T12:34:46.627Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":0,"candidatesMovedToFront":0,"diagnosticID":"dvigGx/Q","establishedTunnelsCount":0,"firstFrontedMeekCandidate":-1,"isReplay":false,"networkType":"WIRED","protocol":"SSH","region":"CA","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:46.653Z"}
+{"data":{"reason":"restricted provider ID: 66FA5AFE5F394DE1"},"noticeType":"SkipServerEntry","timestamp":"2026-10-29T12:34:46.856Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":1,"candidatesMovedToFront":0,"diagnosticID":"xl0zPBaA","establishedTunnelsCount":0,"firstFrontedMeekCandidate":-1,"isReplay":false,"networkType":"WIRED","protocol":"QUIC-OSSH","region":"CA","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:46.859Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":2,"candidatesMovedToFront":0,"diagnosticID":"lwwsiQyj","establishedTunnelsCount":0,"firstFrontedMeekCandidate":-1,"isReplay":false,"networkType":"WIRED","protocol":"OSSH","region":"SG","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:46.874Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":3,"candidatesMovedToFront":0,"diagnosticID":"KDE7NwIz","establishedTunnelsCount":0,"firstFrontedMeekCandidate":-1,"isReplay":false,"networkType":"WIRED","protocol":"OSSH","region":"BE","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:46.893Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":4,"candidatesMovedToFront":0,"diagnosticID":"JhLVpFy4","establishedTunnelsCount":0,"firstFrontedMeekCandidate":-1,"isReplay":false,"networkType":"WIRED","protocol":"SSH","region":"GB","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:46.892Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":5,"candidatesMovedToFront":0,"diagnosticID":"U2xS6JvI","establishedTunnelsCount":0,"firstFrontedMeekCandidate":-1,"isReplay":false,"networkType":"WIRED","protocol":"TLS-OSSH","region":"PL","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:46.908Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":6,"candidatesMovedToFront":0,"diagnosticID":"yGvmODKh","establishedTunnelsCount":0,"firstFrontedMeekCandidate":-1,"isReplay":false,"networkType":"WIRED","protocol":"QUIC-OSSH","region":"US","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:46.914Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":7,"candidatesMovedToFront":0,"diagnosticID":"uDZDExVK","establishedTunnelsCount":0,"firstFrontedMeekCandidate":-1,"isReplay":false,"networkType":"WIRED","protocol":"TLS-OSSH","region":"AU","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:46.923Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":8,"candidatesMovedToFront":0,"diagnosticID":"DZC3Mcxe","establishedTunnelsCount":0,"firstFrontedMeekCandidate":-1,"isReplay":false,"networkType":"WIRED","protocol":"UNFRONTED-MEEK-SESSION-TICKET-OSSH","region":"DE","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:46.938Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":9,"candidatesMovedToFront":0,"diagnosticID":"Q6VKjJjy","establishedTunnelsCount":0,"firstFrontedMeekCandidate":-1,"isReplay":false,"networkType":"WIRED","protocol":"QUIC-OSSH","region":"SE","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:46.944Z"}
+{"data":{"count":430,"duration":"433.988501ms","initialCount":0,"initialLimitTunnelProtocols":[],"initialLimitTunnelProtocolsCandidateCount":0,"limitTunnelDialPortNumbers":{},"limitTunnelProtocols":[],"region":"","replayCandidateCount":10},"noticeType":"CandidateServers","timestamp":"2026-10-29T12:34:47.054Z"}
+{"data":{"regions":["AT","AU","BE","CA","CH","CZ","DE","DK","ES","FI","FR","GB","IE","IN","IT","JP","LT","NL","PL","RO","RS","SE","SG","US"]},"noticeType":"AvailableEgressRegions","timestamp":"2026-10-29T12:34:47.061Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":0,"candidatesMovedToFront":0,"diagnosticID":"dvigGx/Q","establishedTunnelsCount":0,"firstFrontedMeekCandidate":-1,"isReplay":false,"networkType":"WIRED","protocol":"SSH","region":"CA","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectedServer","timestamp":"2026-10-29T12:34:47.065Z"}
+{"data":{"message":"Memory metrics at psiphon.(*Controller).establishTunnelWorker#3970: goroutines 48 | objects 19469 | alloc 2.1M | inuse 4.4M | sys 17.4M | cumulative 87148 6.0M"},"noticeType":"Info","timestamp":"2026-10-29T12:34:47.070Z"}
+{"data":{"message":"stop establishing"},"noticeType":"Info","timestamp":"2026-10-29T12:34:47.080Z"}
+{"data":{"ID":"WIRED+[redacted]"},"noticeType":"NetworkID","timestamp":"2026-10-29T12:34:47.081Z"}
+{"data":{"message":"stopped establishing"},"noticeType":"Info","timestamp":"2026-10-29T12:34:47.124Z"}
+{"data":{"message":"peak concurrent establish tunnels: 10"},"noticeType":"Info","timestamp":"2026-10-29T12:34:47.125Z"}
+{"data":{"message":"peak concurrent resource intensive establish tunnels: 4"},"noticeType":"Info","timestamp":"2026-10-29T12:34:47.125Z"}
+{"data":{"message":"Memory metrics at psiphon.(*Controller).stopEstablishing#3068: goroutines 19 | objects 13683 | alloc 1.6M | inuse 3.7M | sys 17.4M | cumulative 88374 6.3M"},"noticeType":"Info","timestamp":"2026-10-29T12:34:47.126Z"}
+{"data":{"message":"Datastore metrics at psiphon.(*Controller).stopEstablishing#3074: filesize 2.0M | freepages 13 | freealloc 0B | txcount 84 | writes 0 | writetime 0s"},"noticeType":"Info","timestamp":"2026-10-29T12:34:47.130Z"}
+{"data":{"message":"DNS metrics at psiphon.(*Controller).stopEstablishing#3077: resolves 0 | hit 0 | req v4/v6 0/0 | resp 0/0 | peak 0 | rtt n/a - n/a ms. | sys 0 | def 0/0"},"noticeType":"Info","timestamp":"2026-10-29T12:34:47.130Z"}
+{"data":{"message":"starting server context for dvigGx/Q"},"noticeType":"Info","timestamp":"2026-10-29T12:34:47.131Z"}
+{"data":{"region":"US"},"noticeType":"ClientRegion","timestamp":"2026-10-29T12:34:47.162Z"}
+{"data":{"message":"updated server nBhHc066"},"noticeType":"Info","timestamp":"2026-10-29T12:34:47.167Z"}
+{"data":{"url":"https://ipfounder.net/?sponsor_id=4BA4DEF917101460\u0026sponsor=psiphon_bbg\u0026client_region=US\u0026client_asn=8075\u0026client_platform=android\u0026secret=580EfjEI29xL3hoyU6dgP4vSEVxdcGI7JDFkxgjds7PHulSEF0wmORpvzbqxyTwYtpowsY4xMFnfWEnTghe6l8jiV9K5QSZoir2i6fDeKJD6EhL6DkoYTEMu2EE9YJvy3LdCUZ7ncdVC6ipgWx06wznvDLbY1ajfcfRGCpfsQJei2q6tb0GSFh1QK3x3qXKwyjmNPc5J\u0026psiphon_external_homepage"},"noticeType":"Homepage","timestamp":"2026-10-29T12:34:47.172Z"}
+{"data":{"version":"509"},"noticeType":"ClientUpgradeAvailable","timestamp":"2026-10-29T12:34:47.173Z"}
+{"data":{"diagnosticID":"dvigGx/Q","timestamp":"2026-10-29T12:34:47Z"},"noticeType":"ServerTimestamp","timestamp":"2026-10-29T12:34:47.173Z"}
+{"data":{"IDs":[],"diagnosticID":"dvigGx/Q"},"noticeType":"ActiveAuthorizationIDs","timestamp":"2026-10-29T12:34:47.173Z"}
+{"data":{"diagnosticID":"dvigGx/Q","downstreamBytesPerSecond":0,"upstreamBytesPerSecond":0},"noticeType":"TrafficRateLimits","timestamp":"2026-10-29T12:34:47.173Z"}
+{"data":{"count":1},"noticeType":"Tunnels","timestamp":"2026-10-29T12:34:47.179Z"}
+{"data":{"diagnosticID":"dvigGx/Q","protocol":"SSH"},"noticeType":"ActiveTunnel","timestamp":"2026-10-29T12:34:47.181Z"}
+{"data":{"serverRegion":"CA"},"noticeType":"ConnectedServerRegion","timestamp":"2026-10-29T12:34:47.181Z"}
+{"data":{"message":"Unreported persistent stats: 0; server entry check due: true"},"noticeType":"Info","timestamp":"2026-10-29T12:34:47.181Z"}
+{"data":{"known":0,"message":"DSL: fetched server entries","tags":2,"trace":"dsl.(*Fetcher).Run.func1#258","tunneled":true,"updated":0},"noticeType":"Info","timestamp":"2026-10-29T12:34:47.292Z"}
+{"data":{"message":"tunneled DSL fetch failed: psiphon.runTunneledDSLFetcher#153: psiphon.doDSLFetch#402: dsl.(*Fetcher).Run#340: psiphon.doDSLFetch.func3#310: psiphon.DSLStoreServerEntry#3346: protocol.ServerEntryFields.VerifySignature#385: missing public key"},"noticeType":"Error","timestamp":"2026-10-29T12:34:47.293Z"}
 === through the proxy ===
-curl: (97) Can't complete SOCKS5 connection to example.com. (1)
-http=000 bytes=0 time=0.005261
-head: cannot open '/tmp/body2.txt' for reading: No such file or directory
-
+http=200 bytes=577 time=0.089404
+<!doctype html><html lang=en><head><meta charset=utf-8><link rel=icon href=data:,><meta name=viewport content="width=device-width,initial-scale=1"><title>Example Domain</title><style>html{color-scheme

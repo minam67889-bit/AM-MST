@@ -1,83 +1,132 @@
-=== start Thu Oct 29 12:30:31 UTC 2026 ===
+=== start Thu Oct 29 12:34:31 UTC 2026 ===
 SOCKS5 listening after 5s
-Netid State  Recv-Q Send-Q  Local Address:Port Peer Address:PortProcess                                 
-udp   UNCONN 0      0          127.0.0.54:53        0.0.0.0:*                                           
-udp   UNCONN 0      0       127.0.0.53%lo:53        0.0.0.0:*                                           
-udp   UNCONN 0      0      10.1.0.89%eth0:68        0.0.0.0:*                                           
-udp   UNCONN 0      0           127.0.0.1:323       0.0.0.0:*                                           
-udp   UNCONN 0      0               [::1]:323          [::]:*                                           
-tcp   LISTEN 0      4096        127.0.0.1:1080      0.0.0.0:*    users:(("psiphon-amd64",pid=8891,fd=7))
-tcp   LISTEN 0      4096       127.0.0.54:53        0.0.0.0:*                                           
-tcp   LISTEN 0      4096          0.0.0.0:22        0.0.0.0:*                                           
-tcp   LISTEN 0      4096    127.0.0.53%lo:53        0.0.0.0:*                                           
+Netid State  Recv-Q Send-Q  Local Address:Port  Peer Address:PortProcess                                  
+udp   UNCONN 0      0             0.0.0.0:46490      0.0.0.0:*    users:(("psiphon-amd64",pid=8884,fd=17))
+udp   UNCONN 0      0          127.0.0.54:53         0.0.0.0:*                                            
+udp   UNCONN 0      0       127.0.0.53%lo:53         0.0.0.0:*                                            
+udp   UNCONN 0      0      10.1.0.77%eth0:68         0.0.0.0:*                                            
+udp   UNCONN 0      0           127.0.0.1:323        0.0.0.0:*                                            
+udp   UNCONN 0      0               [::1]:323           [::]:*                                            
+tcp   LISTEN 0      4096    127.0.0.53%lo:53         0.0.0.0:*                                            
+tcp   LISTEN 0      4096        127.0.0.1:1080       0.0.0.0:*    users:(("psiphon-amd64",pid=8884,fd=7)) 
+tcp   LISTEN 0      4096          0.0.0.0:22         0.0.0.0:*                                            
 === notices so far ===
-{"data":{"message":"Config migration: need migration"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
-{"data":{"message":"Config migration: 0/0 notice files successfully migrated"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
-{"data":{"message":"DeviceRegion: '' from ''"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
-{"data":{"message":"applied [2] parameters with tag ''"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
-{"data":{"message":"NetworkLatencyMultiplier Min/Max/Lambda: 1.000000/3.000000/2.000000"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.070Z"}
-{"data":{"message":"Config migration: psiphon.(*Config).Commit#2222: psiphon.DoFileMigration#244: (psiphon.boltdb) old path does not exist"},"noticeType":"Warning","timestamp":"2026-10-29T12:30:31.070Z"}
-{"data":{"message":"Config migration: psiphon.(*Config).Commit#2222: psiphon.DoFileMigration#244: (psiphon.boltdb.lock) old path does not exist"},"noticeType":"Warning","timestamp":"2026-10-29T12:30:31.070Z"}
-{"data":{"message":"Config migration: 0/2 legacy files successfully migrated"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.070Z"}
-{"data":{"message":"Config migration: completed"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.070Z"}
-{"data":{"buildInfo":{"buildDate":"","buildRepo":"","buildRev":"","goVersion":"","valuesRev":"none"}},"noticeType":"BuildInfo","timestamp":"2026-10-29T12:30:31.070Z"}
-{"data":{"sessionId":"6251dac3b79c5f3cd97e6eef188a2d6c"},"noticeType":"SessionId","timestamp":"2026-10-29T12:30:31.074Z"}
-{"data":{"ID":"WIRED+[redacted]"},"noticeType":"NetworkID","timestamp":"2026-10-29T12:30:31.075Z"}
-{"data":{"port":1080},"noticeType":"ListeningSocksProxyPort","timestamp":"2026-10-29T12:30:31.076Z"}
-{"data":{"port":8080},"noticeType":"ListeningHttpProxyPort","timestamp":"2026-10-29T12:30:31.076Z"}
-{"data":{"message":"running tunneled DSL fetcher"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.076Z"}
-{"data":{"message":"running untunneled DSL fetcher"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.076Z"}
-{"data":{"message":"start establishing"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.076Z"}
-{"data":{"message":"Memory metrics at psiphon.(*Controller).startEstablishing#2561: goroutines 14 | objects 4613 | alloc 1.0M | inuse 3.0M | sys 16.8M | cumulative 8254 1.6M"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
-{"data":{"message":"ServerEntryIterator.reset: entries 0, dial params 0, moved-to-front 0; durations: move-to-front 2.103µs, entries 691ns, total 9.524µs"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
-{"data":{"message":"tactics request aborted: no capable servers"},"noticeType":"Warning","timestamp":"2026-10-29T12:30:31.078Z"}
-{"data":{"message":"ServerEntryIterator.reset: entries 0, dial params 0, moved-to-front 0; durations: move-to-front 921ns, entries 321ns, total 20.61µs"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
-{"data":{"message":"completed server entry iteration"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
-{"data":{"count":0,"duration":"37.526µs","initialCount":0,"initialLimitTunnelProtocols":[],"initialLimitTunnelProtocolsCandidateCount":0,"limitTunnelDialPortNumbers":{},"limitTunnelProtocols":[],"region":"","replayCandidateCount":10},"noticeType":"CandidateServers","timestamp":"2026-10-29T12:30:31.078Z"}
-{"data":{"message":"untunneled DSL fetch failed: psiphon.runUntunneledDSLFetcher#98: psiphon.runUntunneledDSLFetcher.func1#62: psiphon.(*InproxyBrokerClientManager).GetBrokerClient#150: psiphon.(*InproxyBrokerClientManager).reset#298: psiphon.NewInproxyBrokerClientInstance#388: no broker specs"},"noticeType":"Error","timestamp":"2026-10-29T12:30:31.078Z"}
-{"data":{"regions":[]},"noticeType":"AvailableEgressRegions","timestamp":"2026-10-29T12:30:31.078Z"}
+{"data":{"message":"NetworkLatencyMultiplier Min/Max/Lambda: 1.000000/3.000000/2.000000"},"noticeType":"Info","timestamp":"2026-10-29T12:34:33.827Z"}
+{"data":{"parameters":{"DeviceLocationPrecision":4}},"noticeType":"ApplicationParameters","timestamp":"2026-10-29T12:34:33.827Z"}
+{"data":{"message":"Memory metrics at psiphon.GetTactics#211: goroutines 30 | objects 7572 | alloc 1.4M | inuse 3.4M | sys 13.6M | cumulative 232050 36.8M"},"noticeType":"Info","timestamp":"2026-10-29T12:34:33.828Z"}
+{"data":{"message":"ServerEntryIterator.reset: entries 429, dial params -1, moved-to-front 0; durations: move-to-front 0s, entries 85.869µs, total 149.314µs"},"noticeType":"Info","timestamp":"2026-10-29T12:34:33.877Z"}
+{"data":{"reason":"restricted provider ID: 66FA5AFE5F394DE1"},"noticeType":"SkipServerEntry","timestamp":"2026-10-29T12:34:33.877Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":0,"candidatesMovedToFront":0,"diagnosticID":"ZH4AoMyK","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"FRONTED-MEEK-OSSH","region":"GB","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.879Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":1,"candidatesMovedToFront":0,"diagnosticID":"6aMWw4Be","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"UNFRONTED-MEEK-SESSION-TICKET-OSSH","region":"DK","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.879Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":6,"candidatesMovedToFront":0,"diagnosticID":"d2P9zSCM","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"UNFRONTED-MEEK-OSSH","region":"CA","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.881Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":4,"candidatesMovedToFront":0,"diagnosticID":"nZkQXz48","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"OSSH","region":"NL","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.880Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":5,"candidatesMovedToFront":0,"diagnosticID":"jU8IHyA6","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"OSSH","region":"RS","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.881Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":2,"candidatesMovedToFront":0,"diagnosticID":"Pi+uQIGx","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"QUIC-OSSH","region":"SE","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.881Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":7,"candidatesMovedToFront":0,"diagnosticID":"Gp9gCbVN","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"UNFRONTED-MEEK-HTTPS-OSSH","region":"GB","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.883Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":3,"candidatesMovedToFront":0,"diagnosticID":"0bgaVANA","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"QUIC-OSSH","region":"NL","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.880Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":8,"candidatesMovedToFront":0,"diagnosticID":"iMDTy9ns","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"TLS-OSSH","region":"IN","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.884Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":9,"candidatesMovedToFront":0,"diagnosticID":"dvigGx/Q","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"QUIC-OSSH","region":"CA","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.884Z"}
+{"data":{"message":"negotiated HTTP/2 for ZH4AoMyK"},"noticeType":"Info","timestamp":"2026-10-29T12:34:33.901Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":9,"candidatesMovedToFront":0,"diagnosticID":"dvigGx/Q","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"QUIC-OSSH","region":"CA","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectedServer","timestamp":"2026-10-29T12:34:34.041Z"}
+{"data":{"message":"Memory metrics at psiphon.(*Controller).establishTunnelWorker#3970: goroutines 65 | objects 29368 | alloc 3.0M | inuse 5.4M | sys 13.6M | cumulative 389346 42.5M"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.041Z"}
+{"data":{"message":"stop establishing"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.043Z"}
+{"data":{"message":"stopped establishing"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.045Z"}
+{"data":{"message":"peak concurrent establish tunnels: 10"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.045Z"}
+{"data":{"message":"peak concurrent resource intensive establish tunnels: 7"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.045Z"}
+{"data":{"message":"Memory metrics at psiphon.(*Controller).stopEstablishing#3068: goroutines 29 | objects 17167 | alloc 2.3M | inuse 4.8M | sys 13.6M | cumulative 390160 42.7M"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.045Z"}
+{"data":{"message":"Datastore metrics at psiphon.(*Controller).stopEstablishing#3074: filesize 2.0M | freepages 8 | freealloc 40.0K | txcount 74 | writes 3847 | writetime 129.21888ms"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.046Z"}
+{"data":{"message":"DNS metrics at psiphon.(*Controller).stopEstablishing#3077: resolves 2 | hit 0 | req v4/v6 0/0 | resp 0/0 | peak 0 | rtt n/a - n/a ms. | sys 0 | def 2/2"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.046Z"}
+{"data":{"message":"starting server context for dvigGx/Q"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.046Z"}
+{"data":{"region":"US"},"noticeType":"ClientRegion","timestamp":"2026-10-29T12:34:34.068Z"}
+{"data":{"message":"updated server nBhHc066"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.068Z"}
+{"data":{"url":"https://ipfounder.net/?sponsor_id=4BA4DEF917101460\u0026sponsor=psiphon_bbg\u0026client_region=US\u0026client_asn=8075\u0026client_platform=android\u0026secret=580EfjEI29xL3hoyU6dgP4vSEVxdcGI7JDFkxgjds7PHulSEF0wmORpvzbqxyTwYtpowsY4xMFnfWEnTghe6l8jiV9K5QSZoir2i6fDeKJD6EhL6DkoYTEMu2EE9YJvy3LdCUZ7ncdVC6ipgWx06wznvDLbY1ajfcfRGCpfsQJei2q6tb0GSFh1QK3x3qXKwyjmNPc5J\u0026psiphon_external_homepage"},"noticeType":"Homepage","timestamp":"2026-10-29T12:34:34.069Z"}
+{"data":{"version":"509"},"noticeType":"ClientUpgradeAvailable","timestamp":"2026-10-29T12:34:34.069Z"}
+{"data":{"diagnosticID":"dvigGx/Q","timestamp":"2026-10-29T12:34:34Z"},"noticeType":"ServerTimestamp","timestamp":"2026-10-29T12:34:34.069Z"}
+{"data":{"IDs":[],"diagnosticID":"dvigGx/Q"},"noticeType":"ActiveAuthorizationIDs","timestamp":"2026-10-29T12:34:34.069Z"}
+{"data":{"diagnosticID":"dvigGx/Q","downstreamBytesPerSecond":0,"upstreamBytesPerSecond":0},"noticeType":"TrafficRateLimits","timestamp":"2026-10-29T12:34:34.069Z"}
+{"data":{"count":1},"noticeType":"Tunnels","timestamp":"2026-10-29T12:34:34.070Z"}
+{"data":{"message":"Unreported persistent stats: 1; server entry check due: true"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.070Z"}
+{"data":{"diagnosticID":"dvigGx/Q","protocol":"QUIC-OSSH"},"noticeType":"ActiveTunnel","timestamp":"2026-10-29T12:34:34.070Z"}
+{"data":{"serverRegion":"CA"},"noticeType":"ConnectedServerRegion","timestamp":"2026-10-29T12:34:34.070Z"}
+{"data":{"added":0,"message":"DSL: fetched active OSL IDs","removed":0,"total":0,"trace":"dsl.(*Fetcher).processOSLs#460","tunneled":true},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.141Z"}
+{"data":{"known":0,"message":"DSL: fetched server entries","tags":2,"trace":"dsl.(*Fetcher).Run.func1#258","tunneled":true,"updated":0},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.212Z"}
+{"data":{"message":"tunneled DSL fetch failed: psiphon.runTunneledDSLFetcher#153: psiphon.doDSLFetch#402: dsl.(*Fetcher).Run#340: psiphon.doDSLFetch.func3#310: psiphon.DSLStoreServerEntry#3346: protocol.ServerEntryFields.VerifySignature#385: missing public key"},"noticeType":"Error","timestamp":"2026-10-29T12:34:34.212Z"}
 === through the proxy ===
 --- https://example.com/
-curl: (97) Can't complete SOCKS5 connection to example.com. (1)
-http=000 bytes=0 time=0.000448
-head: cannot open '/tmp/body.txt' for reading: No such file or directory
-
+http=200 bytes=577 time=0.075792
+<!doctype html><html lang=en><head><meta charset=utf-8><link rel=icon href=data:,><meta name=viewport content="width=device-width,initial-scale=1"><title>Example Domain</title><style>html{color-scheme
 --- https://api.telegram.org/
-curl: (97) Can't complete SOCKS5 connection to api.telegram.org. (1)
-http=000 bytes=0 time=0.000321
-head: cannot open '/tmp/body.txt' for reading: No such file or directory
+http=302 bytes=145 time=0.345993
+<html>
+<head><title>302 Found</title></head>
+<body>
+<center><h1>302 Found</h1></center>
+<hr><center>nginx/1.30.1</center>
+</body>
+</html>
 
 --- https://www.google.com/generate_204
-curl: (97) Can't complete SOCKS5 connection to www.google.com. (1)
-http=000 bytes=0 time=0.000300
-head: cannot open '/tmp/body.txt' for reading: No such file or directory
+http=204 bytes=0 time=0.087620
 
 === notices at the end ===
-{"data":{"message":"Config migration: need migration"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
-{"data":{"message":"Config migration: 0/0 notice files successfully migrated"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
-{"data":{"message":"DeviceRegion: '' from ''"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
-{"data":{"message":"applied [2] parameters with tag ''"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.069Z"}
-{"data":{"message":"NetworkLatencyMultiplier Min/Max/Lambda: 1.000000/3.000000/2.000000"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.070Z"}
-{"data":{"message":"Config migration: psiphon.(*Config).Commit#2222: psiphon.DoFileMigration#244: (psiphon.boltdb) old path does not exist"},"noticeType":"Warning","timestamp":"2026-10-29T12:30:31.070Z"}
-{"data":{"message":"Config migration: psiphon.(*Config).Commit#2222: psiphon.DoFileMigration#244: (psiphon.boltdb.lock) old path does not exist"},"noticeType":"Warning","timestamp":"2026-10-29T12:30:31.070Z"}
-{"data":{"message":"Config migration: 0/2 legacy files successfully migrated"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.070Z"}
-{"data":{"message":"Config migration: completed"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.070Z"}
-{"data":{"buildInfo":{"buildDate":"","buildRepo":"","buildRev":"","goVersion":"","valuesRev":"none"}},"noticeType":"BuildInfo","timestamp":"2026-10-29T12:30:31.070Z"}
-{"data":{"sessionId":"6251dac3b79c5f3cd97e6eef188a2d6c"},"noticeType":"SessionId","timestamp":"2026-10-29T12:30:31.074Z"}
-{"data":{"ID":"WIRED+[redacted]"},"noticeType":"NetworkID","timestamp":"2026-10-29T12:30:31.075Z"}
-{"data":{"port":1080},"noticeType":"ListeningSocksProxyPort","timestamp":"2026-10-29T12:30:31.076Z"}
-{"data":{"port":8080},"noticeType":"ListeningHttpProxyPort","timestamp":"2026-10-29T12:30:31.076Z"}
-{"data":{"message":"running tunneled DSL fetcher"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.076Z"}
-{"data":{"message":"running untunneled DSL fetcher"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.076Z"}
-{"data":{"message":"start establishing"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.076Z"}
-{"data":{"message":"Memory metrics at psiphon.(*Controller).startEstablishing#2561: goroutines 14 | objects 4613 | alloc 1.0M | inuse 3.0M | sys 16.8M | cumulative 8254 1.6M"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
-{"data":{"message":"ServerEntryIterator.reset: entries 0, dial params 0, moved-to-front 0; durations: move-to-front 2.103µs, entries 691ns, total 9.524µs"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
-{"data":{"message":"tactics request aborted: no capable servers"},"noticeType":"Warning","timestamp":"2026-10-29T12:30:31.078Z"}
-{"data":{"message":"ServerEntryIterator.reset: entries 0, dial params 0, moved-to-front 0; durations: move-to-front 921ns, entries 321ns, total 20.61µs"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
-{"data":{"message":"completed server entry iteration"},"noticeType":"Info","timestamp":"2026-10-29T12:30:31.078Z"}
-{"data":{"count":0,"duration":"37.526µs","initialCount":0,"initialLimitTunnelProtocols":[],"initialLimitTunnelProtocolsCandidateCount":0,"limitTunnelDialPortNumbers":{},"limitTunnelProtocols":[],"region":"","replayCandidateCount":10},"noticeType":"CandidateServers","timestamp":"2026-10-29T12:30:31.078Z"}
-{"data":{"message":"untunneled DSL fetch failed: psiphon.runUntunneledDSLFetcher#98: psiphon.runUntunneledDSLFetcher.func1#62: psiphon.(*InproxyBrokerClientManager).GetBrokerClient#150: psiphon.(*InproxyBrokerClientManager).reset#298: psiphon.NewInproxyBrokerClientInstance#388: no broker specs"},"noticeType":"Error","timestamp":"2026-10-29T12:30:31.078Z"}
-{"data":{"regions":[]},"noticeType":"AvailableEgressRegions","timestamp":"2026-10-29T12:30:31.078Z"}
-{"data":{"message":"psiphon.(*SocksProxy).serve.func1#163: psiphon.(*SocksProxy).socksConnectionHandler#120: psiphon.(*Controller).dial#2115: no active tunnels"},"noticeType":"LocalProxyError","timestamp":"2026-10-29T12:30:36.155Z"}
-{"data":{"message":"psiphon.(*SocksProxy).serve.func1#163: psiphon.(*SocksProxy).socksConnectionHandler#120: psiphon.(*Controller).dial#2115: no active tunnels","repeats":1},"noticeType":"LocalProxyError","timestamp":"2026-10-29T12:30:36.162Z"}
-=== done Thu Oct 29 12:30:36 UTC 2026 ===
+{"data":{"message":"updated server cO16bKji"},"noticeType":"Info","timestamp":"2026-10-29T12:34:32.146Z"}
+{"data":{"message":"updated server 0c6Oc4QW"},"noticeType":"Info","timestamp":"2026-10-29T12:34:32.146Z"}
+{"data":{"message":"updated server Yx6VQz8C"},"noticeType":"Info","timestamp":"2026-10-29T12:34:32.147Z"}
+{"data":{"message":"updated server U2xS6JvI"},"noticeType":"Info","timestamp":"2026-10-29T12:34:32.148Z"}
+{"data":{"message":"updated server 0ivMkoDL"},"noticeType":"Info","timestamp":"2026-10-29T12:34:32.148Z"}
+{"data":{"message":"updated server SGxMmV8Y"},"noticeType":"Info","timestamp":"2026-10-29T12:34:32.149Z"}
+{"data":{"message":"updated server ocqjC7sQ"},"noticeType":"Info","timestamp":"2026-10-29T12:34:32.150Z"}
+{"data":{"message":"updated server lMkQpC0u"},"noticeType":"Info","timestamp":"2026-10-29T12:34:32.150Z"}
+{"data":{"message":"updated server Y3JycBQp"},"noticeType":"Info","timestamp":"2026-10-29T12:34:32.151Z"}
+{"data":{"message":"updated server 8L+bzlHb"},"noticeType":"Info","timestamp":"2026-10-29T12:34:32.152Z"}
+{"data":{"message":"updated server ex/S53wH"},"noticeType":"Info","timestamp":"2026-10-29T12:34:32.152Z"}
+{"data":{"message":"updated server hn19Q61y"},"noticeType":"Info","timestamp":"2026-10-29T12:34:32.153Z"}
+{"data":{"message":"updated server mGficOH7"},"noticeType":"Info","timestamp":"2026-10-29T12:34:32.153Z"}
+{"data":{"message":"updated server vW5Z5q6G"},"noticeType":"Info","timestamp":"2026-10-29T12:34:32.153Z"}
+{"data":{"message":"updated server BKbTFR+k"},"noticeType":"Info","timestamp":"2026-10-29T12:34:32.154Z"}
+{"data":{"ID":"WIRED+[redacted]"},"noticeType":"NetworkID","timestamp":"2026-10-29T12:34:33.649Z"}
+{"data":{"message":"ServerEntryIterator.reset: entries 429, dial params 0, moved-to-front 0; durations: move-to-front 662.038µs, entries 59.029µs, total 736.749µs"},"noticeType":"Info","timestamp":"2026-10-29T12:34:33.649Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":0,"candidatesMovedToFront":0,"diagnosticID":"1ZdqXjRg","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"FRONTED-MEEK-OSSH","region":"US","replayIgnoredChange":false,"uniqueCandidateEstimate":0},"noticeType":"RequestingTactics","timestamp":"2026-10-29T12:34:33.652Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":0,"candidatesMovedToFront":0,"diagnosticID":"1ZdqXjRg","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"FRONTED-MEEK-OSSH","region":"US","replayIgnoredChange":false,"uniqueCandidateEstimate":0},"noticeType":"RequestedTactics","timestamp":"2026-10-29T12:34:33.826Z"}
+{"data":{"message":"applied [5 54] parameters with tag 'b8f76c1891032c150096e66c70ed2f14'"},"noticeType":"Info","timestamp":"2026-10-29T12:34:33.827Z"}
+{"data":{"message":"NetworkLatencyMultiplier Min/Max/Lambda: 1.000000/3.000000/2.000000"},"noticeType":"Info","timestamp":"2026-10-29T12:34:33.827Z"}
+{"data":{"parameters":{"DeviceLocationPrecision":4}},"noticeType":"ApplicationParameters","timestamp":"2026-10-29T12:34:33.827Z"}
+{"data":{"message":"Memory metrics at psiphon.GetTactics#211: goroutines 30 | objects 7572 | alloc 1.4M | inuse 3.4M | sys 13.6M | cumulative 232050 36.8M"},"noticeType":"Info","timestamp":"2026-10-29T12:34:33.828Z"}
+{"data":{"message":"ServerEntryIterator.reset: entries 429, dial params -1, moved-to-front 0; durations: move-to-front 0s, entries 85.869µs, total 149.314µs"},"noticeType":"Info","timestamp":"2026-10-29T12:34:33.877Z"}
+{"data":{"reason":"restricted provider ID: 66FA5AFE5F394DE1"},"noticeType":"SkipServerEntry","timestamp":"2026-10-29T12:34:33.877Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":0,"candidatesMovedToFront":0,"diagnosticID":"ZH4AoMyK","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"FRONTED-MEEK-OSSH","region":"GB","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.879Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":1,"candidatesMovedToFront":0,"diagnosticID":"6aMWw4Be","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"UNFRONTED-MEEK-SESSION-TICKET-OSSH","region":"DK","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.879Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":6,"candidatesMovedToFront":0,"diagnosticID":"d2P9zSCM","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"UNFRONTED-MEEK-OSSH","region":"CA","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.881Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":4,"candidatesMovedToFront":0,"diagnosticID":"nZkQXz48","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"OSSH","region":"NL","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.880Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":5,"candidatesMovedToFront":0,"diagnosticID":"jU8IHyA6","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"OSSH","region":"RS","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.881Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":2,"candidatesMovedToFront":0,"diagnosticID":"Pi+uQIGx","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"QUIC-OSSH","region":"SE","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.881Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":7,"candidatesMovedToFront":0,"diagnosticID":"Gp9gCbVN","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"UNFRONTED-MEEK-HTTPS-OSSH","region":"GB","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.883Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":3,"candidatesMovedToFront":0,"diagnosticID":"0bgaVANA","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"QUIC-OSSH","region":"NL","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.880Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":8,"candidatesMovedToFront":0,"diagnosticID":"iMDTy9ns","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"TLS-OSSH","region":"IN","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.884Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":9,"candidatesMovedToFront":0,"diagnosticID":"dvigGx/Q","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"QUIC-OSSH","region":"CA","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectingServer","timestamp":"2026-10-29T12:34:33.884Z"}
+{"data":{"message":"negotiated HTTP/2 for ZH4AoMyK"},"noticeType":"Info","timestamp":"2026-10-29T12:34:33.901Z"}
+{"data":{"DSLPrioritized":false,"candidateNumber":9,"candidatesMovedToFront":0,"diagnosticID":"dvigGx/Q","establishedTunnelsCount":0,"firstFrontedMeekCandidate":0,"isReplay":false,"networkType":"WIRED","protocol":"QUIC-OSSH","region":"CA","replayIgnoredChange":false,"uniqueCandidateEstimate":10},"noticeType":"ConnectedServer","timestamp":"2026-10-29T12:34:34.041Z"}
+{"data":{"message":"Memory metrics at psiphon.(*Controller).establishTunnelWorker#3970: goroutines 65 | objects 29368 | alloc 3.0M | inuse 5.4M | sys 13.6M | cumulative 389346 42.5M"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.041Z"}
+{"data":{"message":"stop establishing"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.043Z"}
+{"data":{"message":"stopped establishing"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.045Z"}
+{"data":{"message":"peak concurrent establish tunnels: 10"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.045Z"}
+{"data":{"message":"peak concurrent resource intensive establish tunnels: 7"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.045Z"}
+{"data":{"message":"Memory metrics at psiphon.(*Controller).stopEstablishing#3068: goroutines 29 | objects 17167 | alloc 2.3M | inuse 4.8M | sys 13.6M | cumulative 390160 42.7M"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.045Z"}
+{"data":{"message":"Datastore metrics at psiphon.(*Controller).stopEstablishing#3074: filesize 2.0M | freepages 8 | freealloc 40.0K | txcount 74 | writes 3847 | writetime 129.21888ms"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.046Z"}
+{"data":{"message":"DNS metrics at psiphon.(*Controller).stopEstablishing#3077: resolves 2 | hit 0 | req v4/v6 0/0 | resp 0/0 | peak 0 | rtt n/a - n/a ms. | sys 0 | def 2/2"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.046Z"}
+{"data":{"message":"starting server context for dvigGx/Q"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.046Z"}
+{"data":{"region":"US"},"noticeType":"ClientRegion","timestamp":"2026-10-29T12:34:34.068Z"}
+{"data":{"message":"updated server nBhHc066"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.068Z"}
+{"data":{"url":"https://ipfounder.net/?sponsor_id=4BA4DEF917101460\u0026sponsor=psiphon_bbg\u0026client_region=US\u0026client_asn=8075\u0026client_platform=android\u0026secret=580EfjEI29xL3hoyU6dgP4vSEVxdcGI7JDFkxgjds7PHulSEF0wmORpvzbqxyTwYtpowsY4xMFnfWEnTghe6l8jiV9K5QSZoir2i6fDeKJD6EhL6DkoYTEMu2EE9YJvy3LdCUZ7ncdVC6ipgWx06wznvDLbY1ajfcfRGCpfsQJei2q6tb0GSFh1QK3x3qXKwyjmNPc5J\u0026psiphon_external_homepage"},"noticeType":"Homepage","timestamp":"2026-10-29T12:34:34.069Z"}
+{"data":{"version":"509"},"noticeType":"ClientUpgradeAvailable","timestamp":"2026-10-29T12:34:34.069Z"}
+{"data":{"diagnosticID":"dvigGx/Q","timestamp":"2026-10-29T12:34:34Z"},"noticeType":"ServerTimestamp","timestamp":"2026-10-29T12:34:34.069Z"}
+{"data":{"IDs":[],"diagnosticID":"dvigGx/Q"},"noticeType":"ActiveAuthorizationIDs","timestamp":"2026-10-29T12:34:34.069Z"}
+{"data":{"diagnosticID":"dvigGx/Q","downstreamBytesPerSecond":0,"upstreamBytesPerSecond":0},"noticeType":"TrafficRateLimits","timestamp":"2026-10-29T12:34:34.069Z"}
+{"data":{"count":1},"noticeType":"Tunnels","timestamp":"2026-10-29T12:34:34.070Z"}
+{"data":{"message":"Unreported persistent stats: 1; server entry check due: true"},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.070Z"}
+{"data":{"diagnosticID":"dvigGx/Q","protocol":"QUIC-OSSH"},"noticeType":"ActiveTunnel","timestamp":"2026-10-29T12:34:34.070Z"}
+{"data":{"serverRegion":"CA"},"noticeType":"ConnectedServerRegion","timestamp":"2026-10-29T12:34:34.070Z"}
+{"data":{"added":0,"message":"DSL: fetched active OSL IDs","removed":0,"total":0,"trace":"dsl.(*Fetcher).processOSLs#460","tunneled":true},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.141Z"}
+{"data":{"known":0,"message":"DSL: fetched server entries","tags":2,"trace":"dsl.(*Fetcher).Run.func1#258","tunneled":true,"updated":0},"noticeType":"Info","timestamp":"2026-10-29T12:34:34.212Z"}
+{"data":{"message":"tunneled DSL fetch failed: psiphon.runTunneledDSLFetcher#153: psiphon.doDSLFetch#402: dsl.(*Fetcher).Run#340: psiphon.doDSLFetch.func3#310: psiphon.DSLStoreServerEntry#3346: protocol.ServerEntryFields.VerifySignature#385: missing public key"},"noticeType":"Error","timestamp":"2026-10-29T12:34:34.212Z"}
+=== done Thu Oct 29 12:34:37 UTC 2026 ===
