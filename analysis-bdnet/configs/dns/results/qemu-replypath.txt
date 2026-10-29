@@ -1,0 +1,68 @@
+=== client against the local mock (must receive)
+sendto:   52
+recvfrom: 104
+recvfrom with data: 37
+3531 recvfrom(5,274881609728,4096,0,274878372452,274878372564) = 119
+3531 epoll_pwait(3,70369974454480,128,79,0,0)3531 recvfrom(5,274881257472,4096,0,274878372452,274878372564) = 194
+3531 recvfrom(5,274881261568,4096,0,274878372452,274878372564)3531 epoll_pwait(3,70368760949408,128,8,0,0)3531 futex(0x0000004000090848,FUTEX_PRIVATE_FLAG|FUTEX_WAIT,0,NULL,NULL,0) = 236
+--- mock side
+mock got 106 B, answered
+mock got 181 B, answered
+mock got 223 B, answered
+mock got 223 B, answered
+mock got 223 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 71 B, answered
+mock got 223 B, answered
+mock got 71 B, answered
+mock got 71 B, answered
+
+=== client against 8.8.8.8 (always answers, wrong zone)
+sendto:   45
+recvfrom with data: 36
+
+=== libdns: does it forward to its upstream and receive?
+libdns sendto:   0
+libdns received: 0
