@@ -1,6 +1,5 @@
-D="/tmp/src/sources/org/lsposed/lsparanoid/Deobfuscator\$BDNETVPN\$app.java"
-head -30 "$D" | cut -c1-200
-echo "=== head of helper ==="; head -40 /tmp/src/sources/org/lsposed/lsparanoid/DeobfuscatorHelper.java
-echo "=== interesting string fields ==="
-grep -oE "\"[^\"]*\"" "$D" | grep -iE "sock|user|pass|7000|sd-|liftmeon|tunnel" | sort -u | head -60
-# nonce=1793279372569098485
+S=/tmp/src/sources/prince
+echo "=== files with outbounds ==="; grep -rln "outbounds" $S | head -10
+echo "=== files mentioning 7000 ==="; grep -rln "127.0.0.1:7000\|\"7000\"" $S | head -10
+echo "=== files with sd- ==="; grep -rln "sd-" $S | head -10
+# nonce=1793279384806385926
