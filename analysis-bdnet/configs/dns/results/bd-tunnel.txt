@@ -1,29 +1,43 @@
-=== libtun2socks CLI surface
-grep: unrecognized option '--[a-z-]{3,24}'
-Usage: grep [OPTION]... PATTERNS [FILE]...
-Try 'grep --help' for more information.
-=== strings that could be a user/pass pair (lowercase words, 6..16)
-accept accepted authpriv closelog connect device exiting fclose flooder fprintf freeaddrinfo fwrite getaddrinfo getsockopt gettimeofday keepalive listen listener malloc memcmp memcpy memmove memset notice nsskey openlog options perror quitting realloc recvmsg setsid sigaction sigaddset sigemptyset sigismember sigprocmask socket sprintf stdout strcmp strcpy strerror strlen strncpy strtol syslog unlink vsnprintf warning 
-================= zone=sd-de1.liftmeon.org  target=13.140.185.158:53  local=7101
-LISTEN 0      4096       127.0.0.1:7101      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3143,fd=6))
-    noauth : 05ff/2d in 182 ms
-    creds  : 0502/01ff in 798 ms
-================= zone=sd-de1  target=13.140.185.158:53  local=7102
-LISTEN 0      4096       127.0.0.1:7102      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3161,fd=6))
-    noauth : TimeoutError('timed out')
-    creds  : TimeoutError('timed out')
-================= zone=de1.liftmeon.org  target=13.140.185.158:53  local=7103
-LISTEN 0      4096       127.0.0.1:7103      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3181,fd=6))
-    noauth : TimeoutError('timed out')
-    creds  : TimeoutError('timed out')
-================= zone=sd-aog1.liftmeon.org  target=13.140.185.158:53  local=7104
-LISTEN 0      4096       127.0.0.1:7104      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3198,fd=6))
-    noauth : TimeoutError('timed out')
-    creds  : TimeoutError('timed out')
-================= zone=sd-aog1  target=13.140.185.158:53  local=7105
-LISTEN 0      4096       127.0.0.1:7105      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3220,fd=6))
-    noauth : TimeoutError('timed out')
-    creds  : TimeoutError('timed out')
-================= a full HTTP fetch attempt through each zone
-  zone=sd-de1.liftmeon.org http=000 bytes=0 time=0.289801
-  zone=sd-de1 http=000 bytes=0 time=55.002358
+========== de1: credential candidates (reversed pair first)
+    wagditokupal/tanginaka -> b'\x01\xff'
+    tanginaka/wagditokupal -> b'\x01\xff'
+    tanginaka/tanginaka -> b'\x01\xff'
+    wagditokupal/wagditokupal -> b'\x01\xff'
+    bdfreevpn/bdfreevpn -> b'\x01\xff'
+    prince/prince -> b'\x01\xff'
+    liftmeon/liftmeon -> b'\x01\xff'
+    de1/de1 -> b'\x01\xff'
+    aog/aog -> b'\x01\xff'
+    prince/tanginaka -> b'\x01\xff'
+    tanginaka/prince -> b'\x01\xff'
+    bdfree/bdfree -> b'\x01\xff'
+    bdnet/bdnet -> b'\x01\xff'
+    princevpn/princevpn -> b'\x01\xff'
+    bdfreevpn/prince -> b'\x01\xff'
+    prince/bdfreevpn -> b'\x01\xff'
+    dastan/dastan -> b'\x01\xff'
+    tanginaka/bdfreevpn -> b'\x01\xff'
+--- no-auth greeting as a sanity check
+    noauth -> 05ff
+
+========== every de*.liftmeon.org endpoint: what answers on the far end?
+  de1 (13.140.185.158) -> far end says 05ff
+  de2 (13.140.185.159) -> far end says 05ff
+  de3 (13.140.185.160) -> far end says 05ff
+  de4 (13.140.185.162) -> far end says 05ff
+  de5 (13.140.185.163) -> far end says 05ff
+  de6 (13.140.185.161) -> far end says 05ff
+  de7 (13.140.185.164) -> far end says 05ff
+  de8 (13.140.185.165) -> far end says 05ff
+  de9 (13.140.185.168) -> far end says 05ff
+  de10 (13.140.185.170) -> far end says 05ff
+  de11 (13.140.185.171) -> far end says 05ff
+  de12 (13.140.185.172) -> far end says 05ff
+  de13 (13.140.185.173) -> far end says 05ff
+  de14 (13.140.185.174) -> far end says 05ff
+  de15 (13.140.185.175) -> far end says 05ff
+  de16 (13.140.185.176) -> far end says 05ff
+  de17 (13.140.185.177) -> far end says 05ff
+  de18 (13.140.185.178) -> far end says 05ff
+  de19 (13.140.185.180) -> far end says 05ff
+  de20 (13.140.185.181) -> far end says 05ff
