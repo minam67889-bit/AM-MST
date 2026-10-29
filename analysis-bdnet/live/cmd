@@ -1,2 +1,4 @@
-ls -l libs | head -20; echo "=== libdns flags ==="; strings -n 4 libs/libdns.so | grep -E "^-[a-zA-Z][a-zA-Z0-9_-]{0,20}$" | sort -u | head -40
-# nonce=1793279026506496022
+setsid nohup bash -c "mkdir -p /tmp/jadx && cd /tmp/jadx && curl -sSL -o j.zip https://github.com/skylot/jadx/releases/download/v1.5.0/jadx-1.5.0.zip && unzip -q -o j.zip && chmod +x bin/jadx && echo ok > /tmp/jadx.ok" > /tmp/jadx.log 2>&1 < /dev/null &
+sleep 2
+echo "=== libxdnstt auth-ish strings ==="; strings -n 5 libs/libxdnstt.so | grep -iE "socks5|username|password|auth|proxy" | head -25; echo "=== end ==="
+# nonce=1793279140703294467
