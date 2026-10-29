@@ -11,6 +11,12 @@ data class AppSettings(
     val downloadMtu: Int = 1200,
     val socksPort: Int = 1080,
     val socksEnabled: Boolean = true,
+    /**
+     * Bind the local SOCKS5 to `0.0.0.0` instead of loopback, so phones and
+     * laptops on the same Wi-Fi / hotspot can use this phone as the gateway
+     * (the "VPN SHARE" idea in BD NET's own UI). Loopback stays reachable.
+     */
+    val lanShare: Boolean = false,
     val autoFailover: Boolean = true,
     val autoScan: Boolean = true,
     val dnsMode: Boolean = false,
@@ -31,15 +37,22 @@ data class AppSettings(
      * 1 = drive BD NET's own dnstt client against BD's servers,
      * 2 = run Psiphon's tunnel core (the engine BD NET ships, no account).
      */
-    val engineMode: Int = 0,
+    val engineMode: Int = 1,
     val bdHosts: String = DEFAULT_BD_HOSTS,
     val bdZonePrefix: String = "sd-",
     val bdReport: String = "BD NET VPN",
     val bdPubkey: String = "prince",
     val bdUtls: String = "",
     val bdLocalPort: Int = 7000,
-    val bdUpstreamUser: String = "tanginaka",
-    val bdUpstreamPass: String = "wagditokupal",
+    /**
+     * What BD NET's own (patched) Xray client actually puts on the wire when it
+     * talks to the SOCKS5 at the far end of a SlowDNS tunnel. Recovered by
+     * proxying their client's socket; see docs/SLOWDNS-BREAKTHROUGH.md.
+     * (`tanginaka` / `wagditokupal` appear in their string table but are a
+     * decoy - the shared library substitutes this pair at runtime.)
+     */
+    val bdUpstreamUser: String = "tanginakaba",
+    val bdUpstreamPass: String = "hackpamoregago",
 
     // ---- Psiphon mode ------------------------------------------------------
     /** Exit region ("US", "GB", ...); blank lets Psiphon pick the fastest. */
@@ -73,6 +86,7 @@ data class AppSettings(
                 downloadMtu = p.getInt("download_mtu", 1200),
                 socksPort = p.getInt("socks_port", 1080),
                 socksEnabled = p.getBoolean("socks_enabled", true),
+                lanShare = p.getBoolean("lan_share", false),
                 autoFailover = p.getBoolean("auto_failover", true),
                 autoScan = p.getBoolean("auto_scan", true),
                 dnsMode = p.getBoolean("dns_mode", false),
@@ -82,15 +96,15 @@ data class AppSettings(
                 streamFailoverThreshold = p.getInt("stream_failover_threshold", 2),
                 autoDisableResolvers = p.getBoolean("auto_disable_resolvers", true),
                 autoDisableWindowSeconds = p.getInt("auto_disable_window_seconds", 30),
-                engineMode = p.getInt("engine_mode", 0),
+                engineMode = p.getInt("engine_mode", ENGINE_BD_NATIVE),
                 bdHosts = p.getString("bd_hosts", DEFAULT_BD_HOSTS) ?: DEFAULT_BD_HOSTS,
                 bdZonePrefix = p.getString("bd_zone_prefix", "sd-") ?: "sd-",
                 bdReport = p.getString("bd_report", "BD NET VPN") ?: "BD NET VPN",
                 bdPubkey = p.getString("bd_pubkey", "prince") ?: "prince",
                 bdUtls = p.getString("bd_utls", "") ?: "",
                 bdLocalPort = p.getInt("bd_local_port", 7000),
-                bdUpstreamUser = p.getString("bd_upstream_user", "tanginaka") ?: "tanginaka",
-                bdUpstreamPass = p.getString("bd_upstream_pass", "wagditokupal") ?: "wagditokupal",
+                bdUpstreamUser = p.getString("bd_upstream_user", "tanginakaba") ?: "tanginakaba",
+                bdUpstreamPass = p.getString("bd_upstream_pass", "hackpamoregago") ?: "hackpamoregago",
                 psiphonRegion = p.getString("psiphon_region", "") ?: "",
             )
         }
@@ -104,6 +118,7 @@ data class AppSettings(
                 putInt("download_mtu", settings.downloadMtu)
                 putInt("socks_port", settings.socksPort)
                 putBoolean("socks_enabled", settings.socksEnabled)
+                putBoolean("lan_share", settings.lanShare)
                 putBoolean("auto_failover", settings.autoFailover)
                 putBoolean("auto_scan", settings.autoScan)
                 putBoolean("dns_mode", settings.dnsMode)

@@ -119,7 +119,7 @@ class MainActivity : Activity() {
             typeface = Typeface.DEFAULT_BOLD
         })
         root.addView(TextView(this).apply {
-            text = "DNS-tunnel client with resolver scanning, ranking and failover"
+            text = "SlowDNS / DNS-tunnel client • BD NET servers • new: share it on the LAN"
             setTextColor(textMuted)
             textSize = 12f
             setPadding(0, dp(2), 0, dp(14))
@@ -171,6 +171,10 @@ class MainActivity : Activity() {
         val mtuField = field("Upload MTU (bytes per query)", engine.settings.uploadMtu.toString())
         val socksPortField = field("Local SOCKS5 port", engine.settings.socksPort.toString())
         val socksCheck = checkbox("Enable local SOCKS5 proxy (real traffic path)", engine.settings.socksEnabled)
+        val lanShareCheck = checkbox(
+            "Share it on the LAN — bind SOCKS5 to 0.0.0.0 (phone hotspot / same Wi-Fi)",
+            engine.settings.lanShare,
+        )
         val failoverCheck = checkbox("Automatic resolver failover", engine.settings.autoFailover)
         val autoScanCheck = checkbox("Adaptive background scanning", engine.settings.autoScan)
         val dnsModeCheck = checkbox("DNS-mode VPN (captures DNS only, experimental)", engine.settings.dnsMode)
@@ -198,6 +202,7 @@ class MainActivity : Activity() {
         tunnelCard.addView(mtuField)
         tunnelCard.addView(socksPortField)
         tunnelCard.addView(socksCheck)
+        tunnelCard.addView(lanShareCheck)
         tunnelCard.addView(failoverCheck)
         tunnelCard.addView(autoScanCheck)
         tunnelCard.addView(dnsModeCheck)
@@ -212,6 +217,7 @@ class MainActivity : Activity() {
                 uploadMtu = mtuField.text.toString().trim().toIntOrNull() ?: 120,
                 socksPort = socksPortField.text.toString().trim().toIntOrNull() ?: 1080,
                 socksEnabled = socksCheck.isChecked,
+                lanShare = lanShareCheck.isChecked,
                 autoFailover = failoverCheck.isChecked,
                 autoScan = autoScanCheck.isChecked,
                 dnsMode = dnsModeCheck.isChecked,
@@ -654,9 +660,15 @@ class MainActivity : Activity() {
             appendLine("engine    BD NET client (libxdnstt.so, theirs)")
             appendLine("server    ${engine.bdHost ?: "-"}   zone ${engine.settings.bdZonePrefix}<host>")
             appendLine("local     ${socksLine}  ->  BD port ${engine.settings.bdLocalPort}")
-            appendLine("login     ${engine.settings.bdUpstreamUser} / ${"*".repeat(engine.settings.bdUpstreamPass.length)}")
+            appendLine("login     ${engine.settings.bdUpstreamUser} / ${"*".repeat(engine.settings.bdUpstreamPass.length)}  (checked against the far end on connect)")
+            if (engine.settings.lanShare) {
+                val lan = engine.lanAddress() ?: "this phone's Wi-Fi address"
+                appendLine("share     $lan:${engine.socksPort()}  (no login — anyone on this Wi-Fi/hotspot)")
+            } else {
+                appendLine("share     off — only 127.0.0.1 can use it (tick the LAN box to share)")
+            }
             appendLine("last      ${engine.lastNotice.ifEmpty { "nothing yet - connect and open the proxy once" }}")
-            append("note      the tunnel itself is up; the far end of it decides who may pass")
+            append("test      Telegram → SOCKS5 127.0.0.1:${engine.socksPort()}")
         } else buildString {
             appendLine("resolver  ${stats.currentResolver}")
             appendLine("session   ${if (stats.sessionId > 0) stats.sessionId else "-"}    $socksLine")

@@ -350,7 +350,7 @@ class TunnelEngine(private val context: Context) {
             }
 
             if (s.socksEnabled) {
-                val server = Socks5Server({ transport }, log, "127.0.0.1", s.socksPort)
+                val server = Socks5Server({ transport }, log, listenHost(s), s.socksPort)
                 if (server.start()) {
                     socks = server
                 } else {
@@ -404,11 +404,13 @@ class TunnelEngine(private val context: Context) {
             val bridge = Socks5Relay(
                 upstreamHost = "127.0.0.1",
                 upstreamPort = s.bdLocalPort,
+                listenHost = listenHost(s),
                 upstreamUser = s.bdUpstreamUser,
                 upstreamPass = s.bdUpstreamPass,
                 log = log,
                 listenPort = s.socksPort,
                 onNotice = { message -> lastNotice = message },
+                protectSocket = { socket -> protector.protect(socket) },
             )
             if (bridge.start()) relay = bridge
             else log.error("engine", "could not open the local SOCKS5 bridge on ${s.socksPort}")
@@ -460,6 +462,22 @@ class TunnelEngine(private val context: Context) {
         transport = null
         notifyStateChanged()
     }
+
+    /** `0.0.0.0` when the user asked to share the tunnel with the whole LAN. */
+    fun listenHost(s: AppSettings = settings): String = if (s.lanShare) "0.0.0.0" else "127.0.0.1"
+
+    /**
+     * First non-loopback IPv4 of this phone, so the UI and the share card can
+     * print the exact `host:port` a laptop on the same Wi-Fi has to use.
+     */
+    fun lanAddress(): String? = runCatching {
+        java.net.NetworkInterface.getNetworkInterfaces()
+            .toList()
+            .filter { it.isUp && !it.isLoopback }
+            .flatMap { it.inetAddresses.toList() }
+            .firstOrNull { it is java.net.Inet4Address && !it.isLoopbackAddress }
+            ?.hostAddress
+    }.getOrNull()
 
     /** Per-resolver live scoring rows for the diagnostics screen. */
     fun balancerRows(): List<MasterBalancer.BalancerRow> = balancer?.snapshot() ?: emptyList()

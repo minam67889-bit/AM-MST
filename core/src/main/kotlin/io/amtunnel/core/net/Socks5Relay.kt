@@ -35,6 +35,12 @@ class Socks5Relay(
     listenPort: Int = 1080,
     /** Surfaces the far end's verdict so the UI can explain it in one line. */
     private val onNotice: (String) -> Unit = {},
+    /**
+     * Keeps our sockets outside the tun device when the whole-device VPN is on
+     * - without this, sharing the proxy on the LAN while the VPN is up would
+     * send the LAN replies back into the tunnel.
+     */
+    private val protectSocket: (Socket) -> Boolean = { false },
 ) {
     private var server: ServerSocket? = null
     private val running = AtomicBoolean(false)
@@ -82,6 +88,7 @@ class Socks5Relay(
             } catch (e: Exception) {
                 break
             }
+            runCatching { protectSocket(client) }
             clients.add(client)
             Thread({ handle(client) }, "socks5-relay-client").apply { isDaemon = true }.start()
         }
@@ -120,6 +127,7 @@ class Socks5Relay(
 
             log.info("relay", "CONNECT $host:$targetPort")
             val up = Socket()
+            runCatching { protectSocket(up) }
             up.tcpNoDelay = true
             up.connect(InetSocketAddress(upstreamHost, upstreamPort), 10_000)
             up.soTimeout = 15_000
