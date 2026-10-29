@@ -1,2 +1,5 @@
-python3 /tmp/res.py /tmp/src/sources/prince/dastan/vpn/service/SocksDNSService.java | sed -n "220,420p"
-# nonce=1793279271449938276
+S=/tmp/src/sources
+echo "=== who uses -udp (98598896105355) ==="; grep -rln "98598896105355" $S | head -5
+echo "=== who uses libxdnstt (98422802446219) ==="; grep -rln "98422802446219" $S | head -5
+echo "=== who uses -pubkey ==="; grep -rln "98671910549387" $S | head -5
+# nonce=1793279291665752097
