@@ -1,1 +1,2 @@
-echo hello from the runner; date -u; pwd
+ls -l libs | head -20; echo "=== libdns flags ==="; strings -n 4 libs/libdns.so | grep -E "^-[a-zA-Z][a-zA-Z0-9_-]{0,20}$" | sort -u | head -40
+# nonce=1793279026506496022
