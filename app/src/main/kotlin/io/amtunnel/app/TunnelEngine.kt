@@ -83,6 +83,11 @@ class TunnelEngine(private val context: Context) {
     val isRunning: Boolean
         get() = if (isBdMode) (bd?.isRunning == true) else transport?.isReady == true
 
+    /** One line the UI can show about the last thing the far end said. */
+    @Volatile
+    var lastNotice: String = ""
+        private set
+
     /** Which BD server the live tunnel is attached to, when in BD mode. */
     val bdHost: String? get() = bd?.activeHost
 
@@ -393,6 +398,7 @@ class TunnelEngine(private val context: Context) {
                 upstreamPass = s.bdUpstreamPass,
                 log = log,
                 listenPort = s.socksPort,
+                onNotice = { message -> lastNotice = message },
             )
             if (bridge.start()) relay = bridge
             else log.error("engine", "could not open the local SOCKS5 bridge on ${s.socksPort}")

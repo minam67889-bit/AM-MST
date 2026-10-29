@@ -265,6 +265,12 @@ class MainActivity : Activity() {
             toast(if (updated.engineMode == 1) "BD NET mode selected" else "Built-in Master core selected")
             refresh()
         })
+        bdCard.addView(button("Test the far end (one CONNECT through the relay)", Color.parseColor("#6B7785")) {
+            Thread({
+                val verdict = testFarEnd()
+                handler.post { toast(verdict); refresh() }
+            }, "far-end-test").start()
+        })
         bdCard.addView(button("Use BD NET mode now", Color.parseColor("#9B7BFF")) {
             engine.updateSettings(
                 engine.settings.copy(
@@ -409,6 +415,41 @@ class MainActivity : Activity() {
 
     // --------------------------------------------------------------- actions
 
+    /**
+     * One CONNECT through our relay, straight into BD's tunnel: the quickest
+     * way to find out whether the far-end credentials are accepted without
+     * opening Telegram.
+     */
+    private fun testFarEnd(): String {
+        val port = engine.socksPort()
+        return try {
+            java.net.Socket().use { socket ->
+                socket.connect(java.net.InetSocketAddress("127.0.0.1", port), 4_000)
+                socket.soTimeout = 12_000
+                val out = socket.getOutputStream()
+                val input = java.io.DataInputStream(socket.getInputStream())
+                out.write(byteArrayOf(5, 1, 0)); out.flush()
+                if (input.readUnsignedByte() != 5 || input.readUnsignedByte() != 0) {
+                    return "our own relay refused the no-auth greeting"
+                }
+                val host = "example.com".toByteArray(Charsets.US_ASCII)
+                val packet = ByteArray(7 + host.size)
+                packet[0] = 5; packet[1] = 1; packet[2] = 0; packet[3] = 3
+                packet[4] = host.size.toByte()
+                host.copyInto(packet, 5)
+                packet[5 + host.size] = 0
+                packet[6 + host.size] = 80
+                out.write(packet); out.flush()
+                input.readUnsignedByte()
+                val code = input.readUnsignedByte()
+                if (code.toInt() == 0) "far end accepted us - a real page should load now" else
+                    "far end said no (SOCKS5 code $code) - ${engine.lastNotice.ifEmpty { "credentials refused" }}"
+            }
+        } catch (e: Exception) {
+            "relay not answering on 127.0.0.1:$port (${e.message}) - connect first"
+        }
+    }
+
     private fun connect() {
         val settings = engine.settings
         if (!settings.isValid() && settings.engineMode != AppSettings.ENGINE_BD_NATIVE) {
@@ -545,7 +586,11 @@ class MainActivity : Activity() {
             }
         }
         val state = stats.state
+        val bdMode = engine.isBdMode
+        val bdUp = bdMode && engine.isRunning
         statusText.text = when {
+            bdMode && bdUp -> "BD tunnel up"
+            bdMode -> "BD tunnel down"
             TunnelVpnService.isActive && state == TransportState.READY -> "Connected"
             state == TransportState.INITIALIZING -> "Connecting…"
             state == TransportState.RECOVERING -> "Recovering…"
@@ -554,10 +599,13 @@ class MainActivity : Activity() {
             else -> "Idle"
         }
         statusText.setTextColor(
-            when (state) {
-                TransportState.READY -> accent
-                TransportState.DEGRADED, TransportState.RECOVERING, TransportState.INITIALIZING -> Color.parseColor("#F5A623")
-                TransportState.FAILED -> danger
+            when {
+                bdMode && bdUp -> Color.parseColor("#F5A623")
+                bdMode -> danger
+                state == TransportState.READY -> accent
+                state == TransportState.DEGRADED || state == TransportState.RECOVERING ||
+                    state == TransportState.INITIALIZING -> Color.parseColor("#F5A623")
+                state == TransportState.FAILED -> danger
                 else -> textPrimary
             },
         )
@@ -567,7 +615,14 @@ class MainActivity : Activity() {
         } else {
             "socks off"
         }
-        detailText.text = buildString {
+        detailText.text = if (bdMode) buildString {
+            appendLine("engine    BD NET client (libxdnstt.so, theirs)")
+            appendLine("server    ${engine.bdHost ?: "-"}   zone ${engine.settings.bdZonePrefix}<host>")
+            appendLine("local     ${socksLine}  ->  BD port ${engine.settings.bdLocalPort}")
+            appendLine("login     ${engine.settings.bdUpstreamUser} / ${"*".repeat(engine.settings.bdUpstreamPass.length)}")
+            appendLine("last      ${engine.lastNotice.ifEmpty { "nothing yet - connect and open the proxy once" }}")
+            append("note      the tunnel itself is up; the far end of it decides who may pass")
+        } else buildString {
             appendLine("resolver  ${stats.currentResolver}")
             appendLine("session   ${if (stats.sessionId > 0) stats.sessionId else "-"}    $socksLine")
             appendLine("rtt       ${if (stats.lastRttMs >= 0) "${stats.lastRttMs} ms" else "-"}")
@@ -577,6 +632,7 @@ class MainActivity : Activity() {
             append(engine.sessionDebug())
         }
 
+        connectButton.text = if (bdMode) "Connect (BD NET)" else "Connect"
         connectButton.isEnabled = !TunnelVpnService.isActive
         disconnectButton.isEnabled = TunnelVpnService.isActive || state != TransportState.IDLE
 

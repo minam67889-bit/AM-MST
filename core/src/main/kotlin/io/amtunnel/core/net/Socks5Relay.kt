@@ -33,6 +33,8 @@ class Socks5Relay(
     private val log: TunnelLog,
     private val listenHost: String = "127.0.0.1",
     listenPort: Int = 1080,
+    /** Surfaces the far end's verdict so the UI can explain it in one line. */
+    private val onNotice: (String) -> Unit = {},
 ) {
     private var server: ServerSocket? = null
     private val running = AtomicBoolean(false)
@@ -137,6 +139,7 @@ class Socks5Relay(
             if (version != 5) { log.warn("relay", "upstream is not SOCKS5 (v$version)"); reply(output, 0x01); return }
             if (chosen.toInt() == 0xFF) {
                 log.warn("relay", "upstream rejected every auth method")
+                onNotice("far end offers no SOCKS5 method we can use")
                 reply(output, 0x02); return
             }
             if (chosen.toInt() == 2) {
@@ -153,6 +156,7 @@ class Socks5Relay(
                 val status = upIn.readUnsignedByte()
                 if (status.toInt() != 0) {
                     log.warn("relay", "upstream rejected the credentials (status $status)")
+                    onNotice("the far end of the tunnel rejected user '$upstreamUser' (code $status)")
                     reply(output, 0x02); return
                 }
             }
@@ -178,6 +182,7 @@ class Socks5Relay(
             upIn.skipBytes(2)
             if (result.toInt() != 0) {
                 log.warn("relay", "upstream CONNECT $host:$targetPort failed (code $result)")
+                onNotice("far end refused $host:$targetPort (code $result)")
                 reply(output, result.toInt().coerceIn(1, 8)); return
             }
 
