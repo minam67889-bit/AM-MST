@@ -1,0 +1,108 @@
+================= 13.140.185.158
+--- listeners
+LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3750,fd=6))
+--- what the client itself printed
+3750 fstat(3,0x0000400000fff138) = 0
+3750 fstat(3,0x0000400000ffdfb0) = 0
+3750 pread64(3,0x00004000010dc060,64,0) = 64
+3750 fstat(4,0x0000400000ffdfb0) = 0
+3750 pread64(4,0x00004000010dc260,64,0) = 64
+3750 fstat(5,0x0000400000ffdfb0) = 0
+3750 pread64(5,0x00004000010dc460,64,0) = 64
+3750 fstat(3,0x0000400000ffde10) = 0
+3750 pread64(3,0x0000400001222060,64,0) = 64
+3750 fstat(4,0x0000400000ffde10) = 0
+3750 pread64(4,0x0000400001222260,64,0) = 64
+3750 fstat(3,0x0000400000ffd738) = 0
+3750 sched_getaffinity(0,8192,0x400000ffd528) = 8
+3750 madvise(0x0000400046895000,33554432,MADV_NOHUGEPAGE) = 0
+3750 madvise(0x00004000488a6000,1048576,MADV_NOHUGEPAGE) = 0
+3750 clone(CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID,child_stack=0x0000400048ac2440,parent_tidptr=0x0000400048ac2460,tls=0x0000400048ac24e8,child_tidptr=0x0000400048ac2460) = 3752
+ = 0
+ = 0
+--- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=3750, si_uid=1001} ---
+--- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=3750, si_uid=1001} ---
+grep: write error: Broken pipe
+Licensed to BD NET VPN
+NOTE: Using this app into unlicensed software/application will result into legal action
+--- raw probe of 7000
+  greeting only, no-auth offered:
+      050100 -> 05ff
+  greeting, no-auth + user/pass offered:
+      05020002 -> 0502
+  user/pass only, then prince:prince:
+      050102 -> 0502
+      01067072696e6365067072696e6365 -> 01ff
+  greeting then CONNECT (no auth):
+      050100 -> 05ff
+      050100015db8d8220050 -> 
+  raw CONNECT with no greeting:
+      050100015db8d8220050 -> 05ff
+  HTTP CONNECT text:
+      434f4e4e454354206578616d706c652e636f6d3a383020485454502f312e310d0a486f73743a206578616d706c652e636f6d3a38300d0a0d0a -> 
+  nothing, just listen:
+      - -> 3c74696d656f75743e
+--- curl with credentials
+curl: (97) User was rejected by the SOCKS5 server (1 255).
+  prince:prince -> http=000 bytes=0 time=0.425674
+curl: (97) User was rejected by the SOCKS5 server (1 255).
+  bdnet:bdnet -> http=000 bytes=0 time=0.424428
+curl: (97) User was rejected by the SOCKS5 server (1 255).
+  user:pass -> http=000 bytes=0 time=0.552086
+curl: (97) User was rejected by the SOCKS5 server (1 255).
+  admin:admin -> http=000 bytes=0 time=0.414020
+--- sendto/recvfrom: 191 / 158
+================= 13.140.185.159
+--- listeners
+LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3782,fd=6))
+--- what the client itself printed
+3782 fstat(3,0x0000400000fff138) = 0
+3782 fstat(3,0x0000400000ffdfb0) = 0
+3782 pread64(3,0x00004000010dc060,64,0) = 64
+3782 fstat(4,0x0000400000ffdfb0) = 0
+3782 pread64(4,0x00004000010dc260,64,0) = 64
+3782 fstat(5,0x0000400000ffdfb0) = 0
+3782 pread64(5,0x00004000010dc460,64,0) = 64
+3782 fstat(3,0x0000400000ffde10) = 0
+3782 pread64(3,0x0000400001222060,64,0) = 64
+3782 fstat(4,0x0000400000ffde10) = 0
+3782 pread64(4,0x0000400001222260,64,0) = 64
+3782 fstat(3,0x0000400000ffd738) = 0
+3782 sched_getaffinity(0,8192,0x400000ffd528) = 8
+3782 madvise(0x0000400046895000,33554432,MADV_NOHUGEPAGE) = 0
+3782 madvise(0x00004000488a6000,1048576,MADV_NOHUGEPAGE) = 0
+3782 clone(CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID,child_stack=0x0000400048ac2440,parent_tidptr=0x0000400048ac2460,tls=0x0000400048ac24e8,child_tidptr=0x0000400048ac2460) = 3784
+ = 0
+--- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=3782, si_uid=1001} ---
+--- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=3782, si_uid=1001} ---
+ = 0
+grep: write error: Broken pipe
+Licensed to BD NET VPN
+NOTE: Using this app into unlicensed software/application will result into legal action
+--- raw probe of 7000
+  greeting only, no-auth offered:
+      050100 -> 3c74696d656f75743e
+  greeting, no-auth + user/pass offered:
+      05020002 -> 3c74696d656f75743e
+  user/pass only, then prince:prince:
+      050102 -> 3c74696d656f75743e
+      01067072696e6365067072696e6365 -> 3c74696d656f75743e
+  greeting then CONNECT (no auth):
+      050100 -> 3c74696d656f75743e
+      050100015db8d8220050 -> 3c74696d656f75743e
+  raw CONNECT with no greeting:
+      050100015db8d8220050 -> 3c74696d656f75743e
+  HTTP CONNECT text:
+      434f4e4e454354206578616d706c652e636f6d3a383020485454502f312e310d0a486f73743a206578616d706c652e636f6d3a38300d0a0d0a -> 3c74696d656f75743e
+  nothing, just listen:
+      - -> 3c74696d656f75743e
+--- curl with credentials
+curl: (28) Connection timed out after 20002 milliseconds
+  prince:prince -> http=000 bytes=0 time=20.002105
+curl: (28) Connection timed out after 20002 milliseconds
+  bdnet:bdnet -> http=000 bytes=0 time=20.002780
+curl: (28) Connection timed out after 20001 milliseconds
+  user:pass -> http=000 bytes=0 time=20.002008
+curl: (28) Connection timed out after 20002 milliseconds
+  admin:admin -> http=000 bytes=0 time=20.002227
+--- sendto/recvfrom: 184 / 170

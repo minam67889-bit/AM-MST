@@ -47,8 +47,8 @@ platforms
 + SDKMANAGER=/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager
 + echo sdkmanager=/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager
 sdkmanager=/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager
-+ yes
 + /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses
++ yes
 yes: standard output: Broken pipe
 + /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager 'system-images;android-24;default;arm64-v8a'
 + tail -5
@@ -62,18 +62,18 @@ IMGDIR=/usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a
 + ls -l /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a
 + head
 total 3202888
--rw-r--r-- 1 runner runner    1686439 Oct 29 09:47 NOTICE.txt
--rw-r--r-- 1 runner runner        121 Oct 29 09:47 advancedFeatures.ini
--rw-r--r-- 1 runner runner       2232 Oct 29 09:47 build.prop
--rwxr-xr-x 1 runner runner    7748096 Oct 29 09:47 kernel-qemu
--rwxr-xr-x 1 runner runner    7748096 Oct 29 09:47 kernel-ranchu
--rw-r--r-- 1 runner runner      18469 Oct 29 09:47 package.xml
--rw-r--r-- 1 runner runner    1455579 Oct 29 09:47 ramdisk.img
--rw-r--r-- 1 runner runner        175 Oct 29 09:47 source.properties
--rw-r--r-- 1 runner runner 2684354560 Oct 29 09:47 system.img
+-rw-r--r-- 1 runner runner    1686439 Oct 29 10:01 NOTICE.txt
+-rw-r--r-- 1 runner runner        121 Oct 29 10:01 advancedFeatures.ini
+-rw-r--r-- 1 runner runner       2232 Oct 29 10:01 build.prop
+-rwxr-xr-x 1 runner runner    7748096 Oct 29 10:01 kernel-qemu
+-rwxr-xr-x 1 runner runner    7748096 Oct 29 10:01 kernel-ranchu
+-rw-r--r-- 1 runner runner      18469 Oct 29 10:02 package.xml
+-rw-r--r-- 1 runner runner    1455579 Oct 29 10:01 ramdisk.img
+-rw-r--r-- 1 runner runner        175 Oct 29 10:01 source.properties
+-rw-r--r-- 1 runner runner 2684354560 Oct 29 10:02 system.img
 + IMGFILE=/usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
 + ls -l /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
--rw-r--r-- 1 runner runner 2684354560 Oct 29 09:47 /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
+-rw-r--r-- 1 runner runner 2684354560 Oct 29 10:02 /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
 + mkdir -p sysroot/system/bin sysroot/system/lib64
 + sudo modprobe loop
 + sudo mount -o loop,ro /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img /mnt
@@ -99,7 +99,7 @@ media
 + head -30
 sysroot/system/bin:
 total 908
--rwxr-xr-x 1 runner root 926936 Oct 29 09:48 linker64
+-rwxr-xr-x 1 runner root 926936 Oct 29 10:02 linker64
 
 sysroot/system/lib64:
 total 100624
