@@ -292,6 +292,25 @@ jobs:
             echo "tcp zone=$zone sendto=$(grep -c sendto /tmp/zt.log) recvfrom_data=$(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/zt.log)"
           done
 
+      - name: "look inside the binary: who answers on 7000, and with what secret"
+        run: |
+          exec > >(tee /tmp/inside.txt) 2>&1
+          set +e
+          echo "=== sizes"; ls -l libs/ | head
+          echo "=== every 'prince' occurrence, with 200 bytes of context"
+          for off in $(grep -aob "prince" libs/libxdnstt.so | cut -d: -f1 | head -6); do
+            echo "--- offset $off"
+            dd if=libs/libxdnstt.so bs=1 skip=$((off > 200 ? off - 200 : 0)) count=420 2>/dev/null \
+              | tr -c '[:print:]\n' '.' | fold -w 120
+            echo
+          done
+          echo "=== strings mentioning socks / auth, with offsets"
+          strings -t x -n 6 libs/libxdnstt.so | grep -iE "socks|auth|password|username|greeting|no acceptable" | head -40
+          echo "=== the app's own tun2socks: does it know about SOCKS auth?"
+          strings -n 4 libs/libtun2socks.so 2>/dev/null | grep -iE "socks|auth" | head -30
+          echo "=== does libtun2socks take a user:pass@host address?"
+          strings -n 4 libs/libtun2socks.so 2>/dev/null | grep -E "%s:%s|:.*@|@" | head -20
+
       - name: "socks: it demands user/pass auth -- find the pair"
         run: |
           exec > >(tee /tmp/socks.txt) 2>&1
@@ -393,7 +412,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p analysis-bdnet/configs/dns/results
-          for f in apk sysroot startup xdnstt-run libdns-run xdnstt libdns report-matrix strace replypath zones socks; do
+          for f in apk sysroot startup xdnstt-run libdns-run xdnstt libdns report-matrix strace replypath zones socks inside; do
             [ -f "/tmp/$f.txt" ] && cp "/tmp/$f.txt" "analysis-bdnet/configs/dns/results/qemu-$f.txt"
             [ -f "/tmp/$f.log" ] && cp "/tmp/$f.log" "analysis-bdnet/configs/dns/results/qemu-$f.log"
           done
