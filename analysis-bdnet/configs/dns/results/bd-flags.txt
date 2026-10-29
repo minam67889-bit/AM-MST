@@ -57,7 +57,7 @@ grep: invalid option -- '['
 Usage: grep [OPTION]... PATTERNS [FILE]...
 Try 'grep --help' for more information.
 ================= libdns -h
-2026/10/29 11:46:47 FastDNS v1.2 | Client
+2026/10/29 12:12:41 FastDNS v1.2 | Client
 Usage of libs/libdns.so:
   -listen string
     	Local Server Address (default "127.0.0.1:7777")
@@ -66,7 +66,7 @@ Usage of libs/libdns.so:
   -tunnel string
     	Relay Server Address (default "127.0.0.1:53")
 ================= libdns --help
-2026/10/29 11:46:47 FastDNS v1.2 | Client
+2026/10/29 12:12:41 FastDNS v1.2 | Client
 Usage of libs/libdns.so:
   -listen string
     	Local Server Address (default "127.0.0.1:7777")

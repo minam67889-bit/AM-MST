@@ -1,0 +1,24 @@
+=== client said ===
+Licensed to BD NET VPN
+NOTE: Using this app into unlicensed software/application will result into legal action
+far end probe on 127.0.0.1:7600, 8s patience per shape
+  greeting: noauth only                sent=b'\x05\x01\x00'
+                                       got =b'\x05\xff<eof>'  [7 B, 628 ms]
+  greeting: 3 methods                  sent=b'\x05\x03\x00\x01\x02'
+                                       got =b'\x05\x02<timeout>'  [11 B, 8007 ms]
+  greeting: userpass only              sent=b'\x05\x01\x02'
+                                       got =b'\x05\x02<timeout>'  [11 B, 8001 ms]
+  socks4a 1.1.1.1:80                   sent=b'\x04\x01\x00P\x01\x01\x01\x01\x00usr\x00'
+                                       got =b'\x00[\x00\x00\x00\x00\x00\x00<eof>'  [13 B, 620 ms]
+  http absolute-form                   sent=b'GET http://example.com/ '
+                                       got =b'<eof>'  [5 B, 140 ms]
+  tls clienthello head                 sent=b'\x16\x03\x01\x00/\x01\x00\x00+\x03\x03\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11\x11'
+                                       got =b'<eof>'  [5 B, 624 ms]
+  auth only, no greeting               sent=b'\x01\ttanginaka\x0cwagditokupal'
+                                       got =b'<eof>'  [5 B, 240 ms]
+  greeting+auth in one write           sent=b'\x05\x02\x00\x02\x01\ttanginaka\x0cwagditok'
+                                       got =b'\x05\x02\x01\xff<eof>'  [9 B, 241 ms]
+  greeting+auth+connect one write      sent=b'\x05\x02\x00\x02\x01\ttanginaka\x0cwagditok'
+                                       got =b'\x05\x02\x01\xff<eof>'  [9 B, 233 ms]
+  socks5 connect 1.1.1.1:443 by ip     sent=b'\x05\x01\x00\x05\x01\x00\x01\x01\x01\x01\x01\x01\xbb'
+                                       got =b'\x05\xff<eof>'  [7 B, 239 ms]
