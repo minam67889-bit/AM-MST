@@ -1,0 +1,163 @@
+================= 13.140.185.158
+--- listeners
+LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3754,fd=6))
+--- client log (first 25 lines)
+3754 set_tid_address(0x4000010b2aa8) = 3754
+3754 mmap(NULL,20480,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x00004000010c6000
+3754 mprotect(0x00004000010c6000,4096,PROT_NONE) = 0
+3754 sigaltstack(0x400000fff2f0,(nil)) = 0
+3754 prctl(1398164801,0,70368761769984,16384,70368761541964,0) = -1 errno=22 (Invalid argument)
+3754 prctl(1398164801,0,70368761765888,4096,70368761541984,0) = -1 errno=22 (Invalid argument)
+3754 mprotect(0x00004000010aa000,12288,PROT_READ) = 0
+3754 mprotect(0x00004000010b1000,4096,PROT_READ) = 0
+3754 mprotect(0x00004000010b1000,4096,PROT_READ|PROT_WRITE) = 0
+3754 mprotect(0x00004000010b1000,4096,PROT_READ) = 0
+3754 mmap(NULL,4096,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x00004000010cb000
+3754 prctl(1398164801,0,70368761786368,4096,70368761541752,0) = -1 errno=22 (Invalid argument)
+3754 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3754 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3754 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3754 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3754 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3754 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3754 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3754 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3754 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3754 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3754 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3754 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3754 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+--- curl attempt 1 via socks5h
+curl: (97) No authentication method was acceptable.
+http=000 bytes=0 time=0.204904
+
+--- curl attempt 2 via socks5h
+curl: (97) No authentication method was acceptable.
+http=000 bytes=0 time=0.283040
+
+--- curl attempt 3 via socks5h
+curl: (97) No authentication method was acceptable.
+http=000 bytes=0 time=0.112029
+
+--- sendto/recvfrom: 73 / 61
+--- last 12 log lines
+3754 clock_gettime(CLOCK_MONOTONIC,0x0000400000fff4e0) = 0 ({tv_sec = 454,tv_nsec = 878790671})
+3754 clock_gettime(CLOCK_MONOTONIC,0x0000400000fff4e0) = 0 ({tv_sec = 454,tv_nsec = 878813533})
+3754 clock_gettime(CLOCK_MONOTONIC,0x0000400000fff4e0) = 0 ({tv_sec = 454,tv_nsec = 878839762})
+ = 0
+3754 write(4,0x6ac90,8)3754 futex(0x000000400005f648,FUTEX_PRIVATE_FLAG|FUTEX_WAIT,0,NULL,NULL,0) = 8
+ = 1
+3754 read(4,0x494470f0,8) = 8
+3754 clock_gettime(CLOCK_MONOTONIC,0x00004000494470c0) = 0 ({tv_sec = 454,tv_nsec = 878979239})
+3754 clock_gettime(CLOCK_MONOTONIC,0x0000400000fff240) = 0 ({tv_sec = 454,tv_nsec = 879040347})
+3754 epoll_pwait(3,70368760949408,128,0,0,0) = 0
+3754 clock_gettime(CLOCK_MONOTONIC,0x0000400049447070) = 0 ({tv_sec = 454,tv_nsec = 879104132})
+3754 epoll_pwait(3,70368760949408,128,9,0,0)3754 futex(0x0000004000090148,FUTEX_PRIVATE_FLAG|FUTEX_WAIT,0,NULL,NULL,0)================= 13.140.185.159
+--- listeners
+LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3788,fd=6))
+--- client log (first 25 lines)
+3788 set_tid_address(0x4000010b2aa8) = 3788
+3788 mmap(NULL,20480,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x00004000010c6000
+3788 mprotect(0x00004000010c6000,4096,PROT_NONE) = 0
+3788 sigaltstack(0x400000fff2f0,(nil)) = 0
+3788 prctl(1398164801,0,70368761769984,16384,70368761541964,0) = -1 errno=22 (Invalid argument)
+3788 prctl(1398164801,0,70368761765888,4096,70368761541984,0) = -1 errno=22 (Invalid argument)
+3788 mprotect(0x00004000010aa000,12288,PROT_READ) = 0
+3788 mprotect(0x00004000010b1000,4096,PROT_READ) = 0
+3788 mprotect(0x00004000010b1000,4096,PROT_READ|PROT_WRITE) = 0
+3788 mprotect(0x00004000010b1000,4096,PROT_READ) = 0
+3788 mmap(NULL,4096,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x00004000010cb000
+3788 prctl(1398164801,0,70368761786368,4096,70368761541752,0) = -1 errno=22 (Invalid argument)
+3788 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3788 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3788 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3788 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3788 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3788 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3788 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3788 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3788 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3788 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3788 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3788 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3788 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+--- curl attempt 1 via socks5h
+curl: (28) Connection timed out after 35002 milliseconds
+http=000 bytes=0 time=35.002202
+
+--- curl attempt 2 via socks5h
+curl: (28) Connection timed out after 35001 milliseconds
+http=000 bytes=0 time=35.001784
+
+--- curl attempt 3 via socks5h
+curl: (28) Connection timed out after 35002 milliseconds
+http=000 bytes=0 time=35.002405
+
+--- sendto/recvfrom: 151 / 142
+--- last 12 log lines
+3788 clock_gettime(CLOCK_MONOTONIC,0x00004000496cb310) = 0 ({tv_sec = 580,tv_nsec = 986722891})
+3788 clock_gettime(CLOCK_MONOTONIC,0x00004000496cb310) = 0 ({tv_sec = 580,tv_nsec = 986743740})
+3788 clock_gettime(CLOCK_MONOTONIC,0x00004000496cb310) = 0 ({tv_sec = 580,tv_nsec = 986760511})
+3788 write(4,0x304c90,8) = 8
+3788 clock_gettime(CLOCK_MONOTONIC,0x00004000496cb070) = 0 ({tv_sec = 580,tv_nsec = 986805695})
+ = 0
+3788 futex(0x000000400005f648,FUTEX_PRIVATE_FLAG|FUTEX_WAIT,0,NULL,NULL,0)3788 futex(0x0000004000060448,FUTEX_PRIVATE_FLAG|FUTEX_WAIT,0,NULL,NULL,0) = 1
+3788 read(4,0x494470f0,8) = 8
+3788 clock_gettime(CLOCK_MONOTONIC,0x00004000494470c0) = 0 ({tv_sec = 580,tv_nsec = 986918913})
+3788 clock_gettime(CLOCK_MONOTONIC,0x0000400049447070) = 0 ({tv_sec = 580,tv_nsec = 986941104})
+3788 epoll_pwait(3,70369973397712,128,0,0,0) = 0
+3788 epoll_pwait(3,70369973397712,128,9,0,0)================= 13.140.185.160
+--- listeners
+LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3853,fd=6))
+--- client log (first 25 lines)
+3853 set_tid_address(0x4000010b2aa8) = 3853
+3853 mmap(NULL,20480,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x00004000010c6000
+3853 mprotect(0x00004000010c6000,4096,PROT_NONE) = 0
+3853 sigaltstack(0x400000fff2f0,(nil)) = 0
+3853 prctl(1398164801,0,70368761769984,16384,70368761541964,0) = -1 errno=22 (Invalid argument)
+3853 prctl(1398164801,0,70368761765888,4096,70368761541984,0) = -1 errno=22 (Invalid argument)
+3853 mprotect(0x00004000010aa000,12288,PROT_READ) = 0
+3853 mprotect(0x00004000010b1000,4096,PROT_READ) = 0
+3853 mprotect(0x00004000010b1000,4096,PROT_READ|PROT_WRITE) = 0
+3853 mprotect(0x00004000010b1000,4096,PROT_READ) = 0
+3853 mmap(NULL,4096,PROT_READ|PROT_WRITE,MAP_PRIVATE|MAP_ANONYMOUS,-1,0) = 0x00004000010cb000
+3853 prctl(1398164801,0,70368761786368,4096,70368761541752,0) = -1 errno=22 (Invalid argument)
+3853 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3853 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3853 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3853 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3853 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3853 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3853 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3853 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3853 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3853 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3853 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+3853 mprotect(0x00004000010cb000,4096,PROT_READ|PROT_WRITE) = 0
+3853 mprotect(0x00004000010cb000,4096,PROT_READ) = 0
+--- curl attempt 1 via socks5h
+curl: (28) Connection timed out after 35002 milliseconds
+http=000 bytes=0 time=35.002814
+
+--- curl attempt 2 via socks5h
+curl: (28) Connection timed out after 35001 milliseconds
+http=000 bytes=0 time=35.001473
+
+--- curl attempt 3 via socks5h
+curl: (28) Connection timed out after 35001 milliseconds
+http=000 bytes=0 time=35.001852
+
+--- sendto/recvfrom: 145 / 102
+--- last 12 log lines
+3853 epoll_pwait(3,70369965791440,128,0,0,0) = 0
+3853 epoll_pwait(3,70369965791440,128,9,0,0) = 0
+3853 clock_gettime(CLOCK_MONOTONIC,0x0000400048ac2240) = 0 ({tv_sec = 707,tv_nsec = 96916550})
+3853 clock_gettime(CLOCK_MONOTONIC,0x0000400048ac21e0) = 0 ({tv_sec = 707,tv_nsec = 96951505})
+3853 futex(0x00007f2b41fba220,FUTEX_PRIVATE_FLAG|FUTEX_WAIT,0,{tv_sec = 0,tv_nsec = 785058},NULL,0) = 0
+3853 clock_gettime(CLOCK_MONOTONIC,0x0000400048d060c0) = 0 ({tv_sec = 707,tv_nsec = 97242104})
+3853 clock_gettime(CLOCK_MONOTONIC,0x0000400048d06070) = 0 ({tv_sec = 707,tv_nsec = 97269596})
+3853 epoll_pwait(3,70369965791440,128,0,0,0) = 0
+3853 epoll_pwait(3,70369965791440,128,1,0,0) = -1 errno=110 (Connection timed out)
+3853 clock_gettime(CLOCK_MONOTONIC,0x0000400048ac21e0) = 0 ({tv_sec = 707,tv_nsec = 97891548})
+3853 clock_gettime(CLOCK_MONOTONIC,0x0000400048ac2240) = 0 ({tv_sec = 707,tv_nsec = 97920192})
+3853 nanosleep(70369963418216,0,0,0,1000,10000000)
