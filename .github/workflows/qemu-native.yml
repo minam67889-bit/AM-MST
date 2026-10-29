@@ -311,6 +311,55 @@ jobs:
           echo "=== does libtun2socks take a user:pass@host address?"
           strings -n 4 libs/libtun2socks.so 2>/dev/null | grep -E "%s:%s|:.*@|@" | head -20
 
+      - name: "socks: the app's own credentials are in its string table -- try them"
+        run: |
+          exec > >(tee /tmp/socks.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          for host in 13.140.185.158 13.140.185.161; do
+            echo "================= $host"
+            timeout 200 qemu-aarch64-static -strace libs/libxdnstt.so \
+              -udp "$host:53" -report "BD NET VPN" -pubkey prince \
+              sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/tun.out 2>/tmp/tun.err &
+            pid=$!
+            sleep 8
+            echo "--- listeners"; ss -lntp 2>/dev/null | grep ":7000" || echo "   (nothing on 7000)"
+            echo "--- curl through the socks listener with the app's credentials"
+            for url in http://example.com/ http://1.1.1.1/ https://example.com/; do
+              timeout 45 curl -sS -m 40 --socks5-hostname "tanginaka:wagditokupal@127.0.0.1:7000" \
+                -o /tmp/page.html -w "  $url -> http=%{http_code} bytes=%{size_download} time=%{time_total}\n" \
+                "$url" 2>&1 | tail -2
+              [ -s /tmp/page.html ] && head -c 160 /tmp/page.html && echo
+            done
+            echo "--- and the plain no-auth form, for the record"
+            timeout 30 curl -sS -m 25 -x "socks5h://127.0.0.1:7000" -o /dev/null \
+              -w "  noauth -> http=%{http_code}\n" http://example.com/ 2>&1 | tail -1
+            echo "--- client messages"
+            grep -avE "^[0-9]+ " /tmp/tun.err | head -8
+            echo "--- sendto/recvfrom: $(grep -c sendto /tmp/tun.err) / $(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/tun.err)"
+            kill $pid 2>/dev/null; wait $pid 2>/dev/null
+          done
+          exit 0
+
+      - name: "look inside the binary: who answers on 7000, and with what secret"
+        run: |
+          exec > >(tee /tmp/inside.txt) 2>&1
+          set +e
+          echo "=== sizes"; ls -l libs/ | head
+          echo "=== every 'prince' occurrence, with 200 bytes of context"
+          for off in $(grep -aob "prince" libs/libxdnstt.so | cut -d: -f1 | head -6); do
+            echo "--- offset $off"
+            dd if=libs/libxdnstt.so bs=1 skip=$((off > 200 ? off - 200 : 0)) count=420 2>/dev/null \
+              | tr -c '[:print:]\n' '.' | fold -w 120
+            echo
+          done
+          echo "=== strings mentioning socks / auth, with offsets"
+          strings -t x -n 6 libs/libxdnstt.so | grep -iE "socks|auth|password|username|greeting|no acceptable" | head -40
+          echo "=== the app's own tun2socks: does it know about SOCKS auth?"
+          strings -n 4 libs/libtun2socks.so 2>/dev/null | grep -iE "socks|auth" | head -30
+          echo "=== does libtun2socks take a user:pass@host address?"
+          strings -n 4 libs/libtun2socks.so 2>/dev/null | grep -E "%s:%s|:.*@|@" | head -20
+
       - name: "socks: it demands user/pass auth -- find the pair"
         run: |
           exec > >(tee /tmp/socks.txt) 2>&1
