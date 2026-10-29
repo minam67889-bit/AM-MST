@@ -1,0 +1,129 @@
+name: BD tunnel - real traffic proof
+
+# The narrowest possible harness: run BD NET's own dnstt client under qemu,
+# talk SOCKS5 to the port it opens with the credentials the app itself uses
+# (tanginaka / wagditokupal, straight out of its LSParanoid string table), and
+# ask for a real web page. Everything else is noise; this job answers one
+# question: does a byte come back out of BD's tunnel?
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/bd-tunnel.yml"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      BD_HOSTS: ${{ vars.BD_HOSTS || '13.140.185.158' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq qemu-user-static unzip binutils file dnsutils curl
+
+      - name: APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          exec > >(tee /tmp/apk.txt) 2>&1
+          mkdir -p art libs
+          run=$(gh run list --workflow=analyze-apk.yml --status success --limit 1 \
+                  --json databaseId --jq '.[0].databaseId' || true)
+          echo "analysis run: $run"
+          art=$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$run/artifacts" \
+                  --jq '.artifacts[] | select(.name=="amtunnel-apk-analysis") | .id' | head -1 || true)
+          if [ -n "${art:-}" ]; then
+            gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$art/zip" > art/a.zip || true
+            unzip -o -q art/a.zip -d art/x || true
+          fi
+          apk=$(find art -name '*.apk' | head -1 || true)
+          echo "APK=$apk"
+          [ -z "$apk" ] && exit 1
+          unzip -o -j "$apk" 'lib/arm64-v8a/*' -d libs || true
+          chmod +x libs/* 2>/dev/null || true
+          ls -l libs | head
+
+      - name: Sysroot
+        run: |
+          exec > >(tee /tmp/sysroot.txt) 2>&1
+          set +e
+          sudo apt-get install -y -qq android-sdk-libsparse-utils e2fsprogs
+          export ANDROID_HOME=${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}
+          SDKMANAGER=$(command -v sdkmanager || echo "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager")
+          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1
+          "$SDKMANAGER" "system-images;android-24;default;arm64-v8a" 2>&1 | tail -3
+          IMGDIR=$(find "$ANDROID_HOME" -type d -path '*android-24*arm64-v8a*' | head -1)
+          IMGFILE="$IMGDIR/system.img"
+          mkdir -p sysroot/system/bin sysroot/system/lib64
+          if sudo mount -o loop,ro "$IMGFILE" /mnt; then
+            sudo cp /mnt/bin/linker64 sysroot/system/bin/
+            sudo cp -a /mnt/lib64/*.so sysroot/system/lib64/
+            sudo umount /mnt
+          else
+            sudo chmod 644 "$IMGFILE"
+            for f in bin/linker64 lib64/libc.so lib64/libdl.so lib64/libm.so lib64/liblog.so; do
+              debugfs -R "dump /$f /tmp/x.bin" "$IMGFILE" > /dev/null 2>&1 && \
+                sudo mv /tmp/x.bin "sysroot/system/$f"
+            done
+          fi
+          sudo chown -R "$USER" sysroot
+          ls sysroot/system/bin sysroot/system/lib64 | head
+
+      - name: "Real traffic through BD's tunnel"
+        run: |
+          exec > >(tee /tmp/bd-tunnel.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          for host in $BD_HOSTS; do
+            echo "================= $host  (zone sd-de1.liftmeon.org)"
+            timeout 240 qemu-aarch64-static -strace libs/libxdnstt.so \
+              -udp "$host:53" -report "BD NET VPN" -pubkey prince \
+              sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/c.out 2>/tmp/c.err &
+            pid=$!
+            sleep 9
+            ss -lntp 2>/dev/null | grep 7000 || echo "  (no listener on 7000)"
+            for url in http://example.com/ http://neverssl.com/ https://example.com/; do
+              timeout 60 curl -sS -m 55 --socks5-hostname "tanginaka:wagditokupal@127.0.0.1:7000" \
+                -o /tmp/page.html \
+                -w "  $url -> http=%{http_code} bytes=%{size_download} time=%{time_total}\n" \
+                "$url" 2>&1 | tail -2
+              if [ -s /tmp/page.html ]; then
+                echo "  --- got a page:"; head -c 300 /tmp/page.html; echo
+                echo "  --- TLS/HTTP check on a second host"
+                timeout 60 curl -sS -m 55 --socks5-hostname "tanginaka:wagditokupal@127.0.0.1:7000" \
+                  -o /dev/null -w "  https://www.google.com/ -> http=%{http_code} bytes=%{size_download}\n" \
+                  https://www.google.com/ 2>&1 | tail -1
+              fi
+            done
+            echo "--- client log"; grep -avE "^[0-9]+ " /tmp/c.err | head -6
+            echo "--- packets: sendto=$(grep -c sendto /tmp/c.err) recvwithdata=$(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/c.err)"
+            kill $pid 2>/dev/null; wait $pid 2>/dev/null
+          done
+          exit 0
+
+      - name: Publish
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p analysis-bdnet/configs/dns/results
+          cp /tmp/bd-tunnel.txt analysis-bdnet/configs/dns/results/bd-tunnel.txt 2>/dev/null || true
+          cp /tmp/bd-tunnel.txt /tmp/last-run.txt
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-bdnet/configs/dns/results
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "dns: real traffic through BD's tunnel [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
