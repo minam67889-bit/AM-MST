@@ -1,11 +1,10 @@
 == 13.140.185.158 encrypted=05167e556c53460f5e5e7e6c011d6a516b
 == log
-libs/libdns.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libdl.so: version `LIBC' not found (required by libs/libdns.so)
-libs/libdns.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libc.so: version `LIBC' not found (required by libs/libdns.so)
+qemu-aarch64-static: Could not open '/system/bin/linker64': No such file or directory
 == listening ports
 State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
-LISTEN 0      4096   127.0.0.53%lo:53        0.0.0.0:*          
 LISTEN 0      4096         0.0.0.0:22        0.0.0.0:*          
+LISTEN 0      4096   127.0.0.53%lo:53        0.0.0.0:*          
 LISTEN 0      4096      127.0.0.54:53        0.0.0.0:*          
 LISTEN 0      4096            [::]:22           [::]:*          
 == port 53 open, probing
@@ -13,5 +12,4 @@ PROBE FAIL: nothing listening on 127.0.0.1:53 ([Errno 111] Connection refused)
 PROBE FAIL: nothing listening on 127.0.0.1:53 ([Errno 111] Connection refused)
 DNS query through the tunnel: no answer
 == log after probes
-libs/libdns.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libdl.so: version `LIBC' not found (required by libs/libdns.so)
-libs/libdns.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libc.so: version `LIBC' not found (required by libs/libdns.so)
+qemu-aarch64-static: Could not open '/system/bin/linker64': No such file or directory

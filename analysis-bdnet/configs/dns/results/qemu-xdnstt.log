@@ -1,2 +1,1 @@
-libs/libxdnstt.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libdl.so: version `LIBC' not found (required by libs/libxdnstt.so)
-libs/libxdnstt.so: /home/runner/work/AM-MST/AM-MST/sysroot/system/lib64/libc.so: version `LIBC' not found (required by libs/libxdnstt.so)
+qemu-aarch64-static: Could not open '/system/bin/linker64': No such file or directory
