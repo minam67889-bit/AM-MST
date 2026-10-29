@@ -31,8 +31,8 @@ No VM guests are running outdated hypervisor (qemu) binaries on this host.
 + ANDROID_HOME=/usr/local/lib/android/sdk
 + echo ANDROID_HOME=/usr/local/lib/android/sdk
 ANDROID_HOME=/usr/local/lib/android/sdk
-+ head
 + ls /usr/local/lib/android/sdk
++ head
 build-tools
 cmake
 cmdline-tools
@@ -54,33 +54,33 @@ yes: standard output: Broken pipe
 + tail -5
 Loading package information...                                                  Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [=                                      ] 3% Fetch remote repository...         [=                                      ] 4% Fetch remote repository...         [=                                      ] 5% Fetch remote repository...         [==                                     ] 5% Fetch remote repository...         [==                                     ] 6% Fetch remote repository...         [==                                     ] 7% Fetch remote repository...         [==                                     ] 7% Computing updates...               [===                                    ] 8% Computing updates...               [===                                    ] 10% Computing updates...              [===                                    ] 10% Installing ARM 64 v8a System Image[===                                    ] 10% Downloading arm64-v8a-24_r09.zip..[====                                   ] 10% Downloading arm64-v8a-24_r09.zip..[====                                   ] 11% Downloading arm64-v8a-24_r09.zip..[====                                   ] 12% Downloading arm64-v8a-24_r09.zip..[=====                                  ] 13% Downloading arm64-v8a-24_r09.zip..[=====                                  ] 14% Downloading arm64-v8a-24_r09.zip..[=====                                  ] 15% Downloading arm64-v8a-24_r09.zip..[======                                 ] 15% Downloading arm64-v8a-24_r09.zip..[======                                 ] 16% Downloading arm64-v8a-24_r09.zip..[======                                 ] 17% Downloading arm64-v8a-24_r09.zip..[=======                                ] 18% Downloading arm64-v8a-24_r09.zip..[=======                                ] 19% Downloading arm64-v8a-24_r09.zip..[=======                                ] 20% Downloading arm64-v8a-24_r09.zip..[========                               ] 20% Downloading arm64-v8a-24_r09.zip..[========                               ] 21% Downloading arm64-v8a-24_r09.zip..[========                               ] 22% Downloading arm64-v8a-24_r09.zip..[=========                              ] 23% Downloading arm64-v8a-24_r09.zip..[=========                              ] 24% Downloading arm64-v8a-24_r09.zip..[=========                              ] 25% Downloading arm64-v8a-24_r09.zip..[==========                             ] 25% Downloading arm64-v8a-24_r09.zip..[==========                             ] 26% Downloading arm64-v8a-24_r09.zip..[==========                             ] 27% Downloading arm64-v8a-24_r09.zip..[===========                            ] 28% Downloading arm64-v8a-24_r09.zip..[===========                            ] 29% Downloading arm64-v8a-24_r09.zip..[===========                            ] 30% Downloading arm64-v8a-24_r09.zip..[============                           ] 30% Downloading arm64-v8a-24_r09.zip..[============                           ] 31% Downloading arm64-v8a-24_r09.zip..[============                           ] 32% Downloading arm64-v8a-24_r09.zip..[============                           ] 33% Downloading arm64-v8a-24_r09.zip..[============                           ] 33% Unzipping...                      [============                           ] 33% Unzipping... arm64-v8a/           [============                           ] 33% Unzipping... arm64-v8a/advancedFea[=============                          ] 33% Unzipping... arm64-v8a/advancedFea[=============                          ] 33% Unzipping... arm64-v8a/kernel-ranc[=============                          ] 33% Unzipping... arm64-v8a/NOTICE.txt [=============                          ] 33% Unzipping... arm64-v8a/kernel-qemu[=============                          ] 33% Unzipping... arm64-v8a/build.prop [=============                          ] 33% Unzipping... arm64-v8a/userdata.im[=============                          ] 34% Unzipping... arm64-v8a/userdata.im[=============                          ] 34% Unzipping... arm64-v8a/source.prop[=============                          ] 34% Unzipping... arm64-v8a/ramdisk.img[=============                          ] 34% Unzipping... arm64-v8a/system.img [=============                          ] 35% Unzipping... arm64-v8a/system.img [==============                         ] 35% Unzipping... arm64-v8a/system.img [==============                         ] 36% Unzipping... arm64-v8a/system.img [==============                         ] 37% Unzipping... arm64-v8a/system.img [===============                        ] 38% Unzipping... arm64-v8a/system.img [===============                        ] 39% Unzipping... arm64-v8a/system.img [===============                        ] 40% Unzipping... arm64-v8a/system.img [================                       ] 40% Unzipping... arm64-v8a/system.img [================                       ] 41% Unzipping... arm64-v8a/system.img [================                       ] 42% Unzipping... arm64-v8a/system.img [=================                      ] 43% Unzipping... arm64-v8a/system.img [=================                      ] 44% Unzipping... arm64-v8a/system.img [=================                      ] 45% Unzipping... arm64-v8a/system.img [==================                     ] 45% Unzipping... arm64-v8a/system.img [==================                     ] 46% Unzipping... arm64-v8a/system.img [==================                     ] 47% Unzipping... arm64-v8a/system.img [===================                    ] 48% Unzipping... arm64-v8a/system.img [===================                    ] 49% Unzipping... arm64-v8a/system.img [===================                    ] 50% Unzipping... arm64-v8a/system.img [====================                   ] 50% Unzipping... arm64-v8a/system.img [====================                   ] 51% Unzipping... arm64-v8a/system.img [====================                   ] 52% Unzipping... arm64-v8a/system.img [=====================                  ] 53% Unzipping... arm64-v8a/system.img [=====================                  ] 54% Unzipping... arm64-v8a/system.img [=====================                  ] 55% Unzipping... arm64-v8a/system.img [=======================================] 100% Unzipping... arm64-v8a/system.img
 
-++ find /usr/local/lib/android/sdk -type d -path '*android-24*arm64-v8a*'
 ++ head -1
+++ find /usr/local/lib/android/sdk -type d -path '*android-24*arm64-v8a*'
 + IMGDIR=/usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a
 + echo IMGDIR=/usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a
 IMGDIR=/usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a
 + ls -l /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a
 + head
 total 3202888
--rw-r--r-- 1 runner runner    1686439 Oct 29 10:13 NOTICE.txt
--rw-r--r-- 1 runner runner        121 Oct 29 10:13 advancedFeatures.ini
--rw-r--r-- 1 runner runner       2232 Oct 29 10:13 build.prop
--rwxr-xr-x 1 runner runner    7748096 Oct 29 10:13 kernel-qemu
--rwxr-xr-x 1 runner runner    7748096 Oct 29 10:13 kernel-ranchu
--rw-r--r-- 1 runner runner      18469 Oct 29 10:14 package.xml
--rw-r--r-- 1 runner runner    1455579 Oct 29 10:13 ramdisk.img
--rw-r--r-- 1 runner runner        175 Oct 29 10:13 source.properties
--rw-r--r-- 1 runner runner 2684354560 Oct 29 10:13 system.img
+-rw-r--r-- 1 runner runner    1686439 Oct 29 10:23 NOTICE.txt
+-rw-r--r-- 1 runner runner        121 Oct 29 10:23 advancedFeatures.ini
+-rw-r--r-- 1 runner runner       2232 Oct 29 10:23 build.prop
+-rwxr-xr-x 1 runner runner    7748096 Oct 29 10:23 kernel-qemu
+-rwxr-xr-x 1 runner runner    7748096 Oct 29 10:23 kernel-ranchu
+-rw-r--r-- 1 runner runner      18469 Oct 29 10:24 package.xml
+-rw-r--r-- 1 runner runner    1455579 Oct 29 10:23 ramdisk.img
+-rw-r--r-- 1 runner runner        175 Oct 29 10:23 source.properties
+-rw-r--r-- 1 runner runner 2684354560 Oct 29 10:24 system.img
 + IMGFILE=/usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
 + ls -l /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
--rw-r--r-- 1 runner runner 2684354560 Oct 29 10:13 /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
+-rw-r--r-- 1 runner runner 2684354560 Oct 29 10:24 /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
 + mkdir -p sysroot/system/bin sysroot/system/lib64
 + sudo modprobe loop
 + sudo mount -o loop,ro /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img /mnt
 + echo mounted
 mounted
-+ ls /mnt
 + head
++ ls /mnt
 app
 bin
 build.prop
@@ -99,7 +99,7 @@ media
 + head -30
 sysroot/system/bin:
 total 908
--rwxr-xr-x 1 runner root 926936 Oct 29 10:14 linker64
+-rwxr-xr-x 1 runner root 926936 Oct 29 10:25 linker64
 
 sysroot/system/lib64:
 total 100624

@@ -105,7 +105,7 @@ sort: write failed: 'standard output': Broken pipe
 sort: write error
 ================= 13.140.185.158
 --- listeners
-LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3775,fd=6))
+LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3599,fd=6))
 --- everything the client printed
 Licensed to BD NET VPN
 NOTE: Using this app into unlicensed software/application will result into legal action
@@ -113,8 +113,8 @@ NOTE: Using this app into unlicensed software/application will result into legal
 --- brute force the auth pair
   no pair accepted out of 120 tries
 --- client stderr tail (non-syscall)
-2026/10/29 10:20:35 end stream a0c640b1:237
-2026/10/29 10:20:35 begin stream a0c640b1:239
-2026/10/29 10:20:35 end stream a0c640b1:239
-2026/10/29 10:20:35 begin stream a0c640b1:241
-2026/10/29 10:20:36 end stream a0c640b1:241
+2026/10/29 10:32:03 end stream 42a3eb4d:237
+2026/10/29 10:32:03 begin stream 42a3eb4d:239
+2026/10/29 10:32:03 end stream 42a3eb4d:239
+2026/10/29 10:32:03 begin stream 42a3eb4d:241
+2026/10/29 10:32:04 end stream 42a3eb4d:241
