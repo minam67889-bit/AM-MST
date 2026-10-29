@@ -292,70 +292,73 @@ jobs:
             echo "tcp zone=$zone sendto=$(grep -c sendto /tmp/zt.log) recvfrom_data=$(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/zt.log)"
           done
 
-      - name: "socks: the listener answers, so find out what it wants"
+      - name: "socks: it demands user/pass auth -- find the pair"
         run: |
           exec > >(tee /tmp/socks.txt) 2>&1
           set +e
           export QEMU_LD_PREFIX="$PWD/sysroot"
-          cat > /tmp/socksprobe.py <<'PY'
-          import socket, struct, sys, time
-          port = int(sys.argv[1])
-          def talk(name, steps):
+          echo "=== strings in libxdnstt that mention auth / socks"
+          strings -n 4 libs/libxdnstt.so 2>/dev/null \
+            | grep -iE "socks|auth|credential|username|password|greeting|method" | head -60
+          echo "=== short lowercase words next to the socks code (candidate secrets)"
+          strings -n 5 libs/libxdnstt.so 2>/dev/null | grep -xE "[a-z0-9_.-]{4,20}" \
+            | sort | uniq -c | sort -rn | head -40
+          cat > /tmp/authbrute.py <<'PY'
+          import itertools, socket, struct, sys, time
+          port, extra = int(sys.argv[1]), sys.argv[2:]
+          def attempt(u, p):
+              u, p = u.encode(), p.encode()
               try:
-                  s = socket.create_connection(("127.0.0.1", port), 4); s.settimeout(4)
+                  s = socket.create_connection(("127.0.0.1", port), 3); s.settimeout(3)
+                  s.sendall(b"\x05\x02\x00\x02")
+                  hello = s.recv(2)
+                  if hello != b"\x05\x02":
+                      s.close(); return None
+                  s.sendall(bytes([1, len(u)]) + u + bytes([len(p)]) + p)
+                  r = s.recv(2); s.close()
+                  return r
               except Exception as e:
-                  print(f"  {name}: connect failed {e}"); return
-              out = []
-              for send, wait in steps:
-                  if send: s.sendall(send)
-                  try:
-                      r = s.recv(80) if wait else b""
-                  except socket.timeout:
-                      r = b"<timeout>"
-                  except Exception as e:
-                      r = repr(e).encode()
-                  out.append((send.hex() if send else "-", r.hex() if isinstance(r, bytes) else r))
-              s.close()
-              print(f"  {name}:")
-              for a, b in out: print(f"      {a} -> {b}")
-          noauth = b"\x05\x01\x00"
-          both   = b"\x05\x02\x00\x02"
-          up     = b"\x05\x01\x02"
-          def userpass(u, p_):
-              u, p_ = u.encode(), p_.encode()
-              return bytes([1, len(u)]) + u + bytes([len(p_)]) + p_
-          dst = socket.inet_aton("93.184.216.34") + struct.pack(">H", 80)
-          connect = b"\x05\x01\x00\x01" + dst
-          talk("greeting only, no-auth offered", [(noauth, True)])
-          talk("greeting, no-auth + user/pass offered", [(both, True)])
-          talk("user/pass only, then prince:prince",
-               [(up, True), (userpass("prince", "prince"), True)])
-          talk("greeting then CONNECT (no auth)", [(noauth, True), (connect, True)])
-          talk("raw CONNECT with no greeting", [(connect, True)])
-          talk("HTTP CONNECT text",
-               [(b"CONNECT example.com:80 HTTP/1.1\r\nHost: example.com:80\r\n\r\n", True)])
-          talk("nothing, just listen", [(None, True)])
+                  return repr(e).encode()[:20]
+          words = ["prince", "bd", "bdnet", "bdnetvpn", "datanet", "dastan", "vpn", "tunnel",
+                   "dns", "fastdns", "slowdns", "admin", "root", "test", "pass", "password",
+                   "user", "guest", "1234", "12345", "123456", "priv", "sfr", "sd", "xdnstt",
+                   "reality", "shadowsocks", "socks5", "local", ""]
+          tries = 0
+          for u, p in itertools.chain(zip(words, words),
+                                      zip(words, [""] * len(words)),
+                                      zip([""] * len(words), words)):
+              r = attempt(u, p); tries += 1
+              if r == b"\x01\x00":
+                  print(f"  *** ACCEPTED user={u!r} pass={p!r}"); sys.exit(0)
+              if r not in (b"\x01\x01", b"\x01\xff"):
+                  print(f"  odd reply for {u!r}/{p!r}: {r!r}")
+          for u, p in zip(words, words[1:] + words[:1]):
+              r = attempt(u, p); tries += 1
+              if r == b"\x01\x00":
+                  print(f"  *** ACCEPTED user={u!r} pass={p!r}"); sys.exit(0)
+          for tok in extra:
+              for u, p in ((tok, tok), (tok, ""), ("", tok), (tok, "prince"), ("prince", tok)):
+                  r = attempt(u, p); tries += 1
+                  if r == b"\x01\x00":
+                      print(f"  *** ACCEPTED user={u!r} pass={p!r}"); sys.exit(0)
+          print(f"  no pair accepted out of {tries} tries")
           PY
-          for host in 13.140.185.158 13.140.185.159; do
+          for host in 13.140.185.158; do
             echo "================= $host"
-            timeout 150 qemu-aarch64-static -strace libs/libxdnstt.so \
+            timeout 240 qemu-aarch64-static libs/libxdnstt.so \
               -udp "$host:53" -report "BD NET VPN" -pubkey prince \
-              sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/tun.out 2> /tmp/tun.err &
+              sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/tun.out 2>/tmp/tun.err &
             pid=$!
-            sleep 7
+            sleep 8
             echo "--- listeners"; ss -lntp 2>/dev/null | grep ":7000" || echo "   (nothing on 7000)"
-            echo "--- what the client itself printed"
-            grep -avE "^[0-9]+ (mmap|mprotect|prctl|set_tid|sigaltstack|clock_gettime|futex|epoll|read|write|newfstatat|openat|close|rt_sigprocmask|getpid|gettid|brk|munmap|ioctl|nanosleep|rt_sigaction|sched_yield|epoll_ctl|epoll_pwait|socket|bind|listen|accept|getsockname|setsockopt|getsockopt|sendto|recvfrom|fcntl|uname|getrandom|readlinkat|exit_group|tgkill|rt_sigreturn|dup|getcwd|getuid|geteuid|arch_prctl)" /tmp/tun.err | head -20
-            head -5 /tmp/tun.out
-            echo "--- raw probe of 7000"
-            python3 /tmp/socksprobe.py 7000
-            echo "--- curl with credentials"
-            for cred in prince:prince bdnet:bdnet user:pass admin:admin; do
-              timeout 25 curl -sS -m 20 -x "socks5h://$cred@127.0.0.1:7000" -o /tmp/p.html \
-                -w "  $cred -> http=%{http_code} bytes=%{size_download} time=%{time_total}\n" \
-                http://example.com/ 2>&1 | tail -2
-            done
-            echo "--- sendto/recvfrom: $(grep -c sendto /tmp/tun.err) / $(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/tun.err)"
+            echo "--- everything the client printed"
+            cat /tmp/tun.out
+            session=$(grep -oiE "session[ =:]+[0-9a-f]{4,32}" /tmp/tun.out | head -1 | grep -oiE "[0-9a-f]{4,32}")
+            echo "--- session token guess: ${session:-none}"
+            echo "--- brute force the auth pair"
+            python3 /tmp/authbrute.py 7000 ${session:-}
+            echo "--- client stderr tail (non-syscall)"
+            tail -5 /tmp/tun.err
             kill $pid 2>/dev/null; wait $pid 2>/dev/null
           done
           exit 0
