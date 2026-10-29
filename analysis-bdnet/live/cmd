@@ -1,6 +1,33 @@
-export QEMU_LD_PREFIX="$PWD/sysroot"; echo 'aW1wb3J0IHNvY2tldCwgdGhyZWFkaW5nLCB0aW1lClVTRVIsUEFTUz1iInRhbmdpbmFrYWJhIixiImhhY2twYW1vcmVnYWdvIgpkZWYgcmQocyxuKToKICAgIGI9YiIiCiAgICB3aGlsZSBsZW4oYik8bjoKICAgICAgICBkPXMucmVjdihuLWxlbihiKSkKICAgICAgICBpZiBub3QgZDogcmFpc2UgT1NFcnJvcigiZW9mIikKICAgICAgICBiKz1kCiAgICByZXR1cm4gYgpkZWYgb25lKGhvc3QscG9ydCxwYXRoPSIvIik6CiAgICB0MD10aW1lLnRpbWUoKQogICAgcz1zb2NrZXQuY3JlYXRlX2Nvbm5lY3Rpb24oKCIxMjcuMC4wLjEiLDcwMDApLDEwKTsgcy5zZXR0aW1lb3V0KDYwKQogICAgZ290PWIiIgogICAgIyBleGFjdGx5IHdoYXQgU29ja3M1UmVsYXkua3Qgc2VuZHM6IG9mZmVyIG5vLWF1dGggQU5EIHVzZXIvcGFzcwogICAgcy5zZW5kYWxsKGIiXHgwNVx4MDJceDAwXHgwMiIpCiAgICBnb3QrPXJkKHMsMikKICAgIHMuc2VuZGFsbChieXRlcyhbMSxsZW4oVVNFUildKStVU0VSK2J5dGVzKFtsZW4oUEFTUyldKStQQVNTKQogICAgZ290Kz1yZChzLDIpCiAgICBoPWhvc3QuZW5jb2RlKCkKICAgIHMuc2VuZGFsbChiIlx4MDVceDAxXHgwMFx4MDMiK2J5dGVzKFtsZW4oaCldKStoK3BvcnQudG9fYnl0ZXMoMiwiYmlnIikpCiAgICByZXA9cmQocyw0KTsgZ290Kz1yZXAKICAgIGlmIHJlcFszXT09MTogcmQocyw2KQogICAgZWxpZiByZXBbM109PTM6IHJkKHMscmQocywxKVswXSsyKQogICAgZWxzZTogcmQocywxOCkKICAgIHMuc2VuZGFsbChmIkhFQUQge3BhdGh9IEhUVFAvMS4xXHJcbkhvc3Q6IHtob3N0fVxyXG5Db25uZWN0aW9uOiBjbG9zZVxyXG5cclxuIi5lbmNvZGUoKSkKICAgIGRhdGE9YiIiCiAgICB3aGlsZSBUcnVlOgogICAgICAgIGQ9cy5yZWN2KDQwOTYpCiAgICAgICAgaWYgbm90IGQ6IGJyZWFrCiAgICAgICAgZGF0YSs9ZAogICAgcy5jbG9zZSgpCiAgICByZXR1cm4gZ290LmhleCgpLCBkYXRhLnNwbGl0KGIiXHJcbiIpWzBdLmRlY29kZShlcnJvcnM9InJlcGxhY2UiKSwgZiJ7KHRpbWUudGltZSgpLXQwKSoxMDAwOi4wZn1tcyIKcmVzPXt9CmRlZiBydW4oaSxoLHAscGF0aD0iLyIpOgogICAgdHJ5OiByZXNbaV09b25lKGgscCxwYXRoKQogICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOiByZXNbaV09KCJFUlIiLHN0cihlKSwiIikKdD10aW1lLnRpbWUoKQp0aHM9W3RocmVhZGluZy5UaHJlYWQodGFyZ2V0PXJ1bixhcmdzPShpLGgscCxwdCkpIGZvciBpLChoLHAscHQpIGluIGVudW1lcmF0ZShbCiAgICgiZXhhbXBsZS5jb20iLDgwLCIvIiksKCJhcGkudGVsZWdyYW0ub3JnIiw0NDMsIi8iKSwoInd3dy53aWtpcGVkaWEub3JnIiw0NDMsIi8iKSwKICAgKCJjZG4uanNkZWxpdnIubmV0Iiw0NDMsIi9ucG0vanF1ZXJ5L3BhY2thZ2UuanNvbiIpLCgiYXBpLmdpdGh1Yi5jb20iLDQ0MywiLyIpXSldClt0Xy5zdGFydCgpIGZvciB0XyBpbiB0aHNdOyBbdF8uam9pbigpIGZvciB0XyBpbiB0aHNdCmZvciBpIGluIHNvcnRlZChyZXMpOiBwcmludChpLCByZXNbaV0pCnByaW50KGYiNSBjb25jdXJyZW50IHN0cmVhbXMgaW4ge3RpbWUudGltZSgpLXQ6LjFmfXMiKQo=' | base64 -d > /tmp/relaytest.py
-pkill -f '^qemu-aarch64-static'; sleep 2
-setsid nohup qemu-aarch64-static libs/libxdnstt.so -udp 13.140.185.158:53 -report 'BD NET VPN' -pubkey prince sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/t7.log 2>&1 < /dev/null &
-sleep 7
-timeout 180 python3 /tmp/relaytest.py
-# nonce=1793280239067153859
+export QEMU_LD_PREFIX="$PWD/sysroot"
+cat > /tmp/psiphon.json <<EOF
+{
+  "PropagationChannelId": "FFFFFFFFFFFFFFFF",
+  "SponsorId": "FFFFFFFFFFFFFFFF",
+  "ClientPlatform": "Android",
+  "ClientVersion": "1",
+  "DataStoreDirectory": "/tmp/psiphon-data",
+  "LocalSocksProxyPort": 1080,
+  "LocalHttpProxyPort": 8080,
+  "EmitDiagnosticNotices": true,
+  "DisableTactics": true,
+  "DisableRemoteServerListFetcher": true,
+  "RemoteServerListUrl": "https://s3.amazonaws.com//psiphon/web/mjr4-p23r-puwl/server_list_compressed",
+  "RemoteServerListSignaturePublicKey": "x"
+}
+EOF
+echo "--- does ConsoleClient build stand on its own? try with only what BD ships"
+cat > /tmp/psiphon2.json <<EOF
+{
+  "PropagationChannelId": "FFFFFFFFFFFFFFFF",
+  "SponsorId": "FFFFFFFFFFFFFFFF",
+  "ClientPlatform": "Android",
+  "ClientVersion": "1",
+  "DataStoreDirectory": "/tmp/psiphon-data2",
+  "LocalSocksProxyPort": 1080,
+  "LocalHttpProxyPort": 8080,
+  "EmitDiagnosticNotices": true
+}
+EOF
+mkdir -p /tmp/psiphon-data2
+timeout 60 ./art/psiphon-arm64 -config /tmp/psiphon2.json 2>&1 | head -40
+# nonce=1793280647785951307
