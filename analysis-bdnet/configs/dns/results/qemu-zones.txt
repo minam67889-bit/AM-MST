@@ -1,38 +1,39 @@
 === is the SlowDNS server reachable at all at the DNS level?
 --- dig @13.140.185.158 example.com
-;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 45743
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 56984
 ;; flags: qr; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
 --- dig @13.140.185.158 sd-de1.liftmeon.org
-;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 40092
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 29897
 ;; flags: qr aa; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
 --- dig @de1.liftmeon.org example.com
-;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 21804
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 53760
 ;; flags: qr; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
 --- dig @de1.liftmeon.org sd-de1.liftmeon.org
-;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 29168
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 37682
 ;; flags: qr aa; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
 
 === xdnstt handshake per zone (recvfrom > 0 == the server heard us)
-target=13.140.185.158 zone=sd-de1.liftmeon.org -> sendto=26 recvfrom_data=22
+target=13.140.185.158 zone=sd-de1.liftmeon.org -> sendto=25 recvfrom_data=23
    *** HEARD BACK ***
-3560 recvfrom(5,274880454656,4096,0,274878347876,274878347988) = 125
-3560 nanosleep(70369963418216,0,0,0,1000,10000000)3560 recvfrom(5,274880946176,4096,0,274878347876,274878347988) = 200
-3560 recvfrom(5,274881101824,4096,0,274878347876,274878347988) = 214
-target=13.140.185.158 zone=de1.liftmeon.org -> sendto=59 recvfrom_data=58
+3631 recvfrom(5,274881355776,4096,0,274880416356,274880416468) = 151
+3631 nanosleep(70368760951272,0,3,0,1000,3000)3631 recvfrom(5,274879627264,4096,0,274880416356,274880416468) = 326
+3631 recvfrom(5,274879631360,4096,0,274880416356,274880416468) = 90
+target=13.140.185.158 zone=de1.liftmeon.org -> sendto=60 recvfrom_data=57
    *** HEARD BACK ***
-3602 recvfrom(5,274881298432,4096,0,274881092196,274881092308) = 109
-3602 recvfrom(5,274880823296,4096,0,274881092196,274881092308) = 184
-3602 recvfrom(5,274880827392,4096,0,274881092196,274881092308) = 226
-target=13.140.185.158 zone=sd-de1 -> sendto=41 recvfrom_data=36
+3645 epoll_pwait(3,70368760949408,128,9,0,0)3645 recvfrom(5,274880446464,4096,0,274878364260,274878364372) = 109
+3645 epoll_pwait(3,70368760949408,128,8,0,0)3645 recvfrom(5,274881044480,4096,0,274878364260,274878364372) = 184
+3645 nanosleep(70369963418216,0,0,0,1000,10000000)3645 recvfrom(5,274881048576,4096,0,274878364260,274878364372) = 109
+grep: write error: Broken pipe
+target=13.140.185.158 zone=sd-de1 -> sendto=45 recvfrom_data=42
    *** HEARD BACK ***
-3647 recvfrom(5,274879389696,4096,0,274878347876,274878347988) = 99
-3647 recvfrom(5,274879979520,4096,0,274878347876,274878347988) = 174
-3647 recvfrom(5,274879983616,4096,0,274878347876,274878347988) = 216
-target=13.140.185.158 zone=de1 -> sendto=57 recvfrom_data=53
+3662 recvfrom(5,274879242240,4096,0,274879150692,274879150804) = 99
+3662 recvfrom(5,274879246336,4096,0,274879150692,274879150804) = 174
+3662 recvfrom(5,274879299584,4096,0,274879150692,274879150804) = 216
+target=13.140.185.158 zone=de1 -> sendto=41 recvfrom_data=40
    *** HEARD BACK ***
-3663 recvfrom(5,274881200128,4096,0,274878347876,274878347988) = 96
-3663 recvfrom(5,274880724992,4096,0,274878347876,274878347988) = 171
-3663 recvfrom(5,274880729088,4096,0,274878347876,274878347988) = 96
+3678 recvfrom(5,274879463424,4096,0,274880547428,274880547540) = 96
+3678 recvfrom(5,274879963136,4096,0,274880547428,274880547540) = 171
+3678 recvfrom(5,274879967232,4096,0,274880547428,274880547540) = 213
 target=de1.liftmeon.org zone=sd-de1.liftmeon.org -> sendto=8 recvfrom_data=0
 target=de1.liftmeon.org zone=de1.liftmeon.org -> sendto=8 recvfrom_data=0
 target=de1.liftmeon.org zone=sd-de1 -> sendto=8 recvfrom_data=0

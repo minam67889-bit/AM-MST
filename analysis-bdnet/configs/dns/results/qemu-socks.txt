@@ -1,108 +1,120 @@
+=== strings in libxdnstt that mention auth / socks
+%+vtimeasn1EDOMEADVValueSuiteCloseGroupProtoProxyFlagsModesUConnLimitPrimeNamesKemIdMutexCoeffClassIvLenMajorMinorHelloLabelCauseExtraKdfIdLevelsuiteon100flagsdonecinputvalidabortstatewritereqMugrouphellotconnextraaltMuproxylabelivLenuseBytraceconnspingsmultiavailuconnreqchrtypemutexpkcs8level<nil>falseErrorfileshttpsimap2imap3imapspop3shostsroutecloseMarchAprilmonthdummy&amp;&#34;&#39;:***@Rangerange:path%s %q%s=%sHTTP/socksFound1562578125tls: Earlyvaluefloat  -%slstat%s-%sh2-16h2-15h2-14parseAdlamBamumBatakBuhidDograGreekKhmerLatinLimbuNushuOghamOriyaOsageRunicTakriTamilSTermdefersweeptestRtestWexecWhchanexecRschedsudogtimergscanmheappanicsleeparm64 cnt=gcing MB,  got= ...
+ max=scav  ptr ] = (trap:init  ms, fault and  tab= top=[...], fp:int16int32int64uint8arrayslice (at TypeA.avif.html.jpeg.json.wasm.webputf-8%s*%dtext/Realmbad nSHA-1P-224P-256P-384P-521ECDSApmullcrc32cpuidasimdjscvtlrcpcdcpopalertTLMSPecdsaed44825519psk%dEd448EPERMESRCHEINTRENXIOE2BIGEBADFEBUSYEXDEVEFBIGEROFSEPIPEELOOPEIDRMEBADEEBADRETIMEENOSRECOMMSIGIOA28mBVIssuerLengthA_7bnHClientB4D0vxB63sKoB9v6vjBJmHW6BLHgTHServerCurvesCrdfohCv7gNzCx_MO1DSbYW3DZchYnDdYatBDz0Mz_Dzm_uWE01hi0E1CTu5EFDwwaEGz6XkKeyLenEdfF4gEdm7o3EmXFzpEnzCV9EvW4aeEyAwALF1a3SHFUCWoOTicketFfIXNyFiDQ1HFogxHYFrPEJWCookieFw8GslGAKqSmGJZ74PGcevKbGdvW0wGqiyWVGrPvdcH2Ks2jH77Dn7FieldsHK7Mt6H_h2ZvRandomHkqSV1KeepIDILfiMJINSZDBIoWaZaIuSW04IvWidHWeightJXV3J1LP0xExLT7f2nCipherConfigMnMuEqHeaderN78ACmNLxid8NVb9SUO7AYaUO7p8h1O_C22zOgke7ROwwOpIAnswerPXwhCqCancelTBSCSRQWD5G8QfrcjrBufferKEMKeyR_SQvyRx2QWVSUQx1uAeadIdSz6lDKTKzdQUNumberT_UuVJValuesTswpp0U1G6OeU2SjmwUa_D53Ua_W4dUhio6xVgdofhVhvEC7VrPVuRWAI44cWKG57aMacLenWMJtOMWa8OgRRollerXUMwiUXqgbfOY3y5H1Ya7nX9StatusZKlHg6MethodZOBvK4ZdE8ro_4mToV_Ekhea_L6tbirandom_ddxtH_fm2iI_iN9qIa7RTW6sigAlga7pgfSmethodaZDr4LframerlockedallpSikeyLenauNQw7configb428moschemeticketinflowbRvtTbbVuSdibeGlhwidleMuc75dlKcGFAkWcIWsP6cJ_5WccTwnfQcjKBcasecretcanceldJKjSUdM0iGTdk54lLe20heveE1TKIeSOMdXeeE_y8eg1Fb3parentekejGCnwritefCrPGyfIvneHonlyH1ff98sbremainfm0QhCcookieciphergHTnapgT4cDrgUmRvfserverageAddgYLyHagc4KfHsawEOFbrokenglRz_WresultgxOW99gyxlUjh570olh87yvrhAw9B6hJy7AXhLLQWYhUBJHMcurReqiENl7ZiPgBugicYTqzicjCOjikVS6QreadFnioquqebufferiwfU2kj07d9fjKaQCHserveGjYGfSXjaHht6jbDpq5macLenjoS1eIjoeJaQheaderjsvWlsjwE8_LjwiU4ZkMpj7Skarumbstatusl6FwUvlBhpsclHGsm7closedmagbxln2W4jlidleAtnGi9QOnQxn3znTluHin_s4dOnaekm9nusX2rnzECySo25mQ7num1xxpKSPPBreusedpwoPRYq54nIEqbsasystreamqyfGc0inReadrFAV1_unreadrfqzeXsHHdAjsa2xxqsm5rBktIgxbKtQ_KlotUeFxCu7Iwq8upY07Wv04u98aesKeyvTTblGvw96mgwAvJ_veventswZALIZwZFSGOchunkswadleKwiSU5tunsentwoBsOPx2hxDKgoAwayx7xbdgisHeadkemKeyy1boenclientyDHaEXyFrEknyT3TPOyWJTjHyiyxsvypoYL6yrrNEKz1qziaz29Gg_z5SGAWzPQxBCzcumaKzeezVyChromeiOS_13iOS_14AcceptpubkeyreportStringFormat[]bytestringnetdnsdomaingophertelnet.locallisten.onionndots:sendtoip+netreturnsocketspliceacceptSundayMondayFridayAugustminutesecond\x%02xClosedCANCELGOAWAYPADDEDactivesocks5Basic allow
+expectoriginExpectPragmasocks Locked390625X25519%w%.0wtls13 
+ m=nil base hangupkillederrno uint16uint32uint64structchan<-<-chan ValueTypeNSTypeMXsha512evstrmbrotlisha224sha256sha384psk_keCRYPTOSTREAMx25519GC256AGC256BGC256CGC256DGC512AGC512BGC512CNoise_cmd/goSTREETX-Wing\.//^\ENOENTECHILDEAGAINENOMEMEACCESEFAULTEEXISTENODEVEISDIREINVALENFILEEMFILEENOTTYENOSPCESPIPEEMLINKERANGEENOLCKENOSYSENOMSGECHRNGEL3HLTEL3RSTELNRNGENOCSIEL2HLTEXFULLENOANOEBFONTENOSTRENONETENOPKGESRMNTEPROTOEBADFDEILSEQEUSERSESTALEEISNAMEDQUOTENOKEYSIGHUPSIGINTSIGILLSIGBUSSIGFPESIGURGSIGPWRSIGSYSAFS0UilAYA9Sc1AapqJTPAcEkao9Al9q68mMessageB52FCCBVersionSubjectSessionC3Fvf3wC83u_quCFvX5chCMkAIepCMzkOgxCTGww5sCrwQkG8D8Tm51JDUtbUGbRootCAsDaQKkNmDkJsbU7WillPadE3K0lt7E5IV3h6EAVNKYVERa7TywEczLNthF6OG_QWHandlerFNkW09aF_C1Vk3FcwLb9pFkKLDHlFp6oCgaState12FrRU9QtFyYJfwLRequestGMpKTiKGbR3ujaGzlOwu7TrailerH4w1mhEHGgdfGxBindersState13HUjjcB6He4AlVEGotConnHwTmMHYI2Nnb94IKSD7C4IRDxKTHIRtXb0JIYewsW7IaXJIokIkSSYzPIu3vCa9J5rYo9oErrCodeJJl154lJrHidcuCountryJsmWlC4JxQpyCTKCAAl1yKvCtQFjL5F60qMLOCgdkxLija0dAMeiCSaYMl6Cu9QMsPz64pN10XAbYDialTLSOE67DIQDNSDoneO_ao2gYOgsFfZCOrD3kOYOukSpTWPl4qIjTQLHqsscQRw2WDzQUyaLzXQVO4VKqQWw65IRQtKww88QyMnTP7RGB7BtmCertReqRUdr50NRlr21JqChunkedSGczwKsSYiZguxSZTDqIST2QNUTCT477GrSTUATwGETlhV3pMPatternU40ONzIGetBodyUejlp6qUyq0JFqVUUOguXVdTTl7FWjMd53xWnUvlcCWeightsX8gu1meXl0M941GetConnXqd42BHYEMqbKICurveIDYU4_FiSZEPFzYIZMg03JtZNPJ93VZP2nfmRZmaRs72ZmnnTgRZvVKxWrsessionwritten_Eb7SRe_JlzwVn_MXRRN__fdCSsa_hd2Ibf_kW6Cwc_tRDWtGaMfbOEhaSaVhrGbufPipeaePwsekaf7pY0FafY0f5iamYYKMNapTPsywavSQ0GeawYvsUAcontrolb6RHM1sreqBodybDvcTJubVmtoGgbXmhNa7bei8v6Dclosingc3KOHz1cVEq22mcYOgFv4cdL_wP7cdvrQtEcf2fRxQcoxpdH8dLGar0ndMlujM_dN8sEDVdanfynjstreamsdqC4aHCe8QHWn6startedeT350CZeuIIeLieuaRJMwf9kWZlvfDBo6qlfDavb_hfEpegrDfLcbua6fNQTPYZfQ83eD8fS2yKt9fYprBQvfaHIsHCfnhhBqXg1GIQo0nextMaccreatedconnLRUgUca7YggYnNk53gbnyrTZwritechgiAclkUhIL6mnThleBLAMhu9iUHohv3FCcai3OEQFdiI1gaFssignalcisProxyiKe7WvmiN66o2viSJ5cwIiWzEzMWhandlerijbhAKYtrailerjACtZV7dateBufjOoqgsDjW3AwwRjaCZ74AjaaJsCWhasBytejfaKjyjidleLRUcurveIDkQcdIZbl69ytgml8kDdAwlITvRJHabortedlXSze2dl_6ZjWEljgoG33lrIbbhYsegmentm42cPaOhmacKeymcIjCkzmc_GyJ8mg9dFGcnCMHi4XnXD9VZRreadBufnkFnN2MversionnmI850NoZRLcdco_meU6NoaWDQd4readErrouv0IiXpC6XyKXp_4_S8OpeQxHTmpnDRg4gpryGGtCqLS_8xKqUc5IMkbaseCtxsendBufr0Hah8kr1EBOsIrFmH9ILrPvt_u3ryJ3aQxbyteBufsmwSZdosvRcq9csvrbvlJt1UodbotJunuiYmaxBitscancelctjaP0aHtxuynHjuEo5uUUuOBN79ndialinguhsRpCTuqMoT4tuvnC3l0clenBufvHxKsh8vPPgkqxvkf0hIwvzCAMjqwI_t4a_wb98t9qwvEoMQ8xAWpurpreadbufxD5GA7hpayloadcertReqxgOurVnxieyEbbxkM6eA3xm6gk3mclosechxzfSHbayQJos_oyVPPa7kpatternmatchesyvY11NMyx4TI1XzGGZDJ4headPosznotZABFirefoxfloat32float64androidrunningrecvmsgsendmsgconnectopenbsdlookup writetoTuesdayJanuaryOctoberUpgradeHEADERSsocks5hReferer flags= len=%d (conn) %v=%v,expiresrefererrefreshGODEBUGname %q:method:schemeupgrade:statushttp://chunkedCreatedIM UsedCONNECT19531259765625nil keytls3desderivedInitialUsage:
+;wPublicKeyA3E9DOc1zA40gK0CDUAlgorithmAIP1gMjmHECHConfigQUICEventAegzvm330Aj8EyWg6AAuXfZXJYaB8op_M05cBu03BMHwhAllowHTTPClientMD5CIyuxTRz9CrGeBbj9xCtJop3py7SessionIdDMKXalvLEDNwVurMZUDPfWZCV4HSecretKeyDXWshupdiBitStringRawIssuerE2BWiXXqVE6hK2AoCmE9Uc2o2wTE9cKh5UDWEpvAsQOQ7FJx5Kg2NWFaa_7TXQ3Fe59G3A4WFgulx5TJEFpjUbWbOJGFWk0cQNTGSUH6ykwhGT0v4rPtUGVAyErZK8GWpLPelEdSelectDirGjLycuOvZTruncatedEarlyDataGzmmyCLsgTLSConfigH6hNdadqiHFv7I014IHKrFcyVdZHaJkPH5nMHezEgdqZ4HfJRHUbYhHlM2gD_uJHqHCLucUZUQUICConnI02Lr3wTmITjfbpU_yAuthorityIaHWTxEXIServerMD5KeySharesInoTo7avJJFpH3o3tSJXrjoJICFJeIoWY4VoJiArUUTlSJx7LEfAjkJzHOsYBn5KIXnAWDv_ConnStateKPANvyAT7KZflyNgaIKvczG3TQrL0Fpj2TK7L27JzliXEHelloIDMuL7zI14akLLDEWIehmdKeyConfigMDrpeO8JxMS1VLiSaRMTUOHQG_oMW4iBEB4XMoYWMf69gSignatureNa9W8CmGaNraiD8Zo5O0RSFHg4qBinderKeyNotBeforeOMNPPQr6aOaHs__J0xOn7Xzuh7oStreamDepP7QupobGEPUbkfr3F3P_qde9tOUQIKEzGVGdExclusiveTransportQflgbe8fBRIq7ZcqjDRMzq_FSLcRZa3YxRr8StpKOZXhsTFrTuw4fqTknAVhSKCTpKuIemr_TtDGvVAnGVEGiaW56HVQmly9Vv7Va79whZuqWHDajj8kFWLrC5UX0OWzs4BBWV9XCW1EtJ7KXiNockaSsYMa7OAb60Z9lsJG3dgZQoTkSd8dClientCAsZgk9epDFAZsogvel30ZxAMQnHqaZzft1DPkN_AcGOcozS_QyakUeQSa1i1sQtIsa4lrWo9H1idleTimera92diGsLbcancelCtxaOzVfRnQJbodyBytesaXkZ4ObpUerrDetaillogWritesakmLJhu0jaunC3l4URsharedKeyb12z81gVDb6ZQZefHsbACMGEtc6bCwNKmaq2bGZG3tCYIbKvUSwJ10bUSdC3LS2b_jyR5DY0bm6GVVtcGc8FebhCvLcATSi1CWSendStreamkeySharescxaItGdj9d2d5BhXSedGVb340g2devyBfWwtserverMD5dlMnb07Rddx4EeFS7mdebugDatadzVBowWUoeH7b929UteVkjUmF6HeXKjlfQxZauthorityehyLruC9Xej0YHoa_freaderErrejXZKj3Hulistenersf2IXVqmVEf3QyyahiQf6_R2GcnGfVFZtZU9Qf_6oVEUt5fmfvgAdTnftaatcU7eg0mc0KzEpg1Xknato3g5sP5fs8cg6P1zTyReg9VxtNi4TgRmcUjETTcloseIdlehttp2pipeg_a1XCH3fbufferinggqwgpkkOkh3p30Baioh5FyDzQaah6t4ca6zahIkUyWMLIha9k4rEcnhsuY9wkpWhtGdGkc0Bhtif0LKDpheaderBufhxPE7lgTWhy0Mu1GqLlastFramei9dmiXglrstatusBufdidResumeiKYH0oveliPWYFPUfAin2R7M0D3sessionIdbinderKeyjLD89pJedjeMFzPLPnjtgVBGFyVjy3aJvvDOkAedEY1MkcreatedAtkfepvMVZBl86s1q6JZaddedGziplLouT9JhalUFKPnMVzld0YcwJnYlj73VZG3ym5poi9K8YmCQmWNsHWquicStatemOLZk56Q_mVWi_mSKnmge82AuAOmmR2a7qupmtYCLgSNnreadLimitnHW9IkhNlnWmKNnHQ_hijackedvsingleUseticketKeyndlb5f45PearlyDataoEwHRYr4joPB3_DOK_opTgk4M_yorz6QBTntp8V9mcplwpC5hEI1gKpIoah7tVMpboaHJkonpcfkCFzEnsymbolLenfirstBytenextEventqLmjvevf_qPEQeVht7dataFramebytesSentqbNQ45XDAqk_ys3j0Ar6SQjEfEyr7RW7vx3hrBIII2NLQafterDialrIxfcRAOrrenSjmnA7rfESNm2GsrhGaOdQtzqueuePoolrrixKvUuzrxx976ScIs6X1t_5ZFsecretKeysDIxvufKAswIb7XwrssyjGqrZwst5nahUbKCtg19AqEY9u4nkyeaDXclientMD5v3JCDUAP9vDKhsEAV4vLsS8cZJwvLtWe80N6vNu7ONstsvwgCT7Jc1reqCancelwSwNS3AmxwaVVKoikhwsNxPkHX4xBYDaG933xELDbobFddecSymbolxbLSePflsxmI0gXR7PxnDG47awKxzQo4nTDTyR1mIrT6CyYopng9I8ynia0n3grysUZQwJY1ytQ531EJcabortOnceywoVNNZwGz1Ya3TC86zAsP5AIEHauthKeyIdzVK1koCDezxJoe9AJaS
+NextProtosA8zTN_BrbAProtoMinorAQ4KVOY_zhApMi2WkBGqServerNameB1A0BalSkTSaltLengthB8gesASC40TLSVersMinBPfWHgGl7FExtensionsBSMNrlthD0UseRealPSKBUn7E5eF2hBeWHbNV9WfCCS7RRY_lvCOr4f5H32NCRkFtksp4dC_fsnUN5TrCc3ZgGxY4HCfKsfvTGgxCtZ9mx0SpBCz7JK7Xy1DNextUpdateD3L3SyOSPGD8K3cxmZQYDV1ufb9AhQDWHZmrtR4qDXUTgS6NH0DZNnvB5QdQDiGzwPYuxZDjFC9moPlkOCSPStapleDsgMKQZBBCTranscriptEPUWJ59uUlE_DwDwFQSaThisUpdateF3NT39WrvLFG74AvDjCPFZfycvCL4IECHConfigsGA2t3ePaUDPaddingLenClientAuthIdentitiesGhDBNO1TnAGwCgo0TFaRGziaLm4tkgH8IaCgd6PmHBcaCM88xBRequestURIHKw0tMy5iEHT9eE7ChIKHU3E1wOwgyHg5kkXp_UVHg7qw__L7LHhf8Z9KSNkPskBindersCountErrorJHSZdLFCL3ProtoMajorKZUW1a9V5gKc2a_6gvHAExtraNamesPrivateKeyLS6lzboQfyTLSVersMaxRemoteAddrM7MIewvkxcMExYEFz31FMYnsFPHPsUMqb2yUEWoQMxRqs8OIUGOCzzLB7nyXODbONCNCluOEJzIZttyjOYfVvtu6TXPPCvFbrPCHPYGRi5GB8ICommonNamePostalCodeRJfYxvMbKCRKuBQBgODPStatusCodeRVfRJMN98pMaxPathLenSC9_Gmmw_USDSNU7wfmITFLBkraaBPMinVersionTIqlhWUVGNMaxVersionTSmv23Qx_mTaZ64nfGqYTg2hDDSpXWTs3o5oEdFTStructTypeAlgorithmsU4fCJhSPvmOCSPServerUBL8Lzned3VoOg0YO5FTWWN2b3IwIhWfJZzYg6CyWo88hnNVNqWzljODVm6GX9U5GyAIvCXRyTz9S7RJXgC0IJT9mtXlmnx5booCXnzgzqojQSReasonCodeAdditionalPublicNameZ9r3aZgmTLZJyQnL3mvvZPQ9yc5yOWRawSubjectZY3V_VXDpLZkyOw58qtxSelectCaseZruWic4fmPZskH5vvH0TresTrailer_StOKOziega8leGm5CtaaDZZ27xIzwretryCountaTR_cE2NIiaU4dSZut2zaY85Yen3NJaaPEGLwv6cakTIX6t3QdakueuhKteMserveMsgChatf6RLmChyay6K9F2WuGstructTypebHuqnrRWyjbZy7OYFAPxbl6xYHZ7h5bpLxmyi3ITbpwezTtB9dbwno6DpgJZc30zMU6afFcBKjeHcVNLcaeupFO_CDcaok1Rk1JUcuPwq5C9CSd0qwUYpZQ3activeConnd8rqRNn4ZMd9yPaQGUTPwantsClosedSawBUR0Q8extensionsdTpgUhhFfnd_pSTNY1Pzda2qFJhIj8dfEgosAxBRdlSPjlbXJsnextCipherdoxp1n0oh3handshakese4sMmFsVjIe7l7SXFolve98rCucIW9continueCheAOqMYlsZgsnapHeaderpskBinderseSL_qZm5V3f2Tdj8LuUOpreDefinedbeforeDialframeCachefgDDtOEzSSfpbwMbFvIKactiveCallreadClosedwroteBytesgPzwuI1v2WgeKJsnapKjgiYI2qyebTgtLrMjED7bgv1qYMgVPJcountErrorh2J_lkv46yhE6q9rr2SphWGVc63CVahb9GERcDYahfTlJClyLClastMethodlastActiveiHI6mJQ2P6reqTraileriRGPUCoOGfwriteErrChgreaseSeediTbaVIB1SUmaxVersionijwqEl8vRgstateTableirocBLIyEOiwU0imRqX9cacheEntryj4ZX7kYgjlj4bCadm9oNj7fVmsuQTuj9Hr_xmzFxjCRBtYZx2AjF1gsnIMoljR0aS3gad4doNotReusefullDuplexjbhBtafeXJjhO7fXaRYsjmHX98O5f4nextProtosjrbJBzw2T2kBfbu5vKrkactiveCertkU3iX_qEX4kWcu0k9BFKtargetAddrl2K7Eerdwsl4tDfpxzqcl6PIJNMCOvlCYrgEC3DFconnReaderwriteSchedmDu52rmgsZmR0ihNn26QinShutdownmXIIIMaIXbmaEepzURKnonShutdowntranscriptmoiE_IsHeDgoAwayCodenWeaXvVWulnuZ7cq3Pb9readerDonehttp2FlagsremoteAddroPRtol9eo5ouyasGIJ9roxDgnax4iPp5BeSJKNaZpJqP8BGIItpaN90NP6NPpktpXdPTHcpmL5o9BaxZserverNameqDLX8BfWPuqSgT_kY_q8qZOgCvr2VrqjKyMhNia9qlQ2FP11WkriyS_ZGkbNrjNQii8SZpsTLXcHzcarsdQoe75VyKtDPOYLCFybtNc1DHZcKwticketKeystamtgtr0c3tcKA_4JliIcallerGonetuaJLEhJnutxRRDSPRc8u5J_E9GgwFuHGL2jlvCDuIaAvg3OELpromisedIDuRG5UkuBaVhttp2FramegetReadBufv3AUDqQ0mUbodyReadChwTLQvWmKHFwfX8uBs55UwouJ94ragvx5QQQFsgiqxFTSPMK_MJx_BamhICDVx_l3oKpvpnxa3fC5gnM3xiUZTFa6r0scratchBufy1qa_Z5lPLy6G7rlhSX8fseDecodersentHeaderyNiXD46Vu3ySKpwjnYQsyaqPItaGGAz4XQlb_JBFzD_vvOL4G_peerClosed~M
+ClientHelloIDALPNExtensionRenegotiationPskIdentitiesTrafficSecretUnwrapSessionRawAttributesSessionTicketKemPrivateKeyContentLengthQUICEventKindStreetAddressNamedCurveOIDRequestMethodGetPaddingLenSelectedGroupAlpnProtocolsMultipartFormHPKEKeyConfighttp2dialCalladvMaxStreamstrafficSecretgetConnCalledwriteDeadlinekemPrivateKeyrawExtensionslistenerGroupsentEndStreamselectedGroupnextProtoOncecontentLengthkemPrivKeymapnewclientconndeclBodyBytessessionTicketpublicKeyInfoconnectMethodpkixPublicKeywriteLoopDonereqBodyClosedhandlerHeaderrequestedGziporigJsonInputwantConnQueueconnPoolOrDefpskIdentitiesremoteAddrStralpnProtocolsshutdownTimerheaderFragBufcloseNotifyChpssParameters$-h]
+wakeableSleepprofMemActiveprofMemFuturetraceStackTabexecRInternaltestRInternalGC sweep waitSIGQUIT: quitSIGKILL: killout of memory is nil, not value method bad map state span.base()=bad flushGen , not pointer != sweepgen  MB globals,  work.nproc=  work.nwait=  nStackRoots= flushedWork double unlock s.spanclass= MB) workers=min too large-byte block (runtime: val=runtime: seq= failed with timer_settimefatal error:  idlethreads= syscalltick=load64 failedxadd64 failedxchg64 failedmp.g0 stack [nil stackbase}
+TBSCertificateReadBufferSizeTLS12OnlyStateEmailAddressesOldExtensionIDAuthorityKeyIdTLS13OnlyStateSignatureValueNamedGroupListWorkingHelloIDPubCipherSuiteDialTLSContextMaxHeaderBytesGot100ContinueGot1xxResponseGetCertificateClientAuthTypeMaxPathLenZeroRevocationListTcpDialTimeoutHandshakeStateRevocationTimehandshakeMutexdidCloseNotifyhttp2TransportheaderWriteBufhttp2FrameTypeserverFinishedclientFinishedtbsCertificateverifiedChainscloseNotifyErrsentContentLenrequestAndChanclientProtocolclientHelloMsgactualTableLogpkcs1PublicKeyhttp2PingFrameconnsPerHostMuhttp2DataFramehttp2writeDatatransferReaderhttp2SettingIDdebugFramerBufserverHelloMsgrespHeaderRecvecdhePubKeymap
+MaxReadFrameSizeTLSHandshakeDoneSessionTicketKeyTransferEncodingGenericExtensionWriteByteTimeoutTLSExtensionJSONCurvePreferencesAdditionalPrimesWroteHeaderFieldSupportedVersionVerifyConnectionSignatureSchemesSelectedIdentityProtocolNameListExcludedIPRangesneedToSendGoAwayresumptionSecretomitSNIExtensionhttp2FrameHeaderhttp2addConnCallcipherSuiteTLS13basicConstraintsclientMaxStreamsdebugReadLoggerfhttp2StreamErrorhttp2writeGoAwaygotTrailerHeadercurClientStreamsmutateHeaderFuncselectedIdentitycurPushedStreamssawFirstSettingscanWriteContinueconnsPerHostWaithttp2bodyReadMsgmaxPushPromiseIDcertificateTypesconnectMethodKeyresponseAndErrorhttp2streamStatepeerCertificateshttp2closeWaiterlastHeaderStreamsessionTicketExtsawClientPrefacehttp2GoAwayFramewants10KeepAlivetransportRequestwantWriteFrameChsupportedVersionhttp2writeFramer0123456789abcdefafW@~$
+8PermittedIPRangesMaximumNameLengthRawTBSCertificateNameToCertificatePubClientHelloMsgForceAttemptHTTP2NewWriteSchedulerCompressionMethodPubServerHelloMsgDisableKeepAlivesSupportedVersionsPolicyIdentifiersECPointFormatListECHConfigContentsKeyShareExtensionTLSHandshakeStartMaxHeaderListSizeAllowIllegalReadsReadHeaderTimeoutcompressionMethodsessionTicketKeyshttp2clientStreaminitialWindowSizedebugWriteLoggerfactiveCertHandleshttp2writePingAcksessionControllerhttp2HeadersFrameunstartedHandlershttp2incomparablesupportedVersionssessionTicketSentrandomStreamMutexmaxClientStreamIDhttp2requestParamwritingFrameAsyncdisableKeepAlives0123456789ABCDEFX
+goroutine profileAllThreadsSyscallGC assist markingselect (no cases)sync.RWMutex.Lockwait for GC cycletrace proc statusSIGINT: interruptSIGBUS: bus errorSIGCONT: continuesync.(*Cond).Wait: missing method notetsleepg on g0bad TinySizeClassruntime: pointer g already scannedmark - bad statusscanobject n == 0swept cached spanmarkBits overflowruntime: summary[runtime: level = , p.searchAddr = futexwakeup addr=, 0, {interval: {ns}}, nil) errno=results: got {r1=runtime/internal/internal/runtime/thread exhaustionlocked m0 woke upentersyscallblock spinningthreads=gp.waiting != nilunknown caller pcstack: frame={sp:runtime: nameOff runtime: typeOff runtime: textOff c
+_NX= toXGWbrFgPublicKeyAlgorithmPreSharedKeyCommonDisableCompressionSignatureAlgorithmCompressionMethodsProxyConnectHeaderSupportedProtocolsCandidateConfigIdsClientSessionCacheTB_ProtocolVersionOrganizationalUnitAllowIllegalWritesUnknownExtKeyUsageInsecureSkipVerifyClientSessionStateExcludedDNSDomainsGetConfigForClientExcludedURIDomainshttp2PriorityParamstructTypeUncommonloadSessionTrackercallingLoadSessiontlsNextProtoWasNilcompressionMethodsallocatePromisedIDcertificateRequestcachedPrivateHellotbsCertificateListhttp2goroutineLock$i|s
+StatusRequestExtensionSessionTicketExtensionInsecureAlgorithmErrorClientHelloBuildStatusMaxResponseHeaderBytesExcludedEmailAddressesExtensions_Append_ALPNExtensions_Append_ALPSFakeChannelIDExtensionRenegotiatedConnectionCertificateAuthoritiesSessionTicketsDisabledOnProxyConnectResponseInsecureSkipTimeVerifyCurveIDs_Append_X25519sessionControllerStateencryptedExtensionsMsgcertificateAuthoritiespeerMaxHeaderTableSizehasApplicationSettingsclientHelloBuildStatushttp2FrameWriteRequesthttp2writeWindowUpdatesH
+system huge page size (runtime: s.allocCount= s.allocCount > s.nelems/gc/heap/allocs:objectsmissing type in runfinqruntime: internal errorwork.nwait > work.nprocleft over markroot jobsgcDrain phase incorrectMB during sweep; swept bad profile stack countruntime: eventfd failedruntime: netpoll failedpanic during preemptoffnanotime returning zerothe current g is not g0schedule: holding locksprocresize: invalid argmisuse of profBuf.writeunexpected signal valuespan has no free stacksstack growth after forkshrinkstack at bad timereflect.methodValueCall
+2!og0V%u\CompressionMethodsJSONUnmarshalerCipherSuites_Remove_RandomCiphersFakeDelegatedCredentialsExtensionhttp2write100ContinueHeadersFrame
+index out of range [%x] with length %ym changed unexpectedly in cgocallbackgmakechan: invalid channel element typeunreachable method called. linker bug?concurrent map iteration and map writegcBgMarkWorker: blackening not enabledcannot read stack of running goroutineruntime: blocked read on free polldescruntime: sudog with non-false isSelectarg size to reflect.call more than 1GBv could not fit in traceBytesPerNumber
+runtime: opened unexpected file descriptor /memory/classes/metadata/mcache/inuse:bytesruntime.SetFinalizer: first argument is nilruntime.SetFinalizer: finalizer already setgcBgMarkWorker: unexpected gcMarkWorkerModenon in-use span found with specials bit setgrew heap, but no adequate free space foundroot level max pages doesn't fit in summaryruntime.Pinner: argument is not a pointer: runtime: releaseSudog with non-nil gp.paramunknown runnable goroutine during bootstrapruntime: casfrom_Gscanstatus bad oldval gp=runtime:stoplockedm: lockedg (atomicstatus=methodValueCallFrameObjs is not in a moduleM	8
+abiRegArgsType needs GC Prog, update methodValueCallFrameObjs+D
+Method
+Methods
+Password
+Username
+	BasicAuth
+	NumMethod
+	Authority
+SetBasicAuth
+Authenticate
+MethodByName
+*abi.Imethod
+missingMethod
+SkipAuthority
+AllAuthorities
+*[]abi.Imethod
+ExportedMethods
+AuthorityHeader
+AuthDecapsulate
+AuthEncapsulate
+*miU2R6k_8.Method
+SkipAllAuthorities
+*func(int) miU2R6k_8.Method
+ AuthEncapsulateDeterministically
+&*func(string) (miU2R6k_8.Method, bool)
+internal/abi.(*Type).ExportedMethods
+internal/abi.(*UncommonType).ExportedMethods
+internal/abi.(*Type).NumMethod
+internal/abi.(*InterfaceType).NumMethod
+internal/abi.(*FuncType).NumMethod
+internal/abi.(*PtrType).NumMethod
+runtime.unreachableMethod
+ge5rLXwfrC.ua_E0w.NumMethod
+internal/abi.(*UncommonType).Methods
+ge5rLXwfrC.(*ua_E0w).NumMethod
+reflect.C4TmPf_TsoX.NumMethod
+reflect.C4TmPf_TsoX.NumMethod.func1
+reflect.(*wSwNS3Amx).NumMethod
+reflect.(*hyZZSatDAIk).NumMethod
+type:.eq.reflect.Method
+reflect.(*C4TmPf_TsoX).NumMethod
+reflect.(*ex9vc7xK0).NumMethod
+grep: write error: Broken pipe
+=== short lowercase words next to the socks code (candidate secrets)
+      4 j9p9z8
+      3 hxex_
+      2 timer
+      2 sjt8s
+      2 runtime.schedinit
+      2 runtime.reflectcall
+      2 runtime.osyield
+      2 runtime.osinit
+      2 runtime.newstack
+      2 runtime.newproc
+      2 runtime.mstart0
+      2 runtime.morestackc
+      2 runtime.goexit1
+      2 runtime.dropm
+      2 runtime.check
+      2 runtime.cgocallbackg
+      2 runtime.badmcall2
+      2 runtime.badmcall
+      2 runtime.asmcgocall
+      2 runtime.args
+      2 main.main
+      2 libc.so
+      2 i3q3y3
+      2 i1q1y1
+      2 empty
+      2 crosscall2
+      2 _cgo_topofstack
+      2 _cgo_panic
+      2 9ghe8g
+      2 9ghe8
+      2 9eha8
+      2 -----
+      1 zzai5a.go
+      1 zymn8s
+      1 zyabpea.go
+      1 zw5vf2.go
+      1 zrfoks.go
+      1 zombies
+      1 zm7ewl.go
+      1 zm2h9a5.go
+sort: write failed: 'standard output': Broken pipe
+sort: write error
 ================= 13.140.185.158
 --- listeners
-LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3750,fd=6))
---- what the client itself printed
-3750 fstat(3,0x0000400000fff138) = 0
-3750 fstat(3,0x0000400000ffdfb0) = 0
-3750 pread64(3,0x00004000010dc060,64,0) = 64
-3750 fstat(4,0x0000400000ffdfb0) = 0
-3750 pread64(4,0x00004000010dc260,64,0) = 64
-3750 fstat(5,0x0000400000ffdfb0) = 0
-3750 pread64(5,0x00004000010dc460,64,0) = 64
-3750 fstat(3,0x0000400000ffde10) = 0
-3750 pread64(3,0x0000400001222060,64,0) = 64
-3750 fstat(4,0x0000400000ffde10) = 0
-3750 pread64(4,0x0000400001222260,64,0) = 64
-3750 fstat(3,0x0000400000ffd738) = 0
-3750 sched_getaffinity(0,8192,0x400000ffd528) = 8
-3750 madvise(0x0000400046895000,33554432,MADV_NOHUGEPAGE) = 0
-3750 madvise(0x00004000488a6000,1048576,MADV_NOHUGEPAGE) = 0
-3750 clone(CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID,child_stack=0x0000400048ac2440,parent_tidptr=0x0000400048ac2460,tls=0x0000400048ac24e8,child_tidptr=0x0000400048ac2460) = 3752
- = 0
- = 0
---- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=3750, si_uid=1001} ---
---- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=3750, si_uid=1001} ---
-grep: write error: Broken pipe
+LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3775,fd=6))
+--- everything the client printed
 Licensed to BD NET VPN
 NOTE: Using this app into unlicensed software/application will result into legal action
---- raw probe of 7000
-  greeting only, no-auth offered:
-      050100 -> 05ff
-  greeting, no-auth + user/pass offered:
-      05020002 -> 0502
-  user/pass only, then prince:prince:
-      050102 -> 0502
-      01067072696e6365067072696e6365 -> 01ff
-  greeting then CONNECT (no auth):
-      050100 -> 05ff
-      050100015db8d8220050 -> 
-  raw CONNECT with no greeting:
-      050100015db8d8220050 -> 05ff
-  HTTP CONNECT text:
-      434f4e4e454354206578616d706c652e636f6d3a383020485454502f312e310d0a486f73743a206578616d706c652e636f6d3a38300d0a0d0a -> 
-  nothing, just listen:
-      - -> 3c74696d656f75743e
---- curl with credentials
-curl: (97) User was rejected by the SOCKS5 server (1 255).
-  prince:prince -> http=000 bytes=0 time=0.425674
-curl: (97) User was rejected by the SOCKS5 server (1 255).
-  bdnet:bdnet -> http=000 bytes=0 time=0.424428
-curl: (97) User was rejected by the SOCKS5 server (1 255).
-  user:pass -> http=000 bytes=0 time=0.552086
-curl: (97) User was rejected by the SOCKS5 server (1 255).
-  admin:admin -> http=000 bytes=0 time=0.414020
---- sendto/recvfrom: 191 / 158
-================= 13.140.185.159
---- listeners
-LISTEN 0      4096       127.0.0.1:7000      0.0.0.0:*    users:(("qemu-aarch64-st",pid=3782,fd=6))
---- what the client itself printed
-3782 fstat(3,0x0000400000fff138) = 0
-3782 fstat(3,0x0000400000ffdfb0) = 0
-3782 pread64(3,0x00004000010dc060,64,0) = 64
-3782 fstat(4,0x0000400000ffdfb0) = 0
-3782 pread64(4,0x00004000010dc260,64,0) = 64
-3782 fstat(5,0x0000400000ffdfb0) = 0
-3782 pread64(5,0x00004000010dc460,64,0) = 64
-3782 fstat(3,0x0000400000ffde10) = 0
-3782 pread64(3,0x0000400001222060,64,0) = 64
-3782 fstat(4,0x0000400000ffde10) = 0
-3782 pread64(4,0x0000400001222260,64,0) = 64
-3782 fstat(3,0x0000400000ffd738) = 0
-3782 sched_getaffinity(0,8192,0x400000ffd528) = 8
-3782 madvise(0x0000400046895000,33554432,MADV_NOHUGEPAGE) = 0
-3782 madvise(0x00004000488a6000,1048576,MADV_NOHUGEPAGE) = 0
-3782 clone(CLONE_VM|CLONE_FS|CLONE_FILES|CLONE_SIGHAND|CLONE_THREAD|CLONE_SYSVSEM|CLONE_SETTLS|CLONE_PARENT_SETTID|CLONE_CHILD_CLEARTID,child_stack=0x0000400048ac2440,parent_tidptr=0x0000400048ac2460,tls=0x0000400048ac24e8,child_tidptr=0x0000400048ac2460) = 3784
- = 0
---- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=3782, si_uid=1001} ---
---- SIGURG {si_signo=SIGURG, si_code=SI_TKILL, si_pid=3782, si_uid=1001} ---
- = 0
-grep: write error: Broken pipe
-Licensed to BD NET VPN
-NOTE: Using this app into unlicensed software/application will result into legal action
---- raw probe of 7000
-  greeting only, no-auth offered:
-      050100 -> 3c74696d656f75743e
-  greeting, no-auth + user/pass offered:
-      05020002 -> 3c74696d656f75743e
-  user/pass only, then prince:prince:
-      050102 -> 3c74696d656f75743e
-      01067072696e6365067072696e6365 -> 3c74696d656f75743e
-  greeting then CONNECT (no auth):
-      050100 -> 3c74696d656f75743e
-      050100015db8d8220050 -> 3c74696d656f75743e
-  raw CONNECT with no greeting:
-      050100015db8d8220050 -> 3c74696d656f75743e
-  HTTP CONNECT text:
-      434f4e4e454354206578616d706c652e636f6d3a383020485454502f312e310d0a486f73743a206578616d706c652e636f6d3a38300d0a0d0a -> 3c74696d656f75743e
-  nothing, just listen:
-      - -> 3c74696d656f75743e
---- curl with credentials
-curl: (28) Connection timed out after 20002 milliseconds
-  prince:prince -> http=000 bytes=0 time=20.002105
-curl: (28) Connection timed out after 20002 milliseconds
-  bdnet:bdnet -> http=000 bytes=0 time=20.002780
-curl: (28) Connection timed out after 20001 milliseconds
-  user:pass -> http=000 bytes=0 time=20.002008
-curl: (28) Connection timed out after 20002 milliseconds
-  admin:admin -> http=000 bytes=0 time=20.002227
---- sendto/recvfrom: 184 / 170
+--- session token guess: none
+--- brute force the auth pair
+  no pair accepted out of 120 tries
+--- client stderr tail (non-syscall)
+2026/10/29 10:20:35 end stream a0c640b1:237
+2026/10/29 10:20:35 begin stream a0c640b1:239
+2026/10/29 10:20:35 end stream a0c640b1:239
+2026/10/29 10:20:35 begin stream a0c640b1:241
+2026/10/29 10:20:36 end stream a0c640b1:241

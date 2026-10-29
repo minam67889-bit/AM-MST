@@ -1,18 +1,16 @@
 === client against the local mock (must receive)
-sendto:   53
-recvfrom: 106
-recvfrom with data: 44
-3447 recvfrom(5,274881617920,4096,0,274879445604,274879445716) = 119
-3447 epoll_pwait(3,70369964734672,128,6,0,0)3447 recvfrom(5,274881622016,4096,0,274879445604,274879445716) = 194
-3447 recvfrom(5,274881716224,4096,0,274879445604,274879445716)3447 epoll_pwait(3,70368760949408,128,8,0,0) = 236
-grep: write error: Broken pipe
+sendto:   52
+recvfrom: 104
+recvfrom with data: 37
+3511 recvfrom(5,274880520192,4096,0,274878364260,274878364372) = 119
+3511 epoll_pwait(3,70369976035536,128,83,0,0)3511 futex(0x000000400005ef48,FUTEX_PRIVATE_FLAG|FUTEX_WAIT,0,NULL,NULL,0)3511 recvfrom(5,274880675840,4096,0,274878364260,274878364372) = 194
+3511 recvfrom(5,274880679936,4096,0,274878364260,274878364372) = 236
 --- mock side
 mock got 106 B, answered
 mock got 181 B, answered
 mock got 223 B, answered
 mock got 223 B, answered
 mock got 223 B, answered
-mock got 71 B, answered
 mock got 223 B, answered
 mock got 71 B, answered
 mock got 223 B, answered
@@ -63,7 +61,7 @@ mock got 71 B, answered
 
 === client against 8.8.8.8 (always answers, wrong zone)
 sendto:   46
-recvfrom with data: 46
+recvfrom with data: 40
 
 === libdns: does it forward to its upstream and receive?
 libdns sendto:   0
