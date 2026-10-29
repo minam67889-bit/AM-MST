@@ -78,6 +78,17 @@ data class AppSettings(
 
         fun load(context: Context): AppSettings {
             val p = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+            // Builds before 2026-10-29 shipped the decoy pair from BD's string
+            // table. Anyone who saved it would get `auth 01 ff` forever, so
+            // swap it for the real one on load.
+            val storedUser = p.getString("bd_upstream_user", null)
+            val storedPass = p.getString("bd_upstream_pass", null)
+            if (storedUser == "tanginaka" || storedPass == "wagditokupal") {
+                p.edit()
+                    .putString("bd_upstream_user", "tanginakaba")
+                    .putString("bd_upstream_pass", "hackpamoregago")
+                    .apply()
+            }
             return AppSettings(
                 domain = p.getString("domain", "") ?: "",
                 encryptionMethod = p.getInt("encryption_method", EncryptionMethod.XOR),

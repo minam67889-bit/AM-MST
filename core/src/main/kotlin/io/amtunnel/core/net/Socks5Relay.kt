@@ -162,6 +162,9 @@ class Socks5Relay(
                 upOut.write(packet); upOut.flush()
                 upIn.readUnsignedByte()
                 val status = upIn.readUnsignedByte()
+                if (status.toInt() == 0) {
+                    onNotice("far end accepted the login '$upstreamUser'")
+                }
                 if (status.toInt() != 0) {
                     log.warn("relay", "upstream rejected the credentials (status $status)")
                     onNotice("the far end of the tunnel rejected user '$upstreamUser' (code $status)")
