@@ -1,0 +1,125 @@
+name: App on an emulator - the SlowDNS engine end to end
+
+# The product-level proof, on a real Android arm64 image:
+#   install OUR apk -> start the engine headlessly -> send a real HTTP request
+#   through 127.0.0.1:1080 -> report what came back, plus the same probe from
+#   outside the app via `adb forward`.
+#
+# The broadcast receiver is part of the app (SelftestReceiver), so this is the
+# same code path a user gets when they press Connect - no adb tricks.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/app-selftest.yml"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  emulator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Our APK (debug build of this branch)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set +e
+          exec > >(tee /tmp/apk.txt) 2>&1
+          mkdir -p art
+          run=$(gh run list --workflow=android.yml --status success --limit 1 \
+                  --json databaseId --jq '.[0].databaseId')
+          echo "android run: $run"
+          art=$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$run/artifacts" \
+                  --jq '.artifacts[] | select(.name=="amtunnel-mst-debug-apk") | .id' | head -1)
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$art/zip" > art/a.zip
+          unzip -o -q art/a.zip -d art/x
+          cp "$(find art/x -name '*.apk' | head -1)" art/amtunnel.apk
+          ls -l art/amtunnel.apk
+          unzip -Z1 art/amtunnel.apk | grep 'lib/arm64-v8a/' || true
+
+      - name: Boot, install, run the self-test
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          target: default
+          arch: arm64-v8a
+          profile: pixel
+          emulator-boot-timeout: 3600
+          disable-animations: true
+          emulator-options: >-
+            -no-window -no-snapshot -gpu off -noaudio -no-boot-anim
+            -camera-back none -camera-front none -memory 3072 -no-metrics
+            -partition-size 4096
+          script: |
+            set +e
+            exec > >(tee /tmp/emu.txt) 2>&1
+            adb wait-for-device
+            echo "abi: $(adb shell getprop ro.product.cpu.abi)"
+            adb install -r -g art/amtunnel.apk
+            adb shell pm list packages | grep -i amtunnel
+            adb logcat -c
+            adb shell pm grant io.amtunnel.app.debug android.permission.POST_NOTIFICATIONS 2>/dev/null
+            echo "=== starting the headless end-to-end check"
+            adb shell am broadcast \
+              -a io.amtunnel.app.SELFTEST \
+              -n io.amtunnel.app.debug/io.amtunnel.app.SelftestReceiver
+            for i in $(seq 1 60); do
+              if adb logcat -d | grep -q "AMTUNNEL-SELFTEST.*RESULT"; then break; fi
+              sleep 5
+            done
+            echo "=== self-test verdict"
+            adb logcat -d | grep "AMTUNNEL-SELFTEST" | tail -60
+            echo "=== processes"
+            for pid in $(adb shell "ps -A" | grep -Ei "xdnstt" | awk '{print $2}'); do
+              echo "--- pid $pid: $(adb shell "cat /proc/$pid/cmdline | tr '\0' ' '")"
+            done
+            echo "=== listening sockets (1080 must be there, 0.0.0.0 when sharing)"
+            adb shell "cat /proc/net/tcp /proc/net/tcp6" | head -30
+            echo "=== outside-the-app probe through adb forward"
+            adb forward --remove-all
+            adb forward tcp:11080 tcp:1080
+            timeout 90 python3 tools/tunnel_probe.py 127.0.0.1:11080 --mode socks --timeout 40 --wait 10 || \
+              timeout 90 python3 - <<'PY'
+            import socket
+            s = socket.create_connection(("127.0.0.1", 11080), 10); s.settimeout(45)
+            s.sendall(b"\x05\x01\x00")
+            print("greeting reply:", s.recv(2).hex())
+            h = b"example.com"
+            s.sendall(b"\x05\x01\x00\x03" + bytes([len(h)]) + h + (80).to_bytes(2, "big"))
+            print("connect reply:", s.recv(10).hex())
+            s.sendall(b"GET / HTTP/1.0\r\nHost: example.com\r\n\r\n")
+            print("http:", s.recv(200)[:80])
+            PY
+            echo "=== logcat tail"
+            adb logcat -d | tail -80
+
+      - name: Publish
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p analysis-bdnet/runtime
+          cp /tmp/emu.txt analysis-bdnet/runtime/app-selftest.txt 2>/dev/null || true
+          cp /tmp/apk.txt analysis-bdnet/runtime/app-selftest-apk.txt 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-bdnet/runtime
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "runtime: app self-test on an emulator [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done

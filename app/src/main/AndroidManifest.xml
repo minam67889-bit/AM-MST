@@ -23,6 +23,15 @@
             </intent-filter>
         </activity>
 
+        <!-- headless end-to-end check: adb shell am broadcast -a io.amtunnel.app.SELFTEST -->
+        <receiver
+            android:name=".SelftestReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="io.amtunnel.app.SELFTEST" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name=".TunnelVpnService"
             android:exported="false"
