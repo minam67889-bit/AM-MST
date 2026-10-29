@@ -107,3 +107,17 @@ no user/password.
 * Right now the app ships BD's binaries from their public APK (built in CI from
   the `amtunnel-apk-analysis` artifact), not from this repository.
 * Speed is a DNS tunnel's speed: page loads and Telegram work; video does not.
+
+## Verification status (2026-10-29, end of day)
+
+| layer | how it was checked | state |
+| --- | --- | --- |
+| the wire, with BD's binaries | `libxdnstt.so` + plain socket client under qemu on a runner | **verified** - auth `0100`, CONNECT granted, HTTP 200 |
+| the far-end login | captured from BD's own patched Xray, replayable | **verified** on `sd-de1` and `sd-de20` |
+| the shipped relay code | `core/src/test/kotlin/io/amtunnel/core/Socks5RelayTest.kt` in CI: stub far end, real `Socks5Relay` | **verified** - logs in upstream, hands out a no-auth proxy, and a refused login blocks the client |
+| the APK | CI "Verify APK contents" now fails unless `libxdnstt.so` + `libtun2socks.so` are inside | **verified** (16,587,328 B and 160,232 B) |
+| the app on a phone | `SelftestReceiver` (`am broadcast -a io.amtunnel.app.SELFTEST`) sends a real GET through 1080 and logs `AMTUNNEL-SELFTEST RESULT ...` | **not run here** - the arm64 emulator job (`app-selftest.yml`) failed to boot inside its 90 minute limit; run the broadcast on a real phone to get the same verdict |
+
+Speed is a DNS tunnel's speed: 129 KB/s down on a 512 KiB fetch, page loads and
+Telegram are fine, video is not. Only TCP is proxied (no UDP ASSOCIATE), which
+Telegram's TCP fallback handles.
