@@ -128,8 +128,10 @@ class Socks5RelayTest {
 
             val host = "example.com".toByteArray(Charsets.US_ASCII)
             out.write(byteArrayOf(5, 1, 0, 3, host.size.toByte(), *host, 0, 80)); out.flush()
-            assertEquals(5, readByte(input).toLong())
-            assertEquals("CONNECT must succeed: ${log.dump()}", 0, readByte(input).toLong())
+            // the whole reply: version, status, reserved, atyp, 4-byte address, port
+            val reply = ByteArray(10).also { input.readFully(it) }
+            assertEquals("CONNECT must succeed: ${log.dump()}", 5, reply[0].toInt())
+            assertEquals("CONNECT must succeed: ${log.dump()}", 0, reply[1].toInt())
 
             out.write("GET / HTTP/1.0\r\n\r\n".toByteArray()); out.flush()
             assertEquals("HTTP/1.0 200 OK", readLine(input))
@@ -173,8 +175,9 @@ class Socks5RelayTest {
             readByte(input); readByte(input)
             val host = "example.com".toByteArray(Charsets.US_ASCII)
             out.write(byteArrayOf(5, 1, 0, 3, host.size.toByte(), *host, 0, 80)); out.flush()
-            assertEquals(5, readByte(input).toLong())
-            assertTrue("a refused login must not become a granted CONNECT", readByte(input) != 0)
+            val reply = ByteArray(10).also { input.readFully(it) }
+            assertEquals(5, reply[0].toInt())
+            assertTrue("a refused login must not become a granted CONNECT", reply[1].toInt() != 0)
         }
         assertTrue(
             "the user has to see why nothing works: $notices",
