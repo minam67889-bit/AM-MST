@@ -123,3 +123,5 @@ jobs:
               git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
             sleep 5
           done
+
+# trigger: emulator self-test against the build that carries SelftestReceiver
