@@ -83,27 +83,62 @@ jobs:
           exec > >(tee /tmp/bd-tunnel.txt) 2>&1
           set +e
           export QEMU_LD_PREFIX="$PWD/sysroot"
+          cat > /tmp/probe.py <<'PY'
+          import itertools, socket, sys, base64
+          port = int(sys.argv[1])
+          words = ["tanginaka", "wagditokupal", "prince", "BD NET VPN", "sd-de1.liftmeon.org",
+                   "de1.liftmeon.org", "bdfreevpn", "prince", ""]
+          def attempt(u, p):
+              try:
+                  s = socket.create_connection(("127.0.0.1", port), 3); s.settimeout(3)
+                  s.sendall(b"\x05\x02\x00\x02")
+                  if s.recv(2) != b"\x05\x02":
+                      s.close(); return b"no-method"
+                  u_, p_ = u.encode(), p.encode()
+                  s.sendall(bytes([1, len(u_)]) + u_ + bytes([len(p_)]) + p_)
+                  r = s.recv(2); s.close(); return r
+              except Exception as e:
+                  return repr(e).encode()[:16]
+          seen = set()
+          for u, p in itertools.chain(zip(words, words),
+                                      zip(words, words[1:] + words[:1]),
+                                      zip(words, words[::-1])):
+              if (u, p) in seen: continue
+              seen.add((u, p))
+              r = attempt(u, p)
+              print(f"  user={u!r:24s} pass={p!r:24s} -> {r!r}", flush=True)
+              if r == b"\x01\x00":
+                  print("  *** ACCEPTED ***")
+          PY
           for host in $BD_HOSTS; do
             echo "================= $host  (zone sd-de1.liftmeon.org)"
-            timeout 240 qemu-aarch64-static -strace libs/libxdnstt.so \
+            timeout 200 qemu-aarch64-static -strace libs/libxdnstt.so \
               -udp "$host:53" -report "BD NET VPN" -pubkey prince \
               sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/c.out 2>/tmp/c.err &
             pid=$!
             sleep 9
             ss -lntp 2>/dev/null | grep 7000 || echo "  (no listener on 7000)"
-            for url in http://example.com/ http://neverssl.com/ https://example.com/; do
-              timeout 60 curl -sS -m 55 --socks5-hostname "tanginaka:wagditokupal@127.0.0.1:7000" \
-                -o /tmp/page.html \
-                -w "  $url -> http=%{http_code} bytes=%{size_download} time=%{time_total}\n" \
-                "$url" 2>&1 | tail -2
-              if [ -s /tmp/page.html ]; then
-                echo "  --- got a page:"; head -c 300 /tmp/page.html; echo
-                echo "  --- TLS/HTTP check on a second host"
-                timeout 60 curl -sS -m 55 --socks5-hostname "tanginaka:wagditokupal@127.0.0.1:7000" \
-                  -o /dev/null -w "  https://www.google.com/ -> http=%{http_code} bytes=%{size_download}\n" \
-                  https://www.google.com/ 2>&1 | tail -1
-              fi
+            sudo timeout 90 tcpdump -i any -n -s 0 -w /tmp/cap.pcap "udp port 53" > /tmp/tcpdump.log 2>&1 &
+            td=$!
+            sleep 2
+            echo "--- SOCKS5 auth matrix on 7000"
+            python3 /tmp/probe.py 7000
+            echo "--- one real curl, for the record"
+            timeout 60 curl -sS -m 55 --socks5-hostname "tanginaka:wagditokupal@127.0.0.1:7000" \
+              -o /tmp/page.html -w "  http://example.com/ -> http=%{http_code} bytes=%{size_download}\n" \
+              http://example.com/ 2>&1 | tail -1
+            sudo kill $td 2>/dev/null; wait $td 2>/dev/null
+            echo "--- what went out on the wire"
+            sudo tcpdump -r /tmp/cap.pcap -n 2>/dev/null | head -12
+            echo "--- does the credential itself travel inside the tunnel?"
+            for token in tanginaka wagditokupal; do
+              b64=$(printf %s "$token" | base64 -w0)
+              n=$(sudo tcpdump -r /tmp/cap.pcap -A -n 2>/dev/null | grep -c "$b64")
+              echo "  $token (base64 $b64) appears in $n packet(s)"
             done
+            echo "--- qnames seen (first 10)"
+            sudo tcpdump -r /tmp/cap.pcap -A -n 2>/dev/null | tr -c '[:print:]\n' '.' \
+              | grep -oE "[a-z0-9-]+\.[a-z0-9.-]+liftmeon[a-z.]*|[a-z0-9-]{6,63}\.(sd|de)" | head -10
             echo "--- client log"; grep -avE "^[0-9]+ " /tmp/c.err | head -6
             echo "--- packets: sendto=$(grep -c sendto /tmp/c.err) recvwithdata=$(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/c.err)"
             kill $pid 2>/dev/null; wait $pid 2>/dev/null
