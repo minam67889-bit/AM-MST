@@ -1,0 +1,6 @@
+### writers of the three prefs
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/config/SettingsConstants.java:9:    public static final String CHAVE_KEY = "chaveKey";
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/config/SettingsConstants.java:20:    public static final String DNS_KEY = "dnsKey";
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/config/SettingsConstants.java:29:    public static final String NAMESERVER_KEY = "serverNameKey";
+
+### Settings getters

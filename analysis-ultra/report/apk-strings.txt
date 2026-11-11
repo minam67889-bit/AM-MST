@@ -1,0 +1,50 @@
+### badging
+package: name='co.strongteam.ultra' versionCode='59' versionName='v1.0.8.8' platformBuildVersionName='16' platformBuildVersionCode='36' compileSdkVersion='36' compileSdkVersionCodename='16'
+minSdkVersion:'32'
+targetSdkVersion:'36'
+uses-permission: name='android.permission.ACCESS_NETWORK_STATE'
+uses-permission: name='android.permission.CHANGE_NETWORK_STATE'
+uses-permission: name='android.permission.INTERNET'
+uses-permission: name='android.permission.READ_EXTERNAL_STORAGE'
+uses-permission: name='android.permission.FOREGROUND_SERVICE'
+uses-permission: name='android.permission.FOREGROUND_SERVICE_SPECIAL_USE'
+uses-permission: name='android.permission.POST_NOTIFICATIONS'
+uses-permission: name='android.permission.RECEIVE_BOOT_COMPLETED'
+uses-permission: name='android.permission.VIBRATE'
+uses-permission: name='de.blinkt.openvpn.api.permission.READ_PROFILES'
+uses-permission: name='de.blinkt.openvpn.api.permission.WRITE_PROFILES'
+uses-permission: name='de.blinkt.openvpn.api.permission.START_PROFILE'
+uses-permission: name='android.permission.BIND_VOICE_INTERACTION'
+uses-permission: name='android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS'
+uses-permission: name='android.permission.WAKE_LOCK'
+uses-permission: name='com.google.android.gms.permission.AD_ID'
+uses-permission: name='android.permission.CAMERA'
+
+### slowdns-ish strings in the dex
+	CHAVE_KEY
+"<strong>SlowDNS Bypass OK</strong>
+, SlowDNSHost=
+, SlowDNSKey=
+:53   -pubkey 
+DNSTT
+NAMESERVER_KEY
+PEM_read_bio_PUBKEY
+Please Select Slowdns Server
+Sb,bSd-b1
+Slow DNS
+SlowDNSHost
+SlowDNSKey
+X509_get_pubkey
+bTUNNEL_TYPE_SLOWDNS
+chaveKey
+csd-
+getSlowDNSHost
+getSlowDNSKey
+get_X509_pubkey_oid
+i2d_X509_PUBKEY
+
+### hostnames in resources
+com.google.android.material.app
+github.com
+journeyapps.com
+ultra-tunnel-22e50.firebasestorage.app
