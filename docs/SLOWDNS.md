@@ -121,3 +121,27 @@ no user/password.
 Speed is a DNS tunnel's speed: 129 KB/s down on a 512 KiB fetch, page loads and
 Telegram are fine, video is not. Only TCP is proxied (no UDP ASSOCIATE), which
 Telegram's TCP fallback handles.
+
+## Transport choice: server IP or a public resolver (verified 2026-11-11)
+
+`libxdnstt.so` does not care who carries its queries. Driving BD's own client
+under qemu on a runner, three public resolvers were given the same tunnel:
+
+| transport (`-udp …:53`) | far-end reply | verdict |
+| --- | --- | --- |
+| `13.140.185.158` (the server itself) | `05 ff` in 0.7 s | live |
+| `8.8.8.8` (Google) | `05 ff` in 0.4 s | live |
+| `8.8.4.4` (Google) | `05 ff` in 0.7 s | live |
+| `1.1.1.1` (Cloudflare) | `05 ff` in 0.3 s | live |
+
+`05 ff` is the far end's SOCKS5 answer to a no-auth greeting (`05 01 00`): it
+only accepts username/password, so it rejects the offered method. The *content*
+of the reply is not the point — anything that comes back means the DNS tunnel
+carried a round trip. Raw log: `analysis-bdnet/report/transport-compare.txt`.
+
+That is why the app gained a **"DNS resolver for the tunnel"** setting
+(`AppSettings.bdResolver`, blank = the server's own IP). It is the same trick
+Ultra Tunnel's "Slow DNS" networks use with carrier resolvers: on a network that
+permits DNS to a resolver but blocks UDP to arbitrary addresses, the tunnel still
+comes up. DoH/DoT are *not* covered by this setting — those need TLS, which many
+captive/enterprise networks block outright.

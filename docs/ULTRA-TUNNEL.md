@@ -164,6 +164,13 @@ matter how healthy the server is.
 
 **Not verified — and why**
 
+* **Control, for comparison:** BD NET's zone answers a resolver-relayed query
+  (`sd-de1.liftmeon.org` TXT via 8.8.8.8 → rcode 0, answer present) and BD's own
+  client completes a far-end round trip through 8.8.8.8 in 0.4 s
+  (`analysis-bdnet/report/transport-compare.txt`). Same kind of query against
+  every Ultra zone returns NXDOMAIN or SERVFAIL
+  (`analysis-ultra/report/sandbox-dns-test.txt`). The difference is the server,
+  not the test.
 * **All 8 Ultra endpoints are silent from the public internet.** With the
   working client: session logs `begin session`, no stream is ever opened, no
   bytes arrive. Raw DNS agrees — the authoritative NS addresses answer nothing
