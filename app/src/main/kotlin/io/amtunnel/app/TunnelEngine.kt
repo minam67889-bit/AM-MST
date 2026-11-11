@@ -393,6 +393,7 @@ class TunnelEngine(private val context: Context) {
                 pubkey = s.bdPubkey,
                 localPort = s.bdLocalPort,
                 utls = s.bdUtls,
+                resolver = s.bdResolver,
             ),
         )
         if (!started) {

@@ -45,6 +45,14 @@ data class AppSettings(
     val bdUtls: String = "",
     val bdLocalPort: Int = 7000,
     /**
+     * Optional DNS transport for the tunnel: when set (e.g. `8.8.8.8`), the
+     * client sends its queries to this resolver instead of straight to the
+     * server's IP. That lets the tunnel work on networks that allow DNS to a
+     * public resolver but block UDP to arbitrary addresses - the same trick
+     * Ultra's "Slow DNS" networks use with carrier resolvers.
+     */
+    val bdResolver: String = "",
+    /**
      * What BD NET's own (patched) Xray client actually puts on the wire when it
      * talks to the SOCKS5 at the far end of a SlowDNS tunnel. Recovered by
      * proxying their client's socket; see docs/SLOWDNS-BREAKTHROUGH.md.
@@ -114,6 +122,7 @@ data class AppSettings(
                 bdPubkey = p.getString("bd_pubkey", "prince") ?: "prince",
                 bdUtls = p.getString("bd_utls", "") ?: "",
                 bdLocalPort = p.getInt("bd_local_port", 7000),
+                bdResolver = p.getString("bd_resolver", "") ?: "",
                 bdUpstreamUser = p.getString("bd_upstream_user", "tanginakaba") ?: "tanginakaba",
                 bdUpstreamPass = p.getString("bd_upstream_pass", "hackpamoregago") ?: "hackpamoregago",
                 psiphonRegion = p.getString("psiphon_region", "") ?: "",
@@ -146,6 +155,7 @@ data class AppSettings(
                 putString("bd_pubkey", settings.bdPubkey)
                 putString("bd_utls", settings.bdUtls)
                 putInt("bd_local_port", settings.bdLocalPort)
+                putString("bd_resolver", settings.bdResolver)
                 putString("bd_upstream_user", settings.bdUpstreamUser)
                 putString("bd_upstream_pass", settings.bdUpstreamPass)
                 putString("psiphon_region", settings.psiphonRegion)

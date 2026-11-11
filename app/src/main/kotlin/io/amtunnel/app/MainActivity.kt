@@ -244,6 +244,10 @@ class MainActivity : Activity() {
         val bdPubkeyField = field("dnstt public key label", engine.settings.bdPubkey)
         val bdUtlsField = field("uTLS fingerprints (blank = their default)", engine.settings.bdUtls)
         val bdPortField = field("BD client local port", engine.settings.bdLocalPort.toString())
+        val bdResolverField = field(
+            "DNS resolver for the tunnel (blank = the server's own IP; 8.8.8.8 = go through a public resolver)",
+            engine.settings.bdResolver,
+        )
         val bdUserField = field("Far-end SOCKS5 user", engine.settings.bdUpstreamUser)
         val bdPassField = field("Far-end SOCKS5 password", engine.settings.bdUpstreamPass)
         val psiphonRegionField = field("Psiphon exit region (blank = fastest)", engine.settings.psiphonRegion)
@@ -254,6 +258,7 @@ class MainActivity : Activity() {
         bdCard.addView(bdPubkeyField)
         bdCard.addView(bdUtlsField)
         bdCard.addView(bdPortField)
+        bdCard.addView(bdResolverField)
         bdCard.addView(bdUserField)
         bdCard.addView(bdPassField)
         bdCard.addView(psiphonRegionField)
@@ -266,6 +271,7 @@ class MainActivity : Activity() {
                 bdPubkey = bdPubkeyField.text.toString().trim(),
                 bdUtls = bdUtlsField.text.toString().trim(),
                 bdLocalPort = bdPortField.text.toString().trim().toIntOrNull() ?: 7000,
+                bdResolver = bdResolverField.text.toString().trim(),
                 bdUpstreamUser = bdUserField.text.toString(),
                 bdUpstreamPass = bdPassField.text.toString(),
                 psiphonRegion = psiphonRegionField.text.toString().trim().uppercase(),

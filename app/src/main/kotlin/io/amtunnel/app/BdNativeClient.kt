@@ -41,6 +41,8 @@ class BdNativeClient(
         val pubkey: String = "prince",
         val localPort: Int = 7000,
         val utls: String = "",
+        /** Send queries here instead of to the server's own IP (e.g. `8.8.8.8`). */
+        val resolver: String = "",
         val readyTimeoutMs: Long = 14_000,
     )
 
@@ -82,16 +84,25 @@ class BdNativeClient(
             }
             val port = config.localPort
             val zone = config.zonePrefix + host
+            val transportHost = config.resolver.ifBlank { ip }
+            val viaResolver = transportHost != ip
             val args = mutableListOf(
                 bin.absolutePath,
-                "-udp", "$ip:53",
+                "-udp", "$transportHost:53",
                 "-report", config.report,
                 "-pubkey", config.pubkey,
             )
             if (config.utls.isNotBlank()) args += listOf("-utls", config.utls)
             args += listOf(zone, "127.0.0.1:$port")
 
-            log.info("bd", "starting ${bin.name} against $host ($ip), zone $zone")
+            log.info(
+                "bd",
+                if (viaResolver) {
+                    "starting ${bin.name} against $host via resolver $transportHost, zone $zone"
+                } else {
+                    "starting ${bin.name} against $host ($ip), zone $zone"
+                },
+            )
             val proc = try {
                 ProcessBuilder(args).redirectErrorStream(true).start()
             } catch (e: Exception) {
