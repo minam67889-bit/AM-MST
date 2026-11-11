@@ -11,7 +11,7 @@ verified/unverified marker.
 | `config-decoded.json` | bundled catalogue, fully decrypted, `v3.95`, 56 servers / 859 networks |
 | `remote-config-decoded.json` | live updater catalogue, `v5.28`, 38 servers / 918 networks |
 | `assets/configfile.json` | the original encrypted asset (unchanged, as shipped) |
-| `assets/remote-catalog.enc` | raw body of `strongteam.co/api/ultrasystem/ultrav3.txt` |
+| `remote-catalog.enc` | raw body of `strongteam.co/api/ultrasystem/ultrav3.txt` |
 | `decrypt_config.py` | the Argon2id/AES-256-GCM decoder (outer envelope + inner fields) |
 | `build_slowdns_json.py` | merges both catalogues + the probe reports into `slowdns.json` |
 | `probe_dns.py` | walks the delegation chain to the tunnel server's real IP |
@@ -25,5 +25,5 @@ Reproduce the decryption:
 ```bash
 pip install argon2-cffi pycryptodome
 python3 decrypt_config.py assets/configfile.json out.json      # bundled
-python3 decrypt_config.py assets/remote-catalog.enc out2.json  # live updater
+python3 decrypt_config.py remote-catalog.enc out2.json  # live updater
 ```
