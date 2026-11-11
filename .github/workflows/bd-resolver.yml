@@ -86,20 +86,7 @@ jobs:
               sd-de1.liftmeon.org 127.0.0.1:$port > /tmp/x_$port.log 2>&1 &
             pid=$!
             sleep 25
-            python3 - "$port" >> "$OUT" <<'PY'
-import socket, sys, time
-port = int(sys.argv[1]); t0 = time.time()
-try:
-    s = socket.create_connection(("127.0.0.1", port), timeout=12)
-    s.settimeout(30)
-    s.sendall(b"\x05\x01\x00")
-    got = s.recv(4)
-    live = got[:2] == b"\x05\x02"
-    print(f"  far-end greeting: {got.hex()} in {time.time()-t0:.1f}s ({'LIVE' if live else 'no tunnel'})")
-    s.close()
-except Exception as exc:
-    print(f"  {type(exc).__name__}: {exc} after {time.time()-t0:.1f}s")
-PY
+            python3 tools/far_end_greeting.py "$port" >> "$OUT" 2>&1
             kill $pid 2>/dev/null; wait $pid 2>/dev/null
             echo "  client log:" >> "$OUT"
             tail -6 /tmp/x_$port.log | sed 's/^/    /' >> "$OUT"
