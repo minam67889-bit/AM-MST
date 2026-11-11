@@ -59,3 +59,5 @@ while [ $SECONDS -lt $DEADLINE ]; do
 done
 
 say "$seen" "live shell closing at $(date -u +%H:%M:%S)Z (lifetime reached)"
+
+# (restarted for the Ultra Tunnel session 0128)
