@@ -68,7 +68,7 @@ jobs:
             timeout 120 /tmp/dnstt-primary -udp "$res:53" -pubkey "$key" "$dom" 127.0.0.1:2222 > /tmp/c.log 2>&1 &
             pid=$!
             sleep 15
-            python3 analysis-ultra/probe_dnstt.py "$dom" >> "$OUT" 2>&1
+            python3 analysis-ultra/probe_tcp.py "local 2222 ($dom)" >> "$OUT" 2>&1
             kill $pid 2>/dev/null; wait $pid 2>/dev/null
             echo "  client log:" >> "$OUT"
             tail -8 /tmp/c.log | sed 's/^/    /' >> "$OUT"
