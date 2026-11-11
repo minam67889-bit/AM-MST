@@ -1,26 +1,13 @@
-  example.com:80 http: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  api.telegram.org:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  127.0.0.1:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  1.1.1.1:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
+  selftest tunnel: HTTP 156B in 2.0s -> HTTP/1.0 200 OK\r\nServer: SimpleHTTP/0.6 Python/3.12.3\r\nDate: Wed, 11 Nov 2026 09:25:25 GMT\r\nContent-
 --- client log
-  2026/11/11 09:19:16 effective MTU 134
-  2026/11/11 09:19:16 begin session 9d19e13f
-  2026/11/11 09:19:20 begin stream 9d19e13f:3
-  2026/11/11 09:19:50 end stream 9d19e13f:3
-  2026/11/11 09:19:50 begin stream 9d19e13f:5
-  2026/11/11 09:20:20 end stream 9d19e13f:5
-  2026/11/11 09:20:20 begin stream 9d19e13f:7
-  2026/11/11 09:20:50 end stream 9d19e13f:7
-  2026/11/11 09:20:50 begin stream 9d19e13f:9
-  2026/11/11 09:21:20 end stream 9d19e13f:9
+  2026/11/11 09:25:19 uTLS fingerprint Chrome 120
+  2026/11/11 09:25:19 effective MTU 134
+  2026/11/11 09:25:19 begin session 6db931bd
+  2026/11/11 09:25:23 begin stream 6db931bd:3
+  2026/11/11 09:25:25 end stream 6db931bd:3
 --- server log
-  2026/11/11 09:19:13 effective MTU 932
-  2026/11/11 09:19:16 begin session 9d19e13f
-  2026/11/11 09:19:20 begin stream 9d19e13f:3
-  2026/11/11 09:19:50 begin stream 9d19e13f:5
-  2026/11/11 09:19:50 end stream 9d19e13f:3
-  2026/11/11 09:20:20 begin stream 9d19e13f:7
-  2026/11/11 09:20:20 end stream 9d19e13f:5
-  2026/11/11 09:20:50 begin stream 9d19e13f:9
-  2026/11/11 09:20:50 end stream 9d19e13f:7
-  2026/11/11 09:21:20 end stream 9d19e13f:9
+  2026/11/11 09:25:16 pubkey f8f3c6def38fa87d1dc135cc0ed3f94dfa4a9fa1bcdd9f4be25d13cac98e9d62
+  2026/11/11 09:25:16 effective MTU 932
+  2026/11/11 09:25:19 begin session 6db931bd
+  2026/11/11 09:25:23 begin stream 6db931bd:3
+  2026/11/11 09:25:25 end stream 6db931bd:3
