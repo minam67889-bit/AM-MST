@@ -1,0 +1,103 @@
+name: Ultra Tunnel - Libv2ray DO/EO constants
+
+# The bundled assets/configfile.json is not decrypted by a guessable key: it is an
+# AES-256-GCM envelope whose key comes from Argon2id over a *constant compiled into*
+# libgojni.so (package github.com/2dust/AndroidLibXrayLite, functions EO and DO).
+# This step resolves the Go symbol table of that .so and dumps the two functions so
+# the constants can be read straight off the instructions.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/ultra-consts.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  consts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq unzip binutils python3-pip
+          pip install -q pyelftools capstone
+
+      - name: XAPK
+        run: |
+          set +e
+          mkdir -p /tmp/u && cd /tmp/u
+          URL="https://filebin.net/tc28bjzj2p27ju9v/co.strongteam.ultra.zip"
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+          curl -sS -c jar -A "$UA" -o /dev/null "$URL"
+          curl -sSL -c jar -b jar -A "$UA" -H "Referer: $URL" -o u.zip "$URL"
+          unzip -o -q u.zip -d x
+          unzip -o -q x/config.arm64_v8a.apk -d arm64
+          ls -l arm64/lib/arm64-v8a/libgojni.so
+
+      - name: Fetch scanners
+        run: |
+          set +e
+          mkdir -p /tmp/u/tools && cd /tmp/u/tools
+          B=https://raw.githubusercontent.com/gokussj092/NSKSDKLDLDLDMDNDNDNNDNDNDNDNDNDNDNDNDMDM/HEAD/scripts/apk_analysis
+          curl -sSL -o go_inspect.py "$B/go_inspect.py"
+          curl -sSL -o elf_inspect.py "$B/elf_inspect.py"
+          wc -l *.py
+
+      - name: Go symbols
+        run: |
+          set +e
+          cd /tmp/u
+          R="$GITHUB_WORKSPACE/analysis-ultra/report"
+          mkdir -p "$R"
+          L=arm64/lib/arm64-v8a/libgojni.so
+          {
+            echo "### xray-lite functions"
+            python3 tools/go_inspect.py "$L" --filter 'AndroidLibXrayLite' 2>&1 | head -60
+            echo
+            echo "### libv2ray functions"
+            python3 tools/go_inspect.py "$L" --filter 'libv2ray' 2>&1 | head -60
+            echo
+            echo "### strings that look like passwords"
+            strings -n 8 "$L" | grep -iE "password|passwd|secret|decrypt" | sort -u | head -40
+          } > "$R/libv2ray-funcs.txt"
+          cat "$R/libv2ray-funcs.txt"
+
+      - name: Disassemble DO / EO / Encrypt / decrypt
+        run: |
+          set +e
+          cd /tmp/u
+          R="$GITHUB_WORKSPACE/analysis-ultra/report"
+          L=arm64/lib/arm64-v8a/libgojni.so
+          for fn in DO EO decrypt Encrypt; do
+            {
+              echo "##### $fn"
+              python3 tools/go_inspect.py "$L" --disassemble "github.com/2dust/AndroidLibXrayLite.$fn" 2>&1 | head -400
+            } >> "$R/libv2ray-disasm.txt"
+          done
+          wc -l "$R/libv2ray-disasm.txt"
+
+      - name: Commit
+        if: always()
+        run: |
+          set +e
+          cd "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
+          git add analysis-ultra
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "ultra: libv2ray DO/EO constants [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" > /dev/null 2>&1
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
