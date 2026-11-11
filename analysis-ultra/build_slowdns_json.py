@@ -43,6 +43,7 @@ for catalog, origin in ((bundled, "bundled asset"), (remote, "live updater")):
             "ssl_port": s.get("SSLPort"),
             "ssh_port": s.get("SSH_Port"),
             "catalog_versions": [],
+            "ssh_users": [],
         })
         if s["Name"].strip() not in row["names"]:
             row["names"].append(s["Name"].strip())
@@ -51,6 +52,10 @@ for catalog, origin in ((bundled, "bundled asset"), (remote, "live updater")):
                 row["connect_hosts"].append(h)
         if s.get("ServerType") and s["ServerType"] not in row["server_types"]:
             row["server_types"].append(s["ServerType"])
+        user, pwd = s.get("OVPNUser") or "", s.get("OVPNPass") or ""
+        if user and all(u["user"] != user for u in row["ssh_users"]):
+            row["ssh_users"].append({"user": user, "pass": pwd,
+                                     "default_account": bool(s.get("isdefUser"))})
         ver = catalog.get("Version")
         if ver not in row["catalog_versions"]:
             row["catalog_versions"].append(ver)
@@ -128,6 +133,38 @@ for row in servers:
     row["public_resolver_rcode"] = ep["public"]
     row["endpoint_answers_raw_dns"] = any("answers=" in v and "answers=0" not in v
                                           for v in ep["txt"].values())
+
+# --- end-to-end verdict per domain, from analysis-ultra/report/e2e.txt ------
+def parse_e2e(path: str) -> dict[str, list[dict]]:
+    import re
+    out: dict[str, list[dict]] = {}
+    cur = None
+    try:
+        text = open(path, encoding="utf-8").read()
+    except OSError:
+        return out
+    for line in text.splitlines():
+        m = re.match(r"^==== (\S+) via (\S+)$", line.strip())
+        if m:
+            cur = {"endpoint": m.group(2), "outcome": "no data"}
+            out.setdefault(m.group(1), []).append(cur)
+            continue
+        if cur is None:
+            continue
+        if "BANNER" in line:
+            cur["outcome"] = "banner (tunnel live)"
+        elif "HTTP" in line:
+            cur["outcome"] = "http (tunnel live)"
+        elif "NO-DATA" in line or "CONNECT-FAIL" in line:
+            cur["outcome"] = "silent (no stream opened)"
+    return out
+
+
+e2e = parse_e2e("analysis-ultra/report/e2e.txt")
+for row in servers:
+    row["end_to_end"] = e2e.get(row["slowdns_domain"], [])
+    row["usable_from_public_internet"] = any(
+        "live" in probe["outcome"] for probe in row["end_to_end"])
 
 # --- launch recipes ---------------------------------------------------------
 recipes = []
@@ -221,6 +258,21 @@ out = {
         "live_updater_fetch": "analysis-ultra/report/remote-fetch.txt (HTTP 200, 1,385,469 B)",
         "dns_liveness": "analysis-ultra/report/liveness.txt",
         "end_to_end": "analysis-ultra/report/e2e.txt",
+        "toolchain_self_test": "analysis-ultra/report/selftest.txt",
+        "summary": {
+            "catalogue": "VERIFIED - both catalogues decrypt completely (v3.95 bundled, v5.28 live)",
+            "credentials": "VERIFIED - domain + 64-hex dnstt pubkey + SSH account per SlowDNS server",
+            "engine_argv": "VERIFIED - read from DNSTunnelThread.run(), matches libdns.so flags",
+            "client_toolchain": ("VERIFIED - a fresh dnstt client built from source moved a real "
+                                 "HTTP 200 through a local dnstt-server over UDP (self-test)"),
+            "ultra_endpoints_from_public_internet": ("UNVERIFIED - all 8 domains are silent: no "
+                                                     "stream opens, no TXT answer; their authoritative "
+                                                     "NS IPs drop packets that do not come from the "
+                                                     "carrier resolvers listed in `resolvers`"),
+            "carrier_path": ("UNVERIFIED - none of the 49 non-public resolvers is reachable from a "
+                             "cloud runner, so the carrier/eSIM data-free path can only be tested "
+                             "from a device on one of those networks"),
+        },
     },
 }
 

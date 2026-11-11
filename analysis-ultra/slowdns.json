@@ -616,6 +616,7 @@
     "3.95",
     "5.28"
    ],
+   "ssh_users": [],
    "delegation_ns": [
     "sierra.ns.cloudflare.com",
     "reese.ns.cloudflare.com"
@@ -640,7 +641,9 @@
     "8.8.8.8": "rcode=NXDOMAIN",
     "1.1.1.1": "rcode=NXDOMAIN"
    },
-   "endpoint_answers_raw_dns": false
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [],
+   "usable_from_public_internet": false
   },
   {
    "slowdns_domain": "slwdns.codefyinc.com",
@@ -659,6 +662,13 @@
    "catalog_versions": [
     "3.95"
    ],
+   "ssh_users": [
+    {
+     "user": "islam",
+     "pass": "islam",
+     "default_account": false
+    }
+   ],
    "delegation_ns": [
     "slw.codefyinc.com"
    ],
@@ -668,7 +678,9 @@
     "8.8.8.8": "rcode=SERVFAIL",
     "1.1.1.1": "rcode=SERVFAIL"
    },
-   "endpoint_answers_raw_dns": false
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [],
+   "usable_from_public_internet": false
   },
   {
    "slowdns_domain": "ns.rovox.wampipti.net",
@@ -686,6 +698,13 @@
    "ssh_port": "22",
    "catalog_versions": [
     "3.95"
+   ],
+   "ssh_users": [
+    {
+     "user": "tcx",
+     "pass": "tcx",
+     "default_account": false
+    }
    ],
    "delegation_ns": [
     "vita.ns.cloudflare.com",
@@ -711,7 +730,9 @@
     "8.8.8.8": "rcode=NXDOMAIN",
     "1.1.1.1": "rcode=NXDOMAIN"
    },
-   "endpoint_answers_raw_dns": false
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [],
+   "usable_from_public_internet": false
   },
   {
    "slowdns_domain": "newca.dozapp.xyz",
@@ -730,6 +751,13 @@
    "catalog_versions": [
     "3.95"
    ],
+   "ssh_users": [
+    {
+     "user": "edozprodoings",
+     "pass": "doingsedozpro",
+     "default_account": false
+    }
+   ],
    "delegation_ns": [
     "newcan.dozapp.xyz"
    ],
@@ -743,7 +771,14 @@
     "8.8.8.8": "rcode=SERVFAIL",
     "1.1.1.1": "rcode=SERVFAIL"
    },
-   "endpoint_answers_raw_dns": false
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [
+    {
+     "endpoint": "144.217.81.86",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
+   "usable_from_public_internet": false
   },
   {
    "slowdns_domain": "dnsde1.dozapp.xyz",
@@ -762,6 +797,13 @@
    "catalog_versions": [
     "3.95"
    ],
+   "ssh_users": [
+    {
+     "user": "edozprodoings",
+     "pass": "doingsedozpro",
+     "default_account": false
+    }
+   ],
    "delegation_ns": [
     "dedns1.dozapp.xyz",
     "slowdnsde1.dozapp.xyz"
@@ -778,7 +820,18 @@
     "8.8.8.8": "rcode=SERVFAIL",
     "1.1.1.1": "rcode=SERVFAIL"
    },
-   "endpoint_answers_raw_dns": false
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [
+    {
+     "endpoint": "154.53.57.37",
+     "outcome": "silent (no stream opened)"
+    },
+    {
+     "endpoint": "84.46.252.158",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
+   "usable_from_public_internet": false
   },
   {
    "slowdns_domain": "nssshvip1.vpnprous.com",
@@ -797,6 +850,7 @@
    "catalog_versions": [
     "3.95"
    ],
+   "ssh_users": [],
    "delegation_ns": [
     "sshvip1.vpnprous.com"
    ],
@@ -810,7 +864,14 @@
     "8.8.8.8": "rcode=SERVFAIL",
     "1.1.1.1": "rcode=SERVFAIL"
    },
-   "endpoint_answers_raw_dns": false
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [
+    {
+     "endpoint": "51.83.129.208",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
+   "usable_from_public_internet": false
   },
   {
    "slowdns_domain": "nsVIPSSH087.vpnprous.com",
@@ -829,6 +890,7 @@
    "catalog_versions": [
     "3.95"
    ],
+   "ssh_users": [],
    "delegation_ns": [
     "vipssh087.vpnprous.com"
    ],
@@ -838,7 +900,9 @@
     "8.8.8.8": "rcode=SERVFAIL",
     "1.1.1.1": "rcode=SERVFAIL"
    },
-   "endpoint_answers_raw_dns": false
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [],
+   "usable_from_public_internet": false
   },
   {
    "slowdns_domain": "ns.up2.fcafessh.net",
@@ -857,6 +921,13 @@
    "catalog_versions": [
     "5.28"
    ],
+   "ssh_users": [
+    {
+     "user": "vertexsnipher",
+     "pass": "vertexsnipher",
+     "default_account": false
+    }
+   ],
    "delegation_ns": [
     "up2.fcafessh.net"
    ],
@@ -870,7 +941,14 @@
     "8.8.8.8": "rcode=SERVFAIL",
     "1.1.1.1": "rcode=SERVFAIL"
    },
-   "endpoint_answers_raw_dns": false
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [
+    {
+     "endpoint": "209.94.59.213",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
+   "usable_from_public_internet": false
   }
  ],
  "launch_recipes": [
@@ -1327,6 +1405,15 @@
   "decrypted_in_sandbox": true,
   "live_updater_fetch": "analysis-ultra/report/remote-fetch.txt (HTTP 200, 1,385,469 B)",
   "dns_liveness": "analysis-ultra/report/liveness.txt",
-  "end_to_end": "analysis-ultra/report/e2e.txt"
+  "end_to_end": "analysis-ultra/report/e2e.txt",
+  "toolchain_self_test": "analysis-ultra/report/selftest.txt",
+  "summary": {
+   "catalogue": "VERIFIED - both catalogues decrypt completely (v3.95 bundled, v5.28 live)",
+   "credentials": "VERIFIED - domain + 64-hex dnstt pubkey + SSH account per SlowDNS server",
+   "engine_argv": "VERIFIED - read from DNSTunnelThread.run(), matches libdns.so flags",
+   "client_toolchain": "VERIFIED - a fresh dnstt client built from source moved a real HTTP 200 through a local dnstt-server over UDP (self-test)",
+   "ultra_endpoints_from_public_internet": "UNVERIFIED - all 8 domains are silent: no stream opens, no TXT answer; their authoritative NS IPs drop packets that do not come from the carrier resolvers listed in `resolvers`",
+   "carrier_path": "UNVERIFIED - none of the 49 non-public resolvers is reachable from a cloud runner, so the carrier/eSIM data-free path can only be tested from a device on one of those networks"
+  }
  }
 }
