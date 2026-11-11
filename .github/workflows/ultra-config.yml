@@ -1,0 +1,111 @@
+name: Ultra Tunnel - the remote config (servers, keys, hosts)
+
+# Fifth pass. The model is now known:
+#   ServerList { SlowDNSHost, SlowDNSKey, ServerIPHost, ServerProtocol, ... }
+#   ConfigData { Servers: List<ServerList>, Networks: List<NetworkList>, viplink, businesslink }
+#   DNSTunnelThread: libdns -udp <ServerIPHost>:53 -pubkey <SlowDNSKey> <SlowDNSHost> 127.0.0.1:2222
+# One firebase bucket string showed up: ultra-tunnel-22e50.firebasestorage.app
+# This job finds the exact URL the app fetches the config from, copies the
+# classes that build it, and asks that URL politely what it returns.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/ultra-config.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  config:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq unzip file binutils curl jq default-jre-headless
+
+      - name: XAPK + jadx
+        run: |
+          set +e
+          mkdir -p /tmp/u && cd /tmp/u
+          URL="https://filebin.net/tc28bjzj2p27ju9v/co.strongteam.ultra.zip"
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+          curl -sS -c jar -A "$UA" -o /dev/null "$URL"
+          curl -sSL -c jar -b jar -A "$UA" -H "Referer: $URL" -o u.zip "$URL"
+          unzip -o -q u.zip -d x
+          cp x/co.strongteam.ultra.59.apk base.apk
+          curl -sSL -o jadx.zip "https://github.com/skylot/jadx/releases/download/v1.5.0/jadx-1.5.0.zip"
+          unzip -o -q jadx.zip -d jadx && chmod +x jadx/bin/jadx
+          (setsid nohup jadx/bin/jadx -d /tmp/u/src --no-res --threads-count 4 /tmp/u/base.apk > /tmp/u/jadx.log 2>&1 < /dev/null &)
+          for i in $(seq 1 60); do grep -q "finished" /tmp/u/jadx.log && break; sleep 10; done
+          tail -1 /tmp/u/jadx.log | cut -c1-120
+
+      - name: Find the config source
+        run: |
+          set +e
+          S=/tmp/u/src/sources
+          R="$GITHUB_WORKSPACE/analysis-ultra/report"
+          OUT="$GITHUB_WORKSPACE/analysis-ultra/code"
+          mkdir -p "$R" "$OUT"
+          {
+            echo "### firebase / storage / config url literals"
+            grep -rnoE '"(https?://[^"]{4,160}|[A-Za-z0-9_-]+\.firebasestorage\.app[^"]{0,80})"' "$S" 2>/dev/null \
+              | grep -iE 'firebase|storage|config|panel|api|json' | sort -u | head -60
+            echo
+            echo "### classes that reference ConfigData / NetworkList / ServerList"
+            grep -rl --include=*.java -E 'ConfigData|NetworkList|ServerList' "$S" | head -30
+            echo
+            echo "### retrofit / okhttp call sites building the config request"
+            grep -rn --include=*.java -E -B3 -A8 'ConfigData|getServers\(\)|NetworkList' "$S/com/v2ray" "$S/defpackage" 2>/dev/null | cut -c1-240 | head -120
+          } > "$R/config-source.txt"
+          wc -l "$R/config-source.txt"
+
+          # copy the classes worth reading locally
+          for f in $(grep -rl --include=*.java -E 'ConfigData|NetworkList|ServerList|TUNNEL_TYPE_SLOWDNS|SlowDNSHost' "$S" 2>/dev/null | head -40); do
+            rel=${f#"$S/"}
+            [ "$(stat -c%s "$f")" -gt 400000 ] && continue
+            mkdir -p "$OUT/$(dirname "$rel")"
+            cp "$f" "$OUT/$rel"
+          done
+          find "$OUT" -name "*List*.java" -o -name "Config*.java" | head
+
+      - name: Ask the firebase bucket what it serves
+        run: |
+          set +e
+          R="$GITHUB_WORKSPACE/analysis-ultra/report"
+          mkdir -p "$R"
+          {
+            for u in \
+              "https://firebasestorage.googleapis.com/v0/b/ultra-tunnel-22e50.firebasestorage.app/o" \
+              "https://firebasestorage.googleapis.com/v0/b/ultra-tunnel-22e50.appspot.com/o" \
+              "https://ultra-tunnel-22e50.firebasestorage.app/config.json" \
+              "https://ultra-tunnel-22e50.firebasestorage.app/servers.json" \
+              "https://ultra-tunnel-22e50.firebasestorage.app/ultra.json" ; do
+              echo "### $u"
+              curl -sS -m 20 -o /tmp/c.json -w "http=%{http_code} size=%{size_download} type=%{content_type}\n" "$u"
+              head -c 400 /tmp/c.json 2>/dev/null | tr -d '\0'
+              echo; echo
+            done
+          } > "$R/firebase.txt"
+          cat "$R/firebase.txt"
+
+      - name: Commit
+        if: always()
+        run: |
+          set +e
+          cd "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-ultra
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "ultra: remote config source [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" > /dev/null 2>&1
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
