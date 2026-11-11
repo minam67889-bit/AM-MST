@@ -19,6 +19,22 @@ phone's hotspot can use `phone-ip:1080` as a SOCKS5 — that is the "VPN SHARE"
 behaviour of BD's own app, without BD's app. How the far-end login was
 recovered, and the exact handshake: [`docs/SLOWDNS.md`](docs/SLOWDNS.md).
 
+### Ultra Tunnel (`co.strongteam.ultra`) — analysed, credentials recovered, servers dark
+
+A third APK was taken apart the same way: its encrypted catalogue is now fully
+decrypted (`analysis-ultra/config-decoded.json`) and everything a SlowDNS client
+needs is in [`analysis-ultra/slowdns.json`](analysis-ultra/slowdns.json) —
+8 dnstt domains, their 64-hex public keys, the SSH account each server expects,
+49 resolvers, ports and the exact `libdns` command line. The catalogue is an
+Argon2id + AES-256-GCM envelope with the passphrase compiled into `libgojni.so`;
+the app's live updater (`v5.28`) was decrypted too.
+
+What is *not* claimed: those 8 endpoints do not answer anything outside their
+carrier networks. A dnstt client that we proved can tunnel (self-test: real
+HTTP 200 through a local dnstt-server) never gets a single stream opened against
+them, and their authoritative name servers drop non-carrier traffic. Details and
+evidence: [`docs/ULTRA-TUNNEL.md`](docs/ULTRA-TUNNEL.md).
+
 ---
 
 # AM Tunnel MST — DNS tunnel client with a MasterDNSVPN-style resolver engine

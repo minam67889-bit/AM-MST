@@ -126,16 +126,65 @@ libdns.so -udp 8.8.8.8:53 -pubkey 1f259692993f67c5f5cba26da464ed16f57a394c20fb63
 `analysis-ultra/slowdns.json → launch_recipes` has this pre-built for every
 tunnel × (8.8.8.8, 8.8.4.4, 9.9.9.9, 1.0.0.1).
 
-## 7. Verification status
+## 7. What the local end really is (and the mistake worth recording)
 
-* **Verified** — catalogue decryption (two passphrases, two passes, 925,416 B
-  plaintext → 56/859 and 1,385,469 B → 38/918), live updater reachability,
-  resolver reachability from a GitHub runner
-  (`analysis-ultra/report/liveness.txt`).
-* **Verified** — stock dnstt completes the KEM handshake against these servers
-  (`begin session <id>`, `effective MTU 129–132`); the keys and domains are live,
-  not stale.
-* **Not verified** — payload through the tunnel from a cloud runner; see
-  `analysis-ultra/report/e2e.txt` for the exact per-target outcome. The app's
-  own path is SSH-over-dnstt (`SSH_Port` 22, `SSLPort` 443 on the same server),
-  which a plain HTTP probe does not exercise.
+`dnstt-client`'s local listener is **not** a SOCKS proxy: it accepts a plain TCP
+socket and opens one smux stream per connection, and `dnstt-server` forwards
+every stream to one fixed upstream. Ultra's servers forward to their own
+**sshd**, which is why every SlowDNS server in the catalogue also lists
+`SSH_Port` 22 and an SSH account:
+
+| server | account |
+| --- | --- |
+| `slwdns.codefyinc.com` | `islam` / `islam` |
+| `ns.rovox.wampipti.net` | `tcx` / `tcx` |
+| `newca.dozapp.xyz`, `dnsde1.dozapp.xyz` | `edozprodoings` / `doingsedozpro` |
+| `ns.up2.fcafessh.net` (live v5.28) | `vertexsnipher` / `vertexsnipher` |
+| `nssshvip1.*`, `nsVIPSSH087.*`, `nssshtt.mdmonzo.com` | default account (`isdefUser`) |
+
+So "SlowDNS" in Ultra = SSH over dnstt, exactly like the classic SlowDNS apps:
+`libdns` listens on 127.0.0.1:2222, the SSH client connects to it, the far end's
+sshd answers. Probing that listener with a SOCKS5 handshake therefore hangs no
+matter how healthy the server is.
+
+## 8. Verification status
+
+**Verified**
+
+* Catalogue decryption: 925,416 B → `v3.95` 56 servers / 859 networks; live
+  updater 1,385,469 B → `v5.28` 38 servers / 918 networks. Every protected field
+  opened, including all `SlowDNSHost` / `SlowDNSKey`.
+* Live updater reachability: HTTP 200, `last-modified` one day before the run.
+* Engine line: read straight out of `DNSTunnelThread.run()`, matches the flag set
+  of `libdns.so`.
+* **Toolchain control** (`analysis-ultra/report/selftest.txt`): a dnstt client
+  built from source in CI, pointed at a local `dnstt-server`, fetched
+  `HTTP/1.0 200 OK` through the tunnel in 2.0 s. So the probe method can move
+  bytes; a timeout means the server, not the harness.
+
+**Not verified — and why**
+
+* **All 8 Ultra endpoints are silent from the public internet.** With the
+  working client: session logs `begin session`, no stream is ever opened, no
+  bytes arrive. Raw DNS agrees — the authoritative NS addresses answer nothing
+  (`dns-endpoints.txt`) and public resolvers return `SERVFAIL` with EDE 22
+  "No Reachable Authority" (`dns-probe.txt`).
+* Their delegation points at hosts that either have no A record
+  (`slw.codefyinc.com`, `vipssh087.vpnprous.com`), sit behind Cloudflare with no
+  records (`sierra/reese.ns.cloudflare.com`, `vita/kirk.ns.cloudflare.com`), or
+  drop every packet from a non-carrier source address
+  (`209.94.59.213`, `144.217.81.86`, `154.53.57.37`, `84.46.252.158`,
+  `51.83.129.208`).
+* **49 of the 56 resolvers the Slow DNS networks ride on are carrier/eSIM
+  resolvers** (MTN, Tigo, Claro, Digicel, Turkcell, Mobily, Zain…). None answers
+  from a cloud runner, and no packet from a cloud runner reaches the tunnel
+  hosts. The data-free path can only be tested from a device inside one of those
+  networks — which is also why the app badges those servers "Online 🟢": it
+  measured them from a phone on the carrier.
+
+That is the honest bottom line: **the Ultra Tunnel SlowDNS credential set is
+fully recovered and reproducible; the servers themselves are not reachable from
+anything outside their carrier networks.** BD NET remains the working
+SlowDNS path in this project (`analysis-bdnet/configs/slowdns.json`,
+`docs/SLOWDNS.md`), because BD's server answers the public internet directly at
+`13.140.185.158:53`.

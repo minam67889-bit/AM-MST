@@ -14,6 +14,15 @@ Last verified end-to-end in CI run **40713951951** (`Live DNS-tunnel integration
   been exercised end-to-end.
 * **Blocked** — cannot be done from this environment; reason given.
 
+## Ultra Tunnel
+
+The third APK (`co.strongteam.ultra`) is analysed and its catalogue decrypted —
+see [`ULTRA-TUNNEL.md`](ULTRA-TUNNEL.md) and
+[`../analysis-ultra/slowdns.json`](../analysis-ultra/slowdns.json). Its SlowDNS
+endpoints are unreachable from the public internet (verified: working dnstt
+client, zero streams; authoritative NS drops non-carrier packets), so it adds
+credentials, not a working path. BD NET stays the verified path.
+
 ## Feature matrix
 
 | Area | State | Evidence / reason |
