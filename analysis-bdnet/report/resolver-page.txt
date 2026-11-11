@@ -1,0 +1,27 @@
+==== -udp 13.140.185.158:53
+  example.com/: 888 B in 3.4s -> HTTP/1.1 200 OK
+  api.telegram.org/: 583 B in 14.7s -> HTTP/1.1 302 Moved Temporarily
+  www.google.com/: 1413 B in 9.6s -> HTTP/1.0 200 OK
+    2026/11/11 10:43:44 end stream cedd2482:5
+    2026/11/11 10:43:44 begin stream cedd2482:7
+    2026/11/11 10:43:54 stream cedd2482:7 copy stream←local: writeto tcp 127.0.0.1:7800->127.0.0.1:42006: read tcp 127.0.0.1:7800->127.0.0.1:42006: read: connection reset by peer
+    2026/11/11 10:43:54 end stream cedd2482:7
+
+==== -udp 8.8.8.8:53
+  example.com/: 888 B in 2.2s -> HTTP/1.1 200 OK
+  api.telegram.org/: 583 B in 3.0s -> HTTP/1.1 302 Moved Temporarily
+  www.google.com/: 1414 B in 3.9s -> HTTP/1.0 200 OK
+    2026/11/11 10:44:14 end stream 6abb46b7:5
+    2026/11/11 10:44:14 begin stream 6abb46b7:7
+    2026/11/11 10:44:18 stream 6abb46b7:7 copy stream←local: writeto tcp 127.0.0.1:7800->127.0.0.1:52322: read tcp 127.0.0.1:7800->127.0.0.1:52322: read: connection reset by peer
+    2026/11/11 10:44:18 end stream 6abb46b7:7
+
+==== -udp 1.1.1.1:53
+  example.com/: 888 B in 6.7s -> HTTP/1.1 200 OK
+  api.telegram.org/: 583 B in 4.7s -> HTTP/1.1 302 Moved Temporarily
+  www.google.com/: 1413 B in 6.8s -> HTTP/1.0 200 OK
+    2026/11/11 10:44:44 end stream 52b846de:5
+    2026/11/11 10:44:44 begin stream 52b846de:7
+    2026/11/11 10:44:51 stream 52b846de:7 copy stream←local: writeto tcp 127.0.0.1:7800->127.0.0.1:59040: read tcp 127.0.0.1:7800->127.0.0.1:59040: read: connection reset by peer
+    2026/11/11 10:44:51 end stream 52b846de:7
+
