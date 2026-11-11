@@ -1,6 +1,6 @@
-# nonce: 1794382660909046945-4973
-cd /tmp/ultra
-echo "--- first 64 bytes:"; head -c 64 u.zip | od -An -tx1 -c | head -6
-echo "--- PK offsets:"; grep -abo $"\x50\x4b\x03\x04" u.zip | head -3
-echo "--- unzip -l:"; unzip -l u.zip 2>&1 | head -15
-echo "--- 7z/bsdtar:"; (bsdtar -tf u.zip 2>/dev/null || true) | head -10
+# nonce: 1794383461476591890-20984
+cd /tmp/ultra && rm -rf x && mkdir x && cd x && unzip -o -q ../u.zip && ls -l
+echo "=== manifest.json"; head -c 700 manifest.json; echo
+echo "=== native libs in base:"; unzip -l co.strongteam.ultra.59.apk | grep -E "lib/|\.so$" | head -20
+echo "=== native libs in arm64 split:"; unzip -l config.arm64_v8a.apk | grep -E "\.so$" | head -20
+echo "=== assets in base:"; unzip -l co.strongteam.ultra.59.apk | grep -E " assets/" | head -25
