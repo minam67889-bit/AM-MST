@@ -40,17 +40,24 @@ jobs:
           set +e
           OUT=analysis-ultra/report/selftest.txt
           : > "$OUT"
-          /tmp/dnstt-server -udp 127.0.0.1:5300 -privkey-file /tmp/server.key > /tmp/s.log 2>&1 &
+          (cd /tmp && mkdir -p www && echo "dnstt self-test page" > www/index.html && \
+             python3 -m http.server 8080 --bind 127.0.0.1 > /tmp/h.log 2>&1) &
+          http=$!
+          # dnstt-server takes: <domain> <upstream host:port>; every stream is
+          # forwarded to that fixed upstream, which is how Ultra's servers are
+          # configured too (they forward to their own sshd).
+          /tmp/dnstt-server -udp 127.0.0.1:5300 -privkey-file /tmp/server.key \
+                            t.example.com 127.0.0.1:8080 > /tmp/s.log 2>&1 &
           srv=$!
-          sleep 2
+          sleep 3
           /tmp/dnstt-client -udp 127.0.0.1:5300 -pubkey-file /tmp/server.pub \
                             t.example.com 127.0.0.1:2222 > /tmp/c.log 2>&1 &
           cli=$!
           sleep 4
           python3 analysis-ultra/probe_dnstt.py 127.0.0.1 >> "$OUT" 2>&1
-          echo "--- client log" >> "$OUT"; tail -8 /tmp/c.log | sed 's/^/  /' >> "$OUT"
-          echo "--- server log" >> "$OUT"; tail -8 /tmp/s.log | sed 's/^/  /' >> "$OUT"
-          kill $cli $srv 2>/dev/null
+          echo "--- client log" >> "$OUT"; tail -10 /tmp/c.log | sed 's/^/  /' >> "$OUT"
+          echo "--- server log" >> "$OUT"; tail -10 /tmp/s.log | sed 's/^/  /' >> "$OUT"
+          kill $cli $srv $http 2>/dev/null
           cat "$OUT"
 
       - name: Commit
