@@ -1,9 +1,2 @@
-# nonce: 1794380767647632760-12681
-mkdir -p /tmp/ultra && cd /tmp/ultra && rm -f u.zip dl.ok
-UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
-setsid nohup bash -c "curl -sSL --max-time 1200 -A \"\$UA\" -o /tmp/ultra/u.zip \"https://filebin.net/tc28bjzj2p27ju9v/co.strongteam.ultra.zip\" && echo OK > /tmp/ultra/dl.ok" > /tmp/ultra/dl.log 2>&1 < /dev/null &
-sleep 60
-echo "size: $(stat -c%s /tmp/ultra/u.zip 2>/dev/null || echo none)"
-cat /tmp/ultra/dl.ok 2>/dev/null
-file /tmp/ultra/u.zip 2>/dev/null
-head -c 300 /tmp/ultra/u.zip 2>/dev/null | strings | head -5
+# nonce: 1794381377599002864-28267
+cd /tmp/ultra && grep -oE "(href|action|data-[a-z]+)=\"[^\"]*\"" u.zip | sort -u | head -20; echo "--- cookie hints:"; grep -oiE "download[^ ]{0,60}|confirm[^ ]{0,40}|set-cookie[^ ]{0,40}" u.zip | head -10
