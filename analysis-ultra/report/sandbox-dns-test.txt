@@ -1,0 +1,52 @@
+Sandbox transport + tunnel test (2026-11-11, no CI)
+===================================================
+
+1. What the sandbox allows
+--------------------------
+UDP/53  8.8.8.8            -> OK (61 B reply, 0.0 s)
+UDP/53  1.1.1.1, 9.9.9.9   -> timeout
+UDP/53  13.140.185.158 (BD), 51.83.129.208 / 209.94.59.213 / 154.53.57.37 (Ultra) -> timeout
+TCP     13.140.185.158:22/53/443, 209.94.59.213:53, 51.83.129.208:443 -> connect OK
+HTTPS   https://www.google.com, https://cloudflare.com, https://dns.google -> TLS blocked (SSL_ERROR_SYSCALL)
+=> the only usable tunnel transport here is plain DNS to 8.8.8.8.
+
+2. Control: the same engine, in this sandbox
+--------------------------------------------
+tools/bin/dnstt-server-linux-amd64 (local)  +  tools/bin/dnstt-client-linux-amd64
+  client: effective MTU 137 / begin session 8f160741 / begin stream 8f160741:3
+  probe : HTTP 205B in 2.0s -> "HTTP/1.0 200 OK ... SimpleHTTP/0.6 Python/3.11.2"
+=> the pool of bytes is real: a full HTTP response crossed the DNS tunnel.
+
+3. Through Google's resolver (8.8.8.8), raw DNS
+----------------------------------------------
+zone                      rcode  answers  verdict
+sd-de1.liftmeon.org (BD)    0       1     TXT answered, rdlen=1  -> tunnel server alive
+nssshtt.mdmonzo.com         3       0     NXDOMAIN
+slwdns.codefyinc.com        2       0     SERVFAIL
+ns.up2.fcafessh.net         2       0     SERVFAIL
+dnsde1.dozapp.xyz           2       0     SERVFAIL
+newca.dozapp.xyz            2       0     SERVFAIL
+
+4. Through Google's resolver, real dnstt packets (logging UDP proxy)
+--------------------------------------------------------------------
+BD  sd-de1.liftmeon.org   via 8.8.8.8 : 18 queries / 18 replies (90-294 B)  - no stream
+Ultra nssshtt.mdmonzo.com via 8.8.8.8 : 40 queries / 40 replies (137-289 B) - no stream
+Ultra ns.up2.fcafessh.net via 8.8.8.8 : 13 queries / 13 replies (173-477 B) - no stream
+(the replies are the resolver's NXDOMAIN/SERVFAIL answers, not tunnel data:
+ section 3 shows no tunnel answers behind those names)
+
+5. Why BD still does not flow here
+----------------------------------
+BD's fork takes `-pubkey prince` (a label, not the 32-byte X25519 key).
+Candidates tried through 8.8.8.8 on sd-de1: sha256("prince"), sha256("BD NET VPN"),
+and the two 64-hex constants found in libxdnstt.so -> KCP session opens, Noise
+handshake never completes. Their own libxdnstt.so (arm64, run under qemu in CI)
+is what carries traffic; the sandbox has no qemu and no arm64 sysroot.
+
+6. Interpretation
+-----------------
+A tunnel domain that answers only inside the carrier network (transparent DNS
+hijack: the carrier resolves it, the rest of the internet returns NXDOMAIN /
+SERVFAIL) is exactly what Ultra's catalogue describes: 49 of its 56 resolvers are
+carrier/eSIM resolvers. From any cloud runner, public resolver or desktop ISP the
+zone simply does not exist. BD's zone, by contrast, answers from 8.8.8.8.
