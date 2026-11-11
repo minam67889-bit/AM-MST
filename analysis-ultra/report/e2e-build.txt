@@ -1,6 +1,6 @@
 == upstream reachability
 HTTP/1.1 301 Moved Permanently
-Date: Wed, 11 Nov 2026 09:24:49 GMT
+Date: Wed, 11 Nov 2026 09:33:18 GMT
 Server: Apache/2.4.68 (Debian)
 Location: https://www.bamsoftware.com/git/dnstt.git/
 Content-Type: text/html; charset=iso-8859-1
@@ -21,12 +21,12 @@ go: downloading github.com/templexxx/xorsimd v0.4.3
 go: downloading github.com/tjfoc/gmsm v1.4.1
 go: downloading golang.org/x/crypto v0.39.0
 go: downloading github.com/flynn/noise v1.1.0
+go: downloading github.com/templexxx/cpu v0.1.1
+go: downloading github.com/klauspost/cpuid/v2 v2.2.10
 go: downloading github.com/andybalholm/brotli v1.1.1
 go: downloading github.com/cloudflare/circl v1.6.1
 go: downloading github.com/klauspost/compress v1.18.0
 go: downloading golang.org/x/sys v0.33.0
-go: downloading github.com/templexxx/cpu v0.1.1
-go: downloading github.com/klauspost/cpuid/v2 v2.2.10
 go: downloading golang.org/x/text v0.26.0
 BUILT_FROM=https://github.com/Mygod/dnstt.git
 Usage:
