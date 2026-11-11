@@ -3,15 +3,24 @@
   127.0.0.1:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
   1.1.1.1:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
 --- client log
-  2026/11/11 09:15:02 uTLS fingerprint Chrome 120
-  2026/11/11 09:15:02 effective MTU 134
-  2026/11/11 09:15:02 begin session 3f583b65
+  2026/11/11 09:19:16 effective MTU 134
+  2026/11/11 09:19:16 begin session 9d19e13f
+  2026/11/11 09:19:20 begin stream 9d19e13f:3
+  2026/11/11 09:19:50 end stream 9d19e13f:3
+  2026/11/11 09:19:50 begin stream 9d19e13f:5
+  2026/11/11 09:20:20 end stream 9d19e13f:5
+  2026/11/11 09:20:20 begin stream 9d19e13f:7
+  2026/11/11 09:20:50 end stream 9d19e13f:7
+  2026/11/11 09:20:50 begin stream 9d19e13f:9
+  2026/11/11 09:21:20 end stream 9d19e13f:9
 --- server log
-    -privkey string
-      	server private key (64 hex digits)
-    -privkey-file string
-      	read server private key from file (with -gen-key, write to file)
-    -pubkey-file string
-      	with -gen-key, write server public key to file
-    -udp string
-      	UDP address to listen on (required)
+  2026/11/11 09:19:13 effective MTU 932
+  2026/11/11 09:19:16 begin session 9d19e13f
+  2026/11/11 09:19:20 begin stream 9d19e13f:3
+  2026/11/11 09:19:50 begin stream 9d19e13f:5
+  2026/11/11 09:19:50 end stream 9d19e13f:3
+  2026/11/11 09:20:20 begin stream 9d19e13f:7
+  2026/11/11 09:20:20 end stream 9d19e13f:5
+  2026/11/11 09:20:50 begin stream 9d19e13f:9
+  2026/11/11 09:20:50 end stream 9d19e13f:7
+  2026/11/11 09:21:20 end stream 9d19e13f:9
