@@ -1,0 +1,7 @@
+### https://panel.vpnprous.com
+curl: (28) Connection timed out after 20002 milliseconds
+http=000 size=0 type=
+
+### https://10xbdnet.xyz/login
+curl: (35) OpenSSL/3.0.13: error:0A000438:SSL routines::tlsv1 alert internal error
+http=000 size=0 type=

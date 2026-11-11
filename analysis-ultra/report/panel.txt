@@ -1,0 +1,68 @@
+### who writes the three keys
+
+### Settings.java API around those keys
+
+### panel endpoints in context
+/tmp/u/src/sources/defpackage/yc0.java-114-                qf3.N(homeFragment.M(), "No Facebook Link");
+/tmp/u/src/sources/defpackage/yc0.java-115-                return;
+/tmp/u/src/sources/defpackage/yc0.java-116-            case 3:
+/tmp/u/src/sources/defpackage/yc0.java-117-                int i7 = HomeFragment.f2;
+/tmp/u/src/sources/defpackage/yc0.java:118:                homeFragment.i0("@vpnprous_bot");
+/tmp/u/src/sources/defpackage/yc0.java-119-                return;
+/tmp/u/src/sources/defpackage/yc0.java-120-            case 4:
+/tmp/u/src/sources/defpackage/yc0.java-121-                int i8 = HomeFragment.f2;
+/tmp/u/src/sources/defpackage/yc0.java-122-                HomeFragment.D0(homeFragment, homeFragment.L(), true);
+/tmp/u/src/sources/defpackage/yc0.java-123-                return;
+/tmp/u/src/sources/defpackage/yc0.java-124-            case 5:
+/tmp/u/src/sources/defpackage/yc0.java-125-                int i9 = HomeFragment.f2;
+/tmp/u/src/sources/defpackage/yc0.java-126-                homeFragment.x0();
+/tmp/u/src/sources/defpackage/yc0.java-127-                return;
+/tmp/u/src/sources/defpackage/yc0.java-128-            case 6:
+--
+/tmp/u/src/sources/defpackage/tc0.java-35-                            if (intValue == 3) {
+/tmp/u/src/sources/defpackage/tc0.java-36-                                homeFragment.L().finish();
+/tmp/u/src/sources/defpackage/tc0.java-37-                            }
+/tmp/u/src/sources/defpackage/tc0.java-38-                        } else {
+/tmp/u/src/sources/defpackage/tc0.java:39:                            Uri parse = Uri.parse("https://vpnprous.com/");
+/tmp/u/src/sources/defpackage/tc0.java-40-                            try {
+/tmp/u/src/sources/defpackage/tc0.java-41-                                homeFragment.U(new Intent("android.intent.action.VIEW", parse));
+/tmp/u/src/sources/defpackage/tc0.java-42-                            } catch (ActivityNotFoundException unused) {
+/tmp/u/src/sources/defpackage/tc0.java-43-                                homeFragment.U(new Intent("android.intent.action.VIEW", parse));
+/tmp/u/src/sources/defpackage/tc0.java-44-                            }
+/tmp/u/src/sources/defpackage/tc0.java-45-                        }
+/tmp/u/src/sources/defpackage/tc0.java-46-                    } else {
+/tmp/u/src/sources/defpackage/tc0.java-47-                        homeFragment.j0();
+/tmp/u/src/sources/defpackage/tc0.java-48-                    }
+/tmp/u/src/sources/defpackage/tc0.java-49-                } else {
+--
+/tmp/u/src/sources/defpackage/tc0.java-85-                            if (intValue2 == 3) {
+/tmp/u/src/sources/defpackage/tc0.java-86-                                homeFragment.L().finish();
+/tmp/u/src/sources/defpackage/tc0.java-87-                            }
+/tmp/u/src/sources/defpackage/tc0.java-88-                        } else {
+/tmp/u/src/sources/defpackage/tc0.java:89:                            Uri parse2 = Uri.parse("https://vpnprous.com/");
+/tmp/u/src/sources/defpackage/tc0.java-90-                            try {
+/tmp/u/src/sources/defpackage/tc0.java-91-                                homeFragment.U(new Intent("android.intent.action.VIEW", parse2));
+/tmp/u/src/sources/defpackage/tc0.java-92-                            } catch (ActivityNotFoundException unused2) {
+/tmp/u/src/sources/defpackage/tc0.java-93-                                homeFragment.U(new Intent("android.intent.action.VIEW", parse2));
+/tmp/u/src/sources/defpackage/tc0.java-94-                            }
+/tmp/u/src/sources/defpackage/tc0.java-95-                        }
+/tmp/u/src/sources/defpackage/tc0.java-96-                    } else {
+/tmp/u/src/sources/defpackage/tc0.java-97-                        homeFragment.j0();
+/tmp/u/src/sources/defpackage/tc0.java-98-                    }
+/tmp/u/src/sources/defpackage/tc0.java-99-                } else {
+--
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-31-    private final Integer timetoadd;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-32-    private final String viplink;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-33-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-34-    public /* synthetic */ ConfigData(String str, String str2, String str3, String str4, String str5, String str6, String str7, String str8, String str9, String str10, boolean z, Integer num, String
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java:35:        this(str, str2, str3, str4, str5, str6, str7, str8, str9, str10, (i & 1024) != 0 ? true : z, (i & 2048) != 0 ? null : num, (i & AttribFlags.SSH_FILEXFER_ATTR_MIME_TYPE) != 0 ? "https://panel
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-36-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-37-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-38-    /* renamed from: component1, reason: from getter */
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-39-    public final String getVersion() {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-40-        return this.Version;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-41-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-42-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-43-    /* renamed from: component10, reason: from getter */
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-44-    public final String getDefaultOVPNCert() {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-45-        return this.DefaultOVPNCert;
