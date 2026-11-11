@@ -1,0 +1,81 @@
+==== sd-de1.liftmeon.org
+  NS: 
+  NS(parent liftmeon.org): anastasia.ns.cloudflare.com. mustafa.ns.cloudflare.com. 
+  TXT(994d7d80...) via 8.8.8.8: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 1861 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 512 ; EDE: 22 (No Reachable Authority): (At delegation sd-de1.liftmeon.org for 994d7d80585037c7ebca901e82e746bf.sd-de1.liftmeon.org/txt) 
+
+  TXT(aa000eae...) via 1.1.1.1: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 34392 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 1232 
+
+  SOA: 
+
+==== ns.up2.fcafessh.net
+  NS: 
+  NS(parent up2.fcafessh.net): 
+  TXT(c014d596...) via 8.8.8.8: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 34942 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 512 ; EDE: 22 (No Reachable Authority): (At delegation ns.up2.fcafessh.net for c014d5968c6a40bbac2615be8faf72cf.ns.up2.fcafessh.net/txt) 
+
+  TXT(4c98555c...) via 1.1.1.1: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 46700 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 1232 ; EDE: 22 (No Reachable Authority): (at delegation ns.up2.fcafessh.net.) 
+
+  SOA: 
+
+==== slwdns.codefyinc.com
+  NS: 
+  NS(parent codefyinc.com): frida.ns.cloudflare.com. santino.ns.cloudflare.com. 
+  TXT(ddfc9fbb...) via 8.8.8.8: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 8429 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 512 ; EDE: 22 (No Reachable Authority): (At delegation slwdns.codefyinc.com for ddfc9fbbc148e9c0ffbe257a13263660.slwdns.codefyinc.com/txt) 
+
+  TXT(38870672...) via 1.1.1.1: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 49033 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 1232 ; EDE: 22 (No Reachable Authority): (at delegation slwdns.codefyinc.com.) 
+
+  SOA: 
+
+==== ns.rovox.wampipti.net
+  NS: 
+  NS(parent rovox.wampipti.net): 
+  TXT(87cf8c3c...) via 8.8.8.8: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 19106 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 512 
+
+  TXT(f2ffc71e...) via 1.1.1.1: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 42034 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 1232 
+
+  SOA: 
+
+==== newca.dozapp.xyz
+  NS: 
+  NS(parent dozapp.xyz): chuck.ns.cloudflare.com. gwen.ns.cloudflare.com. 
+  TXT(d590d54c...) via 8.8.8.8: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 47507 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 512 ; EDE: 22 (No Reachable Authority): (At delegation newca.dozapp.xyz for d590d54cd2ca0024241632497161d41e.newca.dozapp.xyz/txt) 
+
+  TXT(0fb3d947...) via 1.1.1.1: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 17065 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 1232 ; EDE: 22 (No Reachable Authority): (at delegation newca.dozapp.xyz.) ; EDE: 23 (Network Error) 
+
+  SOA: 
+
+==== dnsde1.dozapp.xyz
+  NS: 
+  NS(parent dozapp.xyz): chuck.ns.cloudflare.com. gwen.ns.cloudflare.com. 
+  TXT(4d8983ed...) via 8.8.8.8: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 15497 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 512 ; EDE: 22 (No Reachable Authority): (At delegation dnsde1.dozapp.xyz for 4d8983ed1953dd69b643d9b3c5d51834.dnsde1.dozapp.xyz/txt) 
+
+  TXT(b6b85e10...) via 1.1.1.1: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 5657 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 1232 ; EDE: 22 (No Reachable Authority): (at delegation dnsde1.dozapp.xyz.) ; EDE: 23 (Network Error) 
+
+  SOA: 
+
+==== nssshvip1.vpnprous.com
+  NS: 
+  NS(parent vpnprous.com): bart.ns.cloudflare.com. lina.ns.cloudflare.com. 
+  TXT(6e3a1ffe...) via 8.8.8.8: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 42440 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 512 ; EDE: 22 (No Reachable Authority): (At delegation nssshvip1.vpnprous.com for 6e3a1ffee453df831eb98bf60a2de828.nssshvip1.vpnprous.com/txt) 
+
+  TXT(c080d6ba...) via 1.1.1.1: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 37461 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 1232 ; EDE: 22 (No Reachable Authority): (at delegation nssshvip1.vpnprous.com.) 
+
+  SOA: 
+
+==== nsVIPSSH087.vpnprous.com
+  NS: 
+  NS(parent vpnprous.com): lina.ns.cloudflare.com. bart.ns.cloudflare.com. 
+  TXT(ba354637...) via 8.8.8.8: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 52676 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 512 ; EDE: 22 (No Reachable Authority): (At delegation nsVIPSSH087.vpnprous.com for ba3546376e81031a993c12913d500df6.nsVIPSSH087.vpnprous.com/txt) 
+
+  TXT(68f6c686...) via 1.1.1.1: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: SERVFAIL, id: 27120 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 1232 ; EDE: 22 (No Reachable Authority): (at delegation nsvipssh087.vpnprous.com.) 
+
+  SOA: 
+
+==== nssshtt.mdmonzo.com
+  NS: 
+  NS(parent mdmonzo.com): reese.ns.cloudflare.com. sierra.ns.cloudflare.com. 
+  TXT(6bf9e1b6...) via 8.8.8.8: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 4559 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 512 
+
+  TXT(31d52ff7...) via 1.1.1.1: ;; Got answer: ;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 25340 ;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1  ;; OPT PSEUDOSECTION: ; EDNS: version: 0, flags:; udp: 1232 
+
+  SOA: 
+
