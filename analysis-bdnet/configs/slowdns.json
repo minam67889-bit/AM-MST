@@ -26,7 +26,15 @@
       },
       "how_to_read_05ff": "the far end wants username/password (05 02); we offered only no-auth (05 01 00), so it answers 05 ff. A reply of any kind proves bytes crossed the tunnel.",
       "app_setting": "bdResolver / 'DNS resolver for the tunnel' - blank = server IP, 8.8.8.8 = via that resolver",
-      "log": "analysis-bdnet/report/transport-compare.txt"
+      "log": [
+        "analysis-bdnet/report/transport-compare.txt",
+        "analysis-bdnet/report/resolver-page.txt"
+      ],
+      "real_pages_through_the_tunnel": {
+        "direct 13.140.185.158:53": "example.com 200 in 3.4 s | telegram 302 in 14.7 s | google 200 in 9.6 s",
+        "8.8.8.8:53": "example.com 200 in 2.2 s | telegram 302 in 3.0 s | google 200 in 3.9 s",
+        "1.1.1.1:53": "example.com 200 in 6.7 s | telegram 302 in 4.7 s | google 200 in 6.8 s"
+      }
     }
   },
   "engine": {

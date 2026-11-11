@@ -14,11 +14,18 @@ with the very binaries that ship in the APK:
 | 512 KiB from `speed.cloudflare.com` | 4.05 s (**129 KB/s**, ~1 Mbit/s) |
 | 5 concurrent streams | all connected in 2.2 s |
 
-The tunnel does not have to go straight at the server's IP: with **"DNS resolver
-for the tunnel"** set to `8.8.8.8` the same client carries traffic through
-Google's resolver (measured on a runner: far-end round trip in 0.4 s, versus
-0.7 s direct). That is what makes it work on networks that allow DNS and little
-else.
+The tunnel does not have to go straight at the server's IP. With **"DNS resolver
+for the tunnel"** set to `8.8.8.8`, BD's own client carried real pages through
+Google's resolver — and faster than direct:
+
+| transport | example.com | Telegram | Google |
+| --- | --- | --- | --- |
+| server IP | 200 in 3.4 s | 302 in 14.7 s | 200 in 9.6 s |
+| **8.8.8.8** | **200 in 2.2 s** | **302 in 3.0 s** | **200 in 3.9 s** |
+| 1.1.1.1 | 200 in 6.7 s | 302 in 4.7 s | 200 in 6.8 s |
+
+Raw log: `analysis-bdnet/report/resolver-page.txt`. That is what makes the app
+usable on networks that allow DNS and little else.
 
 Tick "Share it on the LAN" and every phone/laptop on the same Wi-Fi or on this
 phone's hotspot can use `phone-ip:1080` as a SOCKS5 — that is the "VPN SHARE"

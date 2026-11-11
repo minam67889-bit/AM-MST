@@ -134,6 +134,18 @@ under qemu on a runner, three public resolvers were given the same tunnel:
 | `8.8.4.4` (Google) | `05 ff` in 0.7 s | live |
 | `1.1.1.1` (Cloudflare) | `05 ff` in 0.3 s | live |
 
+Then the same three transports were used to fetch real pages (SOCKS5 with the
+service-wide login, `tanginakaba` / `hackpamoregago`):
+
+| transport | example.com | api.telegram.org | www.google.com |
+| --- | --- | --- | --- |
+| server IP `13.140.185.158` | 200, 888 B, 3.4 s | 302, 583 B, 14.7 s | 200, 1 413 B, 9.6 s |
+| **`8.8.8.8`** | **200, 888 B, 2.2 s** | **302, 583 B, 3.0 s** | **200, 1 414 B, 3.9 s** |
+| `1.1.1.1` | 200, 888 B, 6.7 s | 302, 583 B, 4.7 s | 200, 1 413 B, 6.8 s |
+
+Google's resolver was actually the *fastest* of the three. Raw log:
+`analysis-bdnet/report/resolver-page.txt`.
+
 `05 ff` is the far end's SOCKS5 answer to a no-auth greeting (`05 01 00`): it
 only accepts username/password, so it rejects the offered method. The *content*
 of the reply is not the point — anything that comes back means the DNS tunnel
