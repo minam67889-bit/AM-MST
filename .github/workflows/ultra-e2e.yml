@@ -31,13 +31,24 @@ jobs:
 
       - name: Build dnstt-client
         run: |
-          set -e
+          set +e
+          mkdir -p "$GITHUB_WORKSPACE/analysis-ultra/report"
+          D="$GITHUB_WORKSPACE/analysis-ultra/report/e2e-build.txt"
+          : > "$D"
           cd /tmp
-          (git clone --depth 1 https://www.bamsoftware.com/git/dnstt.git || \
-           git clone --depth 1 https://github.com/nickel715/dnstt.git || \
-           git clone --depth 1 https://github.com/therealbush/dnstt.git) 2>&1 | tail -3
-          cd dnstt/dnstt-client
-          go build -o /tmp/dnstt-client . && /tmp/dnstt-client -h 2>&1 | head -5 || true
+          for src in https://github.com/Mygod/dnstt.git https://www.bamsoftware.com/git/dnstt.git \
+                     https://github.com/gh4rib/dnstt.git; do
+            echo "== clone $src" >> "$D"
+            if git clone --depth 1 "$src" dt 2>>"$D"; then
+              cd dt && go build -o /tmp/dnstt-client ./dnstt-client >> "$D" 2>&1
+              st=$?
+              echo "build exit $st" >> "$D"
+              if [ $st -eq 0 ]; then /tmp/dnstt-client -h 2>&1 | head -8 >> "$D"; echo "SOURCE $src" >> "$D"; break; fi
+              cd /tmp && rm -rf dt
+            fi
+          done
+          cat "$D"
+          test -x /tmp/dnstt-client
 
       - name: Probe
         run: |
