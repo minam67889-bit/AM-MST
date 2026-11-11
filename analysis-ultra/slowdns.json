@@ -1,28 +1,30 @@
 {
- "$schema_note": "Ultra Tunnel (co.strongteam.ultra v1.0.8.8/build59) SlowDNS material. Recovered from the app's encrypted catalogue; the tunnel itself is stock dnstt, so nothing is guessed: host + 64-hex pubkey + resolver is the complete credential set.",
+ "$schema_note": "Ultra Tunnel (co.strongteam.ultra) SlowDNS material. The tunnel is stock dnstt: domain + 64-hex pubkey + resolver is the complete credential set, so nothing here is guessed. Both the bundled catalogue (v3.95) and the app's live updater (v5.28) were decrypted and merged.",
  "app": {
   "package": "co.strongteam.ultra",
   "version": "v1.0.8.8 / build 59",
-  "catalog_version": "3.95",
   "min_sdk": 32,
   "abi": "arm64-v8a",
   "engine_mode": "bTUNNEL_TYPE_SLOWDNS = 6"
  },
  "catalogue": {
-  "servers": 56,
-  "networks": 859,
-  "slowdns_servers": 9,
-  "slowdns_networks": 77,
-  "distinct_tunnels": 7,
+  "bundled_version": "3.95",
+  "bundled_servers": 56,
+  "bundled_networks": 859,
+  "live_version": "5.28",
+  "live_servers": 38,
+  "live_networks": 918,
+  "distinct_slowdns_tunnels": 8,
+  "slowdns_networks": 161,
   "tunnel_types": {
-   "Direct TCP": 5,
+   "Direct TCP": 4,
    "H2": 2,
-   "Http/Ws Proxy": 301,
-   "SSL + Payload + WS": 56,
-   "SSL Direct": 247,
-   "Slow DNS": 77,
-   "UDP Hysteria": 25,
-   "V2ray": 146
+   "Http/Ws Proxy": 302,
+   "SSL + Payload + WS": 72,
+   "SSL Direct": 271,
+   "Slow DNS": 84,
+   "UDP Hysteria": 27,
+   "V2ray": 156
   }
  },
  "encryption": {
@@ -50,7 +52,10 @@
   ],
   "where": "libgojni.so github.com/2dust/AndroidLibXrayLite.EO/DO",
   "decoder_in_repo": "analysis-ultra/decrypt_config.py",
-  "decoded_catalogue": "analysis-ultra/config-decoded.json",
+  "decoded_catalogues": [
+   "analysis-ultra/config-decoded.json",
+   "analysis-ultra/remote-config-decoded.json"
+  ],
   "remote_catalogue_url": "https://strongteam.co/api/ultrasystem/ultrav3.txt",
   "remote_catalogue_ua": "Ultra Tunnel"
  },
@@ -61,7 +66,7 @@
    "size": 4912352,
    "abi": "arm64-v8a",
    "origin": "lib/arm64-v8a/libdns.so inside Ultra Tunnel's XAPK",
-   "upstream": "stock dnstt client (uses www.bamsoftware.com/git/dnstt.git/dns)"
+   "upstream": "stock dnstt client (www.bamsoftware.com/git/dnstt.git/dns)"
   },
   "argv_template": [
    "libdns.so",
@@ -77,8 +82,8 @@
    "-udp",
    "8.8.8.8:53",
    "-pubkey",
-   "1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809",
-   "slwdns.codefyinc.com",
+   "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "nssshtt.mdmonzo.com",
    "127.0.0.1:2222"
   ],
   "flags": [
@@ -106,12 +111,12 @@
   "ssh_port": 22
  },
  "resolvers": {
-  "count": 49,
-  "note": "the app lets the user pick any of these; they are the DNS recursors the Slow DNS networks are built around (many are carrier/eSIM resolvers that answer to the tunnel domain)",
+  "count": 56,
+  "note": "the app lets the user pick any of these; many are carrier/eSIM resolvers that only answer inside their own network, the public ones work anywhere -- this is the multi-resolver knob to auto-balance over",
   "list": [
    {
     "resolver": "8.8.8.8",
-    "used_by_networks": 16,
+    "used_by_networks": 18,
     "examples": [
      "eSIM Webbing DNS Pro",
      "Google DNS 🤝",
@@ -122,7 +127,7 @@
    },
    {
     "resolver": "8.8.4.4",
-    "used_by_networks": 5,
+    "used_by_networks": 6,
     "examples": [
      "World eSIM Webbing DNS Pro",
      "Google Public DNS",
@@ -130,6 +135,26 @@
      "🇦🇫 AF MTN DNSTT 2"
     ],
     "kind": "public"
+   },
+   {
+    "resolver": "83.181.60.97",
+    "used_by_networks": 3,
+    "examples": [
+     "Pildyk eSIM",
+     "Pildyk 🇱🇹 LT",
+     "Tele2 🇱🇹 LT"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "62.109.121.17",
+    "used_by_networks": 3,
+    "examples": [
+     "🇩🇪 DE O2.OrtelMobile.AldiTalk.Ayyildiz.Blau DNS ◆ {68142}",
+     "DE 🇩🇪 ALL Germany 🇩🇪 O2 DNS",
+     "🇩🇪 DE O2.OrtelMobile.AldiTalk.Ayyildiz.Blau DNS"
+    ],
+    "kind": "carrier/esim"
    },
    {
     "resolver": "196.200.150.3",
@@ -178,11 +203,29 @@
     "kind": "carrier/esim"
    },
    {
+    "resolver": "10.122.6.68",
+    "used_by_networks": 2,
+    "examples": [
+     "🇦🇹 AT RedBull DNS 2️⃣",
+     "Redbull ESim Work"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
     "resolver": "176.95.16.230",
     "used_by_networks": 2,
     "examples": [
      "🇩🇪 DE ALL Germany Vodafone Router",
      "🇩🇪 DE Vodafone Router"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "62.109.121.18",
+    "used_by_networks": 2,
+    "examples": [
+     "🇩🇪 DE O2.OrtelMobile.AldiTalk.Ayyildiz.Blau DNS ✪ {35097}",
+     "🇩🇪 DE O2.OrtelMobile.AldiTalk.Ayyildiz.Blau DNS 1️⃣"
     ],
     "kind": "carrier/esim"
    },
@@ -261,14 +304,6 @@
     "kind": "carrier/esim"
    },
    {
-    "resolver": "83.181.60.97",
-    "used_by_networks": 1,
-    "examples": [
-     "Pildyk eSIM"
-    ],
-    "kind": "carrier/esim"
-   },
-   {
     "resolver": "212.2.96.54",
     "used_by_networks": 1,
     "examples": [
@@ -317,14 +352,6 @@
     "kind": "carrier/esim"
    },
    {
-    "resolver": "10.122.6.68",
-    "used_by_networks": 1,
-    "examples": [
-     "🇦🇹 AT RedBull DNS 2️⃣"
-    ],
-    "kind": "carrier/esim"
-   },
-   {
     "resolver": "84.241.227.81",
     "used_by_networks": 1,
     "examples": [
@@ -337,22 +364,6 @@
     "used_by_networks": 1,
     "examples": [
      "🇩🇪 DE 1&1 GMX WebDNS Pro ✪ {61583}"
-    ],
-    "kind": "carrier/esim"
-   },
-   {
-    "resolver": "62.109.121.17",
-    "used_by_networks": 1,
-    "examples": [
-     "🇩🇪 DE O2.OrtelMobile.AldiTalk.Ayyildiz.Blau DNS ◆ {68142}"
-    ],
-    "kind": "carrier/esim"
-   },
-   {
-    "resolver": "62.109.121.18",
-    "used_by_networks": 1,
-    "examples": [
-     "🇩🇪 DE O2.OrtelMobile.AldiTalk.Ayyildiz.Blau DNS ✪ {35097}"
     ],
     "kind": "carrier/esim"
    },
@@ -515,169 +526,282 @@
      "🇵🇱 Poland T-Mobile"
     ],
     "kind": "carrier/esim"
+   },
+   {
+    "resolver": "firestore.googleapis.com;www.uber.com",
+    "used_by_networks": 1,
+    "examples": [
+     "Firsty eSIM 0"
+    ],
+    "kind": "hostname"
+   },
+   {
+    "resolver": "212.27.40.190",
+    "used_by_networks": 1,
+    "examples": [
+     "🇫🇷 France Free Sim Card"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "212.27.40.191",
+    "used_by_networks": 1,
+    "examples": [
+     "🇫🇷 France Free Sim Card 2️⃣"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "121.100.50.35",
+    "used_by_networks": 1,
+    "examples": [
+     "🇦🇫 AF ALL AWWC DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "10.74.210.210",
+    "used_by_networks": 1,
+    "examples": [
+     "Germany 🇩🇪Telekom-Congstar Free DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "10.178.88.32",
+    "used_by_networks": 1,
+    "examples": [
+     "🇵🇰 Pak Telenor DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "169.255.187.58",
+    "used_by_networks": 1,
+    "examples": [
+     "🇹🇿 Tanzania ALL Halotel DNS"
+    ],
+    "kind": "carrier/esim"
    }
   ]
  },
  "servers": [
   {
-   "name": "DNSST - Online 🟢 01",
-   "slowdns_domain": "slwdns.codefyinc.com",
-   "slowdns_pubkey_hex": "1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809",
-   "connect_hosts": [
-    "slwdns.codefyinc.com"
-   ],
-   "server_type": "WS Server",
-   "server_protocol": "DNSTT",
-   "ssl_port": "443",
-   "ssh_port": "22",
-   "ovpn_user": "islam",
-   "ovpn_pass": "islam",
-   "udp_user": "",
-   "udp_obfs": "sandok",
-   "custom_certificate": ""
-  },
-  {
-   "name": "DNSST - Online 🟢 02",
-   "slowdns_domain": "ns.rovox.wampipti.net",
-   "slowdns_pubkey_hex": "097256d14ca3780369c81867b09eea59990b2ffa4153c9a9662234868243a40d",
-   "connect_hosts": [
-    "ns.rovox.wampipti.net"
-   ],
-   "server_type": "WS Server",
-   "server_protocol": "DNSTT",
-   "ssl_port": "443",
-   "ssh_port": "22",
-   "ovpn_user": "tcx",
-   "ovpn_pass": "tcx",
-   "udp_user": "",
-   "udp_obfs": "sandok",
-   "custom_certificate": ""
-  },
-  {
-   "name": "DNSST - Online 🟢 03",
-   "slowdns_domain": "newca.dozapp.xyz",
-   "slowdns_pubkey_hex": "b4e0dccf98092689d5c81fe4cf37b85f545ed5a770c35f004af99d749fda9e79",
-   "connect_hosts": [
-    "newca.dozapp.xyz"
-   ],
-   "server_type": "WS Server",
-   "server_protocol": "DNSTT",
-   "ssl_port": "443",
-   "ssh_port": "22",
-   "ovpn_user": "edozprodoings",
-   "ovpn_pass": "doingsedozpro",
-   "udp_user": "",
-   "udp_obfs": "sandok",
-   "custom_certificate": ""
-  },
-  {
-   "name": "DNSST - Online 🟢 04",
-   "slowdns_domain": "dnsde1.dozapp.xyz",
-   "slowdns_pubkey_hex": "569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809",
-   "connect_hosts": [
-    "dnsde1.dozapp.xyz"
-   ],
-   "server_type": "WS Server",
-   "server_protocol": "DNSTT",
-   "ssl_port": "443",
-   "ssh_port": "22",
-   "ovpn_user": "edozprodoings",
-   "ovpn_pass": "doingsedozpro",
-   "udp_user": "",
-   "udp_obfs": "sandok",
-   "custom_certificate": ""
-  },
-  {
-   "name": "DNSST - Online 🟢 05",
-   "slowdns_domain": "nssshvip1.vpnprous.com",
-   "slowdns_pubkey_hex": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
-   "connect_hosts": [
-    "sshvip1.vpnprous.com"
-   ],
-   "server_type": "WS Server",
-   "server_protocol": "DNSTT",
-   "ssl_port": "443",
-   "ssh_port": "22",
-   "ovpn_user": "",
-   "ovpn_pass": "",
-   "udp_user": "",
-   "udp_obfs": "sandok",
-   "custom_certificate": ""
-  },
-  {
-   "name": "DNSST - Online 🟢 06",
-   "slowdns_domain": "nsVIPSSH087.vpnprous.com",
-   "slowdns_pubkey_hex": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
-   "connect_hosts": [
-    "VIPSSH087.vpnprous.com"
-   ],
-   "server_type": "WS Server",
-   "server_protocol": "DNSTT",
-   "ssl_port": "443",
-   "ssh_port": "22",
-   "ovpn_user": "",
-   "ovpn_pass": "",
-   "udp_user": "",
-   "udp_obfs": "sandok",
-   "custom_certificate": ""
-  },
-  {
-   "name": "🇬🇧 UK - DATA FREE SERVER  🛜+ 00",
    "slowdns_domain": "nssshtt.mdmonzo.com",
    "slowdns_pubkey_hex": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "names": [
+    "🇬🇧 UK - DATA FREE SERVER  🛜+ 00",
+    "🇬🇧 UK - DATA FREE SERVER  🛜+ 01",
+    "🇬🇧 UK - DATA FREE SERVER  🛜+ 02",
+    "🇬🇧 UK - DATA FREE SERVER  🛜+ 03",
+    "🇬🇧 UK - DATA FREE SERVER  🛜+ 04"
+   ],
    "connect_hosts": [
     "fudp1.focusapps.site",
     "fudp2.focusapps.site",
     "fudp3.focusapps.site",
-    "fudp4.focusapps.site"
+    "fudp4.focusapps.site",
+    "94.16.104.117",
+    "udfg.atnetvpn.xyz",
+    "aa2.mbaareinnovationsug.xyz",
+    "aa1.mbaareinnovationsug.xyz",
+    "108.181.59.55"
    ],
-   "server_type": "WS Server",
-   "server_protocol": "UDP Hysteria",
+   "server_types": [
+    "WS Server"
+   ],
    "ssl_port": "443",
    "ssh_port": "22",
-   "ovpn_user": "",
-   "ovpn_pass": "",
-   "udp_user": "serverudp:serverudp",
-   "udp_obfs": "serverudp",
-   "custom_certificate": ""
+   "catalog_versions": [
+    "3.95",
+    "5.28"
+   ]
   },
   {
-   "name": "🇬🇧 UK - DATA FREE SERVER  🛜+ 01",
-   "slowdns_domain": "nssshtt.mdmonzo.com",
-   "slowdns_pubkey_hex": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
-   "connect_hosts": [
-    "94.16.104.117"
+   "slowdns_domain": "slwdns.codefyinc.com",
+   "slowdns_pubkey_hex": "1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809",
+   "names": [
+    "DNSST - Online 🟢 01"
    ],
-   "server_type": "WS Server",
-   "server_protocol": "UDP Hysteria",
+   "connect_hosts": [
+    "slwdns.codefyinc.com"
+   ],
+   "server_types": [
+    "WS Server"
+   ],
    "ssl_port": "443",
    "ssh_port": "22",
-   "ovpn_user": "",
-   "ovpn_pass": "",
-   "udp_user": "default:password",
-   "udp_obfs": "tfn",
-   "custom_certificate": ""
+   "catalog_versions": [
+    "3.95"
+   ]
   },
   {
-   "name": "🇬🇧 UK - DATA FREE SERVER  🛜+ 02",
-   "slowdns_domain": "nssshtt.mdmonzo.com",
-   "slowdns_pubkey_hex": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
-   "connect_hosts": [
-    "udfg.atnetvpn.xyz"
+   "slowdns_domain": "ns.rovox.wampipti.net",
+   "slowdns_pubkey_hex": "097256d14ca3780369c81867b09eea59990b2ffa4153c9a9662234868243a40d",
+   "names": [
+    "DNSST - Online 🟢 02"
    ],
-   "server_type": "WS Server",
-   "server_protocol": "UDP Hysteria",
+   "connect_hosts": [
+    "ns.rovox.wampipti.net"
+   ],
+   "server_types": [
+    "WS Server"
+   ],
    "ssl_port": "443",
    "ssh_port": "22",
-   "ovpn_user": "",
-   "ovpn_pass": "",
-   "udp_user": "Username:Password",
-   "udp_obfs": "kobe",
-   "custom_certificate": ""
+   "catalog_versions": [
+    "3.95"
+   ]
+  },
+  {
+   "slowdns_domain": "newca.dozapp.xyz",
+   "slowdns_pubkey_hex": "b4e0dccf98092689d5c81fe4cf37b85f545ed5a770c35f004af99d749fda9e79",
+   "names": [
+    "DNSST - Online 🟢 03"
+   ],
+   "connect_hosts": [
+    "newca.dozapp.xyz"
+   ],
+   "server_types": [
+    "WS Server"
+   ],
+   "ssl_port": "443",
+   "ssh_port": "22",
+   "catalog_versions": [
+    "3.95"
+   ]
+  },
+  {
+   "slowdns_domain": "dnsde1.dozapp.xyz",
+   "slowdns_pubkey_hex": "569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809",
+   "names": [
+    "DNSST - Online 🟢 04"
+   ],
+   "connect_hosts": [
+    "dnsde1.dozapp.xyz"
+   ],
+   "server_types": [
+    "WS Server"
+   ],
+   "ssl_port": "443",
+   "ssh_port": "22",
+   "catalog_versions": [
+    "3.95"
+   ]
+  },
+  {
+   "slowdns_domain": "nssshvip1.vpnprous.com",
+   "slowdns_pubkey_hex": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "names": [
+    "DNSST - Online 🟢 05"
+   ],
+   "connect_hosts": [
+    "sshvip1.vpnprous.com"
+   ],
+   "server_types": [
+    "WS Server"
+   ],
+   "ssl_port": "443",
+   "ssh_port": "22",
+   "catalog_versions": [
+    "3.95"
+   ]
+  },
+  {
+   "slowdns_domain": "nsVIPSSH087.vpnprous.com",
+   "slowdns_pubkey_hex": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "names": [
+    "DNSST - Online 🟢 06"
+   ],
+   "connect_hosts": [
+    "VIPSSH087.vpnprous.com"
+   ],
+   "server_types": [
+    "WS Server"
+   ],
+   "ssl_port": "443",
+   "ssh_port": "22",
+   "catalog_versions": [
+    "3.95"
+   ]
+  },
+  {
+   "slowdns_domain": "ns.up2.fcafessh.net",
+   "slowdns_pubkey_hex": "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
+   "names": [
+    "DNSST - Online 🟢 01"
+   ],
+   "connect_hosts": [
+    "up2.fcafessh.net"
+   ],
+   "server_types": [
+    "WS Server"
+   ],
+   "ssl_port": "443",
+   "ssh_port": "22",
+   "catalog_versions": [
+    "5.28"
+   ]
   }
  ],
  "launch_recipes": [
   {
+   "domain": "nssshtt.mdmonzo.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "8.8.8.8",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.8.8:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nssshtt.mdmonzo.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "nssshtt.mdmonzo.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "8.8.4.4",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.4.4:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nssshtt.mdmonzo.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "nssshtt.mdmonzo.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "9.9.9.9",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "9.9.9.9:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nssshtt.mdmonzo.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "nssshtt.mdmonzo.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "1.0.0.1",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "1.0.0.1:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nssshtt.mdmonzo.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
    "domain": "slwdns.codefyinc.com",
    "pubkey": "1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809",
    "resolver": "8.8.8.8",
@@ -1014,68 +1138,66 @@
    ]
   },
   {
-   "domain": "nssshtt.mdmonzo.com",
-   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "domain": "ns.up2.fcafessh.net",
+   "pubkey": "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
    "resolver": "8.8.8.8",
    "argv": [
     "libdns.so",
     "-udp",
     "8.8.8.8:53",
     "-pubkey",
-    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
-    "nssshtt.mdmonzo.com",
+    "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
+    "ns.up2.fcafessh.net",
     "127.0.0.1:2222"
    ]
   },
   {
-   "domain": "nssshtt.mdmonzo.com",
-   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "domain": "ns.up2.fcafessh.net",
+   "pubkey": "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
    "resolver": "8.8.4.4",
    "argv": [
     "libdns.so",
     "-udp",
     "8.8.4.4:53",
     "-pubkey",
-    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
-    "nssshtt.mdmonzo.com",
+    "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
+    "ns.up2.fcafessh.net",
     "127.0.0.1:2222"
    ]
   },
   {
-   "domain": "nssshtt.mdmonzo.com",
-   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "domain": "ns.up2.fcafessh.net",
+   "pubkey": "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
    "resolver": "9.9.9.9",
    "argv": [
     "libdns.so",
     "-udp",
     "9.9.9.9:53",
     "-pubkey",
-    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
-    "nssshtt.mdmonzo.com",
+    "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
+    "ns.up2.fcafessh.net",
     "127.0.0.1:2222"
    ]
   },
   {
-   "domain": "nssshtt.mdmonzo.com",
-   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "domain": "ns.up2.fcafessh.net",
+   "pubkey": "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
    "resolver": "1.0.0.1",
    "argv": [
     "libdns.so",
     "-udp",
     "1.0.0.1:53",
     "-pubkey",
-    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
-    "nssshtt.mdmonzo.com",
+    "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
+    "ns.up2.fcafessh.net",
     "127.0.0.1:2222"
    ]
   }
  ],
  "verification": {
   "decrypted_in_sandbox": true,
-  "evidence": [
-   "analysis-ultra/config-decoded.json",
-   "analysis-ultra/report/liveness.txt"
-  ],
-  "live_dns_txt_probe": "see analysis-ultra/report/liveness.txt"
+  "live_updater_fetch": "analysis-ultra/report/remote-fetch.txt (HTTP 200, 1,385,469 B)",
+  "dns_liveness": "analysis-ultra/report/liveness.txt",
+  "end_to_end": "analysis-ultra/report/e2e.txt"
  }
 }
