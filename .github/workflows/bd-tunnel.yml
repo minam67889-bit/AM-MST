@@ -231,12 +231,40 @@ jobs:
           kill $pid 2>/dev/null; wait $pid 2>/dev/null
           exit 0
 
+      - name: "A real page through the resolver transport (8.8.8.8)"
+        run: |
+          exec > >(tee /tmp/resolver-page.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          OUT="$GITHUB_WORKSPACE/analysis-bdnet/report/resolver-page.txt"
+          : > "$OUT"
+          for transport in 13.140.185.158 8.8.8.8 1.1.1.1; do
+            echo "==== -udp $transport:53" >> "$OUT"
+            timeout 200 qemu-aarch64-static libs/libxdnstt.so \
+              -udp "$transport:53" -report "BD NET VPN" -pubkey prince \
+              sd-de1.liftmeon.org 127.0.0.1:7800 > /tmp/rp.log 2>&1 &
+            pid=$!
+            sleep 15
+            python3 tools/socks5_page.py 7800 tanginakaba hackpamoregago \
+              example.com / >> "$OUT" 2>&1
+            python3 tools/socks5_page.py 7800 tanginakaba hackpamoregago \
+              api.telegram.org / https >> "$OUT" 2>&1
+            python3 tools/socks5_page.py 7800 tanginakaba hackpamoregago \
+              www.google.com / https >> "$OUT" 2>&1
+            kill $pid 2>/dev/null; wait $pid 2>/dev/null
+            tail -4 /tmp/rp.log | sed 's/^/    /' >> "$OUT"
+            echo >> "$OUT"
+          done
+          cat "$OUT"
+          exit 0
+
       - name: Publish
         if: always()
         continue-on-error: true
         run: |
           mkdir -p analysis-bdnet/configs/dns/results analysis-bdnet/report
           cp /tmp/transport.txt analysis-bdnet/report/transport-compare.txt 2>/dev/null || true
+          cp /tmp/resolver-page.txt analysis-bdnet/report/resolver-page.txt 2>/dev/null || true
           cp /tmp/transport.txt analysis-bdnet/configs/dns/results/bd-transport.txt 2>/dev/null || true
           cp /tmp/bd-tunnel.txt analysis-bdnet/configs/dns/results/bd-tunnel.txt 2>/dev/null || true
           cp /tmp/flags.txt analysis-bdnet/configs/dns/results/bd-flags.txt 2>/dev/null || true
