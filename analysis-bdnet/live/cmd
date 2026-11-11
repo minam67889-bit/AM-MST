@@ -1,2 +1,2 @@
-# nonce: 1794380378099829193-11093
-echo online: $(hostname) $(date -u +%H:%M:%SZ)
+# nonce: 1794380633063253036-26535
+echo paged-ok $(date -u +%H:%M:%SZ)
