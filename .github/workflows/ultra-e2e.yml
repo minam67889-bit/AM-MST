@@ -65,21 +65,22 @@ jobs:
           run() {
             dom="$1"; key="$2"; res="$3"
             echo "==== $dom via $res" >> "$OUT"
-            timeout 150 /tmp/dnstt-primary -udp "$res:53" -pubkey "$key" "$dom" 127.0.0.1:2222 > /tmp/c.log 2>&1 &
+            timeout 120 /tmp/dnstt-primary -udp "$res:53" -pubkey "$key" "$dom" 127.0.0.1:2222 > /tmp/c.log 2>&1 &
             pid=$!
-            sleep 25
+            sleep 15
             python3 analysis-ultra/probe_dnstt.py "$dom" >> "$OUT" 2>&1
             kill $pid 2>/dev/null; wait $pid 2>/dev/null
             echo "  client log:" >> "$OUT"
-            tail -12 /tmp/c.log | sed 's/^/    /' >> "$OUT"
+            tail -8 /tmp/c.log | sed 's/^/    /' >> "$OUT"
             echo >> "$OUT"
           }
-          run ns.up2.fcafessh.net   25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026 8.8.8.8
-          run slwdns.codefyinc.com  1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809 8.8.8.8
-          run nssshtt.mdmonzo.com   5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032 8.8.8.8
-          run ns.rovox.wampipti.net 097256d14ca3780369c81867b09eea59990b2ffa4153c9a9662234868243a40d 1.1.1.1
-          run newca.dozapp.xyz      b4e0dccf98092689d5c81fe4cf37b85f545ed5a770c35f004af99d749fda9e79 8.8.4.4
-          run dnsde1.dozapp.xyz     569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809 9.9.9.9
+          # endpoints come from analysis-ultra/report/dns-endpoints.txt: the
+          # authoritative NS address found by walking the delegation chain.
+          run ns.up2.fcafessh.net   25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026 209.94.59.213
+          run newca.dozapp.xyz      b4e0dccf98092689d5c81fe4cf37b85f545ed5a770c35f004af99d749fda9e79 144.217.81.86
+          run dnsde1.dozapp.xyz     569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809 154.53.57.37
+          run dnsde1.dozapp.xyz     569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809 84.46.252.158
+          run nssshvip1.vpnprous.com 5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032 51.83.129.208
           cat "$OUT"
 
       - name: Commit
