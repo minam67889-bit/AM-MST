@@ -642,7 +642,12 @@
     "1.1.1.1": "rcode=NXDOMAIN"
    },
    "endpoint_answers_raw_dns": false,
-   "end_to_end": [],
+   "end_to_end": [
+    {
+     "endpoint": "8.8.8.8",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
    "usable_from_public_internet": false
   },
   {
@@ -679,7 +684,12 @@
     "1.1.1.1": "rcode=SERVFAIL"
    },
    "endpoint_answers_raw_dns": false,
-   "end_to_end": [],
+   "end_to_end": [
+    {
+     "endpoint": "1.1.1.1",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
    "usable_from_public_internet": false
   },
   {
@@ -731,7 +741,12 @@
     "1.1.1.1": "rcode=NXDOMAIN"
    },
    "endpoint_answers_raw_dns": false,
-   "end_to_end": [],
+   "end_to_end": [
+    {
+     "endpoint": "1.1.1.1",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
    "usable_from_public_internet": false
   },
   {
@@ -901,7 +916,12 @@
     "1.1.1.1": "rcode=SERVFAIL"
    },
    "endpoint_answers_raw_dns": false,
-   "end_to_end": [],
+   "end_to_end": [
+    {
+     "endpoint": "8.8.8.8",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
    "usable_from_public_internet": false
   },
   {
