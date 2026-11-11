@@ -1,60 +1,50 @@
-==== ns.up2.fcafessh.net via 8.8.8.8
+==== ns.up2.fcafessh.net via 209.94.59.213
   example.com:80 http: CONNECT-FAIL after 30.0s TimeoutError: timed out
   api.telegram.org:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
   ns.up2.fcafessh.net:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  1.1.1.1:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
+  1.1.1.1:443 tls: CONNECT-FAIL after 14.9s ConnectionResetError: [Errno 104] Connection reset by peer
   client log:
-    2026/11/11 08:40:34 uTLS fingerprint Chrome 102
-    2026/11/11 08:40:34 effective MTU 130
-    2026/11/11 08:40:34 begin session 01d7fc28
+    2026/11/11 09:03:57 uTLS fingerprint Chrome 120
+    2026/11/11 09:03:57 effective MTU 130
+    2026/11/11 09:03:57 begin session 6e146b88
 
-==== slwdns.codefyinc.com via 8.8.8.8
-  example.com:80 http: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  api.telegram.org:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  slwdns.codefyinc.com:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  1.1.1.1:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  client log:
-    2026/11/11 08:42:59 uTLS fingerprint Firefox 105
-    2026/11/11 08:42:59 effective MTU 130
-    2026/11/11 08:42:59 begin session a46072d9
-
-==== nssshtt.mdmonzo.com via 8.8.8.8
-  example.com:80 http: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  api.telegram.org:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  nssshtt.mdmonzo.com:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  1.1.1.1:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  client log:
-    2026/11/11 08:45:24 uTLS fingerprint Randomized-ALPN 0
-    2026/11/11 08:45:24 effective MTU 130
-    2026/11/11 08:45:24 begin session 79c0fe4e
-
-==== ns.rovox.wampipti.net via 1.1.1.1
-  example.com:80 http: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  api.telegram.org:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  ns.rovox.wampipti.net:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  1.1.1.1:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  client log:
-    2026/11/11 08:47:50 uTLS fingerprint iOS 14
-    2026/11/11 08:47:50 effective MTU 129
-    2026/11/11 08:47:50 begin session 03450a19
-
-==== newca.dozapp.xyz via 8.8.4.4
+==== newca.dozapp.xyz via 144.217.81.86
   example.com:80 http: CONNECT-FAIL after 30.0s TimeoutError: timed out
   api.telegram.org:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
   newca.dozapp.xyz:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  1.1.1.1:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
+  1.1.1.1:443 tls: CONNECT-FAIL after 14.9s ConnectionResetError: [Errno 104] Connection reset by peer
   client log:
-    2026/11/11 08:50:15 uTLS fingerprint Randomized-ALPN 0
-    2026/11/11 08:50:15 effective MTU 132
-    2026/11/11 08:50:15 begin session 54e02559
+    2026/11/11 09:05:57 uTLS fingerprint Firefox 120
+    2026/11/11 09:05:57 effective MTU 132
+    2026/11/11 09:05:57 begin session 51214ad3
 
-==== dnsde1.dozapp.xyz via 9.9.9.9
+==== dnsde1.dozapp.xyz via 154.53.57.37
   example.com:80 http: CONNECT-FAIL after 30.0s TimeoutError: timed out
   api.telegram.org:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
   dnsde1.dozapp.xyz:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  1.1.1.1:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
+  1.1.1.1:443 tls: CONNECT-FAIL after 14.9s ConnectionResetError: [Errno 104] Connection reset by peer
   client log:
-    2026/11/11 08:52:40 uTLS fingerprint Firefox 120
-    2026/11/11 08:52:40 effective MTU 132
-    2026/11/11 08:52:40 begin session 5930437c
+    2026/11/11 09:07:57 uTLS fingerprint iOS 14
+    2026/11/11 09:07:57 effective MTU 132
+    2026/11/11 09:07:57 begin session 776bc0ea
+
+==== dnsde1.dozapp.xyz via 84.46.252.158
+  example.com:80 http: CONNECT-FAIL after 30.0s TimeoutError: timed out
+  api.telegram.org:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
+  dnsde1.dozapp.xyz:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
+  1.1.1.1:443 tls: CONNECT-FAIL after 14.9s ConnectionResetError: [Errno 104] Connection reset by peer
+  client log:
+    2026/11/11 09:09:57 uTLS fingerprint Firefox 120
+    2026/11/11 09:09:57 effective MTU 132
+    2026/11/11 09:09:57 begin session 62991bc6
+
+==== nssshvip1.vpnprous.com via 51.83.129.208
+  example.com:80 http: CONNECT-FAIL after 30.0s TimeoutError: timed out
+  api.telegram.org:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
+  nssshvip1.vpnprous.com:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
+  1.1.1.1:443 tls: CONNECT-FAIL after 14.9s ConnectionResetError: [Errno 104] Connection reset by peer
+  client log:
+    2026/11/11 09:11:57 uTLS fingerprint Firefox 120
+    2026/11/11 09:11:57 effective MTU 128
+    2026/11/11 09:11:57 begin session b14a80d5
 
