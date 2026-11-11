@@ -1,2 +1,9 @@
-# nonce: 1794380633063253036-26535
-echo paged-ok $(date -u +%H:%M:%SZ)
+# nonce: 1794380767647632760-12681
+mkdir -p /tmp/ultra && cd /tmp/ultra && rm -f u.zip dl.ok
+UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+setsid nohup bash -c "curl -sSL --max-time 1200 -A \"\$UA\" -o /tmp/ultra/u.zip \"https://filebin.net/tc28bjzj2p27ju9v/co.strongteam.ultra.zip\" && echo OK > /tmp/ultra/dl.ok" > /tmp/ultra/dl.log 2>&1 < /dev/null &
+sleep 60
+echo "size: $(stat -c%s /tmp/ultra/u.zip 2>/dev/null || echo none)"
+cat /tmp/ultra/dl.ok 2>/dev/null
+file /tmp/ultra/u.zip 2>/dev/null
+head -c 300 /tmp/ultra/u.zip 2>/dev/null | strings | head -5
