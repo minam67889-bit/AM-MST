@@ -1,0 +1,17 @@
+  example.com:80 http: CONNECT-FAIL after 30.0s TimeoutError: timed out
+  api.telegram.org:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
+  127.0.0.1:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
+  1.1.1.1:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
+--- client log
+  2026/11/11 09:15:02 uTLS fingerprint Chrome 120
+  2026/11/11 09:15:02 effective MTU 134
+  2026/11/11 09:15:02 begin session 3f583b65
+--- server log
+    -privkey string
+      	server private key (64 hex digits)
+    -privkey-file string
+      	read server private key from file (with -gen-key, write to file)
+    -pubkey-file string
+      	with -gen-key, write server public key to file
+    -udp string
+      	UDP address to listen on (required)
