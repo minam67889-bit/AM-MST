@@ -1,0 +1,15 @@
+### strongteam.co /api/ultrasystem/ultrav3.txt
+HTTP/2 200 
+date: Wed, 11 Nov 2026 08:28:41 GMT
+content-type: text/plain
+server: cloudflare
+last-modified: Tue, 10 Nov 2026 17:03:18 GMT
+vary: Accept-Encoding
+etag: W/"1523fd-65fef0e19f3c7-gzip"
+report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=82nlvf7pDD8NCoNQoEZDWz5FqQI0b0Oeuroeb3JE4XgplqQIr5rIrxGCwnoX%2Flh8%2FldtGO0K6ynyEFSimEWNPN1bRALs61VuhMp%2B1gM8YZg9R5PMbJGGiRA1auEgf9WZ"}]}
+nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+cf-cache-status: DYNAMIC
+cf-ray: a58becc338cd102a-MSP
+alt-svc: h3=":443"; ma=86400
+bytes: 1385469
+LJpUiNrQO7QgFLEr8w+CXzCAVgK7rCJiANIr8KRaKi1heELL3n/lElJEEffcfYe077pcjyWydgoNZj0U

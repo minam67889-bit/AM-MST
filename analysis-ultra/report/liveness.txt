@@ -1,0 +1,57 @@
+== slwdns.codefyinc.com
+  A: 
+  NS delegation: 
+  TXT via 8.8.8.8: 
+  TCP443: closed/filtered
+== ns.rovox.wampipti.net
+  A: 
+  NS delegation: 
+  TXT via 8.8.8.8: 
+  TCP443: closed/filtered
+== newca.dozapp.xyz
+  A: ;; communications error to 127.0.0.53#53: timed out ;; no servers could be reached 
+  NS delegation: ;; communications error to 127.0.0.53#53: timed out ;; no servers could be reached 
+  TXT via 8.8.8.8: 
+  TCP443: closed/filtered
+== dnsde1.dozapp.xyz
+  A: ;; communications error to 127.0.0.53#53: timed out ;; no servers could be reached 
+  NS delegation: ;; communications error to 127.0.0.53#53: timed out ;; no servers could be reached 
+  TXT via 8.8.8.8: 
+  TCP443: closed/filtered
+== nssshvip1.vpnprous.com
+  A: ;; communications error to 127.0.0.53#53: timed out ;; no servers could be reached 
+  NS delegation: ;; communications error to 127.0.0.53#53: timed out ;; no servers could be reached 
+  TXT via 8.8.8.8: 
+  TCP443: closed/filtered
+== nsVIPSSH087.vpnprous.com
+  A: 
+  NS delegation: vipssh087.vpnprous.com. 
+  TXT via 8.8.8.8: 
+  TCP443: closed/filtered
+== nssshtt.mdmonzo.com
+  A: 
+  NS delegation: 
+  TXT via 8.8.8.8: 
+  TCP443: closed/filtered
+
+== resolvers (BugDNS values, UDP53)
+  8.8.8.8 -> 104.20.23.154
+  8.8.4.4 -> 172.66.147.243
+  9.9.9.9 -> 172.66.147.243
+  1.0.0.1 -> 172.66.147.243
+  196.200.150.3 -> 172.66.147.243
+  176.241.248.114 -> ;; communications error to 176.241.248.114#53: timed out
+  190.106.220.98 -> ;; communications error to 190.106.220.98#53: timed out
+  212.2.96.51 -> NO-REPLY
+  121.100.50.32 -> ;; communications error to 121.100.50.32#53: timed out
+  176.95.16.230 -> ;; communications error to 176.95.16.230#53: timed out
+  41.214.140.4 -> ;; communications error to 41.214.140.4#53: timed out
+  165.21.83.88 -> ;; communications error to 165.21.83.88#53: timed out
+  5.188.200.224 -> ;; communications error to 5.188.200.224#53: timed out
+  62.109.121.17 -> NO-REPLY
+  62.109.121.18 -> NO-REPLY
+  103.45.245.217 -> ;; communications error to 103.45.245.217#53: timed out
+  81.192.21.81 -> NO-REPLY
+  213.74.1.4 -> ;; communications error to 213.74.1.4#53: timed out
+  84.235.6.55 -> ;; communications error to 84.235.6.55#53: timed out
+  109.166.202.53 -> ;; communications error to 109.166.202.53#53: timed out
