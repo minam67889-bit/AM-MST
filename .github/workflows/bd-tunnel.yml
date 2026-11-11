@@ -146,6 +146,34 @@ jobs:
           done
           exit 0
 
+      - name: "Transport: direct to the server vs through a public resolver"
+        run: |
+          exec > >(tee /tmp/transport.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          OUT="$GITHUB_WORKSPACE/analysis-bdnet/report/transport-compare.txt"
+          mkdir -p "$(dirname "$OUT")"; : > "$OUT"
+          run() {
+            label="$1"; transport="$2"; zone="$3"; port="$4"
+            echo "==== $label   (-udp $transport:53  zone $zone)" >> "$OUT"
+            timeout 140 qemu-aarch64-static libs/libxdnstt.so \
+              -udp "$transport:53" -report "BD NET VPN" -pubkey prince \
+              "$zone" 127.0.0.1:$port > /tmp/t_$port.log 2>&1 &
+            pid=$!
+            sleep 14
+            python3 tools/far_end_greeting.py "$port" >> "$OUT" 2>&1
+            kill $pid 2>/dev/null; wait $pid 2>/dev/null
+            echo "  client log:" >> "$OUT"
+            tail -8 /tmp/t_$port.log | sed 's/^/    /' >> "$OUT"
+            echo >> "$OUT"
+          }
+          run "control: server IP"          13.140.185.158 sd-de1.liftmeon.org 7510
+          run "via 8.8.8.8 (Google)"        8.8.8.8        sd-de1.liftmeon.org 7511
+          run "via 8.8.4.4 (Google)"        8.8.4.4        sd-de1.liftmeon.org 7512
+          run "via 1.1.1.1 (Cloudflare)"    1.1.1.1        sd-de1.liftmeon.org 7513
+          cat "$OUT"
+          exit 0
+
       - name: "SlowDNS v2: the client that takes a JSON config and opens SOCKS5 on 7777"
         run: |
           exec > >(tee /tmp/slowdns2.txt) 2>&1
