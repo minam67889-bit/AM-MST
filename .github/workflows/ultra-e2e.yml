@@ -1,0 +1,85 @@
+name: Ultra Tunnel - end-to-end dnstt proof
+
+# Ultra Tunnel's libdns.so is a stock dnstt client, so the credential set from
+# analysis-ultra/slowdns.json (domain + 64-hex pubkey + resolver) can be tested
+# with upstream dnstt built for linux/amd64. dnstt-client exposes a SOCKS5 proxy
+# on the local address, which is exactly what the app's tun2socks consumes.
+
+on:
+  workflow_dispatch:
+    inputs:
+      combos:
+        description: "domain|pubkey|resolver pairs (one per line)"
+        required: false
+  push:
+    paths:
+      - ".github/workflows/ultra-e2e.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: Build dnstt-client
+        run: |
+          set -e
+          cd /tmp
+          (git clone --depth 1 https://www.bamsoftware.com/git/dnstt.git || \
+           git clone --depth 1 https://github.com/nickel715/dnstt.git || \
+           git clone --depth 1 https://github.com/therealbush/dnstt.git) 2>&1 | tail -3
+          cd dnstt/dnstt-client
+          go build -o /tmp/dnstt-client . && /tmp/dnstt-client -h 2>&1 | head -5 || true
+
+      - name: Probe
+        run: |
+          set +e
+          OUT="$GITHUB_WORKSPACE/analysis-ultra/report/e2e.txt"
+          mkdir -p "$(dirname "$OUT")"
+          : > "$OUT"
+          probe() {
+            dom="$1"; key="$2"; res="$3"
+            echo "==== $dom via $res" >> "$OUT"
+            timeout 90 /tmp/dnstt-client -udp "$res:53" -pubkey "$key" "$dom" 127.0.0.1:2222 > /tmp/c.log 2>&1 &
+            pid=$!
+            sleep 20
+            for url in http://example.com/ https://api.telegram.org/ http://cp.cloudflare.com/; do
+              code=$(curl -s -o /dev/null -w '%{http_code} %{size_download} %{time_total}' --max-time 25 \
+                     -x socks5h://127.0.0.1:2222 "$url" 2>>/tmp/c.log)
+              echo "  $url -> ${code:-fail}" >> "$OUT"
+            done
+            kill $pid 2>/dev/null; wait $pid 2>/dev/null
+            echo "  client log:" >> "$OUT"
+            tail -18 /tmp/c.log | sed 's/^/    /' >> "$OUT"
+            echo >> "$OUT"
+          }
+          probe slwdns.codefyinc.com  1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809 8.8.8.8
+          probe slwdns.codefyinc.com  1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809 1.1.1.1
+          probe ns.rovox.wampipti.net 097256d14ca3780369c81867b09eea59990b2ffa4153c9a9662234868243a40d 8.8.8.8
+          probe newca.dozapp.xyz      b4e0dccf98092689d5c81fe4cf37b85f545ed5a770c35f004af99d749fda9e79 8.8.4.4
+          probe dnsde1.dozapp.xyz     569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809 9.9.9.9
+          probe nssshtt.mdmonzo.com   5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032 8.8.8.8
+          cat "$OUT"
+
+      - name: Commit
+        if: always()
+        run: |
+          set +e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
+          git add analysis-ultra
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "ultra: dnstt end-to-end probe [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" > /dev/null 2>&1
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done

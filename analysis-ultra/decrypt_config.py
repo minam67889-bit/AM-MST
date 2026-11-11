@@ -1,53 +1,95 @@
 #!/usr/bin/env python3
-"""Decrypt Ultra Tunnel's assets/configfile.json.
+"""Decrypt Ultra Tunnel (co.strongteam.ultra) server catalogue.
 
-Constants and envelope format are the ones the app itself uses
-(AndroidLibXrayLite EO/DO in libgojni.so):
-    salt[16] || nonce[12] || AES-256-GCM ciphertext || tag[16]
-    key = Argon2id(passphrase, salt, t=3, m=16384KiB, p=1, len=32, v19)
+Recovered from libgojni.so (github.com/2dust/AndroidLibXrayLite) and verified
+against build 59 assets/configfile.json.  Envelope:
+
+    base64( salt[16] || nonce[12] || AES-256-GCM(ct) || tag[16] )
+    key = Argon2id(passphrase, salt, t=3, m=8192 KiB, p=1, len=32, v19)
     AAD = salt
+
+Two passphrases:
+  * remote/export ("decrypt", one random ASCII letter inserted at index 3 after
+    base64): /4ssU0OjjtKH8AheiAxnc3DwSGDzsy+8
+  * bundled asset + every protected inner field (EO/DO): NurChickenPowder
+
+Protected inner fields (SlowDNSHost, SlowDNSKey, ServerIPHost, ...) are wrapped
+in the same envelope with the same bundled passphrase.
 """
-import base64, json, sys
+from __future__ import annotations
+
+import base64
+import json
+import re
+import sys
+
 from argon2.low_level import Type, hash_secret_raw
 from Crypto.Cipher import AES
 
-FILE_SECRET = b"iOi/hqT/TocUv0UbDImfWPGR1mfSdzzX"    # Libv2ray.encrypt/decrypt (export)
-FIELD_SECRET = b"NewDecryptLibPassword"               # Libv2ray.EO/DO (bundled config)
+REMOTE_SECRET = b"/4ssU0OjjtKH8AheiAxnc3DwSGDzsy+8"
+BUNDLED_SECRET = b"NurChickenPowder"
+MEM_KIB = 8192
+
+TOP_FIELDS = ("DefOVPNUser", "DefOVPNPass", "HysteriaUser", "HysteriaOBFS", "DefaultOVPNCert")
+SERVER_FIELDS = ("ServerIPHost", "OVPNUser", "OVPNPass", "UDP_obfs", "UDP_user", "CustomCertificate",
+                 "SlowDNSHost", "SlowDNSKey", "V2rayUUID", "V2rayPath", "H2pass", "TrojanPass")
+NETWORK_FIELDS = ("Payload", "CustomProxy", "SNI", "V2rayConfig", "BugDNS", "V2rayAddress",
+                  "V2rayHost", "V2raySNI")
+B64 = re.compile(r"[A-Za-z0-9+/]*={0,2}")
 
 
-def open_envelope(text, secret):
+def open_envelope(text: str, secret: bytes = BUNDLED_SECRET) -> str:
     raw = base64.b64decode(text.replace("\r", "").replace("\n", ""), validate=True)
-    salt, nonce = raw[:16], raw[16:28]
-    key = hash_secret_raw(secret, salt, time_cost=3, memory_cost=16384,
-                          parallelism=1, hash_len=32, type=Type.ID, version=19)
-    c = AES.new(key, AES.MODE_GCM, nonce=nonce)
-    c.update(salt)
+    key = hash_secret_raw(secret, raw[:16], 3, MEM_KIB, 1, 32, Type.ID, version=19)
+    c = AES.new(key, AES.MODE_GCM, nonce=raw[16:28])
+    c.update(raw[:16])
     return c.decrypt_and_verify(raw[28:-16], raw[-16:]).decode("utf-8")
 
 
-def main(path, out):
-    text = open(path, encoding="utf-8-sig").read().strip()
-    for name, secret, exported in (("DO/FIELD_SECRET", FIELD_SECRET, False),
-                                   ("decrypt/FILE_SECRET", FILE_SECRET, True)):
-        t = text
-        if exported:
-            if len(t) < 4 or not t[3].isalpha():
+def decode_fields(obj: dict) -> dict:
+    cache: dict[str, str] = {}
+
+    def decrypt_fields(record: dict, names) -> dict:
+        out = dict(record)
+        for name in names:
+            value = record.get(name)
+            if not isinstance(value, str):
                 continue
-            t = t[:3] + t[4:]
-        try:
-            clear = open_envelope(t, secret)
-        except Exception as exc:
-            print(f"{name}: {type(exc).__name__}: {exc}", file=sys.stderr)
-            continue
-        obj = json.loads(clear)
-        print(f"{name}: OK  {len(clear)} chars  version={obj.get('Version')} "
-              f"servers={len(obj.get('Servers', []))} networks={len(obj.get('Networks', []))}")
-        with open(out, "w", encoding="utf-8") as fh:
-            json.dump(obj, fh, ensure_ascii=False, indent=1)
-        return 0
-    print("FAILED both secrets", file=sys.stderr)
-    return 1
+            packed = value.replace("\r", "").replace("\n", "")
+            if len(packed) < 60 or not B64.fullmatch(packed):
+                continue
+            if packed not in cache:
+                cache[packed] = open_envelope(value)
+            out[name] = cache[packed]
+        return out
+
+    result = decrypt_fields(obj, TOP_FIELDS)
+    for section, names in (("Servers", SERVER_FIELDS), ("Networks", NETWORK_FIELDS)):
+        result[section] = [decrypt_fields(row, names) for row in obj[section]]
+    return result
+
+
+def load(path: str, already_decrypted: bool = False) -> dict:
+    if already_decrypted:
+        obj = json.load(open(path, encoding="utf-8"))
+    else:
+        text = open(path, encoding="utf-8-sig").read().strip()
+        if text.startswith("{"):
+            obj = json.loads(text)
+        else:
+            flat = text.replace("\r", "").replace("\n", "")
+            remote = len(flat) % 4 == 1
+            if remote:
+                text = flat[:3] + flat[4:]
+            obj = json.loads(open_envelope(text, REMOTE_SECRET if remote else BUNDLED_SECRET))
+    return decode_fields(obj)
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv[1], sys.argv[2]))
+    src = sys.argv[1]
+    dst = sys.argv[2]
+    decrypted = len(sys.argv) > 3 and sys.argv[3] == "--inner-only"
+    data = load(src, already_decrypted=decrypted)
+    with open(dst, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, ensure_ascii=False, indent=1)
+    print(f"Version={data.get('Version')} servers={len(data['Servers'])} networks={len(data['Networks'])} -> {dst}")
