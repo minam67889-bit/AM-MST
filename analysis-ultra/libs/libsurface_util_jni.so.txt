@@ -1,0 +1,4 @@
+### libsurface_util_jni.so  4832 bytes
+--- file:
+/tmp/u/libs/libsurface_util_jni.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, BuildID[sha1]=964a1cbe387c160f0a6286713d31d752e35c6801, stripped
+--- interesting strings:

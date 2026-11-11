@@ -1,0 +1,28 @@
+{
+ "xapk_version": 2,
+ "package_name": "co.strongteam.ultra",
+ "name": "co.strongteam.ultra",
+ "version_code": "59",
+ "version_name": "",
+ "min_sdk_version": "",
+ "target_sdk_version": "",
+ "permissions": [],
+ "split_apks": [
+  {
+   "file": "config.arm64_v8a.apk",
+   "id": "config.arm64_v8a"
+  },
+  {
+   "file": "config.en.apk",
+   "id": "config.en"
+  },
+  {
+   "file": "config.es.apk",
+   "id": "config.es"
+  },
+  {
+   "file": "config.xxhdpi.apk",
+   "id": "config.xxhdpi"
+  }
+ ]
+}

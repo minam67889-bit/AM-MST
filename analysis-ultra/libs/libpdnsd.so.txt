@@ -1,0 +1,25 @@
+### libpdnsd.so  215632 bytes
+--- file:
+/tmp/u/libs/libpdnsd.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /system/bin/linker64, BuildID[sha1]=11fb1567356f0a5ee3e85469ed7bff8de61c51c7, stripped
+--- interesting strings:
+	Delegation-only zones: 
+	uptest user: %s
+%s is in %s zone, but no authority information provided by server %s
+%s is in %s zone, but no delegation found in answer returned by server %s
+--pdnsd-user
+--pdnsd-user	print the user pdnsd will run as and exit.
+Could not change group id to that of run_as user '%s': %s
+Could not change user id to that of run_as user '%s': %s
+Could not initialize the group access list of run_as user '%s': %s
+Failed to send status report.
+Please consider reporting this error to one of the maintainers.
+Warning: uptest command "%s" will implicitly be executed as user 
+free_zone
+name not contained in zone
+pdnsd-%s running on %s.
+pdnsd-%s starting.
+report to p.a.rombouts@home.nl or tmoestl@gmx.net
+reportedly failed
+run_as user %s could not be found.
+server not authoritative for zone
+server_data_users non-positive before attempt to decrement it

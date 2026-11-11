@@ -1,0 +1,4 @@
+### libdatastore_shared_counter.so  7112 bytes
+--- file:
+/tmp/u/libs/libdatastore_shared_counter.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, BuildID[sha1]=17db37bd6770ac00dd2d1d2828839fd23a7959a3, stripped
+--- interesting strings:

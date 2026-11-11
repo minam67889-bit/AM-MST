@@ -1,0 +1,49 @@
+### libtun2socks.so  173456 bytes
+--- file:
+/tmp/u/libs/libtun2socks.so: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /system/bin/linker64, stripped
+--- interesting strings:
+        --socks-server-addr <addr>
+        [--append-source-to-username]
+        [--password <password>]
+        [--password-file <file>]
+        [--socks5-udp]
+        [--username <username>]
+--append-source-to-username
+--password
+--password and --password-file cannot both be given
+--password-file
+--socks-server-addr
+--socks-server-addr is required
+--socks5-udp
+--username
+./badvpn/tun2socks/tun2socks.c
+BEncryption
+BSocksClient
+BadVPN tun2socks 1.999.130
+Failed to initialize SOCKS client
+Missing SOCKS-UDP header.
+PasswordListener
+SOCKS closed
+SOCKS closed event for %s, removing connection.
+SOCKS error
+SOCKS error event for %s, removing connection.
+SOCKS up
+SocksUdpClient
+SocksUdpClient_Init: MTU too large.
+SocksUdpGwClient
+SocksUdpGwClient_Init failed
+device fd reports error?
+failed to read password file
+initializing BadVPN tun2socks 1.999.130
+invalid username/password length
+listener accept: BSocksClient_Init failed
+password authentication
+password reply has unknown version
+password reply is negative
+received password reply
+removing after SOCKS went down
+send password
+socks server addr: BAddr_Parse2 failed
+tun2socks
+username given but password not given
+waiting untill buffered data is sent to SOCKS

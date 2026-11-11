@@ -1,0 +1,204 @@
+### libovpncli.so  10016040 bytes
+--- file:
+/tmp/u/libs/libovpncli.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, BuildID[sha1]=7609370d7b64bc95b92b2eb79ff8c1704e03c5f8, stripped
+--- interesting strings:
+ (Tunnel)
+ : password empty
+ : username empty
+%*sContains User Attribute Certificates: 
+%*sOnly User Certificates
+%*sTimezone: UTC%+03lld:00
+%*sUser Notice:
+%*sUser Notices:
+%*sZone: %s, User: 
+%s decrypt:%s
+%s decrypt_init:%s
+%s encrypt:%s
+%s encrypt_init:%s
+%s private key does not match its pubkey part
+../src/nssl-3.6.3-28a9d34a24.clean/crypto/passphrase.c
+../src/nssl-3.6.3-28a9d34a24.clean/crypto/x509/v3_usernotice.c
+../src/nssl-3.6.3-28a9d34a24.clean/crypto/x509/x_pubkey.c
+AES GCM module for ARMv8, SPDX BSD-3-Clause by <xiaokang.qian@arm.com>
+AES_cbc_encrypt
+AES_decrypt
+AES_encrypt
+AES_set_decrypt_key
+AES_set_encrypt_key
+BARE_PUBKEY
+BF_cbc_encrypt
+BF_cfb64_encrypt
+BF_decrypt
+BF_ecb_encrypt
+BF_encrypt
+BF_ofb64_encrypt
+BYPASS_DHCP 
+BYPASS_DNS 
+CAST_cbc_encrypt
+CAST_cfb64_encrypt
+CAST_decrypt
+CAST_ecb_encrypt
+CAST_encrypt
+CAST_ofb64_encrypt
+CRYPTO_cbc128_decrypt
+CRYPTO_cbc128_encrypt
+CRYPTO_ccm128_decrypt
+CRYPTO_ccm128_decrypt_ccm64
+CRYPTO_ccm128_encrypt
+CRYPTO_ccm128_encrypt_ccm64
+CRYPTO_cfb128_1_encrypt
+CRYPTO_cfb128_8_encrypt
+CRYPTO_cfb128_encrypt
+CRYPTO_ctr128_encrypt
+CRYPTO_ctr128_encrypt_ctr32
+CRYPTO_gcm128_decrypt
+CRYPTO_gcm128_decrypt_ctr32
+CRYPTO_gcm128_encrypt
+CRYPTO_gcm128_encrypt_ctr32
+CRYPTO_ocb128_decrypt
+CRYPTO_ocb128_encrypt
+CRYPTO_ofb128_encrypt
+CRYPTO_xts128_encrypt
+Camellia_DecryptBlock
+Camellia_DecryptBlock_Rounds
+Camellia_EncryptBlock
+Camellia_EncryptBlock_Rounds
+Camellia_cbc_encrypt
+Camellia_decrypt
+Camellia_encrypt
+DECRYPT_ERROR
+DES_cfb64_encrypt
+DES_cfb_encrypt
+DES_decrypt3
+DES_ecb3_encrypt
+DES_ecb_encrypt
+DES_ede3_cbc_encrypt
+DES_ede3_cfb64_encrypt
+DES_ede3_cfb_encrypt
+DES_ede3_ofb64_encrypt
+DES_encrypt1
+DES_encrypt2
+DES_encrypt3
+DES_ncbc_encrypt
+DES_ofb64_encrypt
+DES_xcbc_encrypt
+DSA:dsaEncryption:1.2.840.10040.4.1
+Decrypt
+ENCRYPTED
+ENCRYPTED PRIVATE KEY
+ENGINE_get_load_pubkey_function
+ENGINE_set_load_pubkey_function
+EVP_CIPHER_CTX_is_encrypting
+EVP_CipherPipelineDecryptInit
+EVP_CipherPipelineEncryptInit
+EVP_DecryptFinal
+EVP_DecryptFinal_ex
+EVP_DecryptInit
+EVP_DecryptInit_ex
+EVP_DecryptInit_ex (init)
+EVP_DecryptInit_ex (reset)
+EVP_DecryptInit_ex2
+EVP_DecryptUpdate
+EVP_DecryptUpdate AD
+EVP_DecryptUpdate data
+EVP_EncryptFinal
+EVP_EncryptFinal_ex
+EVP_EncryptInit
+EVP_EncryptInit_ex
+EVP_EncryptInit_ex (init)
+EVP_EncryptInit_ex (reset)
+EVP_EncryptInit_ex2
+EVP_EncryptUpdate
+EVP_EncryptUpdate AD
+EVP_EncryptUpdate data
+EVP_PKEY_CTX_set1_pbe_pass
+EVP_PKEY_decrypt
+EVP_PKEY_decrypt_init
+EVP_PKEY_decrypt_init_ex
+EVP_PKEY_encrypt
+EVP_PKEY_encrypt_init
+EVP_PKEY_encrypt_init_ex
+EVP_PKEY_meth_get_decrypt
+EVP_PKEY_meth_get_encrypt
+EVP_PKEY_meth_set_decrypt
+EVP_PKEY_meth_set_encrypt
+Encrypt
+EncryptThenMac
+EncryptedPrivateKeyInfo
+Enter PEM pass phrase:
+HTTP proxy basic authentication not allowed by user preference
+IDEA_cbc_encrypt
+IDEA_cfb64_encrypt
+IDEA_ecb_encrypt
+IDEA_encrypt
+IDEA_ofb64_encrypt
+IDEA_set_decrypt_key
+IDEA_set_encrypt_key
+IPSec Tunnel
+IPSec User
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1ConnectionInfo_1user_1get
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1ConnectionInfo_1user_1set
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1EvalConfig_1allowPasswordSave_1get
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1EvalConfig_1allowPasswordSave_1set
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1EvalConfig_1privateKeyPasswordRequired_1get
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1EvalConfig_1privateKeyPasswordRequired_1set
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1EvalConfig_1userlockedUsername_1get
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1EvalConfig_1userlockedUsername_1set
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1ProvideCreds_1http_1proxy_1pass_1get
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1ProvideCreds_1http_1proxy_1pass_1set
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1ProvideCreds_1http_1proxy_1user_1get
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1ProvideCreds_1http_1proxy_1user_1set
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1ProvideCreds_1password_1get
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1ProvideCreds_1password_1set
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1ProvideCreds_1username_1get
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1ProvideCreds_1username_1set
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1SessionToken_1username_1get
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1SessionToken_1username_1set
+Java_net_openvpn_openvpn_ovpncliJNI_ClientAPI_1TunBuilderBase_1tun_1builder_1add_1proxy_1bypass
+Java_net_openvpn_openvpn_ovpncliJNI_ConfigCommon_1privateKeyPassword_1get
+Java_net_openvpn_openvpn_ovpncliJNI_ConfigCommon_1privateKeyPassword_1set
+Java_net_openvpn_openvpn_ovpncliJNI_ConfigCommon_1proxyPassword_1get
+Java_net_openvpn_openvpn_ovpncliJNI_ConfigCommon_1proxyPassword_1set
+Java_net_openvpn_openvpn_ovpncliJNI_ConfigCommon_1proxyUsername_1get
+Java_net_openvpn_openvpn_ovpncliJNI_ConfigCommon_1proxyUsername_1set
+Microsoft Encrypted File System
+Microsoft User Principal Name
+N7openvpn10DecryptCHMINS_16OpenSSLCryptoAPIEE27chm_unsupported_cipher_modeE
+N7openvpn10EncryptCHMINS_16OpenSSLCryptoAPIEE27chm_unsupported_cipher_modeE
+N7openvpn8UserPass11creds_errorE
+No password method specified
+OSI layer 2 tunnels are not currently supported
+OSSL_DECODER_CTX_set_passphrase
+OSSL_DECODER_CTX_set_passphrase_cb
+OSSL_DECODER_CTX_set_passphrase_ui
+OSSL_DECODER_CTX_set_pem_password_cb
+OSSL_ENCODER_CTX_set_passphrase
+OSSL_ENCODER_CTX_set_passphrase_cb
+OSSL_ENCODER_CTX_set_passphrase_ui
+OSSL_ENCODER_CTX_set_pem_password_cb
+OSSL_STORE_INFO_get0_PUBKEY
+OSSL_STORE_INFO_get1_PUBKEY
+OSSL_STORE_INFO_new_PUBKEY
+OSSL_USER_NOTICE_SYNTAX
+OSSL_USER_NOTICE_SYNTAX_free
+OSSL_USER_NOTICE_SYNTAX_it
+OSSL_USER_NOTICE_SYNTAX_new
+OpenSSL default user interface
+PEM password callback wrapper
+PEM_PASSWORD_FAIL
+PEM_read_DSA_PUBKEY
+PEM_read_EC_PUBKEY
+PEM_read_PUBKEY
+PEM_read_PUBKEY_ex
+PEM_read_RSA_PUBKEY
+PEM_read_X509_PUBKEY
+PEM_read_bio_DSA_PUBKEY
+PEM_read_bio_EC_PUBKEY
+PEM_read_bio_PUBKEY
+PEM_read_bio_PUBKEY_ex
+PEM_read_bio_RSA_PUBKEY
+PEM_read_bio_X509_PUBKEY
+PEM_write_DSA_PUBKEY
+PEM_write_EC_PUBKEY
+PEM_write_PUBKEY
+PEM_write_PUBKEY_ex
