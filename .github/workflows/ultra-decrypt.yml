@@ -1,0 +1,117 @@
+name: Ultra Tunnel - how configfile.json is decrypted
+
+# configfile.json is the app's bundled config: base64 text -> Libv2ray.do_()
+# (a native method inside libgojni.so) -> Gson -> ConfigData{ Servers: List<ServerList> }
+# and ServerList carries exactly the three values the tunnel needs:
+#   SlowDNSHost (the dnstt DOMAIN), SlowDNSKey (the 64-hex pubkey), ServerIPHost (the resolver)
+#
+# So: find that JNI symbol, disassemble it, and collect every string/constant it
+# can touch. This turns "encrypted blob" into a readable algorithm.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/ultra-decrypt.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  decrypt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq unzip file binutils curl jq python3
+
+      - name: XAPK
+        run: |
+          set +e
+          mkdir -p /tmp/u && cd /tmp/u
+          URL="https://filebin.net/tc28bjzj2p27ju9v/co.strongteam.ultra.zip"
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+          curl -sS -c jar -A "$UA" -o /dev/null "$URL"
+          curl -sSL -c jar -b jar -A "$UA" -H "Referer: $URL" -o u.zip "$URL"
+          unzip -o -q u.zip -d x
+          unzip -o -q x/config.arm64_v8a.apk -d arm64
+          cp x/co.strongteam.ultra.59.apk base.apk
+          ls -l arm64/lib/arm64-v8a/libgojni.so
+
+      - name: Find the JNI entry point
+        run: |
+          set +e
+          L=/tmp/u/arm64/lib/arm64-v8a/libgojni.so
+          R="$GITHUB_WORKSPACE/analysis-ultra/report"
+          mkdir -p "$R"
+          {
+            echo "### symbols mentioning do_"
+            readelf -sW "$L" 2>/dev/null | grep -iE "do_|Libv2ray" | head -40
+            echo
+            echo "### dynsym"
+            nm -D --defined-only "$L" 2>/dev/null | grep -iE "do_|libv2ray" | head -20
+            echo
+            echo "### strings near Kid / config"
+            strings -n 4 "$L" | grep -iE "kidconfig|configfile|decode|aes|iv|salt" | head -40
+          } > "$R/libgojni-symbols.txt"
+          cat "$R/libgojni-symbols.txt"
+
+      - name: Disassemble it
+        run: |
+          set +e
+          L=/tmp/u/arm64/lib/arm64-v8a/libgojni.so
+          R="$GITHUB_WORKSPACE/analysis-ultra/report"
+          mkdir -p "$R"
+          sym=$(readelf -sW "$L" 2>/dev/null | awk '/FUNC/ && /do_/ {print $8}' | head -1)
+          echo "symbol: ${sym:-none}"
+          {
+            echo "### symbol: ${sym:-none}"
+            if [ -n "$sym" ]; then
+              addr=$(readelf -sW "$L" | awk -v s="$sym" '$8==s && /FUNC/ {print $2; exit}')
+              echo "addr: $addr"
+              start=$((16#$addr))
+              objdump -d --start-address=$start --stop-address=$((start+1200)) -M no-aliases "$L" 2>/dev/null | head -220
+            fi
+            echo
+            echo "### all Do/Libv2ray-ish exports"
+            readelf -sW "$L" 2>/dev/null | awk '/FUNC/ {print $8}' | grep -iE "libv2ray|do_|java_" | head -40
+          } > "$R/libgojni-do_.txt"
+          head -60 "$R/libgojni-do_.txt"
+
+      - name: Firebase / json literals in the dex
+        run: |
+          set +e
+          cd /tmp/u
+          R="$GITHUB_WORKSPACE/analysis-ultra/report"
+          mkdir -p "$R"
+          {
+            echo "### firebase storage literals"
+            unzip -p base.apk classes*.dex 2>/dev/null | strings -n 6 | grep -iE "firebasestorage|\.firebase|storage\.googleapis" | sort -u | head -30
+            echo
+            echo "### json file names"
+            unzip -p base.apk classes*.dex 2>/dev/null | strings -n 5 | grep -oE "[A-Za-z0-9_./-]{2,40}\.json" | sort -u | head -40
+            echo
+            echo "### base64-looking long literals (possible keys)"
+            unzip -p base.apk classes*.dex 2>/dev/null | strings -n 16 | grep -oE "^[A-Za-z0-9+/]{20,60}={0,2}$" | sort -u | head -40
+          } > "$R/dex-literals.txt"
+          cat "$R/dex-literals.txt" | head -50
+
+      - name: Commit
+        if: always()
+        run: |
+          set +e
+          cd "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
+          git add analysis-ultra
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "ultra: decrypt path for configfile.json [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" > /dev/null 2>&1
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
