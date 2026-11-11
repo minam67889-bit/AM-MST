@@ -1,0 +1,54 @@
+==== slwdns.codefyinc.com via 8.8.8.8
+  http://example.com/ -> 000 0 25.002772
+  https://api.telegram.org/ -> 000 0 25.002835
+  http://cp.cloudflare.com/ -> 000 0 19.971976
+  client log:
+    2026/11/11 08:29:55 uTLS fingerprint Firefox 120
+    2026/11/11 08:29:55 effective MTU 130
+    2026/11/11 08:29:55 begin session 3f8110ce
+
+==== slwdns.codefyinc.com via 1.1.1.1
+  http://example.com/ -> 000 0 25.001918
+  https://api.telegram.org/ -> 000 0 25.002258
+  http://cp.cloudflare.com/ -> 000 0 19.975863
+  client log:
+    2026/11/11 08:31:25 uTLS fingerprint Chrome 120
+    2026/11/11 08:31:25 effective MTU 130
+    2026/11/11 08:31:25 begin session 9e6e11ae
+
+==== ns.rovox.wampipti.net via 8.8.8.8
+  http://example.com/ -> 000 0 25.002775
+  https://api.telegram.org/ -> 000 0 25.002806
+  http://cp.cloudflare.com/ -> 000 0 19.974594
+  client log:
+    2026/11/11 08:32:55 uTLS fingerprint Chrome 120
+    2026/11/11 08:32:55 effective MTU 129
+    2026/11/11 08:32:55 begin session 9d9e110d
+
+==== newca.dozapp.xyz via 8.8.4.4
+  http://example.com/ -> 000 0 25.002382
+  https://api.telegram.org/ -> 000 0 25.002161
+  http://cp.cloudflare.com/ -> 000 0 19.975489
+  client log:
+    2026/11/11 08:34:25 uTLS fingerprint Firefox 120
+    2026/11/11 08:34:25 effective MTU 132
+    2026/11/11 08:34:25 begin session e01f6637
+
+==== dnsde1.dozapp.xyz via 9.9.9.9
+  http://example.com/ -> 000 0 25.001683
+  https://api.telegram.org/ -> 000 0 25.002519
+  http://cp.cloudflare.com/ -> 000 0 19.975801
+  client log:
+    2026/11/11 08:35:55 uTLS fingerprint Firefox 120
+    2026/11/11 08:35:55 effective MTU 132
+    2026/11/11 08:35:55 begin session 8ab0ea01
+
+==== nssshtt.mdmonzo.com via 8.8.8.8
+  http://example.com/ -> 000 0 25.002834
+  https://api.telegram.org/ -> 000 0 25.002440
+  http://cp.cloudflare.com/ -> 000 0 19.975050
+  client log:
+    2026/11/11 08:37:25 uTLS fingerprint Chrome 120
+    2026/11/11 08:37:25 effective MTU 130
+    2026/11/11 08:37:25 begin session 39b7015c
+
