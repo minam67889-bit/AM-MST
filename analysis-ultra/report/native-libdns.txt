@@ -1,0 +1,124 @@
+### libdns.so 4912352 bytes
+--- usage/flags:
+timeout: failed to run command ‘qemu-aarch64-static’: No such file or directory
+--- strings:
+	*[]dns.RR
+	*dns.Name
+	Authority
+	BasicAuth
+	KeyUsages
+	UserAgent
+	cacheZone
+	dnsConfig
+	flagCache
+	m=] = ] n=allgallpasn1basebindbitsboolcallcas1cas2cas3cas4cas5cas6chandatedeaddialechoetagfcmafilefphpfromftpsfuncgziphosthourhttpicmpidleigmpint8itabkindlinkmdnsopenpop3profreadrootsbrkseeksha1sha2sha3smtpstattag:tcp6trueuintunixvaryxn--  -%s ...
+	proxyAuth
+  %[1]s -doh https://resolver.example/dns-query -pubkey-file server.pub t.example.com 127.0.0.1:7000
+  %[1]s -dot resolver.example:853 -pubkey-file server.pub t.example.com 127.0.0.1:7000
+  %[1]s [-doh URL|-dot ADDR|-udp ADDR] -pubkey-file PUBKEYFILE DOMAIN LOCALADDR
+ > (den<<shift)/2trailing bytes after messageunexpected protocol version unreserving unaligned regionunsupported compression for unsupported protocol version45474735088646411895751953125Mon, 02 Jan 2006 15:04:05 GMTMon, 02 Jan 2006 15:04:05 MSTMon, 02-Jan-2006 15:04:05 MSTNon-Authoritative InformationProxy Authentication RequiredSIGPIPE: write to broken pipeSIGPWR: power failure restartTime.UnmarshalBinary: no dataUnavailable For Legal Reasonsaddspecial on invalid pointerbufio.Scanner: token too longcrypto/aes: invalid key size crypto/des: invalid key size crypto/rc4: invalid key size dup idle pconn %p in freelistgc done but gcphase != _GCoffgfput: bad status (not Gdead)http2: client conn not usablehttp2: client connection losthttp: idle connection timeoutilnpv6 locator update messageinteger not minimally-encodedinternal error: took too muchinvalid header field value %qinvalid length of trace eventio: read/write on closed pipemachine is not on the networkmime: invalid media parametermismatched local address typemulticast router solicitationno XENIX semaphores availablenumerical result out of rangeoperation already in progresspadding contained in alphabetpkcs12: odd-length BMP stringpoly1305: unexpected overflowprotocol family not supportedreflect: Elem of invalid typereflect: In of non-func type reflect: Key of non-map type reflect: Out of non-func typeruntime: impossible type kindruntime: levelShift[level] = runtime: marking free object runtime: mmap: access denied
+ H_T= H_a= H_g= MB,  W_a= and  cnt= h_a= h_g= h_t= max= ms,  ptr  siz= tab= top= u_a= u_g=%s %q%s*%d%s=%s&#34;&#39;&amp;, ..., fp:.html.jpeg.json.wasm.webp156252551978125:***@::/96:path<nil>AESNIASIMDAdlamAprilBamumBatakBuhidCLMULCPUIDCRC32ClassDCPOPDograECDSAErrorFoundGreekHTTP/JSCVTKhmerLRCPCLZCNTLatinLimbuLocalMarchNushuOghamOriyaOsageP-224P-256P-384P-521PMULLRangeRealmRunicSGXLCSHA-1SSE4ASSSE3STIBPSTermTakriTamilTypeA] = (arraybad nclosecpuidcrc32dcpopdeferdummyfalsefaultfcntlfilesfloatgFreegcinggscanhchanhostshttpsimap2imap3imapsinit int16int32int64jscvtlinuxlrcpclstatmheapmonthpanicparsepipe2pmullpop3spsk%drangeroutescav schedsleepslicesockssudogsweeptext/tls: traceuint8utf-8valuewrite Value addr= alloc base  code= ctxt: curg= free  goid  jobs= list= m->p= next= p->m= prev= span=% util(...)
+ is unavailable()<>@,;:\"/[]?=,M3.2.0,M11.1.0/etc/mdns.allow/etc/mime.types0601021504Z0700476837158203125: cannot parse <invalid Value>ASCII_Hex_DigitAVX512VPOPCNTDQAccept-EncodingAccept-LanguageClientAuthType(Gateway TimeoutHanifi_RohingyaIdempotency-KeyLength RequiredNot ImplementedOther_LowercaseOther_UppercasePKCS1WithSHA256PKCS1WithSHA384PKCS1WithSHA512Partial ContentPsalter_PahlaviRequest TimeoutX-Forwarded-For]
+ to unallocated span/usr/share/zoneinfo/37252902984619140625Egyptian_HieroglyphsIDS_Trinary_OperatorInsufficient StorageMAX_HEADER_LIST_SIZEMeroitic_HieroglyphsRequest URI Too LongSIGALRM: alarm clockSIGTERM: terminationSeek: invalid offsetSeek: invalid whenceTerminal_PunctuationUnprocessable Entityasn1: syntax error: bad defer size classbad font file formatbad system page sizebad use of bucket.bpbad use of bucket.mpbegin stream %08x:%dcertificate requiredchan send (nil chan)close of nil channelconnection error: %sconnection timed outdodeltimer0: wrong Pflag: help requestedfloating point errorforcegc: phase errorgc_trigger underflowgetCert can't be nilgo of nil func valuegopark: bad g statusgzip: invalid headerheader line too longhttp2: stream closedinvalid DNS responseinvalid request codeinvalid write resultis a named type filekey has been revokedmalloc during signalnotetsleep not on g0number has no digitsopening KCP conn: %vout is not a pointerp mcache not flushedpacer: assist ratio=pad length too largepreempt off reason: reflect.Value.SetIntreflect.makeFuncStubrouter advertisementruntime: double waitruntime: pipe failedruntime: unknown pc selectgo: bad wakeupsemaRoot rotateRighttime: invalid numbertoo few shards giventrace: out of memoryunexpected IP lengthunexpected network: unknown PSK identityunknown address typewirep: already in goworkbuf is not emptywrite of Go pointer  of unexported method previous allocCount=%s flag redefined: %s, levelBits[level] = 186264514923095703125931322574615478515625Anatolian_HieroglyphsInscriptional_PahlaviInternal Server ErrorOther_Grapheme_ExtendPrecondition RequiredRoundTrip failure: %vUNKNOWN_FRAME_TYPE_%dUnhandled Setting: %v_cgo_unsetenv missingasync stack too largebad type in compare: block device requiredbufio: negative countcheckdead: runnable gcommand not supportedconcurrent map writesdecompression failuredefer on system stackextended echo requestfindrunnable: wrong phttp: Handler timeouthttp: nil Request.URLkey is not comparablelink has been severedlocalhost.localdomainnegative shift amountneighbor solicitationnet/http: nil Contextpackage not installedpanic on system stackparsenetlinkrouteattrread-only file systemreflect.Value.Complexreflect.Value.Pointerreflect.Value.SetUintreleasep: invalid argruntime: confused by runtime: newstack at runtime: newstack sp=runtime: searchIdx = runtime: work.nwait= sequence tag mismatchsingle-request-reopenstartlockedm: m has pstartm: m is spinningstate not recoverabletimer data corruptionunknown address type unknown empty Contextunsupported extension received during fork
+ zombie, goid=, j0 = 19531252.5.4.32.5.4.52.5.4.62.5.4.72.5.4.82.5.4.99765625::1/128:method:scheme:statusASIMDDPASIMDHPATOMICSAVX512FAvestanBLAKE2sBengaliBrailleCONNECTChanDirCreatedCypriotDeseretEVTSTRMEd25519ElbasanElymaicExpiresGODEBUGGranthaHEADERSHanunooIM UsedIO waitJanuaryKannadaMD2-RSAMD5-RSAMakasarMandaicMarchenMultaniMyanmarOctoberOsmanyaRadicalRefererSHA-224SHA-256SHA-384SHA-512SharadaShavianSiddhamSignal SinhalaSogdianSoyomboSubjectSwapperTagalogTibetanTirhutaTrailerTuesdayTypeALLTypeOPTTypePTRTypeSOATypeSRVTypeTXTTypeWKSUNKNOWNUpgradeUsage:
+!*map.bucket[cpuid.ArmFlags]string
+"*map.bucket[dnsmessage.Type]string
+"*map.bucket[http.http2Flags]string
+#*map.bucket[dnsmessage.Class]string
+#*map.bucket[dnsmessage.RCode]string
+%*map.bucket[dnsmessage.section]string
+%www.bamsoftware.com/git/dnstt.git/dns
+&*struct { F uintptr; R *flag.FlagSet }
+&*struct { F uintptr; f *flag.FlagSet }
+&vendor/golang.org/x/net/dns/dnsmessage
+'*struct { ptr *[]dns.RR; count uint16 }
+'www.bamsoftware.com/git/dnstt.git/noise
+(MISSING)(unknown), newval=, oldval=, size = , tail = 2001::/322002::/162441406253ffe::/16: status=AuthorityBassa_VahBhaiksukiBigEndianClassINETCuneiformDiacriticForbiddenHex_DigitInheritedInterfaceKhudawadiMalayalamMongolianNabataeanNot FoundPalmyreneParseUintSamaritanSee OtherSeptemberSundaneseToo EarlyTrailer: TypeCNAMETypeHINFOTypeMINFOUse ProxyWednesday[%v = %d]atomicor8attempts:bad indirbad prunechan sendcomplex64copystackctxt != 0d.nx != 0debugLockdns,filesempty urlfec0::/10files,dnsfuncargs(hchanLeafimage/gifimage/pnginittraceinterfaceipv6-icmplocalhostlocaltimemSpanDeadmSpanFreenewosprocnil errorpanicwaitpreemptedprotocol questionsraw-writerecover: reflect: rwxrwxrwxscavtracesignal 32signal 33signal 34signal 35signal 36signal 37signal 38signal 39signal 40signal 41signal 42signal 43signal 44signal 45signal 46signal 47signal 48signal 49signal 50signal 51signal 52signal 53signal 54signal 55signal 56signal 57signal 58signal 59signal 60signal 61signal 62signal 63signal 64stackpoolsucceededtimestampunderflowwbufSpanswebsocket} stack=[ MB goal,  actual
+)*[]struct { ptr *[]dns.RR; count uint16 }
+**[3]struct { ptr *[]dns.RR; count uint16 }
+**flag.Flag
+**struct { F uintptr; result []*flag.Flag }
+*[1]dns.Question
+*[1]dns.RR
+*[1]time.zone
+*[1]time.zoneTrans
+*[2]http.socksAuthMethod
+*[3][]dns.RR
+*[8]*flag.Flag
+*[8]cpuid.ArmFlags
+*[8]cpuid.Flags
+*[8]dnsmessage.Class
+*[8]dnsmessage.RCode
+*[8]dnsmessage.Type
+*[8]dnsmessage.section
+*[8]http.http2Flags
+*[8]map[http.http2Flags]string
+*[]*flag.Flag
+*[][]dns.RR
+*[]cpuid.ArmFlags
+*[]cpuid.Flags
+*[]dns.Question
+*[]dnsmessage.Class
+*[]dnsmessage.RCode
+*[]dnsmessage.Type
+*[]dnsmessage.section
+*[]http.http2Flags
+*[]http.socksAuthMethod
+*[]map[http.http2Flags]string
+*[]time.zone
+*[]time.zoneTrans
+*[]x509.ExtKeyUsage
+*[]x509.authorityInfoAccess
+*asn1.Flag
+*cpuid.ArmFlags
+*cpuid.Flags
+*dns.Message
+*dns.Question
+*dns.RR
+*dns.messageBuilder
+*dnsmessage.AAAAResource
+*dnsmessage.AResource
+*dnsmessage.Builder
+*dnsmessage.Class
+*dnsmessage.Name
+*dnsmessage.Parser
+*dnsmessage.RCode
+*dnsmessage.ResourceHeader
+*dnsmessage.Type
+*dnsmessage.header
+*dnsmessage.nestedError
+*dnsmessage.section
+*flag.ErrorHandling
+*flag.Flag
+*flag.FlagSet
+*flag.Value
+*flag.boolFlag
+*flag.durationValue
+*flag.float64Value
+*flag.int64Value
+*flag.intValue
+*flag.stringValue
+*flag.uint64Value
+*flag.uintValue
+*fmt.fmtFlags
+*func(httptrace.DNSDoneInfo)
+*func(httptrace.DNSStartInfo)
+*http.http2Flags
+*http.socksAddr
+*http.socksAuthMethod
+*http.socksCommand
+*http.socksDialer
+*http.socksUsernamePassword
+*httptrace.DNSDoneInfo
+*httptrace.DNSStartInfo
+*ipv4.ControlFlags
+*ipv6.ControlFlags
+*main.DNSPacketConn
+*map.bucket[cpuid.Flags]string
+*map.bucket[string]*flag.Flag
+*map.hdr[string]*flag.Flag
+*map.iter[string]*flag.Flag
+*map[cpuid.ArmFlags]string
+*map[cpuid.Flags]string
+*map[dnsmessage.Class]string
+*map[dnsmessage.RCode]string
