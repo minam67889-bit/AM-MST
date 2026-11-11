@@ -1,50 +1,35 @@
 ==== ns.up2.fcafessh.net via 209.94.59.213
-  example.com:80 http: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  api.telegram.org:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  ns.up2.fcafessh.net:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  1.1.1.1:443 tls: CONNECT-FAIL after 14.9s ConnectionResetError: [Errno 104] Connection reset by peer
+  local 2222 (ns.up2.fcafessh.net): NO-DATA after 27.0s TimeoutError: timed out
   client log:
-    2026/11/11 09:03:57 uTLS fingerprint Chrome 120
-    2026/11/11 09:03:57 effective MTU 130
-    2026/11/11 09:03:57 begin session 6e146b88
+    2026/11/11 09:25:09 uTLS fingerprint Chrome 102
+    2026/11/11 09:25:09 effective MTU 130
+    2026/11/11 09:25:09 begin session bab15c1c
 
 ==== newca.dozapp.xyz via 144.217.81.86
-  example.com:80 http: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  api.telegram.org:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  newca.dozapp.xyz:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  1.1.1.1:443 tls: CONNECT-FAIL after 14.9s ConnectionResetError: [Errno 104] Connection reset by peer
+  local 2222 (newca.dozapp.xyz): NO-DATA after 27.0s TimeoutError: timed out
   client log:
-    2026/11/11 09:05:57 uTLS fingerprint Firefox 120
-    2026/11/11 09:05:57 effective MTU 132
-    2026/11/11 09:05:57 begin session 51214ad3
+    2026/11/11 09:25:51 uTLS fingerprint Firefox 120
+    2026/11/11 09:25:51 effective MTU 132
+    2026/11/11 09:25:51 begin session 42a1b2a2
 
 ==== dnsde1.dozapp.xyz via 154.53.57.37
-  example.com:80 http: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  api.telegram.org:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  dnsde1.dozapp.xyz:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  1.1.1.1:443 tls: CONNECT-FAIL after 14.9s ConnectionResetError: [Errno 104] Connection reset by peer
+  local 2222 (dnsde1.dozapp.xyz): NO-DATA after 27.0s TimeoutError: timed out
   client log:
-    2026/11/11 09:07:57 uTLS fingerprint iOS 14
-    2026/11/11 09:07:57 effective MTU 132
-    2026/11/11 09:07:57 begin session 776bc0ea
+    2026/11/11 09:26:33 uTLS fingerprint iOS 14
+    2026/11/11 09:26:33 effective MTU 132
+    2026/11/11 09:26:33 begin session 4a8bf78c
 
 ==== dnsde1.dozapp.xyz via 84.46.252.158
-  example.com:80 http: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  api.telegram.org:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  dnsde1.dozapp.xyz:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  1.1.1.1:443 tls: CONNECT-FAIL after 14.9s ConnectionResetError: [Errno 104] Connection reset by peer
+  local 2222 (dnsde1.dozapp.xyz): NO-DATA after 27.0s TimeoutError: timed out
   client log:
-    2026/11/11 09:09:57 uTLS fingerprint Firefox 120
-    2026/11/11 09:09:57 effective MTU 132
-    2026/11/11 09:09:57 begin session 62991bc6
+    2026/11/11 09:27:15 uTLS fingerprint iOS 13
+    2026/11/11 09:27:15 effective MTU 132
+    2026/11/11 09:27:15 begin session 896137f2
 
 ==== nssshvip1.vpnprous.com via 51.83.129.208
-  example.com:80 http: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  api.telegram.org:443 tls: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  nssshvip1.vpnprous.com:22 banner: CONNECT-FAIL after 30.0s TimeoutError: timed out
-  1.1.1.1:443 tls: CONNECT-FAIL after 14.9s ConnectionResetError: [Errno 104] Connection reset by peer
+  local 2222 (nssshvip1.vpnprous.com): NO-DATA after 27.0s TimeoutError: timed out
   client log:
-    2026/11/11 09:11:57 uTLS fingerprint Firefox 120
-    2026/11/11 09:11:57 effective MTU 128
-    2026/11/11 09:11:57 begin session b14a80d5
+    2026/11/11 09:27:57 uTLS fingerprint Firefox 105
+    2026/11/11 09:27:57 effective MTU 128
+    2026/11/11 09:27:57 begin session 2f78b06e
 
