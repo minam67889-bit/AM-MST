@@ -1,0 +1,154 @@
+name: Ultra Tunnel - where the SlowDNS servers come from
+
+# Third pass. Known so far:
+#   DNSTunnelThread:  libdns -udp <dnsKey>:53 -pubkey <chaveKey> <serverNameKey> 127.0.0.1:2222
+#   libdns.so        = stock dnstt client (bamsoftware.com/git/dnstt.git)
+#   libsocks.so      = BadVPN tun2socks 1.999.127 (has --username/--password, app does not use them)
+#   the three values come from SecurePreferences (dnsKey / chaveKey / serverNameKey)
+#
+# So the open question is: who fills those three values? This job answers it,
+# and gets the exact libdns flag list under qemu.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/ultra-probe.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq unzip file binutils curl jq python3 default-jre-headless qemu-user-static
+
+      - name: XAPK + jadx
+        run: |
+          set +e
+          mkdir -p /tmp/u && cd /tmp/u
+          URL="https://filebin.net/tc28bjzj2p27ju9v/co.strongteam.ultra.zip"
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+          curl -sS -c jar -A "$UA" -o /dev/null "$URL"
+          curl -sSL -c jar -b jar -A "$UA" -H "Referer: $URL" -o u.zip "$URL"
+          unzip -o -q u.zip -d x
+          cp x/co.strongteam.ultra.59.apk base.apk
+          unzip -o -q x/config.arm64_v8a.apk -d arm64
+          curl -sSL -o jadx.zip "https://github.com/skylot/jadx/releases/download/v1.5.0/jadx-1.5.0.zip"
+          unzip -o -q jadx.zip -d jadx && chmod +x jadx/bin/jadx
+          (setsid nohup jadx/bin/jadx -d /tmp/u/src --no-res --threads-count 4 /tmp/u/base.apk > /tmp/u/jadx.log 2>&1 < /dev/null &)
+          for i in $(seq 1 60); do grep -q "finished" /tmp/u/jadx.log && break; sleep 10; done
+          tail -1 /tmp/u/jadx.log | cut -c1-120
+          du -sh /tmp/u/src
+
+      - name: Who fills dnsKey / chaveKey / serverNameKey
+        run: |
+          set +e
+          S=/tmp/u/src/sources
+          R="$GITHUB_WORKSPACE/analysis-ultra/report"
+          mkdir -p "$R"
+          {
+            echo "### writers of the three prefs"
+            grep -rn --include=*.java -E 'putString\(\s*SettingsConstants\.(DNS_KEY|CHAVE_KEY|NAMESERVER_KEY)|"(dnsKey|chaveKey|serverNameKey)"' "$S" | cut -c1-300 | head -60
+            echo
+            echo "### Settings getters"
+            grep -rn --include=*.java -A4 'String getPrivString|getChaveKey|getServerName|getDnsKey' "$S" | head -80
+          } > "$R/prefs-writers.txt"
+          wc -l "$R/prefs-writers.txt"
+
+          {
+            echo "### http(s) endpoints in the app's own packages"
+            grep -rhoE '"https?://[^"]{4,120}"' "$S/com/vpn" "$S/com/v2ray" "$S/co/strongteam" 2>/dev/null | sort -u | head -80
+            echo
+            echo "### same, from the whole tree but filtered to app-looking hosts"
+            grep -rhoE '"https?://[^"]{4,120}"' "$S" 2>/dev/null | sort -u | grep -viE 'google|gstatic|facebook|ads|doubleclick|appsflyer|crashlytics|firebase|schema|w3\.org|github\.com/skylot|android\.com|apache\.org|json-schema' | head -80
+          } > "$R/endpoints.txt"
+          wc -l "$R/endpoints.txt"
+
+          {
+            echo "### anything named like a server list"
+            grep -rln --include=*.java -E 'serverlist|server_list|servers\.json|jsonConfig|loadConfig|readConfig|downloadConfig' "$S" | head -40
+            echo
+            echo "### SecurePreferences users with literal keys"
+            grep -rn --include=*.java -E 'SecurePreferences|getPrefsPrivate' "$S/com/vpn" | cut -c1-200 | head -40
+          } > "$R/config-sources.txt"
+          wc -l "$R/config-sources.txt"
+
+      - name: Strings and resources inside the APK
+        run: |
+          set +e
+          cd /tmp/u
+          AAPT2=$(ls ${ANDROID_HOME:-/usr/local/lib/android/sdk}/build-tools/*/aapt2 2>/dev/null | sort -V | tail -1)
+          R="$GITHUB_WORKSPACE/analysis-ultra/report"
+          mkdir -p "$R"
+          {
+            echo "### badging"
+            [ -n "$AAPT2" ] && "$AAPT2" dump badging base.apk 2>/dev/null | head -20
+            echo
+            echo "### slowdns-ish strings in the dex"
+            unzip -p base.apk classes*.dex 2>/dev/null | strings -n 4 | grep -iE "slowdns|slow dns|dnstt|udp2raw|sd-|pubkey|nameserver|chave" | sort -u | head -80
+            echo
+            echo "### hostnames in resources"
+            unzip -p base.apk resources.arsc 2>/dev/null | strings -n 6 | grep -oE "[a-z0-9][a-z0-9.-]+\.(com|net|org|io|xyz|top|site|info|me|live|world|fit|space|cloud|app|online)" | sort -u | head -60
+          } > "$R/apk-strings.txt"
+          wc -l "$R/apk-strings.txt"
+
+      - name: libdns real flags (qemu)
+        run: |
+          set +e
+          cd /tmp/u
+          R="$GITHUB_WORKSPACE/analysis-ultra/report"
+          mkdir -p "$R" sysroot/system/bin sysroot/system/lib64
+          export ANDROID_HOME=${ANDROID_HOME:-/usr/local/lib/android/sdk}
+          SDKMANAGER=$(command -v sdkmanager || echo "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager")
+          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1
+          "$SDKMANAGER" "system-images;android-24;default;arm64-v8a" > /tmp/u/sdk.log 2>&1
+          IMGDIR=$(find "$ANDROID_HOME" -type d -path '*android-24*arm64-v8a*' | head -1)
+          IMGFILE="$IMGDIR/system.img"
+          if sudo mount -o loop,ro "$IMGFILE" /mnt 2>/dev/null; then
+            sudo cp /mnt/bin/linker64 sysroot/system/bin/
+            sudo cp -a /mnt/lib64/*.so sysroot/system/lib64/
+            sudo umount /mnt
+          else
+            sudo chmod 644 "$IMGFILE"
+            for f in bin/linker64 lib64/libc.so lib64/libdl.so lib64/libm.so lib64/liblog.so; do
+              debugfs -R "dump /$f /tmp/x.bin" "$IMGFILE" > /dev/null 2>&1 && sudo mv /tmp/x.bin "sysroot/system/$f"
+            done
+          fi
+          sudo chown -R "$USER" sysroot
+          export QEMU_LD_PREFIX=$PWD/sysroot
+          chmod +x arm64/lib/arm64-v8a/*.so
+          {
+            echo "### libdns.so with a bogus flag (Go prints every flag)"
+            timeout 30 qemu-aarch64-static arm64/lib/arm64-v8a/libdns.so -zzz 2>&1 | head -30
+            echo
+            echo "### libdns.so --help"
+            timeout 30 qemu-aarch64-static arm64/lib/arm64-v8a/libdns.so --help 2>&1 | head -20
+            echo
+            echo "### libsocks.so --help"
+            timeout 30 qemu-aarch64-static arm64/lib/arm64-v8a/libsocks.so --help 2>&1 | head -30
+          } > "$R/native-usage.txt"
+          cat "$R/native-usage.txt"
+
+      - name: Commit
+        if: always()
+        run: |
+          set +e
+          cd "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-ultra
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "ultra: where the slowdns values come from [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" > /dev/null 2>&1
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
