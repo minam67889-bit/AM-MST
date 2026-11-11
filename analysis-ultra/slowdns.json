@@ -615,7 +615,32 @@
    "catalog_versions": [
     "3.95",
     "5.28"
-   ]
+   ],
+   "delegation_ns": [
+    "sierra.ns.cloudflare.com",
+    "reese.ns.cloudflare.com"
+   ],
+   "endpoint_ips": [
+    "108.162.194.245",
+    "108.162.195.117",
+    "162.159.38.245",
+    "162.159.44.117",
+    "172.64.34.245",
+    "172.64.35.117"
+   ],
+   "txt_at_endpoint": {
+    "108.162.194.245": "rcode=NXDOMAIN answers=0 []",
+    "108.162.195.117": "rcode=NXDOMAIN answers=0 []",
+    "162.159.38.245": "rcode=NXDOMAIN answers=0 []",
+    "162.159.44.117": "rcode=NXDOMAIN answers=0 []",
+    "172.64.34.245": "rcode=NXDOMAIN answers=0 []",
+    "172.64.35.117": "rcode=NXDOMAIN answers=0 []"
+   },
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=NXDOMAIN",
+    "1.1.1.1": "rcode=NXDOMAIN"
+   },
+   "endpoint_answers_raw_dns": false
   },
   {
    "slowdns_domain": "slwdns.codefyinc.com",
@@ -633,7 +658,17 @@
    "ssh_port": "22",
    "catalog_versions": [
     "3.95"
-   ]
+   ],
+   "delegation_ns": [
+    "slw.codefyinc.com"
+   ],
+   "endpoint_ips": [],
+   "txt_at_endpoint": {},
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=SERVFAIL",
+    "1.1.1.1": "rcode=SERVFAIL"
+   },
+   "endpoint_answers_raw_dns": false
   },
   {
    "slowdns_domain": "ns.rovox.wampipti.net",
@@ -651,7 +686,32 @@
    "ssh_port": "22",
    "catalog_versions": [
     "3.95"
-   ]
+   ],
+   "delegation_ns": [
+    "vita.ns.cloudflare.com",
+    "kirk.ns.cloudflare.com"
+   ],
+   "endpoint_ips": [
+    "108.162.192.238",
+    "108.162.193.192",
+    "172.64.32.238",
+    "172.64.33.192",
+    "173.245.58.238",
+    "173.245.59.192"
+   ],
+   "txt_at_endpoint": {
+    "108.162.192.238": "rcode=NXDOMAIN answers=0 []",
+    "108.162.193.192": "rcode=NXDOMAIN answers=0 []",
+    "172.64.32.238": "rcode=NXDOMAIN answers=0 []",
+    "172.64.33.192": "rcode=NXDOMAIN answers=0 []",
+    "173.245.58.238": "rcode=NXDOMAIN answers=0 []",
+    "173.245.59.192": "rcode=NXDOMAIN answers=0 []"
+   },
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=NXDOMAIN",
+    "1.1.1.1": "rcode=NXDOMAIN"
+   },
+   "endpoint_answers_raw_dns": false
   },
   {
    "slowdns_domain": "newca.dozapp.xyz",
@@ -669,7 +729,21 @@
    "ssh_port": "22",
    "catalog_versions": [
     "3.95"
-   ]
+   ],
+   "delegation_ns": [
+    "newcan.dozapp.xyz"
+   ],
+   "endpoint_ips": [
+    "144.217.81.86"
+   ],
+   "txt_at_endpoint": {
+    "144.217.81.86": "no reply (Timeout)"
+   },
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=SERVFAIL",
+    "1.1.1.1": "rcode=SERVFAIL"
+   },
+   "endpoint_answers_raw_dns": false
   },
   {
    "slowdns_domain": "dnsde1.dozapp.xyz",
@@ -687,7 +761,24 @@
    "ssh_port": "22",
    "catalog_versions": [
     "3.95"
-   ]
+   ],
+   "delegation_ns": [
+    "dedns1.dozapp.xyz",
+    "slowdnsde1.dozapp.xyz"
+   ],
+   "endpoint_ips": [
+    "154.53.57.37",
+    "84.46.252.158"
+   ],
+   "txt_at_endpoint": {
+    "154.53.57.37": "no reply (Timeout)",
+    "84.46.252.158": "no reply (Timeout)"
+   },
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=SERVFAIL",
+    "1.1.1.1": "rcode=SERVFAIL"
+   },
+   "endpoint_answers_raw_dns": false
   },
   {
    "slowdns_domain": "nssshvip1.vpnprous.com",
@@ -705,7 +796,21 @@
    "ssh_port": "22",
    "catalog_versions": [
     "3.95"
-   ]
+   ],
+   "delegation_ns": [
+    "sshvip1.vpnprous.com"
+   ],
+   "endpoint_ips": [
+    "51.83.129.208"
+   ],
+   "txt_at_endpoint": {
+    "51.83.129.208": "no reply (Timeout)"
+   },
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=SERVFAIL",
+    "1.1.1.1": "rcode=SERVFAIL"
+   },
+   "endpoint_answers_raw_dns": false
   },
   {
    "slowdns_domain": "nsVIPSSH087.vpnprous.com",
@@ -723,7 +828,17 @@
    "ssh_port": "22",
    "catalog_versions": [
     "3.95"
-   ]
+   ],
+   "delegation_ns": [
+    "vipssh087.vpnprous.com"
+   ],
+   "endpoint_ips": [],
+   "txt_at_endpoint": {},
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=SERVFAIL",
+    "1.1.1.1": "rcode=SERVFAIL"
+   },
+   "endpoint_answers_raw_dns": false
   },
   {
    "slowdns_domain": "ns.up2.fcafessh.net",
@@ -741,7 +856,21 @@
    "ssh_port": "22",
    "catalog_versions": [
     "5.28"
-   ]
+   ],
+   "delegation_ns": [
+    "up2.fcafessh.net"
+   ],
+   "endpoint_ips": [
+    "209.94.59.213"
+   ],
+   "txt_at_endpoint": {
+    "209.94.59.213": "no reply (Timeout)"
+   },
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=SERVFAIL",
+    "1.1.1.1": "rcode=SERVFAIL"
+   },
+   "endpoint_answers_raw_dns": false
   }
  ],
  "launch_recipes": [

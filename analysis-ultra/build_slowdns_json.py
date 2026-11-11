@@ -84,6 +84,51 @@ for addr, names in sorted(resolvers.items(), key=lambda kv: -len(kv[1])):
                  else "carrier/esim" if is_ip else "hostname"),
     })
 
+# --- DNS endpoints, from analysis-ultra/report/dns-endpoints.txt -----------
+def parse_endpoints(path: str) -> dict[str, dict]:
+    import re
+    rows: dict[str, dict] = {}
+    cur = None
+    try:
+        text = open(path, encoding="utf-8").read()
+    except OSError:
+        return rows
+    for line in text.splitlines():
+        line = line.strip()
+        m = re.match(r"^==== (\S+)$", line)
+        if m:
+            cur = rows.setdefault(m.group(1), {"ns": [], "ns_ips": [], "txt": {},
+                                               "public": {}})
+            continue
+        if cur is None:
+            continue
+        if line.startswith("delegation NS:"):
+            cur["ns"] = re.findall(r"'([^']+)'", line)
+        elif line.startswith("NS addresses"):
+            cur["ns_ips"] = re.findall(r"(\d+\.\d+\.\d+\.\d+)", line)
+        elif line.startswith("TXT @"):
+            m2 = re.match(r"TXT @([0-9.]+)\s*:\s*(.+)$", line)
+            if m2:
+                ip, res = m2.group(1), m2.group(2)
+                if ip in ("8.8.8.8", "1.1.1.1"):
+                    cur["public"][ip] = res.split(" answers")[0]
+                else:
+                    cur["txt"][ip] = res
+    return rows
+
+
+endpoints = parse_endpoints("analysis-ultra/report/dns-endpoints.txt")
+for row in servers:
+    ep = endpoints.get(row["slowdns_domain"])
+    if not ep:
+        continue
+    row["delegation_ns"] = ep["ns"]
+    row["endpoint_ips"] = ep["ns_ips"]
+    row["txt_at_endpoint"] = ep["txt"]
+    row["public_resolver_rcode"] = ep["public"]
+    row["endpoint_answers_raw_dns"] = any("answers=" in v and "answers=0" not in v
+                                          for v in ep["txt"].values())
+
 # --- launch recipes ---------------------------------------------------------
 recipes = []
 for row in servers:
