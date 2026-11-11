@@ -1,0 +1,120 @@
+name: Ultra Tunnel - panel and prefs (where the servers come from)
+
+# Fourth pass. Established:
+#   libdns.so  = stock dnstt, flags: -udp/-doh/-dot, -pubkey <64 hex>, -pubkey-file,
+#                then DOMAIN and LOCALADDR  ->  Ultra runs a normal dnstt tunnel
+#   the app calls: libdns -udp <dnsKey>:53 -pubkey <chaveKey> <serverNameKey> 127.0.0.1:2222
+#   libsocks.so = BadVPN tun2socks (SOCKS auth flags exist, app does not pass them)
+#
+# Two endpoints showed up in the app's own packages:
+#   https://panel.vpnprous.com   and   https://10xbdnet.xyz/login
+# This job copies every class that touches those or the three prefs, so the
+# origin of dnsKey / chaveKey / serverNameKey is readable in the repo.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/ultra-panel.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  panel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq unzip file binutils curl jq default-jre-headless
+
+      - name: XAPK + jadx
+        run: |
+          set +e
+          mkdir -p /tmp/u && cd /tmp/u
+          URL="https://filebin.net/tc28bjzj2p27ju9v/co.strongteam.ultra.zip"
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+          curl -sS -c jar -A "$UA" -o /dev/null "$URL"
+          curl -sSL -c jar -b jar -A "$UA" -H "Referer: $URL" -o u.zip "$URL"
+          unzip -o -q u.zip -d x
+          cp x/co.strongteam.ultra.59.apk base.apk
+          curl -sSL -o jadx.zip "https://github.com/skylot/jadx/releases/download/v1.5.0/jadx-1.5.0.zip"
+          unzip -o -q jadx.zip -d jadx && chmod +x jadx/bin/jadx
+          (setsid nohup jadx/bin/jadx -d /tmp/u/src --no-res --threads-count 4 /tmp/u/base.apk > /tmp/u/jadx.log 2>&1 < /dev/null &)
+          for i in $(seq 1 60); do grep -q "finished" /tmp/u/jadx.log && break; sleep 10; done
+          tail -1 /tmp/u/jadx.log | cut -c1-120
+
+      - name: Copy every class that touches the panel or the slowdns prefs
+        run: |
+          set +e
+          S=/tmp/u/src/sources
+          OUT="$GITHUB_WORKSPACE/analysis-ultra/code"
+          mkdir -p "$OUT"
+          hits=$(grep -rl --include=*.java -E 'vpnprous|10xbdnet|chaveKey|serverNameKey|dnsKey|DNS_KEY|CHAVE_KEY|NAMESERVER_KEY|slowdns|SlowDNS|SlowDns' "$S" 2>/dev/null | head -80)
+          n=0
+          for f in $hits; do
+            rel=${f#"$S/"}
+            sz=$(stat -c%s "$f")
+            [ "$sz" -gt 400000 ] && continue
+            mkdir -p "$OUT/$(dirname "$rel")"
+            cp "$f" "$OUT/$rel"
+            n=$((n+1))
+          done
+          echo "copied $n files"
+          find "$OUT" -name "*.java" | wc -l
+          du -sh "$OUT"
+
+      - name: Show the relevant lines
+        run: |
+          set +e
+          S=/tmp/u/src/sources
+          R="$GITHUB_WORKSPACE/analysis-ultra/report"
+          mkdir -p "$R"
+          {
+            echo "### who writes the three keys"
+            grep -rn --include=*.java -E 'setPrivString|putString\([^)]*(chaveKey|serverNameKey|dnsKey)' "$S/com/vpn" | cut -c1-260 | head -60
+            echo
+            echo "### Settings.java API around those keys"
+            grep -rn --include=*.java -E -A3 'DNS_KEY|CHAVE_KEY|NAMESERVER_KEY' "$S/com/vpn/sandok/ultrasshservice/config/Settings.java" | cut -c1-260 | head -60
+            echo
+            echo "### panel endpoints in context"
+            grep -rn --include=*.java -E -B4 -A10 'vpnprous|10xbdnet' "$S" | cut -c1-260 | head -120
+          } > "$R/panel.txt"
+          wc -l "$R/panel.txt"
+          head -80 "$R/panel.txt"
+
+      - name: What is the panel (a plain GET, nothing else)
+        run: |
+          set +e
+          R="$GITHUB_WORKSPACE/analysis-ultra/report"
+          mkdir -p "$R"
+          {
+            echo "### https://panel.vpnprous.com"
+            curl -sS -m 20 -o /tmp/panel.html -w "http=%{http_code} size=%{size_download} type=%{content_type}\n" https://panel.vpnprous.com/ 2>&1
+            head -c 600 /tmp/panel.html 2>/dev/null
+            echo
+            echo "### https://10xbdnet.xyz/login"
+            curl -sS -m 20 -o /tmp/bd.html -w "http=%{http_code} size=%{size_download} type=%{content_type}\n" https://10xbdnet.xyz/login 2>&1
+            head -c 600 /tmp/bd.html 2>/dev/null
+          } > "$R/panel-http.txt"
+          cat "$R/panel-http.txt"
+
+      - name: Commit
+        if: always()
+        run: |
+          set +e
+          cd "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-ultra
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "ultra: panel and prefs classes [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" > /dev/null 2>&1
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
