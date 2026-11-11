@@ -1,0 +1,72 @@
+==== sd-de1.liftmeon.org
+  delegation NS: ['de1.liftmeon.org']
+  NS addresses : ['13.140.185.158']
+  TXT @13.140.185.158  : rcode=NXDOMAIN answers=0 []
+  TXT @8.8.8.8         : rcode=NXDOMAIN answers=0 []
+  TXT @1.1.1.1         : rcode=NXDOMAIN answers=0 []
+
+==== ns.up2.fcafessh.net
+  delegation NS: ['up2.fcafessh.net']
+  NS addresses : ['209.94.59.213']
+  TXT @209.94.59.213   : no reply (Timeout)
+  TXT @8.8.8.8         : rcode=SERVFAIL answers=0 []
+  TXT @1.1.1.1         : rcode=SERVFAIL answers=0 []
+
+==== slwdns.codefyinc.com
+  delegation NS: ['slw.codefyinc.com']
+  NS addresses : (none)
+  TXT @8.8.8.8         : rcode=SERVFAIL answers=0 []
+  TXT @1.1.1.1         : rcode=SERVFAIL answers=0 []
+
+==== ns.rovox.wampipti.net
+  delegation NS: ['vita.ns.cloudflare.com', 'kirk.ns.cloudflare.com']
+  NS addresses : ['108.162.192.238', '108.162.193.192', '172.64.32.238', '172.64.33.192', '173.245.58.238', '173.245.59.192']
+  TXT @108.162.192.238 : rcode=NXDOMAIN answers=0 []
+  TXT @108.162.193.192 : rcode=NXDOMAIN answers=0 []
+  TXT @172.64.32.238   : rcode=NXDOMAIN answers=0 []
+  TXT @172.64.33.192   : rcode=NXDOMAIN answers=0 []
+  TXT @173.245.58.238  : rcode=NXDOMAIN answers=0 []
+  TXT @173.245.59.192  : rcode=NXDOMAIN answers=0 []
+  TXT @8.8.8.8         : rcode=NXDOMAIN answers=0 []
+  TXT @1.1.1.1         : rcode=NXDOMAIN answers=0 []
+
+==== newca.dozapp.xyz
+  delegation NS: ['newcan.dozapp.xyz']
+  NS addresses : ['144.217.81.86']
+  TXT @144.217.81.86   : no reply (Timeout)
+  TXT @8.8.8.8         : rcode=SERVFAIL answers=0 []
+  TXT @1.1.1.1         : rcode=SERVFAIL answers=0 []
+
+==== dnsde1.dozapp.xyz
+  delegation NS: ['dedns1.dozapp.xyz', 'slowdnsde1.dozapp.xyz']
+  NS addresses : ['154.53.57.37', '84.46.252.158']
+  TXT @154.53.57.37    : no reply (Timeout)
+  TXT @84.46.252.158   : no reply (Timeout)
+  TXT @8.8.8.8         : rcode=SERVFAIL answers=0 []
+  TXT @1.1.1.1         : rcode=SERVFAIL answers=0 []
+
+==== nssshvip1.vpnprous.com
+  delegation NS: ['sshvip1.vpnprous.com']
+  NS addresses : ['51.83.129.208']
+  TXT @51.83.129.208   : no reply (Timeout)
+  TXT @8.8.8.8         : rcode=SERVFAIL answers=0 []
+  TXT @1.1.1.1         : rcode=SERVFAIL answers=0 []
+
+==== nsVIPSSH087.vpnprous.com
+  delegation NS: ['vipssh087.vpnprous.com']
+  NS addresses : (none)
+  TXT @8.8.8.8         : rcode=SERVFAIL answers=0 []
+  TXT @1.1.1.1         : rcode=SERVFAIL answers=0 []
+
+==== nssshtt.mdmonzo.com
+  delegation NS: ['sierra.ns.cloudflare.com', 'reese.ns.cloudflare.com']
+  NS addresses : ['108.162.194.245', '108.162.195.117', '162.159.38.245', '162.159.44.117', '172.64.34.245', '172.64.35.117']
+  TXT @108.162.194.245 : rcode=NXDOMAIN answers=0 []
+  TXT @108.162.195.117 : rcode=NXDOMAIN answers=0 []
+  TXT @162.159.38.245  : rcode=NXDOMAIN answers=0 []
+  TXT @162.159.44.117  : rcode=NXDOMAIN answers=0 []
+  TXT @172.64.34.245   : rcode=NXDOMAIN answers=0 []
+  TXT @172.64.35.117   : rcode=NXDOMAIN answers=0 []
+  TXT @8.8.8.8         : rcode=NXDOMAIN answers=0 []
+  TXT @1.1.1.1         : rcode=NXDOMAIN answers=0 []
+
