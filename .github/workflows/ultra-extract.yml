@@ -45,16 +45,16 @@ jobs:
           set +e
           mkdir -p analysis-ultra/assets
           cd /tmp/u/x
-          for f in manifest.json; do cp "$f" "/home/runner/work/$GITHUB_REPOSITORY/analysis-ultra/$f" 2>/dev/null; done
+          for f in manifest.json; do cp "$f" "$GITHUB_WORKSPACE/analysis-ultra/$f" 2>/dev/null; done
           unzip -o -q co.strongteam.ultra.59.apk 'assets/*' -d base > /dev/null
           du -sh base/assets
           ls -l base/assets | head -20
-          mkdir -p "/home/runner/work/$GITHUB_REPOSITORY/analysis-ultra/assets"
+          mkdir -p "$GITHUB_WORKSPACE/analysis-ultra/assets"
           # small text assets are copied whole; huge ones are sampled
           for f in base/assets/*.json base/assets/custom_routing_* ; do
             [ -f "$f" ] || continue
             sz=$(stat -c%s "$f")
-            out="/home/runner/work/$GITHUB_REPOSITORY/analysis-ultra/assets/$(basename "$f")"
+            out="$GITHUB_WORKSPACE/analysis-ultra/assets/$(basename "$f")"
             if [ "$sz" -lt 8000000 ]; then cp "$f" "$out"; else head -c 2000000 "$f" > "$out"; fi
             echo "== $f ($sz bytes)"
             head -c 400 "$f"; echo; echo
@@ -76,7 +76,7 @@ jobs:
           unzip -o -j co.strongteam.ultra.59.apk 'lib/arm64-v8a/*' -d /tmp/u/libs > /dev/null 2>&1
           chmod +x /tmp/u/libs/* 2>/dev/null
           ls -l /tmp/u/libs
-          OUT="/home/runner/work/$GITHUB_REPOSITORY/analysis-ultra/libs"
+          OUT="$GITHUB_WORKSPACE/analysis-ultra/libs"
           mkdir -p "$OUT"
           for lib in /tmp/u/libs/*.so; do
             b=$(basename "$lib")
@@ -110,7 +110,7 @@ jobs:
             sleep 15
           done
           tail -3 /tmp/u/jadx.log
-          OUT="/home/runner/work/$GITHUB_REPOSITORY/analysis-ultra/src"
+          OUT="$GITHUB_WORKSPACE/analysis-ultra/src"
           mkdir -p "$OUT"
           S=/tmp/u/src/sources
           du -sh "$S" 2>/dev/null
