@@ -1,0 +1,64 @@
+name: Ultra Tunnel - raw DNS liveness of every SlowDNS domain
+
+# dnstt prints "effective MTU" and "begin session" before it sends a single
+# packet, so those lines say nothing about the server. First domain is the
+# control: BD NET's sd-de1.liftmeon.org, which we know tunnels real traffic. This job asks the only
+# question that matters: does the authoritative server answer a TXT query for a
+# random label under the tunnel domain, and through which resolvers?
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/ultra-dns-probe.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Raw queries
+        run: |
+          set +e
+          OUT=analysis-ultra/report/dns-probe.txt
+          : > "$OUT"
+          domains="sd-de1.liftmeon.org ns.up2.fcafessh.net slwdns.codefyinc.com ns.rovox.wampipti.net newca.dozapp.xyz dnsde1.dozapp.xyz nssshvip1.vpnprous.com nsVIPSSH087.vpnprous.com nssshtt.mdmonzo.com"
+          for d in $domains; do
+            echo "==== $d" >> "$OUT"
+            echo -n "  NS: " >> "$OUT"
+            dig +short +time=5 +tries=1 @8.8.8.8 "$d" NS | tr '\n' ' ' >> "$OUT"; echo >> "$OUT"
+            parent=$(echo "$d" | cut -d. -f2-)
+            echo -n "  NS(parent $parent): " >> "$OUT"
+            dig +short +time=5 +tries=1 @8.8.8.8 "$parent" NS | tr '\n' ' ' >> "$OUT"; echo >> "$OUT"
+            for res in 8.8.8.8 1.1.1.1; do
+              label=$(head -c 16 /dev/urandom | od -An -tx1 | tr -d ' \n')
+              echo -n "  TXT(${label:0:8}...) via $res: " >> "$OUT"
+              out=$(dig +time=6 +tries=1 +noall +comments +answer @$res "${label}.${d}" TXT 2>&1 | tr '\n' ' ' | head -c 400)
+              echo "$out" >> "$OUT"
+              echo >> "$OUT"
+            done
+            echo -n "  SOA: " >> "$OUT"
+            dig +short +time=5 +tries=1 @8.8.8.8 "$d" SOA | tr '\n' ' ' >> "$OUT"; echo >> "$OUT"
+            echo >> "$OUT"
+          done
+          cat "$OUT"
+
+      - name: Commit
+        if: always()
+        run: |
+          set +e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
+          git add analysis-ultra
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "ultra: raw DNS liveness probe [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" > /dev/null 2>&1
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
