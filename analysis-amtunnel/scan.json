@@ -1,0 +1,979 @@
+{
+ "hosts": [
+  {
+   "host": "go.uber.org",
+   "hits": 1280
+  },
+  {
+   "host": "eq.net",
+   "hits": 179
+  },
+  {
+   "host": "go4.org",
+   "hits": 89
+  },
+  {
+   "host": "lukechampine.com",
+   "hits": 37
+  },
+  {
+   "host": "transport.link",
+   "hits": 34
+  },
+  {
+   "host": "idna.info",
+   "hits": 33
+  },
+  {
+   "host": "yaml.org",
+   "hits": 32
+  },
+  {
+   "host": "eq.io",
+   "hits": 18
+  },
+  {
+   "host": "bitbucket.org",
+   "hits": 18
+  },
+  {
+   "host": "eq.go.uber.org",
+   "hits": 16
+  },
+  {
+   "host": "godebugs.info",
+   "hits": 10
+  },
+  {
+   "host": "runtime.link",
+   "hits": 8
+  },
+  {
+   "host": "atomic.store",
+   "hits": 7
+  },
+  {
+   "host": "java.net",
+   "hits": 5
+  },
+  {
+   "host": "hash.net",
+   "hits": 5
+  },
+  {
+   "host": "app-measurement.com",
+   "hits": 3
+  },
+  {
+   "host": "insecure.info",
+   "hits": 3
+  },
+  {
+   "host": "gcm.n.link",
+   "hits": 2
+  },
+  {
+   "host": "twitter.com",
+   "hits": 2
+  },
+  {
+   "host": "java.io",
+   "hits": 2
+  },
+  {
+   "host": "dispatchers.io",
+   "hits": 2
+  },
+  {
+   "host": "web.app",
+   "hits": 2
+  },
+  {
+   "host": "www.recaptcha.net",
+   "hits": 2
+  },
+  {
+   "host": "client.dev",
+   "hits": 2
+  },
+  {
+   "host": "acme-v02.api.letsencrypt.org",
+   "hits": 2
+  },
+  {
+   "host": "acme-staging-v02.api.letsencrypt.org",
+   "hits": 2
+  },
+  {
+   "host": "viper.jwwlogger.info",
+   "hits": 2
+  },
+  {
+   "host": "logrus.info",
+   "hits": 2
+  },
+  {
+   "host": "maxmind.com",
+   "hits": 2
+  },
+  {
+   "host": "g.co",
+   "hits": 1
+  },
+  {
+   "host": "com.chrome.dev",
+   "hits": 1
+  },
+  {
+   "host": "ns.adobe.com",
+   "hits": 1
+  },
+  {
+   "host": "login.live.com",
+   "hits": 1
+  },
+  {
+   "host": "login.yahoo.com",
+   "hits": 1
+  },
+  {
+   "host": "www.linkedin.com",
+   "hits": 1
+  },
+  {
+   "host": "www.paypal.com",
+   "hits": 1
+  },
+  {
+   "host": "libcore.io",
+   "hits": 1
+  },
+  {
+   "host": "pyyaml.org",
+   "hits": 1
+  },
+  {
+   "host": "in.app",
+   "hits": 1
+  },
+  {
+   "host": "service.dev",
+   "hits": 1
+  },
+  {
+   "host": "measurement.store",
+   "hits": 1
+  },
+  {
+   "host": "javax.net",
+   "hits": 1
+  },
+  {
+   "host": "t.me",
+   "hits": 1
+  },
+  {
+   "host": "gmx.net",
+   "hits": 1
+  },
+  {
+   "host": "www.gnu.org",
+   "hits": 1
+  },
+  {
+   "host": "gmail.com",
+   "hits": 1
+  },
+  {
+   "host": "go.dev",
+   "hits": 1
+  },
+  {
+   "host": "handler.app",
+   "hits": 1
+  },
+  {
+   "host": "v2ray.core.app",
+   "hits": 1
+  },
+  {
+   "host": "preloadv2ray.core.app",
+   "hits": 1
+  },
+  {
+   "host": "isv2ray.core.app",
+   "hits": 1
+  },
+  {
+   "host": "protobuf.dev",
+   "hits": 1
+  },
+  {
+   "host": "test.com",
+   "hits": 1
+  },
+  {
+   "host": "love.com",
+   "hits": 1
+  },
+  {
+   "host": "tap.info",
+   "hits": 1
+  },
+  {
+   "host": "go-proxyproto.pp2type.app",
+   "hits": 1
+  },
+  {
+   "host": "credentials.tlscreds.info",
+   "hits": 1
+  },
+  {
+   "host": "bufio.extendedudpconn.net",
+   "hits": 1
+  },
+  {
+   "host": "channelz.info",
+   "hits": 1
+  },
+  {
+   "host": "insecure.insecuretc.info",
+   "hits": 1
+  },
+  {
+   "host": "thing.org",
+   "hits": 1
+  },
+  {
+   "host": "genretrucklooksvalueframe.net",
+   "hits": 1
+  },
+  {
+   "host": "log.com",
+   "hits": 1
+  },
+  {
+   "host": "tos.org",
+   "hits": 1
+  },
+  {
+   "host": "the.com",
+   "hits": 1
+  },
+  {
+   "host": "www.world",
+   "hits": 1
+  }
+ ],
+ "ips": [
+  {
+   "ip": "2.2.1.1",
+   "hits": 10
+  },
+  {
+   "ip": "1.3.1.1",
+   "hits": 9
+  },
+  {
+   "ip": "1.2.2.1",
+   "hits": 4
+  },
+  {
+   "ip": "6.21.0.0",
+   "hits": 3
+  },
+  {
+   "ip": "5.4.62.5",
+   "hits": 3
+  },
+  {
+   "ip": "4.32.5.4",
+   "hits": 3
+  },
+  {
+   "ip": "5.4.82.5",
+   "hits": 3
+  },
+  {
+   "ip": "5.4.102.5",
+   "hits": 3
+  },
+  {
+   "ip": "4.112.5.4",
+   "hits": 3
+  },
+  {
+   "ip": "8.8.8.8",
+   "hits": 2
+  },
+  {
+   "ip": "72.5.4.82",
+   "hits": 2
+  },
+  {
+   "ip": "5.4.92.5",
+   "hits": 2
+  },
+  {
+   "ip": "1.2.1.1",
+   "hits": 2
+  },
+  {
+   "ip": "5.4.32.5",
+   "hits": 2
+  },
+  {
+   "ip": "4.52.5.4",
+   "hits": 2
+  },
+  {
+   "ip": "62.5.4.72",
+   "hits": 2
+  },
+  {
+   "ip": "8.8.4.4",
+   "hits": 1
+  },
+  {
+   "ip": "1.1.0.0",
+   "hits": 1
+  },
+  {
+   "ip": "10.0.0.0",
+   "hits": 1
+  },
+  {
+   "ip": "10.0.0.1",
+   "hits": 1
+  },
+  {
+   "ip": "10.0.0.2",
+   "hits": 1
+  },
+  {
+   "ip": "169.254.1.0",
+   "hits": 1
+  },
+  {
+   "ip": "169.254.1.1",
+   "hits": 1
+  },
+  {
+   "ip": "169.254.1.2",
+   "hits": 1
+  },
+  {
+   "ip": "172.16.0.0",
+   "hits": 1
+  },
+  {
+   "ip": "172.16.0.1",
+   "hits": 1
+  },
+  {
+   "ip": "172.16.0.2",
+   "hits": 1
+  },
+  {
+   "ip": "192.168.0.0",
+   "hits": 1
+  },
+  {
+   "ip": "192.168.0.1",
+   "hits": 1
+  },
+  {
+   "ip": "192.168.0.2",
+   "hits": 1
+  },
+  {
+   "ip": "192.168.42.0",
+   "hits": 1
+  },
+  {
+   "ip": "192.168.44.0",
+   "hits": 1
+  },
+  {
+   "ip": "192.168.49.0",
+   "hits": 1
+  },
+  {
+   "ip": "224.0.0.0",
+   "hits": 1
+  },
+  {
+   "ip": "52.5.4.72",
+   "hits": 1
+  }
+ ],
+ "hex64_keys": [
+  "0000000000000000000000000000000000000000000000000000000000000000",
+  "2108744088277d551668b83002f814e608696b38e952acd57b906c8eb0b72725",
+  "4fe342e2fe1a7f9b8ee7eb4a7c0f9e162bce33576b315ececbb6406837bf51f5",
+  "5ac635d8aa3a93e7b3ebbd55769886bc651d06b0cc53b0f63bce3c3e27d2604b",
+  "6b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c296",
+  "808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9f",
+  "9fb02d530f4280db41a919d36817386415ddda881b9e412bca2e00b0720525a8",
+  "a0c91c71fd368b5d30f8a04d1e4f14a4186fd3423a1957aa58b1e03c3b3735dd",
+  "a43ffc4a4831591b9de7c1ed0cb93795c1209295578eacf0b17a0150abe1d3e7",
+  "aaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbcccccccccccccccccccccccccccccccc",
+  "bd08080c1fbfee950fa40a48dd32aaef4114f62671bdbc8fcec9936685bc2f85",
+  "ea0710d912261ce6c8a6c91ea69f308f3d93959fe0c1ec034c5de474e276239b"
+ ],
+ "urls": [
+  "http://.css",
+  "http://.jpg|right|thumb|.js",
+  "http://Descriptionrelatively",
+  "http://OPTIONSCreatedIM",
+  "http://UA-Compatible",
+  "http://according",
+  "http://addEventListenerresponsible",
+  "http://applicationslink",
+  "http://ator",
+  "http://convertnil",
+  "http://cript",
+  "http://dictionaryperceptionrevolutionfoundationpx;height:successfulsupportersmillenniumhis",
+  "http://encoding=",
+  "http://familiar",
+  "http://g.co/dev/packagevisibility.",
+  "http://html4/loose.dtd",
+  "http://hylafaxhyper-ghyperipi-zipqdias-regibm-appibm-db2ibm-mgribm-ppsibm-resibm-ssdibm3494icad-elicg-swpideesrviec-104iee-qfxi",
+  "http://ignoredillegalintegerinvalidipSliceiso8601issuerskeytypeld",
+  "http://imEnglish",
+  "http://interested",
+  "http://interpreted",
+  "http://iparticipation",
+  "http://link",
+  "http://mathematicsmargin-top:eventually",
+  "http://navigation",
+  "http://ns.adobe.com/xap/1.0/",
+  "http://option",
+  "http://pyyaml.org/wiki/YAMLColonInFlowContext",
+  "http://s;text-align:centerfont-weight:",
+  "http://site_name",
+  "http://staticsuggested",
+  "http://style=",
+  "http://whether",
+  "http://www-//W3C//DTD",
+  "http://www.",
+  "http://www./div",
+  "http://www.C//DTD",
+  "http://www.a",
+  "http://www.css",
+  "http://www.gnu.org/licenses/",
+  "http://www.hortcut",
+  "http://www.icon",
+  "http://www.interpretation",
+  "http://www.language=",
+  "http://www.style=",
+  "http://www.text-decoration:underthe",
+  "http://www.wencodeURIComponent(",
+  "http://www.years",
+  "http://xt/css",
+  "https://acme-staging-v02.api.letsencrypt.org/directoryinternal",
+  "https://acme-v02.api.letsencrypt.org/directoryinternal",
+  "https://app-measurement.com/a",
+  "https://app-measurement.com/s/d",
+  "https://go.dev/issue/66821):",
+  "https://goo.gl/NAOOOI",
+  "https://goo.gl/NAOOOI.",
+  "https://htuilsrvhysteriaiadt-tlsiafdbaseias-authibm-cicsibm-dt-2iclpv-dmiclpv-pmiclpv-scidentifyidentityidig-muxidmgratmidotdist",
+  "https://identityif-matchif-rangeinfinityinstanceintSliceinvalid",
+  "https://login.live.com",
+  "https://login.yahoo.com",
+  "https://mediation.goog/mads/static/sdk/native/sdk-core-v40.html",
+  "https://protobuf.dev/reference/go/faq#namespace-conflictpickfirst:",
+  "https://t.me/Master_Mod7",
+  "https://twitter.com",
+  "https://www.World",
+  "https://www.linkedin.com",
+  "https://www.paypal.com",
+  "https://www.recaptcha.net/recaptcha/api3",
+  "https://www.recent"
+ ],
+ "base64_blobs": [
+  "+/ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789",
+  "+1i1Roub6nUghMBVAoLDxYV9TZpDQ5AMDe/5Cq/znMO3U8LCqexq5guZO3a8xE36pRMzWopAyA4rALROo+8ZNo99vIlJ/",
+  "+9qxvwuIefe0SiL32+eJEvoJAdd8kXLpa/KG7DsmUmV7Es7E2PuIGo5W0mPy9NsF6vJGerPP85uv2qC1hVkHlLNkf/onz2oTXI2RwBCT+",
+  "+R57dUy0pIhHHCgyD3x+QBzIIXZv5msTVYsugnWrrcOzI3B08dFQJ5LgW5l5dBLdKSQAQEMIgmDSukENjtpH0Aq4DaiNfJ6DUkSljsFG8GatqqCUK48/",
+  "+VZ8pjfjuGUbLhWOvdTIV44ERxS+RPOwcgQIwq+Cf5PgZdnQjXtyR6Yp7AoqtQ3xkZWGN21aef0U9W40/",
+  "+gavONPR41YSiW5F3s71qTpye8p6IeCtBPOt4DPa14FxjmMi7IsfS0pgIETjJscqGJa67XgB+jfKGBLprJN5n2eBUu12225iooHud+",
+  "+hgnKcYsY2u7EF80qezFiYE1m2rTsaSgLayhiiFUhInqs0QWvKZh3ZEIUcpqKsdoYlxklLEOjnmutaK9C9YS1LCQ98IRo/",
+  "+i4Qi2+UyJnWDoCsZRjJ8btiYjFaYjUtOGgZV3NNKjrIgkjImSofJyDv2xcjN36LsHwfbeSSVgvGyEhu2q6NwsqSjV15Hi36/phDjRNkou+M8whGMYznslYw",
+  "+iozDkTI57AIZooeQbnvm7d+hOmxPmtPYUWWgrTyCeUkI45jdot/O2gJOvW2pnBl3miV0NeZ7xlTGOfLuxHLufsxPMDdWXsvoqMPoyKpylino0DRrsxhV8/",
+  "+k+JSqLttnzVHN7wd5iL43ceVL+0rotuPnr6Tyr0A0vEgx5WCIy3eUl2SEm/GiQfEB+",
+  "+k6dJJOMjXM4Re9TG/A2H5MfYrMsIUM2BTz2zQ9RWoL6H8G8v1rPrWwuVw3QOZAm9SfjCeQdrKqfzM1/KiWTTy7XTyI33FeMDwArU8fh+",
+  "+rXX8DYIEs5YYL88w1zRgFhb6qzmuCbplvo/PdtdUdzPqVYiM3bkJ8jeKxMuBnwzxqBnx1s5oG6FgGSqJFUzo3eePp+",
+  "+tnlxP/Yl9eUC8LxU5jze2HgzqQynwG7RCe+EMnDch+pJsSpaXyNGWFNXdMyZDl1ggFfQEDhBiq0GMZeMEGcepB/",
+  "/0P2s16tMllAe/nektq0raZ8TzHl8ASzcDsQTTALlroMShDZ/bMBkaB0OwVHGTvsszfivAEEQ5n7TbS1o5A1W5xj+",
+  "/2jmSdn7WduDZzlwNM9ePvVbAj19ESDJJVqNL5ScKV7TOI9ouotfNE0X0xTxM9A42qoCuzg2W9W9hjcwxSj9ooGa8aoPavUkYgqiodw2H+",
+  "/3lsDvVG+TUJ/Xa+GKNCoszm4iX6h3F8dsHA0YT1ZMqiuoK43OlcGozxmzMQ4mJPWyAqmndV6cWsa18PLdW65MSwthJqKGideiiXoB/",
+  "/6pOB69kCCj5WhfXaH1l+c745vIYl4MMD013I6bBqy1OXRqR8NU+VdblO/8kbCEoItADhPskIeGo4YvbWHMVBX3vPoYjKx2RWDvfMmpNcvX/ZuYn3JLW+",
+  "/73EfjfvjjGOyBKaPB+q1WqwCyEd6p15gv+eIUa/D8HY3b6t32om3y78R0+U1XxwAzExjjjmeHVymUVG8PQrTmm/g5JVcHXZVTZx9GYE8H5+8iDe1/",
+  "/8T+NqHaHNT5iwj7aWoItRv5PmJbdCQds2gJV2AMTzNLauBd/Lcg821KsGvaAZVCueRaMvYIUZZjdogo7U8047+nlQnn+l9jz35x/",
+  "/DJuTfA32Dg0FF6Ko73WpREzP1yIcniFrNg67Tr2U3hygNDpCQ8ro6sRomB1CO9uhYGGC97Pu5jw6jax1sxA32kmJ+",
+  "/DropDataContentProviderBoundaryInterface",
+  "/FsOMvnr377JNbJdVoEAUQZldf+8zHQSgDoydKQ6TiJnWY1Bn/fBQkxwPJXyXSOcxF+AXidLBh0AW70WlnIpgn3rvni4cZ69tBAdUXniFUb0sMZkEr90+",
+  "/JFJjnP0xWEQB8hfuyOfTXEYy1onUYJ/ORhOn0W1Ll6YTQllvbvsmypMLIkSQeMQVSM2W7zLqxNzmDkuJJ6Hx+9/C7j4Tjvf2F+1+y5geSW+",
+  "/Ms5jGHs7xjjygYPIigX5/vamjTaHF1XstyiHkYbTC/",
+  "/N+DEdMLYNXUHKOmjolgIQUfu85Bg86JCyZ2WplomjPPsBmd334OX52eyL2fKQMqRbtjt+bpOVdqF4kPo0poZexsJ/",
+  "/PQlwA/HJtRAEj4LtGJ1A5mg+7rFH3bJj1NvZ/E865yXfHgtKLg9SZG1vvHd8ENVDf9RnEo9SqvJz+ATtBKfeGAm8KbXoJpl/2cSpbnTqKwinna2DyJNJ/",
+  "/PrefetchOperationResultBoundaryInterface",
+  "/ServiceWorkerControllerBoundaryInterface",
+  "/ServiceWorkerWebSettingsBoundaryInterface",
+  "/WebViewProviderFactoryBoundaryInterface",
+  "/WebkitToCompatConverterBoundaryInterface",
+  "/ZpGRb5d3s5iJ5sE4M7FzGVEYYtALjnYolvOCt9tc8+T0gpG5nfWMEb0bdQKguRs3GuRnTr1zM1Fgf3wMMEd6bNK+q+Ih5q9asn97+s2Tz4KsfEho4/",
+  "/eRU3Vmb8kqeKOZGSNZCm28ooiYrUdnMUMpVnpcLicbs57NhAmCt7lGvcEbBBDLXoFlBM2h3E0CS2lCQpO3Ks6PbQSwAYeA/a8by3SZyJC+oV6+/",
+  "/google/android/gms/auth/api/identity/BeginSignInRequest",
+  "/google/android/gms/fido/fido2/api/common/BrowserPublicKeyCredentialRequestOptions",
+  "/google/android/play/core/integrity/StandardIntegrityManager",
+  "/htpY4Al5114I6AmxYvUJlz13J3uOf0d7lak4KIsLRY7vZxv+lxZTWLLWA8tBHTL+ql+TZe8ipgVwTobjrWBvhNqeSsmVlP3tlBWRP/",
+  "/kvSJ8yS/HxDO+R9EDzdiWqOfP0RM7vkQ902TEvB6sBec9qATR30wwx2jpkI54fbc4lHRGt8dUHnfbROxUKY1SnS8nziNrIT/",
+  "/mwZd84ssVXvVg9HmvBAkJzS0Ojzi2VVPqE+Cop3Jh+",
+  "/n//pxQ5t9xllWXPasHsfOFUPHVyTGxTSBHRnjEQ1brYxoED1fPwbOezruzo93VJUWLRSlJncLPzw1eNAxz7jRR7pg1MP7udJwuQGSZyFTtOc/",
+  "/oggapplication/pdfapplication/zipasyncpreemptoffbad",
+  "/purposesrequireselectionbecomingprovidesacademicexerciseactuallymedicineconstantaccidentMagazinedocumentstartingbottom",
+  "/sa48vmTd+giqmCQfWoi6iPdKgeMduqGrCCbUbKFbe3GRE/WKPAY2Mi6Sr7OmOiVfgo0KLMcTXFMywScfH4djRca7+",
+  "/xVrao7wZW9IiwzQxHKrGCahVkltEgb5gtoUmxsg6czPf2w0Yx2ogFzVf8FKLda7i91V4XvMuiwMDNDUJJgb/HRi+",
+  "0/internal/encoding/javaproperties/codec",
+  "0/sign/dilithium/internal/common/generic",
+  "0/sign/dilithium/mode2/internal/dilithium",
+  "0/sign/dilithium/mode2/internal/rounding",
+  "0/sign/dilithium/mode3/internal/dilithium",
+  "0/sign/dilithium/mode3/internal/rounding",
+  "0000000000000000000000000000000000000000000000000000000000000000",
+  "000000000ShellCompDirectiveDefaultShellCompDirectiveNoSpaceSkipping",
+  "0000111122223333444455556666777788889999",
+  "0001123333333333444444444455666677777888888888889999999999",
+  "000Z07009094947017729282379150390625BayStack",
+  "000ideadrawhugespotfundburnhrefcellkeystickhourlossfuel12pxsuitdealRSS",
+  "005684341886080801486968994140625Additional",
+  "005684341886080801486968994140625ApplicationData",
+  "0088817841970012523233890533447265625CONTINUATION",
+  "00v7atomicsmath/randtlsrsakexInheritedBigEndiand",
+  "01001031251602002042063023044004034044214254434RD500503625853",
+  "0100103125200204206302304400403404421425443500503625853",
+  "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
+  "0123456789ABCDEFX0123456789abcdefxreflect",
+  "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+  "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZhttp2",
+  "0123456789notifyListprofInsertstackLargeNot",
+  "01dns2godoc1lmdocentdockerdoglmsdomaindotenvdoubledpanicdproxydrmsmcds",
+  "0269r4DGev/6c4F9atqv7ajDKBbzuDspmHnVEb1DOrhuyxnaHpxsqDz60pLwEgLsiP3Mu5IDpiIoQ+lDAuMumIDc2O8TGI/o4VhEf/",
+  "02EnumRangesHasDefaultExtensionsIsMapEntry",
+  "02xClosedCANCELGOAWAYPADDEDactivesocks5Basic",
+  "02xscriptactionbordercoordsheighthiddenposterscopedsrcdocsrcsettargetusemaptypeofPACKEDVERIFYld",
+  "0520060102150405Z07007450580596923828125AFI",
+  "0520060102150405Z07007450580596923828125APL",
+  "06/e9h7RsRyWPMdu3qRDPUYFaVDy6+dpUDSQ0+E2Ot6AHtVyvjeUTIL651mFIo/7",
+  "070058207660913467407226562573057221226d27330d335d2fAcct",
+  "0AIf+you+want+more+mod+apps+like+this+so+join+my+telegram+channel",
+  "0Anlzjpi4vEasTeNFn2mLJgTSwt0+6sfsiTG8qcWGx4",
+  "0BHmCgCE6CVCTdmuh6BMjEENgxDvkcvoc+YJcERgbmPs6Tg",
+  "0BkCyvAwRMTm0TkOZyDYQMHRR/BfGWZQu16Q1Ljk3pdYDZK5S"
+ ],
+ "interesting_lines": [
+  "classes: 2 did not call through to super.onActivityCreated()",
+  "classes: ) did not call through to super.onAttach()",
+  "classes: ) did not call through to super.onCreate()",
+  "classes: * did not call through to super.onDestroy()",
+  "classes: . did not call through to super.onDestroyView()",
+  "classes: ) did not call through to super.onDetach()",
+  "classes: ( did not call through to super.onPause()",
+  "classes: ) did not call through to super.onResume()",
+  "classes: ( did not call through to super.onStart()",
+  "classes: ' did not call through to super.onStop()",
+  "classes: 4 did not call through to super.onViewStateRestored()",
+  "classes: qAttempted to call failure callbacks in CONNECTION_MODE_NONE. Callbacks should be disabled via GmsClientSupervisor",
+  "classes: qAttempted to call success callbacks in CONNECTION_MODE_NONE. Callbacks should be disabled via GmsClientSupervisor",
+  "classes: GmsClientSupervisor",
+  "classes: $GoogleTunnelServerIdExtensionCreator",
+  "classes: KEY_CID_PUBKEY",
+  "classes: <Lcom/google/android/gms/common/internal/GmsClientSupervisor;",
+  "classes: uLcom/google/android/gms/fido/fido2/api/common/PublicKeyCredentialDescriptor$UnsupportedPubKeyCredDescriptorException;",
+  "classes: ,Lcom/wireguard/android/backend/Tunnel$State;",
+  "classes: &Lcom/wireguard/android/backend/Tunnel;",
+  "classes: 6Lorg/lsposed/lsparanoid/Deobfuscator$AMTUNNELLITE$app;",
+  "classes: %Lprince/udp/vpn/service/SuperService;",
+  "classes: 0Lprince/udp/vpn/service/vpn/TunnelManagerHelper;",
+  "classes: >Lprince/udp/vpn/service/vpn/TunnelManagerThread$OnStopCliente;",
+  "classes: 0Lprince/udp/vpn/service/vpn/TunnelManagerThread;",
+  "classes: (Lprince/udp/vpn/service/vpn/TunnelUtils;",
+  "classes: OMX.bcm.vdec.avc.tunnel",
+  "classes: OMX.bcm.vdec.avc.tunnel.secure",
+  "classes: OMX.bcm.vdec.hevc.tunnel",
+  "classes: OMX.bcm.vdec.hevc.tunnel.secure",
+  "classes: !OMX.broadcom.video_decoder.tunnel",
+  "classes: (OMX.broadcom.video_decoder.tunnel.secure",
+  "classes: \"OMX.realtek.video.decoder.tunneled",
+  "classes: Super_SlowMotion_BGM",
+  "classes: Super_SlowMotion_Data",
+  "classes: Super_SlowMotion_Deflickering_On",
+  "classes: Super_SlowMotion_Edit_Data",
+  "classes: Supervisor must not be null",
+  "classes: (UnsupportedPubKeyCredDescriptorException",
+  "classes: cid_pubkey",
+  "classes: <com.google.android.instantapps.supervisor.InstantAppsRuntime",
+  "classes: getDevicePubKey",
+  "classes: getGoogleTunnelServerIdExtension",
+  "classes: getSuperCaller",
+  "classes: getSuperState",
+  "classes: getSuperclass",
+  "classes: getTunnelServerId",
+  "classes: isTunnelActive",
+  "classes: super.onSaveInstanceState()",
+  "classes: superDispatchKeyEvent",
+  "classes: superState must be null",
+  "classes: superState must not be null",
+  "classes: tunneled-playback",
+  "classes2: /system/app/Superuser.apk",
+  "classes2: ACC_SUPER",
+  "classes2: AM TUNNEL LITE",
+  "classes2: Bringing tunnel",
+  "classes2: ,Lcom/wireguard/android/backend/Tunnel$State;",
+  "classes2: &Lcom/wireguard/android/backend/Tunnel;",
+  "classes2: 6Lorg/lsposed/lsparanoid/Deobfuscator$AMTUNNELLITE$app;",
+  "classes2: %Lprince/udp/vpn/service/SuperService;",
+  "classes2: %Lprince/udp/vpn/service/vpn/Tunnel$1;",
+  "classes2: %Lprince/udp/vpn/service/vpn/Tunnel$2;",
+  "classes2: /Lprince/udp/vpn/service/vpn/Tunnel$HostService;",
+  "classes2: #Lprince/udp/vpn/service/vpn/Tunnel;",
+  "classes2: 0Lprince/udp/vpn/service/vpn/TunnelManagerHelper;",
+  "classes2: 2Lprince/udp/vpn/service/vpn/TunnelManagerThread$1;",
+  "classes2: 2Lprince/udp/vpn/service/vpn/TunnelManagerThread$2;",
+  "classes2: 2Lprince/udp/vpn/service/vpn/TunnelManagerThread$3;",
+  "classes2: >Lprince/udp/vpn/service/vpn/TunnelManagerThread$OnStopCliente;",
+  "classes2: 0Lprince/udp/vpn/service/vpn/TunnelManagerThread;",
+  "classes2: (Lprince/udp/vpn/service/vpn/TunnelState;",
+  "classes2: (Lprince/udp/vpn/service/vpn/TunnelUtils;",
+  "classes2: /Lprince/udp/vpn/service/vpn/TunnelVpnManager$1;",
+  "classes2: =Lprince/udp/vpn/service/vpn/TunnelVpnManager$ManagerListener;",
+  "classes2: -Lprince/udp/vpn/service/vpn/TunnelVpnManager;",
+  "classes2: 9Lprince/udp/vpn/service/vpn/TunnelVpnService$LocalBinder;",
+  "classes2: -Lprince/udp/vpn/service/vpn/TunnelVpnService;",
+  "classes2: 0Lprince/udp/vpn/service/vpn/TunnelVpnSettings$1;",
+  "classes2: .Lprince/udp/vpn/service/vpn/TunnelVpnSettings;",
+  "classes2: Parando VPN and tunnel.",
+  "classes2: Parando tunnel.",
+  "classes2: Restarting tunnel.",
+  "classes2: SUPER_STATE_KEY",
+  "classes2: Start tunnel failed:",
+  "classes2: ?Super calls with default arguments not supported in this target",
+  "classes2: TUNNEL_MISSING_CONFIG",
+  "classes2: TUNNEL_VPN_DISCONNECT_BROADCAST",
+  "classes2: TUNNEL_VPN_START_BROADCAST",
+  "classes2: TUNNEL_VPN_START_SUCCESS_EXTRA",
+  "classes2: Tunnel already down",
+  "classes2: Tunnel already up",
+  "classes2: TunnelManager",
+  "classes2: TunnelManagerThread",
+  "classes2: TunnelVpnService",
+  "classes2: #Unable to enumerate running tunnels",
+  "classes2: -[Lcom/wireguard/android/backend/Tunnel$State;",
+  "classes2: /[Lprince/udp/vpn/service/vpn/TunnelVpnSettings;",
+  "classes2: app.vpn.amtunnellite",
+  "classes2: currentSuperClass",
+  "classes2: currentTunnel",
+  "classes2: currentTunnelHandle",
+  "classes2: #dastan.prince.bdfreevpn:startTunnel",
+  "classes2: getCommonSuperClass",
+  "classes2: getRunningTunnelNames",
+  "classes2: getStartingTunnelManager",
+  "classes2: getSuperButtonTintList",
+  "classes2: getSuperClass",
+  "classes2: getSuperClassName",
+  "classes2: getSuperClasses",
+  "classes2: getSuperName",
+  "classes2: getSuperState",
+  "classes2: getSuperTypeIndex",
+  "classes2: getSuperclass",
+  "classes2: getTunnelManager",
+  "classes2: getTunnelState",
+  "classes2: isTunnelActive",
+  "classes2: mRoutingThroughTunnel",
+  "classes2: mTunnel",
+  "classes2: mTunnelThreadStopSignal",
+  "classes2: m_startingTunnelManager",
+  "classes2: m_tunnel",
+  "classes2: m_tunnelManager",
+  "classes2: m_tunnelState",
+  "classes2: m_tunnelThread",
+  "classes2: m_tunnelThreadStopSignal",
+  "classes2: m_vpnTunnelBroadcastReceiver",
+  "classes2: multipleTunnels",
+  "classes2: newSuperTypeReference",
+  "classes2: newTunnel",
+  "classes2: onTunnelConnected",
+  "classes2: restartTunnel",
+  "classes2: routeThroughTunnel",
+  "classes2: runTunnel",
+  "classes2: setMultipleTunnels",
+  "classes2: setStartingTunnelManager",
+  "classes2: setSuperName",
+  "classes2: setTunnelManager",
+  "classes2: sshTunnelServiceRestsrt",
+  "classes2: sshtunnelservicestop",
+  "classes2: startSuperDns",
+  "classes2: startTunnel",
+  "classes2: startTunnelVpnService",
+  "classes2: startTunneling",
+  "classes2: stopRoutingThroughTunnel",
+  "classes2: stopSuperDns",
+  "classes2: stopTunnelVpnService",
+  "classes2: stopTunneling",
+  "classes2: superClass",
+  "classes2: superClassConstructorCalled",
+  "classes2: superName",
+  "classes2: tunnelVpnDisconnectBroadcast",
+  "classes2: tunnelVpnStartBroadcast",
+  "classes2: tunnelVpnStartSuccessExtra",
+  "classes2: visitSuperclass",
+  "lib_libARYAN.so: stopSuperDns",
+  "lib_libARYAN.so: isTunnelActive",
+  "lib_libARYAN.so: Lcom/wireguard/android/backend/Tunnel$State;",
+  "lib_libARYAN.so: org.lsposed.lsparanoid.Deobfuscator$AMTUNNELLITE$app",
+  "lib_libARYAN.so: prince.udp.vpn.service.SuperService",
+  "lib_libARYAN.so: prince.udp.vpn.service.vpn.TunnelManagerHelper",
+  "lib_libdns.so: max=scav  ptr ] = (trap:init  ms, fault tab= top=[...], fp:1562578125MarchAprilGreekQUERYED448OtherohttpISPKIAFSDBCNAMECSYNCDHCIDDNAMEEUI48EUI64HINFOHTTPSMAILAMAILBMINFONAPTRNINFONSEC3RRSIGSSHFPUINFOCLASSdns: udp: fileshttpsimap2imap3imapspop3shostsvfpv4idivaSHA-1 (at Classpmullthumbvfpv326bitidivtcrc32listentunnelreportstring",
+  "lib_libdns.so: ; PADDING: multipathtcpno such hostunknown portinvalid portrandautoseedgotypesaliashttpmuxgo121tlsunsafeekmLittleEndianECDSA-SHA256ECDSA-SHA384ECDSA-SHA512/dev/urandominvalid baseRCodeSuccessRCodeRefusedAM TUNNEL PROUsage of %s:",
+  "lib_libpdnsd.so: nameserver",
+  "lib_libpdoq.so: missing pubkey",
+  "lib_libpdoq.so: X509_get_pubkey_parameters",
+  "lib_libpdoq.so: x509_pubkey_decode",
+  "lib_libpdoq.so: ipsecTunnel",
+  "lib_libpdoq.so: check pubkey too large",
+  "lib_libpdoq.so: X509_PUBKEY_get0",
+  "lib_libpdoq.so: i2d_RSA_PUBKEY",
+  "lib_libpdoq.so: check pubkey too small",
+  "lib_libpdoq.so: crypto/x509/x_pubkey.c",
+  "lib_libpdoq.so: X509_PUBKEY",
+  "lib_libpdoq.so: i2d_EC_PUBKEY",
+  "lib_libpdoq.so: IPSec Tunnel",
+  "lib_libpdoq.so: setCext-tunneling",
+  "lib_libpdoq.so: i2d_DSA_PUBKEY",
+  "lib_libpdoq.so: -d, --domain=DOMAIN             Domain name used for the tunnel",
+  "lib_libpdoq.so: X509_PUBKEY_get",
+  "lib_libpdoq.so: superseded",
+  "lib_libpdoq.so: X509_PUBKEY_set",
+  "lib_libpdoq.so: check pubkey invalid",
+  "lib_libpdoq.so: (Tunnel)",
+  "lib_libpdoq.so: Superseded",
+  "lib_libpdoqhelper.so: pmmime/multipartRejectionReasonExtraExtensionsHostKeyCallbackValidPrincipalsEphemeralPubKeyCriticalOptionsAlgorithmSignerSubjectUniqueIdFirstKexFollowsAdditionalBytesAuthLogCallbackwindowAdjustMsggenericCertDatapkcs10AttributekexECDHReplyMsgglobalResponseskexDHGexInitMsgpasswordAuthMsghostKeyCallbackkeyingTransportcertificateListpkcs1PrivateKeychannelCloseMsgreadPacketsLeft",
+  "lib_libpdoqhelper.so: ryUXIix509negativeserialRevokedCertificatesGSSAPIWithMICConfigRequestSpecificDataPermittedURIDomainsCiphersClientServerRevocationListEntryDirectionAlgorithmsPreAuthConnCallbackPermittedDNSDomainsCiphersServerClientuserAuthGSSAPIErrorsubsystemRequestMsgforwardedTCPPayloaduserAuthPubKeyOkMsgsupportedAlgorithmsuserAuthGSSAPITokenFa$L@",
+  "lib_libputils.so: SCT_CTX_set1_issuer_pubkey",
+  "lib_libputils.so: SCT_CTX_set1_pubkey",
+  "lib_libputils.so: ENGINE_set_load_pubkey_function",
+  "lib_libputils.so: ENGINE_get_load_pubkey_function",
+  "lib_libputils.so: X509_PUBKEY_get0_param",
+  "lib_libputils.so: X509_PUBKEY_set0_param",
+  "lib_libputils.so: X509_get0_pubkey",
+  "lib_libputils.so: X509_get_pubkey",
+  "lib_libputils.so: d2i_PUBKEY",
+  "lib_libputils.so: X509_get_X509_PUBKEY",
+  "lib_libputils.so: X509_get0_pubkey_bitstr",
+  "lib_libputils.so: X509_PUBKEY_get0",
+  "lib_libputils.so: X509_PUBKEY_get",
+  "lib_libputils.so: X509_REQ_get_pubkey",
+  "lib_libputils.so: X509_REQ_get0_pubkey",
+  "lib_libputils.so: X509_REQ_get_X509_PUBKEY",
+  "lib_libputils.so: X509_set_pubkey",
+  "lib_libputils.so: X509_PUBKEY_set",
+  "lib_libputils.so: X509_get_pubkey_parameters",
+  "lib_libputils.so: i2d_X509_PUBKEY",
+  "lib_libputils.so: X509_REQ_set_pubkey",
+  "lib_libputils.so: d2i_RSA_PUBKEY_fp",
+  "lib_libputils.so: d2i_RSA_PUBKEY",
+  "lib_libputils.so: i2d_RSA_PUBKEY_fp",
+  "lib_libputils.so: i2d_RSA_PUBKEY",
+  "lib_libputils.so: d2i_RSA_PUBKEY_bio",
+  "lib_libputils.so: i2d_RSA_PUBKEY_bio",
+  "lib_libputils.so: d2i_DSA_PUBKEY_fp",
+  "lib_libputils.so: d2i_DSA_PUBKEY",
+  "lib_libputils.so: i2d_DSA_PUBKEY_fp",
+  "lib_libputils.so: i2d_DSA_PUBKEY",
+  "lib_libputils.so: d2i_DSA_PUBKEY_bio",
+  "lib_libputils.so: i2d_DSA_PUBKEY_bio",
+  "lib_libputils.so: d2i_EC_PUBKEY_fp",
+  "lib_libputils.so: d2i_EC_PUBKEY",
+  "lib_libputils.so: i2d_EC_PUBKEY_fp",
+  "lib_libputils.so: i2d_EC_PUBKEY",
+  "lib_libputils.so: d2i_EC_PUBKEY_bio",
+  "lib_libputils.so: i2d_EC_PUBKEY_bio",
+  "lib_libputils.so: X509_pubkey_digest",
+  "lib_libputils.so: i2d_PUBKEY_fp",
+  "lib_libputils.so: i2d_PUBKEY",
+  "lib_libputils.so: d2i_PUBKEY_fp",
+  "lib_libputils.so: i2d_PUBKEY_bio",
+  "lib_libputils.so: d2i_PUBKEY_bio",
+  "lib_libputils.so: X509_PUBKEY_it",
+  "lib_libputils.so: d2i_X509_PUBKEY",
+  "lib_libputils.so: X509_PUBKEY_new",
+  "lib_libputils.so: X509_PUBKEY_free",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/dh/dh_ameth.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bn/bn_gcd.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bn/bn_exp.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ec/ecp_nistz256.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/dh/dh_rfc7919.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/evp/cmeth_lib.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/engine/eng_dyn.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/rsa/rsa_crpt.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/rsa/rsa_saos.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/stack/stack.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ct/ct_log.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509v3/v3_sxnet.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bn/bn_mod.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/dsa/dsa_ossl.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ec/ec_curve.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/dsa/dsa_pmeth.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/pkcs7/pk7_attr.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/pkcs7/pk7_lib.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/a_digest.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509/x_name.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bn/bn_recp.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/tasn_fre.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/cms/cms_dd.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ec/ec_oct.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/rsa/rsa_none.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/store/loader_file.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/engine/eng_table.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bn/bn_prime.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bn/bn_intern.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/bio_ndef.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/a_strex.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bn/bn_sqrt.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509/x509_trs.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509/x_pubkey.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509v3/v3_alt.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509v3/v3_utl.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bio/bio_lib.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bio/b_sock2.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/engine/eng_ctrl.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bn/bn_add.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/evp/evp_pbe.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/evp/e_des3.c",
+  "lib_libputils.so: missing pubkey",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/pkcs12/p12_p8e.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bn/bn_blind.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/threads_pthread.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/f_string.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ex_data.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/dh/dh_asn1.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bn/bn_exp2.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ec/eck_prn.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/dso/dso_dlfcn.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/evp/e_aria.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/evp/e_chacha20_poly1305.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/pkcs12/p12_add.c",
+  "lib_libputils.so: X509_get_pubkey_parameters",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bio/bio_meth.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/a_d2i_fp.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ec/ec_key.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/dh/dh_kdf.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/rsa/rsa_ameth.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/pkcs12/p12_sbag.c",
+  "lib_libputils.so: x509_pubkey_decode",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/a_sign.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bio/b_sock.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/evp/encode.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/tasn_prn.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/cms/cms_enc.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/conf/conf_mod.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/a_strnid.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/engine/eng_pkey.c",
+  "lib_libputils.so: ipsecTunnel",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/pkcs12/p12_decr.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/rsa/rsa_x931.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/sm2/sm2_sign.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/store/store_lib.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ocsp/ocsp_ht.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509v3/v3_conf.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/engine/tb_cipher.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/dh/dh_key.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/evp/bio_enc.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ec/ec_ameth.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ec/ecdsa_sign.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/dso/dso_lib.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/mem_sec.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/objects/obj_xref.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/store/store_init.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ui/ui_lib.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/a_verify.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509v3/v3_ia5.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/err/err.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ec/ec2_smpl.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/asn1_gen.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/f_int.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/rsa/rsa_ssl.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ui/ui_openssl.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ct/ct_x509v3.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/dh/dh_check.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/x_int64.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/pkcs12/p12_mutl.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509v3/v3_prn.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/tasn_enc.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/a_dup.c",
+  "lib_libputils.so: check pubkey too large",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/lhash/lhash.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/rsa/rsa_pk1.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/sm2/sm2_pmeth.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/buffer/buffer.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/cms/cms_io.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bn/bn_gf2m.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/modes/ocb128.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/objects/obj_dat.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/rsa/rsa_lib.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/rsa/rsa_sign.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/siphash/siphash_pmeth.c",
+  "lib_libputils.so: X509_PUBKEY_get0",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509/x509_vfy.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509v3/pcy_node.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509v3/v3_cpols.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/init.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/p5_pbe.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/hmac/hmac.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/evp/e_aes.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ec/ecp_smpl.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ec/ecp_oct.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/rsa/rsa_ossl.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/rsa/rsa_pmeth.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509v3/v3_purp.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bio/bss_file.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/evp/p5_crpt.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/p5_scrypt.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/cms/cms_att.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/conf/conf_lib.c",
+  "lib_libputils.so: i2d_RSA_PUBKEY",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/engine/eng_cnf.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/modes/gcm128.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/i2d_pr.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509/x_x509.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509v3/v3_enum.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509v3/v3_skey.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ec/ecp_mont.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ec/ecdh_ossl.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ec/ec_mult.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/cmac/cmac.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ec/ecx_meth.c",
+  "lib_libputils.so: check pubkey too small",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/evp/evp_pkey.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/pkcs12/p12_crpt.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/rsa/rsa_gen.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509v3/pcy_data.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/async/async.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/engine/eng_fat.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bn/bn_div.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/tasn_new.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/evp/pmeth_gn.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/ec/ec_kmeth.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/asn_moid.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/pem/pem_oth.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/x509/x509_lu.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/bn/bn_rand.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/p5_pbev2.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/asn1/a_time.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/evp/evp_cnf.c",
+  "lib_libputils.so: E:/BD NET COMPANY/AM TUNNEL LITE/app/src/main/cpp/openssl/crypto/evp/p_verify.c"
+ ]
+}
