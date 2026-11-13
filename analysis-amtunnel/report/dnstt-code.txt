@@ -1,0 +1,14 @@
+### files that mention SocksDNS / libdns
+src/sources/prince/udp/vpn/service/vpn/Tunnel.java
+src/sources/prince/udp/vpn/service/vpn/TunnelManagerHelper.java
+src/sources/prince/udp/vpn/service/SocksDNSService.java
+src/sources/prince/udp/vpn/core/MainReceiver.java
+src/sources/defpackage/C2701hA.java
+src/sources/defpackage/C3338tE.java
+src/sources/defpackage/RunnableC3391uE.java
+src/sources/defpackage/RunnableC0247Ph.java
+src/sources/defpackage/Y4.java
+src/sources/defpackage/A2.java
+find: ‘/tmp/resolved’: No such file or directory
+
+=================== full 
