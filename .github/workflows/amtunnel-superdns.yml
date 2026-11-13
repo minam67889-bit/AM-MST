@@ -154,34 +154,39 @@ jobs:
           cd /tmp/a
           R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
           mkdir -p "$R"
-          # jadx usually gives up on the generated Deobfuscator class, so take the
-          # chunk table from smali, which is lossless.
-          sudo apt-get install -y -qq apktool > /dev/null 2>&1
-          apktool --version
-          timeout 900 apktool d -f -r -o smali apk.apk > apktool.log 2>&1
-          echo "apktool exit=$?"; tail -3 apktool.log
-          ls smali 2>/dev/null
-          python3 "$GITHUB_WORKSPACE/tools/extract_paranoid_chunks.py" smali chunks.txt
-          wc -l chunks.txt; awk '{print length}' chunks.txt | head
-          python3 "$GITHUB_WORKSPACE/tools/lsparanoid_decode.py" \
-            --chunks-file chunks.txt --scan src --out decrypted.tsv \
-            --hosts-out hosts.txt > /tmp/dec.log 2>&1
-          tail -40 /tmp/dec.log
-          wc -l decrypted.tsv 2>/dev/null
+          grep -rhoE "\$app\.getString\((-?[0-9]+)L?\)" src 2>/dev/null | \
+            grep -oE "[-0-9]+" | sort -u > ids.txt
+          echo "ids: $(wc -l < ids.txt)"
           {
-            echo "### decoder log"
-            cat /tmp/dec.log
+            echo "### attempt 1: apktool smali"
+            sudo apt-get install -y -qq apktool > /dev/null 2>&1
+            apktool --version 2>&1 | head -2
+            timeout 600 apktool d -f -r -o smali apk.apk > apktool.log 2>&1
+            echo "exit=$?"; tail -5 apktool.log
+            find smali -name '*Deobfuscator*' | head -5
+            python3 "$GITHUB_WORKSPACE/tools/extract_paranoid_chunks.py" smali chunks.txt 2>&1 | head -5
+            awk '{print length}' chunks.txt 2>/dev/null | head -5
             echo
+            echo "### attempt 2: dex string pool"
+            python3 "$GITHUB_WORKSPACE/tools/paranoid_from_dex.py" apk.apk ids.txt decrypted.tsv hosts.txt 2>&1 | head -20
+          } > "$R/strings-decrypted.txt" 2>&1
+          {
             echo "### app hosts (deobfuscated)"
             cat hosts.txt 2>/dev/null
             echo
             echo "### strings mentioning super/dns/tunnel/pubkey"
-            grep -iE "super|dnstt|slowdns|slow dns|pubkey|nameserver|tunnel" decrypted.tsv 2>/dev/null | head -80
+            grep -iE "super|dnstt|slowdns|slow dns|pubkey|nameserver|tunnel" decrypted.tsv 2>/dev/null | head -100
+            echo
+            echo "### strings that look like hosts"
+            grep -oE "\b[a-z0-9.-]+\.(com|net|org|xyz|top|site|online|app|club|sbs|icu|co)\b" decrypted.tsv 2>/dev/null | sort -u | head -60
             echo
             echo "### 64-hex keys in plaintext strings"
             grep -oE "\b[0-9a-f]{64}\b" decrypted.tsv 2>/dev/null | sort -u | head -20
-          } > "$R/strings-decrypted.txt" 2>&1
-          head -60 "$R/strings-decrypted.txt"
+            echo
+            echo "### first 40 decoded strings"
+            head -40 decrypted.tsv 2>/dev/null
+          } >> "$R/strings-decrypted.txt" 2>&1
+          head -70 "$R/strings-decrypted.txt"
 
       - name: Readable SuperService / tunnel code
         run: |
