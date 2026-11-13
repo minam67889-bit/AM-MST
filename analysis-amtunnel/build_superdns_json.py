@@ -174,11 +174,23 @@ def main() -> None:
                 "SuperService argv, pubkey and local port read from the decrypted code",
             ],
             "unverified": [
-                "no handshake was driven through libsuperdns.so: it is an Android-only ELF",
+                "no handshake was driven through libsuperdns.so: it is an Android-only ELF "
+                "(aarch64, /system/bin/linker64)",
                 "the \"sl\" + host domain rule is what the code does, but sl<host> has no public "
-                "A/NS record, so the effective wire name could not be confirmed from outside",
-                "no tunnelled page was fetched (the sandbox cannot reach these IPs on :53)",
+                "A/NS record and supaghost.cc has no NS delegation, so the effective wire name "
+                "could not be confirmed from outside",
+                "no tunnelled page was fetched; the exact label format the Go client sends was "
+                "not reproduced, so a NOERROR from the server on a well-formed query was never "
+                "observed",
             ],
+            "endpoint_behaviour": {
+                "udp_53": "answers (NXDOMAIN for the apex, for sl<host> and for a random label)",
+                "tcp_53": "connection refused",
+                "tcp_443_8443_2053_2096_8080_80": "connection refused on every sampled host",
+                "reading": ("the endpoints are pure DNS listeners, so the tunnel rides on :53 "
+                            "only, which matches a DNS tunnel and rules out a TLS/QUIC listener "
+                            "on the usual alternative ports"),
+            },
             "dns_census": {category: f"{alive_count(category)}/{host_count(category)}" for category in CATEGORY_META},
             "evidence_files": [
                 "report/janny-decoded.json", "report/a-records.json",

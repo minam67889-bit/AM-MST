@@ -48,6 +48,27 @@ HTTP 200 through a local dnstt-server) never gets a single stream opened against
 them, and their authoritative name servers drop non-carrier traffic. Details and
 evidence: [`docs/ULTRA-TUNNEL.md`](docs/ULTRA-TUNNEL.md).
 
+### AM TUNNEL LITE VPN (`app.vpn.amtunnellite`) — SuperDNS servers recovered
+
+The "MOD Universal" build hides its catalogue behind two layers: every dex string
+is LSParanoid-encrypted *and* the server list is an encrypted asset. Both are open
+now, so the app's whole catalogue is in
+[`analysis-amtunnel/superdns.json`](analysis-amtunnel/superdns.json):
+
+* **SuperDNS** (category `ocsslow`, `SuperService` + `libsuperdns.so`):
+  **50 hosts** `sa1..sa50.supaghost.cc` — **50/50 resolve**, and each answers DNS
+  on UDP/53 (nothing on TCP/53 or the TLS ports).
+* SocksDNS/dnstt: 150 hosts `{gg,hh}*.apnacp.xyz` — 150/150 resolve.
+* UDP: 796/800 hosts resolve. PDoQ: 0/270 — that pool is dead.
+* 46 transport entries (`udp://`, `doh://`, `dot://`, per-carrier resolvers) and
+  the app's own credentials (`tanginaka`).
+
+The binary is not dnstt: 16.6 MB of Go, aarch64, linking TLS/QUIC/uTLS, exec'd as
+`libsuperdns.so -udp <resolver>:53 -utls Chrome -frequency N -report … -pubkey prince sl<host> 127.0.0.1:7000`.
+It is an Android-only ELF, so no handshake was driven off-device. How both layers
+were opened, and what is still unverified:
+[`docs/AM-TUNNEL-SUPERDNS.md`](docs/AM-TUNNEL-SUPERDNS.md).
+
 ---
 
 # AM Tunnel MST — DNS tunnel client with a MasterDNSVPN-style resolver engine
