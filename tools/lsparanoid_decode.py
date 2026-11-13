@@ -29,6 +29,7 @@ Usage
 from __future__ import annotations
 
 import argparse
+import json
 import pathlib
 import re
 import sys
@@ -251,9 +252,12 @@ def main(argv: list[str]) -> int:
         ap.error("--java or --chunks-file is required")
 
     if args.chunks_file:
-        chunks = [line.rstrip("\n") for line in
-                  args.chunks_file.read_text(encoding="utf-8", errors="replace").splitlines()]
-        chunks = [c for c in chunks if c]
+        raw = args.chunks_file.read_text(encoding="utf-8", errors="replace")
+        if raw.lstrip().startswith("["):
+            chunks = [c for c in json.loads(raw) if c]
+        else:
+            chunks = [line.rstrip("\n") for line in raw.splitlines()]
+            chunks = [c for c in chunks if c]
     else:
         chunks = load_chunks(args.java)
     total_chars = sum(len(c) for c in chunks)

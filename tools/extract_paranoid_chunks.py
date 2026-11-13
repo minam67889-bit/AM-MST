@@ -10,6 +10,7 @@ Usage: extract_paranoid_chunks.py <smali-dir> <out-file>
 """
 from __future__ import annotations
 
+import json
 import pathlib
 import re
 import sys
@@ -61,7 +62,8 @@ def main() -> None:
     long_chunks = [c for c in chunks if len(c) >= 1024]
     keep = long_chunks or chunks
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text("\n".join(keep) + "\n", encoding="utf-8")
+    # JSON, because a chunk may itself contain newlines / quotes.
+    out.write_text(json.dumps(keep, ensure_ascii=False), encoding="utf-8")
     print(f"{path}: {len(chunks)} const-strings, kept {len(keep)} "
           f"(sizes {[len(c) for c in keep][:6]}) -> {out}")
 

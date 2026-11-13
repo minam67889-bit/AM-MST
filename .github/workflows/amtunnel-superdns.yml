@@ -293,6 +293,10 @@ jobs:
           cp scan.json "$DEST/scan.json" 2>/dev/null
           cp list.txt "$DEST/report/apk-entries.txt" 2>/dev/null
           cp jadx.log "$DEST/report/jadx.log" 2>/dev/null
+          cp chunks.txt "$DEST/report/paranoid-chunks.json" 2>/dev/null
+          cp ids.txt "$DEST/report/paranoid-ids.txt" 2>/dev/null
+          cp decrypted.tsv "$DEST/report/decrypted.tsv" 2>/dev/null
+          cp hosts.txt "$DEST/report/hosts.txt" 2>/dev/null
           cd "$GITHUB_WORKSPACE"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
