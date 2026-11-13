@@ -283,6 +283,41 @@ jobs:
             > "$R/probe.txt" 2>&1
           sed -n '/### url probe/,$p' "$R/probe.txt" | head -60
 
+      - name: Where does the server list come from
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          G="$GITHUB_WORKSPACE/analysis-amtunnel/code-resolved"
+          mkdir -p "$R" "$G"
+          {
+            echo "### every http(s) url in the whole apktool tree"
+            grep -rhoE "https?://[A-Za-z0-9._~:/?#@!$&'()*+,;=%-]{6,160}" smali 2>/dev/null \
+              | sed 's/[.,;)]*$//' | sort -u | grep -viE "schemas.android|w3.org|apache.org|xmlpull|json.org|ns.adobe|purl.org|github.com/google|goo.gl" | head -60
+            echo
+            echo "### files mentioning SSH_HOST"
+            grep -rln "SSH_HOST" src 2>/dev/null | head -20
+            echo
+            echo "### files mentioning janny"
+            grep -rln "janny" src 2>/dev/null | head -20
+            echo
+            echo "### assets/janny.json"
+            unzip -p apk.apk assets/janny.json > janny.b64 2>/dev/null
+            echo "bytes: $(wc -c < janny.b64)"
+            python3 "$GITHUB_WORKSPACE/tools/decode_asset_blob.py" janny.b64 "$R/janny-decoded.json"
+            echo
+            echo "### res/raw and assets listing"
+            find smali/assets smali/res/raw -maxdepth 1 -type f 2>/dev/null | head -40
+          } > "$R/server-list.txt" 2>&1
+          # Make the interesting classes readable (paranoid ids -> literals).
+          for f in $(grep -rl "SSH_HOST" src 2>/dev/null | head -8); do
+            rel="${f#src/}"
+            mkdir -p "$G/$(dirname "$rel")"
+            python3 "$GITHUB_WORKSPACE/tools/resolve_paranoid_source.py" decrypted.tsv "$f" "$G/$rel" >/dev/null 2>&1 \
+              || cp "$f" "$G/$rel"
+          done
+          tail -60 "$R/server-list.txt"
+
       - name: Commit
         if: always()
         run: |
@@ -297,6 +332,7 @@ jobs:
           cp ids.txt "$DEST/report/paranoid-ids.txt" 2>/dev/null
           cp decrypted.tsv "$DEST/report/decrypted.tsv" 2>/dev/null
           cp hosts.txt "$DEST/report/hosts.txt" 2>/dev/null
+          cp janny.b64 "$DEST/report/janny.b64" 2>/dev/null
           cd "$GITHUB_WORKSPACE"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
