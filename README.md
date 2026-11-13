@@ -65,9 +65,12 @@ now, so the app's whole catalogue is in
 
 The binary is not dnstt: 16.6 MB of Go, aarch64, linking TLS/QUIC/uTLS, exec'd as
 `libsuperdns.so -udp <resolver>:53 -utls Chrome -frequency N -report … -pubkey prince sl<host> 127.0.0.1:7000`.
-It is an Android-only ELF, so no handshake was driven off-device. How both layers
-were opened, and what is still unverified:
-[`docs/AM-TUNNEL-SUPERDNS.md`](docs/AM-TUNNEL-SUPERDNS.md).
+It is an Android-only ELF, so no handshake was driven off-device — but a reference
+dnstt client was run against the endpoints from a GitHub runner:
+`FORMERR` for `sl<host>` proves the tunnel domain, the session starts, and no
+stream is ever opened (the same harness loads a real Instagram page through a
+local dnstt server, 200 OK). How both layers were opened, the live test and what
+is still unverified: [`docs/AM-TUNNEL-SUPERDNS.md`](docs/AM-TUNNEL-SUPERDNS.md).
 
 ---
 

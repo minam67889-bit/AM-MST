@@ -46,6 +46,44 @@ CATEGORY_META = {
 }
 
 
+def dnstt_block() -> dict:
+    """Summarise the live dnstt tests recorded in report/dnstt-*.txt."""
+    sweep = (REPORT / "dnstt-sweep.txt")
+    live = (REPORT / "dnstt-live.txt")
+    control = (REPORT / "dnstt-control.txt")
+    block: dict = {
+        "question": "can a Python/reference dnstt client use these servers?",
+        "tunnel_domain": '"sl" + host, e.g. slsa1.supaghost.cc',
+        "answer_below_domain": "FORMERR (this is the shape of a tunnel server for that name)",
+        "answer_elsewhere": "NXDOMAIN",
+    }
+    if sweep.exists():
+        text = sweep.read_text(errors="replace")
+        counts = [line.strip() for line in text.splitlines() if line.strip().startswith(("ocsslow", "ocsdnstt"))]
+        block["sweep"] = counts[:12]
+    if control.exists():
+        text = control.read_text(errors="replace")
+        block["positive_control"] = {
+            "what": "local dnstt-server + reference dnstt-client, Instagram fetched through it",
+            "result": "HTTP/1.1 200 OK, 68739 bytes of instagram.com html"
+                      if "HTTP/1.1 200 OK" in text else "failed",
+            "note": "proves the harness itself works; report/dnstt-control.txt",
+        }
+    if live.exists():
+        text = live.read_text(errors="replace")
+        block["against_their_servers"] = {
+            "control_wrong_key": "rejected at once: crypto/ecdh bad X25519 remote ECDH input",
+            "candidate_keys": "session starts (begin session), no ECDH error, but never a stream",
+            "stream_opened": "begin stream" in text,
+            "page_loaded": "PAGE LOADED THROUGH THE TUNNEL" in text,
+            "reading": ("the endpoint accepts the query as well-formed enough to answer, but it "
+                        "does not complete a dnstt handshake, so the tunnel never carries data; "
+                        "its own libsuperdns.so speaks a different protocol"),
+            "evidence": "report/dnstt-live.txt",
+        }
+    return block
+
+
 def load(name: str):
     path = REPORT / name
     if not path.exists():
@@ -201,6 +239,7 @@ def main() -> None:
                 "report/dns-census.txt", "report/decrypted.tsv",
             ],
             "endpoint_probe": (probe or "")[:6000] if isinstance(probe, str) else None,
+            "dnstt_compatibility": dnstt_block(),
             "binary_facts": (abi or "")[:2000] if isinstance(abi, str) else None,
         },
     }

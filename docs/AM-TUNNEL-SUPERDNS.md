@@ -85,3 +85,61 @@ python3 analysis-amtunnel/build_superdns_json.py
 CI: `.github/workflows/amtunnel-superdns.yml` re-downloads the APK from filebin,
 decrypts both layers, runs the census and the endpoint probes, and commits the
 report into `analysis-amtunnel/report/`.
+
+## 7. Live dnstt test (Python, on GitHub runners)
+
+The sandbox cannot reach these endpoints: outbound UDP is limited to `8.8.8.8`,
+so every attempt there dies with a timeout at the socket. The GitHub runners have
+no such limit, so all measurements below were taken there, driven by
+`tools/amtunnel_dnstt_check.py` and `tools/amtunnel_dnstt_e2e.py`.
+
+**What the endpoints are.** A sweep of all 200 catalogue hosts:
+
+| family | hosts | reacts how |
+| --- | --- | --- |
+| `saN.supaghost.cc` (SuperDNS) | 50 | answers `FORMERR` for names under `sl<host>`, `NXDOMAIN` for everything else |
+| `{gg,hh}N.apnacp.xyz` (dnstt category) | 150 | no reply at all (unreachable from the runner) |
+
+`FORMERR for <anything>.slsa1.supaghost.cc` and `NXDOMAIN` for `sa1.supaghost.cc`,
+`x.sa1.supaghost.cc` or `x.sd.sa1.supaghost.cc` is exactly how a tunnel server
+announces its own zone — and `"sl" + host` is what `SuperService` passes as the
+domain. So the server side is real and the domain rule in the code is correct.
+
+**Does the reference dnstt client work against them?** No.
+
+```
+key 000…0 (control)  -> immediate crypto/ecdh: bad X25519 remote ECDH input, SOCKS never opens
+key ea0710d9…        -> begin session, no error … and never a single stream
+key 9bd2ef7a…        -> same
+key a43ffc4a…        -> same
+key 2c587152…        -> same
+```
+
+A wrong key is rejected instantly, so the keys above are *not* rejected — yet no
+stream is ever opened, and no byte ever comes back. Their server answers our
+queries with `FORMERR`, i.e. it does not accept the dnstt handshake format at all.
+`libsuperdns.so` is therefore a custom protocol that merely shares dnstt's command
+line surface (`-udp -doh -dot -pubkey -utls`).
+
+**Positive control.** The same Python harness, pointed at a dnstt-server started on
+the runner, loaded the real page:
+
+```
+https://www.instagram.com/ -> HTTP/1.1 200 OK, 68739 bytes
+```
+
+So the tooling is proven; the failure is on AM TUNNEL's side, not in our client.
+
+Reproduce:
+
+```bash
+tools/bin/dnstt-server-linux-amd64 -gen-key -privkey-file k -pubkey-file p
+python3 tools/socks5_server.py 11080 180 &
+tools/bin/dnstt-server-linux-amd64 -udp 127.0.0.1:5353 -privkey-file k t.control 127.0.0.1:11080 &
+python3 tools/amtunnel_dnstt_e2e.py --client tools/bin/dnstt-client-linux-amd64 \
+    --hosts t.control --keys "$(cat p)" --resolver 127.0.0.1:5353 \
+    --url https://www.instagram.com/
+```
+
+Evidence files: `report/dnstt-sweep.txt`, `report/dnstt-live.txt`,
+`report/dnstt-control.txt`, `report/libdns-what.txt`.
