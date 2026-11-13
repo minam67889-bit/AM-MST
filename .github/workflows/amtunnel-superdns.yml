@@ -387,6 +387,10 @@ jobs:
             python3 "$GITHUB_WORKSPACE/tools/superdns_probe.py" \
               sa1.supaghost.cc sa2.supaghost.cc sa25.supaghost.cc sa50.supaghost.cc \
               gg1.apnacp.xyz
+            echo
+            echo "### what the SuperDNS endpoints speak on the tls ports"
+            python3 "$GITHUB_WORKSPACE/tools/tls_probe.py" \
+              sa1.supaghost.cc sa2.supaghost.cc sa25.supaghost.cc sa50.supaghost.cc
           } > "$R/superdns-run.txt" 2>&1
           cat "$R/superdns-run.txt" | head -60
 
