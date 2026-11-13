@@ -62,16 +62,30 @@ per-carrier entries (Cuba, Egypt, Kenya, Morocco, Nigeria, Sudan, Yemen, …).
 `Username` and `Password` in the catalogue are XXTEA blobs too; both decrypt to
 `tanginaka`.
 
-## 5. Verified vs not
+## 5. Verified vs not (after the live tests)
 
-Verified: catalogue decrypted from the APK; 50/50 SuperDNS hosts resolve; the
-SuperDNS endpoint IPs answer DNS on UDP/53 (NXDOMAIN for everything asked,
-including a random tunnel label), TCP/53 refused; `library`/argv facts read from
-decrypted code.
+**Verified**
 
-Not verified: any tunnel handshake. `sl<host>` has no public A/NS record, and the
-whole `supaghost.cc` zone has no delegation, so the effective wire name cannot be
-confirmed from outside; no page was fetched through this tunnel.
+* the catalogue is decrypted from the APK itself: 139 server groups, 91 transport
+  entries, `Username`/`Password` = `tanginaka`;
+* `50/50` SuperDNS hosts resolve; `796/800` UDP hosts, `10/20` HTTP/SOCKS hosts,
+  `0/270` PDoQ hosts (that pool is gone); the 150 dnstt-category hosts resolve but
+  none of them answers a query;
+* the tunnel domain `"sl" + host` is confirmed **on the wire**: `<anything>.slsa1.supaghost.cc`
+  gets `FORMERR`, while `sa1.supaghost.cc` and `<anything>.sa1.supaghost.cc` get `NXDOMAIN`;
+* a reference `dnstt-client` starts a session against those IPs (no ECDH rejection),
+  so the key material is not refused;
+* the harness itself works: a local dnstt-server serves
+  `https://www.instagram.com/` → `HTTP/1.1 200 OK`, 68 739 bytes.
+
+**Not verified**
+
+* no byte ever flowed through AM TUNNEL's own tunnels — the reference client never
+  opens a stream, i.e. their server does not speak plain dnstt;
+* `libsuperdns.so` was never executed (Android-only ELF, `/system/bin/linker64`);
+* the label/obfuscation format of their protocol is unknown, so it could not be
+  reproduced;
+* nothing was observed on a real phone (what happens after `begin session`).
 
 ## 6. Reproducing
 

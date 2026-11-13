@@ -1,5 +1,5 @@
 {
-  "schema": "am-tunnel-superdns/1",
+  "schema": "am-tunnel-superdns/2",
   "generated_from": {
     "apk": "AM TUNNEL LITE VPN [MOD Universal] (filebin kaq42zmlr3c1na2g)",
     "package": "app.vpn.amtunnellite",
@@ -70,6 +70,8 @@
         "dot://<host>": "-dot <host>:853"
       },
       "domain_rule": "\"sl\" + SSH_HOST, where SSH_HOST is the selected server host",
+      "domain_rule_confirmed": "checked against the live endpoints: <anything>.sl<host> -> FORMERR, <host> and <anything>.<host> -> NXDOMAIN",
+      "domain_rule_evidence": "report/dnstt-sweep.txt",
       "pubkey": "prince",
       "utls": [
         "Chrome",
@@ -78,6 +80,36 @@
       "local_listen": "127.0.0.1:7000"
     },
     "source": "prince/udp/vpn/service/SuperService.java (string table decrypted)"
+  },
+  "connection_method": {
+    "summary": "the app never dials the tunnel host directly for SuperDNS: it picks a server host, builds the tunnel domain 'sl'+host, and runs its own Go binary against a DNS resolver (UDP/53, DoH or DoT)",
+    "flow": [
+      "1. catalogue (assets/janny.json) gives Free_servers[] and Payloads[]",
+      "2. the user picks a server, e.g. A - SERVER 1 -> sa1.supaghost.cc",
+      "3. the user picks a transport, e.g. udp://8.8.8.8 -> -udp 8.8.8.8:53 (doh://host -> -doh https://host/dns-query, dot://host -> -dot host:853)",
+      "4. SuperService.execs libsuperdns.so with that resolver, -pubkey prince, -utls Chrome|Firefox, -frequency from SUPER_DNS_FREQUENCY, -report 'AM TUNNEL LITE VPN', the tunnel domain 'sl' + host, and 127.0.0.1:7000",
+      "5. libsuperdns.so carries the tunnel inside DNS traffic to the resolver, which forwards it to the server host; the client exposes SOCKS5 on 127.0.0.1:7000",
+      "6. tun2socks/VpnService routes device traffic into that local port"
+    ],
+    "local_ports": {
+      "superdns": "127.0.0.1:7000 (libsuperdns.so)",
+      "http_socks": "127.0.0.1:10801 (libxray)",
+      "pdoq": "127.0.0.1:10802 / 2222",
+      "udp": "127.0.0.1:10802",
+      "dnstt": "127.0.0.1:10802 plus pdnsd"
+    },
+    "transport_switches": {
+      "udp://<host>": "-udp <host>:53",
+      "doh://<host>": "-doh https://<host>/dns-query",
+      "dot://<host>": "-dot <host>:853"
+    },
+    "reproduced_with_reference_dnstt": false,
+    "why_not_reproduced": "the same argv and the same domain were replayed with a reference dnstt client: the server answers the query (FORMERR, so the domain is right) and a session starts, but no stream is ever opened - the binary is not dnstt",
+    "what_a_working_client_needs": [
+      "a DNS resolver that can reach the server IP on :53 (any of the 46 payload entries)",
+      "the tunnel domain 'sl' + server host",
+      "their private protocol (libsuperdns.so, Android aarch64 only)"
+    ]
   },
   "servers": {
     "superdns": [
@@ -7045,16 +7077,20 @@
     "verified": [
       "catalogue decrypted from the APK (not guessed): 139 server groups, 91 transport entries",
       "all 50 SuperDNS hosts resolve via 8.8.8.8 (50 alive)",
-      "all 150 dnstt hosts resolve (150 alive)",
+      "all 150 dnstt hosts resolve (150 alive), but not one of them answers a DNS query from a runner (150/150 silent)",
       "UDP hosts: 796/800 resolve",
       "PDoQ hosts: 0/270 resolve (the whole pdoq pool is gone)",
       "HTTP/SOCKS hosts: 10/20 resolve",
-      "SuperService argv, pubkey and local port read from the decrypted code"
+      "SuperService argv, pubkey and local port read from the decrypted code",
+      "the 'sl' + host domain rule is confirmed on the wire: the SuperDNS IPs answer FORMERR for <anything>.sl<host> and NXDOMAIN for everything else",
+      "a reference dnstt client DOES start a session against those IPs (begin session, no ECDH error), so the key material is not rejected",
+      "the test harness itself is proven: local dnstt-server -> https://www.instagram.com/ HTTP 200, 68 739 bytes"
     ],
     "unverified": [
-      "no handshake was driven through libsuperdns.so: it is an Android-only ELF (aarch64, /system/bin/linker64)",
-      "the \"sl\" + host domain rule is what the code does, but sl<host> has no public A/NS record and supaghost.cc has no NS delegation, so the effective wire name could not be confirmed from outside",
-      "no tunnelled page was fetched; the exact label format the Go client sends was not reproduced, so a NOERROR from the server on a well-formed query was never observed"
+      "no byte ever flowed through AM TUNNEL's tunnels: the reference dnstt client never opens a stream, so their server does not speak plain dnstt",
+      "libsuperdns.so itself was never executed: Android-only ELF (aarch64, /system/bin/linker64)",
+      "the label/obfuscation format of their custom protocol is unknown, so their protocol could not be reproduced",
+      "what the app does after 'begin session' on a real phone (whether the tunnel then carries traffic) was not observed"
     ],
     "endpoint_behaviour": {
       "udp_53": "answers (NXDOMAIN for the apex, for sl<host> and for a random label)",
