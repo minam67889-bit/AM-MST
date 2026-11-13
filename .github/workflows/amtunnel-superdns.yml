@@ -361,6 +361,35 @@ jobs:
           done
           wc -l "$R/crypto-plumbing.txt"
 
+      - name: Live probe - census plus the app's own SuperDNS binary
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          mkdir -p "$R"
+          echo "### abi list" > "$R/superdns-run.txt"
+          unzip -l apk.apk | grep -E "lib/[^/]+/libsuperdns" >> "$R/superdns-run.txt"
+          for abi in x86_64 arm64-v8a armeabi-v7a; do
+            mkdir -p "libs/$abi"
+            unzip -o -j apk.apk "lib/$abi/libsuperdns.so" -d "libs/$abi" > /dev/null 2>&1
+          done
+          python3 "$GITHUB_WORKSPACE/tools/run_libsuperdns.py" libs/x86_64/libsuperdns.so \
+            "$R/superdns-run.txt" sa1.supaghost.cc gg1.apnacp.xyz aa1.amnupower.com \
+            >> "$R/superdns-run.txt" 2>&1
+          if [ -f libs/arm64-v8a/libsuperdns.so ] && command -v qemu-aarch64-static > /dev/null; then
+            echo "=== arm64 under qemu" >> "$R/superdns-run.txt"
+            qemu-aarch64-static libs/arm64-v8a/libsuperdns.so 2>&1 | head -20 >> "$R/superdns-run.txt"
+          fi
+          cat "$R/superdns-run.txt"
+
+      - name: DNS census over the decrypted catalogue
+        run: |
+          set +e
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          python3 "$GITHUB_WORKSPACE/tools/catalogue_census.py" \
+            "$GITHUB_WORKSPACE/analysis-amtunnel/report/janny-decoded.json" \
+            "$R/dns-census.txt" 8.8.8.8 12 2>&1 | head -80
+
       - name: Commit
         if: always()
         run: |
@@ -376,6 +405,8 @@ jobs:
           cp decrypted.tsv "$DEST/report/decrypted.tsv" 2>/dev/null
           cp hosts.txt "$DEST/report/hosts.txt" 2>/dev/null
           cp janny.b64 "$DEST/report/janny.b64" 2>/dev/null
+          cp dns-census.txt "$DEST/report/dns-census.txt" 2>/dev/null
+          cp superdns-run.txt "$DEST/report/superdns-run.txt" 2>/dev/null
           cd "$GITHUB_WORKSPACE"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
