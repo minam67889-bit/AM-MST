@@ -285,6 +285,41 @@ jobs:
             > "$R/probe.txt" 2>&1
           sed -n '/### url probe/,$p' "$R/probe.txt" | head -60
 
+      - name: dnstt - recover the SocksDNS command line and the keys
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          mkdir -p "$R"
+          {
+            echo "### files that mention SocksDNS / libdns"
+            grep -rl "SocksDNS\|libdns" /tmp/resolved src 2>/dev/null | head -10
+            for f in $(grep -rl "libdns" /tmp/resolved src 2>/dev/null | head -4); do
+              echo
+              echo "=================== $f"
+              grep -nE 'libdns|"-|pubkey|ProcessBuilder|arrayList.add|startsWith|split|addAll|new String\[' "$f" | head -70
+            done
+            F=$(find /tmp/resolved -name 'SocksDNSService.java' | head -1)
+            echo
+            echo "=================== full $F"
+            sed -n '300,520p' "$F" 2>/dev/null
+          } > "$R/dnstt-code.txt" 2>&1
+          {
+            for lib in libdns libsuperdns libudpq libpdoq libxray; do
+              mkdir -p "libs/$lib"
+              unzip -o -j apk.apk "lib/arm64-v8a/$lib.so" -d "libs/$lib" > /dev/null 2>&1
+              f="libs/$lib/$lib.so"
+              if [ -s "$f" ]; then
+                echo "--- $lib.so $(stat -c %s "$f") bytes"
+                grep -aoE '[0-9a-f]{64}' "$f" | sort | uniq -c | sort -rn | head -8
+              fi
+            done
+            echo
+            echo "--- printable key-ish strings in libdns.so"
+            strings -n 8 libs/libdns/libdns.so 2>/dev/null | grep -iE "pubkey|dnstt|prince|noise|handshake" | sort -u | head -20
+          } > "$R/dnstt-keys.txt" 2>&1
+          head -40 "$R/dnstt-code.txt"; echo; head -30 "$R/dnstt-keys.txt"
+
       - name: Where does the server list come from
         run: |
           set +e
@@ -420,6 +455,8 @@ jobs:
           cp dns-census.txt "$DEST/report/dns-census.txt" 2>/dev/null
           cp superdns-run.txt "$DEST/report/superdns-run.txt" 2>/dev/null
           cp superdns-abi.txt "$DEST/report/superdns-abi.txt" 2>/dev/null
+          cp dnstt-code.txt "$DEST/report/dnstt-code.txt" 2>/dev/null
+          cp dnstt-keys.txt "$DEST/report/dnstt-keys.txt" 2>/dev/null
           cd "$GITHUB_WORKSPACE"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
