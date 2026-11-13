@@ -281,50 +281,50 @@
    classes2: mTunnelThreadStopSignal
 
 ### url probe
-  http://.css                                                                                000 0B 0.000081s
+  http://.css                                                                                000 0B 0.000076s
   http://.jpg|right|thumb|.js                                                                000 0B 0.000057s
-  http://Descriptionrelatively                                                               000 0B 0.015310s
-  http://OPTIONSCreatedIM                                                                    000 0B 0.003206s
-  http://UA-Compatible                                                                       000 0B 0.003193s
-  http://according                                                                           000 0B 0.003190s
-  http://addEventListenerresponsible                                                         000 0B 0.003189s
-  http://applicationslink                                                                    000 0B 0.015338s
-  http://ator                                                                                000 0B 0.015362s
-  http://convertnil                                                                          000 0B 0.007282s
-  http://cript                                                                               000 0B 0.007335s
-  http://dictionaryperceptionrevolutionfoundationpx;height:successfulsupportersmillenniumh   000 0B 0.000024s
-  http://encoding=                                                                           000 0B 0.000005s
-  http://familiar                                                                            000 0B 0.003228s
-  http://g.co/dev/packagevisibility.                                                         301 0B 0.101005s
-  http://html4/loose.dtd                                                                     000 0B 0.007296s
-  http://hylafaxhyper-ghyperipi-zipqdias-regibm-appibm-db2ibm-mgribm-ppsibm-resibm-ssdibm3   000 0B 0.000065s
-  http://ignoredillegalintegerinvalidipSliceiso8601issuerskeytypeld                          000 0B 0.031380s
-  http://imEnglish                                                                           000 0B 0.007293s
+  http://Descriptionrelatively                                                               000 0B 0.007249s
+  http://OPTIONSCreatedIM                                                                    000 0B 0.003192s
+  http://UA-Compatible                                                                       000 0B 0.003183s
+  http://according                                                                           000 0B 0.003186s
+  http://addEventListenerresponsible                                                         000 0B 0.015300s
+  http://applicationslink                                                                    000 0B 0.003198s
+  http://ator                                                                                000 0B 0.007263s
+  http://convertnil                                                                          000 0B 0.003186s
+  http://cript                                                                               000 0B 0.003211s
+  http://dictionaryperceptionrevolutionfoundationpx;height:successfulsupportersmillenniumh   000 0B 0.000006s
+  http://encoding=                                                                           000 0B 0.000007s
+  http://familiar                                                                            000 0B 0.003189s
+  http://g.co/dev/packagevisibility.                                                         301 0B 0.086949s
+  http://html4/loose.dtd                                                                     000 0B 0.007273s
+  http://hylafaxhyper-ghyperipi-zipqdias-regibm-appibm-db2ibm-mgribm-ppsibm-resibm-ssdibm3   000 0B 0.000063s
+  http://ignoredillegalintegerinvalidipSliceiso8601issuerskeytypeld                          000 0B 0.007274s
+  http://imEnglish                                                                           000 0B 0.007273s
   http://interested                                                                          000 0B 0.003191s
 
 ### dns probe of the top hosts
-  go.uber.org                                  A=ghs.googlehosted.com. 142.251.210.147  NS=ghs.googlehosted.com.
+  go.uber.org                                  A=ghs.googlehosted.com. 142.251.218.19  NS=ghs.googlehosted.com.
   eq.net                                       A=207.207.210.23 207.207.210.50 207.207.210.36  NS=maceio.ns.porkbun.com. salvador.ns.porkbun.com. fortaleza.ns.porkbun.com. curitiba.ns.porkbun.com.
-  go4.org                                      A=216.239.32.21 216.239.38.21 216.239.36.21 216.239.34.21  NS=ns-873.awsdns-45.net. ns-1278.awsdns-31.org. ns-1541.awsdns-00.co.uk. ns-387.awsdns-48.com.
+  go4.org                                      A=216.239.34.21 216.239.36.21 216.239.32.21 216.239.38.21  NS=ns-387.awsdns-48.com. ns-873.awsdns-45.net. ns-1278.awsdns-31.org. ns-1541.awsdns-00.co.uk.
   lukechampine.com                             A=23.92.16.31  NS=ns-cloud-b1.googledomains.com. ns-cloud-b2.googledomains.com. ns-cloud-b3.googledomains.com. ns-cloud-b4.googledomains.com.
   transport.link                               A=-  NS=-
-  idna.info                                    A=81.2.196.19  NS=ns.forpsi.cz. ns.forpsi.it. ns.forpsi.net.
-  yaml.org                                     A=185.199.108.153 185.199.111.153 185.199.109.153 185.199.110.153  NS=evan.ns.cloudflare.com. tegan.ns.cloudflare.com.
+  idna.info                                    A=81.2.196.19  NS=ns.forpsi.net. ns.forpsi.it. ns.forpsi.cz.
+  yaml.org                                     A=185.199.110.153 185.199.111.153 185.199.108.153 185.199.109.153  NS=evan.ns.cloudflare.com. tegan.ns.cloudflare.com.
   eq.io                                        A=3.139.159.151  NS=l1.ns.divido.org. l2.ns.divido.org.
-  bitbucket.org                                A=104.192.142.24 104.192.142.26 104.192.142.25  NS=ns-1305.awsdns-35.org. ns-1746.awsdns-26.co.uk. ns-445.awsdns-55.com. ns-584.awsdns-09.net.
+  bitbucket.org                                A=104.192.142.26 104.192.142.24 104.192.142.25  NS=ns-1305.awsdns-35.org. ns-1746.awsdns-26.co.uk. ns-445.awsdns-55.com. ns-584.awsdns-09.net.
   eq.go.uber.org                               A=-  NS=-
   godebugs.info                                A=-  NS=-
-  runtime.link                                 A=103.224.128.139  NS=dns1.registrar-servers.com. dns2.registrar-servers.com.
-  atomic.store                                 A=23.227.38.65  NS=ns3npv.name.com. ns1lmy.name.com. ns2bls.name.com. ns4bty.name.com.
+  runtime.link                                 A=103.224.128.139  NS=dns2.registrar-servers.com. dns1.registrar-servers.com.
+  atomic.store                                 A=23.227.38.65  NS=ns4bty.name.com. ns2bls.name.com. ns1lmy.name.com. ns3npv.name.com.
   java.net                                     A=137.254.56.25  NS=a18-67.akam.net. a11-66.akam.net. a1-160.akam.net. a13-65.akam.net. ns1.p201.dns.oraclecloud.net. ns2.p201.dns.oraclecloud.net. ns3.p201.dns.oraclecloud.net. ns4.p201.dns.oraclecloud.net.
-  hash.net                                     A=54.66.238.183  NS=ns73.domaincontrol.com. ns74.domaincontrol.com.
-  app-measurement.com                          A=142.251.41.14  NS=ns2.google.com. ns1.google.com. ns3.google.com. ns4.google.com.
-  insecure.info                                A=76.223.54.146 13.248.169.48  NS=ns2.afternic.com. ns1.afternic.com. verification-e7ktf2ehupufe4sbe7xxk3.ns101.verify.hn.
+  hash.net                                     A=54.66.238.183  NS=ns74.domaincontrol.com. ns73.domaincontrol.com.
+  app-measurement.com                          A=142.251.34.78  NS=ns2.google.com. ns1.google.com. ns3.google.com. ns4.google.com.
+  insecure.info                                A=76.223.54.146 13.248.169.48  NS=verification-e7ktf2ehupufe4sbe7xxk3.ns101.verify.hn. ns2.afternic.com. ns1.afternic.com.
   gcm.n.link                                   A=-  NS=-
-  twitter.com                                  A=172.66.0.227  NS=a.r06.twtrdns.net. a.u06.twtrdns.net. b.r06.twtrdns.net. b.u06.twtrdns.net. c.r06.twtrdns.net. c.u06.twtrdns.net. d.r06.twtrdns.net. d.u06.twtrdns.net.
-  java.io                                      A=3.33.165.172 15.197.228.149  NS=ns1.domaineasy.com. ns2.domaineasy.com.
-  dispatchers.io                               A=104.21.61.164 172.67.212.41  NS=fish.ns.cloudflare.com. clay.ns.cloudflare.com.
-  web.app                                      A=199.36.158.100  NS=ns2.googledomains.com. ns1.googledomains.com. ns4.googledomains.com. ns3.googledomains.com.
-  www.recaptcha.net                            A=142.251.218.3  NS=-
-  client.dev                                   A=64.239.109.65 64.239.123.129  NS=ns2.vercel-dns.com. ns1.vercel-dns.com.
+  twitter.com                                  A=162.159.140.229  NS=a.r06.twtrdns.net. a.u06.twtrdns.net. b.r06.twtrdns.net. b.u06.twtrdns.net. c.r06.twtrdns.net. c.u06.twtrdns.net. d.r06.twtrdns.net. d.u06.twtrdns.net.
+  java.io                                      A=15.197.228.149 3.33.165.172  NS=ns2.domaineasy.com. ns1.domaineasy.com.
+  dispatchers.io                               A=172.67.212.41 104.21.61.164  NS=clay.ns.cloudflare.com. fish.ns.cloudflare.com.
+  web.app                                      A=199.36.158.100  NS=ns3.googledomains.com. ns1.googledomains.com. ns2.googledomains.com. ns4.googledomains.com.
+  www.recaptcha.net                            A=142.251.210.131  NS=-
+  client.dev                                   A=64.239.123.129 64.239.123.193  NS=ns2.vercel-dns.com. ns1.vercel-dns.com.
   acme-v02.api.letsencrypt.org                 A=prod.api.letsencrypt.org. ca80a1adb12a4fbdac5ffcbc944e9a61.pacloudflare.com. 172.65.32.248  NS=prod.api.letsencrypt.org. ca80a1adb12a4fbdac5ffcbc944e9a61.pacloudflare.com.
