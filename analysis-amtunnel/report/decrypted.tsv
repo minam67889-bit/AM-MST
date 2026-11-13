@@ -1,6 +1,43 @@
 # LSParanoid string table - decrypted by tools/lsparanoid_decode.py
-# chunks=2 chunk_chars=14474 ids=454
-# decoded=454 errors=0
+# chunks=2 chunk_chars=14474 ids=491
+# decoded=454 errors=37
+0	#ERR IndexError: string index out of range
+1	#ERR IndexError: list index out of range
+2	#ERR IndexError: list index out of range
+3	#ERR IndexError: list index out of range
+4	#ERR IndexError: list index out of range
+5	#ERR IndexError: list index out of range
+6	#ERR IndexError: list index out of range
+7	#ERR IndexError: list index out of range
+8	#ERR IndexError: list index out of range
+9	#ERR IndexError: list index out of range
+10	#ERR IndexError: list index out of range
+12	#ERR IndexError: list index out of range
+13	#ERR IndexError: list index out of range
+14	#ERR IndexError: list index out of range
+15	#ERR IndexError: list index out of range
+2131951659	#ERR IndexError: list index out of range
+2131951660	#ERR IndexError: list index out of range
+2131951691	#ERR IndexError: list index out of range
+2131951713	#ERR IndexError: list index out of range
+2131951714	#ERR IndexError: list index out of range
+2131951715	#ERR IndexError: list index out of range
+2131951717	#ERR IndexError: list index out of range
+2131951718	#ERR IndexError: list index out of range
+2131951719	#ERR IndexError: list index out of range
+2131951762	#ERR IndexError: list index out of range
+2131951962	#ERR IndexError: list index out of range
+2131951968	#ERR IndexError: list index out of range
+2131951969	#ERR IndexError: list index out of range
+2131952015	#ERR IndexError: list index out of range
+2131952021	#ERR IndexError: list index out of range
+2131952171	#ERR IndexError: list index out of range
+2131952179	#ERR IndexError: list index out of range
+2131952180	#ERR IndexError: list index out of range
+2131952183	#ERR IndexError: list index out of range
+2131952185	#ERR IndexError: list index out of range
+2131952199	#ERR IndexError: list index out of range
+2131952239	#ERR IndexError: list index out of range
 750632264787325428	PRINCE_F
 750633205385163252	\s*=\s*(\S+)
 750633222565032436	wg/

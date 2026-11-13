@@ -1,15 +1,19 @@
 ### chunks from apktool smali
 apktool exit=0
-smali/smali_classes2/org/lsposed/lsparanoid/Deobfuscator$AMTUNNELLITE$app.smali
 smali/smali_classes2/org/lsposed/lsparanoid/Deobfuscator$AMTUNNELLITE$app.smali: 2 const-strings, kept 2 (sizes [8191, 6283]) -> chunks.txt
-chunks: 0
-wrote decrypted.tsv (457 lines)
+
+### ids: smali (complete) + jadx
+smali=0 jadx=491 total=491
+wrote decrypted.tsv (494 lines)
 wrote hosts.txt (0 hosts)
-chunks=2 ids=454 decoded=454 errors=0
+chunks=2 ids=491 decoded=454 errors=37
 
 ### app hosts (deobfuscated)
 
-### strings mentioning super/dns/tunnel/pubkey
+### every domain-looking token in the decoded table
+      1 googleapis.com
+
+### strings mentioning super/dns/tunnel/pubkey/host
 750640678628258292	SUPER_DNS_FREQUENCY
 750640764527604212	SUPER_DNS_FREQUENCY
 750640901966557684	SUPER_NETWORK_SELECTED_POSITION
@@ -20,134 +24,37 @@ chunks=2 ids=454 decoded=454 errors=0
 750641554801586676	SUPER_CUSTOM_DNS
 750641627816030708	SUPER_DNS
 750641670765703668	SUPER_DNS
+750643221248897524	SSH_HOST
 750643646450659828	TUNNEL_TYPE
 750643697990267380	TUNNEL_TYPE
-750652601457471988	openvpn_userreq
-750652670176948724	openvpn_newstat
-750652717421588980	openvpn_bg
-750652786141065716	openvpn_userreq
-750652854860542452	openvpn_newstat
-750652902105182708	openvpn_bg
-750653370256617972	openvpn_userreq
-750653417501258228	openvpn_bg
-750653520580473332	openvpn_newstat
-750653589299950068	openvpn_newstat
-750655182732816884	openvpn_newstat
-750655423250985460	openvpn_userreq
-750655491970462196	openvpn_newstat
-750656217819935220	openvpn_userreq
-750656286539411956	openvpn_newstat
-750656333784052212	openvpn_bg
+750644703012614644	SSH_HOST
+750645622135615988	SERVER_SELECTED_NAME
+  "server": "%s",
+  "server": "%s",
+  "server": "%s",
 750656475517972980	app.vpn.amtunnellite:startTunnel
 750656514172678644	SuperDNS
-750656853475095028	openvpn_userreq
-750656922194571764	openvpn_newstat
-750656990914048500	openvpn_userreq
-750657059633525236	openvpn_newstat
-750657106878165492	openvpn_bg
-750657575029600756	openvpn_userreq
-750657622274241012	openvpn_bg
-750657725353456116	openvpn_newstat
-750657794072932852	openvpn_newstat
 750658021706199540	SuperDNS Helper Exception
 750658107605545460	SuperDNS Connecting
   "dns":{"hosts":{"domain:googleapis.cn":"googleapis.com"},"servers":["1.1.1.1"]},"inbounds":[{"listen":"127.0.0.1","port":%s,"protocol":"socks","settings":{"auth":"noauth","udp":true,"userLevel":8},"sniffing":{"destOverride":["http","tls"],"enabled":true},"tag":"socks"},{"listen":"127.0.0.1","port":%s,"protocol":"http","settings":{"userLevel":8},"tag":"http"}],"log":{"loglevel":"warning"},"outbounds":[{"mux":{"concurrency":8,"enabled":false},"protocol":"superdns","settings":{"servers":[{"address":"%s","level":8,"method":"%s","ota":false,"password":"%s","port":%s}]},"streamSettings":{"network":"tcp","security":""},"tag":"proxy"},{"protocol":"freedom","settings":{},"tag":"direct"},{"protocol":"blackhole","settings":{"response":{"type":"http"}},"tag":"block"}],"policy":{"levels":{"8":{"connIdle":300,"downlinkOnly":1,"handshake":4,"uplinkOnly":1}},"system":{"statsOutboundUplink":true,"statsOutboundDownlink":true}},"routing":{"domainStrategy":"IPIfNonMatch","rules":[{"ip":["1.1.1.1"],"outboundTag":"proxy","port":"53","type":"field"}]},"stats":{}}
 750663222911594996	SuperDNS Exception
 750663321695842804	-pubkey
 750664678905508340	libsuperdns.so
-750664850704200180	vpnSettings
-750664966668317172	VPN Error, Restart Device!
 750665108402237940	SuperDNS
 750665507834196468	tunnelVpnStartBroadcast
 750665632388248052	tunnelVpnDisconnectBroadcast
-750665847136612852	openvpn_newstat
 750665988870533620	app.vpn.amtunnellite:startTunnel
 750666152079290868	SuperDNS
-750666865043862004	Error running VPNService!
 750667178576474612	SuperDNS Connected
 750667930195751412	tunnelVpnDisconnectBroadcast
 750668046159868404	tunnelVpnStartSuccessExtra
 750668149239083508	tunnelVpnStartBroadcast
-750668428411957748	openvpn_userreq
-750668497131434484	openvpn_newstat
-750668544376074740	openvpn_bg
 750668686109995508	app.vpn.amtunnellite:startTunnel
-750669046887248372	openvpn_userreq
-750669115606725108	openvpn_newstat
-750669184326201844	openvpn_userreq
-750669253045678580	openvpn_newstat
-750669300290318836	openvpn_bg
-750671391939391988	vpnSettings
-750671507903508980	VPN Error, Restart Device!
 750671842910958068	tunnelVpnStartBroadcast
 750671967465009652	tunnelVpnDisconnectBroadcast
-750672182213374452	openvpn_newstat
 750672323947295220	app.vpn.amtunnellite:startTunnel
-750673698336829940	Error running VPNService!
 750674621754798580	tunnelVpnDisconnectBroadcast
 750674737718915572	tunnelVpnStartSuccessExtra
 750674840798130676	tunnelVpnStartBroadcast
 
-### 64-hex keys in plaintext strings
-
-### first 60 decoded strings
-# LSParanoid string table - decrypted by tools/lsparanoid_decode.py
-# chunks=2 chunk_chars=14474 ids=454
-# decoded=454 errors=0
-750632264787325428	PRINCE_F
-750633205385163252	\s*=\s*(\S+)
-750633222565032436	wg/
-750635004976460276	SHA1
-750635056516067828	Copied Text
-750635099465740788	clipboard
-750639424497807860	...|...
-750639450267611636	UTF-8
-750639553346826740	UTF-8
-750639579116630516	UTF-8
-750639604886434292	UTF-8
-750640678628258292	SUPER_DNS_FREQUENCY
-750640764527604212	SUPER_DNS_FREQUENCY
-750640901966557684	SUPER_NETWORK_SELECTED_POSITION
-750641039405511156	SUPER_NETWORK_SELECTED_POSITION
-750641112419955188	isCustomSuperSet
-750641185434399220	isCustomSuperSet
-750641408772698612	udp://8.8.8.8
-750641481787142644	SUPER_CUSTOM_DNS
-750641554801586676	SUPER_CUSTOM_DNS
-750641584866357748	Direct
-750641627816030708	SUPER_DNS
-750641670765703668	SUPER_DNS
-750641799614722548	isCustomPDOQSet
-750641868334199284	isCustomPDOQSet
-750642014363087348	8.8.8.8
-750642083082564084	PDOQ_CUSTOM_DNS
-750642151802040820	PDOQ_CUSTOM_DNS
-750642181866811892	Direct
-750642220521517556	PDOQ_DNS
-750642259176223220	PDOQ_DNS
-750642263471190516	
-750642315010798068	UDP_VERSION
-750643221248897524	SSH_HOST
-750643646450659828	TUNNEL_TYPE
-750643697990267380	TUNNEL_TYPE
-750644342235361780	443
-750644380890067444	UDP_PORT
-750644664357908980	
-750644703012614644	SSH_HOST
-750644814681764340	NETWORK_SELECTED_POSITION
-750644926350914036	NETWORK_SELECTED_POSITION
-750645531941302772	
-750645622135615988	SERVER_SELECTED_NAME
-750646000092738036	
-750646043042410996	BackQuery
-750646472539140596	999
-750646524078748148	libudpq
-750646605683126772	Disconnected
-750646700172407284	Try Again To Connect!
-750646829021426164	Error, Reconnect/Restart App!
-750646884856001012	Disconnected
-750646992230183412	Waiting for UDP response
-750647039474823668	CONNECTING
-750647078129529332	--config
-750647108194300404	client
-750647159733907956	config.json
+### 64-hex keys
