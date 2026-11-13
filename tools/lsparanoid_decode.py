@@ -232,6 +232,8 @@ def selftest() -> None:
 def main(argv: list[str]) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--java", type=pathlib.Path, help="jadx output of the generated Deobfuscator$*.java")
+    ap.add_argument("--chunks-file", type=pathlib.Path,
+                    help="file with one chunk per line, when jadx could not decompile the class")
     ap.add_argument("--scan", type=pathlib.Path, help="jadx sources tree to harvest getString(<id>) ids from")
     ap.add_argument("--ids", help="comma separated ids")
     ap.add_argument("--ids-file", type=pathlib.Path, help="file with one id per line")
@@ -243,12 +245,17 @@ def main(argv: list[str]) -> int:
     if args.selftest:
         selftest()
 
-    if not args.java:
+    if not args.java and not args.chunks_file:
         if args.selftest:
             return 0
-        ap.error("--java is required")
+        ap.error("--java or --chunks-file is required")
 
-    chunks = load_chunks(args.java)
+    if args.chunks_file:
+        chunks = [line.rstrip("\n") for line in
+                  args.chunks_file.read_text(encoding="utf-8", errors="replace").splitlines()]
+        chunks = [c for c in chunks if c]
+    else:
+        chunks = load_chunks(args.java)
     total_chars = sum(len(c) for c in chunks)
 
     ids: set[int] = set()

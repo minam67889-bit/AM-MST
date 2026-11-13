@@ -153,24 +153,35 @@ jobs:
           set +e
           cd /tmp/a
           R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
-          DEO=$(find src -name 'Deobfuscator*app.java' | head -1)
-          echo "deobfuscator: $DEO"
+          mkdir -p "$R"
+          # jadx usually gives up on the generated Deobfuscator class, so take the
+          # chunk table from smali, which is lossless.
+          sudo apt-get install -y -qq apktool > /dev/null 2>&1
+          apktool --version
+          timeout 900 apktool d -f -r -o smali apk.apk > apktool.log 2>&1
+          echo "apktool exit=$?"; tail -3 apktool.log
+          ls smali 2>/dev/null
+          python3 "$GITHUB_WORKSPACE/tools/extract_paranoid_chunks.py" smali chunks.txt
+          wc -l chunks.txt; awk '{print length}' chunks.txt | head
           python3 "$GITHUB_WORKSPACE/tools/lsparanoid_decode.py" \
-            --java "$DEO" --scan src --out decrypted.tsv \
+            --chunks-file chunks.txt --scan src --out decrypted.tsv \
             --hosts-out hosts.txt > /tmp/dec.log 2>&1
-          tail -30 /tmp/dec.log
-          wc -l decrypted.tsv
+          tail -40 /tmp/dec.log
+          wc -l decrypted.tsv 2>/dev/null
           {
+            echo "### decoder log"
+            cat /tmp/dec.log
+            echo
             echo "### app hosts (deobfuscated)"
             cat hosts.txt 2>/dev/null
             echo
             echo "### strings mentioning super/dns/tunnel/pubkey"
-            grep -iE "super|dnstt|slowdns|slow dns|pubkey|nameserver|tunnel" decrypted.tsv | head -80
+            grep -iE "super|dnstt|slowdns|slow dns|pubkey|nameserver|tunnel" decrypted.tsv 2>/dev/null | head -80
             echo
             echo "### 64-hex keys in plaintext strings"
-            grep -oE "\b[0-9a-f]{64}\b" decrypted.tsv | sort -u | head -20
+            grep -oE "\b[0-9a-f]{64}\b" decrypted.tsv 2>/dev/null | sort -u | head -20
           } > "$R/strings-decrypted.txt" 2>&1
-          head -80 "$R/strings-decrypted.txt"
+          head -60 "$R/strings-decrypted.txt"
 
       - name: Readable SuperService / tunnel code
         run: |
