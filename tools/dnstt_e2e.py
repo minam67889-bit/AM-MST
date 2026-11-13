@@ -36,26 +36,34 @@ def wait_port(port: int, seconds: float) -> bool:
 
 
 def socks5_connect(port: int, host: str, dest_port: int = 80, timeout: float = 20.0) -> socket.socket:
+    """SOCKS5 CONNECT through the tunnel.
+
+    dnstt-client answers the greeting only after the tunnel stream is open, and
+    the stream is opened when the CONNECT arrives, so greeting and request go out
+    together and the replies are read as they come.
+    """
     sock = socket.create_connection(("127.0.0.1", port), timeout=timeout)
     sock.settimeout(timeout)
-    sock.sendall(b"\x05\x01\x00")
-    reply = sock.recv(2)
-    if len(reply) < 2 or reply[0] != 5 or reply[1] != 0:
-        raise OSError(f"SOCKS5 greeting refused: {reply!r}")
     name = host.encode()
-    sock.sendall(b"\x05\x01\x00\x03" + bytes([len(name)]) + name + struct.pack("!H", dest_port))
-    head = sock.recv(4)
-    if len(head) < 4 or head[1] != 0:
-        raise OSError(f"SOCKS5 CONNECT failed: {head!r}")
-    atyp = head[3]
-    if atyp == 1:
-        sock.recv(4)
-    elif atyp == 3:
-        length = sock.recv(1)[0]
-        sock.recv(length)
-    elif atyp == 4:
-        sock.recv(16)
-    sock.recv(2)
+    request = (b"\x05\x01\x00"
+               + b"\x05\x01\x00\x03" + bytes([len(name)]) + name
+               + struct.pack("!H", dest_port))
+    sock.sendall(request)
+    buf = b""
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        if b"\x05\x00\x00" in buf:
+            break
+        try:
+            chunk = sock.recv(64)
+        except socket.timeout:
+            break
+        if not chunk:
+            break
+        buf += chunk
+    if b"\x05\x00\x00" not in buf:
+        sock.close()
+        raise OSError(f"SOCKS5 CONNECT not acknowledged (got {buf[:16]!r})")
     return sock
 
 

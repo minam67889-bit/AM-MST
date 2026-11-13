@@ -497,8 +497,8 @@ jobs:
           python3 "$GITHUB_WORKSPACE/tools/amtunnel_dnstt_e2e.py" \
             --client "$GITHUB_WORKSPACE/tools/bin/dnstt-client-linux-amd64" \
             --hosts sa1.supaghost.cc \
-            --keys 0000000000000000000000000000000000000000000000000000000000000000,ea0710d912261ce6c8a6c91ea69f308f3d93959fe0c1ec034c5de474e276239b,9bd2ef7a9ddbb22386f27f5f6885f8eeef6cdf57e96bbdef0f9e0421f1ec4654,a43ffc4a4831591b9de7c1ed0cb93795c1209295578eacf0b17a0150abe1d3e7 \
-            --seconds 12 --out "$R/dnstt-live.txt" 2>&1 | tail -80
+            --keys ea0710d912261ce6c8a6c91ea69f308f3d93959fe0c1ec034c5de474e276239b,9bd2ef7a9ddbb22386f27f5f6885f8eeef6cdf57e96bbdef0f9e0421f1ec4654,a43ffc4a4831591b9de7c1ed0cb93795c1209295578eacf0b17a0150abe1d3e7,2c587152c2f436fc5ec104c928e860879c863f40cd3cf40ed0b41cc2adca5048 \
+            --seconds 25 --out "$R/dnstt-live.txt" 2>&1 | tail -80
 
       - name: Commit
         if: always()
