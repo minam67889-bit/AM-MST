@@ -52,7 +52,7 @@ def attempt(client: str, ip: str, key: str, domain: str, port: int,
     started = time.time()
     result: dict = {"ip": ip, "key": key, "domain": domain, "socks": False, "fetches": []}
     try:
-        result["socks"] = wait_port(port, 8)
+        result["socks"] = wait_port(port, 10)
         if result["socks"]:
             result["socks_after"] = round(time.time() - started, 1)
             for url in urls:
@@ -67,7 +67,7 @@ def attempt(client: str, ip: str, key: str, domain: str, port: int,
             proc.kill()
         log.seek(0)
         text = log.read().decode("utf-8", "replace")
-        result["log"] = [line for line in text.strip().splitlines() if line][-8:]
+        result["log"] = [line for line in text.strip().splitlines() if line][-25:]
     result["begin_session"] = any("begin session" in line for line in result["log"])
     return result
 
@@ -100,7 +100,9 @@ def main() -> None:
             port += 1
             lines.append(f"--- key {key[:16]}… on {ip}:53")
             result = attempt(args.client, ip, key, domain, port, urls, args.seconds)
-            lines.append(f"    socks={result['socks']} begin_session={result['begin_session']}")
+            lines.append(f"    socks={result['socks']} begin_session={result['begin_session']} "
+                         f"stream={'yes' if any('begin stream' in x for x in result['log']) else 'no'} "
+                         f"ecdh_error={'yes' if any('ecdh' in x for x in result['log']) else 'no'}")
             for line in result["log"]:
                 lines.append("    log: " + line)
             for item in result["fetches"]:
