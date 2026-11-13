@@ -52,7 +52,7 @@ public final class QI implements AdapterView.OnItemSelectedListener {
                         textView.setVisibility(0);
                         editText.setVisibility(0);
                         c2507db.getClass();
-                        editText.setText(c2507db.a.getString("#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range"));
+                        editText.setText(c2507db.a.getString("PDOQ_CUSTOM_DNS", "8.8.8.8"));
                         uDPClient.V = true;
                         return;
                     }

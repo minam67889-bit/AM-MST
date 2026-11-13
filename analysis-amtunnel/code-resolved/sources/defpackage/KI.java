@@ -75,7 +75,7 @@ public final class KI implements View.OnClickListener {
                 uDPClient.s("ocspdoq");
                 try {
                     a.getClass();
-                    spinner.setSelection(a.a.getInt("#ERR IndexError: string index out of range", 0));
+                    spinner.setSelection(a.a.getInt("NETWORK_SELECTED_POSITION", 0));
                 } catch (IndexOutOfBoundsException unused) {
                     spinner.setSelection(0);
                 }
@@ -134,7 +134,7 @@ public final class KI implements View.OnClickListener {
                                                         j = 750675721266426356L;
                                                     } else {
                                                         SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC = c2507db2.b;
-                                                        sharedPreferencesEditorC2544eC.putString("#ERR IndexError: string index out of range", obj);
+                                                        sharedPreferencesEditorC2544eC.putString("PDOQ_CUSTOM_DNS", obj);
                                                         sharedPreferencesEditorC2544eC.apply();
                                                         c2507db2.g(true);
                                                     }
@@ -147,7 +147,7 @@ public final class KI implements View.OnClickListener {
                                                 }
                                                 int selectedItemPosition = spinner2.getSelectedItemPosition();
                                                 SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC2 = c2507db2.b;
-                                                sharedPreferencesEditorC2544eC2.putInt("#ERR IndexError: string index out of range", selectedItemPosition);
+                                                sharedPreferencesEditorC2544eC2.putInt("NETWORK_SELECTED_POSITION", selectedItemPosition);
                                                 sharedPreferencesEditorC2544eC2.apply();
                                                 dialogInterfaceC3167q1.dismiss();
                                                 return;
@@ -162,7 +162,7 @@ public final class KI implements View.OnClickListener {
                                                         return;
                                                     }
                                                     SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC3 = c2507db3.b;
-                                                    sharedPreferencesEditorC2544eC3.putString("#ERR IndexError: string index out of range", obj2);
+                                                    sharedPreferencesEditorC2544eC3.putString("SUPER_CUSTOM_DNS", obj2);
                                                     sharedPreferencesEditorC2544eC3.apply();
                                                     c2507db3.h(true);
                                                 } else if (!uDPClient4.U) {
@@ -171,7 +171,7 @@ public final class KI implements View.OnClickListener {
                                                 }
                                                 int selectedItemPosition2 = spinner2.getSelectedItemPosition();
                                                 SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC4 = c2507db3.b;
-                                                sharedPreferencesEditorC2544eC4.putInt("#ERR IndexError: string index out of range", selectedItemPosition2);
+                                                sharedPreferencesEditorC2544eC4.putInt("SUPER_NETWORK_SELECTED_POSITION", selectedItemPosition2);
                                                 sharedPreferencesEditorC2544eC4.apply();
                                                 dialogInterfaceC3167q1.dismiss();
                                                 return;
@@ -206,7 +206,7 @@ public final class KI implements View.OnClickListener {
                                                         j = 750675721266426356L;
                                                     } else {
                                                         SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC = c2507db22.b;
-                                                        sharedPreferencesEditorC2544eC.putString("#ERR IndexError: string index out of range", obj);
+                                                        sharedPreferencesEditorC2544eC.putString("PDOQ_CUSTOM_DNS", obj);
                                                         sharedPreferencesEditorC2544eC.apply();
                                                         c2507db22.g(true);
                                                     }
@@ -219,7 +219,7 @@ public final class KI implements View.OnClickListener {
                                                 }
                                                 int selectedItemPosition = spinner3.getSelectedItemPosition();
                                                 SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC2 = c2507db22.b;
-                                                sharedPreferencesEditorC2544eC2.putInt("#ERR IndexError: string index out of range", selectedItemPosition);
+                                                sharedPreferencesEditorC2544eC2.putInt("NETWORK_SELECTED_POSITION", selectedItemPosition);
                                                 sharedPreferencesEditorC2544eC2.apply();
                                                 dialogInterfaceC3167q12.dismiss();
                                                 return;
@@ -234,7 +234,7 @@ public final class KI implements View.OnClickListener {
                                                         return;
                                                     }
                                                     SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC3 = c2507db3.b;
-                                                    sharedPreferencesEditorC2544eC3.putString("#ERR IndexError: string index out of range", obj2);
+                                                    sharedPreferencesEditorC2544eC3.putString("SUPER_CUSTOM_DNS", obj2);
                                                     sharedPreferencesEditorC2544eC3.apply();
                                                     c2507db3.h(true);
                                                 } else if (!uDPClient4.U) {
@@ -243,7 +243,7 @@ public final class KI implements View.OnClickListener {
                                                 }
                                                 int selectedItemPosition2 = spinner3.getSelectedItemPosition();
                                                 SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC4 = c2507db3.b;
-                                                sharedPreferencesEditorC2544eC4.putInt("#ERR IndexError: string index out of range", selectedItemPosition2);
+                                                sharedPreferencesEditorC2544eC4.putInt("SUPER_NETWORK_SELECTED_POSITION", selectedItemPosition2);
                                                 sharedPreferencesEditorC2544eC4.apply();
                                                 dialogInterfaceC3167q12.dismiss();
                                                 return;
@@ -275,7 +275,7 @@ public final class KI implements View.OnClickListener {
                 scrollableNumberPicker.setListener(new C2701hA(a3, 7));
                 try {
                     a3.getClass();
-                    scrollableNumberPicker.setValue(a3.a.getInt("#ERR IndexError: string index out of range", 0));
+                    scrollableNumberPicker.setValue(a3.a.getInt("SUPER_DNS_FREQUENCY", 0));
                 } catch (IndexOutOfBoundsException unused2) {
                     scrollableNumberPicker.setValue(0);
                 }
@@ -309,7 +309,7 @@ public final class KI implements View.OnClickListener {
                 uDPClient2.s("ocsslow");
                 try {
                     a3.getClass();
-                    spinner2.setSelection(a3.a.getInt("#ERR IndexError: string index out of range", 0));
+                    spinner2.setSelection(a3.a.getInt("SUPER_NETWORK_SELECTED_POSITION", 0));
                 } catch (IndexOutOfBoundsException unused3) {
                     spinner2.setSelection(0);
                 }
@@ -367,7 +367,7 @@ public final class KI implements View.OnClickListener {
                                                         j = 750675721266426356L;
                                                     } else {
                                                         SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC = c2507db22.b;
-                                                        sharedPreferencesEditorC2544eC.putString("#ERR IndexError: string index out of range", obj);
+                                                        sharedPreferencesEditorC2544eC.putString("PDOQ_CUSTOM_DNS", obj);
                                                         sharedPreferencesEditorC2544eC.apply();
                                                         c2507db22.g(true);
                                                     }
@@ -380,7 +380,7 @@ public final class KI implements View.OnClickListener {
                                                 }
                                                 int selectedItemPosition = spinner22.getSelectedItemPosition();
                                                 SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC2 = c2507db22.b;
-                                                sharedPreferencesEditorC2544eC2.putInt("#ERR IndexError: string index out of range", selectedItemPosition);
+                                                sharedPreferencesEditorC2544eC2.putInt("NETWORK_SELECTED_POSITION", selectedItemPosition);
                                                 sharedPreferencesEditorC2544eC2.apply();
                                                 dialogInterfaceC3167q1.dismiss();
                                                 return;
@@ -395,7 +395,7 @@ public final class KI implements View.OnClickListener {
                                                         return;
                                                     }
                                                     SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC3 = c2507db3.b;
-                                                    sharedPreferencesEditorC2544eC3.putString("#ERR IndexError: string index out of range", obj2);
+                                                    sharedPreferencesEditorC2544eC3.putString("SUPER_CUSTOM_DNS", obj2);
                                                     sharedPreferencesEditorC2544eC3.apply();
                                                     c2507db3.h(true);
                                                 } else if (!uDPClient4.U) {
@@ -404,7 +404,7 @@ public final class KI implements View.OnClickListener {
                                                 }
                                                 int selectedItemPosition2 = spinner22.getSelectedItemPosition();
                                                 SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC4 = c2507db3.b;
-                                                sharedPreferencesEditorC2544eC4.putInt("#ERR IndexError: string index out of range", selectedItemPosition2);
+                                                sharedPreferencesEditorC2544eC4.putInt("SUPER_NETWORK_SELECTED_POSITION", selectedItemPosition2);
                                                 sharedPreferencesEditorC2544eC4.apply();
                                                 dialogInterfaceC3167q1.dismiss();
                                                 return;
@@ -439,7 +439,7 @@ public final class KI implements View.OnClickListener {
                                                         j = 750675721266426356L;
                                                     } else {
                                                         SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC = c2507db22.b;
-                                                        sharedPreferencesEditorC2544eC.putString("#ERR IndexError: string index out of range", obj);
+                                                        sharedPreferencesEditorC2544eC.putString("PDOQ_CUSTOM_DNS", obj);
                                                         sharedPreferencesEditorC2544eC.apply();
                                                         c2507db22.g(true);
                                                     }
@@ -452,7 +452,7 @@ public final class KI implements View.OnClickListener {
                                                 }
                                                 int selectedItemPosition = spinner3.getSelectedItemPosition();
                                                 SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC2 = c2507db22.b;
-                                                sharedPreferencesEditorC2544eC2.putInt("#ERR IndexError: string index out of range", selectedItemPosition);
+                                                sharedPreferencesEditorC2544eC2.putInt("NETWORK_SELECTED_POSITION", selectedItemPosition);
                                                 sharedPreferencesEditorC2544eC2.apply();
                                                 dialogInterfaceC3167q12.dismiss();
                                                 return;
@@ -467,7 +467,7 @@ public final class KI implements View.OnClickListener {
                                                         return;
                                                     }
                                                     SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC3 = c2507db3.b;
-                                                    sharedPreferencesEditorC2544eC3.putString("#ERR IndexError: string index out of range", obj2);
+                                                    sharedPreferencesEditorC2544eC3.putString("SUPER_CUSTOM_DNS", obj2);
                                                     sharedPreferencesEditorC2544eC3.apply();
                                                     c2507db3.h(true);
                                                 } else if (!uDPClient4.U) {
@@ -476,7 +476,7 @@ public final class KI implements View.OnClickListener {
                                                 }
                                                 int selectedItemPosition2 = spinner3.getSelectedItemPosition();
                                                 SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC4 = c2507db3.b;
-                                                sharedPreferencesEditorC2544eC4.putInt("#ERR IndexError: string index out of range", selectedItemPosition2);
+                                                sharedPreferencesEditorC2544eC4.putInt("SUPER_NETWORK_SELECTED_POSITION", selectedItemPosition2);
                                                 sharedPreferencesEditorC2544eC4.apply();
                                                 dialogInterfaceC3167q12.dismiss();
                                                 return;

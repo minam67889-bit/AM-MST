@@ -27,7 +27,7 @@ public final class As implements View.OnLongClickListener {
         String str = this.a;
         Activity activity = ((C2513dh) bs).a;
         try {
-            ((ClipboardManager) activity.getSystemService("#ERR IndexError: string index out of range")).setPrimaryClip(ClipData.newPlainText("#ERR IndexError: string index out of range", str));
+            ((ClipboardManager) activity.getSystemService("clipboard")).setPrimaryClip(ClipData.newPlainText("Copied Text", str));
             return true;
         } catch (Exception e) {
             SkStatus.logException("Error copying log", e);

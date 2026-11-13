@@ -171,7 +171,7 @@ public abstract class AbstractC2879kf {
 
     public static String G(String str, String str2) {
         StringBuilder o2 = AbstractC3603yE.o(str2);
-        o2.append("#ERR IndexError: string index out of range");
+        o2.append("\\s*=\\s*(\\S+)");
         Matcher matcher = Pattern.compile(o2.toString()).matcher(str);
         if (matcher.find()) {
             return matcher.group(1);
@@ -374,7 +374,7 @@ public abstract class AbstractC2879kf {
     }
 
     public static String R(Context context, String str) {
-        InputStream open = context.getResources().getAssets().open("#ERR IndexError: string index out of range" + str);
+        InputStream open = context.getResources().getAssets().open("wg/" + str);
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(open));
             StringBuilder sb = new StringBuilder();
@@ -1066,7 +1066,7 @@ public abstract class AbstractC2879kf {
         StringBuilder sb = new StringBuilder();
         for (Signature signature : context.getPackageManager().getPackageInfo(context.getPackageName(), 64).signatures) {
             byte[] byteArray = signature.toByteArray();
-            MessageDigest messageDigest = MessageDigest.getInstance("#ERR IndexError: string index out of range");
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA1");
             messageDigest.update(byteArray);
             byte[] digest = messageDigest.digest();
             char[] cArr = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};

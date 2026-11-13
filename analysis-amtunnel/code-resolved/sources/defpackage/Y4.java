@@ -188,7 +188,7 @@ public final class Y4 implements Runnable {
             SkStatus.logInfo("Local IP: " + ((activeNetworkInfo == null || !activeNetworkInfo.isConnectedOrConnecting()) ? "Indisponivel" : TunnelUtils.getLocalIpAddress()));
             try {
                 ?? thread = new Thread();
-                thread.b = "#ERR IndexError: string index out of range";
+                thread.b = "libudpqtwo";
                 thread.a = socksDNSService;
                 thread.e = C2507db.a(socksDNSService);
                 socksDNSService.e = thread;

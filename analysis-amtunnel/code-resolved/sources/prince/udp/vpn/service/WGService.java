@@ -57,9 +57,9 @@ public class WGService extends Service implements SkStatus.StateListener {
     public String q;
 
     static {
-        "#ERR IndexError: string index out of range";
-        "#ERR IndexError: string index out of range";
-        "#ERR IndexError: string index out of range";
+        "openvpn_bg";
+        "openvpn_newstat";
+        "openvpn_userreq";
         s = 0L;
     }
 
@@ -72,24 +72,24 @@ public class WGService extends Service implements SkStatus.StateListener {
         long j = s;
         long j2 = time - j;
         if (j == 0) {
-            return "#ERR IndexError: string index out of range";
+            return "00:00:00";
         }
-        return String.format("#ERR IndexError: string index out of range", Long.valueOf((j2 / 3600000) % 24), Long.valueOf((j2 / 60000) % 60), Long.valueOf((j2 / 1000) % 60));
+        return String.format("%02d:%02d:%02d", Long.valueOf((j2 / 3600000) % 24), Long.valueOf((j2 / 60000) % 60), Long.valueOf((j2 / 1000) % 60));
     }
 
     public final void a() {
-        NotificationManager notificationManager = (NotificationManager) getSystemService("#ERR IndexError: string index out of range");
-        NotificationChannel notificationChannel = new NotificationChannel("#ERR IndexError: string index out of range", getString(2131951717), 1);
+        NotificationManager notificationManager = (NotificationManager) getSystemService("notification");
+        NotificationChannel notificationChannel = new NotificationChannel("openvpn_bg", getString(2131951717), 1);
         notificationChannel.setDescription(getString(2131951713));
         notificationChannel.enableLights(false);
         notificationChannel.setLightColor(2131100642);
         notificationManager.createNotificationChannel(notificationChannel);
-        NotificationChannel notificationChannel2 = new NotificationChannel("#ERR IndexError: string index out of range", getString(2131951718), 2);
+        NotificationChannel notificationChannel2 = new NotificationChannel("openvpn_newstat", getString(2131951718), 2);
         notificationChannel2.setDescription(getString(2131951714));
         notificationChannel2.enableLights(true);
         notificationChannel2.setLightColor(2131100642);
         notificationManager.createNotificationChannel(notificationChannel2);
-        NotificationChannel notificationChannel3 = new NotificationChannel("#ERR IndexError: string index out of range", getString(2131951719), 1);
+        NotificationChannel notificationChannel3 = new NotificationChannel("openvpn_userreq", getString(2131951719), 1);
         notificationChannel3.setDescription(getString(2131951715));
         notificationChannel3.setLightColor(2131100642);
         notificationManager.createNotificationChannel(notificationChannel3);
@@ -97,31 +97,31 @@ public class WGService extends Service implements SkStatus.StateListener {
 
     public final void d(String str, String str2, String str3, ConnectionStatus connectionStatus) {
         int i = AbstractC2816jL.a[connectionStatus.ordinal()];
-        NotificationManager notificationManager = (NotificationManager) getSystemService("#ERR IndexError: string index out of range");
+        NotificationManager notificationManager = (NotificationManager) getSystemService("notification");
         int i2 = Build.VERSION.SDK_INT;
         if (i2 >= 26) {
             a();
-            new Notification.Builder(this, "#ERR IndexError: string index out of range");
+            new Notification.Builder(this, "openvpn_newstat");
         } else if (i2 >= 28) {
             a();
-            new Notification.Builder(this, "#ERR IndexError: string index out of range");
+            new Notification.Builder(this, "openvpn_newstat");
         } else {
             new Notification.Builder(this);
         }
         Notification.Builder ongoing = new Notification.Builder(this).setContentTitle(getString(2131951660)).setOnlyAlertOnce(true).setOngoing(true);
-        ongoing.setCategory("#ERR IndexError: string index out of range");
+        ongoing.setCategory("service");
         ongoing.setLocalOnly(true);
-        int i3 = str3.equals("#ERR IndexError: string index out of range") ? -2 : str3.equals("#ERR IndexError: string index out of range") ? 2 : 0;
+        int i3 = str3.equals("openvpn_bg") ? -2 : str3.equals("openvpn_userreq") ? 2 : 0;
         ongoing.setSmallIcon(2131230926);
-        if (SkStatus.getLastState().equals("#ERR IndexError: string index out of range")) {
-            str = "#ERR IndexError: string index out of range" + this.c.c();
+        if (SkStatus.getLastState().equals("CONNECTED")) {
+            str = "Connected to " + this.c.c();
         }
         ongoing.setContentText(str);
         ongoing.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, (Class<?>) UDPClient.class), 201326592));
         if (i3 != 0) {
             try {
-                ongoing.getClass().getMethod("#ERR IndexError: string index out of range", Integer.TYPE).invoke(ongoing, Integer.valueOf(i3));
-                ongoing.getClass().getMethod("#ERR IndexError: string index out of range", Boolean.TYPE).invoke(ongoing, Boolean.TRUE);
+                ongoing.getClass().getMethod("setPriority", Integer.TYPE).invoke(ongoing, Integer.valueOf(i3));
+                ongoing.getClass().getMethod("setUsesChronometer", Boolean.TYPE).invoke(ongoing, Boolean.TRUE);
             } catch (IllegalAccessException | IllegalArgumentException | NoSuchMethodException | InvocationTargetException e) {
                 SkStatus.logException(e);
             }
@@ -130,7 +130,7 @@ public class WGService extends Service implements SkStatus.StateListener {
         if (i4 >= 26) {
             ongoing.setChannelId(str3);
         }
-        if (str2 != null && !str2.equals("#ERR IndexError: string index out of range")) {
+        if (str2 != null && !str2.equals("")) {
             ongoing.setTicker(str2);
         }
         Notification build = ongoing.build();
@@ -156,25 +156,25 @@ public class WGService extends Service implements SkStatus.StateListener {
         Interface.Builder builder = new Interface.Builder();
         Peer.Builder builder2 = new Peer.Builder();
         this.a = new GoBackend(this);
-        InetAddress byName = InetAddress.getByName("#ERR IndexError: string index out of range");
-        InetAddress byName2 = InetAddress.getByName("#ERR IndexError: string index out of range");
+        InetAddress byName = InetAddress.getByName("8.8.8.8");
+        InetAddress byName2 = InetAddress.getByName("8.8.4.4");
         ArrayList arrayList = new ArrayList();
         arrayList.add(byName);
         arrayList.add(byName2);
         try {
             Integer valueOf = Integer.valueOf(new Random().nextInt(1001));
-            String R = AbstractC2879kf.R(getApplicationContext(), "#ERR IndexError: string index out of range" + valueOf + "#ERR IndexError: string index out of range");
-            this.n = AbstractC2879kf.G(R, "#ERR IndexError: string index out of range");
-            this.o = AbstractC2879kf.G(R, "#ERR IndexError: string index out of range");
-            this.p = AbstractC2879kf.G(R, "#ERR IndexError: string index out of range");
+            String R = AbstractC2879kf.R(getApplicationContext(), "am" + valueOf + ".conf");
+            this.n = AbstractC2879kf.G(R, "Endpoint");
+            this.o = AbstractC2879kf.G(R, "Hash1");
+            this.p = AbstractC2879kf.G(R, "Hash2");
         } catch (Exception unused) {
-            AbstractC2879kf.V(getApplicationContext(), "#ERR IndexError: string index out of range");
-            ((UDPClient) r).i("#ERR IndexError: string index out of range");
+            AbstractC2879kf.V(getApplicationContext(), "Error Parsing Data!");
+            ((UDPClient) r).i("Disconnected");
             InterfaceC2869kL interfaceC2869kL = r;
             if (interfaceC2869kL != null) {
                 ((UDPClient) interfaceC2869kL).E();
             } else {
-                AbstractC2879kf.V(getApplicationContext(), "#ERR IndexError: string index out of range");
+                AbstractC2879kf.V(getApplicationContext(), "Error, Reconnect/Restart App!");
             }
             s = 0L;
             Ww ww = this.m;
@@ -191,13 +191,13 @@ public class WGService extends Service implements SkStatus.StateListener {
         try {
             inetAddressArr = InetAddress.getAllByName(b);
         } catch (UnknownHostException unused2) {
-            AbstractC2879kf.V(getApplicationContext(), "#ERR IndexError: string index out of range");
-            ((UDPClient) r).i("#ERR IndexError: string index out of range");
+            AbstractC2879kf.V(getApplicationContext(), "Error Parsing IP!");
+            ((UDPClient) r).i("Disconnected");
             InterfaceC2869kL interfaceC2869kL2 = r;
             if (interfaceC2869kL2 != null) {
                 ((UDPClient) interfaceC2869kL2).E();
             } else {
-                AbstractC2879kf.V(getApplicationContext(), "#ERR IndexError: string index out of range");
+                AbstractC2879kf.V(getApplicationContext(), "Error, Reconnect/Restart App!");
             }
             s = 0L;
             Ww ww2 = this.m;
@@ -226,12 +226,12 @@ public class WGService extends Service implements SkStatus.StateListener {
         }
         C2507db c2507db = this.c;
         c2507db.getClass();
-        if (c2507db.a.getString("#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range").isEmpty()) {
-            string = "#ERR IndexError: string index out of range";
+        if (c2507db.a.getString("UDP_PORT", "443").isEmpty()) {
+            string = "9201";
         } else {
             C2507db c2507db2 = this.c;
             c2507db2.getClass();
-            string = c2507db2.a.getString("#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range");
+            string = c2507db2.a.getString("UDP_PORT", "443");
         }
         new Thread(new RunnableC2765iL(this, builder, arrayList, builder2, string)).start();
     }
@@ -246,9 +246,9 @@ public class WGService extends Service implements SkStatus.StateListener {
         super.onCreate();
         this.c = new C2507db(getApplicationContext());
         s = new Date().getTime();
-        this.f = (ConnectivityManager) getSystemService("#ERR IndexError: string index out of range");
+        this.f = (ConnectivityManager) getSystemService("connectivity");
         if (this.e == null) {
-            this.e = (NotificationManager) getSystemService("#ERR IndexError: string index out of range");
+            this.e = (NotificationManager) getSystemService("notification");
         }
         AbstractC3192qa.f(getApplicationContext());
     }
@@ -260,12 +260,12 @@ public class WGService extends Service implements SkStatus.StateListener {
         try {
             if (this.a.getState(this.b) == Tunnel.State.UP) {
                 this.a.setState(this.b, Tunnel.State.DOWN, null);
-                ((UDPClient) r).i("#ERR IndexError: string index out of range");
-                SkStatus.updateStateString("#ERR IndexError: string index out of range", getString(2131952180));
-                SkStatus.logInfo("#ERR IndexError: string index out of range");
+                ((UDPClient) r).i("Disconnected");
+                SkStatus.updateStateString("DISCONNECTED", getString(2131952180));
+                SkStatus.logInfo("<strong><font color=\"red\">WG DISCONNECTED</strong>");
             }
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "#ERR IndexError: string index out of range" + e.getMessage(), 0).show();
+            Toast.makeText(getApplicationContext(), "Error stopping WG: " + e.getMessage(), 0).show();
         }
         Ww ww = this.m;
         if (ww != null) {
@@ -282,28 +282,28 @@ public class WGService extends Service implements SkStatus.StateListener {
         ww.b = false;
         ww.c = 1000L;
         this.m = ww;
-        new Thread(this.m, "#ERR IndexError: string index out of range").start();
+        new Thread(this.m, "Status Poller").start();
         String string = getString(SkStatus.getLocalizedState(SkStatus.getLastState()));
-        d(string, string, "#ERR IndexError: string index out of range", ConnectionStatus.LEVEL_START);
+        d(string, string, "openvpn_newstat", ConnectionStatus.LEVEL_START);
         try {
-            String string2 = "#ERR IndexError: string index out of range";
+            String string2 = "Local IP: %s";
             NetworkInfo activeNetworkInfo = this.f.getActiveNetworkInfo();
-            SkStatus.logInfo(String.format(string2, (activeNetworkInfo == null || !activeNetworkInfo.isConnectedOrConnecting()) ? "#ERR IndexError: string index out of range" : TunnelUtils.getLocalIpAddress()));
+            SkStatus.logInfo(String.format(string2, (activeNetworkInfo == null || !activeNetworkInfo.isConnectedOrConnecting()) ? "Indisponivel" : TunnelUtils.getLocalIpAddress()));
             e();
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "#ERR IndexError: string index out of range" + e.getMessage(), 0).show();
+            Toast.makeText(getApplicationContext(), "Error starting WG: " + e.getMessage(), 0).show();
         }
         return 1;
     }
 
     @Override // prince.udp.vpn.service.vpn.logger.SkStatus.StateListener
     public final void updateState(String str, String str2, int i, ConnectionStatus connectionStatus, Intent intent) {
-        if (AL.a.name().equals("#ERR IndexError: string index out of range")) {
+        if (AL.a.name().equals("DOWN")) {
             return;
         }
-        String string = "#ERR IndexError: string index out of range";
+        String string = "openvpn_newstat";
         if (connectionStatus == ConnectionStatus.LEVEL_CONNECTED) {
-            string = "#ERR IndexError: string index out of range";
+            string = "openvpn_userreq";
         }
         String string2 = getString(SkStatus.getLocalizedState(SkStatus.getLastState()));
         d(string2, string2, string, connectionStatus);

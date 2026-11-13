@@ -36,7 +36,7 @@ public final class TI extends Thread {
     public File v;
 
     static {
-        "#ERR IndexError: string index out of range";
+        "libudpq";
     }
 
     public static Inet4Address a(InetAddress[] inetAddressArr) {
@@ -63,7 +63,7 @@ public final class TI extends Thread {
     @Override // java.lang.Thread
     public final void interrupt() {
         if (this.c != null) {
-            ((UDPClient) w).i("#ERR IndexError: string index out of range");
+            ((UDPClient) w).i("Disconnected");
             this.c.destroy();
         }
         try {
@@ -91,36 +91,36 @@ public final class TI extends Thread {
             try {
                 String str = context.getApplicationInfo().nativeLibraryDir;
                 c2507db.getClass();
-                boolean equals = c2507db.a.getString("#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range").equals("#ERR IndexError: string index out of range");
+                boolean equals = c2507db.a.getString("UDP_VERSION", "").equals("v2");
                 String str2 = this.b;
                 if (equals && c2507db.f() == 11) {
-                    file = new File(str, str2 + "#ERR IndexError: string index out of range");
+                    file = new File(str, str2 + ".so");
                 } else if (c2507db.f() == 6) {
-                    file = new File(str, str2 + "#ERR IndexError: string index out of range");
+                    file = new File(str, str2 + ".so");
                 } else {
-                    file = new File(str, "#ERR IndexError: string index out of range");
+                    file = new File(str, "libudpq.so");
                 }
                 this.d = file;
                 if (this.d == null) {
-                    ((UDPClient) w).i("#ERR IndexError: string index out of range");
-                    throw new IOException("#ERR IndexError: string index out of range");
+                    ((UDPClient) w).i("Bin Not found");
+                    throw new IOException("UDP bin not found");
                 }
-                this.u = c2507db.f() == 11 ? c2507db.a.getString("#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range") : c2507db.b();
-                if (this.u.contains("#ERR IndexError: string index out of range")) {
-                    String[] split = this.u.split("#ERR IndexError: string index out of range");
+                this.u = c2507db.f() == 11 ? c2507db.a.getString("BackQuery", "") : c2507db.b();
+                if (this.u.contains(";")) {
+                    String[] split = this.u.split(";");
                     this.u = split[new Random().nextInt(split.length)];
                 }
                 InetAddress[] inetAddressArr = new InetAddress[0];
                 try {
                     inetAddressArr = InetAddress.getAllByName(this.u);
                 } catch (UnknownHostException unused) {
-                    AbstractC2879kf.V(context, "#ERR IndexError: string index out of range");
-                    ((UDPClient) w).i("#ERR IndexError: string index out of range");
+                    AbstractC2879kf.V(context, "Error Parsing IP!");
+                    ((UDPClient) w).i("Disconnected");
                     SI si = w;
                     if (si != null) {
                         ((UDPClient) si).E();
                     } else {
-                        AbstractC2879kf.V(context, "#ERR IndexError: string index out of range");
+                        AbstractC2879kf.V(context, "Error, Reconnect/Restart App!");
                     }
                     TunnelManagerHelper.stopSocksHttp(context);
                 }
@@ -130,26 +130,26 @@ public final class TI extends Thread {
                 }
                 String str3 = this.u;
                 SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC = c2507db.b;
-                sharedPreferencesEditorC2544eC.putString("#ERR IndexError: string index out of range", str3);
+                sharedPreferencesEditorC2544eC.putString("SSH_HOST", str3);
                 sharedPreferencesEditorC2544eC.apply();
-                this.o = this.u + "#ERR IndexError: string index out of range" + new String[]{"#ERR IndexError: string index out of range"}[new Random().nextInt(1)];
-                this.r = "#ERR IndexError: string index out of range";
-                this.p = "#ERR IndexError: string index out of range";
-                this.q = "#ERR IndexError: string index out of range";
-                this.n = "#ERR IndexError: string index out of range";
-                this.s = "#ERR IndexError: string index out of range";
-                String string = "#ERR IndexError: string index out of range";
+                this.o = this.u + ":" + new String[]{"6000-19999"}[new Random().nextInt(1)];
+                this.r = "2";
+                this.p = "3";
+                this.q = "3";
+                this.n = "-1";
+                this.s = "127.0.0.1:10802";
+                String string = "196608";
                 this.f = string;
                 this.m = String.valueOf((Integer.parseInt(string) * 5) / 2);
-                this.t = "#ERR IndexError: string index out of range";
-                String format = c2507db.f() == 11 ? c2507db.a.getString("#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range").equals("#ERR IndexError: string index out of range") ? String.format(Locale.ENGLISH, "#ERR IndexError: string index out of range", PUtils.pEncrypt(context, "#ERR IndexError: string index out of range"), this.t, this.r, this.p, this.q, this.n, this.s, this.f, this.m, context.getString(2131951660)) : String.format(Locale.ENGLISH, "#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range", this.t, this.p, this.q, this.n, this.s, this.f, this.m, context.getString(2131951660)) : String.format(Locale.ENGLISH, "#ERR IndexError: string index out of range", PUtils.pEncrypt(context, this.o), this.t, this.r, this.p, this.q, this.n, this.s, this.f, this.m, context.getString(2131951660));
-                File file2 = new File(context.getFilesDir().getPath(), "#ERR IndexError: string index out of range");
+                this.t = "2";
+                String format = c2507db.f() == 11 ? c2507db.a.getString("UDP_VERSION", "").equals("v2") ? String.format(Locale.ENGLISH, "{", PUtils.pEncrypt(context, "127.0.0.1:7777"), this.t, this.r, this.p, this.q, this.n, this.s, this.f, this.m, context.getString(2131951660)) : String.format(Locale.ENGLISH, "{", "127.0.0.1:7777", this.t, this.p, this.q, this.n, this.s, this.f, this.m, context.getString(2131951660)) : String.format(Locale.ENGLISH, "{", PUtils.pEncrypt(context, this.o), this.t, this.r, this.p, this.q, this.n, this.s, this.f, this.m, context.getString(2131951660));
+                File file2 = new File(context.getFilesDir().getPath(), "config.json");
                 this.v = file2;
                 if (b(file2, format)) {
-                    this.c = new ProcessBuilder(new String[0]).command(new File(this.d.getCanonicalPath()).getAbsolutePath(), "#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range", this.v.getAbsolutePath()).redirectErrorStream(true).start();
-                    SkStatus.updateStateString("#ERR IndexError: string index out of range", context.getString(2131952179));
+                    this.c = new ProcessBuilder(new String[0]).command(new File(this.d.getCanonicalPath()).getAbsolutePath(), "client", "--config", this.v.getAbsolutePath()).redirectErrorStream(true).start();
+                    SkStatus.updateStateString("CONNECTING", context.getString(2131952179));
                     SkStatus.logInfo(2131952179, new Object[0]);
-                    ((UDPClient) w).i("#ERR IndexError: string index out of range");
+                    ((UDPClient) w).i("Waiting for UDP response");
                     C2701hA c2701hA = new C2701hA(this, 8);
                     C3303sg c3303sg = new C3303sg(this.c.getInputStream(), c2701hA);
                     C3303sg c3303sg2 = new C3303sg(this.c.getErrorStream(), c2701hA);
@@ -160,15 +160,15 @@ public final class TI extends Thread {
             } catch (IOException | InterruptedException unused3) {
             }
         } catch (NullPointerException unused4) {
-            ((UDPClient) w).i("#ERR IndexError: string index out of range");
+            ((UDPClient) w).i("Disconnected");
             SI si2 = w;
             if (si2 != null) {
                 ((UDPClient) si2).E();
             } else {
-                AbstractC2879kf.V(context, "#ERR IndexError: string index out of range");
+                AbstractC2879kf.V(context, "Error, Reconnect/Restart App!");
             }
             TunnelManagerHelper.stopSocksHttp(context);
-            AbstractC2879kf.U(context, "#ERR IndexError: string index out of range");
+            AbstractC2879kf.U(context, "Try Again To Connect!");
         }
     }
 }

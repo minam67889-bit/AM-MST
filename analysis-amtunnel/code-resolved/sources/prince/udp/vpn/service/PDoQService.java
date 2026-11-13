@@ -182,10 +182,10 @@ public class PDoQService extends Service implements Runnable, Handler.Callback, 
         String format = String.format(Locale.ENGLISH, "127.0.0.1:%s", Integer.valueOf(x));
         C2507db c2507db = this.c;
         c2507db.getClass();
-        if (c2507db.a.getBoolean("#ERR IndexError: string index out of range", false)) {
+        if (c2507db.a.getBoolean("isCustomPDOQSet", false)) {
             C2507db c2507db2 = this.c;
             c2507db2.getClass();
-            String string = c2507db2.a.getString("#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range");
+            String string = c2507db2.a.getString("PDOQ_CUSTOM_DNS", "8.8.8.8");
             if (string.contains(";")) {
                 String[] split = string.split(";");
                 ArrayList arrayList = new ArrayList();
@@ -317,10 +317,10 @@ public class PDoQService extends Service implements Runnable, Handler.Callback, 
             String str = "ns-" + this.c.b();
             C2507db c2507db = this.c;
             c2507db.getClass();
-            if (!c2507db.a.getBoolean("#ERR IndexError: string index out of range", false)) {
+            if (!c2507db.a.getBoolean("isCustomPDOQSet", false)) {
                 C2507db c2507db2 = this.c;
                 c2507db2.getClass();
-                if (c2507db2.a.getString("#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range").equals("Direct")) {
+                if (c2507db2.a.getString("PDOQ_DNS", "Direct").equals("Direct")) {
                     try {
                         InetAddress[] allByName = InetAddress.getAllByName(this.c.b());
                         int length = allByName.length;
@@ -345,7 +345,7 @@ public class PDoQService extends Service implements Runnable, Handler.Callback, 
                 } else {
                     C2507db c2507db3 = this.c;
                     c2507db3.getClass();
-                    this.q = c2507db3.a.getString("#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range");
+                    this.q = c2507db3.a.getString("PDOQ_DNS", "Direct");
                 }
             }
             File file = new File(this.m.getCanonicalPath());
@@ -356,10 +356,10 @@ public class PDoQService extends Service implements Runnable, Handler.Callback, 
             arrayList.add(String.format(locale, PUtils.pEncrypt(getApplicationContext(), str), new Object[0]));
             C2507db c2507db4 = this.c;
             c2507db4.getClass();
-            if (c2507db4.a.getBoolean("#ERR IndexError: string index out of range", false)) {
+            if (c2507db4.a.getBoolean("isCustomPDOQSet", false)) {
                 C2507db c2507db5 = this.c;
                 c2507db5.getClass();
-                String string = c2507db5.a.getString("#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range");
+                String string = c2507db5.a.getString("PDOQ_CUSTOM_DNS", "8.8.8.8");
                 if (string.contains(";")) {
                     for (String str2 : string.split(";")) {
                         arrayList.add("-r");

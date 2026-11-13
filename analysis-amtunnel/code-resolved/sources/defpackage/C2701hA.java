@@ -95,7 +95,7 @@ public final class C2701hA implements InterfaceC3554xI, InterfaceC2916lF, Kt, In
     }
 
     public void a() {
-        String string = "#ERR IndexError: string index out of range";
+        String string = "PRINCE_F";
         SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC = (SharedPreferencesEditorC2544eC) ((SharedPreferencesC2597fC) this.b).edit();
         sharedPreferencesEditorC2544eC.putBoolean(string, true);
         sharedPreferencesEditorC2544eC.apply();
@@ -196,8 +196,8 @@ public final class C2701hA implements InterfaceC3554xI, InterfaceC2916lF, Kt, In
                 }
                 return;
             default:
-                if (str.contains("#ERR IndexError: string index out of range")) {
-                    ((UDPClient) TI.w).i("#ERR IndexError: string index out of range");
+                if (str.contains("Connected")) {
+                    ((UDPClient) TI.w).i("Connected");
                     ((UDPClient) TI.w).runOnUiThread(new RunnableC0247Ph(4));
                     Thread thread = SocksDNSService.r;
                     Thread thread2 = new Thread(SocksDNSService.s);
@@ -205,46 +205,46 @@ public final class C2701hA implements InterfaceC3554xI, InterfaceC2916lF, Kt, In
                     thread2.start();
                     SkStatus.logInfo(2131952220, new Object[0]);
                 }
-                if (str.contains("#ERR IndexError: string index out of range")) {
-                    ((UDPClient) TI.w).i("#ERR IndexError: string index out of range");
+                if (str.contains("UDP running")) {
+                    ((UDPClient) TI.w).i("UDP is running");
                 }
-                boolean contains2 = str.contains("#ERR IndexError: string index out of range");
+                boolean contains2 = str.contains("auth error");
                 TI ti = (TI) this.b;
                 if (contains2) {
-                    ((UDPClient) TI.w).i("#ERR IndexError: string index out of range");
+                    ((UDPClient) TI.w).i("Invalid Authentication!");
                     SI si = TI.w;
                     if (si != null) {
                         ((UDPClient) si).E();
                     } else {
-                        AbstractC2879kf.V(ti.a, "#ERR IndexError: string index out of range");
+                        AbstractC2879kf.V(ti.a, "Error, Reconnect/Restart App!");
                     }
-                    AbstractC2879kf.V(ti.a, "#ERR IndexError: string index out of range");
+                    AbstractC2879kf.V(ti.a, "Invalid Account! Contact developer");
                     TunnelManagerHelper.stopSocksHttp(ti.a);
                 }
-                if (str.contains("#ERR IndexError: string index out of range")) {
+                if (str.contains("exiting")) {
                     SI si2 = TI.w;
                     if (si2 != null) {
                         ((UDPClient) si2).E();
                     } else {
-                        AbstractC2879kf.V(ti.a, "#ERR IndexError: string index out of range");
+                        AbstractC2879kf.V(ti.a, "Error, Reconnect/Restart App!");
                     }
                     TunnelManagerHelper.stopSocksHttp(ti.a);
                 }
-                if (str.contains("#ERR IndexError: string index out of range")) {
+                if (str.contains("unknown command")) {
                     SI si3 = TI.w;
                     if (si3 != null) {
                         ((UDPClient) si3).E();
                     } else {
-                        AbstractC2879kf.V(ti.a, "#ERR IndexError: string index out of range");
+                        AbstractC2879kf.V(ti.a, "Error, Reconnect/Restart App!");
                     }
                     TunnelManagerHelper.stopSocksHttp(ti.a);
                 }
-                if (str.contains("#ERR IndexError: string index out of range")) {
-                    SkStatus.updateStateString("#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range");
-                    ((UDPClient) TI.w).i("#ERR IndexError: string index out of range");
+                if (str.contains("reconnecting")) {
+                    SkStatus.updateStateString("RECONECTANDO", "Reconnecting...");
+                    ((UDPClient) TI.w).i("Reconnecting...");
                     new Thread(new H0(this, 18)).start();
                 }
-                str.contains("#ERR IndexError: string index out of range");
+                str.contains("network is unreachable");
                 return;
         }
     }

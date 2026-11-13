@@ -7,7 +7,7 @@ import org.objectweb.asm.signature.SignatureVisitor;
 /* renamed from: yh, reason: case insensitive filesystem */
 /* loaded from: classes2.dex */
 public abstract class AbstractC3622yh {
-    public static final String a = "#ERR IndexError: string index out of range";
+    public static final String a = "...|...";
 
     public static int a(int i, int i2, int i3, int i4, int i5, int[] iArr) {
         return ((i ^ i2) + (iArr[(i4 & 3) ^ i5] ^ i3)) ^ (((i3 >>> 5) ^ (i2 << 2)) + ((i2 >>> 3) ^ (i3 << 4)));
@@ -49,14 +49,14 @@ public abstract class AbstractC3622yh {
         byte[] bArr;
         try {
             try {
-                bArr = b(AbstractC3365tp.B(str), str2.getBytes("#ERR IndexError: string index out of range"));
+                bArr = b(AbstractC3365tp.B(str), str2.getBytes("UTF-8"));
             } catch (UnsupportedEncodingException unused) {
                 bArr = null;
             }
             if (bArr == null) {
                 return null;
             }
-            return new String(bArr, "#ERR IndexError: string index out of range");
+            return new String(bArr, "UTF-8");
         } catch (UnsupportedEncodingException unused2) {
             return null;
         }
@@ -107,7 +107,7 @@ public abstract class AbstractC3622yh {
         byte[] bArr;
         String str3;
         try {
-            bArr = d(str.getBytes("#ERR IndexError: string index out of range"), str2.getBytes("#ERR IndexError: string index out of range"));
+            bArr = d(str.getBytes("UTF-8"), str2.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException unused) {
             bArr = null;
         }

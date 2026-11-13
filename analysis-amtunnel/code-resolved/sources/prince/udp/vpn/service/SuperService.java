@@ -80,16 +80,16 @@ public class SuperService extends Service implements Runnable, Handler.Callback,
     public final A2 y = new A2(this, 5);
 
     static {
-        "#ERR IndexError: string index out of range";
-        "#ERR IndexError: string index out of range";
-        "#ERR IndexError: string index out of range";
-        "#ERR IndexError: string index out of range";
-        "#ERR IndexError: string index out of range";
+        "SuperDNS";
+        "app.vpn.amtunnellite:startTunnel";
+        "openvpn_bg";
+        "openvpn_newstat";
+        "openvpn_userreq";
         z = 10801;
         A = 10802;
         B = 0L;
-        E = SuperService.class.getName() + "#ERR IndexError: string index out of range";
-        F = SuperService.class.getName() + "#ERR IndexError: string index out of range";
+        E = SuperService.class.getName() + "::restartservicebroadcast";
+        F = SuperService.class.getName() + "::stopservicebroadcast";
     }
 
     public static String c() {
@@ -97,9 +97,9 @@ public class SuperService extends Service implements Runnable, Handler.Callback,
         long j = B;
         long j2 = time - j;
         if (j == 0) {
-            return "#ERR IndexError: string index out of range";
+            return "00:00:00";
         }
-        return String.format("#ERR IndexError: string index out of range", Long.valueOf((j2 / 3600000) % 24), Long.valueOf((j2 / 60000) % 60), Long.valueOf((j2 / 1000) % 60));
+        return String.format("%02d:%02d:%02d", Long.valueOf((j2 / 3600000) % 24), Long.valueOf((j2 / 60000) % 60), Long.valueOf((j2 / 1000) % 60));
     }
 
     public final synchronized void a() {
@@ -107,18 +107,18 @@ public class SuperService extends Service implements Runnable, Handler.Callback,
     }
 
     public final void b() {
-        NotificationManager notificationManager = (NotificationManager) getSystemService("#ERR IndexError: string index out of range");
-        NotificationChannel notificationChannel = new NotificationChannel("#ERR IndexError: string index out of range", getString(2131951717), 1);
+        NotificationManager notificationManager = (NotificationManager) getSystemService("notification");
+        NotificationChannel notificationChannel = new NotificationChannel("openvpn_bg", getString(2131951717), 1);
         notificationChannel.setDescription(getString(2131951713));
         notificationChannel.enableLights(false);
         notificationChannel.setLightColor(2131100642);
         notificationManager.createNotificationChannel(notificationChannel);
-        NotificationChannel notificationChannel2 = new NotificationChannel("#ERR IndexError: string index out of range", getString(2131951718), 2);
+        NotificationChannel notificationChannel2 = new NotificationChannel("openvpn_newstat", getString(2131951718), 2);
         notificationChannel2.setDescription(getString(2131951714));
         notificationChannel2.enableLights(true);
         notificationChannel2.setLightColor(2131100642);
         notificationManager.createNotificationChannel(notificationChannel2);
-        NotificationChannel notificationChannel3 = new NotificationChannel("#ERR IndexError: string index out of range", getString(2131951719), 1);
+        NotificationChannel notificationChannel3 = new NotificationChannel("openvpn_userreq", getString(2131951719), 1);
         notificationChannel3.setDescription(getString(2131951715));
         notificationChannel3.setLightColor(2131100642);
         notificationManager.createNotificationChannel(notificationChannel3);
@@ -129,17 +129,17 @@ public class SuperService extends Service implements Runnable, Handler.Callback,
         try {
             NetworkInfo activeNetworkInfo = this.o.getActiveNetworkInfo();
             if (activeNetworkInfo == null) {
-                message = "#ERR IndexError: string index out of range";
+                message = "not connected";
             } else {
                 String subtypeName = activeNetworkInfo.getSubtypeName();
                 if (subtypeName == null) {
-                    subtypeName = "#ERR IndexError: string index out of range";
+                    subtypeName = "";
                 }
                 String extraInfo = activeNetworkInfo.getExtraInfo();
                 if (extraInfo == null) {
-                    extraInfo = "#ERR IndexError: string index out of range";
+                    extraInfo = "";
                 }
-                message = String.format("#ERR IndexError: string index out of range", activeNetworkInfo.getTypeName(), activeNetworkInfo.getDetailedState(), extraInfo, subtypeName);
+                message = String.format("%2$s %4$s to %1$s %3$s", activeNetworkInfo.getTypeName(), activeNetworkInfo.getDetailedState(), extraInfo, subtypeName);
             }
         } catch (Exception e) {
             message = e.getMessage();
@@ -149,31 +149,31 @@ public class SuperService extends Service implements Runnable, Handler.Callback,
 
     public final void e(String str, String str2, String str3, ConnectionStatus connectionStatus) {
         int i = GF.a[connectionStatus.ordinal()];
-        NotificationManager notificationManager = (NotificationManager) getSystemService("#ERR IndexError: string index out of range");
+        NotificationManager notificationManager = (NotificationManager) getSystemService("notification");
         int i2 = Build.VERSION.SDK_INT;
         if (i2 >= 26) {
             b();
-            new Notification.Builder(this, "#ERR IndexError: string index out of range");
+            new Notification.Builder(this, "openvpn_newstat");
         } else if (i2 >= 28) {
             b();
-            new Notification.Builder(this, "#ERR IndexError: string index out of range");
+            new Notification.Builder(this, "openvpn_newstat");
         } else {
             new Notification.Builder(this);
         }
         Notification.Builder ongoing = new Notification.Builder(this).setContentTitle(getString(2131951660)).setOnlyAlertOnce(true).setOngoing(true);
-        ongoing.setCategory("#ERR IndexError: string index out of range");
+        ongoing.setCategory("service");
         ongoing.setLocalOnly(true);
-        int i3 = str3.equals("#ERR IndexError: string index out of range") ? -2 : str3.equals("#ERR IndexError: string index out of range") ? 2 : 0;
+        int i3 = str3.equals("openvpn_bg") ? -2 : str3.equals("openvpn_userreq") ? 2 : 0;
         ongoing.setSmallIcon(2131230926);
-        if (SkStatus.getLastState().equals("#ERR IndexError: string index out of range")) {
-            str = "#ERR IndexError: string index out of range" + this.c.c();
+        if (SkStatus.getLastState().equals("CONNECTED")) {
+            str = "Connected to " + this.c.c();
         }
         ongoing.setContentText(str);
         ongoing.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, (Class<?>) UDPClient.class), 201326592));
         if (i3 != 0) {
             try {
-                ongoing.getClass().getMethod("#ERR IndexError: string index out of range", Integer.TYPE).invoke(ongoing, Integer.valueOf(i3));
-                ongoing.getClass().getMethod("#ERR IndexError: string index out of range", Boolean.TYPE).invoke(ongoing, Boolean.TRUE);
+                ongoing.getClass().getMethod("setPriority", Integer.TYPE).invoke(ongoing, Integer.valueOf(i3));
+                ongoing.getClass().getMethod("setUsesChronometer", Boolean.TYPE).invoke(ongoing, Boolean.TRUE);
             } catch (IllegalAccessException | IllegalArgumentException | NoSuchMethodException | InvocationTargetException e) {
                 SkStatus.logException(e);
             }
@@ -182,7 +182,7 @@ public class SuperService extends Service implements Runnable, Handler.Callback,
         if (i4 >= 26) {
             ongoing.setChannelId(str3);
         }
-        if (str2 != null && !str2.equals("#ERR IndexError: string index out of range")) {
+        if (str2 != null && !str2.equals("")) {
             ongoing.setTicker(str2);
         }
         Notification build = ongoing.build();
@@ -351,7 +351,7 @@ public class SuperService extends Service implements Runnable, Handler.Callback,
             String string3 = "8.8.8.8:53";
             C2507db c2507db = this.c;
             c2507db.getClass();
-            if (c2507db.a.getBoolean("#ERR IndexError: string index out of range", false)) {
+            if (c2507db.a.getBoolean("isCustomSuperSet", false)) {
                 if (this.c.d().startsWith("udp://")) {
                     this.q = this.c.d().split("udp://")[1];
                     string2 = "-udp";
@@ -376,7 +376,7 @@ public class SuperService extends Service implements Runnable, Handler.Callback,
                         arrayList.add("-frequency");
                         C2507db c2507db2 = this.c;
                         c2507db2.getClass();
-                        arrayList.add(String.valueOf(c2507db2.a.getInt("#ERR IndexError: string index out of range", 0)));
+                        arrayList.add(String.valueOf(c2507db2.a.getInt("SUPER_DNS_FREQUENCY", 0)));
                         arrayList.add("-report");
                         arrayList.add(getString(2131951660));
                         arrayList.add("-pubkey");
@@ -408,7 +408,7 @@ public class SuperService extends Service implements Runnable, Handler.Callback,
                 arrayList2.add("-frequency");
                 C2507db c2507db22 = this.c;
                 c2507db22.getClass();
-                arrayList2.add(String.valueOf(c2507db22.a.getInt("#ERR IndexError: string index out of range", 0)));
+                arrayList2.add(String.valueOf(c2507db22.a.getInt("SUPER_DNS_FREQUENCY", 0)));
                 arrayList2.add("-report");
                 arrayList2.add(getString(2131951660));
                 arrayList2.add("-pubkey");
@@ -478,7 +478,7 @@ public class SuperService extends Service implements Runnable, Handler.Callback,
                     arrayList22.add("-frequency");
                     C2507db c2507db222 = this.c;
                     c2507db222.getClass();
-                    arrayList22.add(String.valueOf(c2507db222.a.getInt("#ERR IndexError: string index out of range", 0)));
+                    arrayList22.add(String.valueOf(c2507db222.a.getInt("SUPER_DNS_FREQUENCY", 0)));
                     arrayList22.add("-report");
                     arrayList22.add(getString(2131951660));
                     arrayList22.add("-pubkey");
@@ -510,7 +510,7 @@ public class SuperService extends Service implements Runnable, Handler.Callback,
             arrayList222.add("-frequency");
             C2507db c2507db2222 = this.c;
             c2507db2222.getClass();
-            arrayList222.add(String.valueOf(c2507db2222.a.getInt("#ERR IndexError: string index out of range", 0)));
+            arrayList222.add(String.valueOf(c2507db2222.a.getInt("SUPER_DNS_FREQUENCY", 0)));
             arrayList222.add("-report");
             arrayList222.add(getString(2131951660));
             arrayList222.add("-pubkey");
@@ -525,9 +525,9 @@ public class SuperService extends Service implements Runnable, Handler.Callback,
             c3303sg2222.start();
             return;
         } catch (Exception e) {
-            SkStatus.logInfo(String.format("#ERR IndexError: string index out of range", "SuperDNS Exception", e.getMessage()));
+            SkStatus.logInfo(String.format("%s: %s", "SuperDNS Exception", e.getMessage()));
         }
-        SkStatus.logInfo(String.format("#ERR IndexError: string index out of range", "SuperDNS Exception", e.getMessage()));
+        SkStatus.logInfo(String.format("%s: %s", "SuperDNS Exception", e.getMessage()));
     }
 
     @Override // prince.udp.vpn.service.vpn.logger.SkStatus.StateListener
@@ -535,9 +535,9 @@ public class SuperService extends Service implements Runnable, Handler.Callback,
         if (this.a == null) {
             return;
         }
-        String string = "#ERR IndexError: string index out of range";
+        String string = "openvpn_newstat";
         if (connectionStatus == ConnectionStatus.LEVEL_CONNECTED) {
-            string = "#ERR IndexError: string index out of range";
+            string = "openvpn_userreq";
         }
         String string2 = getString(SkStatus.getLocalizedState(SkStatus.getLastState()));
         e(string2, string2, string, connectionStatus);

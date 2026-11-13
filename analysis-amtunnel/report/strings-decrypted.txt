@@ -2,14 +2,56 @@
 apktool exit=0
 smali/smali_classes2/org/lsposed/lsparanoid/Deobfuscator$AMTUNNELLITE$app.smali
 smali/smali_classes2/org/lsposed/lsparanoid/Deobfuscator$AMTUNNELLITE$app.smali: 2 const-strings, kept 2 (sizes [8191, 6283]) -> chunks.txt
-chunks: 2
+chunks: 0
 wrote decrypted.tsv (457 lines)
 wrote hosts.txt (0 hosts)
-chunks=9 ids=454 decoded=256 errors=198
+chunks=2 ids=454 decoded=454 errors=0
 
 ### app hosts (deobfuscated)
 
 ### strings mentioning super/dns/tunnel/pubkey
+750640678628258292	SUPER_DNS_FREQUENCY
+750640764527604212	SUPER_DNS_FREQUENCY
+750640901966557684	SUPER_NETWORK_SELECTED_POSITION
+750641039405511156	SUPER_NETWORK_SELECTED_POSITION
+750641112419955188	isCustomSuperSet
+750641185434399220	isCustomSuperSet
+750641481787142644	SUPER_CUSTOM_DNS
+750641554801586676	SUPER_CUSTOM_DNS
+750641627816030708	SUPER_DNS
+750641670765703668	SUPER_DNS
+750643646450659828	TUNNEL_TYPE
+750643697990267380	TUNNEL_TYPE
+750652601457471988	openvpn_userreq
+750652670176948724	openvpn_newstat
+750652717421588980	openvpn_bg
+750652786141065716	openvpn_userreq
+750652854860542452	openvpn_newstat
+750652902105182708	openvpn_bg
+750653370256617972	openvpn_userreq
+750653417501258228	openvpn_bg
+750653520580473332	openvpn_newstat
+750653589299950068	openvpn_newstat
+750655182732816884	openvpn_newstat
+750655423250985460	openvpn_userreq
+750655491970462196	openvpn_newstat
+750656217819935220	openvpn_userreq
+750656286539411956	openvpn_newstat
+750656333784052212	openvpn_bg
+750656475517972980	app.vpn.amtunnellite:startTunnel
+750656514172678644	SuperDNS
+750656853475095028	openvpn_userreq
+750656922194571764	openvpn_newstat
+750656990914048500	openvpn_userreq
+750657059633525236	openvpn_newstat
+750657106878165492	openvpn_bg
+750657575029600756	openvpn_userreq
+750657622274241012	openvpn_bg
+750657725353456116	openvpn_newstat
+750657794072932852	openvpn_newstat
+750658021706199540	SuperDNS Helper Exception
+750658107605545460	SuperDNS Connecting
+  "dns":{"hosts":{"domain:googleapis.cn":"googleapis.com"},"servers":["1.1.1.1"]},"inbounds":[{"listen":"127.0.0.1","port":%s,"protocol":"socks","settings":{"auth":"noauth","udp":true,"userLevel":8},"sniffing":{"destOverride":["http","tls"],"enabled":true},"tag":"socks"},{"listen":"127.0.0.1","port":%s,"protocol":"http","settings":{"userLevel":8},"tag":"http"}],"log":{"loglevel":"warning"},"outbounds":[{"mux":{"concurrency":8,"enabled":false},"protocol":"superdns","settings":{"servers":[{"address":"%s","level":8,"method":"%s","ota":false,"password":"%s","port":%s}]},"streamSettings":{"network":"tcp","security":""},"tag":"proxy"},{"protocol":"freedom","settings":{},"tag":"direct"},{"protocol":"blackhole","settings":{"response":{"type":"http"}},"tag":"block"}],"policy":{"levels":{"8":{"connIdle":300,"downlinkOnly":1,"handshake":4,"uplinkOnly":1}},"system":{"statsOutboundUplink":true,"statsOutboundDownlink":true}},"routing":{"domainStrategy":"IPIfNonMatch","rules":[{"ip":["1.1.1.1"],"outboundTag":"proxy","port":"53","type":"field"}]},"stats":{}}
 750663222911594996	SuperDNS Exception
 750663321695842804	-pubkey
 750664678905508340	libsuperdns.so
@@ -50,62 +92,62 @@ chunks=9 ids=454 decoded=256 errors=198
 
 ### first 60 decoded strings
 # LSParanoid string table - decrypted by tools/lsparanoid_decode.py
-# chunks=9 chunk_chars=14467 ids=454
-# decoded=256 errors=198
-750632264787325428	#ERR IndexError: string index out of range
-750633205385163252	#ERR IndexError: string index out of range
-750633222565032436	#ERR IndexError: string index out of range
-750635004976460276	#ERR IndexError: string index out of range
-750635056516067828	#ERR IndexError: string index out of range
-750635099465740788	#ERR IndexError: string index out of range
-750639424497807860	#ERR IndexError: string index out of range
-750639450267611636	#ERR IndexError: string index out of range
-750639553346826740	#ERR IndexError: string index out of range
-750639579116630516	#ERR IndexError: string index out of range
-750639604886434292	#ERR IndexError: string index out of range
-750640678628258292	#ERR IndexError: string index out of range
-750640764527604212	#ERR IndexError: string index out of range
-750640901966557684	#ERR IndexError: string index out of range
-750641039405511156	#ERR IndexError: string index out of range
-750641112419955188	#ERR IndexError: string index out of range
-750641185434399220	#ERR IndexError: string index out of range
-750641408772698612	#ERR IndexError: string index out of range
-750641481787142644	#ERR IndexError: string index out of range
-750641554801586676	#ERR IndexError: string index out of range
-750641584866357748	#ERR IndexError: string index out of range
-750641627816030708	#ERR IndexError: string index out of range
-750641670765703668	#ERR IndexError: string index out of range
-750641799614722548	#ERR IndexError: string index out of range
-750641868334199284	#ERR IndexError: string index out of range
-750642014363087348	#ERR IndexError: string index out of range
-750642083082564084	#ERR IndexError: string index out of range
-750642151802040820	#ERR IndexError: string index out of range
-750642181866811892	#ERR IndexError: string index out of range
-750642220521517556	#ERR IndexError: string index out of range
-750642259176223220	#ERR IndexError: string index out of range
-750642263471190516	#ERR IndexError: string index out of range
-750642315010798068	#ERR IndexError: string index out of range
-750643221248897524	#ERR IndexError: string index out of range
-750643646450659828	#ERR IndexError: string index out of range
-750643697990267380	#ERR IndexError: string index out of range
-750644342235361780	#ERR IndexError: string index out of range
-750644380890067444	#ERR IndexError: string index out of range
-750644664357908980	#ERR IndexError: string index out of range
-750644703012614644	#ERR IndexError: string index out of range
-750644814681764340	#ERR IndexError: string index out of range
-750644926350914036	#ERR IndexError: string index out of range
-750645531941302772	#ERR IndexError: string index out of range
-750645622135615988	#ERR IndexError: string index out of range
-750646000092738036	#ERR IndexError: string index out of range
-750646043042410996	#ERR IndexError: string index out of range
-750646472539140596	#ERR IndexError: string index out of range
-750646524078748148	#ERR IndexError: string index out of range
-750646605683126772	#ERR IndexError: string index out of range
-750646700172407284	#ERR IndexError: string index out of range
-750646829021426164	#ERR IndexError: string index out of range
-750646884856001012	#ERR IndexError: string index out of range
-750646992230183412	#ERR IndexError: string index out of range
-750647039474823668	#ERR IndexError: string index out of range
-750647078129529332	#ERR IndexError: string index out of range
-750647108194300404	#ERR IndexError: string index out of range
-750647159733907956	#ERR IndexError: string index out of range
+# chunks=2 chunk_chars=14474 ids=454
+# decoded=454 errors=0
+750632264787325428	PRINCE_F
+750633205385163252	\s*=\s*(\S+)
+750633222565032436	wg/
+750635004976460276	SHA1
+750635056516067828	Copied Text
+750635099465740788	clipboard
+750639424497807860	...|...
+750639450267611636	UTF-8
+750639553346826740	UTF-8
+750639579116630516	UTF-8
+750639604886434292	UTF-8
+750640678628258292	SUPER_DNS_FREQUENCY
+750640764527604212	SUPER_DNS_FREQUENCY
+750640901966557684	SUPER_NETWORK_SELECTED_POSITION
+750641039405511156	SUPER_NETWORK_SELECTED_POSITION
+750641112419955188	isCustomSuperSet
+750641185434399220	isCustomSuperSet
+750641408772698612	udp://8.8.8.8
+750641481787142644	SUPER_CUSTOM_DNS
+750641554801586676	SUPER_CUSTOM_DNS
+750641584866357748	Direct
+750641627816030708	SUPER_DNS
+750641670765703668	SUPER_DNS
+750641799614722548	isCustomPDOQSet
+750641868334199284	isCustomPDOQSet
+750642014363087348	8.8.8.8
+750642083082564084	PDOQ_CUSTOM_DNS
+750642151802040820	PDOQ_CUSTOM_DNS
+750642181866811892	Direct
+750642220521517556	PDOQ_DNS
+750642259176223220	PDOQ_DNS
+750642263471190516	
+750642315010798068	UDP_VERSION
+750643221248897524	SSH_HOST
+750643646450659828	TUNNEL_TYPE
+750643697990267380	TUNNEL_TYPE
+750644342235361780	443
+750644380890067444	UDP_PORT
+750644664357908980	
+750644703012614644	SSH_HOST
+750644814681764340	NETWORK_SELECTED_POSITION
+750644926350914036	NETWORK_SELECTED_POSITION
+750645531941302772	
+750645622135615988	SERVER_SELECTED_NAME
+750646000092738036	
+750646043042410996	BackQuery
+750646472539140596	999
+750646524078748148	libudpq
+750646605683126772	Disconnected
+750646700172407284	Try Again To Connect!
+750646829021426164	Error, Reconnect/Restart App!
+750646884856001012	Disconnected
+750646992230183412	Waiting for UDP response
+750647039474823668	CONNECTING
+750647078129529332	--config
+750647108194300404	client
+750647159733907956	config.json

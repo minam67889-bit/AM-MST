@@ -34,10 +34,10 @@ public final class RunnableC2765iL implements Runnable {
     public final void run() {
         WGService wGService = this.e;
         try {
-            wGService.a.setState(wGService.b, Tunnel.State.UP, new Config.Builder().setInterface(this.a.addAddress(InetNetwork.parse(wGService.n + "#ERR IndexError: string index out of range")).parsePrivateKey(wGService.o).addDnsServers(this.b).build()).addPeer(this.c.addAllowedIp(InetNetwork.parse("#ERR IndexError: string index out of range")).setEndpoint(InetEndpoint.parse(wGService.d + "#ERR IndexError: string index out of range" + this.d)).parsePublicKey(wGService.p).setPersistentKeepalive(25).build()).build());
-            ((UDPClient) WGService.r).i("#ERR IndexError: string index out of range");
-            SkStatus.updateStateString("#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range");
-            SkStatus.logInfo("#ERR IndexError: string index out of range");
+            wGService.a.setState(wGService.b, Tunnel.State.UP, new Config.Builder().setInterface(this.a.addAddress(InetNetwork.parse(wGService.n + "/22")).parsePrivateKey(wGService.o).addDnsServers(this.b).build()).addPeer(this.c.addAllowedIp(InetNetwork.parse("0.0.0.0/0")).setEndpoint(InetEndpoint.parse(wGService.d + ":" + this.d)).parsePublicKey(wGService.p).setPersistentKeepalive(25).build()).build());
+            ((UDPClient) WGService.r).i("Connected");
+            SkStatus.updateStateString("CONNECTED", "WG Connected");
+            SkStatus.logInfo("<strong><font color=\"green\">WG CONNECTED</strong>");
         } catch (Exception unused) {
         }
     }

@@ -7,6 +7,6 @@ public abstract class Q9 {
     public static final /* synthetic */ int a = 0;
 
     static {
-        "#ERR IndexError: string index out of range";
+        "999";
     }
 }

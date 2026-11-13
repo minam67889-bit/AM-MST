@@ -495,18 +495,18 @@ public class Rw implements InterfaceC2916lF, InterfaceC3110oy, InterfaceC2500dK,
                 if (str.contains("begin session") && !superService.r) {
                     try {
                         superService.e = new File(superService.getApplicationInfo().nativeLibraryDir, "libxray.so");
-                        String format = String.format(Locale.ENGLISH, "#ERR IndexError: string index out of range", Integer.valueOf(SuperService.z), Integer.valueOf(SuperService.A), "#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range");
-                        File file = new File(superService.getFilesDir().getPath(), "#ERR IndexError: string index out of range");
+                        String format = String.format(Locale.ENGLISH, "{", Integer.valueOf(SuperService.z), Integer.valueOf(SuperService.A), "127.0.0.1", "none", "prince", "7000");
+                        File file = new File(superService.getFilesDir().getPath(), "xray.json");
                         superService.u = file;
                         try {
                             PrintWriter printWriter = new PrintWriter(file);
                             printWriter.println(format);
                             printWriter.flush();
                             printWriter.close();
-                            superService.d = new ProcessBuilder(new String[0]).command(new File(superService.e.getCanonicalPath()).getAbsolutePath(), "#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range", superService.u.getAbsolutePath()).redirectErrorStream(true).start();
-                            SkStatus.updateStateString("#ERR IndexError: string index out of range", superService.getString(2131952179));
+                            superService.d = new ProcessBuilder(new String[0]).command(new File(superService.e.getCanonicalPath()).getAbsolutePath(), "run", "-c", superService.u.getAbsolutePath()).redirectErrorStream(true).start();
+                            SkStatus.updateStateString("CONNECTING", superService.getString(2131952179));
                             SkStatus.logInfo(2131952179, new Object[0]);
-                            ((UDPClient) SuperService.C).i("#ERR IndexError: string index out of range");
+                            ((UDPClient) SuperService.C).i("SuperDNS Connecting");
                             C2701hA c2701hA = new C2701hA(superService, i);
                             C3303sg c3303sg = new C3303sg(superService.d.getInputStream(), c2701hA);
                             C3303sg c3303sg2 = new C3303sg(superService.d.getErrorStream(), c2701hA);
@@ -515,7 +515,7 @@ public class Rw implements InterfaceC2916lF, InterfaceC3110oy, InterfaceC2500dK,
                         } catch (Exception unused2) {
                         }
                     } catch (Exception e) {
-                        SkStatus.logInfo(String.format("#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range", e.getMessage()));
+                        SkStatus.logInfo(String.format("%s: %s", "SuperDNS Helper Exception", e.getMessage()));
                     }
                     superService.r = true;
                 }

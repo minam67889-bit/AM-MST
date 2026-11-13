@@ -174,8 +174,8 @@ public class Tunnel {
                         this.mRoutes.a(new T7("169.254.1.0", 24), false);
                         SharedPreferencesC2597fC sharedPreferencesC2597fC = new SharedPreferencesC2597fC(this.mHostService.getContext());
                         sharedPreferencesC2597fC.edit();
-                        if (sharedPreferencesC2597fC.getInt("#ERR IndexError: string index out of range", 6) != 12 && sharedPreferencesC2597fC.getInt("#ERR IndexError: string index out of range", 6) != 13) {
-                            this.mRoutes.a(new T7(sharedPreferencesC2597fC.getString("#ERR IndexError: string index out of range", "#ERR IndexError: string index out of range"), 32), false);
+                        if (sharedPreferencesC2597fC.getInt("TUNNEL_TYPE", 6) != 12 && sharedPreferencesC2597fC.getInt("TUNNEL_TYPE", 6) != 13) {
+                            this.mRoutes.a(new T7(sharedPreferencesC2597fC.getString("SSH_HOST", ""), 32), false);
                         }
                         if (z6) {
                             int length2 = strArr4.length;
@@ -244,7 +244,7 @@ public class Tunnel {
                                 hostService.onDiagnosticMessage(str);
                             }
                         }
-                        ParcelFileDescriptor establish = (sharedPreferencesC2597fC.getInt("#ERR IndexError: string index out of range", 6) == 10 ? addAddress.setSession(this.mHostService.getAppName()).setConfigureIntent(WGService.b(this.mHostService.getContext())) : sharedPreferencesC2597fC.getInt("#ERR IndexError: string index out of range", 6) == 12 ? addAddress.setSession(this.mHostService.getAppName()).setConfigureIntent(PDoQService.c(this.mHostService.getContext())) : addAddress.setSession(this.mHostService.getAppName()).setConfigureIntent(SocksDNSService.b(this.mHostService.getContext()))).establish();
+                        ParcelFileDescriptor establish = (sharedPreferencesC2597fC.getInt("TUNNEL_TYPE", 6) == 10 ? addAddress.setSession(this.mHostService.getAppName()).setConfigureIntent(WGService.b(this.mHostService.getContext())) : sharedPreferencesC2597fC.getInt("TUNNEL_TYPE", 6) == 12 ? addAddress.setSession(this.mHostService.getAppName()).setConfigureIntent(PDoQService.c(this.mHostService.getContext())) : addAddress.setSession(this.mHostService.getAppName()).setConfigureIntent(SocksDNSService.b(this.mHostService.getContext()))).establish();
                         if (establish == null) {
                             Locale.setDefault(locale);
                             return false;

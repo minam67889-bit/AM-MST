@@ -239,7 +239,7 @@ public class ScrollableNumberPicker extends LinearLayout {
         if (interfaceC0418aC != null) {
             int i = this.e;
             SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC = ((C2507db) ((C2701hA) interfaceC0418aC).b).b;
-            sharedPreferencesEditorC2544eC.putInt("#ERR IndexError: string index out of range", i);
+            sharedPreferencesEditorC2544eC.putInt("SUPER_DNS_FREQUENCY", i);
             sharedPreferencesEditorC2544eC.apply();
         }
     }
