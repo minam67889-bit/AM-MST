@@ -154,66 +154,27 @@ jobs:
           cd /tmp/a
           R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
           {
-            echo "### hosts in dex (excluding SDK noise)"
-            python3 - <<'PY'
-import json
-d = json.load(open('scan.json'))
-for row in d['hosts'][:60]:
-    print(f"  {row['hosts'] if 'hosts' in row else row['host']:40s} {row['hits']}")
-print()
-print("### urls")
-for u in d['urls'][:60]:
-    print("  ", u)
-print()
-print("### 64-hex keys")
-for k in d['hex64_keys'][:30]:
-    print("  ", k)
-print()
-print("### interesting lines")
-for line in d['interesting_lines'][:80]:
-    print("  ", line[:200])
-PY
+            python3 "$GITHUB_WORKSPACE/analysis-amtunnel/report_candidates.py" scan.json
             echo
-            echo "### pref keys / config fields"
+            echo "### pref keys / config fields seen in code"
             grep -rhoE "\"(super[A-Za-z]*|[a-z]*[Dd]ns[A-Za-z]*|[a-z]*[Hh]ost[a-z]*|pubkey|nameserver|tunnel[A-Za-z]*)\"" src 2>/dev/null | sort | uniq -c | sort -rn | head -50
             echo
-            echo "### json/asset config names"
+            echo "### json / asset config names"
             grep -rhoE "\"[A-Za-z0-9_./-]{3,40}\\.json\"" src 2>/dev/null | sort -u | head -40
+            echo
+            echo "### asset names in the apk"
+            unzip -Z1 apk.apk | grep '^assets/' | head -60
           } > "$R/config-sources.txt" 2>&1
-          head -100 "$R/config-sources.txt"
+          head -120 "$R/config-sources.txt"
 
-      - name: Probe any endpoint the app talks to
+      - name: Probe endpoints
         run: |
           set +e
           cd /tmp/a
           R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
-          {
-            echo "### url probe"
-            python3 - <<'PY'
-import json, subprocess
-d = json.load(open('scan.json'))
-urls = [u for u in d['urls'] if 'firebase' not in u][:25]
-for u in urls:
-    r = subprocess.run(["curl", "-sS", "-m", "20", "-o", "/dev/null",
-                        "-w", "%{http_code} %{size_download} %{time_total}", u],
-                       capture_output=True, text=True)
-    print(f"  {u[:90]:92s} {r.stdout.strip() or r.stderr.strip()[:60]}")
-PY
-            echo
-            echo "### dns probe of the top hosts"
-            python3 - <<'PY'
-import json, subprocess
-d = json.load(open('scan.json'))
-for row in d['hosts'][:25]:
-    h = row.get('host') or row.get('hosts')
-    a = subprocess.run(["dig", "+short", "+time=4", "+tries=1", h, "A"],
-                       capture_output=True, text=True).stdout.strip().replace("\n", " ")
-    n = subprocess.run(["dig", "+short", "+time=4", "+tries=1", h, "NS"],
-                       capture_output=True, text=True).stdout.strip().replace("\n", " ")
-    print(f"  {h:44s} A={a or '-'}  NS={n or '-'}")
-PY
-          } > "$R/probe.txt" 2>&1
-          cat "$R/probe.txt" | head -60
+          python3 "$GITHUB_WORKSPACE/analysis-amtunnel/report_candidates.py" scan.json --probe \
+            > "$R/probe.txt" 2>&1
+          sed -n '/### url probe/,$p' "$R/probe.txt" | head -60
 
       - name: Commit
         if: always()
