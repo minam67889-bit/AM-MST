@@ -3,10 +3,11 @@ apktool exit=0
 smali/smali_classes2/org/lsposed/lsparanoid/Deobfuscator$AMTUNNELLITE$app.smali: 2 const-strings, kept 2 (sizes [8191, 6283]) -> chunks.txt
 
 ### ids: smali (complete) + jadx
-smali=0 jadx=491 total=491
-wrote decrypted.tsv (494 lines)
+19998 smali files: 431 call-site ids, 0 64-bit constants, 431 candidates
+smali=431 jadx=491 total=529
+wrote decrypted.tsv (532 lines)
 wrote hosts.txt (0 hosts)
-chunks=2 ids=491 decoded=454 errors=37
+chunks=2 ids=529 decoded=492 errors=37
 
 ### app hosts (deobfuscated)
 
@@ -14,6 +15,8 @@ chunks=2 ids=491 decoded=454 errors=37
       1 googleapis.com
 
 ### strings mentioning super/dns/tunnel/pubkey/host
+750636181797499380	app.vpn.amtunnellite
+750636263401878004	AM TUNNEL LITE VPN
 750640678628258292	SUPER_DNS_FREQUENCY
 750640764527604212	SUPER_DNS_FREQUENCY
 750640901966557684	SUPER_NETWORK_SELECTED_POSITION
