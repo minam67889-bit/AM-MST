@@ -14,7 +14,7 @@ import pathlib
 import re
 import sys
 
-CONST = re.compile(r'^\s*const-string(?:/jumbo)?\s+v\d+,\s*"(.*)"\s*$')
+CONST = re.compile(r'^\s*const-string(?:/jumbo)?\s+v\d+,\s*"(.*)"\s*$', re.M)
 
 
 def unescape(lit: str) -> str:
@@ -45,7 +45,8 @@ def unescape(lit: str) -> str:
 def main() -> None:
     root = pathlib.Path(sys.argv[1])
     out = pathlib.Path(sys.argv[2])
-    candidates = list(root.rglob("Deobfuscator*app.smali"))
+    candidates = sorted(root.rglob("Deobfuscator*app.smali"))
+    candidates.sort(key=lambda p: p.stat().st_size, reverse=True)
     if not candidates:
         raise SystemExit("no Deobfuscator smali found")
     path = candidates[0]

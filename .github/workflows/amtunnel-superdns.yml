@@ -156,41 +156,40 @@ jobs:
           mkdir -p "$R"
           grep -rhoE 'Deobfuscator\$[A-Za-z0-9_$]+\$app\.getString\(-?[0-9]+L?\)' src 2>/dev/null \
             | grep -oE '[-0-9]+' | sort -u > ids.txt
-          echo "ids: $(wc -l < ids.txt)"
+          echo "ids from jadx sources: $(wc -l < ids.txt)"
           {
-            echo "### attempt 1: apktool smali"
+            echo "### chunks from apktool smali"
             sudo apt-get install -y -qq apktool > /dev/null 2>&1
-            apktool --version 2>&1 | head -2
             timeout 600 apktool d -f -r -o smali apk.apk > apktool.log 2>&1
-            echo "exit=$?"; tail -5 apktool.log
-            find smali -name '*Deobfuscator*' | head -5
-            SM=$(find smali -name 'Deobfuscator$AMTUNNELLITE$app.smali' | head -1)
-            echo "--- $SM ($(wc -l < "$SM" 2>/dev/null) lines)"
-            head -30 "$SM" 2>/dev/null
-            grep -nE "const-string|filled-new-array|array-data|sput-object|String\[" "$SM" 2>/dev/null | head -12
-            python3 "$GITHUB_WORKSPACE/tools/extract_paranoid_chunks.py" smali chunks.txt 2>&1 | head -5
-            awk '{print length}' chunks.txt 2>/dev/null | head -5
-            echo
-            echo "### attempt 2: dex string pool"
-            python3 "$GITHUB_WORKSPACE/tools/paranoid_from_dex.py" apk.apk ids.txt decrypted.tsv hosts.txt 2>&1 | head -20
+            echo "apktool exit=$?"
+            find smali -name 'Deobfuscator*app.smali' | head -5
+            python3 "$GITHUB_WORKSPACE/tools/extract_paranoid_chunks.py" smali chunks.txt 2>&1 | tail -3
+            echo "chunks: $(wc -l < chunks.txt)"
           } > "$R/strings-decrypted.txt" 2>&1
+          if [ -s chunks.txt ]; then
+            python3 "$GITHUB_WORKSPACE/tools/lsparanoid_decode.py" --chunks-file chunks.txt \
+              --ids-file ids.txt --scan src --out decrypted.tsv --hosts-out hosts.txt \
+              >> "$R/strings-decrypted.txt" 2>&1
+          else
+            echo "### fallback: dex string pool" >> "$R/strings-decrypted.txt"
+            python3 "$GITHUB_WORKSPACE/tools/paranoid_from_dex.py" apk.apk ids.txt \
+              decrypted.tsv hosts.txt >> "$R/strings-decrypted.txt" 2>&1
+          fi
           {
+            echo
             echo "### app hosts (deobfuscated)"
             cat hosts.txt 2>/dev/null
             echo
             echo "### strings mentioning super/dns/tunnel/pubkey"
-            grep -iE "super|dnstt|slowdns|slow dns|pubkey|nameserver|tunnel" decrypted.tsv 2>/dev/null | head -100
-            echo
-            echo "### strings that look like hosts"
-            grep -oE "\b[a-z0-9.-]+\.(com|net|org|xyz|top|site|online|app|club|sbs|icu|co)\b" decrypted.tsv 2>/dev/null | sort -u | head -60
+            grep -iE "super|dnstt|slowdns|slow dns|pubkey|nameserver|tunnel|vpn" decrypted.tsv 2>/dev/null | head -120
             echo
             echo "### 64-hex keys in plaintext strings"
             grep -oE "\b[0-9a-f]{64}\b" decrypted.tsv 2>/dev/null | sort -u | head -20
             echo
-            echo "### first 40 decoded strings"
-            head -40 decrypted.tsv 2>/dev/null
+            echo "### first 60 decoded strings"
+            head -60 decrypted.tsv 2>/dev/null | cut -c1-200
           } >> "$R/strings-decrypted.txt" 2>&1
-          head -70 "$R/strings-decrypted.txt"
+          head -80 "$R/strings-decrypted.txt"
 
       - name: Readable SuperService / tunnel code
         run: |
