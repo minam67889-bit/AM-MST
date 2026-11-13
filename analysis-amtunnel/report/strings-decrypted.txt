@@ -1,0 +1,7 @@
+### app hosts (deobfuscated)
+
+### strings mentioning super/dns/tunnel/pubkey
+grep: decrypted.tsv: No such file or directory
+
+### 64-hex keys in plaintext strings
+grep: decrypted.tsv: No such file or directory
