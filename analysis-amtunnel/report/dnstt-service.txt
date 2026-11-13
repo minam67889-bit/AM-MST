@@ -1,0 +1,1538 @@
+=================== sources/prince/udp/vpn/service/SocksDNSService.java
+package prince.udp.vpn.service;
+
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
+import android.os.Handler;
+import android.os.IBinder;
+import android.util.Log;
+import defpackage.A2;
+import defpackage.AbstractC0487bc;
+import defpackage.AbstractC3192qa;
+import defpackage.AbstractC3444vE;
+import defpackage.C2507db;
+import defpackage.InterfaceC3497wE;
+import defpackage.Sw;
+import defpackage.TI;
+import defpackage.Wu;
+import defpackage.Ww;
+import defpackage.Y4;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
+import prince.udp.vpn.activities.UDPClient;
+import prince.udp.vpn.service.vpn.TunnelManagerThread;
+import prince.udp.vpn.service.vpn.logger.ConnectionStatus;
+import prince.udp.vpn.service.vpn.logger.SkStatus;
+
+/* loaded from: classes2.dex */
+public class SocksDNSService extends Service implements SkStatus.StateListener {
+    public static long q;
+    public static Thread r;
+    public static TunnelManagerThread s;
+    public static boolean t;
+    public static InterfaceC3497wE u;
+    public static final String v = SocksDNSService.class.getName().concat("::restartservicebroadcast");
+    public static final String w = SocksDNSService.class.getName().concat("::stopservicebroadcast");
+    public NotificationManager a;
+    public Handler b;
+    public ConnectivityManager c;
+    public TI e;
+    public Ww f;
+    public C2507db m;
+    public String n;
+    public final Wu d = new Wu(this);
+    public final Sw o = new Sw(1);
+    public final A2 p = new A2(this, 4);
+
+    public static PendingIntent b(Context context) {
+        return PendingIntent.getActivity(context, 0, new Intent(context, (Class<?>) UDPClient.class), 67108864);
+    }
+
+    public static String c() {
+        long time = new Date().getTime();
+        long j = q;
+        long j2 = time - j;
+        if (j == 0) {
+            return "00:00:00";
+        }
+        return String.format("%02d:%02d:%02d", Long.valueOf((j2 / 3600000) % 24), Long.valueOf((j2 / 60000) % 60), Long.valueOf((j2 / 1000) % 60));
+    }
+
+    public final void a() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService("notification");
+        NotificationChannel notificationChannel = new NotificationChannel("openvpn_bg", getString(2131951717), 1);
+        notificationChannel.setDescription(getString(2131951713));
+        notificationChannel.enableLights(false);
+        notificationChannel.setLightColor(2131100642);
+        notificationManager.createNotificationChannel(notificationChannel);
+        NotificationChannel notificationChannel2 = new NotificationChannel("openvpn_newstat", getString(2131951718), 2);
+        notificationChannel2.setDescription(getString(2131951714));
+        notificationChannel2.enableLights(true);
+        notificationChannel2.setLightColor(2131100642);
+        notificationManager.createNotificationChannel(notificationChannel2);
+        NotificationChannel notificationChannel3 = new NotificationChannel("openvpn_userreq", getString(2131951719), 1);
+        notificationChannel3.setDescription(getString(2131951715));
+        notificationChannel3.setLightColor(2131100642);
+        notificationManager.createNotificationChannel(notificationChannel3);
+    }
+
+    public final void d() {
+        String message;
+        try {
+            NetworkInfo activeNetworkInfo = this.c.getActiveNetworkInfo();
+            if (activeNetworkInfo == null) {
+                message = "not connected";
+            } else {
+                String subtypeName = activeNetworkInfo.getSubtypeName();
+                String str = "";
+                if (subtypeName == null) {
+                    subtypeName = "";
+                }
+                String extraInfo = activeNetworkInfo.getExtraInfo();
+                if (extraInfo != null) {
+                    str = extraInfo;
+                }
+                message = String.format("%2$s %4$s to %1$s %3$s", activeNetworkInfo.getTypeName(), activeNetworkInfo.getDetailedState(), str, subtypeName);
+            }
+        } catch (Exception e) {
+            message = e.getMessage();
+        }
+        SkStatus.logInfo(message);
+    }
+
+    public final void e(String str, String str2, String str3, ConnectionStatus connectionStatus) {
+        int i = AbstractC3444vE.a[connectionStatus.ordinal()];
+        NotificationManager notificationManager = (NotificationManager) getSystemService("notification");
+        int i2 = Build.VERSION.SDK_INT;
+        if (i2 >= 26) {
+            a();
+            new Notification.Builder(this, "openvpn_newstat");
+        } else if (i2 >= 28) {
+            a();
+            new Notification.Builder(this, "openvpn_newstat");
+        } else {
+            new Notification.Builder(this);
+        }
+        Notification.Builder ongoing = new Notification.Builder(this).setContentTitle(getString(2131951660)).setOnlyAlertOnce(true).setOngoing(true);
+        ongoing.setCategory("service");
+        ongoing.setLocalOnly(true);
+        int i3 = str3.equals("openvpn_bg") ? -2 : str3.equals("openvpn_userreq") ? 2 : 0;
+        ongoing.setSmallIcon(2131230926);
+        if (SkStatus.getLastState().equals(SkStatus.SSH_CONNECTED)) {
+            str = "Connected to " + this.m.c();
+        }
+        ongoing.setContentText(str);
+        ongoing.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, (Class<?>) UDPClient.class), 201326592));
+        if (i3 != 0) {
+            try {
+                ongoing.getClass().getMethod("setPriority", Integer.TYPE).invoke(ongoing, Integer.valueOf(i3));
+                ongoing.getClass().getMethod("setUsesChronometer", Boolean.TYPE).invoke(ongoing, Boolean.TRUE);
+            } catch (IllegalAccessException | IllegalArgumentException | NoSuchMethodException | InvocationTargetException e) {
+                SkStatus.logException(e);
+            }
+        }
+        int i4 = Build.VERSION.SDK_INT;
+        if (i4 >= 26) {
+            ongoing.setChannelId(str3);
+        }
+        if (str2 != null && !str2.equals("")) {
+            ongoing.setTicker(str2);
+        }
+        Notification build = ongoing.build();
+        int hashCode = str3.hashCode();
+        notificationManager.notify(hashCode, build);
+        if (i4 >= 34) {
+            startForeground(hashCode, build, 1073741824);
+        } else {
+            startForeground(hashCode, build);
+        }
+        String str4 = this.n;
+        if (str4 != null && !str3.equals(str4)) {
+            notificationManager.cancel(this.n.hashCode());
+        }
+        this.n = str3;
+    }
+
+    public final synchronized void f() {
+        try {
+            q = 0L;
+            TI ti = this.e;
+            if (ti != null) {
+                ti.interrupt();
+            }
+            this.e = null;
+            TunnelManagerThread tunnelManagerThread = s;
+            if (tunnelManagerThread != null) {
+                tunnelManagerThread.stopAll();
+                d();
+                Thread thread = r;
+                if (thread != null) {
+                    thread.interrupt();
+                    SkStatus.logInfo(2131952221, new Object[0]);
+                }
+                s = null;
+                t = false;
+            }
+        } catch (Throwable th) {
+            throw th;
+        }
+    }
+
+    @Override // android.app.Service
+    public final IBinder onBind(Intent intent) {
+        return this.d;
+    }
+
+    @Override // android.app.Service
+    public final void onCreate() {
+        Log.i("SocksDNSService", "onCreate");
+        super.onCreate();
+        this.b = new Handler();
+        this.c = (ConnectivityManager) getSystemService("connectivity");
+        if (this.a == null) {
+            this.a = (NotificationManager) getSystemService("notification");
+        }
+        this.m = C2507db.a(this);
+        AbstractC3192qa.f(getApplicationContext());
+    }
+
+    @Override // android.app.Service
+    public final void onDestroy() {
+        Log.i("SocksDNSService", "onDestroy");
+        super.onDestroy();
+        f();
+        Ww ww = this.f;
+        if (ww != null) {
+            ww.b = true;
+        }
+        try {
+            unregisterReceiver(this.p);
+        } catch (IllegalArgumentException unused) {
+        }
+        try {
+            if (Build.VERSION.SDK_INT >= 24) {
+                this.c.unregisterNetworkCallback(this.o);
+            }
+        } catch (IllegalArgumentException unused2) {
+        }
+        SkStatus.removeStateListener(this);
+    }
+
+    @Override // android.app.Service
+    public final int onStartCommand(Intent intent, int i, int i2) {
+        Log.i("SocksDNSService", "onStartCommand");
+        if (Build.VERSION.SDK_INT >= 24) {
+            this.c.registerDefaultNetworkCallback(this.o);
+        }
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(w);
+        intentFilter.addAction(v);
+        AbstractC0487bc.registerReceiver(this, this.p, intentFilter, 2);
+        SkStatus.addStateListener(this);
+        Ww ww = new Ww(1);
+        ww.b = false;
+        ww.c = 1000L;
+        this.f = ww;
+        new Thread(this.f, "Status Poller").start();
+        if (intent != null && "dastan.prince.bdfreevpn:startTunnel".equals(intent.getAction())) {
+            return 2;
+        }
+        String string = getString(SkStatus.getLocalizedState(SkStatus.getLastState()));
+        e(string, string, "openvpn_newstat", ConnectionStatus.LEVEL_START);
+        new Thread(new Y4(this, 18)).start();
+        return 2;
+    }
+
+    @Override // prince.udp.vpn.service.vpn.logger.SkStatus.StateListener
+    public final void updateState(String str, String str2, int i, ConnectionStatus connectionStatus, Intent intent) {
+        if (r == null) {
+            return;
+        }
+        String str3 = connectionStatus == ConnectionStatus.LEVEL_CONNECTED ? "openvpn_userreq" : "openvpn_newstat";
+        String string = getString(SkStatus.getLocalizedState(SkStatus.getLastState()));
+        e(string, string, str3, connectionStatus);
+    }
+}
+
+=================== sources/prince/udp/vpn/service/vpn/Tunnel.java
+package prince.udp.vpn.service.vpn;
+
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.net.VpnService;
+import android.os.Build;
+import android.os.ParcelFileDescriptor;
+import com.google.android.gms.common.ConnectionResult;
+import defpackage.Ev;
+import defpackage.Fv;
+import defpackage.SharedPreferencesC2597fC;
+import defpackage.T7;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+import org.lsposed.lsparanoid.Deobfuscator$AMTUNNELLITE$app;
+import org.uproxy.tun2socks.Tun2SocksJni;
+import prince.udp.vpn.service.PDoQService;
+import prince.udp.vpn.service.SocksDNSService;
+import prince.udp.vpn.service.WGService;
+import prince.udp.vpn.service.vpn.Tun2Socks;
+import prince.udp.vpn.service.vpn.VpnUtils;
+import prince.udp.vpn.service.vpn.logger.SkStatus;
+
+/* loaded from: classes2.dex */
+public class Tunnel {
+    private static final String DNS_RESOLVER_IP = "8.8.8.8";
+    private static final int DNS_RESOLVER_PORT = 53;
+    private static final String VPN_INTERFACE_NETMASK = "255.255.255.0";
+    private static Tunnel mTunnel;
+    private final HostService mHostService;
+    private Pdnsd mPdnsd;
+    private VpnUtils.PrivateAddress mPrivateAddress;
+    private Fv mRoutes;
+    private Tun2Socks mTun2Socks;
+    private Thread mTun2SocksThread;
+    private int mMtu = ConnectionResult.DRIVE_EXTERNAL_STORAGE_REQUIRED;
+    private AtomicReference<ParcelFileDescriptor> mTunFd = new AtomicReference<>();
+    private AtomicBoolean mRoutingThroughTunnel = new AtomicBoolean(false);
+
+    /* loaded from: classes2.dex */
+    public interface HostService {
+        String getAppName();
+
+        Context getContext();
+
+        Object getVpnService();
+
+        Object newVpnServiceBuilder();
+
+        void onDiagnosticMessage(String str);
+
+        void onTunnelConnected();
+
+        void onVpnEstablished();
+    }
+
+    /* JADX WARN: Type inference failed for: r2v3, types: [Fv, java.lang.Object] */
+    private Tunnel(HostService hostService) {
+        this.mHostService = hostService;
+        ?? obj = new Object();
+        obj.a = new TreeSet();
+        this.mRoutes = obj;
+    }
+
+    public static synchronized Tunnel newTunnel(HostService hostService) {
+        Tunnel tunnel;
+        synchronized (Tunnel.class) {
+            try {
+                Tunnel tunnel2 = mTunnel;
+                if (tunnel2 != null) {
+                    tunnel2.stop();
+                }
+                tunnel = new Tunnel(hostService);
+                mTunnel = tunnel;
+            } catch (Throwable th) {
+                throw th;
+            }
+        }
+        return tunnel;
+    }
+
+    private boolean routeThroughTunnel(String str, String[] strArr, boolean z, String str2, boolean z2) {
+        ParcelFileDescriptor parcelFileDescriptor;
+        String str3;
+        if (!this.mRoutingThroughTunnel.compareAndSet(false, true) || (parcelFileDescriptor = this.mTunFd.get()) == null) {
+            return false;
+        }
+        if (z) {
+            int findAvailablePort = VpnUtils.findAvailablePort(8091, 10);
+            Locale locale = Locale.ENGLISH;
+            str3 = this.mPrivateAddress.mIpAddress + ":" + findAvailablePort;
+            Pdnsd pdnsd = new Pdnsd(this.mHostService.getContext(), strArr, 53, this.mPrivateAddress.mIpAddress, findAvailablePort);
+            this.mPdnsd = pdnsd;
+            pdnsd.start();
+        } else {
+            str3 = null;
+        }
+        Tun2Socks tun2Socks = new Tun2Socks(this.mHostService.getContext(), parcelFileDescriptor, this.mMtu, this.mPrivateAddress.mRouter, VPN_INTERFACE_NETMASK, str, str2, str3, z2);
+        this.mTun2Socks = tun2Socks;
+        tun2Socks.setOnTun2SocksListener(new Tun2Socks.OnTun2SocksListener() { // from class: prince.udp.vpn.service.vpn.Tunnel.1
+            @Override // prince.udp.vpn.service.vpn.Tun2Socks.OnTun2SocksListener
+            public void onStart() {
+                Tunnel.this.mHostService.onDiagnosticMessage("tun2socks started");
+            }
+
+            @Override // prince.udp.vpn.service.vpn.Tun2Socks.OnTun2SocksListener
+            public void onStop() {
+                Tunnel.this.mHostService.onDiagnosticMessage("tun2socks stopped");
+                Tunnel.this.stop();
+            }
+        });
+        this.mTun2Socks.start();
+        this.mHostService.onTunnelConnected();
+        return true;
+    }
+
+    private void startTun2Socks(final ParcelFileDescriptor parcelFileDescriptor, final int i, final String str, final String str2, final String str3, final String str4, final String str5, final String str6, final boolean z, final boolean z2) {
+        if (this.mTun2SocksThread != null) {
+            return;
+        }
+        Thread thread = new Thread(new Runnable() { // from class: prince.udp.vpn.service.vpn.Tunnel.2
+            @Override // java.lang.Runnable
+            public void run() {
+                Tun2SocksJni.runTun2Socks(parcelFileDescriptor.getFd(), i, str, str2, str3, str4, str5, str6, z ? 1 : 0, z2 ? 1 : 0);
+            }
+        });
+        this.mTun2SocksThread = thread;
+        thread.start();
+        this.mHostService.onDiagnosticMessage("tun2socks started");
+    }
+
+    private boolean startVpn(boolean z, String[] strArr, String[] strArr2, boolean z2, boolean z3, String[] strArr3, boolean z4, boolean z5) {
+        int i;
+        HostService hostService;
+        String str;
+        boolean z6 = z;
+        String[] strArr4 = strArr;
+        StringBuilder sb = new StringBuilder("Routes: ");
+        this.mPrivateAddress = VpnUtils.selectPrivateAddress();
+        int length = strArr2.length;
+        int i2 = 0;
+        while (true) {
+            i = 32;
+            if (i2 >= length) {
+                break;
+            }
+            this.mRoutes.a(new T7(strArr2[i2], 32), false);
+            i2++;
+        }
+        Locale locale = Locale.getDefault();
+        try {
+            try {
+                try {
+                    try {
+                        Locale.setDefault(new Locale("en"));
+                        VpnService.Builder builder = (VpnService.Builder) this.mHostService.newVpnServiceBuilder();
+                        VpnUtils.PrivateAddress privateAddress = this.mPrivateAddress;
+                        VpnService.Builder addAddress = builder.addAddress(privateAddress.mIpAddress, privateAddress.mPrefixLength);
+                        this.mRoutes.a(new T7("0.0.0.0", 0), true);
+                        this.mRoutes.a(new T7("10.0.0.0", 8), false);
+                        Fv fv = this.mRoutes;
+                        VpnUtils.PrivateAddress privateAddress2 = this.mPrivateAddress;
+                        fv.a(new T7(privateAddress2.mSubnet, privateAddress2.mPrefixLength), false);
+                        if (z4) {
+                            this.mRoutes.a(new T7("192.168.42.0", 23), false);
+                            this.mRoutes.a(new T7("192.168.44.0", 24), false);
+                            this.mRoutes.a(new T7("192.168.49.0", 24), false);
+                        }
+                        this.mRoutes.a(new T7("169.254.1.0", 24), false);
+                        SharedPreferencesC2597fC sharedPreferencesC2597fC = new SharedPreferencesC2597fC(this.mHostService.getContext());
+                        sharedPreferencesC2597fC.edit();
+                        if (sharedPreferencesC2597fC.getInt("TUNNEL_TYPE", 6) != 12 && sharedPreferencesC2597fC.getInt("TUNNEL_TYPE", 6) != 13) {
+                            this.mRoutes.a(new T7(sharedPreferencesC2597fC.getString("SSH_HOST", ""), 32), false);
+                        }
+                        if (z6) {
+                            int length2 = strArr4.length;
+                            int i3 = 0;
+                            while (i3 < length2) {
+                                String str2 = strArr4[i3];
+                                try {
+                                    addAddress.addDnsServer(str2);
+                                    this.mRoutes.a(new T7(str2, i), z6);
+                                } catch (IllegalArgumentException e) {
+                                    this.mHostService.onDiagnosticMessage("Error adding dns " + str2 + ", " + e.getLocalizedMessage());
+                                }
+                                i3++;
+                                z6 = z;
+                                strArr4 = strArr;
+                                i = 32;
+                            }
+                        }
+                        String str3 = Build.VERSION.RELEASE;
+                        addAddress.setMtu(this.mMtu);
+                        Iterator it = this.mRoutes.c(true).iterator();
+                        while (it.hasNext()) {
+                            Ev ev = (Ev) it.next();
+                            sb.append(String.format("%s/%d", ev.b(), Integer.valueOf(ev.b)));
+                            sb.append(", ");
+                        }
+                        sb.deleteCharAt(sb.lastIndexOf(", "));
+                        Iterator it2 = this.mRoutes.c(false).iterator();
+                        while (it2.hasNext()) {
+                        }
+                        this.mHostService.onDiagnosticMessage(sb.toString());
+                        Ev ev2 = new Ev(new T7("224.0.0.0", 3), true);
+                        Iterator it3 = this.mRoutes.d().iterator();
+                        while (it3.hasNext()) {
+                            Ev ev3 = (Ev) it3.next();
+                            try {
+                                BigInteger a = ev2.a();
+                                BigInteger c = ev2.c();
+                                BigInteger a2 = ev3.a();
+                                BigInteger c2 = ev3.c();
+                                boolean z7 = a.compareTo(a2) != 1;
+                                boolean z8 = c.compareTo(c2) != -1;
+                                if (z7 && z8) {
+                                    SkStatus.logDebug("VPN: Ignoring multicast route: " + ev3.toString());
+                                } else {
+                                    addAddress.addRoute(ev3.b(), ev3.b);
+                                }
+                            } catch (IllegalArgumentException unused) {
+                            }
+                        }
+                        if (z2) {
+                            for (String str4 : strArr3) {
+                                if (z3) {
+                                    try {
+                                        addAddress.addDisallowedApplication(str4);
+                                        hostService = this.mHostService;
+                                        str = "Filtro de Apps: Vpn desativada para \"" + str4 + "\"";
+                                    } catch (PackageManager.NameNotFoundException unused2) {
+                                        this.mHostService.onDiagnosticMessage("Aplicativo \"" + str4 + "\" não encontrado. Filtro de Apps não irá funcionar, verifique as configurações.");
+                                    }
+                                } else {
+                                    addAddress.addAllowedApplication(str4);
+                                    hostService = this.mHostService;
+                                    str = "Filtro de Apps: Vpn ativada para \"" + str4 + "\"";
+                                }
+                                hostService.onDiagnosticMessage(str);
+                            }
+                        }
+                        ParcelFileDescriptor establish = (sharedPreferencesC2597fC.getInt("TUNNEL_TYPE", 6) == 10 ? addAddress.setSession(this.mHostService.getAppName()).setConfigureIntent(WGService.b(this.mHostService.getContext())) : sharedPreferencesC2597fC.getInt("TUNNEL_TYPE", 6) == 12 ? addAddress.setSession(this.mHostService.getAppName()).setConfigureIntent(PDoQService.c(this.mHostService.getContext())) : addAddress.setSession(this.mHostService.getAppName()).setConfigureIntent(SocksDNSService.b(this.mHostService.getContext()))).establish();
+                        if (establish == null) {
+                            Locale.setDefault(locale);
+                            return false;
+                        }
+                        this.mTunFd.set(establish);
+                        this.mRoutingThroughTunnel.set(false);
+                        this.mHostService.onVpnEstablished();
+                        this.mRoutes.b();
+                        Locale.setDefault(locale);
+                        return true;
+                    } catch (Throwable th) {
+                        Locale.setDefault(locale);
+                        throw th;
+                    }
+                } catch (IllegalArgumentException e2) {
+                    throw new Exception("startVpn failed", e2);
+                }
+            } catch (IllegalStateException e3) {
+                throw new Exception("startVpn failed", e3);
+            }
+        } catch (SecurityException e4) {
+            throw new Exception("startVpn failed", e4);
+        }
+    }
+
+    private void stopRoutingThroughTunnel() {
+        Tun2Socks tun2Socks = this.mTun2Socks;
+        if (tun2Socks != null && tun2Socks.isAlive()) {
+            this.mTun2Socks.interrupt();
+        }
+        this.mTun2Socks = null;
+        Pdnsd pdnsd = this.mPdnsd;
+        if (pdnsd != null && pdnsd.isAlive()) {
+            this.mPdnsd.interrupt();
+        }
+        this.mPdnsd = null;
+    }
+
+    private void stopTun2Socks() {
+        if (this.mTun2SocksThread != null) {
+            try {
+                Tun2SocksJni.terminateTun2Socks();
+                this.mTun2SocksThread.join();
+            } catch (InterruptedException unused) {
+                Thread.currentThread().interrupt();
+            }
+            this.mTun2SocksThread = null;
+            this.mRoutingThroughTunnel.set(false);
+            this.mHostService.onDiagnosticMessage("tun2socks stopped");
+        }
+    }
+
+    private void stopVpn() {
+        stopRoutingThroughTunnel();
+        ParcelFileDescriptor andSet = this.mTunFd.getAndSet(null);
+        if (andSet != null) {
+            try {
+                this.mHostService.onDiagnosticMessage("<strong>Disconnected</strong>");
+                andSet.close();
+            } catch (IOException unused) {
+            }
+        }
+    }
+
+    public Object clone() {
+        throw new CloneNotSupportedException();
+    }
+
+    public synchronized boolean startRouting(TunnelVpnSettings tunnelVpnSettings) {
+        return startVpn(tunnelVpnSettings.mDnsForward, tunnelVpnSettings.mDnsResolver, tunnelVpnSettings.mExcludeIps, tunnelVpnSettings.mEnableFilterApps, tunnelVpnSettings.mFilterBypassMode, tunnelVpnSettings.mFilterApps, tunnelVpnSettings.mTetheringSubnet, tunnelVpnSettings.bypass);
+    }
+
+    public synchronized boolean startTunneling(String str, String[] strArr, boolean z, String str2, boolean z2) {
+        return routeThroughTunnel(str, strArr, z, str2, z2);
+    }
+
+    public synchronized void stop() {
+        stopVpn();
+    }
+
+    public synchronized void stopTunneling() {
+        stopRoutingThroughTunnel();
+    }
+}
+
+=================== sources/defpackage/Y4.java
+package defpackage;
+
+import android.animation.ValueAnimator;
+import android.database.Cursor;
+import android.net.NetworkInfo;
+import android.os.Handler;
+import android.os.SystemClock;
+import android.text.TextUtils;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewPropertyAnimator;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
+import androidx.appcompat.widget.ActionMenuView;
+import androidx.appcompat.widget.SearchView$SearchAutoComplete;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.f;
+import androidx.fragment.app.g;
+import androidx.fragment.app.t;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.work.ListenableWorker;
+import androidx.work.impl.workers.ConstraintTrackingWorker;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.internal.CheckableImageButton;
+import com.google.android.material.textfield.TextInputLayout;
+import com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.WeakHashMap;
+import org.lsposed.lsparanoid.Deobfuscator$AMTUNNELLITE$app;
+import prince.udp.vpn.service.SocksDNSService;
+import prince.udp.vpn.service.vpn.TunnelManagerThread;
+import prince.udp.vpn.service.vpn.TunnelUtils;
+import prince.udp.vpn.service.vpn.logger.SkStatus;
+
+/* loaded from: classes.dex */
+public final class Y4 implements Runnable {
+    public final /* synthetic */ int a;
+    public final /* synthetic */ Object b;
+
+    public /* synthetic */ Y4(Object obj, int i) {
+        this.a = i;
+        this.b = obj;
+    }
+
+    /* JADX WARN: Removed duplicated region for block: B:24:0x0085  */
+    /* JADX WARN: Removed duplicated region for block: B:41:0x00bb A[ADDED_TO_REGION, ORIG_RETURN, RETURN] */
+    /*
+        Code decompiled incorrectly, please refer to instructions dump.
+        To view partially-correct add '--show-bad-code' argument
+    */
+    private final void b() {
+        /*
+            r5 = this;
+            java.lang.Object r0 = r5.b
+            Ep r0 = (defpackage.C0089Ep) r0
+            ZA r0 = r0.c
+            java.util.concurrent.locks.ReentrantReadWriteLock r0 = r0.h
+            java.util.concurrent.locks.ReentrantReadWriteLock$ReadLock r0 = r0.readLock()
+            r1 = 1
+            r2 = 0
+            r3 = 0
+            r0.lock()     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            java.lang.Object r4 = r5.b     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            Ep r4 = (defpackage.C0089Ep) r4     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            boolean r4 = r4.a()     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            if (r4 != 0) goto L20
+            r0.unlock()
+            return
+        L20:
+            java.lang.Object r4 = r5.b     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            Ep r4 = (defpackage.C0089Ep) r4     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            java.util.concurrent.atomic.AtomicBoolean r4 = r4.d     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            boolean r1 = r4.compareAndSet(r1, r2)     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            if (r1 != 0) goto L30
+            r0.unlock()
+            return
+        L30:
+            java.lang.Object r1 = r5.b     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            Ep r1 = (defpackage.C0089Ep) r1     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            ZA r1 = r1.c     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            VF r1 = r1.c     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            xm r1 = r1.d()     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            android.database.sqlite.SQLiteClosable r1 = r1.b     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            android.database.sqlite.SQLiteDatabase r1 = (android.database.sqlite.SQLiteDatabase) r1     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            boolean r1 = r1.inTransaction()     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            if (r1 == 0) goto L4a
+            r0.unlock()
+            return
+        L4a:
+            java.lang.Object r1 = r5.b     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            Ep r1 = (defpackage.C0089Ep) r1     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            ZA r1 = r1.c     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            boolean r2 = r1.f     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            if (r2 == 0) goto L73
+            VF r1 = r1.c     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            xm r1 = r1.d()     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            r1.a()     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            java.util.HashSet r3 = r5.a()     // Catch: java.lang.Throwable -> L6e
+            r1.l()     // Catch: java.lang.Throwable -> L6e
+            r1.h()     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            goto L77
+        L68:
+            r1 = move-exception
+            goto Lbc
+        L6a:
+            r1 = move-exception
+            goto L7b
+        L6c:
+            r1 = move-exception
+            goto L7b
+        L6e:
+            r2 = move-exception
+            r1.h()     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+            throw r2     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+        L73:
+            java.util.HashSet r3 = r5.a()     // Catch: java.lang.Throwable -> L68 android.database.sqlite.SQLiteException -> L6a java.lang.IllegalStateException -> L6c
+        L77:
+            r0.unlock()
+            goto L83
+        L7b:
+            java.lang.String r2 = "ROOM"
+            java.lang.String r4 = "Cannot run invalidation tracker. Is the db closed?"
+            android.util.Log.e(r2, r4, r1)     // Catch: java.lang.Throwable -> L68
+            goto L77
+        L83:
+            if (r3 == 0) goto Lbb
+            boolean r0 = r3.isEmpty()
+            if (r0 != 0) goto Lbb
+            java.lang.Object r0 = r5.b
+            Ep r0 = (defpackage.C0089Ep) r0
+            uB r0 = r0.h
+            monitor-enter(r0)
+            java.lang.Object r1 = r5.b     // Catch: java.lang.Throwable -> La6
+            Ep r1 = (defpackage.C0089Ep) r1     // Catch: java.lang.Throwable -> La6
+            uB r1 = r1.h     // Catch: java.lang.Throwable -> La6
+            java.util.Iterator r1 = r1.iterator()     // Catch: java.lang.Throwable -> La6
+            qB r1 = (defpackage.C3177qB) r1     // Catch: java.lang.Throwable -> La6
+            boolean r2 = r1.hasNext()     // Catch: java.lang.Throwable -> La6
+            if (r2 != 0) goto La8
+            monitor-exit(r0)     // Catch: java.lang.Throwable -> La6
+            goto Lbb
+        La6:
+            r1 = move-exception
+            goto Lb9
+        La8:
+            java.lang.Object r1 = r1.next()     // Catch: java.lang.Throwable -> La6
+            java.util.Map$Entry r1 = (java.util.Map.Entry) r1     // Catch: java.lang.Throwable -> La6
+            java.lang.Object r1 = r1.getValue()     // Catch: java.lang.Throwable -> La6
+            Dp r1 = (defpackage.AbstractC0073Dp) r1     // Catch: java.lang.Throwable -> La6
+            r1.getClass()     // Catch: java.lang.Throwable -> La6
+            r1 = 0
+            throw r1     // Catch: java.lang.Throwable -> La6
+        Lb9:
+            monitor-exit(r0)     // Catch: java.lang.Throwable -> La6
+            throw r1
+        Lbb:
+            return
+        Lbc:
+            r0.unlock()
+            throw r1
+        */
+        throw new UnsupportedOperationException("Method not decompiled: defpackage.Y4.b():void");
+    }
+
+    private final void c() {
+        Object obj;
+        synchronized (((Wr) this.b).a) {
+            obj = ((Wr) this.b).f;
+            ((Wr) this.b).f = Wr.k;
+        }
+        ((Wr) this.b).h(obj);
+    }
+
+    /* JADX WARN: Type inference failed for: r1v5, types: [TI, java.lang.Thread] */
+    private final void d() {
+        SocksDNSService socksDNSService = (SocksDNSService) this.b;
+        synchronized (socksDNSService) {
+            SocksDNSService.t = true;
+            SkStatus.updateStateString(SkStatus.SSH_STARTING, socksDNSService.getString(2131952171));
+            socksDNSService.d();
+            NetworkInfo activeNetworkInfo = socksDNSService.c.getActiveNetworkInfo();
+            SkStatus.logInfo("Local IP: " + ((activeNetworkInfo == null || !activeNetworkInfo.isConnectedOrConnecting()) ? "Indisponivel" : TunnelUtils.getLocalIpAddress()));
+            try {
+                ?? thread = new Thread();
+                thread.b = "libudpqtwo";
+                thread.a = socksDNSService;
+                thread.e = C2507db.a(socksDNSService);
+                socksDNSService.e = thread;
+                thread.start();
+                TunnelManagerThread tunnelManagerThread = new TunnelManagerThread(socksDNSService.b, socksDNSService);
+                SocksDNSService.s = tunnelManagerThread;
+                tunnelManagerThread.setOnStopClienteListener(new C3338tE(socksDNSService));
+                SocksDNSService.q = new Date().getTime();
+            } catch (Exception e) {
+                SkStatus.logException(e);
+                socksDNSService.b.post(new RunnableC3391uE(socksDNSService));
+            }
+        }
+    }
+
+    public HashSet a() {
+        HashSet hashSet = new HashSet();
+        Cursor g = ((C0089Ep) this.b).c.g(new C0367Xh("SELECT * FROM room_table_modification_log WHERE invalidated = 1;", 2));
+        while (g.moveToNext()) {
+            try {
+                hashSet.add(Integer.valueOf(g.getInt(0)));
+            } catch (Throwable th) {
+                g.close();
+                throw th;
+            }
+        }
+        g.close();
+        if (!hashSet.isEmpty()) {
+            ((C0089Ep) this.b).f.m();
+        }
+        return hashSet;
+    }
+
+    @Override // java.lang.Runnable
+    public final void run() {
+        Pr pr;
+        View d;
+        int width;
+        int i;
+        boolean z;
+        Handler handler;
+        Y4 y4;
+        A0 a0;
+        int i2 = 16;
+        switch (this.a) {
+            case 0:
+                Nr nr = (Nr) this.b;
+                if (nr.u) {
+                    boolean z2 = nr.s;
+                    X4 x4 = nr.a;
+                    if (z2) {
+                        nr.s = false;
+                        x4.getClass();
+                        long currentAnimationTimeMillis = AnimationUtils.currentAnimationTimeMillis();
+                        x4.e = currentAnimationTimeMillis;
+                        x4.g = -1L;
+                        x4.f = currentAnimationTimeMillis;
+                        x4.h = 0.5f;
+                    }
+                    if ((x4.g > 0 && AnimationUtils.currentAnimationTimeMillis() > x4.g + x4.i) || !nr.e()) {
+                        nr.u = false;
+                        return;
+                    }
+                    boolean z3 = nr.t;
+                    View view = nr.c;
+                    if (z3) {
+                        nr.t = false;
+                        long uptimeMillis = SystemClock.uptimeMillis();
+                        MotionEvent obtain = MotionEvent.obtain(uptimeMillis, uptimeMillis, 3, 0.0f, 0.0f, 0);
+                        view.onTouchEvent(obtain);
+                        obtain.recycle();
+                    }
+                    if (x4.f == 0) {
+                        throw new RuntimeException("Cannot compute scroll delta before calling start()");
+                    }
+                    long currentAnimationTimeMillis2 = AnimationUtils.currentAnimationTimeMillis();
+                    float a = x4.a(currentAnimationTimeMillis2);
+                    long j = currentAnimationTimeMillis2 - x4.f;
+                    x4.f = currentAnimationTimeMillis2;
+                    nr.w.scrollListBy((int) (((float) j) * ((a * 4.0f) + ((-4.0f) * a * a)) * x4.d));
+                    WeakHashMap weakHashMap = AbstractC3238rK.a;
+                    view.postOnAnimation(this);
+                    return;
+                }
+                return;
+            case 1:
+                C3649z7 c3649z7 = (C3649z7) this.b;
+                c3649z7.c = false;
+                BottomSheetBehavior bottomSheetBehavior = (BottomSheetBehavior) c3649z7.e;
+                C3344tK c3344tK = bottomSheetBehavior.O;
+                if (c3344tK != null && c3344tK.g()) {
+                    c3649z7.a(c3649z7.b);
+                    return;
+                } else {
+                    if (bottomSheetBehavior.N == 2) {
+                        bottomSheetBehavior.D(c3649z7.b);
+                        return;
+                    }
+                    return;
+                }
+            case 2:
+                try {
+                    super/*android.app.Activity*/.onBackPressed();
+                    return;
+                } catch (IllegalStateException e) {
+                    if (!TextUtils.equals(e.getMessage(), "Can not perform this action after onSaveInstanceState")) {
+                        throw e;
+                    }
+                    return;
+                } catch (NullPointerException e2) {
+                    if (!TextUtils.equals(e2.getMessage(), "Attempt to invoke virtual method 'android.os.Handler android.app.FragmentHostCallback.getHandler()' on a null object reference")) {
+                        throw e2;
+                    }
+                    return;
+                }
+            case 3:
+                ConstraintTrackingWorker constraintTrackingWorker = (ConstraintTrackingWorker) this.b;
+                String b = constraintTrackingWorker.getInputData().b("androidx.work.impl.workers.ConstraintTrackingWorker.ARGUMENT_CLASS_NAME");
+                if (TextUtils.isEmpty(b)) {
+                    C3686zs.c().b(ConstraintTrackingWorker.f, "No worker to delegate to.", new Throwable[0]);
+                    pr = new Pr();
+                } else {
+                    ListenableWorker a2 = constraintTrackingWorker.getWorkerFactory().a(constraintTrackingWorker.getApplicationContext(), b, constraintTrackingWorker.a);
+                    constraintTrackingWorker.e = a2;
+                    if (a2 != null) {
+                        KM j2 = EM.W(constraintTrackingWorker.getApplicationContext()).l.n().j(constraintTrackingWorker.getId().toString());
+                        if (j2 == null) {
+                            constraintTrackingWorker.d.i(new Pr());
+                            return;
+                        }
+                        C3346tM c3346tM = new C3346tM(constraintTrackingWorker.getApplicationContext(), constraintTrackingWorker.getTaskExecutor(), constraintTrackingWorker);
+                        c3346tM.c(Collections.singletonList(j2));
+                        if (!c3346tM.a(constraintTrackingWorker.getId().toString())) {
+                            C3686zs.c().a(ConstraintTrackingWorker.f, AbstractC3603yE.x("Constraints not met for delegate ", b, ". Requesting retry."), new Throwable[0]);
+                            constraintTrackingWorker.d.i(new Object());
+                            return;
+                        }
+                        C3686zs.c().a(ConstraintTrackingWorker.f, AbstractC3603yE.w("Constraints met for delegate ", b), new Throwable[0]);
+                        try {
+                            Or startWork = constraintTrackingWorker.e.startWork();
+                            startWork.addListener(new RunnableC3589y0(7, constraintTrackingWorker, startWork), constraintTrackingWorker.getBackgroundExecutor());
+                            return;
+                        } catch (Throwable th) {
+                            C3686zs c = C3686zs.c();
+                            String str = ConstraintTrackingWorker.f;
+                            c.a(str, AbstractC3603yE.x("Delegated worker ", b, " threw exception in startWork."), th);
+                            synchronized (constraintTrackingWorker.b) {
+                                try {
+                                    if (constraintTrackingWorker.c) {
+                                        C3686zs.c().a(str, "Constraints were unmet, Retrying.", new Throwable[0]);
+                                        constraintTrackingWorker.d.i(new Object());
+                                    } else {
+                                        constraintTrackingWorker.d.i(new Pr());
+                                    }
+                                    return;
+                                } finally {
+                                }
+                            }
+                        }
+                    }
+                    C3686zs.c().a(ConstraintTrackingWorker.f, "No worker to delegate to.", new Throwable[0]);
+                    pr = new Pr();
+                }
+                constraintTrackingWorker.d.i(pr);
+                return;
+            case 4:
+                AnimationAnimationListenerC0200Mf animationAnimationListenerC0200Mf = (AnimationAnimationListenerC0200Mf) this.b;
+                animationAnimationListenerC0200Mf.b.endViewTransition(animationAnimationListenerC0200Mf.c);
+                animationAnimationListenerC0200Mf.d.a();
+                return;
+            case 5:
+                AbstractC2781im.a((ArrayList) this.b, 4);
+                return;
+            case 6:
+                g gVar = (g) this.b;
+                g.access$100(gVar).onDismiss(g.access$000(gVar));
+                return;
+            case 7:
+                I1 i1 = (I1) this.b;
+                i1.a(true);
+                i1.invalidateSelf();
+                return;
+            case 8:
+                C0544ch c0544ch = (C0544ch) this.b;
+                int i3 = c0544ch.i.o;
+                int i4 = c0544ch.h;
+                boolean z4 = i4 == 3;
+                DrawerLayout drawerLayout = c0544ch.k;
+                if (z4) {
+                    d = drawerLayout.d(3);
+                    width = (d != null ? -d.getWidth() : 0) + i3;
+                } else {
+                    d = drawerLayout.d(5);
+                    width = drawerLayout.getWidth() - i3;
+                }
+                if (d != null) {
+                    if (((!z4 || d.getLeft() >= width) && (z4 || d.getLeft() <= width)) || drawerLayout.g(d) != 0) {
+                        return;
+                    }
+                    C0439ah c0439ah = (C0439ah) d.getLayoutParams();
+                    c0544ch.i.s(d, width, d.getTop());
+                    c0439ah.c = true;
+                    drawerLayout.invalidate();
+                    View d2 = drawerLayout.d(i4 == 3 ? 5 : 3);
+                    if (d2 != null) {
+                        drawerLayout.b(d2);
+                    }
+                    if (drawerLayout.x) {
+                        return;
+                    }
+                    long uptimeMillis2 = SystemClock.uptimeMillis();
+                    MotionEvent obtain2 = MotionEvent.obtain(uptimeMillis2, uptimeMillis2, 3, 0.0f, 0.0f, 0);
+                    int childCount = drawerLayout.getChildCount();
+                    for (int i5 = 0; i5 < childCount; i5++) {
+                        drawerLayout.getChildAt(i5).dispatchTouchEvent(obtain2);
+                    }
+                    obtain2.recycle();
+                    drawerLayout.x = true;
+                    return;
+                }
+                return;
+            case 9:
+                C2828jh c2828jh = (C2828jh) this.b;
+                c2828jh.r = null;
+                c2828jh.drawableStateChanged();
+                return;
+            case 10:
+                C3624yj c3624yj = (C3624yj) this.b;
+                int i6 = c3624yj.A;
+                ValueAnimator valueAnimator = c3624yj.z;
+                if (i6 != 1) {
+                    i = 2;
+                    if (i6 != 2) {
+                        return;
+                    }
+                } else {
+                    i = 2;
+                    valueAnimator.cancel();
+                }
+                c3624yj.A = 3;
+                float[] fArr = new float[i];
+                fArr[0] = ((Float) valueAnimator.getAnimatedValue()).floatValue();
+                fArr[1] = 0.0f;
+                valueAnimator.setFloatValues(fArr);
+                valueAnimator.setDuration(500);
+                valueAnimator.start();
+                return;
+            case 11:
+                ((f) this.b).d();
+                return;
+            case 12:
+                ((t) this.b).x(true);
+                return;
+            case 13:
+                b();
+                return;
+            case 14:
+                c();
+                return;
+            case 15:
+                RecyclerView recyclerView = (RecyclerView) this.b;
+                AbstractC3640yz abstractC3640yz = recyclerView.O;
+                if (abstractC3640yz != null) {
+                    C0063Df c0063Df = (C0063Df) abstractC3640yz;
+                    ArrayList arrayList = c0063Df.h;
+                    boolean z5 = !arrayList.isEmpty();
+                    ArrayList arrayList2 = c0063Df.j;
+                    boolean z6 = !arrayList2.isEmpty();
+                    ArrayList arrayList3 = c0063Df.k;
+                    boolean z7 = !arrayList3.isEmpty();
+                    ArrayList arrayList4 = c0063Df.i;
+                    boolean z8 = !arrayList4.isEmpty();
+                    if (z5 || z6 || z8 || z7) {
+                        Iterator it = arrayList.iterator();
+                        while (true) {
+                            boolean hasNext = it.hasNext();
+                            long j3 = c0063Df.d;
+                            if (hasNext) {
+                                Qz qz = (Qz) it.next();
+                                View view2 = qz.a;
+                                ViewPropertyAnimator animate = view2.animate();
+                                c0063Df.q.add(qz);
+                                animate.setDuration(j3).alpha(0.0f).setListener(new C3620yf(c0063Df, qz, animate, view2)).start();
+                            } else {
+                                arrayList.clear();
+                                if (z6) {
+                                    ArrayList arrayList5 = new ArrayList();
+                                    arrayList5.addAll(arrayList2);
+                                    c0063Df.m.add(arrayList5);
+                                    arrayList2.clear();
+                                    RunnableC3567xf runnableC3567xf = new RunnableC3567xf(c0063Df, arrayList5, 0);
+                                    if (z5) {
+                                        View view3 = ((C0047Cf) arrayList5.get(0)).a.a;
+                                        WeakHashMap weakHashMap2 = AbstractC3238rK.a;
+                                        view3.postOnAnimationDelayed(runnableC3567xf, j3);
+                                    } else {
+                                        runnableC3567xf.run();
+                                    }
+                                }
+                                if (z7) {
+                                    ArrayList arrayList6 = new ArrayList();
+                                    arrayList6.addAll(arrayList3);
+                                    c0063Df.n.add(arrayList6);
+                                    arrayList3.clear();
+                                    RunnableC3567xf runnableC3567xf2 = new RunnableC3567xf(c0063Df, arrayList6, 1);
+                                    if (z5) {
+                                        View view4 = ((C0031Bf) arrayList6.get(0)).a.a;
+                                        WeakHashMap weakHashMap3 = AbstractC3238rK.a;
+                                        view4.postOnAnimationDelayed(runnableC3567xf2, j3);
+                                    } else {
+                                        runnableC3567xf2.run();
+                                    }
+                                }
+                                if (z8) {
+                                    ArrayList arrayList7 = new ArrayList();
+                                    arrayList7.addAll(arrayList4);
+                                    c0063Df.l.add(arrayList7);
+                                    arrayList4.clear();
+                                    RunnableC3567xf runnableC3567xf3 = new RunnableC3567xf(c0063Df, arrayList7, 2);
+                                    if (z5 || z6 || z7) {
+                                        if (!z5) {
+                                            j3 = 0;
+                                        }
+                                        long max = Math.max(z6 ? c0063Df.e : 0L, z7 ? c0063Df.f : 0L) + j3;
+                                        View view5 = ((Qz) arrayList7.get(0)).a;
+                                        WeakHashMap weakHashMap4 = AbstractC3238rK.a;
+                                        view5.postOnAnimationDelayed(runnableC3567xf3, max);
+                                    } else {
+                                        runnableC3567xf3.run();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    z = false;
+                } else {
+                    z = false;
+                }
+                recyclerView.p0 = z;
+                return;
+            case 16:
+                ScrollableNumberPicker scrollableNumberPicker = (ScrollableNumberPicker) this.b;
+                if (scrollableNumberPicker.F) {
+                    ScrollableNumberPicker.a(scrollableNumberPicker);
+                    handler = scrollableNumberPicker.H;
+                    y4 = new Y4(scrollableNumberPicker, i2);
+                } else {
+                    if (!scrollableNumberPicker.G) {
+                        return;
+                    }
+                    ScrollableNumberPicker.c(scrollableNumberPicker);
+                    handler = scrollableNumberPicker.H;
+                    y4 = new Y4(scrollableNumberPicker, i2);
+                }
+                handler.postDelayed(y4, scrollableNumberPicker.s);
+                return;
+            case 17:
+                SearchView$SearchAutoComplete searchView$SearchAutoComplete = (SearchView$SearchAutoComplete) this.b;
+                if (searchView$SearchAutoComplete.f) {
+                    ((InputMethodManager) searchView$SearchAutoComplete.getContext().getSystemService("input_method")).showSoftInput(searchView$SearchAutoComplete, 0);
+                    searchView$SearchAutoComplete.f = false;
+                    return;
+                }
+                return;
+            case 18:
+                d();
+                return;
+            case 19:
+                ((StaggeredGridLayoutManager) this.b).D0();
+                return;
+            case 20:
+                CheckableImageButton checkableImageButton = ((TextInputLayout) this.b).c.m;
+                checkableImageButton.performClick();
+                checkableImageButton.jumpDrawablesToCurrentState();
+                return;
+            case 21:
+                ActionMenuView actionMenuView = ((Toolbar) this.b).a;
+                if (actionMenuView == null || (a0 = actionMenuView.z) == null) {
+                    return;
+                }
+                a0.l();
+                return;
+            default:
+                ((C3344tK) this.b).p(0);
+                return;
+        }
+    }
+}
+
+=================== sources/defpackage/C2701hA.java
+package defpackage;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowInsetsController;
+import android.webkit.WebView;
+import androidx.appcompat.widget.Toolbar;
+import com.google.android.gms.common.internal.Preconditions;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.Task;
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
+import org.chromium.support_lib_boundary.ProfileStoreBoundaryInterface;
+import org.chromium.support_lib_boundary.StaticsBoundaryInterface;
+import org.chromium.support_lib_boundary.WebViewProviderBoundaryInterface;
+import org.chromium.support_lib_boundary.WebViewProviderFactoryBoundaryInterface;
+import org.chromium.support_lib_boundary.util.BoundaryInterfaceReflectionUtil;
+import org.lsposed.lsparanoid.Deobfuscator$AMTUNNELLITE$app;
+import prince.udp.vpn.activities.SplashActivity;
+import prince.udp.vpn.activities.UDPClient;
+import prince.udp.vpn.service.SocksDNSService;
+import prince.udp.vpn.service.SuperService;
+import prince.udp.vpn.service.vpn.TunnelManagerHelper;
+import prince.udp.vpn.service.vpn.logger.SkStatus;
+
+/* renamed from: hA, reason: case insensitive filesystem */
+/* loaded from: classes2.dex */
+public final class C2701hA implements InterfaceC3554xI, InterfaceC2916lF, Kt, InterfaceC0418aC, InterfaceC3663zL, Continuation {
+    public static C2701hA c;
+    public final /* synthetic */ int a;
+    public Object b;
+
+    public /* synthetic */ C2701hA(int i) {
+        this.a = i;
+    }
+
+    public C2701hA(Context context) {
+        boolean isEmpty;
+        this.a = 3;
+        SharedPreferences sharedPreferences = context.getSharedPreferences("com.google.android.gms.appid", 0);
+        this.b = sharedPreferences;
+        File file = new File(AbstractC0487bc.getNoBackupFilesDir(context), "com.google.android.gms.appid-no-backup");
+        if (file.exists()) {
+            return;
+        }
+        try {
+            if (file.createNewFile()) {
+                synchronized (this) {
+                    isEmpty = sharedPreferences.getAll().isEmpty();
+                }
+                if (isEmpty) {
+                    return;
+                }
+                Log.i("FirebaseMessaging", "App restored, clearing state");
+                d();
+            }
+        } catch (IOException e) {
+            if (Log.isLoggable("FirebaseMessaging", 3)) {
+                Log.d("FirebaseMessaging", "Error creating file in no backup dir: " + e.getMessage());
+            }
+        }
+    }
+
+    /* JADX WARN: Type inference failed for: r0v4, types: [Rw, xE] */
+    public C2701hA(View view) {
+        Rw rw;
+        this.a = 1;
+        if (Build.VERSION.SDK_INT >= 30) {
+            ?? rw2 = new Rw(view, 7);
+            rw2.c = view;
+            rw = rw2;
+        } else {
+            rw = new Rw(view, 7);
+        }
+        this.b = rw;
+    }
+
+    /* JADX WARN: Type inference failed for: r0v1, types: [Rw, java.lang.Object, xE] */
+    public C2701hA(WindowInsetsController windowInsetsController) {
+        this.a = 1;
+        ?? rw = new Rw((Object) null, 7);
+        rw.d = windowInsetsController;
+        this.b = rw;
+    }
+
+    public /* synthetic */ C2701hA(Object obj, int i) {
+        this.a = i;
+        this.b = obj;
+    }
+
+    public void a() {
+        String string = "PRINCE_F";
+        SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC = (SharedPreferencesEditorC2544eC) ((SharedPreferencesC2597fC) this.b).edit();
+        sharedPreferencesEditorC2544eC.putBoolean(string, true);
+        sharedPreferencesEditorC2544eC.apply();
+    }
+
+    @Override // defpackage.InterfaceC3554xI
+    public void b() {
+        SplashActivity splashActivity = (SplashActivity) ((EE) this.b).b;
+        splashActivity.getClass();
+        splashActivity.startActivity(new Intent(splashActivity, (Class<?>) UDPClient.class));
+        splashActivity.finish();
+    }
+
+    @Override // defpackage.Kt
+    public boolean c(Mt mt, MenuItem menuItem) {
+        ((Toolbar) this.b).getClass();
+        return false;
+    }
+
+    @Override // defpackage.InterfaceC3663zL
+    public WebViewProviderBoundaryInterface createWebView(WebView webView) {
+        return (WebViewProviderBoundaryInterface) BoundaryInterfaceReflectionUtil.castToSuppLibClass(WebViewProviderBoundaryInterface.class, ((WebViewProviderFactoryBoundaryInterface) this.b).createWebView(webView));
+    }
+
+    public synchronized void d() {
+        ((SharedPreferences) this.b).edit().clear().commit();
+    }
+
+    public void e() {
+        AbstractC3605yG abstractC3605yG = (AbstractC3605yG) this.b;
+        abstractC3605yG.getClass();
+        String str = ((AG) abstractC3605yG).b;
+        if (str == null) {
+            throw new AssertionError();
+        }
+        throw new AssertionError(str);
+    }
+
+    @Override // defpackage.Kt
+    public void g(Mt mt) {
+        Toolbar toolbar = (Toolbar) this.b;
+        A0 a0 = toolbar.a.z;
+        if (a0 == null || !a0.k()) {
+            Iterator it = toolbar.M.b.iterator();
+            while (it.hasNext()) {
+                ((C0296Sl) ((InterfaceC2788iu) it.next())).a.s(mt);
+            }
+        }
+    }
+
+    @Override // defpackage.InterfaceC3663zL
+    public ProfileStoreBoundaryInterface getProfileStore() {
+        return (ProfileStoreBoundaryInterface) BoundaryInterfaceReflectionUtil.castToSuppLibClass(ProfileStoreBoundaryInterface.class, ((WebViewProviderFactoryBoundaryInterface) this.b).getProfileStore());
+    }
+
+    @Override // defpackage.InterfaceC3663zL
+    public StaticsBoundaryInterface getStatics() {
+        return (StaticsBoundaryInterface) BoundaryInterfaceReflectionUtil.castToSuppLibClass(StaticsBoundaryInterface.class, ((WebViewProviderFactoryBoundaryInterface) this.b).getStatics());
+    }
+
+    @Override // defpackage.InterfaceC3663zL
+    public String[] i() {
+        return ((WebViewProviderFactoryBoundaryInterface) this.b).getSupportedFeatures();
+    }
+
+    @Override // defpackage.InterfaceC2916lF
+    public void onLine(String str) {
+        switch (this.a) {
+            case 4:
+                boolean contains = str.contains("Xray 24.11.30");
+                SuperService superService = (SuperService) this.b;
+                if (contains && !superService.s) {
+                    try {
+                        int i = SuperService.z;
+                        superService.f();
+                    } catch (Exception unused) {
+                        HF hf = SuperService.C;
+                        if (hf != null) {
+                            ((UDPClient) hf).E();
+                        } else {
+                            AbstractC2879kf.V(superService.getApplicationContext(), "Error, Reconnect/Restart App!");
+                        }
+                        TunnelManagerHelper.stopSuperDns(superService.getApplicationContext());
+                        AbstractC2879kf.U(superService.getApplicationContext(), "Error running VPNService!");
+                    }
+                    superService.s = true;
+                }
+                if (str.contains("Failed to start")) {
+                    HF hf2 = SuperService.C;
+                    if (hf2 != null) {
+                        ((UDPClient) hf2).E();
+                    } else {
+                        AbstractC2879kf.V(superService.getApplicationContext(), "Error, Reconnect/Restart App!");
+                    }
+                    TunnelManagerHelper.stopSuperDns(superService.getApplicationContext());
+                    AbstractC2879kf.U(superService.getApplicationContext(), "Failed to start!");
+                    return;
+                }
+                return;
+            default:
+                if (str.contains("Connected")) {
+                    ((UDPClient) TI.w).i("Connected");
+                    ((UDPClient) TI.w).runOnUiThread(new RunnableC0247Ph(4));
+                    Thread thread = SocksDNSService.r;
+                    Thread thread2 = new Thread(SocksDNSService.s);
+                    SocksDNSService.r = thread2;
+                    thread2.start();
+                    SkStatus.logInfo(2131952220, new Object[0]);
+                }
+                if (str.contains("UDP running")) {
+                    ((UDPClient) TI.w).i("UDP is running");
+                }
+                boolean contains2 = str.contains("auth error");
+                TI ti = (TI) this.b;
+                if (contains2) {
+                    ((UDPClient) TI.w).i("Invalid Authentication!");
+                    SI si = TI.w;
+                    if (si != null) {
+                        ((UDPClient) si).E();
+                    } else {
+                        AbstractC2879kf.V(ti.a, "Error, Reconnect/Restart App!");
+                    }
+                    AbstractC2879kf.V(ti.a, "Invalid Account! Contact developer");
+                    TunnelManagerHelper.stopSocksHttp(ti.a);
+                }
+                if (str.contains("exiting")) {
+                    SI si2 = TI.w;
+                    if (si2 != null) {
+                        ((UDPClient) si2).E();
+                    } else {
+                        AbstractC2879kf.V(ti.a, "Error, Reconnect/Restart App!");
+                    }
+                    TunnelManagerHelper.stopSocksHttp(ti.a);
+                }
+                if (str.contains("unknown command")) {
+                    SI si3 = TI.w;
+                    if (si3 != null) {
+                        ((UDPClient) si3).E();
+                    } else {
+                        AbstractC2879kf.V(ti.a, "Error, Reconnect/Restart App!");
+                    }
+                    TunnelManagerHelper.stopSocksHttp(ti.a);
+                }
+                if (str.contains("reconnecting")) {
+                    SkStatus.updateStateString("RECONECTANDO", "Reconnecting...");
+                    ((UDPClient) TI.w).i("Reconnecting...");
+                    new Thread(new H0(this, 18)).start();
+                }
+                str.contains("network is unreachable");
+                return;
+        }
+    }
+
+    @Override // com.google.android.gms.tasks.Continuation
+    public Object then(Task task) {
+        String str;
+        boolean isSuccessful = task.isSuccessful();
+        AbstractC2555eN abstractC2555eN = (AbstractC2555eN) this.b;
+        if (isSuccessful) {
+            str = (String) task.getResult();
+        } else {
+            Log.e("RecaptchaCallWrapper", "Failed to get Recaptcha token, error - " + ((Exception) Preconditions.checkNotNull(task.getException())).getMessage() + "\n\n Failing open with a fake token.");
+            str = "NO_RECAPTCHA";
+        }
+        return abstractC2555eN.o0(str);
+    }
+}
+
+=================== sources/defpackage/A2.java
+package defpackage;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import prince.udp.vpn.service.PDoQService;
+import prince.udp.vpn.service.SocksDNSService;
+import prince.udp.vpn.service.SuperService;
+
+/* loaded from: classes.dex */
+public final class A2 extends BroadcastReceiver {
+    public final /* synthetic */ int a;
+    public final /* synthetic */ Object b;
+
+    public /* synthetic */ A2(Object obj, int i) {
+        this.a = i;
+        this.b = obj;
+    }
+
+    @Override // android.content.BroadcastReceiver
+    public final void onReceive(Context context, Intent intent) {
+        switch (this.a) {
+            case 0:
+                ((B2) this.b).g();
+                return;
+            case 1:
+                if (intent != null) {
+                    ((B7) this.b).g(intent);
+                    return;
+                }
+                return;
+            case 2:
+                if (intent == null || intent.getAction() == null || !intent.getAction().equals("android.net.conn.CONNECTIVITY_CHANGE")) {
+                    return;
+                }
+                C3686zs.c().a(Iv.j, "Network broadcast received", new Throwable[0]);
+                Iv iv = (Iv) this.b;
+                iv.c(iv.f());
+                return;
+            case 3:
+                String action = intent.getAction();
+                if (action == null) {
+                    return;
+                }
+                if (action.equals(PDoQService.B)) {
+                    new Thread(new RunnableC0247Ph(1)).start();
+                    return;
+                } else {
+                    if (action.equals(PDoQService.C)) {
+                        PDoQService pDoQService = (PDoQService) this.b;
+                        pDoQService.b.post(new Pw(pDoQService, 0));
+                        return;
+                    }
+                    return;
+                }
+            case 4:
+                String action2 = intent.getAction();
+                if (action2 == null) {
+                    return;
+                }
+                if (action2.equals(SocksDNSService.v)) {
+                    new Thread(new RunnableC0247Ph(2)).start();
+                    return;
+                } else {
+                    if (action2.equals(SocksDNSService.w)) {
+                        SocksDNSService socksDNSService = (SocksDNSService) this.b;
+                        socksDNSService.b.post(new RunnableC3391uE(socksDNSService));
+                        return;
+                    }
+                    return;
+                }
+            default:
+                String action3 = intent.getAction();
+                if (action3 == null) {
+                    return;
+                }
+                if (action3.equals(SuperService.E)) {
+                    new Thread(new RunnableC0247Ph(3)).start();
+                    return;
+                } else {
+                    if (action3.equals(SuperService.F)) {
+                        SuperService superService = (SuperService) this.b;
+                        superService.b.post(new FF(superService, 0));
+                        return;
+                    }
+                    return;
+                }
+        }
+    }
+}
+
