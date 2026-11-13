@@ -328,6 +328,26 @@ jobs:
             --out "$R/dnstt-test.txt" --probe-limit 6 --max-hosts 2 --max-keys 2 \
             --max-domains 2 --seconds 20 2>&1 | tail -40
 
+      - name: dnstt - the exact domain string the client builds
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          mkdir -p "$R"
+          python3 "$GITHUB_WORKSPACE/tools/resolve_paranoid_source.py" decrypted.tsv src /tmp/res3 > /dev/null 2>&1
+          {
+            for f in sources/prince/udp/vpn/service/SocksDNSService.java \
+                     sources/prince/udp/vpn/service/vpn/Tunnel.java \
+                     sources/defpackage/Y4.java sources/defpackage/C2701hA.java \
+                     sources/defpackage/A2.java; do
+              echo "=================== $f"
+              if [ -f "/tmp/res3/$f" ]; then cat "/tmp/res3/$f"; else cat "src/$f" 2>/dev/null; fi
+              echo
+            done
+          } > "$R/dnstt-service.txt" 2>&1
+          wc -l "$R/dnstt-service.txt"
+          grep -nE "libdns|add\(|-sd|-udp|-pubkey|[a-z]+\.add|startsWith|\+ \"|getString" "$R/dnstt-service.txt" | head -80
+
       - name: Where does the server list come from
         run: |
           set +e
@@ -466,6 +486,7 @@ jobs:
           cp dnstt-code.txt "$DEST/report/dnstt-code.txt" 2>/dev/null
           cp dnstt-keys.txt "$DEST/report/dnstt-keys.txt" 2>/dev/null
           cp dnstt-test.txt "$DEST/report/dnstt-test.txt" 2>/dev/null
+          cp dnstt-service.txt "$DEST/report/dnstt-service.txt" 2>/dev/null
           cd "$GITHUB_WORKSPACE"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
