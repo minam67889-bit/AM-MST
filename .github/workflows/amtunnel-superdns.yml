@@ -330,6 +330,37 @@ jobs:
           done
           grep -h "" "$R/server-list.txt" | head -80
 
+      - name: The janny.json decryption plumbing
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          G="$GITHUB_WORKSPACE/analysis-amtunnel/code-resolved"
+          mkdir -p "$R" "$G"
+          {
+            for f in sources/defpackage/AbstractC3622yh.java sources/defpackage/AbstractC2866kI.java \
+                     sources/prince/udp/vpn/activities/a.java sources/defpackage/RunnableC0043Cb.java; do
+              echo "=================== $f"
+              if [ -f "/tmp/resolved/$f" ]; then cat "/tmp/resolved/$f"; else cat "src/$f" 2>/dev/null; fi
+              echo
+            done
+            echo "=================== who mentions oast.info"
+            grep -rn "oast.info" /tmp/resolved 2>/dev/null | head -5
+            echo
+            echo "=================== every string that looks like a secret/key"
+            cut -f2 decrypted.tsv 2>/dev/null | grep -v '^#' \
+              | grep -E "^[A-Za-z0-9+/=_-]{16,120}$" | sort -u | head -40
+          } > "$R/crypto-plumbing.txt" 2>&1
+          for f in sources/defpackage/AbstractC3622yh.java sources/defpackage/AbstractC2866kI.java \
+                   sources/prince/udp/vpn/activities/a.java sources/defpackage/RunnableC0043Cb.java; do
+            if [ -f "/tmp/resolved/$f" ]; then
+              mkdir -p "$G/$(dirname "$f")"; cp "/tmp/resolved/$f" "$G/$f"
+            elif [ -f "src/$f" ]; then
+              mkdir -p "$G/$(dirname "$f")"; cp "src/$f" "$G/$f"
+            fi
+          done
+          wc -l "$R/crypto-plumbing.txt"
+
       - name: Commit
         if: always()
         run: |
