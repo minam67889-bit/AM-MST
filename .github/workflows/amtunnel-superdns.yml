@@ -148,6 +148,94 @@ jobs:
           wc -l "$R/superdns-code.txt"
           head -120 "$R/superdns-code.txt"
 
+      - name: Decrypt the LSParanoid string table
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          DEO=$(find src -name 'Deobfuscator*app.java' | head -1)
+          echo "deobfuscator: $DEO"
+          python3 "$GITHUB_WORKSPACE/tools/lsparanoid_decode.py" \
+            --java "$DEO" --scan src --out decrypted.tsv \
+            --hosts-out hosts.txt > /tmp/dec.log 2>&1
+          tail -30 /tmp/dec.log
+          wc -l decrypted.tsv
+          {
+            echo "### app hosts (deobfuscated)"
+            cat hosts.txt 2>/dev/null
+            echo
+            echo "### strings mentioning super/dns/tunnel/pubkey"
+            grep -iE "super|dnstt|slowdns|slow dns|pubkey|nameserver|tunnel" decrypted.tsv | head -80
+            echo
+            echo "### 64-hex keys in plaintext strings"
+            grep -oE "\b[0-9a-f]{64}\b" decrypted.tsv | sort -u | head -20
+          } > "$R/strings-decrypted.txt" 2>&1
+          head -80 "$R/strings-decrypted.txt"
+
+      - name: Readable SuperService / tunnel code
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          OUT="$GITHUB_WORKSPACE/analysis-amtunnel/code-resolved"
+          rm -rf "$OUT"; mkdir -p "$OUT"
+          python3 "$GITHUB_WORKSPACE/tools/resolve_paranoid_source.py" \
+            decrypted.tsv src "$OUT" "**/*.java"
+          ls "$OUT"/sources/prince/udp/vpn/service 2>/dev/null | head
+          {
+            for f in $(find "$OUT" -name 'SuperService.java' -o -name 'PDoQService.java' \
+                       -o -name 'SocksDNSService.java' | head -4); do
+              echo "=================== $f"
+              grep -nE "libsuperdns|libdns|exec|\-udp|\-pubkey|\-report|getString|ProcessBuilder|args" "$f" | head -60
+            done
+          } > "$R/superdns-args.txt" 2>&1
+          cat "$R/superdns-args.txt" | head -60
+
+      - name: What does libsuperdns.so want?
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          L=apkx/lib/arm64-v8a/libsuperdns.so
+          {
+            echo "### size: $(stat -c%s $L)"
+            echo
+            echo "### flags"
+            strings -n 2 "$L" | grep -xE "-[a-zA-Z][a-zA-Z0-9-]{1,18}" | sort -u | head -40
+            echo
+            echo "### usage / help lines"
+            strings -n 6 "$L" | grep -iE "usage|pubkey-file|\-udp ADDR|\-doh|\-dot|local address|slowdns" | sort -u | head -30
+            echo
+            echo "### protocol markers"
+            strings -n 8 "$L" | grep -iE "bamsoftware|turbotunnel|dnstt|kcp-go|smux|flynn/noise|superdns" | sort -u | head -30
+            echo
+            echo "### embedded hosts / keys"
+            strings -n 6 "$L" | grep -oE "\b[a-z0-9]([a-z0-9-]{0,40}\.)+(com|net|org|xyz|top|site|online|live|shop|app|io|me|tech|space|club|info|co|dev|pro|link|store|cloud|fun|sbs|cfd)\b" | sort | uniq -c | sort -rn | head -30
+            strings -n 32 "$L" | grep -oE "\b[0-9a-f]{64}\b" | sort -u | head -10
+          } > "$R/libsuperdns.txt" 2>&1
+          cat "$R/libsuperdns.txt" | head -70
+
+      - name: Assets that could hold servers
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          {
+            echo "### asset json/cnf/txt files"
+            for f in $(unzip -Z1 apk.apk | grep -E '^assets/.*\.(json|txt|cnf|conf|xml)$' | grep -v '/wg/' | head -20); do
+              echo "=================== $f"
+              unzip -p apk.apk "$f" | head -c 1200
+              echo
+            done
+            echo
+            echo "### janny.json"
+            unzip -p apk.apk assets/janny.json 2>/dev/null | head -c 1500
+            echo
+            echo "### protected_by_np"
+            unzip -p apk.apk 'assets/protected_by_np/*.txt' 2>/dev/null | head -c 600
+          } > "$R/assets-dump.txt" 2>&1
+          head -60 "$R/assets-dump.txt"
+
       - name: Config sources and endpoints
         run: |
           set +e
