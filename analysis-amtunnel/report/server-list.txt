@@ -1,0 +1,81 @@
+### every http(s) url in the whole apktool tree
+http://cldr.unicode.org/
+http://cloud.google.com/terms/launch-stages
+http://code.google.com/appengine
+http://example.com/some/info?color=red
+http://g.co/dev/packagevisibility
+http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime(
+http://localhost
+http://pyyaml.org/wiki/YAMLColonInFlowContext
+http://semver.org
+http://unitsofmeasure.org/ucum.html
+http://www.example.com
+http://www.google.com
+http://www.jacoco.org/jacoco
+http://www.rfc-editor.org/rfc/bcp/bcp47.txt
+http://www.unicode.org/cldr/charts/30/supplemental/territory_information.html
+http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf
+https://accounts.google.com
+https://accounts.google.com/
+https://accounts.google.com/o/oauth2/revoke?token=
+https://app-measurement.com/a
+https://app-measurement.com/s/d
+https://cloud.google.com/apis/design/errors
+https://cloud.google.com/apis/design/glossary
+https://cloud.google.com/apis/design/resource_names
+https://cloud.google.com/endpoints
+https://cloud.google.com/pubsub
+https://cloud.google.com/pubsub/docs/overview
+https://cloud.google.com/terms/
+https://cloud.google.com/terms/deprecation
+https://developer.android.com/google/play/integrity/reference/com/google/android/play/core/integrity/model/IntegrityErrorCode.html#
+https://developer.android.com/google/play/integrity/reference/com/google/android/play/core/integrity/model/StandardIntegrityErrorCode.html#
+https://developer.android.com/guide/topics/media/issues/cleartext-not-permitted
+https://developer.android.com/guide/topics/media/issues/player-accessed-on-wrong-thread
+https://developer.android.com/reference/com/google/android/play/core/install/model/InstallErrorCode#
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString
+https://developers.google.com/admob/android/test-ads#enable_test_devices
+https://developers.google.com/discovery/v1/reference/apis
+https://developers.google.com/identity/protocols/OpenIDConnect
+https://developers.google.com/protocol-buffers/
+https://developers.google.com/protocol-buffers/docs/proto#options
+https://developers.google.com/protocol-buffers/docs/proto3#json
+https://developers.google.com/time/smear
+https://developers.google.com/tink/faq/registration_errors
+https://docs.python.org/2/library/time.html#time.strftime
+https://en.wikipedia.org/wiki/Bloom_filter
+https://en.wikipedia.org/wiki/Cross-origin_resource_sharing
+https://en.wikipedia.org/wiki/Dimensionless_quantity
+https://en.wikipedia.org/wiki/Gimbal_lock
+https://en.wikipedia.org/wiki/ISO_week_date
+https://en.wikipedia.org/wiki/Quaternion
+https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation
+https://en.wikipedia.org/wiki/Rotation_formalisms_in_three_dimensions
+https://example.appspot.com
+https://example.appspot.com/api/company/widgetworks/user/johndoe
+https://example.appspot.com/api/company/widgetworks/user/johndoe?timezone=EST
+https://example.cloudfunctions.net/getUser
+https://example.cloudfunctions.net/getUser?cid=widgetworks&uid=johndoe
+https://example.cloudfunctions.net/getUser?timezone=EST&cid=widgetworks&uid=johndoe
+https://firebase.google.com/docs/crashlytics/get-started?platform=android#add-plugin
+https://firebase.google.com/support/guides/disable-analytics
+
+### files mentioning SSH_HOST
+
+### files mentioning janny
+
+### assets/janny.json
+bytes: 121952
+blob: 121952 bytes, head=b'xLr8+MDEleNAywyu734WgWsjiG3SxQlKG72b3qLq'
+  base64 -> 91464 bytes, head=c4bafcf8c0c495e340cb0caeef7e16816b23886dd2c5094a1bbd9bdea2eafb87
+  no transform produced JSON-ish plaintext
+  as-is printable ratio: 0.38
+  first 256 bytes: c4bafcf8c0c495e340cb0caeef7e16816b23886dd2c5094a1bbd9bdea2eafb8700bd6d0089d7990be7afb50fd6616afe97803f6238c8ae94e8f6b8d2731dcb57428c2cf4766fb4c5c1b27347ec6b5d4bbc0bb363b32b5d25881abab9f8ae344a056a27e02d2282c7e41d6f1ef1f13d73723e4ecd77eb21659a19f08d3003325da33f72ccc99a9ceac4db5b439add2a3a799d748cd93ecc31ca429372324c621c6b6669da036ca2b6fe63af4d3afed6099e465f6b06f8f25947b1ef505ba917063da69a9e013e3d7d2198d7b83d83f21b0521e42877232819ebcc883ae1058804780166c992e0236199f48ec09f4fe80e5ed11ac82021af6a008b45c7be72442d
+
+### res/raw and assets listing
+smali/assets/ɑ ɾ վ ɑ ղ.png
+smali/assets/¹.otf
+smali/assets/janny.json
+smali/res/raw/firebase_crashlytics_keep.xml
+smali/res/raw/firebase_common_keep.xml
+smali/res/raw/pdnsd_local
