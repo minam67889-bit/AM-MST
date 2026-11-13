@@ -1,0 +1,238 @@
+name: AM Tunnel Lite - SuperDNS hunt
+
+# New build (MOD Universal) of AM TUNNEL LITE VPN. Goal: find the SuperDNS
+# servers the app connects to and dump them into a JSON. Previous build only
+# had `prince/udp/vpn/service/SuperService` referenced; this run decompiles it
+# and mines every string table for hosts, keys and config endpoints.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/amtunnel-superdns.yml"
+      - "analysis-amtunnel/scan_superdns.py"
+
+permissions:
+  contents: write
+
+jobs:
+  hunt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq unzip curl binutils file python3 default-jre-headless
+
+      - name: Download the MOD build
+        run: |
+          set +e
+          mkdir -p /tmp/a && cd /tmp/a
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+          for URL in \
+            "https://filebin.net/kaq42zmlr3c1na2g/AM%20TUNNEL%20LITE%20VPN_AM%20%5BMOD%20Universal%5D.zip" \
+            "https://filebin.net/kaq42zmlr3c1na2g/AM TUNNEL LITE VPN_AM [MOD Universal].zip"; do
+            echo "== $URL"
+            curl -sS -c jar -A "$UA" -o /dev/null "$URL"
+            curl -sSL -c jar -b jar -A "$UA" -H "Referer: $URL" -o pack.zip "$URL"
+            file pack.zip; ls -l pack.zip
+            if unzip -l pack.zip > /dev/null 2>&1; then echo "OK zip"; break; fi
+          done
+          unzip -o -q pack.zip -d x || true
+          find x -maxdepth 3 | head -40
+          ls -l
+
+      - name: Locate the APK
+        run: |
+          set +e
+          cd /tmp/a
+          apk=$(find x -name '*.apk' -size +1M | head -1)
+          if [ -z "$apk" ] && unzip -l pack.zip 2>/dev/null | grep -qi 'AndroidManifest'; then
+            cp pack.zip universal.apk; apk=universal.apk
+          fi
+          echo "APK=$apk"
+          [ -z "$apk" ] && { echo "NO APK FOUND"; exit 1; }
+          cp "$apk" apk.apk
+          mkdir -p apkx && unzip -o -q apk.apk -d apkx
+          echo "--- entries: $(wc -l < <(unzip -Z1 apk.apk))"
+          unzip -Z1 apk.apk | grep -E '^(assets|lib)/' | head -60 > list.txt
+          unzip -Z1 apk.apk | wc -l
+          du -sh apkx
+          ls apkx
+          echo "--- assets"
+          unzip -Z1 apk.apk | grep '^assets/' | head -80
+          echo "--- libs"
+          unzip -Z1 apk.apk | grep '^lib/' | head -40
+          echo "--- dex"
+          unzip -Z1 apk.apk | grep -E '^classes[0-9]*\.dex$' | head -20
+
+      - name: Strings of every dex and native lib
+        run: |
+          set +e
+          cd /tmp/a
+          mkdir -p strs
+          for d in apkx/classes*.dex; do
+            [ -f "$d" ] || continue
+            b=$(basename "$d" .dex)
+            strings -n 5 "$d" > "strs/$b.txt"
+          done
+          for l in apkx/lib/*/*.so; do
+            [ -f "$l" ] || continue
+            b=$(basename "$l")
+            strings -n 5 "$l" > "strs/lib_$b.txt"
+          done
+          wc -l strs/*.txt | tail -20
+          python3 "$GITHUB_WORKSPACE/analysis-amtunnel/scan_superdns.py" strs scan.json
+          head -c 3000 scan.json
+
+      - name: Native libraries - which engine is SuperDNS?
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          mkdir -p "$R"
+          {
+            echo "### libraries"
+            for l in apkx/lib/arm64-v8a/*.so; do
+              [ -f "$l" ] || continue
+              printf "%-28s %10d  %s\n" "$(basename "$l")" "$(stat -c%s "$l")" "$(file -b "$l" | cut -c1-60)"
+            done
+            echo
+            echo "### dnstt / tunnel markers per library"
+            for l in apkx/lib/arm64-v8a/*.so; do
+              [ -f "$l" ] || continue
+              b=$(basename "$l")
+              hits=$(strings -n 6 "$l" | grep -icE "bamsoftware|turbotunnel|dnstt|pubkey|kcp|smux|noise" )
+              [ "$hits" -gt 0 ] && echo "$b: $hits marker lines" && \
+                strings -n 8 "$l" | grep -iE "bamsoftware|turbotunnel|dnstt|pubkey-file|slowdns" | sort -u | head -8
+            done
+            echo
+            echo "### superdns-ish strings anywhere"
+            grep -hiE "superdns|super dns|super_dns|SUPERDNS" strs/*.txt | sort -u | head -60
+          } > "$R/native.txt" 2>&1
+          cat "$R/native.txt" | head -80
+
+      - name: Decompile
+        run: |
+          set +e
+          cd /tmp/a
+          curl -sSL -o jadx.zip https://github.com/skylot/jadx/releases/download/v1.5.0/jadx-1.5.0.zip
+          unzip -o -q jadx.zip -d jadx && chmod +x jadx/bin/jadx
+          jadx/bin/jadx --version
+          timeout 1500 jadx/bin/jadx -d src --no-res --threads-count 4 apk.apk > jadx.log 2>&1
+          echo "exit=$?"
+          grep -c "ERROR" jadx.log || true
+          find src -name '*.java' | wc -l
+          ls src 2>/dev/null | head
+
+      - name: SuperDNS code
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          mkdir -p "$R"
+          mkdir -p "$GITHUB_WORKSPACE/analysis-amtunnel/code"
+          cp -r src/prince "$GITHUB_WORKSPACE/analysis-amtunnel/code/" 2>/dev/null
+          {
+            echo "### files mentioning super dns"
+            grep -rl -iE "superdns|super dns|startSuperDns|SuperService" src 2>/dev/null | head -30
+            echo
+            for f in $(grep -rl -iE "SuperService|startSuperDns" src 2>/dev/null | head -6); do
+              echo "=================== $f"
+              sed -n '1,140p' "$f"
+            done
+          } > "$R/superdns-code.txt" 2>&1
+          wc -l "$R/superdns-code.txt"
+          head -120 "$R/superdns-code.txt"
+
+      - name: Config sources and endpoints
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          {
+            echo "### hosts in dex (excluding SDK noise)"
+            python3 - <<'PY'
+import json
+d = json.load(open('scan.json'))
+for row in d['hosts'][:60]:
+    print(f"  {row['hosts'] if 'hosts' in row else row['host']:40s} {row['hits']}")
+print()
+print("### urls")
+for u in d['urls'][:60]:
+    print("  ", u)
+print()
+print("### 64-hex keys")
+for k in d['hex64_keys'][:30]:
+    print("  ", k)
+print()
+print("### interesting lines")
+for line in d['interesting_lines'][:80]:
+    print("  ", line[:200])
+PY
+            echo
+            echo "### pref keys / config fields"
+            grep -rhoE "\"(super[A-Za-z]*|[a-z]*[Dd]ns[A-Za-z]*|[a-z]*[Hh]ost[a-z]*|pubkey|nameserver|tunnel[A-Za-z]*)\"" src 2>/dev/null | sort | uniq -c | sort -rn | head -50
+            echo
+            echo "### json/asset config names"
+            grep -rhoE "\"[A-Za-z0-9_./-]{3,40}\\.json\"" src 2>/dev/null | sort -u | head -40
+          } > "$R/config-sources.txt" 2>&1
+          head -100 "$R/config-sources.txt"
+
+      - name: Probe any endpoint the app talks to
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          {
+            echo "### url probe"
+            python3 - <<'PY'
+import json, subprocess
+d = json.load(open('scan.json'))
+urls = [u for u in d['urls'] if 'firebase' not in u][:25]
+for u in urls:
+    r = subprocess.run(["curl", "-sS", "-m", "20", "-o", "/dev/null",
+                        "-w", "%{http_code} %{size_download} %{time_total}", u],
+                       capture_output=True, text=True)
+    print(f"  {u[:90]:92s} {r.stdout.strip() or r.stderr.strip()[:60]}")
+PY
+            echo
+            echo "### dns probe of the top hosts"
+            python3 - <<'PY'
+import json, subprocess
+d = json.load(open('scan.json'))
+for row in d['hosts'][:25]:
+    h = row.get('host') or row.get('hosts')
+    a = subprocess.run(["dig", "+short", "+time=4", "+tries=1", h, "A"],
+                       capture_output=True, text=True).stdout.strip().replace("\n", " ")
+    n = subprocess.run(["dig", "+short", "+time=4", "+tries=1", h, "NS"],
+                       capture_output=True, text=True).stdout.strip().replace("\n", " ")
+    print(f"  {h:44s} A={a or '-'}  NS={n or '-'}")
+PY
+          } > "$R/probe.txt" 2>&1
+          cat "$R/probe.txt" | head -60
+
+      - name: Commit
+        if: always()
+        run: |
+          set +e
+          cd /tmp/a
+          DEST="$GITHUB_WORKSPACE/analysis-amtunnel"
+          mkdir -p "$DEST/report"
+          cp scan.json "$DEST/scan.json" 2>/dev/null
+          cp list.txt "$DEST/report/apk-entries.txt" 2>/dev/null
+          cp jadx.log "$DEST/report/jadx.log" 2>/dev/null
+          cd "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
+          git add analysis-amtunnel
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "amtunnel: SuperDNS hunt over the MOD build [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" > /dev/null 2>&1
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
