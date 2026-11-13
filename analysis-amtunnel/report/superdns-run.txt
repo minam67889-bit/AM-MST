@@ -1,2 +1,17 @@
-binary missing
-binary: libs/x86_64/libsuperdns.so (0 bytes)
+### file
+ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /system/bin/linker64, for Android 21, built by NDK r19c (5345600), stripped
+
+### -h
+timeout: failed to execute process: No such file or directory (os error 2)
+
+=== sa1.supaghost.cc via 8.8.8.8:53
+timeout: failed to execute process: No such file or directory (os error 2)
+/home/runner/work/_temp/34d30304-0744-4a8d-8c7b-083c019daecc.sh: line 41: -udp: command not found
+/home/runner/work/_temp/34d30304-0744-4a8d-8c7b-083c019daecc.sh: line 42: -pubkey: command not found
+exit=0
+
+=== gg1.apnacp.xyz via 8.8.8.8:53
+timeout: failed to execute process: No such file or directory (os error 2)
+/home/runner/work/_temp/34d30304-0744-4a8d-8c7b-083c019daecc.sh: line 41: -udp: command not found
+/home/runner/work/_temp/34d30304-0744-4a8d-8c7b-083c019daecc.sh: line 42: -pubkey: command not found
+exit=0

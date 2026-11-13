@@ -1,0 +1,9 @@
+### libsuperdns entries in the apk
+warning [apk.apk]:  206 extra bytes at beginning or within zipfile
+  (attempting to process anyway)
+ 16607808  1980-01-01 00:00   lib/arm64-v8a/libsuperdns.so
+ 15889620  1980-01-01 00:00   lib/armeabi-v7a/libsuperdns.so
+
+x86_64:  bytes
+arm64-v8a: 16607808 bytes
+armeabi-v7a: 15889620 bytes
