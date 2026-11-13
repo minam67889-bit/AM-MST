@@ -1,16 +1,20 @@
 === verdict counts
   ocsdnstt  unreachable              150
-  ocsslow   FORMERR/sl               45
-  ocsslow   FORMERR/sl_b32           5
+  ocsslow   FORMERR/sl               47
+  ocsslow   FORMERR/sl_b32           1
+  ocsslow   nxdomain                 2
 
 === ocsslow: 50 hosts
   sa1.supaghost.cc       169.58.203.175   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa10.supaghost.cc      169.58.203.162   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
-      sd_b32  rcode=3 an=0 []
-  sa10.supaghost.cc      169.58.203.162   FORMERR/sl (dnstt-shaped)
-      sl      rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
   sa11.supaghost.cc      169.58.137.218   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
@@ -26,25 +30,21 @@
       sd_b32  rcode=3 an=0 []
   sa13.supaghost.cc      169.58.137.182   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
-      b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
   sa14.supaghost.cc      169.58.137.179   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
-      sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
-  sa15.supaghost.cc      109.199.127.126  FORMERR/sl_b32 (dnstt-shaped)
+  sa15.supaghost.cc      109.199.127.126  FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
-      sl_b32  rcode=1 an=0 []
-      sd_b32  rcode=3 an=0 []
-  sa16.supaghost.cc      169.58.137.172   FORMERR/sl (dnstt-shaped)
-      apex    rcode=3 an=0 []
       sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
+  sa16.supaghost.cc      169.58.137.172   nxdomain (plain dns)
   sa17.supaghost.cc      169.58.137.168   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
@@ -52,9 +52,11 @@
       sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
   sa18.supaghost.cc      84.247.161.137   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
   sa19.supaghost.cc      169.58.137.149   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
@@ -62,32 +64,28 @@
       sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
   sa2.supaghost.cc       169.58.203.174   FORMERR/sl (dnstt-shaped)
-      b32     rcode=3 an=0 []
+      apex    rcode=3 an=0 []
       sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
-      sd_b32  rcode=3 an=0 []
   sa20.supaghost.cc      169.58.137.138   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
-  sa21.supaghost.cc      161.97.79.146    FORMERR/sl_b32 (dnstt-shaped)
-      apex    rcode=3 an=0 []
-      sl_b32  rcode=1 an=0 []
-      sd_b32  rcode=3 an=0 []
-  sa22.supaghost.cc      169.58.203.159   FORMERR/sl (dnstt-shaped)
+  sa21.supaghost.cc      161.97.79.146    FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
-      sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
+  sa22.supaghost.cc      169.58.203.159   FORMERR/sl (dnstt-shaped)
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
   sa23.supaghost.cc      169.58.203.158   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
-      sl_b32  rcode=1 an=0 []
-      sd_b32  rcode=3 an=0 []
   sa24.supaghost.cc      169.58.203.156   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
@@ -104,22 +102,23 @@
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
   sa27.supaghost.cc      169.58.203.153   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
-      sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
   sa28.supaghost.cc      169.58.203.152   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
-      b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
   sa29.supaghost.cc      169.58.203.151   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
   sa3.supaghost.cc       169.58.67.7      FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
@@ -127,9 +126,10 @@
       sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
-  sa30.supaghost.cc      169.58.203.150   FORMERR/sl_b32 (dnstt-shaped)
+  sa30.supaghost.cc      169.58.203.150   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
   sa31.supaghost.cc      169.58.9.155     FORMERR/sl (dnstt-shaped)
@@ -144,11 +144,7 @@
       sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
-  sa33.supaghost.cc      84.247.130.172   FORMERR/sl (dnstt-shaped)
-      apex    rcode=3 an=0 []
-      b32     rcode=3 an=0 []
-      sl      rcode=1 an=0 []
-      sd_b32  rcode=3 an=0 []
+  sa33.supaghost.cc      84.247.130.172   nxdomain (plain dns)
   sa34.supaghost.cc      169.58.94.198    FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
@@ -156,9 +152,8 @@
       sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
   sa35.supaghost.cc      169.58.65.115    FORMERR/sl (dnstt-shaped)
-      apex    rcode=3 an=0 []
-      b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
   sa36.supaghost.cc      169.58.65.132    FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
@@ -176,13 +171,12 @@
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
   sa39.supaghost.cc      169.58.161.2     FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
-      sl_b32  rcode=1 an=0 []
-      sd_b32  rcode=3 an=0 []
   sa4.supaghost.cc       169.58.203.172   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
@@ -205,10 +199,11 @@
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
-      sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
-  sa43.supaghost.cc      169.58.203.122   FORMERR/sl_b32 (dnstt-shaped)
+  sa43.supaghost.cc      169.58.203.122   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
   sa44.supaghost.cc      169.58.203.121   FORMERR/sl (dnstt-shaped)
@@ -221,7 +216,10 @@
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
   sa46.supaghost.cc      169.58.203.119   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
@@ -236,15 +234,15 @@
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
   sa49.supaghost.cc      169.58.203.116   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
-      b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
-      sd_b32  rcode=3 an=0 []
   sa5.supaghost.cc       169.58.203.171   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
@@ -254,15 +252,12 @@
       sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
-  sa6.supaghost.cc       169.58.203.170   FORMERR/sl_b32 (dnstt-shaped)
-      apex    rcode=3 an=0 []
-      b32     rcode=3 an=0 []
-      sl_b32  rcode=1 an=0 []
-      sd_b32  rcode=3 an=0 []
-  sa7.supaghost.cc       161.97.93.238    FORMERR/sl (dnstt-shaped)
+  sa6.supaghost.cc       169.58.203.170   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
       b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
+  sa7.supaghost.cc       161.97.93.238    FORMERR/sl_b32 (dnstt-shaped)
+      b32     rcode=3 an=0 []
       sl_b32  rcode=1 an=0 []
   sa8.supaghost.cc       169.58.203.169   FORMERR/sl (dnstt-shaped)
       apex    rcode=3 an=0 []
@@ -271,9 +266,10 @@
       sl_b32  rcode=1 an=0 []
       sd_b32  rcode=3 an=0 []
   sa9.supaghost.cc       169.58.65.24     FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
       sl      rcode=1 an=0 []
       sl_b32  rcode=1 an=0 []
-      sd_b32  rcode=3 an=0 []
 
 === ocsdnstt: 150 hosts
   gg1.apnacp.xyz         84.247.176.22    unreachable
@@ -427,4 +423,4 @@
   hh8.apnacp.xyz         13.140.146.157   unreachable
   hh9.apnacp.xyz         13.140.146.156   unreachable
 
-endpoints that answered anything: 43/200
+endpoints that answered anything: 47/200

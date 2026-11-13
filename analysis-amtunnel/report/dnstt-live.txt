@@ -2,37 +2,37 @@ client: /home/runner/work/AM-MST/AM-MST/tools/bin/dnstt-client-linux-amd64
 urls: ['http://example.com/', 'https://www.instagram.com/']
 
 === sa1.supaghost.cc -> 169.58.203.175, tunnel domain slsa1.supaghost.cc
---- key 0000000000000000… on 169.58.203.175:53
-    socks=False begin_session=True stream=no ecdh_error=yes
-    log: 2026/11/13 11:22:40 uTLS fingerprint Randomized-ALPN 0
-    log: 2026/11/13 11:22:40 effective MTU 131
-    log: 2026/11/13 11:22:40 begin session 4565be43
-    log: 2026/11/13 11:22:40 end session 4565be43
-    log: 2026/11/13 11:22:40 crypto/ecdh: bad X25519 remote ECDH input: low order point
-    (session started, no page yet)
 --- key ea0710d912261ce6… on 169.58.203.175:53
     socks=True begin_session=True stream=no ecdh_error=no
-    log: 2026/11/13 11:22:50 uTLS fingerprint Randomized-ALPN 0
-    log: 2026/11/13 11:22:50 effective MTU 131
-    log: 2026/11/13 11:22:50 begin session c5e3b76d
-    fetch: {"url": "http://example.com/", "ok": false, "stage": "socks", "error": "timed out", "seconds": 12.0}
-    fetch: {"url": "https://www.instagram.com/", "ok": false, "stage": "socks", "error": "timed out", "seconds": 12.0}
+    log: 2026/11/13 11:32:44 uTLS fingerprint Firefox 120
+    log: 2026/11/13 11:32:44 effective MTU 131
+    log: 2026/11/13 11:32:44 begin session f5a88edd
+    fetch: {"url": "http://example.com/", "ok": false, "stage": "socks", "error": "SOCKS5 CONNECT not acknowledged (got b'')", "seconds": 25.0}
+    fetch: {"url": "https://www.instagram.com/", "ok": false, "stage": "socks", "error": "SOCKS5 CONNECT not acknowledged (got b'')", "seconds": 25.0}
     (session started, no page yet)
 --- key 9bd2ef7a9ddbb223… on 169.58.203.175:53
     socks=True begin_session=True stream=no ecdh_error=no
-    log: 2026/11/13 11:23:14 uTLS fingerprint Randomized-ALPN 0
-    log: 2026/11/13 11:23:14 effective MTU 131
-    log: 2026/11/13 11:23:14 begin session ea3d6b13
-    fetch: {"url": "http://example.com/", "ok": false, "stage": "socks", "error": "timed out", "seconds": 12.0}
-    fetch: {"url": "https://www.instagram.com/", "ok": false, "stage": "socks", "error": "timed out", "seconds": 12.0}
+    log: 2026/11/13 11:33:35 uTLS fingerprint Randomized-ALPN 0
+    log: 2026/11/13 11:33:35 effective MTU 131
+    log: 2026/11/13 11:33:35 begin session d0552b3c
+    fetch: {"url": "http://example.com/", "ok": false, "stage": "socks", "error": "SOCKS5 CONNECT not acknowledged (got b'')", "seconds": 25.0}
+    fetch: {"url": "https://www.instagram.com/", "ok": false, "stage": "socks", "error": "SOCKS5 CONNECT not acknowledged (got b'')", "seconds": 25.0}
     (session started, no page yet)
 --- key a43ffc4a4831591b… on 169.58.203.175:53
     socks=True begin_session=True stream=no ecdh_error=no
-    log: 2026/11/13 11:23:39 uTLS fingerprint Randomized-ALPN 0
-    log: 2026/11/13 11:23:39 effective MTU 131
-    log: 2026/11/13 11:23:39 begin session d2753185
-    fetch: {"url": "http://example.com/", "ok": false, "stage": "socks", "error": "timed out", "seconds": 12.0}
-    fetch: {"url": "https://www.instagram.com/", "ok": false, "stage": "socks", "error": "timed out", "seconds": 12.0}
+    log: 2026/11/13 11:34:25 uTLS fingerprint Chrome 102
+    log: 2026/11/13 11:34:25 effective MTU 131
+    log: 2026/11/13 11:34:25 begin session 07688169
+    fetch: {"url": "http://example.com/", "ok": false, "stage": "socks", "error": "SOCKS5 CONNECT not acknowledged (got b'')", "seconds": 25.0}
+    fetch: {"url": "https://www.instagram.com/", "ok": false, "stage": "socks", "error": "SOCKS5 CONNECT not acknowledged (got b'')", "seconds": 25.0}
+    (session started, no page yet)
+--- key 2c587152c2f436fc… on 169.58.203.175:53
+    socks=True begin_session=True stream=no ecdh_error=no
+    log: 2026/11/13 11:35:15 uTLS fingerprint iOS 13
+    log: 2026/11/13 11:35:15 effective MTU 131
+    log: 2026/11/13 11:35:15 begin session e67c799d
+    fetch: {"url": "http://example.com/", "ok": false, "stage": "socks", "error": "SOCKS5 CONNECT not acknowledged (got b'')", "seconds": 25.0}
+    fetch: {"url": "https://www.instagram.com/", "ok": false, "stage": "socks", "error": "SOCKS5 CONNECT not acknowledged (got b'')", "seconds": 25.0}
     (session started, no page yet)
 
 
