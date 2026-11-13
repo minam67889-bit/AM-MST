@@ -1,10 +1,34 @@
-### decoder log
-wrote decrypted.tsv (457 lines)
-wrote hosts.txt (0 hosts)
-chunks=0 ids=454 decoded=0 errors=454
+### attempt 1: apktool smali
+2.7.0-dirty
+exit=0
+I: Baksmaling assets/audience_network/classes2.dex...
+I: Copying assets and libs...
+I: Copying unknown files...
+I: Copying original files...
+I: Copying META-INF/services directory
+smali/smali_classes2/org/lsposed/lsparanoid/DeobfuscatorHelper.smali
+smali/smali_classes2/org/lsposed/lsparanoid/Deobfuscator$AMTUNNELLITE$app.smali
+smali/smali_classes2/org/lsposed/lsparanoid/Deobfuscator$AMTUNNELLITE$app.smali: 0 const-strings, kept 0 (sizes []) -> chunks.txt
+0
 
+### attempt 2: dex string pool
+ids: 0
+dex strings: 66063
+chunk candidates: 2 sizes=[2392, 2190]
+Traceback (most recent call last):
+  File "/home/runner/work/AM-MST/AM-MST/tools/paranoid_from_dex.py", line 223, in <module>
+    main()
+    ~~~~^^
+  File "/home/runner/work/AM-MST/AM-MST/tools/paranoid_from_dex.py", line 195, in main
+    print(f"best ordering score: {best[0]:.3f} with {len(best[1])} chunks")
+                                                     ~~~^^^^^^^^^
+TypeError: object of type 'NoneType' has no len()
 ### app hosts (deobfuscated)
 
 ### strings mentioning super/dns/tunnel/pubkey
 
+### strings that look like hosts
+
 ### 64-hex keys in plaintext strings
+
+### first 40 decoded strings
