@@ -361,7 +361,7 @@ jobs:
           done
           wc -l "$R/crypto-plumbing.txt"
 
-      - name: Live probe - run the app's own SuperDNS binary
+      - name: Live probe of the SuperDNS endpoints
         run: |
           set +e
           cd /tmp/a
@@ -370,45 +370,24 @@ jobs:
           {
             echo "### libsuperdns entries in the apk"
             unzip -l apk.apk | grep -E "lib/[^/]+/libsuperdns" || echo "(none)"
-            echo
+            for abi in x86_64 arm64-v8a armeabi-v7a; do
+              mkdir -p "libs/$abi"
+              unzip -o -j apk.apk "lib/$abi/libsuperdns.so" -d "libs/$abi" > /dev/null 2>&1
+              f="libs/$abi/libsuperdns.so"
+              if [ -s "$f" ]; then
+                echo "$abi: $(stat -c %s "$f") bytes :: $(file -b "$f")"
+              fi
+            done
           } > "$R/superdns-abi.txt" 2>&1
-          for abi in x86_64 arm64-v8a armeabi-v7a; do
-            mkdir -p "libs/$abi"
-            unzip -o -j apk.apk "lib/$abi/libsuperdns.so" -d "libs/$abi" > /dev/null 2>&1
-            echo "$abi: $(stat -c %s "libs/$abi/libsuperdns.so" 2>/dev/null) bytes" >> "$R/superdns-abi.txt"
-          done
           cat "$R/superdns-abi.txt"
-          RUNNER=""
-          if [ -s libs/x86_64/libsuperdns.so ]; then
-            RUNNER="libs/x86_64/libsuperdns.so"
-          elif [ -s libs/arm64-v8a/libsuperdns.so ]; then
-            sudo apt-get install -y -qq qemu-user-static > /dev/null 2>&1
-            command -v qemu-aarch64-static && echo "qemu-aarch64-static: $(qemu-aarch64-static --version | head -1)" >> "$R/superdns-abi.txt"
-          fi
-          if [ -n "$RUNNER" ]; then
-            python3 "$GITHUB_WORKSPACE/tools/run_libsuperdns.py" "$RUNNER" \\
-              "$R/superdns-run.txt" sa1.supaghost.cc gg1.apnacp.xyz aa1.amnupower.com > /tmp/run1.log 2>&1
-          else
-            # arm64 through qemu: the harness prepends the interpreter.
-            cat > /tmp/run_arm.sh <<'EOS'
-          #!/bin/sh
-          exec qemu-aarch64-static /tmp/a/libs/arm64-v8a/libsuperdns.so "$@"
-          EOS
-            chmod +x /tmp/run_arm.sh
-            cp /tmp/a/libs/arm64-v8a/libsuperdns.so /tmp/a/libs/libsuperdns-arm64 2>/dev/null
-            {
-              echo "### file"; file -b /tmp/a/libs/arm64-v8a/libsuperdns.so
-              echo; echo "### -h"
-              timeout 20 qemu-aarch64-static /tmp/a/libs/arm64-v8a/libsuperdns.so -h 2>&1 | head -30
-              for d in sa1.supaghost.cc gg1.apnacp.xyz; do
-                echo; echo "=== $d via 8.8.8.8:53"
-                timeout 25 qemu-aarch64-static /tmp/a/libs/arm64-v8a/libsuperdns.so \\
-                  -udp 8.8.8.8:53 -utls Chrome -frequency 0 -report "AM TUNNEL LITE VPN" \\
-                  -pubkey prince "$d" 127.0.0.1:7000 2>&1 | head -20
-                echo "exit=$?"
-              done
-            } > "$R/superdns-run.txt" 2>&1
-          fi
+          {
+            echo "### the shipped binary cannot be executed off-Android:"
+            echo "###   it is an Android ELF whose interpreter is /system/bin/linker64"
+            echo
+            python3 "$GITHUB_WORKSPACE/tools/superdns_probe.py" \
+              sa1.supaghost.cc sa2.supaghost.cc sa25.supaghost.cc sa50.supaghost.cc \
+              gg1.apnacp.xyz
+          } > "$R/superdns-run.txt" 2>&1
           cat "$R/superdns-run.txt" | head -60
 
       - name: DNS census over the decrypted catalogue

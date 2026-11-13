@@ -1,0 +1,6452 @@
+{
+  "sa1.supaghost.cc": {
+    "a": "169.58.203.175",
+    "raw": "NOERROR AN:A=169.58.203.175",
+    "category": "ocsslow"
+  },
+  "sa2.supaghost.cc": {
+    "a": "169.58.203.174",
+    "raw": "NOERROR AN:A=169.58.203.174",
+    "category": "ocsslow"
+  },
+  "sa3.supaghost.cc": {
+    "a": "169.58.67.7",
+    "raw": "NOERROR AN:A=169.58.67.7",
+    "category": "ocsslow"
+  },
+  "sa4.supaghost.cc": {
+    "a": "169.58.203.172",
+    "raw": "NOERROR AN:A=169.58.203.172",
+    "category": "ocsslow"
+  },
+  "sa5.supaghost.cc": {
+    "a": "169.58.203.171",
+    "raw": "NOERROR AN:A=169.58.203.171",
+    "category": "ocsslow"
+  },
+  "sa6.supaghost.cc": {
+    "a": "169.58.203.170",
+    "raw": "NOERROR AN:A=169.58.203.170",
+    "category": "ocsslow"
+  },
+  "sa7.supaghost.cc": {
+    "a": "161.97.93.238",
+    "raw": "NOERROR AN:A=161.97.93.238",
+    "category": "ocsslow"
+  },
+  "sa8.supaghost.cc": {
+    "a": "169.58.203.169",
+    "raw": "NOERROR AN:A=169.58.203.169",
+    "category": "ocsslow"
+  },
+  "sa9.supaghost.cc": {
+    "a": "169.58.65.24",
+    "raw": "NOERROR AN:A=169.58.65.24",
+    "category": "ocsslow"
+  },
+  "sa10.supaghost.cc": {
+    "a": "169.58.203.162",
+    "raw": "NOERROR AN:A=169.58.203.162",
+    "category": "ocsslow"
+  },
+  "sa11.supaghost.cc": {
+    "a": "169.58.137.218",
+    "raw": "NOERROR AN:A=169.58.137.218",
+    "category": "ocsslow"
+  },
+  "sa12.supaghost.cc": {
+    "a": "169.58.137.191",
+    "raw": "NOERROR AN:A=169.58.137.191",
+    "category": "ocsslow"
+  },
+  "sa13.supaghost.cc": {
+    "a": "169.58.137.182",
+    "raw": "NOERROR AN:A=169.58.137.182",
+    "category": "ocsslow"
+  },
+  "sa14.supaghost.cc": {
+    "a": "169.58.137.179",
+    "raw": "NOERROR AN:A=169.58.137.179",
+    "category": "ocsslow"
+  },
+  "sa15.supaghost.cc": {
+    "a": "109.199.127.126",
+    "raw": "NOERROR AN:A=109.199.127.126",
+    "category": "ocsslow"
+  },
+  "sa16.supaghost.cc": {
+    "a": "169.58.137.172",
+    "raw": "NOERROR AN:A=169.58.137.172",
+    "category": "ocsslow"
+  },
+  "sa17.supaghost.cc": {
+    "a": "169.58.137.168",
+    "raw": "NOERROR AN:A=169.58.137.168",
+    "category": "ocsslow"
+  },
+  "sa18.supaghost.cc": {
+    "a": "84.247.161.137",
+    "raw": "NOERROR AN:A=84.247.161.137",
+    "category": "ocsslow"
+  },
+  "sa19.supaghost.cc": {
+    "a": "169.58.137.149",
+    "raw": "NOERROR AN:A=169.58.137.149",
+    "category": "ocsslow"
+  },
+  "sa20.supaghost.cc": {
+    "a": "169.58.137.138",
+    "raw": "NOERROR AN:A=169.58.137.138",
+    "category": "ocsslow"
+  },
+  "sa21.supaghost.cc": {
+    "a": "161.97.79.146",
+    "raw": "NOERROR AN:A=161.97.79.146",
+    "category": "ocsslow"
+  },
+  "sa22.supaghost.cc": {
+    "a": "169.58.203.159",
+    "raw": "NOERROR AN:A=169.58.203.159",
+    "category": "ocsslow"
+  },
+  "sa23.supaghost.cc": {
+    "a": "169.58.203.158",
+    "raw": "NOERROR AN:A=169.58.203.158",
+    "category": "ocsslow"
+  },
+  "sa24.supaghost.cc": {
+    "a": "169.58.203.156",
+    "raw": "NOERROR AN:A=169.58.203.156",
+    "category": "ocsslow"
+  },
+  "sa25.supaghost.cc": {
+    "a": "169.58.203.155",
+    "raw": "NOERROR AN:A=169.58.203.155",
+    "category": "ocsslow"
+  },
+  "sa26.supaghost.cc": {
+    "a": "169.58.203.154",
+    "raw": "NOERROR AN:A=169.58.203.154",
+    "category": "ocsslow"
+  },
+  "sa27.supaghost.cc": {
+    "a": "169.58.203.153",
+    "raw": "NOERROR AN:A=169.58.203.153",
+    "category": "ocsslow"
+  },
+  "sa28.supaghost.cc": {
+    "a": "169.58.203.152",
+    "raw": "NOERROR AN:A=169.58.203.152",
+    "category": "ocsslow"
+  },
+  "sa29.supaghost.cc": {
+    "a": "169.58.203.151",
+    "raw": "NOERROR AN:A=169.58.203.151",
+    "category": "ocsslow"
+  },
+  "sa30.supaghost.cc": {
+    "a": "169.58.203.150",
+    "raw": "NOERROR AN:A=169.58.203.150",
+    "category": "ocsslow"
+  },
+  "sa31.supaghost.cc": {
+    "a": "169.58.9.155",
+    "raw": "NOERROR AN:A=169.58.9.155",
+    "category": "ocsslow"
+  },
+  "sa32.supaghost.cc": {
+    "a": "169.58.92.35",
+    "raw": "NOERROR AN:A=169.58.92.35",
+    "category": "ocsslow"
+  },
+  "sa33.supaghost.cc": {
+    "a": "84.247.130.172",
+    "raw": "NOERROR AN:A=84.247.130.172",
+    "category": "ocsslow"
+  },
+  "sa34.supaghost.cc": {
+    "a": "169.58.94.198",
+    "raw": "NOERROR AN:A=169.58.94.198",
+    "category": "ocsslow"
+  },
+  "sa35.supaghost.cc": {
+    "a": "169.58.65.115",
+    "raw": "NOERROR AN:A=169.58.65.115",
+    "category": "ocsslow"
+  },
+  "sa36.supaghost.cc": {
+    "a": "169.58.65.132",
+    "raw": "NOERROR AN:A=169.58.65.132",
+    "category": "ocsslow"
+  },
+  "sa37.supaghost.cc": {
+    "a": "169.58.91.82",
+    "raw": "NOERROR AN:A=169.58.91.82",
+    "category": "ocsslow"
+  },
+  "sa38.supaghost.cc": {
+    "a": "169.58.65.143",
+    "raw": "NOERROR AN:A=169.58.65.143",
+    "category": "ocsslow"
+  },
+  "sa39.supaghost.cc": {
+    "a": "169.58.161.2",
+    "raw": "NOERROR AN:A=169.58.161.2",
+    "category": "ocsslow"
+  },
+  "sa40.supaghost.cc": {
+    "a": "169.58.195.174",
+    "raw": "NOERROR AN:A=169.58.195.174",
+    "category": "ocsslow"
+  },
+  "sa41.supaghost.cc": {
+    "a": "169.58.203.149",
+    "raw": "NOERROR AN:A=169.58.203.149",
+    "category": "ocsslow"
+  },
+  "sa42.supaghost.cc": {
+    "a": "169.58.203.127",
+    "raw": "NOERROR AN:A=169.58.203.127",
+    "category": "ocsslow"
+  },
+  "sa43.supaghost.cc": {
+    "a": "169.58.203.122",
+    "raw": "NOERROR AN:A=169.58.203.122",
+    "category": "ocsslow"
+  },
+  "sa44.supaghost.cc": {
+    "a": "169.58.203.121",
+    "raw": "NOERROR AN:A=169.58.203.121",
+    "category": "ocsslow"
+  },
+  "sa45.supaghost.cc": {
+    "a": "169.58.203.120",
+    "raw": "NOERROR AN:A=169.58.203.120",
+    "category": "ocsslow"
+  },
+  "sa46.supaghost.cc": {
+    "a": "169.58.203.119",
+    "raw": "NOERROR AN:A=169.58.203.119",
+    "category": "ocsslow"
+  },
+  "sa47.supaghost.cc": {
+    "a": "169.58.203.118",
+    "raw": "NOERROR AN:A=169.58.203.118",
+    "category": "ocsslow"
+  },
+  "sa48.supaghost.cc": {
+    "a": "169.58.203.117",
+    "raw": "NOERROR AN:A=169.58.203.117",
+    "category": "ocsslow"
+  },
+  "sa49.supaghost.cc": {
+    "a": "169.58.203.116",
+    "raw": "NOERROR AN:A=169.58.203.116",
+    "category": "ocsslow"
+  },
+  "sa50.supaghost.cc": {
+    "a": "169.58.202.238",
+    "raw": "NOERROR AN:A=169.58.202.238",
+    "category": "ocsslow"
+  },
+  "gg1.apnacp.xyz": {
+    "a": "84.247.176.22",
+    "raw": "NOERROR AN:A=84.247.176.22",
+    "category": "ocsdnstt"
+  },
+  "gg2.apnacp.xyz": {
+    "a": "13.140.146.151",
+    "raw": "NOERROR AN:A=13.140.146.151",
+    "category": "ocsdnstt"
+  },
+  "gg3.apnacp.xyz": {
+    "a": "13.140.146.145",
+    "raw": "NOERROR AN:A=13.140.146.145",
+    "category": "ocsdnstt"
+  },
+  "gg4.apnacp.xyz": {
+    "a": "109.199.114.187",
+    "raw": "NOERROR AN:A=109.199.114.187",
+    "category": "ocsdnstt"
+  },
+  "gg5.apnacp.xyz": {
+    "a": "109.199.114.173",
+    "raw": "NOERROR AN:A=109.199.114.173",
+    "category": "ocsdnstt"
+  },
+  "gg6.apnacp.xyz": {
+    "a": "109.199.114.121",
+    "raw": "NOERROR AN:A=109.199.114.121",
+    "category": "ocsdnstt"
+  },
+  "gg7.apnacp.xyz": {
+    "a": "158.220.127.31",
+    "raw": "NOERROR AN:A=158.220.127.31",
+    "category": "ocsdnstt"
+  },
+  "gg8.apnacp.xyz": {
+    "a": "109.199.108.52",
+    "raw": "NOERROR AN:A=109.199.108.52",
+    "category": "ocsdnstt"
+  },
+  "gg9.apnacp.xyz": {
+    "a": "109.199.108.51",
+    "raw": "NOERROR AN:A=109.199.108.51",
+    "category": "ocsdnstt"
+  },
+  "gg10.apnacp.xyz": {
+    "a": "109.199.107.238",
+    "raw": "NOERROR AN:A=109.199.107.238",
+    "category": "ocsdnstt"
+  },
+  "gg11.apnacp.xyz": {
+    "a": "109.199.113.69",
+    "raw": "NOERROR AN:A=109.199.113.69",
+    "category": "ocsdnstt"
+  },
+  "gg12.apnacp.xyz": {
+    "a": "109.199.112.182",
+    "raw": "NOERROR AN:A=109.199.112.182",
+    "category": "ocsdnstt"
+  },
+  "gg13.apnacp.xyz": {
+    "a": "109.199.112.136",
+    "raw": "NOERROR AN:A=109.199.112.136",
+    "category": "ocsdnstt"
+  },
+  "gg14.apnacp.xyz": {
+    "a": "109.199.111.201",
+    "raw": "NOERROR AN:A=109.199.111.201",
+    "category": "ocsdnstt"
+  },
+  "gg15.apnacp.xyz": {
+    "a": "109.199.111.116",
+    "raw": "NOERROR AN:A=109.199.111.116",
+    "category": "ocsdnstt"
+  },
+  "gg16.apnacp.xyz": {
+    "a": "109.199.110.215",
+    "raw": "NOERROR AN:A=109.199.110.215",
+    "category": "ocsdnstt"
+  },
+  "gg17.apnacp.xyz": {
+    "a": "13.140.209.141",
+    "raw": "NOERROR AN:A=13.140.209.141",
+    "category": "ocsdnstt"
+  },
+  "gg18.apnacp.xyz": {
+    "a": "109.199.110.163",
+    "raw": "NOERROR AN:A=109.199.110.163",
+    "category": "ocsdnstt"
+  },
+  "gg19.apnacp.xyz": {
+    "a": "158.220.126.47",
+    "raw": "NOERROR AN:A=158.220.126.47",
+    "category": "ocsdnstt"
+  },
+  "gg20.apnacp.xyz": {
+    "a": "109.199.109.117",
+    "raw": "NOERROR AN:A=109.199.109.117",
+    "category": "ocsdnstt"
+  },
+  "gg21.apnacp.xyz": {
+    "a": "109.199.107.182",
+    "raw": "NOERROR AN:A=109.199.107.182",
+    "category": "ocsdnstt"
+  },
+  "gg22.apnacp.xyz": {
+    "a": "13.140.146.143",
+    "raw": "NOERROR AN:A=13.140.146.143",
+    "category": "ocsdnstt"
+  },
+  "gg23.apnacp.xyz": {
+    "a": "13.140.145.100",
+    "raw": "NOERROR AN:A=13.140.145.100",
+    "category": "ocsdnstt"
+  },
+  "gg24.apnacp.xyz": {
+    "a": "62.169.30.227",
+    "raw": "NOERROR AN:A=62.169.30.227",
+    "category": "ocsdnstt"
+  },
+  "gg25.apnacp.xyz": {
+    "a": "213.199.47.175",
+    "raw": "NOERROR AN:A=213.199.47.175",
+    "category": "ocsdnstt"
+  },
+  "gg26.apnacp.xyz": {
+    "a": "213.199.42.139",
+    "raw": "NOERROR AN:A=213.199.42.139",
+    "category": "ocsdnstt"
+  },
+  "gg27.apnacp.xyz": {
+    "a": "37.60.234.194",
+    "raw": "NOERROR AN:A=37.60.234.194",
+    "category": "ocsdnstt"
+  },
+  "gg28.apnacp.xyz": {
+    "a": "84.247.183.210",
+    "raw": "NOERROR AN:A=84.247.183.210",
+    "category": "ocsdnstt"
+  },
+  "gg29.apnacp.xyz": {
+    "a": "84.247.131.106",
+    "raw": "NOERROR AN:A=84.247.131.106",
+    "category": "ocsdnstt"
+  },
+  "gg30.apnacp.xyz": {
+    "a": "184.174.36.36",
+    "raw": "NOERROR AN:A=184.174.36.36",
+    "category": "ocsdnstt"
+  },
+  "gg31.apnacp.xyz": {
+    "a": "158.220.104.22",
+    "raw": "NOERROR AN:A=158.220.104.22",
+    "category": "ocsdnstt"
+  },
+  "gg32.apnacp.xyz": {
+    "a": "31.220.73.11",
+    "raw": "NOERROR AN:A=31.220.73.11",
+    "category": "ocsdnstt"
+  },
+  "gg33.apnacp.xyz": {
+    "a": "31.220.73.4",
+    "raw": "NOERROR AN:A=31.220.73.4",
+    "category": "ocsdnstt"
+  },
+  "gg34.apnacp.xyz": {
+    "a": "31.220.72.247",
+    "raw": "NOERROR AN:A=31.220.72.247",
+    "category": "ocsdnstt"
+  },
+  "gg35.apnacp.xyz": {
+    "a": "184.174.35.4",
+    "raw": "NOERROR AN:A=184.174.35.4",
+    "category": "ocsdnstt"
+  },
+  "gg36.apnacp.xyz": {
+    "a": "109.199.102.138",
+    "raw": "NOERROR AN:A=109.199.102.138",
+    "category": "ocsdnstt"
+  },
+  "gg37.apnacp.xyz": {
+    "a": "109.199.104.215",
+    "raw": "NOERROR AN:A=109.199.104.215",
+    "category": "ocsdnstt"
+  },
+  "gg38.apnacp.xyz": {
+    "a": "109.199.104.145",
+    "raw": "NOERROR AN:A=109.199.104.145",
+    "category": "ocsdnstt"
+  },
+  "gg39.apnacp.xyz": {
+    "a": "109.199.103.166",
+    "raw": "NOERROR AN:A=109.199.103.166",
+    "category": "ocsdnstt"
+  },
+  "gg40.apnacp.xyz": {
+    "a": "109.199.99.29",
+    "raw": "NOERROR AN:A=109.199.99.29",
+    "category": "ocsdnstt"
+  },
+  "gg41.apnacp.xyz": {
+    "a": "185.213.27.43",
+    "raw": "NOERROR AN:A=185.213.27.43",
+    "category": "ocsdnstt"
+  },
+  "gg42.apnacp.xyz": {
+    "a": "109.199.103.121",
+    "raw": "NOERROR AN:A=109.199.103.121",
+    "category": "ocsdnstt"
+  },
+  "gg43.apnacp.xyz": {
+    "a": "84.247.135.196",
+    "raw": "NOERROR AN:A=84.247.135.196",
+    "category": "ocsdnstt"
+  },
+  "gg44.apnacp.xyz": {
+    "a": "109.199.102.173",
+    "raw": "NOERROR AN:A=109.199.102.173",
+    "category": "ocsdnstt"
+  },
+  "gg45.apnacp.xyz": {
+    "a": "109.199.102.143",
+    "raw": "NOERROR AN:A=109.199.102.143",
+    "category": "ocsdnstt"
+  },
+  "gg46.apnacp.xyz": {
+    "a": "109.199.102.91",
+    "raw": "NOERROR AN:A=109.199.102.91",
+    "category": "ocsdnstt"
+  },
+  "gg47.apnacp.xyz": {
+    "a": "109.199.102.46",
+    "raw": "NOERROR AN:A=109.199.102.46",
+    "category": "ocsdnstt"
+  },
+  "gg48.apnacp.xyz": {
+    "a": "109.199.101.52",
+    "raw": "NOERROR AN:A=109.199.101.52",
+    "category": "ocsdnstt"
+  },
+  "gg49.apnacp.xyz": {
+    "a": "109.199.101.47",
+    "raw": "NOERROR AN:A=109.199.101.47",
+    "category": "ocsdnstt"
+  },
+  "gg50.apnacp.xyz": {
+    "a": "109.199.101.23",
+    "raw": "NOERROR AN:A=109.199.101.23",
+    "category": "ocsdnstt"
+  },
+  "gg51.apnacp.xyz": {
+    "a": "84.247.175.219",
+    "raw": "NOERROR AN:A=84.247.175.219",
+    "category": "ocsdnstt"
+  },
+  "gg52.apnacp.xyz": {
+    "a": "109.199.99.15",
+    "raw": "NOERROR AN:A=109.199.99.15",
+    "category": "ocsdnstt"
+  },
+  "gg53.apnacp.xyz": {
+    "a": "84.247.175.202",
+    "raw": "NOERROR AN:A=84.247.175.202",
+    "category": "ocsdnstt"
+  },
+  "gg54.apnacp.xyz": {
+    "a": "84.247.175.123",
+    "raw": "NOERROR AN:A=84.247.175.123",
+    "category": "ocsdnstt"
+  },
+  "gg55.apnacp.xyz": {
+    "a": "84.247.136.158",
+    "raw": "NOERROR AN:A=84.247.136.158",
+    "category": "ocsdnstt"
+  },
+  "gg56.apnacp.xyz": {
+    "a": "84.247.129.178",
+    "raw": "NOERROR AN:A=84.247.129.178",
+    "category": "ocsdnstt"
+  },
+  "gg57.apnacp.xyz": {
+    "a": "109.199.114.69",
+    "raw": "NOERROR AN:A=109.199.114.69",
+    "category": "ocsdnstt"
+  },
+  "gg58.apnacp.xyz": {
+    "a": "84.247.141.26",
+    "raw": "NOERROR AN:A=84.247.141.26",
+    "category": "ocsdnstt"
+  },
+  "gg59.apnacp.xyz": {
+    "a": "84.247.139.208",
+    "raw": "NOERROR AN:A=84.247.139.208",
+    "category": "ocsdnstt"
+  },
+  "gg60.apnacp.xyz": {
+    "a": "169.58.131.118",
+    "raw": "NOERROR AN:A=169.58.131.118",
+    "category": "ocsdnstt"
+  },
+  "gg61.apnacp.xyz": {
+    "a": "217.76.53.16",
+    "raw": "NOERROR AN:A=217.76.53.16",
+    "category": "ocsdnstt"
+  },
+  "gg62.apnacp.xyz": {
+    "a": "109.199.103.47",
+    "raw": "NOERROR AN:A=109.199.103.47",
+    "category": "ocsdnstt"
+  },
+  "gg63.apnacp.xyz": {
+    "a": "217.76.53.1",
+    "raw": "NOERROR AN:A=217.76.53.1",
+    "category": "ocsdnstt"
+  },
+  "gg64.apnacp.xyz": {
+    "a": "84.247.173.55",
+    "raw": "NOERROR AN:A=84.247.173.55",
+    "category": "ocsdnstt"
+  },
+  "gg65.apnacp.xyz": {
+    "a": "109.199.98.78",
+    "raw": "NOERROR AN:A=109.199.98.78",
+    "category": "ocsdnstt"
+  },
+  "gg66.apnacp.xyz": {
+    "a": "84.46.249.82",
+    "raw": "NOERROR AN:A=84.46.249.82",
+    "category": "ocsdnstt"
+  },
+  "gg67.apnacp.xyz": {
+    "a": "84.247.173.5",
+    "raw": "NOERROR AN:A=84.247.173.5",
+    "category": "ocsdnstt"
+  },
+  "gg68.apnacp.xyz": {
+    "a": "169.58.230.116",
+    "raw": "NOERROR AN:A=169.58.230.116",
+    "category": "ocsdnstt"
+  },
+  "gg69.apnacp.xyz": {
+    "a": "169.58.230.109",
+    "raw": "NOERROR AN:A=169.58.230.109",
+    "category": "ocsdnstt"
+  },
+  "gg70.apnacp.xyz": {
+    "a": "169.58.175.39",
+    "raw": "NOERROR AN:A=169.58.175.39",
+    "category": "ocsdnstt"
+  },
+  "gg71.apnacp.xyz": {
+    "a": "185.252.233.215",
+    "raw": "NOERROR AN:A=185.252.233.215",
+    "category": "ocsdnstt"
+  },
+  "gg72.apnacp.xyz": {
+    "a": "169.58.136.130",
+    "raw": "NOERROR AN:A=169.58.136.130",
+    "category": "ocsdnstt"
+  },
+  "gg73.apnacp.xyz": {
+    "a": "109.199.97.192",
+    "raw": "NOERROR AN:A=109.199.97.192",
+    "category": "ocsdnstt"
+  },
+  "gg74.apnacp.xyz": {
+    "a": "109.199.97.189",
+    "raw": "NOERROR AN:A=109.199.97.189",
+    "category": "ocsdnstt"
+  },
+  "gg75.apnacp.xyz": {
+    "a": "185.252.233.127",
+    "raw": "NOERROR AN:A=185.252.233.127",
+    "category": "ocsdnstt"
+  },
+  "gg76.apnacp.xyz": {
+    "a": "194.5.152.127",
+    "raw": "NOERROR AN:A=194.5.152.127",
+    "category": "ocsdnstt"
+  },
+  "gg77.apnacp.xyz": {
+    "a": "185.252.233.111",
+    "raw": "NOERROR AN:A=185.252.233.111",
+    "category": "ocsdnstt"
+  },
+  "gg78.apnacp.xyz": {
+    "a": "89.116.25.151",
+    "raw": "NOERROR AN:A=89.116.25.151",
+    "category": "ocsdnstt"
+  },
+  "gg79.apnacp.xyz": {
+    "a": "185.209.229.251",
+    "raw": "NOERROR AN:A=185.209.229.251",
+    "category": "ocsdnstt"
+  },
+  "gg80.apnacp.xyz": {
+    "a": "109.199.96.249",
+    "raw": "NOERROR AN:A=109.199.96.249",
+    "category": "ocsdnstt"
+  },
+  "gg81.apnacp.xyz": {
+    "a": "169.58.173.67",
+    "raw": "NOERROR AN:A=169.58.173.67",
+    "category": "ocsdnstt"
+  },
+  "gg82.apnacp.xyz": {
+    "a": "109.199.97.9",
+    "raw": "NOERROR AN:A=109.199.97.9",
+    "category": "ocsdnstt"
+  },
+  "gg83.apnacp.xyz": {
+    "a": "109.199.96.214",
+    "raw": "NOERROR AN:A=109.199.96.214",
+    "category": "ocsdnstt"
+  },
+  "gg84.apnacp.xyz": {
+    "a": "109.199.96.122",
+    "raw": "NOERROR AN:A=109.199.96.122",
+    "category": "ocsdnstt"
+  },
+  "gg85.apnacp.xyz": {
+    "a": "185.194.217.192",
+    "raw": "NOERROR AN:A=185.194.217.192",
+    "category": "ocsdnstt"
+  },
+  "gg86.apnacp.xyz": {
+    "a": "169.58.196.244",
+    "raw": "NOERROR AN:A=169.58.196.244",
+    "category": "ocsdnstt"
+  },
+  "gg87.apnacp.xyz": {
+    "a": "185.252.235.182",
+    "raw": "NOERROR AN:A=185.252.235.182",
+    "category": "ocsdnstt"
+  },
+  "gg88.apnacp.xyz": {
+    "a": "84.247.171.13",
+    "raw": "NOERROR AN:A=84.247.171.13",
+    "category": "ocsdnstt"
+  },
+  "gg89.apnacp.xyz": {
+    "a": "169.58.173.197",
+    "raw": "NOERROR AN:A=169.58.173.197",
+    "category": "ocsdnstt"
+  },
+  "gg90.apnacp.xyz": {
+    "a": "195.88.87.234",
+    "raw": "NOERROR AN:A=195.88.87.234",
+    "category": "ocsdnstt"
+  },
+  "gg91.apnacp.xyz": {
+    "a": "195.88.87.170",
+    "raw": "NOERROR AN:A=195.88.87.170",
+    "category": "ocsdnstt"
+  },
+  "gg92.apnacp.xyz": {
+    "a": "45.134.226.106",
+    "raw": "NOERROR AN:A=45.134.226.106",
+    "category": "ocsdnstt"
+  },
+  "gg93.apnacp.xyz": {
+    "a": "169.58.91.112",
+    "raw": "NOERROR AN:A=169.58.91.112",
+    "category": "ocsdnstt"
+  },
+  "gg94.apnacp.xyz": {
+    "a": "37.60.235.134",
+    "raw": "NOERROR AN:A=37.60.235.134",
+    "category": "ocsdnstt"
+  },
+  "gg95.apnacp.xyz": {
+    "a": "169.58.173.193",
+    "raw": "NOERROR AN:A=169.58.173.193",
+    "category": "ocsdnstt"
+  },
+  "gg96.apnacp.xyz": {
+    "a": "169.58.173.192",
+    "raw": "NOERROR AN:A=169.58.173.192",
+    "category": "ocsdnstt"
+  },
+  "gg97.apnacp.xyz": {
+    "a": "169.58.173.175",
+    "raw": "NOERROR AN:A=169.58.173.175",
+    "category": "ocsdnstt"
+  },
+  "gg98.apnacp.xyz": {
+    "a": "84.247.170.59",
+    "raw": "NOERROR AN:A=84.247.170.59",
+    "category": "ocsdnstt"
+  },
+  "gg99.apnacp.xyz": {
+    "a": "169.58.240.2",
+    "raw": "NOERROR AN:A=169.58.240.2",
+    "category": "ocsdnstt"
+  },
+  "gg100.apnacp.xyz": {
+    "a": "109.205.182.44",
+    "raw": "NOERROR AN:A=109.205.182.44",
+    "category": "ocsdnstt"
+  },
+  "hh1.apnacp.xyz": {
+    "a": "84.247.169.182",
+    "raw": "NOERROR AN:A=84.247.169.182",
+    "category": "ocsdnstt"
+  },
+  "hh2.apnacp.xyz": {
+    "a": "13.140.148.96",
+    "raw": "NOERROR AN:A=13.140.148.96",
+    "category": "ocsdnstt"
+  },
+  "hh3.apnacp.xyz": {
+    "a": "13.140.148.94",
+    "raw": "NOERROR AN:A=13.140.148.94",
+    "category": "ocsdnstt"
+  },
+  "hh4.apnacp.xyz": {
+    "a": "13.140.148.92",
+    "raw": "NOERROR AN:A=13.140.148.92",
+    "category": "ocsdnstt"
+  },
+  "hh5.apnacp.xyz": {
+    "a": "13.140.146.236",
+    "raw": "NOERROR AN:A=13.140.146.236",
+    "category": "ocsdnstt"
+  },
+  "hh6.apnacp.xyz": {
+    "a": "13.140.146.232",
+    "raw": "NOERROR AN:A=13.140.146.232",
+    "category": "ocsdnstt"
+  },
+  "hh7.apnacp.xyz": {
+    "a": "169.58.15.69",
+    "raw": "NOERROR AN:A=169.58.15.69",
+    "category": "ocsdnstt"
+  },
+  "hh8.apnacp.xyz": {
+    "a": "13.140.146.157",
+    "raw": "NOERROR AN:A=13.140.146.157",
+    "category": "ocsdnstt"
+  },
+  "hh9.apnacp.xyz": {
+    "a": "13.140.146.156",
+    "raw": "NOERROR AN:A=13.140.146.156",
+    "category": "ocsdnstt"
+  },
+  "hh10.apnacp.xyz": {
+    "a": "194.163.164.179",
+    "raw": "NOERROR AN:A=194.163.164.179",
+    "category": "ocsdnstt"
+  },
+  "hh11.apnacp.xyz": {
+    "a": "169.58.216.7",
+    "raw": "NOERROR AN:A=169.58.216.7",
+    "category": "ocsdnstt"
+  },
+  "hh12.apnacp.xyz": {
+    "a": "169.58.56.184",
+    "raw": "NOERROR AN:A=169.58.56.184",
+    "category": "ocsdnstt"
+  },
+  "hh13.apnacp.xyz": {
+    "a": "13.140.209.129",
+    "raw": "NOERROR AN:A=13.140.209.129",
+    "category": "ocsdnstt"
+  },
+  "hh14.apnacp.xyz": {
+    "a": "169.58.115.153",
+    "raw": "NOERROR AN:A=169.58.115.153",
+    "category": "ocsdnstt"
+  },
+  "hh15.apnacp.xyz": {
+    "a": "169.58.115.42",
+    "raw": "NOERROR AN:A=169.58.115.42",
+    "category": "ocsdnstt"
+  },
+  "hh16.apnacp.xyz": {
+    "a": "169.58.45.188",
+    "raw": "NOERROR AN:A=169.58.45.188",
+    "category": "ocsdnstt"
+  },
+  "hh17.apnacp.xyz": {
+    "a": "169.58.115.12",
+    "raw": "NOERROR AN:A=169.58.115.12",
+    "category": "ocsdnstt"
+  },
+  "hh18.apnacp.xyz": {
+    "a": "169.58.115.54",
+    "raw": "NOERROR AN:A=169.58.115.54",
+    "category": "ocsdnstt"
+  },
+  "hh19.apnacp.xyz": {
+    "a": "169.58.143.249",
+    "raw": "NOERROR AN:A=169.58.143.249",
+    "category": "ocsdnstt"
+  },
+  "hh20.apnacp.xyz": {
+    "a": "169.58.52.0",
+    "raw": "NOERROR AN:A=169.58.52.0",
+    "category": "ocsdnstt"
+  },
+  "hh21.apnacp.xyz": {
+    "a": "169.58.236.215",
+    "raw": "NOERROR AN:A=169.58.236.215",
+    "category": "ocsdnstt"
+  },
+  "hh22.apnacp.xyz": {
+    "a": "169.58.227.159",
+    "raw": "NOERROR AN:A=169.58.227.159",
+    "category": "ocsdnstt"
+  },
+  "hh23.apnacp.xyz": {
+    "a": "169.58.224.96",
+    "raw": "NOERROR AN:A=169.58.224.96",
+    "category": "ocsdnstt"
+  },
+  "hh24.apnacp.xyz": {
+    "a": "169.58.222.189",
+    "raw": "NOERROR AN:A=169.58.222.189",
+    "category": "ocsdnstt"
+  },
+  "hh25.apnacp.xyz": {
+    "a": "169.58.204.47",
+    "raw": "NOERROR AN:A=169.58.204.47",
+    "category": "ocsdnstt"
+  },
+  "hh26.apnacp.xyz": {
+    "a": "169.58.201.41",
+    "raw": "NOERROR AN:A=169.58.201.41",
+    "category": "ocsdnstt"
+  },
+  "hh27.apnacp.xyz": {
+    "a": "169.58.200.76",
+    "raw": "NOERROR AN:A=169.58.200.76",
+    "category": "ocsdnstt"
+  },
+  "hh28.apnacp.xyz": {
+    "a": "169.58.200.75",
+    "raw": "NOERROR AN:A=169.58.200.75",
+    "category": "ocsdnstt"
+  },
+  "hh29.apnacp.xyz": {
+    "a": "169.58.200.74",
+    "raw": "NOERROR AN:A=169.58.200.74",
+    "category": "ocsdnstt"
+  },
+  "hh30.apnacp.xyz": {
+    "a": "169.58.200.36",
+    "raw": "NOERROR AN:A=169.58.200.36",
+    "category": "ocsdnstt"
+  },
+  "hh31.apnacp.xyz": {
+    "a": "169.58.132.102",
+    "raw": "NOERROR AN:A=169.58.132.102",
+    "category": "ocsdnstt"
+  },
+  "hh32.apnacp.xyz": {
+    "a": "169.58.132.100",
+    "raw": "NOERROR AN:A=169.58.132.100",
+    "category": "ocsdnstt"
+  },
+  "hh33.apnacp.xyz": {
+    "a": "169.58.132.1",
+    "raw": "NOERROR AN:A=169.58.132.1",
+    "category": "ocsdnstt"
+  },
+  "hh34.apnacp.xyz": {
+    "a": "169.58.131.215",
+    "raw": "NOERROR AN:A=169.58.131.215",
+    "category": "ocsdnstt"
+  },
+  "hh35.apnacp.xyz": {
+    "a": "169.58.131.205",
+    "raw": "NOERROR AN:A=169.58.131.205",
+    "category": "ocsdnstt"
+  },
+  "hh36.apnacp.xyz": {
+    "a": "169.58.131.187",
+    "raw": "NOERROR AN:A=169.58.131.187",
+    "category": "ocsdnstt"
+  },
+  "hh37.apnacp.xyz": {
+    "a": "169.58.131.126",
+    "raw": "NOERROR AN:A=169.58.131.126",
+    "category": "ocsdnstt"
+  },
+  "hh38.apnacp.xyz": {
+    "a": "169.58.93.195",
+    "raw": "NOERROR AN:A=169.58.93.195",
+    "category": "ocsdnstt"
+  },
+  "hh39.apnacp.xyz": {
+    "a": "169.58.131.116",
+    "raw": "NOERROR AN:A=169.58.131.116",
+    "category": "ocsdnstt"
+  },
+  "hh40.apnacp.xyz": {
+    "a": "169.58.196.48",
+    "raw": "NOERROR AN:A=169.58.196.48",
+    "category": "ocsdnstt"
+  },
+  "hh41.apnacp.xyz": {
+    "a": "169.58.131.65",
+    "raw": "NOERROR AN:A=169.58.131.65",
+    "category": "ocsdnstt"
+  },
+  "hh42.apnacp.xyz": {
+    "a": "169.58.131.64",
+    "raw": "NOERROR AN:A=169.58.131.64",
+    "category": "ocsdnstt"
+  },
+  "hh43.apnacp.xyz": {
+    "a": "169.58.131.48",
+    "raw": "NOERROR AN:A=169.58.131.48",
+    "category": "ocsdnstt"
+  },
+  "hh44.apnacp.xyz": {
+    "a": "84.247.168.223",
+    "raw": "NOERROR AN:A=84.247.168.223",
+    "category": "ocsdnstt"
+  },
+  "hh45.apnacp.xyz": {
+    "a": "194.163.129.60",
+    "raw": "NOERROR AN:A=194.163.129.60",
+    "category": "ocsdnstt"
+  },
+  "hh46.apnacp.xyz": {
+    "a": "75.119.145.53",
+    "raw": "NOERROR AN:A=75.119.145.53",
+    "category": "ocsdnstt"
+  },
+  "hh47.apnacp.xyz": {
+    "a": "75.119.144.41",
+    "raw": "NOERROR AN:A=75.119.144.41",
+    "category": "ocsdnstt"
+  },
+  "hh48.apnacp.xyz": {
+    "a": "169.58.173.163",
+    "raw": "NOERROR AN:A=169.58.173.163",
+    "category": "ocsdnstt"
+  },
+  "hh49.apnacp.xyz": {
+    "a": "169.58.173.131",
+    "raw": "NOERROR AN:A=169.58.173.131",
+    "category": "ocsdnstt"
+  },
+  "hh50.apnacp.xyz": {
+    "a": "169.58.47.14",
+    "raw": "NOERROR AN:A=169.58.47.14",
+    "category": "ocsdnstt"
+  },
+  "aa1.amnupower.com": {
+    "a": "164.68.121.100",
+    "raw": "NOERROR AN:A=164.68.121.100",
+    "category": "ocsudp"
+  },
+  "aa2.amnupower.com": {
+    "a": "13.140.130.44",
+    "raw": "NOERROR AN:A=13.140.130.44",
+    "category": "ocsudp"
+  },
+  "aa3.amnupower.com": {
+    "a": "84.247.163.202",
+    "raw": "NOERROR AN:A=84.247.163.202",
+    "category": "ocsudp"
+  },
+  "aa4.amnupower.com": {
+    "a": "169.58.198.195",
+    "raw": "NOERROR AN:A=169.58.198.195",
+    "category": "ocsudp"
+  },
+  "aa5.amnupower.com": {
+    "a": "94.250.203.5",
+    "raw": "NOERROR AN:A=94.250.203.5",
+    "category": "ocsudp"
+  },
+  "aa6.amnupower.com": {
+    "a": "169.58.173.94",
+    "raw": "NOERROR AN:A=169.58.173.94",
+    "category": "ocsudp"
+  },
+  "aa7.amnupower.com": {
+    "a": "62.169.31.230",
+    "raw": "NOERROR AN:A=62.169.31.230",
+    "category": "ocsudp"
+  },
+  "aa8.amnupower.com": {
+    "a": "169.58.173.70",
+    "raw": "NOERROR AN:A=169.58.173.70",
+    "category": "ocsudp"
+  },
+  "aa9.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocsudp"
+  },
+  "aa10.amnupower.com": {
+    "a": "161.97.66.17",
+    "raw": "NOERROR AN:A=161.97.66.17",
+    "category": "ocsudp"
+  },
+  "aa11.amnupower.com": {
+    "a": "178.238.235.59",
+    "raw": "NOERROR AN:A=178.238.235.59",
+    "category": "ocsudp"
+  },
+  "aa12.amnupower.com": {
+    "a": "169.58.198.184",
+    "raw": "NOERROR AN:A=169.58.198.184",
+    "category": "ocsudp"
+  },
+  "aa13.amnupower.com": {
+    "a": "169.58.198.25",
+    "raw": "NOERROR AN:A=169.58.198.25",
+    "category": "ocsudp"
+  },
+  "aa14.amnupower.com": {
+    "a": "194.163.148.200",
+    "raw": "NOERROR AN:A=194.163.148.200",
+    "category": "ocsudp"
+  },
+  "aa15.amnupower.com": {
+    "a": "84.247.162.237",
+    "raw": "NOERROR AN:A=84.247.162.237",
+    "category": "ocsudp"
+  },
+  "aa16.amnupower.com": {
+    "a": "161.97.97.233",
+    "raw": "NOERROR AN:A=161.97.97.233",
+    "category": "ocsudp"
+  },
+  "aa17.amnupower.com": {
+    "a": "84.247.142.132",
+    "raw": "NOERROR AN:A=84.247.142.132",
+    "category": "ocsudp"
+  },
+  "aa18.amnupower.com": {
+    "a": "109.123.255.146",
+    "raw": "NOERROR AN:A=109.123.255.146",
+    "category": "ocsudp"
+  },
+  "aa19.amnupower.com": {
+    "a": "13.140.143.210",
+    "raw": "NOERROR AN:A=13.140.143.210",
+    "category": "ocsudp"
+  },
+  "aa20.amnupower.com": {
+    "a": "169.58.231.20",
+    "raw": "NOERROR AN:A=169.58.231.20",
+    "category": "ocsudp"
+  },
+  "aa21.amnupower.com": {
+    "a": "84.247.138.55",
+    "raw": "NOERROR AN:A=84.247.138.55",
+    "category": "ocsudp"
+  },
+  "aa22.amnupower.com": {
+    "a": "158.220.120.45",
+    "raw": "NOERROR AN:A=158.220.120.45",
+    "category": "ocsudp"
+  },
+  "aa23.amnupower.com": {
+    "a": "169.58.141.89",
+    "raw": "NOERROR AN:A=169.58.141.89",
+    "category": "ocsudp"
+  },
+  "aa24.amnupower.com": {
+    "a": "57.129.72.139",
+    "raw": "NOERROR AN:A=57.129.72.139",
+    "category": "ocsudp"
+  },
+  "aa25.amnupower.com": {
+    "a": "13.140.209.113",
+    "raw": "NOERROR AN:A=13.140.209.113",
+    "category": "ocsudp"
+  },
+  "aa26.amnupower.com": {
+    "a": "169.58.128.22",
+    "raw": "NOERROR AN:A=169.58.128.22",
+    "category": "ocsudp"
+  },
+  "aa27.amnupower.com": {
+    "a": "169.58.173.49",
+    "raw": "NOERROR AN:A=169.58.173.49",
+    "category": "ocsudp"
+  },
+  "aa28.amnupower.com": {
+    "a": "157.173.121.124",
+    "raw": "NOERROR AN:A=157.173.121.124",
+    "category": "ocsudp"
+  },
+  "aa29.amnupower.com": {
+    "a": "169.58.173.40",
+    "raw": "NOERROR AN:A=169.58.173.40",
+    "category": "ocsudp"
+  },
+  "aa30.amnupower.com": {
+    "a": "169.58.94.117",
+    "raw": "NOERROR AN:A=169.58.94.117",
+    "category": "ocsudp"
+  },
+  "aa31.amnupower.com": {
+    "a": "169.58.173.14",
+    "raw": "NOERROR AN:A=169.58.173.14",
+    "category": "ocsudp"
+  },
+  "aa32.amnupower.com": {
+    "a": "37.60.229.208",
+    "raw": "NOERROR AN:A=37.60.229.208",
+    "category": "ocsudp"
+  },
+  "aa33.amnupower.com": {
+    "a": "169.58.173.11",
+    "raw": "NOERROR AN:A=169.58.173.11",
+    "category": "ocsudp"
+  },
+  "aa34.amnupower.com": {
+    "a": "169.58.173.5",
+    "raw": "NOERROR AN:A=169.58.173.5",
+    "category": "ocsudp"
+  },
+  "aa35.amnupower.com": {
+    "a": "84.247.131.166",
+    "raw": "NOERROR AN:A=84.247.131.166",
+    "category": "ocsudp"
+  },
+  "aa36.amnupower.com": {
+    "a": "169.58.173.1",
+    "raw": "NOERROR AN:A=169.58.173.1",
+    "category": "ocsudp"
+  },
+  "aa37.amnupower.com": {
+    "a": "109.123.250.140",
+    "raw": "NOERROR AN:A=109.123.250.140",
+    "category": "ocsudp"
+  },
+  "aa38.amnupower.com": {
+    "a": "169.58.172.226",
+    "raw": "NOERROR AN:A=169.58.172.226",
+    "category": "ocsudp"
+  },
+  "aa39.amnupower.com": {
+    "a": "169.58.197.212",
+    "raw": "NOERROR AN:A=169.58.197.212",
+    "category": "ocsudp"
+  },
+  "aa40.amnupower.com": {
+    "a": "13.140.209.121",
+    "raw": "NOERROR AN:A=13.140.209.121",
+    "category": "ocsudp"
+  },
+  "aa41.amnupower.com": {
+    "a": "169.58.162.201",
+    "raw": "NOERROR AN:A=169.58.162.201",
+    "category": "ocsudp"
+  },
+  "aa42.amnupower.com": {
+    "a": "169.58.246.189",
+    "raw": "NOERROR AN:A=169.58.246.189",
+    "category": "ocsudp"
+  },
+  "aa43.amnupower.com": {
+    "a": "169.58.164.94",
+    "raw": "NOERROR AN:A=169.58.164.94",
+    "category": "ocsudp"
+  },
+  "aa44.amnupower.com": {
+    "a": "169.58.93.9",
+    "raw": "NOERROR AN:A=169.58.93.9",
+    "category": "ocsudp"
+  },
+  "aa45.amnupower.com": {
+    "a": "169.58.159.242",
+    "raw": "NOERROR AN:A=169.58.159.242",
+    "category": "ocsudp"
+  },
+  "aa46.amnupower.com": {
+    "a": "161.97.73.249",
+    "raw": "NOERROR AN:A=161.97.73.249",
+    "category": "ocsudp"
+  },
+  "aa47.amnupower.com": {
+    "a": "13.140.179.245",
+    "raw": "NOERROR AN:A=13.140.179.245",
+    "category": "ocsudp"
+  },
+  "aa48.amnupower.com": {
+    "a": "169.58.160.253",
+    "raw": "NOERROR AN:A=169.58.160.253",
+    "category": "ocsudp"
+  },
+  "aa49.amnupower.com": {
+    "a": "169.58.159.67",
+    "raw": "NOERROR AN:A=169.58.159.67",
+    "category": "ocsudp"
+  },
+  "aa50.amnupower.com": {
+    "a": "169.58.161.3",
+    "raw": "NOERROR AN:A=169.58.161.3",
+    "category": "ocsudp"
+  },
+  "hh1.amnupower.com": {
+    "a": "185.215.166.93",
+    "raw": "NOERROR AN:A=185.215.166.93",
+    "category": "ocsudp"
+  },
+  "hh2.amnupower.com": {
+    "a": "13.140.209.107",
+    "raw": "NOERROR AN:A=13.140.209.107",
+    "category": "ocsudp"
+  },
+  "hh3.amnupower.com": {
+    "a": "158.220.122.30",
+    "raw": "NOERROR AN:A=158.220.122.30",
+    "category": "ocsudp"
+  },
+  "hh4.amnupower.com": {
+    "a": "13.140.128.135",
+    "raw": "NOERROR AN:A=13.140.128.135",
+    "category": "ocsudp"
+  },
+  "hh5.amnupower.com": {
+    "a": "13.140.209.112",
+    "raw": "NOERROR AN:A=13.140.209.112",
+    "category": "ocsudp"
+  },
+  "hh6.amnupower.com": {
+    "a": "13.140.209.100",
+    "raw": "NOERROR AN:A=13.140.209.100",
+    "category": "ocsudp"
+  },
+  "hh7.amnupower.com": {
+    "a": "13.140.209.101",
+    "raw": "NOERROR AN:A=13.140.209.101",
+    "category": "ocsudp"
+  },
+  "hh8.amnupower.com": {
+    "a": "13.140.209.105",
+    "raw": "NOERROR AN:A=13.140.209.105",
+    "category": "ocsudp"
+  },
+  "hh9.amnupower.com": {
+    "a": "13.140.209.99",
+    "raw": "NOERROR AN:A=13.140.209.99",
+    "category": "ocsudp"
+  },
+  "hh10.amnupower.com": {
+    "a": "144.91.92.108",
+    "raw": "NOERROR AN:A=144.91.92.108",
+    "category": "ocsudp"
+  },
+  "aa51.amnupower.com": {
+    "a": "169.58.161.5",
+    "raw": "NOERROR AN:A=169.58.161.5",
+    "category": "ocsudp"
+  },
+  "aa52.amnupower.com": {
+    "a": "13.140.209.81",
+    "raw": "NOERROR AN:A=13.140.209.81",
+    "category": "ocsudp"
+  },
+  "aa53.amnupower.com": {
+    "a": "184.174.35.238",
+    "raw": "NOERROR AN:A=184.174.35.238",
+    "category": "ocsudp"
+  },
+  "aa54.amnupower.com": {
+    "a": "185.182.187.12",
+    "raw": "NOERROR AN:A=185.182.187.12",
+    "category": "ocsudp"
+  },
+  "aa55.amnupower.com": {
+    "a": "169.58.172.222",
+    "raw": "NOERROR AN:A=169.58.172.222",
+    "category": "ocsudp"
+  },
+  "aa56.amnupower.com": {
+    "a": "169.58.197.247",
+    "raw": "NOERROR AN:A=169.58.197.247",
+    "category": "ocsudp"
+  },
+  "aa57.amnupower.com": {
+    "a": "169.58.231.24",
+    "raw": "NOERROR AN:A=169.58.231.24",
+    "category": "ocsudp"
+  },
+  "aa58.amnupower.com": {
+    "a": "169.58.246.196",
+    "raw": "NOERROR AN:A=169.58.246.196",
+    "category": "ocsudp"
+  },
+  "aa59.amnupower.com": {
+    "a": "169.58.172.179",
+    "raw": "NOERROR AN:A=169.58.172.179",
+    "category": "ocsudp"
+  },
+  "aa60.amnupower.com": {
+    "a": "158.220.121.175",
+    "raw": "NOERROR AN:A=158.220.121.175",
+    "category": "ocsudp"
+  },
+  "aa61.amnupower.com": {
+    "a": "62.171.129.145",
+    "raw": "NOERROR AN:A=62.171.129.145",
+    "category": "ocsudp"
+  },
+  "aa62.amnupower.com": {
+    "a": "169.58.172.48",
+    "raw": "NOERROR AN:A=169.58.172.48",
+    "category": "ocsudp"
+  },
+  "aa63.amnupower.com": {
+    "a": "161.97.171.106",
+    "raw": "NOERROR AN:A=161.97.171.106",
+    "category": "ocsudp"
+  },
+  "aa64.amnupower.com": {
+    "a": "169.58.244.120",
+    "raw": "NOERROR AN:A=169.58.244.120",
+    "category": "ocsudp"
+  },
+  "aa65.amnupower.com": {
+    "a": "144.91.68.175",
+    "raw": "NOERROR AN:A=144.91.68.175",
+    "category": "ocsudp"
+  },
+  "aa66.amnupower.com": {
+    "a": "184.174.37.101",
+    "raw": "NOERROR AN:A=184.174.37.101",
+    "category": "ocsudp"
+  },
+  "aa67.amnupower.com": {
+    "a": "13.140.184.49",
+    "raw": "NOERROR AN:A=13.140.184.49",
+    "category": "ocsudp"
+  },
+  "aa68.amnupower.com": {
+    "a": "13.140.182.57",
+    "raw": "NOERROR AN:A=13.140.182.57",
+    "category": "ocsudp"
+  },
+  "aa69.amnupower.com": {
+    "a": "13.140.181.69",
+    "raw": "NOERROR AN:A=13.140.181.69",
+    "category": "ocsudp"
+  },
+  "aa70.amnupower.com": {
+    "a": "13.140.180.214",
+    "raw": "NOERROR AN:A=13.140.180.214",
+    "category": "ocsudp"
+  },
+  "aa71.amnupower.com": {
+    "a": "169.58.136.118",
+    "raw": "NOERROR AN:A=169.58.136.118",
+    "category": "ocsudp"
+  },
+  "aa72.amnupower.com": {
+    "a": "13.140.180.26",
+    "raw": "NOERROR AN:A=13.140.180.26",
+    "category": "ocsudp"
+  },
+  "aa73.amnupower.com": {
+    "a": "161.97.162.184",
+    "raw": "NOERROR AN:A=161.97.162.184",
+    "category": "ocsudp"
+  },
+  "aa74.amnupower.com": {
+    "a": "158.220.123.31",
+    "raw": "NOERROR AN:A=158.220.123.31",
+    "category": "ocsudp"
+  },
+  "aa75.amnupower.com": {
+    "a": "161.97.115.75",
+    "raw": "NOERROR AN:A=161.97.115.75",
+    "category": "ocsudp"
+  },
+  "aa76.amnupower.com": {
+    "a": "169.58.196.161",
+    "raw": "NOERROR AN:A=169.58.196.161",
+    "category": "ocsudp"
+  },
+  "aa77.amnupower.com": {
+    "a": "161.97.85.126",
+    "raw": "NOERROR AN:A=161.97.85.126",
+    "category": "ocsudp"
+  },
+  "aa78.amnupower.com": {
+    "a": "161.97.77.176",
+    "raw": "NOERROR AN:A=161.97.77.176",
+    "category": "ocsudp"
+  },
+  "aa79.amnupower.com": {
+    "a": "161.97.74.169",
+    "raw": "NOERROR AN:A=161.97.74.169",
+    "category": "ocsudp"
+  },
+  "aa80.amnupower.com": {
+    "a": "169.58.136.115",
+    "raw": "NOERROR AN:A=169.58.136.115",
+    "category": "ocsudp"
+  },
+  "aa81.amnupower.com": {
+    "a": "169.58.189.146",
+    "raw": "NOERROR AN:A=169.58.189.146",
+    "category": "ocsudp"
+  },
+  "aa82.amnupower.com": {
+    "a": "169.58.136.108",
+    "raw": "NOERROR AN:A=169.58.136.108",
+    "category": "ocsudp"
+  },
+  "aa83.amnupower.com": {
+    "a": "169.58.195.171",
+    "raw": "NOERROR AN:A=169.58.195.171",
+    "category": "ocsudp"
+  },
+  "aa84.amnupower.com": {
+    "a": "169.58.9.102",
+    "raw": "NOERROR AN:A=169.58.9.102",
+    "category": "ocsudp"
+  },
+  "aa85.amnupower.com": {
+    "a": "169.58.94.207",
+    "raw": "NOERROR AN:A=169.58.94.207",
+    "category": "ocsudp"
+  },
+  "aa86.amnupower.com": {
+    "a": "158.220.105.59",
+    "raw": "NOERROR AN:A=158.220.105.59",
+    "category": "ocsudp"
+  },
+  "aa87.amnupower.com": {
+    "a": "84.247.186.90",
+    "raw": "NOERROR AN:A=84.247.186.90",
+    "category": "ocsudp"
+  },
+  "aa88.amnupower.com": {
+    "a": "109.205.178.225",
+    "raw": "NOERROR AN:A=109.205.178.225",
+    "category": "ocsudp"
+  },
+  "aa89.amnupower.com": {
+    "a": "161.97.67.84",
+    "raw": "NOERROR AN:A=161.97.67.84",
+    "category": "ocsudp"
+  },
+  "aa90.amnupower.com": {
+    "a": "158.220.112.87",
+    "raw": "NOERROR AN:A=158.220.112.87",
+    "category": "ocsudp"
+  },
+  "aa91.amnupower.com": {
+    "a": "169.58.136.102",
+    "raw": "NOERROR AN:A=169.58.136.102",
+    "category": "ocsudp"
+  },
+  "aa92.amnupower.com": {
+    "a": "169.58.195.105",
+    "raw": "NOERROR AN:A=169.58.195.105",
+    "category": "ocsudp"
+  },
+  "aa93.amnupower.com": {
+    "a": "158.220.121.154",
+    "raw": "NOERROR AN:A=158.220.121.154",
+    "category": "ocsudp"
+  },
+  "aa94.amnupower.com": {
+    "a": "158.220.126.223",
+    "raw": "NOERROR AN:A=158.220.126.223",
+    "category": "ocsudp"
+  },
+  "aa95.amnupower.com": {
+    "a": "169.58.196.148",
+    "raw": "NOERROR AN:A=169.58.196.148",
+    "category": "ocsudp"
+  },
+  "aa96.amnupower.com": {
+    "a": "169.58.246.200",
+    "raw": "NOERROR AN:A=169.58.246.200",
+    "category": "ocsudp"
+  },
+  "aa97.amnupower.com": {
+    "a": "62.171.142.73",
+    "raw": "NOERROR AN:A=62.171.142.73",
+    "category": "ocsudp"
+  },
+  "aa98.amnupower.com": {
+    "a": "169.58.184.86",
+    "raw": "NOERROR AN:A=169.58.184.86",
+    "category": "ocsudp"
+  },
+  "aa99.amnupower.com": {
+    "a": "13.140.167.49",
+    "raw": "NOERROR AN:A=13.140.167.49",
+    "category": "ocsudp"
+  },
+  "aa100.amnupower.com": {
+    "a": "13.140.155.29",
+    "raw": "NOERROR AN:A=13.140.155.29",
+    "category": "ocsudp"
+  },
+  "hh11.amnupower.com": {
+    "a": "144.91.121.183",
+    "raw": "NOERROR AN:A=144.91.121.183",
+    "category": "ocsudp"
+  },
+  "hh12.amnupower.com": {
+    "a": "13.140.209.110",
+    "raw": "NOERROR AN:A=13.140.209.110",
+    "category": "ocsudp"
+  },
+  "hh13.amnupower.com": {
+    "a": "213.199.45.197",
+    "raw": "NOERROR AN:A=213.199.45.197",
+    "category": "ocsudp"
+  },
+  "hh14.amnupower.com": {
+    "a": "109.199.99.122",
+    "raw": "NOERROR AN:A=109.199.99.122",
+    "category": "ocsudp"
+  },
+  "hh15.amnupower.com": {
+    "a": "158.220.113.144",
+    "raw": "NOERROR AN:A=158.220.113.144",
+    "category": "ocsudp"
+  },
+  "hh16.amnupower.com": {
+    "a": "169.58.182.226",
+    "raw": "NOERROR AN:A=169.58.182.226",
+    "category": "ocsudp"
+  },
+  "hh17.amnupower.com": {
+    "a": "169.58.143.5",
+    "raw": "NOERROR AN:A=169.58.143.5",
+    "category": "ocsudp"
+  },
+  "hh18.amnupower.com": {
+    "a": "213.136.64.53",
+    "raw": "NOERROR AN:A=213.136.64.53",
+    "category": "ocsudp"
+  },
+  "hh19.amnupower.com": {
+    "a": "95.111.225.194",
+    "raw": "NOERROR AN:A=95.111.225.194",
+    "category": "ocsudp"
+  },
+  "hh20.amnupower.com": {
+    "a": "194.163.191.93",
+    "raw": "NOERROR AN:A=194.163.191.93",
+    "category": "ocsudp"
+  },
+  "bb1.amnupower.com": {
+    "a": "169.58.136.101",
+    "raw": "NOERROR AN:A=169.58.136.101",
+    "category": "ocsudp"
+  },
+  "bb2.amnupower.com": {
+    "a": "212.47.66.182",
+    "raw": "NOERROR AN:A=212.47.66.182",
+    "category": "ocsudp"
+  },
+  "bb3.amnupower.com": {
+    "a": "169.58.195.173",
+    "raw": "NOERROR AN:A=169.58.195.173",
+    "category": "ocsudp"
+  },
+  "bb4.amnupower.com": {
+    "a": "62.84.186.236",
+    "raw": "NOERROR AN:A=62.84.186.236",
+    "category": "ocsudp"
+  },
+  "bb5.amnupower.com": {
+    "a": "62.84.186.139",
+    "raw": "NOERROR AN:A=62.84.186.139",
+    "category": "ocsudp"
+  },
+  "bb6.amnupower.com": {
+    "a": "169.58.171.97",
+    "raw": "NOERROR AN:A=169.58.171.97",
+    "category": "ocsudp"
+  },
+  "bb7.amnupower.com": {
+    "a": "213.199.35.142",
+    "raw": "NOERROR AN:A=213.199.35.142",
+    "category": "ocsudp"
+  },
+  "bb8.amnupower.com": {
+    "a": "84.247.129.209",
+    "raw": "NOERROR AN:A=84.247.129.209",
+    "category": "ocsudp"
+  },
+  "bb9.amnupower.com": {
+    "a": "161.97.101.241",
+    "raw": "NOERROR AN:A=161.97.101.241",
+    "category": "ocsudp"
+  },
+  "bb10.amnupower.com": {
+    "a": "169.58.94.78",
+    "raw": "NOERROR AN:A=169.58.94.78",
+    "category": "ocsudp"
+  },
+  "bb11.amnupower.com": {
+    "a": "13.140.209.146",
+    "raw": "NOERROR AN:A=13.140.209.146",
+    "category": "ocsudp"
+  },
+  "bb12.amnupower.com": {
+    "a": "145.239.55.63",
+    "raw": "NOERROR AN:A=145.239.55.63",
+    "category": "ocsudp"
+  },
+  "bb13.amnupower.com": {
+    "a": "169.58.25.155",
+    "raw": "NOERROR AN:A=169.58.25.155",
+    "category": "ocsudp"
+  },
+  "bb14.amnupower.com": {
+    "a": "169.58.251.18",
+    "raw": "NOERROR AN:A=169.58.251.18",
+    "category": "ocsudp"
+  },
+  "bb15.amnupower.com": {
+    "a": "169.58.172.223",
+    "raw": "NOERROR AN:A=169.58.172.223",
+    "category": "ocsudp"
+  },
+  "bb16.amnupower.com": {
+    "a": "77.237.235.132",
+    "raw": "NOERROR AN:A=77.237.235.132",
+    "category": "ocsudp"
+  },
+  "bb17.amnupower.com": {
+    "a": "89.116.24.56",
+    "raw": "NOERROR AN:A=89.116.24.56",
+    "category": "ocsudp"
+  },
+  "bb18.amnupower.com": {
+    "a": "169.58.251.19",
+    "raw": "NOERROR AN:A=169.58.251.19",
+    "category": "ocsudp"
+  },
+  "bb19.amnupower.com": {
+    "a": "169.58.195.187",
+    "raw": "NOERROR AN:A=169.58.195.187",
+    "category": "ocsudp"
+  },
+  "bb20.amnupower.com": {
+    "a": "169.58.195.178",
+    "raw": "NOERROR AN:A=169.58.195.178",
+    "category": "ocsudp"
+  },
+  "bb21.amnupower.com": {
+    "a": "62.169.31.71",
+    "raw": "NOERROR AN:A=62.169.31.71",
+    "category": "ocsudp"
+  },
+  "bb22.amnupower.com": {
+    "a": "62.171.131.215",
+    "raw": "NOERROR AN:A=62.171.131.215",
+    "category": "ocsudp"
+  },
+  "bb23.amnupower.com": {
+    "a": "169.58.190.135",
+    "raw": "NOERROR AN:A=169.58.190.135",
+    "category": "ocsudp"
+  },
+  "bb24.amnupower.com": {
+    "a": "161.97.162.118",
+    "raw": "NOERROR AN:A=161.97.162.118",
+    "category": "ocsudp"
+  },
+  "bb25.amnupower.com": {
+    "a": "169.58.172.212",
+    "raw": "NOERROR AN:A=169.58.172.212",
+    "category": "ocsudp"
+  },
+  "bb26.amnupower.com": {
+    "a": "169.58.195.172",
+    "raw": "NOERROR AN:A=169.58.195.172",
+    "category": "ocsudp"
+  },
+  "bb27.amnupower.com": {
+    "a": "169.58.112.104",
+    "raw": "NOERROR AN:A=169.58.112.104",
+    "category": "ocsudp"
+  },
+  "bb28.amnupower.com": {
+    "a": "169.58.189.144",
+    "raw": "NOERROR AN:A=169.58.189.144",
+    "category": "ocsudp"
+  },
+  "bb29.amnupower.com": {
+    "a": "169.58.195.170",
+    "raw": "NOERROR AN:A=169.58.195.170",
+    "category": "ocsudp"
+  },
+  "bb30.amnupower.com": {
+    "a": "185.225.232.207",
+    "raw": "NOERROR AN:A=185.225.232.207",
+    "category": "ocsudp"
+  },
+  "bb31.amnupower.com": {
+    "a": "169.58.14.39",
+    "raw": "NOERROR AN:A=169.58.14.39",
+    "category": "ocsudp"
+  },
+  "bb32.amnupower.com": {
+    "a": "169.58.92.184",
+    "raw": "NOERROR AN:A=169.58.92.184",
+    "category": "ocsudp"
+  },
+  "bb33.amnupower.com": {
+    "a": "193.187.129.134",
+    "raw": "NOERROR AN:A=193.187.129.134",
+    "category": "ocsudp"
+  },
+  "bb34.amnupower.com": {
+    "a": "109.123.247.224",
+    "raw": "NOERROR AN:A=109.123.247.224",
+    "category": "ocsudp"
+  },
+  "bb35.amnupower.com": {
+    "a": "144.91.125.131",
+    "raw": "NOERROR AN:A=144.91.125.131",
+    "category": "ocsudp"
+  },
+  "bb36.amnupower.com": {
+    "a": "158.220.104.233",
+    "raw": "NOERROR AN:A=158.220.104.233",
+    "category": "ocsudp"
+  },
+  "bb37.amnupower.com": {
+    "a": "31.220.87.83",
+    "raw": "NOERROR AN:A=31.220.87.83",
+    "category": "ocsudp"
+  },
+  "bb38.amnupower.com": {
+    "a": "184.174.36.122",
+    "raw": "NOERROR AN:A=184.174.36.122",
+    "category": "ocsudp"
+  },
+  "bb39.amnupower.com": {
+    "a": "155.133.22.163",
+    "raw": "NOERROR AN:A=155.133.22.163",
+    "category": "ocsudp"
+  },
+  "bb40.amnupower.com": {
+    "a": "169.58.203.173",
+    "raw": "NOERROR AN:A=169.58.203.173",
+    "category": "ocsudp"
+  },
+  "bb41.amnupower.com": {
+    "a": "31.220.86.9",
+    "raw": "NOERROR AN:A=31.220.86.9",
+    "category": "ocsudp"
+  },
+  "bb42.amnupower.com": {
+    "a": "158.220.108.129",
+    "raw": "NOERROR AN:A=158.220.108.129",
+    "category": "ocsudp"
+  },
+  "bb43.amnupower.com": {
+    "a": "31.220.79.84",
+    "raw": "NOERROR AN:A=31.220.79.84",
+    "category": "ocsudp"
+  },
+  "bb44.amnupower.com": {
+    "a": "217.76.52.133",
+    "raw": "NOERROR AN:A=217.76.52.133",
+    "category": "ocsudp"
+  },
+  "bb45.amnupower.com": {
+    "a": "169.58.203.163",
+    "raw": "NOERROR AN:A=169.58.203.163",
+    "category": "ocsudp"
+  },
+  "bb46.amnupower.com": {
+    "a": "169.58.250.82",
+    "raw": "NOERROR AN:A=169.58.250.82",
+    "category": "ocsudp"
+  },
+  "bb47.amnupower.com": {
+    "a": "37.60.244.204",
+    "raw": "NOERROR AN:A=37.60.244.204",
+    "category": "ocsudp"
+  },
+  "bb48.amnupower.com": {
+    "a": "75.119.158.183",
+    "raw": "NOERROR AN:A=75.119.158.183",
+    "category": "ocsudp"
+  },
+  "bb49.amnupower.com": {
+    "a": "194.163.178.204",
+    "raw": "NOERROR AN:A=194.163.178.204",
+    "category": "ocsudp"
+  },
+  "bb50.amnupower.com": {
+    "a": "169.58.197.6",
+    "raw": "NOERROR AN:A=169.58.197.6",
+    "category": "ocsudp"
+  },
+  "hh21.amnupower.com": {
+    "a": "45.14.194.108",
+    "raw": "NOERROR AN:A=45.14.194.108",
+    "category": "ocsudp"
+  },
+  "hh22.amnupower.com": {
+    "a": "161.97.172.14",
+    "raw": "NOERROR AN:A=161.97.172.14",
+    "category": "ocsudp"
+  },
+  "hh23.amnupower.com": {
+    "a": "169.58.214.19",
+    "raw": "NOERROR AN:A=169.58.214.19",
+    "category": "ocsudp"
+  },
+  "hh24.amnupower.com": {
+    "a": "169.58.212.146",
+    "raw": "NOERROR AN:A=169.58.212.146",
+    "category": "ocsudp"
+  },
+  "hh25.amnupower.com": {
+    "a": "169.58.250.4",
+    "raw": "NOERROR AN:A=169.58.250.4",
+    "category": "ocsudp"
+  },
+  "hh26.amnupower.com": {
+    "a": "169.58.212.68",
+    "raw": "NOERROR AN:A=169.58.212.68",
+    "category": "ocsudp"
+  },
+  "hh27.amnupower.com": {
+    "a": "139.144.217.229",
+    "raw": "NOERROR AN:A=139.144.217.229",
+    "category": "ocsudp"
+  },
+  "hh28.amnupower.com": {
+    "a": "172.105.177.123",
+    "raw": "NOERROR AN:A=172.105.177.123",
+    "category": "ocsudp"
+  },
+  "hh29.amnupower.com": {
+    "a": "194.34.232.244",
+    "raw": "NOERROR AN:A=194.34.232.244",
+    "category": "ocsudp"
+  },
+  "hh30.amnupower.com": {
+    "a": "172.105.186.88",
+    "raw": "NOERROR AN:A=172.105.186.88",
+    "category": "ocsudp"
+  },
+  "bb51.amnupower.com": {
+    "a": "212.47.65.81",
+    "raw": "NOERROR AN:A=212.47.65.81",
+    "category": "ocsudp"
+  },
+  "bb52.amnupower.com": {
+    "a": "37.60.240.206",
+    "raw": "NOERROR AN:A=37.60.240.206",
+    "category": "ocsudp"
+  },
+  "bb53.amnupower.com": {
+    "a": "37.60.228.204",
+    "raw": "NOERROR AN:A=37.60.228.204",
+    "category": "ocsudp"
+  },
+  "bb54.amnupower.com": {
+    "a": "13.140.161.222",
+    "raw": "NOERROR AN:A=13.140.161.222",
+    "category": "ocsudp"
+  },
+  "bb55.amnupower.com": {
+    "a": "185.194.217.105",
+    "raw": "NOERROR AN:A=185.194.217.105",
+    "category": "ocsudp"
+  },
+  "bb56.amnupower.com": {
+    "a": "169.58.137.106",
+    "raw": "NOERROR AN:A=169.58.137.106",
+    "category": "ocsudp"
+  },
+  "bb57.amnupower.com": {
+    "a": "169.58.136.218",
+    "raw": "NOERROR AN:A=169.58.136.218",
+    "category": "ocsudp"
+  },
+  "bb58.amnupower.com": {
+    "a": "95.111.250.196",
+    "raw": "NOERROR AN:A=95.111.250.196",
+    "category": "ocsudp"
+  },
+  "bb59.amnupower.com": {
+    "a": "144.91.101.43",
+    "raw": "NOERROR AN:A=144.91.101.43",
+    "category": "ocsudp"
+  },
+  "bb60.amnupower.com": {
+    "a": "144.91.113.195",
+    "raw": "NOERROR AN:A=144.91.113.195",
+    "category": "ocsudp"
+  },
+  "bb61.amnupower.com": {
+    "a": "173.212.226.40",
+    "raw": "NOERROR AN:A=173.212.226.40",
+    "category": "ocsudp"
+  },
+  "bb62.amnupower.com": {
+    "a": "77.237.238.84",
+    "raw": "NOERROR AN:A=77.237.238.84",
+    "category": "ocsudp"
+  },
+  "bb63.amnupower.com": {
+    "a": "178.238.234.137",
+    "raw": "NOERROR AN:A=178.238.234.137",
+    "category": "ocsudp"
+  },
+  "bb64.amnupower.com": {
+    "a": "62.169.23.47",
+    "raw": "NOERROR AN:A=62.169.23.47",
+    "category": "ocsudp"
+  },
+  "bb65.amnupower.com": {
+    "a": "62.169.27.195",
+    "raw": "NOERROR AN:A=62.169.27.195",
+    "category": "ocsudp"
+  },
+  "bb66.amnupower.com": {
+    "a": "82.208.22.29",
+    "raw": "NOERROR AN:A=82.208.22.29",
+    "category": "ocsudp"
+  },
+  "bb67.amnupower.com": {
+    "a": "144.91.91.165",
+    "raw": "NOERROR AN:A=144.91.91.165",
+    "category": "ocsudp"
+  },
+  "bb68.amnupower.com": {
+    "a": "169.58.250.254",
+    "raw": "NOERROR AN:A=169.58.250.254",
+    "category": "ocsudp"
+  },
+  "bb69.amnupower.com": {
+    "a": "169.58.195.123",
+    "raw": "NOERROR AN:A=169.58.195.123",
+    "category": "ocsudp"
+  },
+  "bb70.amnupower.com": {
+    "a": "164.68.103.156",
+    "raw": "NOERROR AN:A=164.68.103.156",
+    "category": "ocsudp"
+  },
+  "bb71.amnupower.com": {
+    "a": "167.86.101.162",
+    "raw": "NOERROR AN:A=167.86.101.162",
+    "category": "ocsudp"
+  },
+  "bb72.amnupower.com": {
+    "a": "75.119.150.37",
+    "raw": "NOERROR AN:A=75.119.150.37",
+    "category": "ocsudp"
+  },
+  "bb73.amnupower.com": {
+    "a": "167.86.82.170",
+    "raw": "NOERROR AN:A=167.86.82.170",
+    "category": "ocsudp"
+  },
+  "bb74.amnupower.com": {
+    "a": "167.86.76.57",
+    "raw": "NOERROR AN:A=167.86.76.57",
+    "category": "ocsudp"
+  },
+  "bb75.amnupower.com": {
+    "a": "173.212.255.128",
+    "raw": "NOERROR AN:A=173.212.255.128",
+    "category": "ocsudp"
+  },
+  "bb76.amnupower.com": {
+    "a": "173.212.255.124",
+    "raw": "NOERROR AN:A=173.212.255.124",
+    "category": "ocsudp"
+  },
+  "bb77.amnupower.com": {
+    "a": "185.2.102.140",
+    "raw": "NOERROR AN:A=185.2.102.140",
+    "category": "ocsudp"
+  },
+  "bb78.amnupower.com": {
+    "a": "207.180.234.90",
+    "raw": "NOERROR AN:A=207.180.234.90",
+    "category": "ocsudp"
+  },
+  "bb79.amnupower.com": {
+    "a": "207.180.230.41",
+    "raw": "NOERROR AN:A=207.180.230.41",
+    "category": "ocsudp"
+  },
+  "bb80.amnupower.com": {
+    "a": "84.247.177.73",
+    "raw": "NOERROR AN:A=84.247.177.73",
+    "category": "ocsudp"
+  },
+  "bb81.amnupower.com": {
+    "a": "194.163.165.227",
+    "raw": "NOERROR AN:A=194.163.165.227",
+    "category": "ocsudp"
+  },
+  "bb82.amnupower.com": {
+    "a": "158.220.103.152",
+    "raw": "NOERROR AN:A=158.220.103.152",
+    "category": "ocsudp"
+  },
+  "bb83.amnupower.com": {
+    "a": "213.199.51.251",
+    "raw": "NOERROR AN:A=213.199.51.251",
+    "category": "ocsudp"
+  },
+  "bb84.amnupower.com": {
+    "a": "207.180.222.250",
+    "raw": "NOERROR AN:A=207.180.222.250",
+    "category": "ocsudp"
+  },
+  "bb85.amnupower.com": {
+    "a": "45.14.194.117",
+    "raw": "NOERROR AN:A=45.14.194.117",
+    "category": "ocsudp"
+  },
+  "bb86.amnupower.com": {
+    "a": "45.67.217.116",
+    "raw": "NOERROR AN:A=45.67.217.116",
+    "category": "ocsudp"
+  },
+  "bb87.amnupower.com": {
+    "a": "169.58.250.138",
+    "raw": "NOERROR AN:A=169.58.250.138",
+    "category": "ocsudp"
+  },
+  "bb88.amnupower.com": {
+    "a": "207.180.211.58",
+    "raw": "NOERROR AN:A=207.180.211.58",
+    "category": "ocsudp"
+  },
+  "bb89.amnupower.com": {
+    "a": "207.180.204.57",
+    "raw": "NOERROR AN:A=207.180.204.57",
+    "category": "ocsudp"
+  },
+  "bb90.amnupower.com": {
+    "a": "173.249.54.195",
+    "raw": "NOERROR AN:A=173.249.54.195",
+    "category": "ocsudp"
+  },
+  "bb91.amnupower.com": {
+    "a": "173.249.22.149",
+    "raw": "NOERROR AN:A=173.249.22.149",
+    "category": "ocsudp"
+  },
+  "bb92.amnupower.com": {
+    "a": "173.212.253.88",
+    "raw": "NOERROR AN:A=173.212.253.88",
+    "category": "ocsudp"
+  },
+  "bb93.amnupower.com": {
+    "a": "173.212.253.87",
+    "raw": "NOERROR AN:A=173.212.253.87",
+    "category": "ocsudp"
+  },
+  "bb94.amnupower.com": {
+    "a": "173.212.253.86",
+    "raw": "NOERROR AN:A=173.212.253.86",
+    "category": "ocsudp"
+  },
+  "bb95.amnupower.com": {
+    "a": "173.212.253.85",
+    "raw": "NOERROR AN:A=173.212.253.85",
+    "category": "ocsudp"
+  },
+  "bb96.amnupower.com": {
+    "a": "158.220.103.22",
+    "raw": "NOERROR AN:A=158.220.103.22",
+    "category": "ocsudp"
+  },
+  "bb97.amnupower.com": {
+    "a": "173.212.244.37",
+    "raw": "NOERROR AN:A=173.212.244.37",
+    "category": "ocsudp"
+  },
+  "bb98.amnupower.com": {
+    "a": "86.48.0.216",
+    "raw": "NOERROR AN:A=86.48.0.216",
+    "category": "ocsudp"
+  },
+  "bb99.amnupower.com": {
+    "a": "173.212.255.129",
+    "raw": "NOERROR AN:A=173.212.255.129",
+    "category": "ocsudp"
+  },
+  "bb100.amnupower.com": {
+    "a": "173.212.206.37",
+    "raw": "NOERROR AN:A=173.212.206.37",
+    "category": "ocsudp"
+  },
+  "hh31.amnupower.com": {
+    "a": "172.105.186.167",
+    "raw": "NOERROR AN:A=172.105.186.167",
+    "category": "ocsudp"
+  },
+  "hh32.amnupower.com": {
+    "a": "172.105.178.147",
+    "raw": "NOERROR AN:A=172.105.178.147",
+    "category": "ocsudp"
+  },
+  "hh33.amnupower.com": {
+    "a": "172.105.165.99",
+    "raw": "NOERROR AN:A=172.105.165.99",
+    "category": "ocsudp"
+  },
+  "hh34.amnupower.com": {
+    "a": "172.105.165.125",
+    "raw": "NOERROR AN:A=172.105.165.125",
+    "category": "ocsudp"
+  },
+  "hh35.amnupower.com": {
+    "a": "31.220.86.66",
+    "raw": "NOERROR AN:A=31.220.86.66",
+    "category": "ocsudp"
+  },
+  "hh36.amnupower.com": {
+    "a": "169.58.135.145",
+    "raw": "NOERROR AN:A=169.58.135.145",
+    "category": "ocsudp"
+  },
+  "hh37.amnupower.com": {
+    "a": "169.58.135.123",
+    "raw": "NOERROR AN:A=169.58.135.123",
+    "category": "ocsudp"
+  },
+  "hh38.amnupower.com": {
+    "a": "172.105.165.239",
+    "raw": "NOERROR AN:A=172.105.165.239",
+    "category": "ocsudp"
+  },
+  "hh39.amnupower.com": {
+    "a": "31.220.74.0",
+    "raw": "NOERROR AN:A=31.220.74.0",
+    "category": "ocsudp"
+  },
+  "hh40.amnupower.com": {
+    "a": "169.58.135.116",
+    "raw": "NOERROR AN:A=169.58.135.116",
+    "category": "ocsudp"
+  },
+  "cc1.amnupower.com": {
+    "a": "169.58.136.19",
+    "raw": "NOERROR AN:A=169.58.136.19",
+    "category": "ocsudp"
+  },
+  "cc2.amnupower.com": {
+    "a": "51.161.80.84",
+    "raw": "NOERROR AN:A=51.161.80.84",
+    "category": "ocsudp"
+  },
+  "cc3.amnupower.com": {
+    "a": "89.117.62.39",
+    "raw": "NOERROR AN:A=89.117.62.39",
+    "category": "ocsudp"
+  },
+  "cc4.amnupower.com": {
+    "a": "158.220.102.219",
+    "raw": "NOERROR AN:A=158.220.102.219",
+    "category": "ocsudp"
+  },
+  "cc5.amnupower.com": {
+    "a": "86.48.0.213",
+    "raw": "NOERROR AN:A=86.48.0.213",
+    "category": "ocsudp"
+  },
+  "cc6.amnupower.com": {
+    "a": "84.46.251.10",
+    "raw": "NOERROR AN:A=84.46.251.10",
+    "category": "ocsudp"
+  },
+  "cc7.amnupower.com": {
+    "a": "173.212.196.112",
+    "raw": "NOERROR AN:A=173.212.196.112",
+    "category": "ocsudp"
+  },
+  "cc8.amnupower.com": {
+    "a": "5.189.183.13",
+    "raw": "NOERROR AN:A=5.189.183.13",
+    "category": "ocsudp"
+  },
+  "cc9.amnupower.com": {
+    "a": "84.46.250.84",
+    "raw": "NOERROR AN:A=84.46.250.84",
+    "category": "ocsudp"
+  },
+  "cc10.amnupower.com": {
+    "a": "84.46.250.37",
+    "raw": "NOERROR AN:A=84.46.250.37",
+    "category": "ocsudp"
+  },
+  "cc11.amnupower.com": {
+    "a": "158.220.111.148",
+    "raw": "NOERROR AN:A=158.220.111.148",
+    "category": "ocsudp"
+  },
+  "cc12.amnupower.com": {
+    "a": "5.189.183.12",
+    "raw": "NOERROR AN:A=5.189.183.12",
+    "category": "ocsudp"
+  },
+  "cc13.amnupower.com": {
+    "a": "169.58.137.251",
+    "raw": "NOERROR AN:A=169.58.137.251",
+    "category": "ocsudp"
+  },
+  "cc14.amnupower.com": {
+    "a": "5.189.183.11",
+    "raw": "NOERROR AN:A=5.189.183.11",
+    "category": "ocsudp"
+  },
+  "cc15.amnupower.com": {
+    "a": "84.46.249.251",
+    "raw": "NOERROR AN:A=84.46.249.251",
+    "category": "ocsudp"
+  },
+  "cc16.amnupower.com": {
+    "a": "158.220.110.136",
+    "raw": "NOERROR AN:A=158.220.110.136",
+    "category": "ocsudp"
+  },
+  "cc17.amnupower.com": {
+    "a": "158.220.109.171",
+    "raw": "NOERROR AN:A=158.220.109.171",
+    "category": "ocsudp"
+  },
+  "cc18.amnupower.com": {
+    "a": "158.220.109.129",
+    "raw": "NOERROR AN:A=158.220.109.129",
+    "category": "ocsudp"
+  },
+  "cc19.amnupower.com": {
+    "a": "158.220.109.58",
+    "raw": "NOERROR AN:A=158.220.109.58",
+    "category": "ocsudp"
+  },
+  "cc20.amnupower.com": {
+    "a": "5.189.157.165",
+    "raw": "NOERROR AN:A=5.189.157.165",
+    "category": "ocsudp"
+  },
+  "cc21.amnupower.com": {
+    "a": "5.189.157.84",
+    "raw": "NOERROR AN:A=5.189.157.84",
+    "category": "ocsudp"
+  },
+  "cc22.amnupower.com": {
+    "a": "169.58.137.235",
+    "raw": "NOERROR AN:A=169.58.137.235",
+    "category": "ocsudp"
+  },
+  "cc23.amnupower.com": {
+    "a": "169.58.137.230",
+    "raw": "NOERROR AN:A=169.58.137.230",
+    "category": "ocsudp"
+  },
+  "cc24.amnupower.com": {
+    "a": "158.220.106.93",
+    "raw": "NOERROR AN:A=158.220.106.93",
+    "category": "ocsudp"
+  },
+  "cc25.amnupower.com": {
+    "a": "158.220.106.50",
+    "raw": "NOERROR AN:A=158.220.106.50",
+    "category": "ocsudp"
+  },
+  "cc26.amnupower.com": {
+    "a": "169.58.137.81",
+    "raw": "NOERROR AN:A=169.58.137.81",
+    "category": "ocsudp"
+  },
+  "cc27.amnupower.com": {
+    "a": "169.58.136.97",
+    "raw": "NOERROR AN:A=169.58.136.97",
+    "category": "ocsudp"
+  },
+  "cc28.amnupower.com": {
+    "a": "169.58.136.85",
+    "raw": "NOERROR AN:A=169.58.136.85",
+    "category": "ocsudp"
+  },
+  "cc29.amnupower.com": {
+    "a": "169.58.136.83",
+    "raw": "NOERROR AN:A=169.58.136.83",
+    "category": "ocsudp"
+  },
+  "cc30.amnupower.com": {
+    "a": "169.58.195.147",
+    "raw": "NOERROR AN:A=169.58.195.147",
+    "category": "ocsudp"
+  },
+  "cc31.amnupower.com": {
+    "a": "169.58.136.75",
+    "raw": "NOERROR AN:A=169.58.136.75",
+    "category": "ocsudp"
+  },
+  "cc32.amnupower.com": {
+    "a": "84.46.245.187",
+    "raw": "NOERROR AN:A=84.46.245.187",
+    "category": "ocsudp"
+  },
+  "cc33.amnupower.com": {
+    "a": "169.58.136.18",
+    "raw": "NOERROR AN:A=169.58.136.18",
+    "category": "ocsudp"
+  },
+  "cc34.amnupower.com": {
+    "a": "169.58.131.95",
+    "raw": "NOERROR AN:A=169.58.131.95",
+    "category": "ocsudp"
+  },
+  "cc35.amnupower.com": {
+    "a": "89.117.60.152",
+    "raw": "NOERROR AN:A=89.117.60.152",
+    "category": "ocsudp"
+  },
+  "cc36.amnupower.com": {
+    "a": "13.140.146.231",
+    "raw": "NOERROR AN:A=13.140.146.231",
+    "category": "ocsudp"
+  },
+  "cc37.amnupower.com": {
+    "a": "169.58.195.89",
+    "raw": "NOERROR AN:A=169.58.195.89",
+    "category": "ocsudp"
+  },
+  "cc38.amnupower.com": {
+    "a": "158.220.120.118",
+    "raw": "NOERROR AN:A=158.220.120.118",
+    "category": "ocsudp"
+  },
+  "cc39.amnupower.com": {
+    "a": "5.189.148.151",
+    "raw": "NOERROR AN:A=5.189.148.151",
+    "category": "ocsudp"
+  },
+  "cc40.amnupower.com": {
+    "a": "161.97.130.43",
+    "raw": "NOERROR AN:A=161.97.130.43",
+    "category": "ocsudp"
+  },
+  "cc41.amnupower.com": {
+    "a": "13.140.209.142",
+    "raw": "NOERROR AN:A=13.140.209.142",
+    "category": "ocsudp"
+  },
+  "cc42.amnupower.com": {
+    "a": "158.220.112.230",
+    "raw": "NOERROR AN:A=158.220.112.230",
+    "category": "ocsudp"
+  },
+  "cc43.amnupower.com": {
+    "a": "45.88.188.77",
+    "raw": "NOERROR AN:A=45.88.188.77",
+    "category": "ocsudp"
+  },
+  "cc44.amnupower.com": {
+    "a": "185.193.66.165",
+    "raw": "NOERROR AN:A=185.193.66.165",
+    "category": "ocsudp"
+  },
+  "cc45.amnupower.com": {
+    "a": "13.140.209.135",
+    "raw": "NOERROR AN:A=13.140.209.135",
+    "category": "ocsudp"
+  },
+  "cc46.amnupower.com": {
+    "a": "194.163.130.188",
+    "raw": "NOERROR AN:A=194.163.130.188",
+    "category": "ocsudp"
+  },
+  "cc47.amnupower.com": {
+    "a": "15.235.41.84",
+    "raw": "NOERROR AN:A=15.235.41.84",
+    "category": "ocsudp"
+  },
+  "cc48.amnupower.com": {
+    "a": "84.46.246.189",
+    "raw": "NOERROR AN:A=84.46.246.189",
+    "category": "ocsudp"
+  },
+  "cc49.amnupower.com": {
+    "a": "13.140.209.145",
+    "raw": "NOERROR AN:A=13.140.209.145",
+    "category": "ocsudp"
+  },
+  "cc50.amnupower.com": {
+    "a": "84.46.244.217",
+    "raw": "NOERROR AN:A=84.46.244.217",
+    "category": "ocsudp"
+  },
+  "hh41.amnupower.com": {
+    "a": "172.233.195.26",
+    "raw": "NOERROR AN:A=172.233.195.26",
+    "category": "ocsudp"
+  },
+  "hh42.amnupower.com": {
+    "a": "172.105.168.148",
+    "raw": "NOERROR AN:A=172.105.168.148",
+    "category": "ocsudp"
+  },
+  "hh43.amnupower.com": {
+    "a": "169.58.135.50",
+    "raw": "NOERROR AN:A=169.58.135.50",
+    "category": "ocsudp"
+  },
+  "hh44.amnupower.com": {
+    "a": "169.58.135.46",
+    "raw": "NOERROR AN:A=169.58.135.46",
+    "category": "ocsudp"
+  },
+  "hh45.amnupower.com": {
+    "a": "169.58.135.4",
+    "raw": "NOERROR AN:A=169.58.135.4",
+    "category": "ocsudp"
+  },
+  "hh46.amnupower.com": {
+    "a": "169.58.134.209",
+    "raw": "NOERROR AN:A=169.58.134.209",
+    "category": "ocsudp"
+  },
+  "hh47.amnupower.com": {
+    "a": "172.234.152.186",
+    "raw": "NOERROR AN:A=172.234.152.186",
+    "category": "ocsudp"
+  },
+  "hh48.amnupower.com": {
+    "a": "169.58.213.226",
+    "raw": "NOERROR AN:A=169.58.213.226",
+    "category": "ocsudp"
+  },
+  "hh49.amnupower.com": {
+    "a": "89.116.26.151",
+    "raw": "NOERROR AN:A=89.116.26.151",
+    "category": "ocsudp"
+  },
+  "hh50.amnupower.com": {
+    "a": "95.111.224.195",
+    "raw": "NOERROR AN:A=95.111.224.195",
+    "category": "ocsudp"
+  },
+  "cc51.amnupower.com": {
+    "a": "169.58.195.132",
+    "raw": "NOERROR AN:A=169.58.195.132",
+    "category": "ocsudp"
+  },
+  "cc52.amnupower.com": {
+    "a": "84.46.241.33",
+    "raw": "NOERROR AN:A=84.46.241.33",
+    "category": "ocsudp"
+  },
+  "cc53.amnupower.com": {
+    "a": "169.58.135.118",
+    "raw": "NOERROR AN:A=169.58.135.118",
+    "category": "ocsudp"
+  },
+  "cc54.amnupower.com": {
+    "a": "84.46.242.66",
+    "raw": "NOERROR AN:A=84.46.242.66",
+    "category": "ocsudp"
+  },
+  "cc55.amnupower.com": {
+    "a": "13.140.209.130",
+    "raw": "NOERROR AN:A=13.140.209.130",
+    "category": "ocsudp"
+  },
+  "cc56.amnupower.com": {
+    "a": "169.58.136.17",
+    "raw": "NOERROR AN:A=169.58.136.17",
+    "category": "ocsudp"
+  },
+  "cc57.amnupower.com": {
+    "a": "45.67.216.33",
+    "raw": "NOERROR AN:A=45.67.216.33",
+    "category": "ocsudp"
+  },
+  "cc58.amnupower.com": {
+    "a": "169.58.195.115",
+    "raw": "NOERROR AN:A=169.58.195.115",
+    "category": "ocsudp"
+  },
+  "cc59.amnupower.com": {
+    "a": "169.58.135.212",
+    "raw": "NOERROR AN:A=169.58.135.212",
+    "category": "ocsudp"
+  },
+  "cc60.amnupower.com": {
+    "a": "169.58.134.62",
+    "raw": "NOERROR AN:A=169.58.134.62",
+    "category": "ocsudp"
+  },
+  "cc61.amnupower.com": {
+    "a": "169.58.195.110",
+    "raw": "NOERROR AN:A=169.58.195.110",
+    "category": "ocsudp"
+  },
+  "cc62.amnupower.com": {
+    "a": "169.58.135.211",
+    "raw": "NOERROR AN:A=169.58.135.211",
+    "category": "ocsudp"
+  },
+  "cc63.amnupower.com": {
+    "a": "169.58.94.126",
+    "raw": "NOERROR AN:A=169.58.94.126",
+    "category": "ocsudp"
+  },
+  "cc64.amnupower.com": {
+    "a": "156.67.29.215",
+    "raw": "NOERROR AN:A=156.67.29.215",
+    "category": "ocsudp"
+  },
+  "cc65.amnupower.com": {
+    "a": "77.237.247.70",
+    "raw": "NOERROR AN:A=77.237.247.70",
+    "category": "ocsudp"
+  },
+  "cc66.amnupower.com": {
+    "a": "213.199.35.187",
+    "raw": "NOERROR AN:A=213.199.35.187",
+    "category": "ocsudp"
+  },
+  "cc67.amnupower.com": {
+    "a": "213.136.79.190",
+    "raw": "NOERROR AN:A=213.136.79.190",
+    "category": "ocsudp"
+  },
+  "cc68.amnupower.com": {
+    "a": "169.58.195.90",
+    "raw": "NOERROR AN:A=169.58.195.90",
+    "category": "ocsudp"
+  },
+  "cc69.amnupower.com": {
+    "a": "169.58.182.237",
+    "raw": "NOERROR AN:A=169.58.182.237",
+    "category": "ocsudp"
+  },
+  "cc70.amnupower.com": {
+    "a": "135.125.136.212",
+    "raw": "NOERROR AN:A=135.125.136.212",
+    "category": "ocsudp"
+  },
+  "cc71.amnupower.com": {
+    "a": "169.58.195.61",
+    "raw": "NOERROR AN:A=169.58.195.61",
+    "category": "ocsudp"
+  },
+  "cc72.amnupower.com": {
+    "a": "54.37.77.184",
+    "raw": "NOERROR AN:A=54.37.77.184",
+    "category": "ocsudp"
+  },
+  "cc73.amnupower.com": {
+    "a": "169.58.182.236",
+    "raw": "NOERROR AN:A=169.58.182.236",
+    "category": "ocsudp"
+  },
+  "cc74.amnupower.com": {
+    "a": "194.163.171.236",
+    "raw": "NOERROR AN:A=194.163.171.236",
+    "category": "ocsudp"
+  },
+  "cc75.amnupower.com": {
+    "a": "31.220.81.160",
+    "raw": "NOERROR AN:A=31.220.81.160",
+    "category": "ocsudp"
+  },
+  "cc76.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocsudp"
+  },
+  "cc77.amnupower.com": {
+    "a": "62.171.136.218",
+    "raw": "NOERROR AN:A=62.171.136.218",
+    "category": "ocsudp"
+  },
+  "cc78.amnupower.com": {
+    "a": "5.182.17.171",
+    "raw": "NOERROR AN:A=5.182.17.171",
+    "category": "ocsudp"
+  },
+  "cc79.amnupower.com": {
+    "a": "169.58.182.235",
+    "raw": "NOERROR AN:A=169.58.182.235",
+    "category": "ocsudp"
+  },
+  "cc80.amnupower.com": {
+    "a": "85.208.48.213",
+    "raw": "NOERROR AN:A=85.208.48.213",
+    "category": "ocsudp"
+  },
+  "cc81.amnupower.com": {
+    "a": "169.58.182.234",
+    "raw": "NOERROR AN:A=169.58.182.234",
+    "category": "ocsudp"
+  },
+  "cc82.amnupower.com": {
+    "a": "169.58.182.232",
+    "raw": "NOERROR AN:A=169.58.182.232",
+    "category": "ocsudp"
+  },
+  "cc83.amnupower.com": {
+    "a": "169.58.182.231",
+    "raw": "NOERROR AN:A=169.58.182.231",
+    "category": "ocsudp"
+  },
+  "cc84.amnupower.com": {
+    "a": "109.199.110.194",
+    "raw": "NOERROR AN:A=109.199.110.194",
+    "category": "ocsudp"
+  },
+  "cc85.amnupower.com": {
+    "a": "158.220.116.71",
+    "raw": "NOERROR AN:A=158.220.116.71",
+    "category": "ocsudp"
+  },
+  "cc86.amnupower.com": {
+    "a": "217.76.60.187",
+    "raw": "NOERROR AN:A=217.76.60.187",
+    "category": "ocsudp"
+  },
+  "cc87.amnupower.com": {
+    "a": "217.76.57.225",
+    "raw": "NOERROR AN:A=217.76.57.225",
+    "category": "ocsudp"
+  },
+  "cc88.amnupower.com": {
+    "a": "217.76.53.161",
+    "raw": "NOERROR AN:A=217.76.53.161",
+    "category": "ocsudp"
+  },
+  "cc89.amnupower.com": {
+    "a": "169.58.135.193",
+    "raw": "NOERROR AN:A=169.58.135.193",
+    "category": "ocsudp"
+  },
+  "cc90.amnupower.com": {
+    "a": "95.111.254.5",
+    "raw": "NOERROR AN:A=95.111.254.5",
+    "category": "ocsudp"
+  },
+  "cc91.amnupower.com": {
+    "a": "169.58.195.51",
+    "raw": "NOERROR AN:A=169.58.195.51",
+    "category": "ocsudp"
+  },
+  "cc92.amnupower.com": {
+    "a": "169.58.195.58",
+    "raw": "NOERROR AN:A=169.58.195.58",
+    "category": "ocsudp"
+  },
+  "cc93.amnupower.com": {
+    "a": "84.247.173.227",
+    "raw": "NOERROR AN:A=84.247.173.227",
+    "category": "ocsudp"
+  },
+  "cc94.amnupower.com": {
+    "a": "213.199.53.225",
+    "raw": "NOERROR AN:A=213.199.53.225",
+    "category": "ocsudp"
+  },
+  "cc95.amnupower.com": {
+    "a": "169.58.135.192",
+    "raw": "NOERROR AN:A=169.58.135.192",
+    "category": "ocsudp"
+  },
+  "cc96.amnupower.com": {
+    "a": "213.199.47.16",
+    "raw": "NOERROR AN:A=213.199.47.16",
+    "category": "ocsudp"
+  },
+  "cc97.amnupower.com": {
+    "a": "37.60.241.176",
+    "raw": "NOERROR AN:A=37.60.241.176",
+    "category": "ocsudp"
+  },
+  "cc98.amnupower.com": {
+    "a": "167.86.90.75",
+    "raw": "NOERROR AN:A=167.86.90.75",
+    "category": "ocsudp"
+  },
+  "cc99.amnupower.com": {
+    "a": "169.58.101.195",
+    "raw": "NOERROR AN:A=169.58.101.195",
+    "category": "ocsudp"
+  },
+  "cc100.amnupower.com": {
+    "a": "169.58.100.236",
+    "raw": "NOERROR AN:A=169.58.100.236",
+    "category": "ocsudp"
+  },
+  "hh51.amnupower.com": {
+    "a": "161.97.148.110",
+    "raw": "NOERROR AN:A=161.97.148.110",
+    "category": "ocsudp"
+  },
+  "hh52.amnupower.com": {
+    "a": "169.58.203.239",
+    "raw": "NOERROR AN:A=169.58.203.239",
+    "category": "ocsudp"
+  },
+  "hh53.amnupower.com": {
+    "a": "161.97.172.235",
+    "raw": "NOERROR AN:A=161.97.172.235",
+    "category": "ocsudp"
+  },
+  "hh54.amnupower.com": {
+    "a": "169.58.212.131",
+    "raw": "NOERROR AN:A=169.58.212.131",
+    "category": "ocsudp"
+  },
+  "hh55.amnupower.com": {
+    "a": "169.58.214.136",
+    "raw": "NOERROR AN:A=169.58.214.136",
+    "category": "ocsudp"
+  },
+  "hh56.amnupower.com": {
+    "a": "62.171.154.140",
+    "raw": "NOERROR AN:A=62.171.154.140",
+    "category": "ocsudp"
+  },
+  "hh57.amnupower.com": {
+    "a": "155.133.27.178",
+    "raw": "NOERROR AN:A=155.133.27.178",
+    "category": "ocsudp"
+  },
+  "hh58.amnupower.com": {
+    "a": "169.58.198.173",
+    "raw": "NOERROR AN:A=169.58.198.173",
+    "category": "ocsudp"
+  },
+  "hh59.amnupower.com": {
+    "a": "185.196.20.205",
+    "raw": "NOERROR AN:A=185.196.20.205",
+    "category": "ocsudp"
+  },
+  "hh60.amnupower.com": {
+    "a": "161.97.75.169",
+    "raw": "NOERROR AN:A=161.97.75.169",
+    "category": "ocsudp"
+  },
+  "dd1.amnupower.com": {
+    "a": "162.19.209.215",
+    "raw": "NOERROR AN:A=162.19.209.215",
+    "category": "ocsudp"
+  },
+  "dd2.amnupower.com": {
+    "a": "169.58.99.3",
+    "raw": "NOERROR AN:A=169.58.99.3",
+    "category": "ocsudp"
+  },
+  "dd3.amnupower.com": {
+    "a": "13.140.144.41",
+    "raw": "NOERROR AN:A=13.140.144.41",
+    "category": "ocsudp"
+  },
+  "dd4.amnupower.com": {
+    "a": "57.129.117.58",
+    "raw": "NOERROR AN:A=57.129.117.58",
+    "category": "ocsudp"
+  },
+  "dd5.amnupower.com": {
+    "a": "37.60.240.224",
+    "raw": "NOERROR AN:A=37.60.240.224",
+    "category": "ocsudp"
+  },
+  "dd6.amnupower.com": {
+    "a": "13.140.143.160",
+    "raw": "NOERROR AN:A=13.140.143.160",
+    "category": "ocsudp"
+  },
+  "dd7.amnupower.com": {
+    "a": "13.140.142.226",
+    "raw": "NOERROR AN:A=13.140.142.226",
+    "category": "ocsudp"
+  },
+  "dd8.amnupower.com": {
+    "a": "155.133.26.26",
+    "raw": "NOERROR AN:A=155.133.26.26",
+    "category": "ocsudp"
+  },
+  "dd9.amnupower.com": {
+    "a": "157.173.124.120",
+    "raw": "NOERROR AN:A=157.173.124.120",
+    "category": "ocsudp"
+  },
+  "dd10.amnupower.com": {
+    "a": "159.173.140.86",
+    "raw": "NOERROR AN:A=159.173.140.86",
+    "category": "ocsudp"
+  },
+  "dd11.amnupower.com": {
+    "a": "157.173.121.108",
+    "raw": "NOERROR AN:A=157.173.121.108",
+    "category": "ocsudp"
+  },
+  "dd12.amnupower.com": {
+    "a": "169.58.251.7",
+    "raw": "NOERROR AN:A=169.58.251.7",
+    "category": "ocsudp"
+  },
+  "dd13.amnupower.com": {
+    "a": "157.173.107.22",
+    "raw": "NOERROR AN:A=157.173.107.22",
+    "category": "ocsudp"
+  },
+  "dd14.amnupower.com": {
+    "a": "157.173.100.105",
+    "raw": "NOERROR AN:A=157.173.100.105",
+    "category": "ocsudp"
+  },
+  "dd15.amnupower.com": {
+    "a": "185.250.37.115",
+    "raw": "NOERROR AN:A=185.250.37.115",
+    "category": "ocsudp"
+  },
+  "dd16.amnupower.com": {
+    "a": "156.67.29.189",
+    "raw": "NOERROR AN:A=156.67.29.189",
+    "category": "ocsudp"
+  },
+  "dd17.amnupower.com": {
+    "a": "185.197.250.60",
+    "raw": "NOERROR AN:A=185.197.250.60",
+    "category": "ocsudp"
+  },
+  "dd18.amnupower.com": {
+    "a": "62.169.25.227",
+    "raw": "NOERROR AN:A=62.169.25.227",
+    "category": "ocsudp"
+  },
+  "dd19.amnupower.com": {
+    "a": "84.247.141.204",
+    "raw": "NOERROR AN:A=84.247.141.204",
+    "category": "ocsudp"
+  },
+  "dd20.amnupower.com": {
+    "a": "213.199.60.103",
+    "raw": "NOERROR AN:A=213.199.60.103",
+    "category": "ocsudp"
+  },
+  "dd21.amnupower.com": {
+    "a": "84.247.134.21",
+    "raw": "NOERROR AN:A=84.247.134.21",
+    "category": "ocsudp"
+  },
+  "dd22.amnupower.com": {
+    "a": "84.247.133.99",
+    "raw": "NOERROR AN:A=84.247.133.99",
+    "category": "ocsudp"
+  },
+  "dd23.amnupower.com": {
+    "a": "62.84.185.221",
+    "raw": "NOERROR AN:A=62.84.185.221",
+    "category": "ocsudp"
+  },
+  "dd24.amnupower.com": {
+    "a": "213.199.45.180",
+    "raw": "NOERROR AN:A=213.199.45.180",
+    "category": "ocsudp"
+  },
+  "dd25.amnupower.com": {
+    "a": "169.58.161.0",
+    "raw": "NOERROR AN:A=169.58.161.0",
+    "category": "ocsudp"
+  },
+  "dd26.amnupower.com": {
+    "a": "213.199.42.11",
+    "raw": "NOERROR AN:A=213.199.42.11",
+    "category": "ocsudp"
+  },
+  "dd27.amnupower.com": {
+    "a": "169.58.251.42",
+    "raw": "NOERROR AN:A=169.58.251.42",
+    "category": "ocsudp"
+  },
+  "dd28.amnupower.com": {
+    "a": "109.199.114.243",
+    "raw": "NOERROR AN:A=109.199.114.243",
+    "category": "ocsudp"
+  },
+  "dd29.amnupower.com": {
+    "a": "109.199.114.192",
+    "raw": "NOERROR AN:A=109.199.114.192",
+    "category": "ocsudp"
+  },
+  "dd30.amnupower.com": {
+    "a": "109.199.110.203",
+    "raw": "NOERROR AN:A=109.199.110.203",
+    "category": "ocsudp"
+  },
+  "dd31.amnupower.com": {
+    "a": "31.220.85.25",
+    "raw": "NOERROR AN:A=31.220.85.25",
+    "category": "ocsudp"
+  },
+  "dd32.amnupower.com": {
+    "a": "169.58.65.45",
+    "raw": "NOERROR AN:A=169.58.65.45",
+    "category": "ocsudp"
+  },
+  "dd33.amnupower.com": {
+    "a": "144.91.114.157",
+    "raw": "NOERROR AN:A=144.91.114.157",
+    "category": "ocsudp"
+  },
+  "dd34.amnupower.com": {
+    "a": "13.140.209.92",
+    "raw": "NOERROR AN:A=13.140.209.92",
+    "category": "ocsudp"
+  },
+  "dd35.amnupower.com": {
+    "a": "185.197.195.115",
+    "raw": "NOERROR AN:A=185.197.195.115",
+    "category": "ocsudp"
+  },
+  "dd36.amnupower.com": {
+    "a": "161.97.71.7",
+    "raw": "NOERROR AN:A=161.97.71.7",
+    "category": "ocsudp"
+  },
+  "dd37.amnupower.com": {
+    "a": "158.220.125.44",
+    "raw": "NOERROR AN:A=158.220.125.44",
+    "category": "ocsudp"
+  },
+  "dd38.amnupower.com": {
+    "a": "95.111.235.14",
+    "raw": "NOERROR AN:A=95.111.235.14",
+    "category": "ocsudp"
+  },
+  "dd39.amnupower.com": {
+    "a": "62.171.138.59",
+    "raw": "NOERROR AN:A=62.171.138.59",
+    "category": "ocsudp"
+  },
+  "dd40.amnupower.com": {
+    "a": "62.171.128.98",
+    "raw": "NOERROR AN:A=62.171.128.98",
+    "category": "ocsudp"
+  },
+  "dd41.amnupower.com": {
+    "a": "167.86.87.77",
+    "raw": "NOERROR AN:A=167.86.87.77",
+    "category": "ocsudp"
+  },
+  "dd42.amnupower.com": {
+    "a": "193.46.243.127",
+    "raw": "NOERROR AN:A=193.46.243.127",
+    "category": "ocsudp"
+  },
+  "dd43.amnupower.com": {
+    "a": "185.182.186.86",
+    "raw": "NOERROR AN:A=185.182.186.86",
+    "category": "ocsudp"
+  },
+  "dd44.amnupower.com": {
+    "a": "109.199.107.21",
+    "raw": "NOERROR AN:A=109.199.107.21",
+    "category": "ocsudp"
+  },
+  "dd45.amnupower.com": {
+    "a": "89.116.26.252",
+    "raw": "NOERROR AN:A=89.116.26.252",
+    "category": "ocsudp"
+  },
+  "dd46.amnupower.com": {
+    "a": "144.91.81.87",
+    "raw": "NOERROR AN:A=144.91.81.87",
+    "category": "ocsudp"
+  },
+  "dd47.amnupower.com": {
+    "a": "169.58.89.7",
+    "raw": "NOERROR AN:A=169.58.89.7",
+    "category": "ocsudp"
+  },
+  "dd48.amnupower.com": {
+    "a": "38.242.199.12",
+    "raw": "NOERROR AN:A=38.242.199.12",
+    "category": "ocsudp"
+  },
+  "dd49.amnupower.com": {
+    "a": "169.58.88.151",
+    "raw": "NOERROR AN:A=169.58.88.151",
+    "category": "ocsudp"
+  },
+  "dd50.amnupower.com": {
+    "a": "84.247.161.198",
+    "raw": "NOERROR AN:A=84.247.161.198",
+    "category": "ocsudp"
+  },
+  "hh61.amnupower.com": {
+    "a": "185.169.252.8",
+    "raw": "NOERROR AN:A=185.169.252.8",
+    "category": "ocsudp"
+  },
+  "hh62.amnupower.com": {
+    "a": "95.111.237.72",
+    "raw": "NOERROR AN:A=95.111.237.72",
+    "category": "ocsudp"
+  },
+  "hh63.amnupower.com": {
+    "a": "62.171.191.61",
+    "raw": "NOERROR AN:A=62.171.191.61",
+    "category": "ocsudp"
+  },
+  "hh64.amnupower.com": {
+    "a": "109.123.253.0",
+    "raw": "NOERROR AN:A=109.123.253.0",
+    "category": "ocsudp"
+  },
+  "hh65.amnupower.com": {
+    "a": "169.58.214.252",
+    "raw": "NOERROR AN:A=169.58.214.252",
+    "category": "ocsudp"
+  },
+  "hh66.amnupower.com": {
+    "a": "178.18.244.100",
+    "raw": "NOERROR AN:A=178.18.244.100",
+    "category": "ocsudp"
+  },
+  "hh67.amnupower.com": {
+    "a": "185.241.151.147",
+    "raw": "NOERROR AN:A=185.241.151.147",
+    "category": "ocsudp"
+  },
+  "hh68.amnupower.com": {
+    "a": "178.18.241.79",
+    "raw": "NOERROR AN:A=178.18.241.79",
+    "category": "ocsudp"
+  },
+  "hh69.amnupower.com": {
+    "a": "139.144.212.163",
+    "raw": "NOERROR AN:A=139.144.212.163",
+    "category": "ocsudp"
+  },
+  "hh70.amnupower.com": {
+    "a": "161.97.136.199",
+    "raw": "NOERROR AN:A=161.97.136.199",
+    "category": "ocsudp"
+  },
+  "dd51.amnupower.com": {
+    "a": "83.171.248.179",
+    "raw": "NOERROR AN:A=83.171.248.179",
+    "category": "ocsudp"
+  },
+  "dd52.amnupower.com": {
+    "a": "169.58.141.90",
+    "raw": "NOERROR AN:A=169.58.141.90",
+    "category": "ocsudp"
+  },
+  "dd53.amnupower.com": {
+    "a": "169.58.143.1",
+    "raw": "NOERROR AN:A=169.58.143.1",
+    "category": "ocsudp"
+  },
+  "dd54.amnupower.com": {
+    "a": "169.58.142.204",
+    "raw": "NOERROR AN:A=169.58.142.204",
+    "category": "ocsudp"
+  },
+  "dd55.amnupower.com": {
+    "a": "161.97.133.148",
+    "raw": "NOERROR AN:A=161.97.133.148",
+    "category": "ocsudp"
+  },
+  "dd56.amnupower.com": {
+    "a": "161.97.127.143",
+    "raw": "NOERROR AN:A=161.97.127.143",
+    "category": "ocsudp"
+  },
+  "dd57.amnupower.com": {
+    "a": "185.202.236.155",
+    "raw": "NOERROR AN:A=185.202.236.155",
+    "category": "ocsudp"
+  },
+  "dd58.amnupower.com": {
+    "a": "158.220.117.95",
+    "raw": "NOERROR AN:A=158.220.117.95",
+    "category": "ocsudp"
+  },
+  "dd59.amnupower.com": {
+    "a": "217.76.49.62",
+    "raw": "NOERROR AN:A=217.76.49.62",
+    "category": "ocsudp"
+  },
+  "dd60.amnupower.com": {
+    "a": "109.199.110.156",
+    "raw": "NOERROR AN:A=109.199.110.156",
+    "category": "ocsudp"
+  },
+  "dd61.amnupower.com": {
+    "a": "109.199.97.196",
+    "raw": "NOERROR AN:A=109.199.97.196",
+    "category": "ocsudp"
+  },
+  "dd62.amnupower.com": {
+    "a": "84.247.166.17",
+    "raw": "NOERROR AN:A=84.247.166.17",
+    "category": "ocsudp"
+  },
+  "dd63.amnupower.com": {
+    "a": "169.58.92.124",
+    "raw": "NOERROR AN:A=169.58.92.124",
+    "category": "ocsudp"
+  },
+  "dd64.amnupower.com": {
+    "a": "169.58.92.126",
+    "raw": "NOERROR AN:A=169.58.92.126",
+    "category": "ocsudp"
+  },
+  "dd65.amnupower.com": {
+    "a": "185.217.127.193",
+    "raw": "NOERROR AN:A=185.217.127.193",
+    "category": "ocsudp"
+  },
+  "dd66.amnupower.com": {
+    "a": "176.57.189.126",
+    "raw": "NOERROR AN:A=176.57.189.126",
+    "category": "ocsudp"
+  },
+  "dd67.amnupower.com": {
+    "a": "62.171.132.53",
+    "raw": "NOERROR AN:A=62.171.132.53",
+    "category": "ocsudp"
+  },
+  "dd68.amnupower.com": {
+    "a": "161.97.75.20",
+    "raw": "NOERROR AN:A=161.97.75.20",
+    "category": "ocsudp"
+  },
+  "dd69.amnupower.com": {
+    "a": "185.194.216.57",
+    "raw": "NOERROR AN:A=185.194.216.57",
+    "category": "ocsudp"
+  },
+  "dd70.amnupower.com": {
+    "a": "207.180.219.50",
+    "raw": "NOERROR AN:A=207.180.219.50",
+    "category": "ocsudp"
+  },
+  "dd71.amnupower.com": {
+    "a": "169.58.173.114",
+    "raw": "NOERROR AN:A=169.58.173.114",
+    "category": "ocsudp"
+  },
+  "dd72.amnupower.com": {
+    "a": "169.58.244.115",
+    "raw": "NOERROR AN:A=169.58.244.115",
+    "category": "ocsudp"
+  },
+  "dd73.amnupower.com": {
+    "a": "158.220.119.162",
+    "raw": "NOERROR AN:A=158.220.119.162",
+    "category": "ocsudp"
+  },
+  "dd74.amnupower.com": {
+    "a": "13.140.209.137",
+    "raw": "NOERROR AN:A=13.140.209.137",
+    "category": "ocsudp"
+  },
+  "dd75.amnupower.com": {
+    "a": "13.140.209.132",
+    "raw": "NOERROR AN:A=13.140.209.132",
+    "category": "ocsudp"
+  },
+  "dd76.amnupower.com": {
+    "a": "185.192.96.168",
+    "raw": "NOERROR AN:A=185.192.96.168",
+    "category": "ocsudp"
+  },
+  "dd77.amnupower.com": {
+    "a": "38.242.199.95",
+    "raw": "NOERROR AN:A=38.242.199.95",
+    "category": "ocsudp"
+  },
+  "dd78.amnupower.com": {
+    "a": "212.90.121.46",
+    "raw": "NOERROR AN:A=212.90.121.46",
+    "category": "ocsudp"
+  },
+  "dd79.amnupower.com": {
+    "a": "13.140.209.131",
+    "raw": "NOERROR AN:A=13.140.209.131",
+    "category": "ocsudp"
+  },
+  "dd80.amnupower.com": {
+    "a": "217.76.49.237",
+    "raw": "NOERROR AN:A=217.76.49.237",
+    "category": "ocsudp"
+  },
+  "dd81.amnupower.com": {
+    "a": "45.88.223.30",
+    "raw": "NOERROR AN:A=45.88.223.30",
+    "category": "ocsudp"
+  },
+  "dd82.amnupower.com": {
+    "a": "38.242.236.215",
+    "raw": "NOERROR AN:A=38.242.236.215",
+    "category": "ocsudp"
+  },
+  "dd83.amnupower.com": {
+    "a": "38.242.238.100",
+    "raw": "NOERROR AN:A=38.242.238.100",
+    "category": "ocsudp"
+  },
+  "dd84.amnupower.com": {
+    "a": "109.199.105.132",
+    "raw": "NOERROR AN:A=109.199.105.132",
+    "category": "ocsudp"
+  },
+  "dd85.amnupower.com": {
+    "a": "185.192.97.25",
+    "raw": "NOERROR AN:A=185.192.97.25",
+    "category": "ocsudp"
+  },
+  "dd86.amnupower.com": {
+    "a": "185.177.116.32",
+    "raw": "NOERROR AN:A=185.177.116.32",
+    "category": "ocsudp"
+  },
+  "dd87.amnupower.com": {
+    "a": "161.97.138.180",
+    "raw": "NOERROR AN:A=161.97.138.180",
+    "category": "ocsudp"
+  },
+  "dd88.amnupower.com": {
+    "a": "45.67.217.228",
+    "raw": "NOERROR AN:A=45.67.217.228",
+    "category": "ocsudp"
+  },
+  "dd89.amnupower.com": {
+    "a": "84.46.245.191",
+    "raw": "NOERROR AN:A=84.46.245.191",
+    "category": "ocsudp"
+  },
+  "dd90.amnupower.com": {
+    "a": "194.163.169.8",
+    "raw": "NOERROR AN:A=194.163.169.8",
+    "category": "ocsudp"
+  },
+  "dd91.amnupower.com": {
+    "a": "86.48.0.202",
+    "raw": "NOERROR AN:A=86.48.0.202",
+    "category": "ocsudp"
+  },
+  "dd92.amnupower.com": {
+    "a": "161.97.138.226",
+    "raw": "NOERROR AN:A=161.97.138.226",
+    "category": "ocsudp"
+  },
+  "dd93.amnupower.com": {
+    "a": "185.190.143.51",
+    "raw": "NOERROR AN:A=185.190.143.51",
+    "category": "ocsudp"
+  },
+  "dd94.amnupower.com": {
+    "a": "13.140.209.147",
+    "raw": "NOERROR AN:A=13.140.209.147",
+    "category": "ocsudp"
+  },
+  "dd95.amnupower.com": {
+    "a": "185.190.142.214",
+    "raw": "NOERROR AN:A=185.190.142.214",
+    "category": "ocsudp"
+  },
+  "dd96.amnupower.com": {
+    "a": "192.145.37.59",
+    "raw": "NOERROR AN:A=192.145.37.59",
+    "category": "ocsudp"
+  },
+  "dd97.amnupower.com": {
+    "a": "86.48.5.33",
+    "raw": "NOERROR AN:A=86.48.5.33",
+    "category": "ocsudp"
+  },
+  "dd98.amnupower.com": {
+    "a": "13.140.209.143",
+    "raw": "NOERROR AN:A=13.140.209.143",
+    "category": "ocsudp"
+  },
+  "dd99.amnupower.com": {
+    "a": "178.18.242.191",
+    "raw": "NOERROR AN:A=178.18.242.191",
+    "category": "ocsudp"
+  },
+  "dd100.amnupower.com": {
+    "a": "31.220.85.109",
+    "raw": "NOERROR AN:A=31.220.85.109",
+    "category": "ocsudp"
+  },
+  "hh71.amnupower.com": {
+    "a": "158.220.109.98",
+    "raw": "NOERROR AN:A=158.220.109.98",
+    "category": "ocsudp"
+  },
+  "hh72.amnupower.com": {
+    "a": "109.123.244.43",
+    "raw": "NOERROR AN:A=109.123.244.43",
+    "category": "ocsudp"
+  },
+  "hh73.amnupower.com": {
+    "a": "13.140.209.72",
+    "raw": "NOERROR AN:A=13.140.209.72",
+    "category": "ocsudp"
+  },
+  "hh74.amnupower.com": {
+    "a": "185.225.232.71",
+    "raw": "NOERROR AN:A=185.225.232.71",
+    "category": "ocsudp"
+  },
+  "hh75.amnupower.com": {
+    "a": "161.97.125.250",
+    "raw": "NOERROR AN:A=161.97.125.250",
+    "category": "ocsudp"
+  },
+  "hh76.amnupower.com": {
+    "a": "178.18.253.45",
+    "raw": "NOERROR AN:A=178.18.253.45",
+    "category": "ocsudp"
+  },
+  "hh77.amnupower.com": {
+    "a": "178.18.255.39",
+    "raw": "NOERROR AN:A=178.18.255.39",
+    "category": "ocsudp"
+  },
+  "hh78.amnupower.com": {
+    "a": "144.91.105.43",
+    "raw": "NOERROR AN:A=144.91.105.43",
+    "category": "ocsudp"
+  },
+  "hh79.amnupower.com": {
+    "a": "169.58.213.41",
+    "raw": "NOERROR AN:A=169.58.213.41",
+    "category": "ocsudp"
+  },
+  "hh80.amnupower.com": {
+    "a": "172.237.163.10",
+    "raw": "NOERROR AN:A=172.237.163.10",
+    "category": "ocsudp"
+  },
+  "ee1.amnupower.com": {
+    "a": "161.97.158.132",
+    "raw": "NOERROR AN:A=161.97.158.132",
+    "category": "ocsudp"
+  },
+  "ee2.amnupower.com": {
+    "a": "31.220.94.140",
+    "raw": "NOERROR AN:A=31.220.94.140",
+    "category": "ocsudp"
+  },
+  "ee3.amnupower.com": {
+    "a": "161.97.159.11",
+    "raw": "NOERROR AN:A=161.97.159.11",
+    "category": "ocsudp"
+  },
+  "ee4.amnupower.com": {
+    "a": "194.163.175.140",
+    "raw": "NOERROR AN:A=194.163.175.140",
+    "category": "ocsudp"
+  },
+  "ee5.amnupower.com": {
+    "a": "185.190.143.71",
+    "raw": "NOERROR AN:A=185.190.143.71",
+    "category": "ocsudp"
+  },
+  "ee6.amnupower.com": {
+    "a": "194.163.154.201",
+    "raw": "NOERROR AN:A=194.163.154.201",
+    "category": "ocsudp"
+  },
+  "ee7.amnupower.com": {
+    "a": "185.190.143.217",
+    "raw": "NOERROR AN:A=185.190.143.217",
+    "category": "ocsudp"
+  },
+  "ee8.amnupower.com": {
+    "a": "45.130.104.149",
+    "raw": "NOERROR AN:A=45.130.104.149",
+    "category": "ocsudp"
+  },
+  "ee9.amnupower.com": {
+    "a": "194.34.232.178",
+    "raw": "NOERROR AN:A=194.34.232.178",
+    "category": "ocsudp"
+  },
+  "ee10.amnupower.com": {
+    "a": "109.123.250.104",
+    "raw": "NOERROR AN:A=109.123.250.104",
+    "category": "ocsudp"
+  },
+  "ee11.amnupower.com": {
+    "a": "185.230.138.182",
+    "raw": "NOERROR AN:A=185.230.138.182",
+    "category": "ocsudp"
+  },
+  "ee12.amnupower.com": {
+    "a": "62.171.179.217",
+    "raw": "NOERROR AN:A=62.171.179.217",
+    "category": "ocsudp"
+  },
+  "ee13.amnupower.com": {
+    "a": "185.190.143.206",
+    "raw": "NOERROR AN:A=185.190.143.206",
+    "category": "ocsudp"
+  },
+  "ee14.amnupower.com": {
+    "a": "161.97.152.200",
+    "raw": "NOERROR AN:A=161.97.152.200",
+    "category": "ocsudp"
+  },
+  "ee15.amnupower.com": {
+    "a": "169.58.110.168",
+    "raw": "NOERROR AN:A=169.58.110.168",
+    "category": "ocsudp"
+  },
+  "ee16.amnupower.com": {
+    "a": "194.163.138.159",
+    "raw": "NOERROR AN:A=194.163.138.159",
+    "category": "ocsudp"
+  },
+  "ee17.amnupower.com": {
+    "a": "109.205.176.235",
+    "raw": "NOERROR AN:A=109.205.176.235",
+    "category": "ocsudp"
+  },
+  "ee18.amnupower.com": {
+    "a": "194.60.87.130",
+    "raw": "NOERROR AN:A=194.60.87.130",
+    "category": "ocsudp"
+  },
+  "ee19.amnupower.com": {
+    "a": "169.58.29.159",
+    "raw": "NOERROR AN:A=169.58.29.159",
+    "category": "ocsudp"
+  },
+  "ee20.amnupower.com": {
+    "a": "185.137.122.69",
+    "raw": "NOERROR AN:A=185.137.122.69",
+    "category": "ocsudp"
+  },
+  "ee21.amnupower.com": {
+    "a": "178.18.249.221",
+    "raw": "NOERROR AN:A=178.18.249.221",
+    "category": "ocsudp"
+  },
+  "ee22.amnupower.com": {
+    "a": "185.239.208.141",
+    "raw": "NOERROR AN:A=185.239.208.141",
+    "category": "ocsudp"
+  },
+  "ee23.amnupower.com": {
+    "a": "185.190.142.114",
+    "raw": "NOERROR AN:A=185.190.142.114",
+    "category": "ocsudp"
+  },
+  "ee24.amnupower.com": {
+    "a": "51.79.102.147",
+    "raw": "NOERROR AN:A=51.79.102.147",
+    "category": "ocsudp"
+  },
+  "ee25.amnupower.com": {
+    "a": "185.252.234.63",
+    "raw": "NOERROR AN:A=185.252.234.63 AN:A=191.101.36.152",
+    "category": "ocsudp"
+  },
+  "ee26.amnupower.com": {
+    "a": "45.8.133.7",
+    "raw": "NOERROR AN:A=45.8.133.7",
+    "category": "ocsudp"
+  },
+  "ee27.amnupower.com": {
+    "a": "185.198.27.31",
+    "raw": "NOERROR AN:A=185.198.27.31",
+    "category": "ocsudp"
+  },
+  "ee28.amnupower.com": {
+    "a": "167.86.105.247",
+    "raw": "NOERROR AN:A=167.86.105.247",
+    "category": "ocsudp"
+  },
+  "ee29.amnupower.com": {
+    "a": "169.58.162.36",
+    "raw": "NOERROR AN:A=169.58.162.36",
+    "category": "ocsudp"
+  },
+  "ee30.amnupower.com": {
+    "a": "169.58.202.47",
+    "raw": "NOERROR AN:A=169.58.202.47",
+    "category": "ocsudp"
+  },
+  "ee31.amnupower.com": {
+    "a": "164.68.126.44",
+    "raw": "NOERROR AN:A=164.68.126.44",
+    "category": "ocsudp"
+  },
+  "ee32.amnupower.com": {
+    "a": "169.58.111.57",
+    "raw": "NOERROR AN:A=169.58.111.57",
+    "category": "ocsudp"
+  },
+  "ee33.amnupower.com": {
+    "a": "169.58.213.177",
+    "raw": "NOERROR AN:A=169.58.213.177",
+    "category": "ocsudp"
+  },
+  "ee34.amnupower.com": {
+    "a": "169.58.203.140",
+    "raw": "NOERROR AN:A=169.58.203.140",
+    "category": "ocsudp"
+  },
+  "ee35.amnupower.com": {
+    "a": "51.178.33.3",
+    "raw": "NOERROR AN:A=51.178.33.3",
+    "category": "ocsudp"
+  },
+  "ee36.amnupower.com": {
+    "a": "13.140.209.134",
+    "raw": "NOERROR AN:A=13.140.209.134",
+    "category": "ocsudp"
+  },
+  "ee37.amnupower.com": {
+    "a": "169.58.203.139",
+    "raw": "NOERROR AN:A=169.58.203.139",
+    "category": "ocsudp"
+  },
+  "ee38.amnupower.com": {
+    "a": "169.58.105.180",
+    "raw": "NOERROR AN:A=169.58.105.180",
+    "category": "ocsudp"
+  },
+  "ee39.amnupower.com": {
+    "a": "169.58.203.137",
+    "raw": "NOERROR AN:A=169.58.203.137",
+    "category": "ocsudp"
+  },
+  "ee40.amnupower.com": {
+    "a": "169.58.250.89",
+    "raw": "NOERROR AN:A=169.58.250.89",
+    "category": "ocsudp"
+  },
+  "ee41.amnupower.com": {
+    "a": "162.19.0.126",
+    "raw": "NOERROR AN:A=162.19.0.126",
+    "category": "ocsudp"
+  },
+  "ee42.amnupower.com": {
+    "a": "185.209.229.60",
+    "raw": "NOERROR AN:A=185.209.229.60",
+    "category": "ocsudp"
+  },
+  "ee43.amnupower.com": {
+    "a": "13.140.209.139",
+    "raw": "NOERROR AN:A=13.140.209.139",
+    "category": "ocsudp"
+  },
+  "ee44.amnupower.com": {
+    "a": "13.140.209.117",
+    "raw": "NOERROR AN:A=13.140.209.117",
+    "category": "ocsudp"
+  },
+  "ee45.amnupower.com": {
+    "a": "13.140.209.111",
+    "raw": "NOERROR AN:A=13.140.209.111",
+    "category": "ocsudp"
+  },
+  "ee46.amnupower.com": {
+    "a": "91.134.39.163",
+    "raw": "NOERROR AN:A=91.134.39.163",
+    "category": "ocsudp"
+  },
+  "ee47.amnupower.com": {
+    "a": "13.140.209.116",
+    "raw": "NOERROR AN:A=13.140.209.116",
+    "category": "ocsudp"
+  },
+  "ee48.amnupower.com": {
+    "a": "169.58.98.41",
+    "raw": "NOERROR AN:A=169.58.98.41",
+    "category": "ocsudp"
+  },
+  "ee49.amnupower.com": {
+    "a": "13.140.209.115",
+    "raw": "NOERROR AN:A=13.140.209.115",
+    "category": "ocsudp"
+  },
+  "ee50.amnupower.com": {
+    "a": "144.91.118.48",
+    "raw": "NOERROR AN:A=144.91.118.48",
+    "category": "ocsudp"
+  },
+  "hh81.amnupower.com": {
+    "a": "169.58.212.147",
+    "raw": "NOERROR AN:A=169.58.212.147",
+    "category": "ocsudp"
+  },
+  "hh82.amnupower.com": {
+    "a": "172.237.163.168",
+    "raw": "NOERROR AN:A=172.237.163.168",
+    "category": "ocsudp"
+  },
+  "hh83.amnupower.com": {
+    "a": "95.111.241.124",
+    "raw": "NOERROR AN:A=95.111.241.124",
+    "category": "ocsudp"
+  },
+  "hh84.amnupower.com": {
+    "a": "13.140.209.82",
+    "raw": "NOERROR AN:A=13.140.209.82",
+    "category": "ocsudp"
+  },
+  "hh85.amnupower.com": {
+    "a": "13.140.209.83",
+    "raw": "NOERROR AN:A=13.140.209.83",
+    "category": "ocsudp"
+  },
+  "hh86.amnupower.com": {
+    "a": "169.58.213.26",
+    "raw": "NOERROR AN:A=169.58.213.26",
+    "category": "ocsudp"
+  },
+  "hh87.amnupower.com": {
+    "a": "13.140.209.71",
+    "raw": "NOERROR AN:A=13.140.209.71",
+    "category": "ocsudp"
+  },
+  "hh88.amnupower.com": {
+    "a": "13.140.209.70",
+    "raw": "NOERROR AN:A=13.140.209.70",
+    "category": "ocsudp"
+  },
+  "hh89.amnupower.com": {
+    "a": "13.140.209.89",
+    "raw": "NOERROR AN:A=13.140.209.89",
+    "category": "ocsudp"
+  },
+  "hh90.amnupower.com": {
+    "a": "13.140.209.79",
+    "raw": "NOERROR AN:A=13.140.209.79",
+    "category": "ocsudp"
+  },
+  "ee51.amnupower.com": {
+    "a": "51.68.158.180",
+    "raw": "NOERROR AN:A=51.68.158.180",
+    "category": "ocsudp"
+  },
+  "ee52.amnupower.com": {
+    "a": "178.18.244.135",
+    "raw": "NOERROR AN:A=178.18.244.135",
+    "category": "ocsudp"
+  },
+  "ee53.amnupower.com": {
+    "a": "178.18.243.8",
+    "raw": "NOERROR AN:A=178.18.243.8",
+    "category": "ocsudp"
+  },
+  "ee54.amnupower.com": {
+    "a": "185.218.125.29",
+    "raw": "NOERROR AN:A=185.218.125.29",
+    "category": "ocsudp"
+  },
+  "ee55.amnupower.com": {
+    "a": "169.58.251.79",
+    "raw": "NOERROR AN:A=169.58.251.79",
+    "category": "ocsudp"
+  },
+  "ee56.amnupower.com": {
+    "a": "161.97.152.243",
+    "raw": "NOERROR AN:A=161.97.152.243",
+    "category": "ocsudp"
+  },
+  "ee57.amnupower.com": {
+    "a": "13.140.209.108",
+    "raw": "NOERROR AN:A=13.140.209.108",
+    "category": "ocsudp"
+  },
+  "ee58.amnupower.com": {
+    "a": "13.140.209.118",
+    "raw": "NOERROR AN:A=13.140.209.118",
+    "category": "ocsudp"
+  },
+  "ee59.amnupower.com": {
+    "a": "13.140.169.50",
+    "raw": "NOERROR AN:A=13.140.169.50",
+    "category": "ocsudp"
+  },
+  "ee60.amnupower.com": {
+    "a": "169.58.60.242",
+    "raw": "NOERROR AN:A=169.58.60.242",
+    "category": "ocsudp"
+  },
+  "ee61.amnupower.com": {
+    "a": "161.97.183.153",
+    "raw": "NOERROR AN:A=161.97.183.153",
+    "category": "ocsudp"
+  },
+  "ee62.amnupower.com": {
+    "a": "13.140.209.106",
+    "raw": "NOERROR AN:A=13.140.209.106",
+    "category": "ocsudp"
+  },
+  "ee63.amnupower.com": {
+    "a": "13.140.184.184",
+    "raw": "NOERROR AN:A=13.140.184.184",
+    "category": "ocsudp"
+  },
+  "ee64.amnupower.com": {
+    "a": "13.140.209.120",
+    "raw": "NOERROR AN:A=13.140.209.120",
+    "category": "ocsudp"
+  },
+  "ee65.amnupower.com": {
+    "a": "13.140.209.104",
+    "raw": "NOERROR AN:A=13.140.209.104",
+    "category": "ocsudp"
+  },
+  "ee66.amnupower.com": {
+    "a": "13.140.209.103",
+    "raw": "NOERROR AN:A=13.140.209.103",
+    "category": "ocsudp"
+  },
+  "ee67.amnupower.com": {
+    "a": "13.140.209.102",
+    "raw": "NOERROR AN:A=13.140.209.102",
+    "category": "ocsudp"
+  },
+  "ee68.amnupower.com": {
+    "a": "13.140.209.119",
+    "raw": "NOERROR AN:A=13.140.209.119",
+    "category": "ocsudp"
+  },
+  "ee69.amnupower.com": {
+    "a": "161.97.113.87",
+    "raw": "NOERROR AN:A=161.97.113.87",
+    "category": "ocsudp"
+  },
+  "ee70.amnupower.com": {
+    "a": "159.173.132.163",
+    "raw": "NOERROR AN:A=159.173.132.163",
+    "category": "ocsudp"
+  },
+  "ee71.amnupower.com": {
+    "a": "91.134.93.243",
+    "raw": "NOERROR AN:A=91.134.93.243",
+    "category": "ocsudp"
+  },
+  "ee72.amnupower.com": {
+    "a": "13.140.209.114",
+    "raw": "NOERROR AN:A=13.140.209.114",
+    "category": "ocsudp"
+  },
+  "ee73.amnupower.com": {
+    "a": "169.58.47.213",
+    "raw": "NOERROR AN:A=169.58.47.213",
+    "category": "ocsudp"
+  },
+  "ee74.amnupower.com": {
+    "a": "62.169.22.94",
+    "raw": "NOERROR AN:A=62.169.22.94",
+    "category": "ocsudp"
+  },
+  "ee75.amnupower.com": {
+    "a": "51.178.135.23",
+    "raw": "NOERROR AN:A=51.178.135.23",
+    "category": "ocsudp"
+  },
+  "ee76.amnupower.com": {
+    "a": "13.140.180.193",
+    "raw": "NOERROR AN:A=13.140.180.193",
+    "category": "ocsudp"
+  },
+  "ee77.amnupower.com": {
+    "a": "169.58.249.248",
+    "raw": "NOERROR AN:A=169.58.249.248",
+    "category": "ocsudp"
+  },
+  "ee78.amnupower.com": {
+    "a": "13.140.209.122",
+    "raw": "NOERROR AN:A=13.140.209.122",
+    "category": "ocsudp"
+  },
+  "ee79.amnupower.com": {
+    "a": "169.58.129.44",
+    "raw": "NOERROR AN:A=169.58.129.44",
+    "category": "ocsudp"
+  },
+  "ee80.amnupower.com": {
+    "a": "91.134.30.114",
+    "raw": "NOERROR AN:A=91.134.30.114",
+    "category": "ocsudp"
+  },
+  "ee81.amnupower.com": {
+    "a": "91.134.106.8",
+    "raw": "NOERROR AN:A=91.134.106.8",
+    "category": "ocsudp"
+  },
+  "ee82.amnupower.com": {
+    "a": "13.140.184.84",
+    "raw": "NOERROR AN:A=13.140.184.84",
+    "category": "ocsudp"
+  },
+  "ee83.amnupower.com": {
+    "a": "172.234.32.243",
+    "raw": "NOERROR AN:A=172.234.32.243",
+    "category": "ocsudp"
+  },
+  "ee84.amnupower.com": {
+    "a": "172.234.134.179",
+    "raw": "NOERROR AN:A=172.234.134.179",
+    "category": "ocsudp"
+  },
+  "ee85.amnupower.com": {
+    "a": "51.83.225.189",
+    "raw": "NOERROR AN:A=51.83.225.189",
+    "category": "ocsudp"
+  },
+  "ee86.amnupower.com": {
+    "a": "51.83.252.143",
+    "raw": "NOERROR AN:A=51.83.252.143",
+    "category": "ocsudp"
+  },
+  "ee87.amnupower.com": {
+    "a": "152.228.192.164",
+    "raw": "NOERROR AN:A=152.228.192.164",
+    "category": "ocsudp"
+  },
+  "ee88.amnupower.com": {
+    "a": "169.58.105.124",
+    "raw": "NOERROR AN:A=169.58.105.124",
+    "category": "ocsudp"
+  },
+  "ee89.amnupower.com": {
+    "a": "158.220.118.254",
+    "raw": "NOERROR AN:A=158.220.118.254",
+    "category": "ocsudp"
+  },
+  "ee90.amnupower.com": {
+    "a": "158.220.104.45",
+    "raw": "NOERROR AN:A=158.220.104.45",
+    "category": "ocsudp"
+  },
+  "ee91.amnupower.com": {
+    "a": "51.89.116.169",
+    "raw": "NOERROR AN:A=51.89.116.169",
+    "category": "ocsudp"
+  },
+  "ee92.amnupower.com": {
+    "a": "5.189.146.236",
+    "raw": "NOERROR AN:A=5.189.146.236",
+    "category": "ocsudp"
+  },
+  "ee93.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocsudp"
+  },
+  "ee94.amnupower.com": {
+    "a": "13.140.209.109",
+    "raw": "NOERROR AN:A=13.140.209.109",
+    "category": "ocsudp"
+  },
+  "ee95.amnupower.com": {
+    "a": "169.58.60.152",
+    "raw": "NOERROR AN:A=169.58.60.152",
+    "category": "ocsudp"
+  },
+  "ee96.amnupower.com": {
+    "a": "57.131.14.60",
+    "raw": "NOERROR AN:A=57.131.14.60",
+    "category": "ocsudp"
+  },
+  "ee97.amnupower.com": {
+    "a": "207.180.219.7",
+    "raw": "NOERROR AN:A=207.180.219.7",
+    "category": "ocsudp"
+  },
+  "ee98.amnupower.com": {
+    "a": "161.97.93.1",
+    "raw": "NOERROR AN:A=161.97.93.1",
+    "category": "ocsudp"
+  },
+  "ee99.amnupower.com": {
+    "a": "135.125.168.36",
+    "raw": "NOERROR AN:A=135.125.168.36",
+    "category": "ocsudp"
+  },
+  "ee100.amnupower.com": {
+    "a": "158.220.104.8",
+    "raw": "NOERROR AN:A=158.220.104.8",
+    "category": "ocsudp"
+  },
+  "hh91.amnupower.com": {
+    "a": "13.140.209.75",
+    "raw": "NOERROR AN:A=13.140.209.75",
+    "category": "ocsudp"
+  },
+  "hh92.amnupower.com": {
+    "a": "169.58.134.205",
+    "raw": "NOERROR AN:A=169.58.134.205",
+    "category": "ocsudp"
+  },
+  "hh93.amnupower.com": {
+    "a": "13.140.209.88",
+    "raw": "NOERROR AN:A=13.140.209.88",
+    "category": "ocsudp"
+  },
+  "hh94.amnupower.com": {
+    "a": "158.220.104.40",
+    "raw": "NOERROR AN:A=158.220.104.40",
+    "category": "ocsudp"
+  },
+  "hh95.amnupower.com": {
+    "a": "169.58.212.123",
+    "raw": "NOERROR AN:A=169.58.212.123",
+    "category": "ocsudp"
+  },
+  "hh96.amnupower.com": {
+    "a": "169.58.215.34",
+    "raw": "NOERROR AN:A=169.58.215.34",
+    "category": "ocsudp"
+  },
+  "hh97.amnupower.com": {
+    "a": "169.58.213.178",
+    "raw": "NOERROR AN:A=169.58.213.178",
+    "category": "ocsudp"
+  },
+  "hh98.amnupower.com": {
+    "a": "169.58.184.26",
+    "raw": "NOERROR AN:A=169.58.184.26",
+    "category": "ocsudp"
+  },
+  "hh99.amnupower.com": {
+    "a": "169.58.213.155",
+    "raw": "NOERROR AN:A=169.58.213.155",
+    "category": "ocsudp"
+  },
+  "hh100.amnupower.com": {
+    "a": "62.171.170.3",
+    "raw": "NOERROR AN:A=62.171.170.3",
+    "category": "ocsudp"
+  },
+  "ff1.amnupower.com": {
+    "a": "57.131.15.195",
+    "raw": "NOERROR AN:A=57.131.15.195",
+    "category": "ocsudp"
+  },
+  "ff2.amnupower.com": {
+    "a": "57.131.15.53",
+    "raw": "NOERROR AN:A=57.131.15.53",
+    "category": "ocsudp"
+  },
+  "ff3.amnupower.com": {
+    "a": "141.95.107.174",
+    "raw": "NOERROR AN:A=141.95.107.174",
+    "category": "ocsudp"
+  },
+  "ff4.amnupower.com": {
+    "a": "135.125.216.47",
+    "raw": "NOERROR AN:A=135.125.216.47",
+    "category": "ocsudp"
+  },
+  "ff5.amnupower.com": {
+    "a": "89.116.27.46",
+    "raw": "NOERROR AN:A=89.116.27.46",
+    "category": "ocsudp"
+  },
+  "ff6.amnupower.com": {
+    "a": "173.249.57.149",
+    "raw": "NOERROR AN:A=173.249.57.149",
+    "category": "ocsudp"
+  },
+  "ff7.amnupower.com": {
+    "a": "169.58.169.206",
+    "raw": "NOERROR AN:A=169.58.169.206",
+    "category": "ocsudp"
+  },
+  "ff8.amnupower.com": {
+    "a": "75.119.155.27",
+    "raw": "NOERROR AN:A=75.119.155.27",
+    "category": "ocsudp"
+  },
+  "ff9.amnupower.com": {
+    "a": "75.119.153.218",
+    "raw": "NOERROR AN:A=75.119.153.218",
+    "category": "ocsudp"
+  },
+  "ff10.amnupower.com": {
+    "a": "75.119.143.218",
+    "raw": "NOERROR AN:A=75.119.143.218",
+    "category": "ocsudp"
+  },
+  "ff11.amnupower.com": {
+    "a": "57.130.73.99",
+    "raw": "NOERROR AN:A=57.130.73.99",
+    "category": "ocsudp"
+  },
+  "ff12.amnupower.com": {
+    "a": "169.58.251.54",
+    "raw": "NOERROR AN:A=169.58.251.54",
+    "category": "ocsudp"
+  },
+  "ff13.amnupower.com": {
+    "a": "169.58.251.32",
+    "raw": "NOERROR AN:A=169.58.251.32",
+    "category": "ocsudp"
+  },
+  "ff14.amnupower.com": {
+    "a": "169.58.251.106",
+    "raw": "NOERROR AN:A=169.58.251.106",
+    "category": "ocsudp"
+  },
+  "ff15.amnupower.com": {
+    "a": "169.58.251.101",
+    "raw": "NOERROR AN:A=169.58.251.101",
+    "category": "ocsudp"
+  },
+  "ff16.amnupower.com": {
+    "a": "57.130.73.137",
+    "raw": "NOERROR AN:A=57.130.73.137",
+    "category": "ocsudp"
+  },
+  "ff17.amnupower.com": {
+    "a": "57.130.73.110",
+    "raw": "NOERROR AN:A=57.130.73.110",
+    "category": "ocsudp"
+  },
+  "ff18.amnupower.com": {
+    "a": "51.89.10.231",
+    "raw": "NOERROR AN:A=51.89.10.231",
+    "category": "ocsudp"
+  },
+  "ff19.amnupower.com": {
+    "a": "169.58.251.81",
+    "raw": "NOERROR AN:A=169.58.251.81",
+    "category": "ocsudp"
+  },
+  "ff20.amnupower.com": {
+    "a": "169.58.45.114",
+    "raw": "NOERROR AN:A=169.58.45.114",
+    "category": "ocsudp"
+  },
+  "ff21.amnupower.com": {
+    "a": "169.58.45.113",
+    "raw": "NOERROR AN:A=169.58.45.113",
+    "category": "ocsudp"
+  },
+  "ff22.amnupower.com": {
+    "a": "159.173.140.45",
+    "raw": "NOERROR AN:A=159.173.140.45",
+    "category": "ocsudp"
+  },
+  "ff23.amnupower.com": {
+    "a": "169.58.161.138",
+    "raw": "NOERROR AN:A=169.58.161.138",
+    "category": "ocsudp"
+  },
+  "ff24.amnupower.com": {
+    "a": "159.173.134.171",
+    "raw": "NOERROR AN:A=159.173.134.171",
+    "category": "ocsudp"
+  },
+  "ff25.amnupower.com": {
+    "a": "13.140.170.246",
+    "raw": "NOERROR AN:A=13.140.170.246",
+    "category": "ocsudp"
+  },
+  "ff26.amnupower.com": {
+    "a": "169.58.162.72",
+    "raw": "NOERROR AN:A=169.58.162.72",
+    "category": "ocsudp"
+  },
+  "ff27.amnupower.com": {
+    "a": "13.140.187.228",
+    "raw": "NOERROR AN:A=13.140.187.228",
+    "category": "ocsudp"
+  },
+  "ff28.amnupower.com": {
+    "a": "169.58.161.223",
+    "raw": "NOERROR AN:A=169.58.161.223",
+    "category": "ocsudp"
+  },
+  "ff29.amnupower.com": {
+    "a": "159.173.140.53",
+    "raw": "NOERROR AN:A=159.173.140.53",
+    "category": "ocsudp"
+  },
+  "ff30.amnupower.com": {
+    "a": "51.89.137.232",
+    "raw": "NOERROR AN:A=51.89.137.232",
+    "category": "ocsudp"
+  },
+  "ff31.amnupower.com": {
+    "a": "157.173.119.178",
+    "raw": "NOERROR AN:A=157.173.119.178",
+    "category": "ocsudp"
+  },
+  "ff32.amnupower.com": {
+    "a": "13.140.209.98",
+    "raw": "NOERROR AN:A=13.140.209.98",
+    "category": "ocsudp"
+  },
+  "ff33.amnupower.com": {
+    "a": "169.58.143.67",
+    "raw": "NOERROR AN:A=169.58.143.67",
+    "category": "ocsudp"
+  },
+  "ff34.amnupower.com": {
+    "a": "212.47.78.81",
+    "raw": "NOERROR AN:A=212.47.78.81",
+    "category": "ocsudp"
+  },
+  "ff35.amnupower.com": {
+    "a": "84.247.130.216",
+    "raw": "NOERROR AN:A=84.247.130.216",
+    "category": "ocsudp"
+  },
+  "ff36.amnupower.com": {
+    "a": "169.58.251.88",
+    "raw": "NOERROR AN:A=169.58.251.88",
+    "category": "ocsudp"
+  },
+  "ff37.amnupower.com": {
+    "a": "169.58.251.44",
+    "raw": "NOERROR AN:A=169.58.251.44",
+    "category": "ocsudp"
+  },
+  "ff38.amnupower.com": {
+    "a": "156.67.26.78",
+    "raw": "NOERROR AN:A=156.67.26.78",
+    "category": "ocsudp"
+  },
+  "ff39.amnupower.com": {
+    "a": "169.58.250.38",
+    "raw": "NOERROR AN:A=169.58.250.38",
+    "category": "ocsudp"
+  },
+  "ff40.amnupower.com": {
+    "a": "169.58.250.126",
+    "raw": "NOERROR AN:A=169.58.250.126",
+    "category": "ocsudp"
+  },
+  "ff41.amnupower.com": {
+    "a": "77.237.245.225",
+    "raw": "NOERROR AN:A=77.237.245.225",
+    "category": "ocsudp"
+  },
+  "ff42.amnupower.com": {
+    "a": "169.58.250.81",
+    "raw": "NOERROR AN:A=169.58.250.81",
+    "category": "ocsudp"
+  },
+  "ff43.amnupower.com": {
+    "a": "169.58.244.92",
+    "raw": "NOERROR AN:A=169.58.244.92",
+    "category": "ocsudp"
+  },
+  "ff44.amnupower.com": {
+    "a": "77.237.247.243",
+    "raw": "NOERROR AN:A=77.237.247.243",
+    "category": "ocsudp"
+  },
+  "ff45.amnupower.com": {
+    "a": "169.58.250.49",
+    "raw": "NOERROR AN:A=169.58.250.49",
+    "category": "ocsudp"
+  },
+  "ff46.amnupower.com": {
+    "a": "109.199.121.211",
+    "raw": "NOERROR AN:A=109.199.121.211",
+    "category": "ocsudp"
+  },
+  "ff47.amnupower.com": {
+    "a": "109.199.101.149",
+    "raw": "NOERROR AN:A=109.199.101.149",
+    "category": "ocsudp"
+  },
+  "ff48.amnupower.com": {
+    "a": "13.140.187.83",
+    "raw": "NOERROR AN:A=13.140.187.83",
+    "category": "ocsudp"
+  },
+  "ff49.amnupower.com": {
+    "a": "109.199.124.175",
+    "raw": "NOERROR AN:A=109.199.124.175",
+    "category": "ocsudp"
+  },
+  "ff50.amnupower.com": {
+    "a": "169.58.161.36",
+    "raw": "NOERROR AN:A=169.58.161.36",
+    "category": "ocsudp"
+  },
+  "ff51.amnupower.com": {
+    "a": "37.60.247.30",
+    "raw": "NOERROR AN:A=37.60.247.30",
+    "category": "ocsudp"
+  },
+  "ff52.amnupower.com": {
+    "a": "130.185.119.35",
+    "raw": "NOERROR AN:A=130.185.119.35",
+    "category": "ocsudp"
+  },
+  "ff53.amnupower.com": {
+    "a": "158.220.96.85",
+    "raw": "NOERROR AN:A=158.220.96.85",
+    "category": "ocsudp"
+  },
+  "ff54.amnupower.com": {
+    "a": "169.58.250.70",
+    "raw": "NOERROR AN:A=169.58.250.70",
+    "category": "ocsudp"
+  },
+  "ff55.amnupower.com": {
+    "a": "31.220.76.150",
+    "raw": "NOERROR AN:A=31.220.76.150",
+    "category": "ocsudp"
+  },
+  "ff56.amnupower.com": {
+    "a": "169.58.250.101",
+    "raw": "NOERROR AN:A=169.58.250.101",
+    "category": "ocsudp"
+  },
+  "ff57.amnupower.com": {
+    "a": "169.58.143.0",
+    "raw": "NOERROR AN:A=169.58.143.0",
+    "category": "ocsudp"
+  },
+  "ff58.amnupower.com": {
+    "a": "75.119.133.190",
+    "raw": "NOERROR AN:A=75.119.133.190",
+    "category": "ocsudp"
+  },
+  "ff59.amnupower.com": {
+    "a": "161.97.184.26",
+    "raw": "NOERROR AN:A=161.97.184.26",
+    "category": "ocsudp"
+  },
+  "ff60.amnupower.com": {
+    "a": "161.97.170.90",
+    "raw": "NOERROR AN:A=161.97.170.90",
+    "category": "ocsudp"
+  },
+  "ff61.amnupower.com": {
+    "a": "213.199.45.93",
+    "raw": "NOERROR AN:A=213.199.45.93",
+    "category": "ocsudp"
+  },
+  "ff62.amnupower.com": {
+    "a": "161.97.116.187",
+    "raw": "NOERROR AN:A=161.97.116.187",
+    "category": "ocsudp"
+  },
+  "ff63.amnupower.com": {
+    "a": "169.58.142.237",
+    "raw": "NOERROR AN:A=169.58.142.237",
+    "category": "ocsudp"
+  },
+  "ff64.amnupower.com": {
+    "a": "185.215.165.13",
+    "raw": "NOERROR AN:A=185.215.165.13",
+    "category": "ocsudp"
+  },
+  "ff65.amnupower.com": {
+    "a": "161.97.115.181",
+    "raw": "NOERROR AN:A=161.97.115.181",
+    "category": "ocsudp"
+  },
+  "ff66.amnupower.com": {
+    "a": "161.97.105.45",
+    "raw": "NOERROR AN:A=161.97.105.45",
+    "category": "ocsudp"
+  },
+  "ff67.amnupower.com": {
+    "a": "169.58.142.218",
+    "raw": "NOERROR AN:A=169.58.142.218",
+    "category": "ocsudp"
+  },
+  "ff68.amnupower.com": {
+    "a": "185.255.131.118",
+    "raw": "NOERROR AN:A=185.255.131.118",
+    "category": "ocsudp"
+  },
+  "ff69.amnupower.com": {
+    "a": "169.58.142.215",
+    "raw": "NOERROR AN:A=169.58.142.215",
+    "category": "ocsudp"
+  },
+  "ff70.amnupower.com": {
+    "a": "169.58.142.214",
+    "raw": "NOERROR AN:A=169.58.142.214",
+    "category": "ocsudp"
+  },
+  "ff71.amnupower.com": {
+    "a": "217.76.63.67",
+    "raw": "NOERROR AN:A=217.76.63.67",
+    "category": "ocsudp"
+  },
+  "ff72.amnupower.com": {
+    "a": "164.68.104.154",
+    "raw": "NOERROR AN:A=164.68.104.154",
+    "category": "ocsudp"
+  },
+  "ff73.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocsudp"
+  },
+  "ff74.amnupower.com": {
+    "a": "51.89.227.180",
+    "raw": "NOERROR AN:A=51.89.227.180",
+    "category": "ocsudp"
+  },
+  "ff75.amnupower.com": {
+    "a": "185.197.249.97",
+    "raw": "NOERROR AN:A=185.197.249.97",
+    "category": "ocsudp"
+  },
+  "ff76.amnupower.com": {
+    "a": "169.58.142.203",
+    "raw": "NOERROR AN:A=169.58.142.203",
+    "category": "ocsudp"
+  },
+  "ff77.amnupower.com": {
+    "a": "169.58.142.201",
+    "raw": "NOERROR AN:A=169.58.142.201",
+    "category": "ocsudp"
+  },
+  "ff78.amnupower.com": {
+    "a": "169.58.250.36",
+    "raw": "NOERROR AN:A=169.58.250.36",
+    "category": "ocsudp"
+  },
+  "ff79.amnupower.com": {
+    "a": "169.58.142.178",
+    "raw": "NOERROR AN:A=169.58.142.178",
+    "category": "ocsudp"
+  },
+  "ff80.amnupower.com": {
+    "a": "198.244.142.222",
+    "raw": "NOERROR AN:A=198.244.142.222",
+    "category": "ocsudp"
+  },
+  "ff81.amnupower.com": {
+    "a": "51.68.158.240",
+    "raw": "NOERROR AN:A=51.68.158.240",
+    "category": "ocsudp"
+  },
+  "ff82.amnupower.com": {
+    "a": "13.140.168.202",
+    "raw": "NOERROR AN:A=13.140.168.202",
+    "category": "ocsudp"
+  },
+  "ff83.amnupower.com": {
+    "a": "169.58.250.79",
+    "raw": "NOERROR AN:A=169.58.250.79",
+    "category": "ocsudp"
+  },
+  "ff84.amnupower.com": {
+    "a": "169.58.250.41",
+    "raw": "NOERROR AN:A=169.58.250.41",
+    "category": "ocsudp"
+  },
+  "ff85.amnupower.com": {
+    "a": "51.77.40.109",
+    "raw": "NOERROR AN:A=51.77.40.109",
+    "category": "ocsudp"
+  },
+  "ff86.amnupower.com": {
+    "a": "169.58.250.139",
+    "raw": "NOERROR AN:A=169.58.250.139",
+    "category": "ocsudp"
+  },
+  "ff87.amnupower.com": {
+    "a": "51.68.156.20",
+    "raw": "NOERROR AN:A=51.68.156.20",
+    "category": "ocsudp"
+  },
+  "ff88.amnupower.com": {
+    "a": "161.97.167.219",
+    "raw": "NOERROR AN:A=161.97.167.219",
+    "category": "ocsudp"
+  },
+  "ff89.amnupower.com": {
+    "a": "84.247.134.125",
+    "raw": "NOERROR AN:A=84.247.134.125",
+    "category": "ocsudp"
+  },
+  "ff90.amnupower.com": {
+    "a": "169.58.250.76",
+    "raw": "NOERROR AN:A=169.58.250.76",
+    "category": "ocsudp"
+  },
+  "ff91.amnupower.com": {
+    "a": "169.58.250.74",
+    "raw": "NOERROR AN:A=169.58.250.74",
+    "category": "ocsudp"
+  },
+  "ff92.amnupower.com": {
+    "a": "185.202.238.131",
+    "raw": "NOERROR AN:A=185.202.238.131",
+    "category": "ocsudp"
+  },
+  "ff93.amnupower.com": {
+    "a": "158.220.99.82",
+    "raw": "NOERROR AN:A=158.220.99.82",
+    "category": "ocsudp"
+  },
+  "ff94.amnupower.com": {
+    "a": "194.163.169.32",
+    "raw": "NOERROR AN:A=194.163.169.32",
+    "category": "ocsudp"
+  },
+  "ff95.amnupower.com": {
+    "a": "169.58.250.58",
+    "raw": "NOERROR AN:A=169.58.250.58",
+    "category": "ocsudp"
+  },
+  "ff96.amnupower.com": {
+    "a": "169.58.91.191",
+    "raw": "NOERROR AN:A=169.58.91.191",
+    "category": "ocsudp"
+  },
+  "ff97.amnupower.com": {
+    "a": "169.58.45.112",
+    "raw": "NOERROR AN:A=169.58.45.112",
+    "category": "ocsudp"
+  },
+  "ff98.amnupower.com": {
+    "a": "169.58.45.111",
+    "raw": "NOERROR AN:A=169.58.45.111",
+    "category": "ocsudp"
+  },
+  "ff99.amnupower.com": {
+    "a": "84.46.251.234",
+    "raw": "NOERROR AN:A=84.46.251.234",
+    "category": "ocsudp"
+  },
+  "ff100.amnupower.com": {
+    "a": "169.58.135.161",
+    "raw": "NOERROR AN:A=169.58.135.161",
+    "category": "ocsudp"
+  },
+  "gg1.amnupower.com": {
+    "a": "169.58.45.109",
+    "raw": "NOERROR AN:A=169.58.45.109",
+    "category": "ocsudp"
+  },
+  "gg2.amnupower.com": {
+    "a": "169.58.13.41",
+    "raw": "NOERROR AN:A=169.58.13.41",
+    "category": "ocsudp"
+  },
+  "gg3.amnupower.com": {
+    "a": "169.58.11.82",
+    "raw": "NOERROR AN:A=169.58.11.82",
+    "category": "ocsudp"
+  },
+  "gg4.amnupower.com": {
+    "a": "169.58.9.27",
+    "raw": "NOERROR AN:A=169.58.9.27",
+    "category": "ocsudp"
+  },
+  "gg5.amnupower.com": {
+    "a": "144.91.81.86",
+    "raw": "NOERROR AN:A=144.91.81.86",
+    "category": "ocsudp"
+  },
+  "gg6.amnupower.com": {
+    "a": "13.140.187.42",
+    "raw": "NOERROR AN:A=13.140.187.42",
+    "category": "ocsudp"
+  },
+  "gg7.amnupower.com": {
+    "a": "212.47.64.151",
+    "raw": "NOERROR AN:A=212.47.64.151",
+    "category": "ocsudp"
+  },
+  "gg8.amnupower.com": {
+    "a": "62.84.186.9",
+    "raw": "NOERROR AN:A=62.84.186.9",
+    "category": "ocsudp"
+  },
+  "gg9.amnupower.com": {
+    "a": "62.169.26.210",
+    "raw": "NOERROR AN:A=62.169.26.210",
+    "category": "ocsudp"
+  },
+  "gg10.amnupower.com": {
+    "a": "185.182.186.166",
+    "raw": "NOERROR AN:A=185.182.186.166",
+    "category": "ocsudp"
+  },
+  "gg11.amnupower.com": {
+    "a": "169.58.250.52",
+    "raw": "NOERROR AN:A=169.58.250.52",
+    "category": "ocsudp"
+  },
+  "gg12.amnupower.com": {
+    "a": "173.212.242.229",
+    "raw": "NOERROR AN:A=173.212.242.229",
+    "category": "ocsudp"
+  },
+  "gg13.amnupower.com": {
+    "a": "169.58.250.112",
+    "raw": "NOERROR AN:A=169.58.250.112",
+    "category": "ocsudp"
+  },
+  "gg14.amnupower.com": {
+    "a": "167.86.124.156",
+    "raw": "NOERROR AN:A=167.86.124.156",
+    "category": "ocsudp"
+  },
+  "gg15.amnupower.com": {
+    "a": "169.58.250.47",
+    "raw": "NOERROR AN:A=169.58.250.47",
+    "category": "ocsudp"
+  },
+  "gg16.amnupower.com": {
+    "a": "169.58.249.246",
+    "raw": "NOERROR AN:A=169.58.249.246",
+    "category": "ocsudp"
+  },
+  "gg17.amnupower.com": {
+    "a": "167.86.120.83",
+    "raw": "NOERROR AN:A=167.86.120.83",
+    "category": "ocsudp"
+  },
+  "gg18.amnupower.com": {
+    "a": "169.58.227.50",
+    "raw": "NOERROR AN:A=169.58.227.50",
+    "category": "ocsudp"
+  },
+  "gg19.amnupower.com": {
+    "a": "169.58.250.13",
+    "raw": "NOERROR AN:A=169.58.250.13",
+    "category": "ocsudp"
+  },
+  "gg20.amnupower.com": {
+    "a": "91.229.245.171",
+    "raw": "NOERROR AN:A=91.229.245.171",
+    "category": "ocsudp"
+  },
+  "gg21.amnupower.com": {
+    "a": "85.190.254.39",
+    "raw": "NOERROR AN:A=85.190.254.39",
+    "category": "ocsudp"
+  },
+  "gg22.amnupower.com": {
+    "a": "185.215.167.191",
+    "raw": "NOERROR AN:A=185.215.167.191",
+    "category": "ocsudp"
+  },
+  "gg23.amnupower.com": {
+    "a": "194.242.56.178",
+    "raw": "NOERROR AN:A=194.242.56.178",
+    "category": "ocsudp"
+  },
+  "gg24.amnupower.com": {
+    "a": "194.60.87.167",
+    "raw": "NOERROR AN:A=194.60.87.167",
+    "category": "ocsudp"
+  },
+  "gg25.amnupower.com": {
+    "a": "185.194.217.220",
+    "raw": "NOERROR AN:A=185.194.217.220",
+    "category": "ocsudp"
+  },
+  "gg26.amnupower.com": {
+    "a": "62.169.26.7",
+    "raw": "NOERROR AN:A=62.169.26.7",
+    "category": "ocsudp"
+  },
+  "gg27.amnupower.com": {
+    "a": "167.86.89.219",
+    "raw": "NOERROR AN:A=167.86.89.219",
+    "category": "ocsudp"
+  },
+  "gg28.amnupower.com": {
+    "a": "167.86.87.235",
+    "raw": "NOERROR AN:A=167.86.87.235",
+    "category": "ocsudp"
+  },
+  "gg29.amnupower.com": {
+    "a": "207.180.252.164",
+    "raw": "NOERROR AN:A=207.180.252.164",
+    "category": "ocsudp"
+  },
+  "gg30.amnupower.com": {
+    "a": "173.212.198.57",
+    "raw": "NOERROR AN:A=173.212.198.57",
+    "category": "ocsudp"
+  },
+  "gg31.amnupower.com": {
+    "a": "169.58.237.217",
+    "raw": "NOERROR AN:A=169.58.237.217",
+    "category": "ocsudp"
+  },
+  "gg32.amnupower.com": {
+    "a": "5.189.143.144",
+    "raw": "NOERROR AN:A=5.189.143.144",
+    "category": "ocsudp"
+  },
+  "gg33.amnupower.com": {
+    "a": "207.180.232.185",
+    "raw": "NOERROR AN:A=207.180.232.185",
+    "category": "ocsudp"
+  },
+  "gg34.amnupower.com": {
+    "a": "207.180.209.177",
+    "raw": "NOERROR AN:A=207.180.209.177",
+    "category": "ocsudp"
+  },
+  "gg35.amnupower.com": {
+    "a": "173.249.27.111",
+    "raw": "NOERROR AN:A=173.249.27.111",
+    "category": "ocsudp"
+  },
+  "gg36.amnupower.com": {
+    "a": "173.212.225.3",
+    "raw": "NOERROR AN:A=173.212.225.3",
+    "category": "ocsudp"
+  },
+  "gg37.amnupower.com": {
+    "a": "173.212.238.9",
+    "raw": "NOERROR AN:A=173.212.238.9",
+    "category": "ocsudp"
+  },
+  "gg38.amnupower.com": {
+    "a": "169.58.231.164",
+    "raw": "NOERROR AN:A=169.58.231.164",
+    "category": "ocsudp"
+  },
+  "gg39.amnupower.com": {
+    "a": "169.58.250.7",
+    "raw": "NOERROR AN:A=169.58.250.7",
+    "category": "ocsudp"
+  },
+  "gg40.amnupower.com": {
+    "a": "81.17.100.214",
+    "raw": "NOERROR AN:A=81.17.100.214",
+    "category": "ocsudp"
+  },
+  "gg41.amnupower.com": {
+    "a": "169.58.232.106",
+    "raw": "NOERROR AN:A=169.58.232.106",
+    "category": "ocsudp"
+  },
+  "gg42.amnupower.com": {
+    "a": "213.199.56.204",
+    "raw": "NOERROR AN:A=213.199.56.204",
+    "category": "ocsudp"
+  },
+  "gg43.amnupower.com": {
+    "a": "57.129.89.57",
+    "raw": "NOERROR AN:A=57.129.89.57",
+    "category": "ocsudp"
+  },
+  "gg44.amnupower.com": {
+    "a": "169.58.250.1",
+    "raw": "NOERROR AN:A=169.58.250.1",
+    "category": "ocsudp"
+  },
+  "gg45.amnupower.com": {
+    "a": "89.117.57.31",
+    "raw": "NOERROR AN:A=89.117.57.31",
+    "category": "ocsudp"
+  },
+  "gg46.amnupower.com": {
+    "a": "185.197.251.122",
+    "raw": "NOERROR AN:A=185.197.251.122",
+    "category": "ocsudp"
+  },
+  "gg47.amnupower.com": {
+    "a": "169.58.235.137",
+    "raw": "NOERROR AN:A=169.58.235.137",
+    "category": "ocsudp"
+  },
+  "gg48.amnupower.com": {
+    "a": "169.58.135.160",
+    "raw": "NOERROR AN:A=169.58.135.160",
+    "category": "ocsudp"
+  },
+  "gg49.amnupower.com": {
+    "a": "169.58.244.137",
+    "raw": "NOERROR AN:A=169.58.244.137",
+    "category": "ocsudp"
+  },
+  "gg50.amnupower.com": {
+    "a": "169.58.219.240",
+    "raw": "NOERROR AN:A=169.58.219.240",
+    "category": "ocsudp"
+  },
+  "gg51.amnupower.com": {
+    "a": "169.58.249.251",
+    "raw": "NOERROR AN:A=169.58.249.251",
+    "category": "ocsudp"
+  },
+  "gg52.amnupower.com": {
+    "a": "169.58.250.3",
+    "raw": "NOERROR AN:A=169.58.250.3",
+    "category": "ocsudp"
+  },
+  "gg53.amnupower.com": {
+    "a": "217.76.54.227",
+    "raw": "NOERROR AN:A=217.76.54.227",
+    "category": "ocsudp"
+  },
+  "gg54.amnupower.com": {
+    "a": "81.17.100.156",
+    "raw": "NOERROR AN:A=81.17.100.156",
+    "category": "ocsudp"
+  },
+  "gg55.amnupower.com": {
+    "a": "169.58.250.15",
+    "raw": "NOERROR AN:A=169.58.250.15",
+    "category": "ocsudp"
+  },
+  "gg56.amnupower.com": {
+    "a": "169.58.237.118",
+    "raw": "NOERROR AN:A=169.58.237.118",
+    "category": "ocsudp"
+  },
+  "gg57.amnupower.com": {
+    "a": "169.58.9.51",
+    "raw": "NOERROR AN:A=169.58.9.51",
+    "category": "ocsudp"
+  },
+  "gg58.amnupower.com": {
+    "a": "161.97.85.232",
+    "raw": "NOERROR AN:A=161.97.85.232",
+    "category": "ocsudp"
+  },
+  "gg59.amnupower.com": {
+    "a": "152.228.252.227",
+    "raw": "NOERROR AN:A=152.228.252.227",
+    "category": "ocsudp"
+  },
+  "gg60.amnupower.com": {
+    "a": "95.111.246.154",
+    "raw": "NOERROR AN:A=95.111.246.154",
+    "category": "ocsudp"
+  },
+  "gg61.amnupower.com": {
+    "a": "184.174.33.107",
+    "raw": "NOERROR AN:A=184.174.33.107",
+    "category": "ocsudp"
+  },
+  "gg62.amnupower.com": {
+    "a": "169.58.217.68",
+    "raw": "NOERROR AN:A=169.58.217.68",
+    "category": "ocsudp"
+  },
+  "gg63.amnupower.com": {
+    "a": "169.58.221.250",
+    "raw": "NOERROR AN:A=169.58.221.250",
+    "category": "ocsudp"
+  },
+  "gg64.amnupower.com": {
+    "a": "152.228.255.221",
+    "raw": "NOERROR AN:A=152.228.255.221",
+    "category": "ocsudp"
+  },
+  "gg65.amnupower.com": {
+    "a": "169.58.217.100",
+    "raw": "NOERROR AN:A=169.58.217.100",
+    "category": "ocsudp"
+  },
+  "gg66.amnupower.com": {
+    "a": "185.194.219.201",
+    "raw": "NOERROR AN:A=185.194.219.201",
+    "category": "ocsudp"
+  },
+  "gg67.amnupower.com": {
+    "a": "169.58.249.252",
+    "raw": "NOERROR AN:A=169.58.249.252",
+    "category": "ocsudp"
+  },
+  "gg68.amnupower.com": {
+    "a": "79.143.190.230",
+    "raw": "NOERROR AN:A=79.143.190.230",
+    "category": "ocsudp"
+  },
+  "gg69.amnupower.com": {
+    "a": "152.228.252.113",
+    "raw": "NOERROR AN:A=152.228.252.113",
+    "category": "ocsudp"
+  },
+  "gg70.amnupower.com": {
+    "a": "207.180.201.145",
+    "raw": "NOERROR AN:A=207.180.201.145",
+    "category": "ocsudp"
+  },
+  "gg71.amnupower.com": {
+    "a": "173.212.214.78",
+    "raw": "NOERROR AN:A=173.212.214.78",
+    "category": "ocsudp"
+  },
+  "gg72.amnupower.com": {
+    "a": "169.58.244.127",
+    "raw": "NOERROR AN:A=169.58.244.127",
+    "category": "ocsudp"
+  },
+  "gg73.amnupower.com": {
+    "a": "164.132.87.161",
+    "raw": "NOERROR AN:A=164.132.87.161",
+    "category": "ocsudp"
+  },
+  "gg74.amnupower.com": {
+    "a": "169.58.172.225",
+    "raw": "NOERROR AN:A=169.58.172.225",
+    "category": "ocsudp"
+  },
+  "gg75.amnupower.com": {
+    "a": "169.58.244.126",
+    "raw": "NOERROR AN:A=169.58.244.126",
+    "category": "ocsudp"
+  },
+  "gg76.amnupower.com": {
+    "a": "169.58.250.24",
+    "raw": "NOERROR AN:A=169.58.250.24",
+    "category": "ocsudp"
+  },
+  "gg77.amnupower.com": {
+    "a": "169.58.235.107",
+    "raw": "NOERROR AN:A=169.58.235.107",
+    "category": "ocsudp"
+  },
+  "gg78.amnupower.com": {
+    "a": "169.58.222.187",
+    "raw": "NOERROR AN:A=169.58.222.187",
+    "category": "ocsudp"
+  },
+  "gg79.amnupower.com": {
+    "a": "169.58.244.125",
+    "raw": "NOERROR AN:A=169.58.244.125",
+    "category": "ocsudp"
+  },
+  "gg80.amnupower.com": {
+    "a": "169.58.94.77",
+    "raw": "NOERROR AN:A=169.58.94.77",
+    "category": "ocsudp"
+  },
+  "gg81.amnupower.com": {
+    "a": "169.58.226.9",
+    "raw": "NOERROR AN:A=169.58.226.9",
+    "category": "ocsudp"
+  },
+  "gg82.amnupower.com": {
+    "a": "169.58.244.110",
+    "raw": "NOERROR AN:A=169.58.244.110",
+    "category": "ocsudp"
+  },
+  "gg83.amnupower.com": {
+    "a": "169.58.244.106",
+    "raw": "NOERROR AN:A=169.58.244.106",
+    "category": "ocsudp"
+  },
+  "gg84.amnupower.com": {
+    "a": "169.58.189.147",
+    "raw": "NOERROR AN:A=169.58.189.147",
+    "category": "ocsudp"
+  },
+  "gg85.amnupower.com": {
+    "a": "173.249.40.22",
+    "raw": "NOERROR AN:A=173.249.40.22",
+    "category": "ocsudp"
+  },
+  "gg86.amnupower.com": {
+    "a": "172.234.158.244",
+    "raw": "NOERROR AN:A=172.234.158.244",
+    "category": "ocsudp"
+  },
+  "gg87.amnupower.com": {
+    "a": "158.220.103.156",
+    "raw": "NOERROR AN:A=158.220.103.156",
+    "category": "ocsudp"
+  },
+  "gg88.amnupower.com": {
+    "a": "169.58.244.84",
+    "raw": "NOERROR AN:A=169.58.244.84",
+    "category": "ocsudp"
+  },
+  "gg89.amnupower.com": {
+    "a": "13.140.147.33",
+    "raw": "NOERROR AN:A=13.140.147.33",
+    "category": "ocsudp"
+  },
+  "gg90.amnupower.com": {
+    "a": "169.58.244.81",
+    "raw": "NOERROR AN:A=169.58.244.81",
+    "category": "ocsudp"
+  },
+  "gg91.amnupower.com": {
+    "a": "169.58.244.51",
+    "raw": "NOERROR AN:A=169.58.244.51",
+    "category": "ocsudp"
+  },
+  "gg92.amnupower.com": {
+    "a": "169.58.214.193",
+    "raw": "NOERROR AN:A=169.58.214.193",
+    "category": "ocsudp"
+  },
+  "gg93.amnupower.com": {
+    "a": "185.192.96.191",
+    "raw": "NOERROR AN:A=185.192.96.191",
+    "category": "ocsudp"
+  },
+  "gg94.amnupower.com": {
+    "a": "13.140.137.141",
+    "raw": "NOERROR AN:A=13.140.137.141",
+    "category": "ocsudp"
+  },
+  "gg95.amnupower.com": {
+    "a": "45.13.59.24",
+    "raw": "NOERROR AN:A=45.13.59.24",
+    "category": "ocsudp"
+  },
+  "gg96.amnupower.com": {
+    "a": "139.144.200.187",
+    "raw": "NOERROR AN:A=139.144.200.187",
+    "category": "ocsudp"
+  },
+  "gg97.amnupower.com": {
+    "a": "212.47.79.51",
+    "raw": "NOERROR AN:A=212.47.79.51",
+    "category": "ocsudp"
+  },
+  "gg98.amnupower.com": {
+    "a": "31.220.76.29",
+    "raw": "NOERROR AN:A=31.220.76.29",
+    "category": "ocsudp"
+  },
+  "gg99.amnupower.com": {
+    "a": "89.117.56.121",
+    "raw": "NOERROR AN:A=89.117.56.121",
+    "category": "ocsudp"
+  },
+  "gg100.amnupower.com": {
+    "a": "185.208.206.166",
+    "raw": "NOERROR AN:A=185.208.206.166",
+    "category": "ocsudp"
+  },
+  "pq1.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq2.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq3.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq4.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq5.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq6.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq7.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq8.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq9.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq10.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq11.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq12.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq13.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq14.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq15.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq16.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq17.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq18.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq19.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq20.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq21.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq22.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq23.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq24.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq25.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq26.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq27.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq28.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq29.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq30.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq31.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq32.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq33.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq34.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq35.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq36.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq37.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq38.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq39.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq40.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq41.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq42.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq43.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq44.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq45.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq46.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq47.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq48.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq49.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq50.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq51.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq52.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq53.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq54.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq55.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq56.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq57.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq58.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq59.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq60.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq61.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq62.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq63.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq64.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq65.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq66.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq67.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq68.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq69.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq70.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq71.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq72.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq73.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq74.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq75.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq76.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq77.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq78.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq79.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq80.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq81.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq82.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq83.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq84.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq85.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq86.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq87.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq88.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq89.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq90.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq91.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq92.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq93.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq94.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq95.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq96.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq97.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq98.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq99.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pq100.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt1.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt2.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt3.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt4.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt5.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt6.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt7.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt8.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt9.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt10.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt11.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt12.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt13.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt14.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt15.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt16.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt17.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt18.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt19.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt20.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt21.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt22.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt23.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt24.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt25.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt26.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt27.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt28.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt29.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt30.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt31.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt32.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt33.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt34.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt35.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt36.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt37.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt38.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt39.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt40.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt41.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt42.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt43.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt44.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt45.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt46.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt47.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt48.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt49.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt50.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt51.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt52.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt53.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt54.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt55.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt56.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt57.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt58.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt59.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt60.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt61.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt62.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt63.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt64.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt65.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt66.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt67.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt68.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt69.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt70.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt71.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt72.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt73.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt74.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt75.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt76.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt77.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt78.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt79.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt80.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt81.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt82.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt83.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt84.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt85.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt86.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt87.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt88.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt89.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt90.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt91.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt92.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt93.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt94.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt95.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt96.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt97.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt98.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt99.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pt100.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu1.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu2.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu3.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu4.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu5.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu6.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu7.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu8.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu9.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu10.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu11.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu12.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu13.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu14.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu15.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu16.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu17.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu18.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu19.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu20.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu21.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu22.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu23.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu24.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu25.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu26.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu27.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu28.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu29.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu30.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu31.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu32.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu33.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu34.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu35.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu36.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu37.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu38.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu39.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu40.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu41.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu42.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu43.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu44.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu45.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu46.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu47.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu48.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu49.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu50.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu51.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu52.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu53.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu54.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu55.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu56.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu57.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu58.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu59.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu60.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu61.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu62.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu63.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu64.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu65.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu66.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu67.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu68.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu69.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "pu70.amnupower.com": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocspdoq"
+  },
+  "Um1.apnaghost.xyz": {
+    "a": "161.97.68.120",
+    "raw": "NOERROR AN:A=161.97.68.120",
+    "category": "ocsnormal"
+  },
+  "Um2.apnaghost.xyz": {
+    "a": "161.97.68.38",
+    "raw": "NOERROR AN:A=161.97.68.38",
+    "category": "ocsnormal"
+  },
+  "Um3.apnaghost.xyz": {
+    "a": "161.97.67.211",
+    "raw": "NOERROR AN:A=161.97.67.211",
+    "category": "ocsnormal"
+  },
+  "Um4.apnaghost.xyz": {
+    "a": "195.88.87.34",
+    "raw": "NOERROR AN:A=195.88.87.34",
+    "category": "ocsnormal"
+  },
+  "Um5.apnaghost.xyz": {
+    "a": "95.111.239.140",
+    "raw": "NOERROR AN:A=95.111.239.140",
+    "category": "ocsnormal"
+  },
+  "Um6.apnaghost.xyz": {
+    "a": "144.91.85.74",
+    "raw": "NOERROR AN:A=144.91.85.74",
+    "category": "ocsnormal"
+  },
+  "Um7.apnaghost.xyz": {
+    "a": "217.76.59.4",
+    "raw": "NOERROR AN:A=217.76.59.4",
+    "category": "ocsnormal"
+  },
+  "Um8.apnaghost.xyz": {
+    "a": "194.242.56.170",
+    "raw": "NOERROR AN:A=194.242.56.170",
+    "category": "ocsnormal"
+  },
+  "Um9.apnaghost.xyz": {
+    "a": "169.58.230.230",
+    "raw": "NOERROR AN:A=169.58.230.230",
+    "category": "ocsnormal"
+  },
+  "Um10.apnaghost.xyz": {
+    "a": "217.76.59.8",
+    "raw": "NOERROR AN:A=217.76.59.8",
+    "category": "ocsnormal"
+  },
+  "Um11.apnaghost.xyz": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocsnormal"
+  },
+  "Um12.apnaghost.xyz": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocsnormal"
+  },
+  "Um13.apnaghost.xyz": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocsnormal"
+  },
+  "Um14.apnaghost.xyz": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocsnormal"
+  },
+  "Um15.apnaghost.xyz": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocsnormal"
+  },
+  "Um16.apnaghost.xyz": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocsnormal"
+  },
+  "Um17.apnaghost.xyz": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocsnormal"
+  },
+  "Um18.apnaghost.xyz": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocsnormal"
+  },
+  "Um19.apnaghost.xyz": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocsnormal"
+  },
+  "Um20.apnaghost.xyz": {
+    "a": null,
+    "raw": "NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com",
+    "category": "ocsnormal"
+  }
+}
