@@ -291,18 +291,19 @@ jobs:
           cd /tmp/a
           R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
           mkdir -p "$R"
+          python3 "$GITHUB_WORKSPACE/tools/resolve_paranoid_source.py" decrypted.tsv src /tmp/res2 > /dev/null 2>&1
           {
             echo "### files that mention SocksDNS / libdns"
-            grep -rl "SocksDNS\|libdns" /tmp/resolved src 2>/dev/null | head -10
-            for f in $(grep -rl "libdns" /tmp/resolved src 2>/dev/null | head -4); do
+            grep -rl "SocksDNS\|libdns" /tmp/res2 src 2>/dev/null | head -10
+            for f in $(grep -rl "libdns" /tmp/res2 src 2>/dev/null | head -4); do
               echo
               echo "=================== $f"
               grep -nE 'libdns|"-|pubkey|ProcessBuilder|arrayList.add|startsWith|split|addAll|new String\[' "$f" | head -70
             done
-            F=$(find /tmp/resolved -name 'SocksDNSService.java' | head -1)
+            F=$(find /tmp/res2 -name 'SocksDNSService.java' | head -1)
             echo
             echo "=================== full $F"
-            sed -n '300,520p' "$F" 2>/dev/null
+            sed -n '1,240p' "$F" 2>/dev/null
           } > "$R/dnstt-code.txt" 2>&1
           {
             for lib in libdns libsuperdns libudpq libpdoq libxray; do
@@ -318,7 +319,14 @@ jobs:
             echo "--- printable key-ish strings in libdns.so"
             strings -n 8 libs/libdns/libdns.so 2>/dev/null | grep -iE "pubkey|dnstt|prince|noise|handshake" | sort -u | head -20
           } > "$R/dnstt-keys.txt" 2>&1
-          head -40 "$R/dnstt-code.txt"; echo; head -30 "$R/dnstt-keys.txt"
+          head -60 "$R/dnstt-code.txt"; echo; head -30 "$R/dnstt-keys.txt"
+          chmod +x "$GITHUB_WORKSPACE/tools/bin/dnstt-client-linux-amd64"
+          python3 "$GITHUB_WORKSPACE/tools/dnstt_hunt.py" \
+            --catalogue "$GITHUB_WORKSPACE/analysis-amtunnel/report/janny-decoded.json" \
+            --keys-file "$R/dnstt-keys.txt" \
+            --client "$GITHUB_WORKSPACE/tools/bin/dnstt-client-linux-amd64" \
+            --out "$R/dnstt-test.txt" --probe-limit 6 --max-hosts 2 --max-keys 2 \
+            --max-domains 2 --seconds 20 2>&1 | tail -40
 
       - name: Where does the server list come from
         run: |
@@ -457,6 +465,7 @@ jobs:
           cp superdns-abi.txt "$DEST/report/superdns-abi.txt" 2>/dev/null
           cp dnstt-code.txt "$DEST/report/dnstt-code.txt" 2>/dev/null
           cp dnstt-keys.txt "$DEST/report/dnstt-keys.txt" 2>/dev/null
+          cp dnstt-test.txt "$DEST/report/dnstt-test.txt" 2>/dev/null
           cd "$GITHUB_WORKSPACE"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
