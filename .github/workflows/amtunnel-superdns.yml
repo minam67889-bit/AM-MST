@@ -488,6 +488,29 @@ jobs:
             "$GITHUB_WORKSPACE/analysis-amtunnel/report/janny-decoded.json" \
             "$R/dnstt-sweep.txt" --threads 24 2>&1 | head -70
 
+      - name: Positive control - a real DNS tunnel that loads Instagram
+        run: |
+          set +e
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          B="$GITHUB_WORKSPACE/tools"
+          cd /tmp
+          "$B/bin/dnstt-server-linux-amd64" -gen-key -privkey-file /tmp/ctl.key -pubkey-file /tmp/ctl.pub > /dev/null 2>&1
+          echo "control pubkey: $(cat /tmp/ctl.pub)"
+          python3 "$B/socks5_server.py" 11080 180 > /tmp/socks5.log 2>&1 &
+          sleep 1
+          setsid "$B/bin/dnstt-server-linux-amd64" -udp 127.0.0.1:5353 -privkey-file /tmp/ctl.key \
+            t.control 127.0.0.1:11080 > /tmp/ctl-server.log 2>&1 &
+          sleep 2
+          chmod +x "$B/bin/dnstt-client-linux-amd64"
+          python3 "$B/amtunnel_dnstt_e2e.py" \
+            --client "$B/bin/dnstt-client-linux-amd64" \
+            --hosts t.control --keys "$(cat /tmp/ctl.pub)" \
+            --resolver 127.0.0.1:5353 \
+            --url https://www.instagram.com/ --seconds 40 \
+            --out "$R/dnstt-control.txt" 2>&1 | tail -40
+          echo "--- server log"; tail -10 /tmp/ctl-server.log
+          pkill -f 'dnstt-server' ; pkill -f socks5_server.py
+
       - name: dnstt - load a real page through AM TUNNEL's SuperDNS
         run: |
           set +e
@@ -525,6 +548,7 @@ jobs:
           cp libdns-what.txt "$DEST/report/libdns-what.txt" 2>/dev/null
           cp dnstt-sweep.txt "$DEST/report/dnstt-sweep.txt" 2>/dev/null
           cp dnstt-live.txt "$DEST/report/dnstt-live.txt" 2>/dev/null
+          cp dnstt-control.txt "$DEST/report/dnstt-control.txt" 2>/dev/null
           cd "$GITHUB_WORKSPACE"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"

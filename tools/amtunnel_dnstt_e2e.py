@@ -45,12 +45,14 @@ def resolve(host: str) -> str | None:
 
 
 def attempt(client: str, ip: str, key: str, domain: str, port: int,
-            urls: list[str], seconds: float) -> dict:
-    argv = [client, "-udp", f"{ip}:53", "-pubkey", key, domain, f"127.0.0.1:{port}"]
+            urls: list[str], seconds: float, resolver: str | None = None) -> dict:
+    resolver = resolver or f"{ip}:53"
+    argv = [client, "-udp", resolver, "-pubkey", key, domain, f"127.0.0.1:{port}"]
     log = tempfile.TemporaryFile()
     proc = subprocess.Popen(argv, stdout=log, stderr=subprocess.STDOUT)
     started = time.time()
-    result: dict = {"ip": ip, "key": key, "domain": domain, "socks": False, "fetches": []}
+    result: dict = {"ip": ip, "resolver": resolver, "key": key, "domain": domain,
+                    "socks": False, "fetches": []}
     try:
         result["socks"] = wait_port(port, 10)
         if result["socks"]:
@@ -79,6 +81,7 @@ def main() -> None:
     ap.add_argument("--keys", default=",".join(DEFAULT_KEYS))
     ap.add_argument("--url", action="append")
     ap.add_argument("--seconds", type=float, default=25.0)
+    ap.add_argument("--resolver", help="override the -udp resolver (control runs)")
     ap.add_argument("--out", default="analysis-amtunnel/report/dnstt-live.txt")
     args = ap.parse_args()
 
@@ -90,8 +93,8 @@ def main() -> None:
     winner: dict | None = None
     port = 23000
     for host in hosts:
-        ip = resolve(host)
-        domain = f"sl{host}"
+        ip = resolve(host) or (args.resolver.split(":")[0] if args.resolver else None)
+        domain = host if args.resolver else f"sl{host}"
         lines.append(f"=== {host} -> {ip}, tunnel domain {domain}")
         if not ip:
             lines.append("  no A record")
@@ -99,7 +102,7 @@ def main() -> None:
         for key in keys:
             port += 1
             lines.append(f"--- key {key[:16]}… on {ip}:53")
-            result = attempt(args.client, ip, key, domain, port, urls, args.seconds)
+            result = attempt(args.client, ip, key, domain, port, urls, args.seconds, args.resolver)
             lines.append(f"    socks={result['socks']} begin_session={result['begin_session']} "
                          f"stream={'yes' if any('begin stream' in x for x in result['log']) else 'no'} "
                          f"ecdh_error={'yes' if any('ecdh' in x for x in result['log']) else 'no'}")
