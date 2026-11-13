@@ -1,17 +1,34 @@
-### file
-ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /system/bin/linker64, for Android 21, built by NDK r19c (5345600), stripped
+### the shipped binary cannot be executed off-Android:
+###   it is an Android ELF whose interpreter is /system/bin/linker64
 
-### -h
-timeout: failed to execute process: No such file or directory (os error 2)
+=== sa1.supaghost.cc  A=169.58.203.175  (NOERROR AN:A=169.58.203.175)
+  @169.58.203.175 sa1.supaghost.cc                   UDP NXDOMAIN (34B)  <- the domain itself
+  @169.58.203.175 slsa1.supaghost.cc                 UDP NXDOMAIN (36B)  <- SuperService builds 'sl' + host
+  @169.58.203.175 atgrcnce.sa1.supaghost.cc          UDP NXDOMAIN (43B)  <- random tunnel label
+  @169.58.203.175 TCP 53 TCP ConnectionRefusedError: [Errno 111] Connection refused
 
-=== sa1.supaghost.cc via 8.8.8.8:53
-timeout: failed to execute process: No such file or directory (os error 2)
-/home/runner/work/_temp/34d30304-0744-4a8d-8c7b-083c019daecc.sh: line 41: -udp: command not found
-/home/runner/work/_temp/34d30304-0744-4a8d-8c7b-083c019daecc.sh: line 42: -pubkey: command not found
-exit=0
+=== sa2.supaghost.cc  A=169.58.203.174  (NOERROR AN:A=169.58.203.174)
+  @169.58.203.174 sa2.supaghost.cc                   UDP NXDOMAIN (34B)  <- the domain itself
+  @169.58.203.174 slsa2.supaghost.cc                 UDP NXDOMAIN (36B)  <- SuperService builds 'sl' + host
+  @169.58.203.174 iqvhrirm.sa2.supaghost.cc          UDP NXDOMAIN (43B)  <- random tunnel label
+  @169.58.203.174 TCP 53 TCP ConnectionRefusedError: [Errno 111] Connection refused
 
-=== gg1.apnacp.xyz via 8.8.8.8:53
-timeout: failed to execute process: No such file or directory (os error 2)
-/home/runner/work/_temp/34d30304-0744-4a8d-8c7b-083c019daecc.sh: line 41: -udp: command not found
-/home/runner/work/_temp/34d30304-0744-4a8d-8c7b-083c019daecc.sh: line 42: -pubkey: command not found
-exit=0
+=== sa25.supaghost.cc  A=169.58.203.155  (NOERROR AN:A=169.58.203.155)
+  @169.58.203.155 sa25.supaghost.cc                  UDP NXDOMAIN (35B)  <- the domain itself
+  @169.58.203.155 slsa25.supaghost.cc                UDP NXDOMAIN (37B)  <- SuperService builds 'sl' + host
+  @169.58.203.155 tmkmcfcb.sa25.supaghost.cc         UDP NXDOMAIN (44B)  <- random tunnel label
+  @169.58.203.155 TCP 53 TCP ConnectionRefusedError: [Errno 111] Connection refused
+
+=== sa50.supaghost.cc  A=169.58.202.238  (NOERROR AN:A=169.58.202.238)
+  @169.58.202.238 sa50.supaghost.cc                  UDP NXDOMAIN (35B)  <- the domain itself
+  @169.58.202.238 slsa50.supaghost.cc                UDP NXDOMAIN (37B)  <- SuperService builds 'sl' + host
+  @169.58.202.238 lxhucyvz.sa50.supaghost.cc         UDP NXDOMAIN (44B)  <- random tunnel label
+  @169.58.202.238 TCP 53 TCP ConnectionRefusedError: [Errno 111] Connection refused
+
+=== gg1.apnacp.xyz  A=84.247.176.22  (NOERROR AN:A=84.247.176.22)
+  @84.247.176.22 gg1.apnacp.xyz                     no answer (TimeoutError)  <- the domain itself
+  @84.247.176.22 slgg1.apnacp.xyz                   no answer (TimeoutError)  <- SuperService builds 'sl' + host
+  @84.247.176.22 jlwzivqy.gg1.apnacp.xyz            no answer (TimeoutError)  <- random tunnel label
+  @84.247.176.22 TCP 53 TCP ConnectionRefusedError: [Errno 111] Connection refused
+
+
