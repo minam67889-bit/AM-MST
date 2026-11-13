@@ -488,6 +488,16 @@ jobs:
             "$GITHUB_WORKSPACE/analysis-amtunnel/report/janny-decoded.json" \
             "$R/dnstt-sweep.txt" --threads 24 2>&1 | head -70
 
+      - name: dnstt - load a real page through AM TUNNEL's SuperDNS
+        run: |
+          set +e
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          chmod +x "$GITHUB_WORKSPACE/tools/bin/dnstt-client-linux-amd64"
+          python3 "$GITHUB_WORKSPACE/tools/amtunnel_dnstt_e2e.py" \
+            --client "$GITHUB_WORKSPACE/tools/bin/dnstt-client-linux-amd64" \
+            --hosts sa1.supaghost.cc,sa11.supaghost.cc \
+            --seconds 20 --out "$R/dnstt-live.txt" 2>&1 | tail -60
+
       - name: Commit
         if: always()
         run: |
@@ -512,6 +522,7 @@ jobs:
           cp dnstt-service.txt "$DEST/report/dnstt-service.txt" 2>/dev/null
           cp libdns-what.txt "$DEST/report/libdns-what.txt" 2>/dev/null
           cp dnstt-sweep.txt "$DEST/report/dnstt-sweep.txt" 2>/dev/null
+          cp dnstt-live.txt "$DEST/report/dnstt-live.txt" 2>/dev/null
           cd "$GITHUB_WORKSPACE"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
