@@ -192,9 +192,11 @@ def main() -> None:
             best = (s, perm)
         if s == 1.0:
             break
-    print(f"best ordering score: {best[0]:.3f} with {len(best[1])} chunks")
     if best[1] is None:
+        print("no ordering produced readable text - dumping diagnostics")
+        print(f"sample ids={ids[:5]} candidates={[len(c) for c in candidates]}")
         raise SystemExit("could not order the chunks")
+    print(f"best ordering score: {best[0]:.3f} with {len(best[1])} chunks")
     chunks = list(best[1])
 
     rows = []

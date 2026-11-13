@@ -154,8 +154,8 @@ jobs:
           cd /tmp/a
           R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
           mkdir -p "$R"
-          grep -rhoE "\$app\.getString\((-?[0-9]+)L?\)" src 2>/dev/null | \
-            grep -oE "[-0-9]+" | sort -u > ids.txt
+          grep -rhoE 'Deobfuscator\$[A-Za-z0-9_$]+\$app\.getString\(-?[0-9]+L?\)' src 2>/dev/null \
+            | grep -oE '[-0-9]+' | sort -u > ids.txt
           echo "ids: $(wc -l < ids.txt)"
           {
             echo "### attempt 1: apktool smali"
@@ -164,6 +164,10 @@ jobs:
             timeout 600 apktool d -f -r -o smali apk.apk > apktool.log 2>&1
             echo "exit=$?"; tail -5 apktool.log
             find smali -name '*Deobfuscator*' | head -5
+            SM=$(find smali -name 'Deobfuscator$AMTUNNELLITE$app.smali' | head -1)
+            echo "--- $SM ($(wc -l < "$SM" 2>/dev/null) lines)"
+            head -30 "$SM" 2>/dev/null
+            grep -nE "const-string|filled-new-array|array-data|sput-object|String\[" "$SM" 2>/dev/null | head -12
             python3 "$GITHUB_WORKSPACE/tools/extract_paranoid_chunks.py" smali chunks.txt 2>&1 | head -5
             awk '{print length}' chunks.txt 2>/dev/null | head -5
             echo
