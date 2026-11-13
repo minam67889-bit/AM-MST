@@ -72,9 +72,11 @@ def main() -> None:
         seen.setdefault(category, set())
         unique: list[str] = []
         for host in hosts:
-            if host not in seen[category]:
-                seen[category].add(host)
+            # group 6 repeats the hosts of groups 1-5 on purpose; keep every
+            # group intact and dedupe only for the category totals below.
+            if host not in unique:
                 unique.append(host)
+            seen[category].add(host)
         groups[category].append({
             "name": entry.get("server_name", ""),
             "hosts": unique,
@@ -98,10 +100,11 @@ def main() -> None:
             transports[entry["category"]].append(payload)
 
     def host_count(category: str) -> int:
-        return sum(g["host_count"] for g in groups.get(category, []))
+        return len(seen.get(category, set()))
 
     def alive_count(category: str) -> int:
-        return sum(g["alive"] for g in groups.get(category, []))
+        return sum(1 for host in seen.get(category, set())
+                   if (census.get(host, {}) or {}).get("a"))
 
     document = {
         "schema": "am-tunnel-superdns/1",
