@@ -162,7 +162,7 @@ jobs:
             python3 "$GITHUB_WORKSPACE/tools/extract_paranoid_chunks.py" smali chunks.txt 2>&1 | tail -2
             echo
             echo "### ids: smali (complete) + jadx"
-            grep -rhoE 'getString\(\s*-?[0-9]+L?\s*\)' smali 2>/dev/null | grep -oE '[-0-9]+' | sort -u > ids-smali.txt
+            python3 "$GITHUB_WORKSPACE/tools/ids_from_smali.py" smali ids-smali.txt | tail -1
             grep -rhoE 'getString\(\s*-?[0-9]+L?\s*\)' src 2>/dev/null | grep -oE '[-0-9]+' | sort -u > ids-jadx.txt
             sort -u ids-smali.txt ids-jadx.txt > ids.txt
             echo "smali=$(wc -l < ids-smali.txt) jadx=$(wc -l < ids-jadx.txt) total=$(wc -l < ids.txt)"
@@ -292,33 +292,43 @@ jobs:
           R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
           G="$GITHUB_WORKSPACE/analysis-amtunnel/code-resolved"
           mkdir -p "$R" "$G"
+          # The prefs keys only exist after the ids are resolved, so resolve the
+          # whole tree first and grep the readable copy.
+          python3 "$GITHUB_WORKSPACE/tools/resolve_paranoid_source.py" decrypted.tsv src /tmp/resolved > /tmp/res.log 2>&1
+          tail -1 /tmp/res.log
           {
-            echo "### every http(s) url in the whole apktool tree"
-            grep -rhoE "https?://[A-Za-z0-9._~:/?#@!$&'()*+,;=%-]{6,160}" smali 2>/dev/null \
-              | sed 's/[.,;)]*$//' | sort -u | grep -viE "schemas.android|w3.org|apache.org|xmlpull|json.org|ns.adobe|purl.org|github.com/google|goo.gl" | head -60
+            echo "### who writes SSH_HOST"
+            grep -rn "SSH_HOST" /tmp/resolved 2>/dev/null | head -20
             echo
-            echo "### files mentioning SSH_HOST"
-            grep -rln "SSH_HOST" src 2>/dev/null | head -20
+            echo "### who touches janny.json"
+            grep -rn "janny" /tmp/resolved 2>/dev/null | head -20
             echo
-            echo "### files mentioning janny"
-            grep -rln "janny" src 2>/dev/null | head -20
+            echo "### server-list plumbing"
+            grep -rln "SERVER_SELECTED_NAME\|isCustomSuperSet\|SUPER_DNS\|isCustomPDOQSet" /tmp/resolved 2>/dev/null | head -20
+            echo
+            echo "### superdns outbound json builder (address/method/password)"
+            grep -rln "\"servers\"\|superdns\"\|\"method\"" /tmp/resolved 2>/dev/null | head -20
+            echo
+            echo "### every domain-looking token in the resolved tree"
+            grep -rhoE "[a-z0-9][a-z0-9.-]{2,60}\.(com|net|org|io|xyz|top|site|online|app|dev|link|co|me|tk|ml|info|club|sbs|icu|pro|live|cloud|ir|ru|biz|store|shop|one|pw|cc)\b" /tmp/resolved 2>/dev/null \
+              | grep -viE "^(schemas|www\.w3|example|json|xml|apache|google|android|firebase|crashlytics|kotlin|golang|github|oracle|elasticsearch|squareup|okhttp|protobuf|unicode|joda|rfc|tools\.ietf|datatracker)" \
+              | sort | uniq -c | sort -rn | head -60
             echo
             echo "### assets/janny.json"
             unzip -p apk.apk assets/janny.json > janny.b64 2>/dev/null
             echo "bytes: $(wc -c < janny.b64)"
-            python3 "$GITHUB_WORKSPACE/tools/decode_asset_blob.py" janny.b64 "$R/janny-decoded.json"
+            python3 "$GITHUB_WORKSPACE/tools/decode_asset_blob.py" janny.b64 "$R/janny-decoded.json" 2>&1 | head -25
             echo
-            echo "### res/raw and assets listing"
-            find smali/assets smali/res/raw -maxdepth 1 -type f 2>/dev/null | head -40
+            echo "### res/raw + assets"
+            find smali/assets smali/res/raw -maxdepth 1 -type f 2>/dev/null | head -30
           } > "$R/server-list.txt" 2>&1
-          # Make the interesting classes readable (paranoid ids -> literals).
-          for f in $(grep -rl "SSH_HOST" src 2>/dev/null | head -8); do
-            rel="${f#src/}"
+          # keep the readable version of every file that mentions the catalogue
+          for f in $(grep -rl "SSH_HOST\|janny\|SERVER_SELECTED_NAME\|isCustomSuperSet" /tmp/resolved 2>/dev/null | head -12); do
+            rel="${f#/tmp/resolved/}"
             mkdir -p "$G/$(dirname "$rel")"
-            python3 "$GITHUB_WORKSPACE/tools/resolve_paranoid_source.py" decrypted.tsv "$f" "$G/$rel" >/dev/null 2>&1 \
-              || cp "$f" "$G/$rel"
+            cp "$f" "$G/$rel"
           done
-          tail -60 "$R/server-list.txt"
+          grep -h "" "$R/server-list.txt" | head -80
 
       - name: Commit
         if: always()
