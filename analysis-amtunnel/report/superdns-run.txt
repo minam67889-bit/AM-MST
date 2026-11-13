@@ -4,31 +4,31 @@
 === sa1.supaghost.cc  A=169.58.203.175  (NOERROR AN:A=169.58.203.175)
   @169.58.203.175 sa1.supaghost.cc                   UDP NXDOMAIN (34B)  <- the domain itself
   @169.58.203.175 slsa1.supaghost.cc                 UDP NXDOMAIN (36B)  <- SuperService builds 'sl' + host
-  @169.58.203.175 vpgobkcy.sa1.supaghost.cc          UDP NXDOMAIN (43B)  <- random tunnel label
+  @169.58.203.175 wmscdzoy.sa1.supaghost.cc          UDP NXDOMAIN (43B)  <- random tunnel label
   @169.58.203.175 TCP 53 TCP ConnectionRefusedError: [Errno 111] Connection refused
 
 === sa2.supaghost.cc  A=169.58.203.174  (NOERROR AN:A=169.58.203.174)
-  @169.58.203.174 sa2.supaghost.cc                   UDP NXDOMAIN (34B)  <- the domain itself
-  @169.58.203.174 slsa2.supaghost.cc                 no answer (TimeoutError)  <- SuperService builds 'sl' + host
-  @169.58.203.174 thttaanr.sa2.supaghost.cc          UDP NXDOMAIN (43B)  <- random tunnel label
+  @169.58.203.174 sa2.supaghost.cc                   no answer (TimeoutError)  <- the domain itself
+  @169.58.203.174 slsa2.supaghost.cc                 UDP NXDOMAIN (36B)  <- SuperService builds 'sl' + host
+  @169.58.203.174 covqoauh.sa2.supaghost.cc          UDP NXDOMAIN (43B)  <- random tunnel label
   @169.58.203.174 TCP 53 TCP ConnectionRefusedError: [Errno 111] Connection refused
 
 === sa25.supaghost.cc  A=169.58.203.155  (NOERROR AN:A=169.58.203.155)
   @169.58.203.155 sa25.supaghost.cc                  UDP NXDOMAIN (35B)  <- the domain itself
   @169.58.203.155 slsa25.supaghost.cc                UDP NXDOMAIN (37B)  <- SuperService builds 'sl' + host
-  @169.58.203.155 pdcpfcxi.sa25.supaghost.cc         UDP NXDOMAIN (44B)  <- random tunnel label
+  @169.58.203.155 epaagdqi.sa25.supaghost.cc         UDP NXDOMAIN (44B)  <- random tunnel label
   @169.58.203.155 TCP 53 TCP ConnectionRefusedError: [Errno 111] Connection refused
 
 === sa50.supaghost.cc  A=169.58.202.238  (NOERROR AN:A=169.58.202.238)
   @169.58.202.238 sa50.supaghost.cc                  UDP NXDOMAIN (35B)  <- the domain itself
   @169.58.202.238 slsa50.supaghost.cc                UDP NXDOMAIN (37B)  <- SuperService builds 'sl' + host
-  @169.58.202.238 uqdvwnek.sa50.supaghost.cc         UDP NXDOMAIN (44B)  <- random tunnel label
+  @169.58.202.238 pxjarxjc.sa50.supaghost.cc         UDP NXDOMAIN (44B)  <- random tunnel label
   @169.58.202.238 TCP 53 TCP ConnectionRefusedError: [Errno 111] Connection refused
 
 === gg1.apnacp.xyz  A=84.247.176.22  (NOERROR AN:A=84.247.176.22)
   @84.247.176.22 gg1.apnacp.xyz                     no answer (TimeoutError)  <- the domain itself
   @84.247.176.22 slgg1.apnacp.xyz                   no answer (TimeoutError)  <- SuperService builds 'sl' + host
-  @84.247.176.22 gsftgonr.gg1.apnacp.xyz            no answer (TimeoutError)  <- random tunnel label
+  @84.247.176.22 tgjkxzbt.gg1.apnacp.xyz            no answer (TimeoutError)  <- random tunnel label
   @84.247.176.22 TCP 53 TCP ConnectionRefusedError: [Errno 111] Connection refused
 
 

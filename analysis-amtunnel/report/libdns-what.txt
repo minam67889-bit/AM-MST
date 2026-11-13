@@ -1,0 +1,26 @@
+### what is libdns.so
+ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /system/bin/linker64, for Android 21, built by NDK r19c (5345600), Go BuildID=ni8j3ihbiWSjJbAVX1M_/O2htNX6ugsWuEi-faYB8/w-3jTDglUHKG1Gy2a9iw/p_wqIBH4oA1pcAxNA5iw, stripped
+-*func() go.shape.interface { Error() string }
+-*func(fmtsort.KeyValue, fmtsort.KeyValue) int
+-*struct { F uintptr; R runtime.metricReader }
+-,O'-U	ND
+---))))))
+--------%%%   
+-H]>R/
+-LTY/:]
+-thread limit
+/system/bin/linker64
+
+### tunnel type table
+/tmp/res3/sources/prince/udp/vpn/service/vpn/Tunnel.java:177:                        if (sharedPreferencesC2597fC.getInt("TUNNEL_TYPE", 6) != 12 && sharedPreferencesC2597fC.getInt("TUNNEL_TYPE", 6) != 13) {
+/tmp/res3/sources/prince/udp/vpn/service/vpn/Tunnel.java:247:                        ParcelFileDescriptor establish = (sharedPreferencesC2597fC.getInt("TUNNEL_TYPE", 6) == 10 ? addAddress.setSession(this.mHostService.getAppName()).setConfigureIntent(WGService.b(this.mHostService.getContext())) : sharedPreferencesC2597fC.getInt("TUNNEL_TYPE", 6) == 12 ? addAddress.setSession(this.mHostService.getAppName()).setConfigureIntent(PDoQService.c(this.mHostService.getContext())) : addAddress.setSession(this.mHostService.getAppName()).setConfigureIntent(SocksDNSService.b(this.mHostService.getContext()))).establish();
+/tmp/res3/sources/defpackage/C2507db.java:43:        return this.a.getInt("TUNNEL_TYPE", 6);
+/tmp/res3/sources/defpackage/C2507db.java:72:        sharedPreferencesEditorC2544eC.putInt("TUNNEL_TYPE", i);
+
+### every resolved source naming a native lib
+      1 libxray.so
+      1 libudpq.so
+      1 libsuperdns.so
+      1 libpdoqhelper.so
+      1 libpdoq.so
+
