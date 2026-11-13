@@ -1,0 +1,131 @@
+=== ocsdnstt  (dnstt  (SocksDNSService))
+hosts in catalogue: 150
+  A   gg83.apnacp.xyz              NOERROR AN:A=109.199.96.214
+  A   gg39.apnacp.xyz              NOERROR AN:A=109.199.103.166
+  A   hh2.apnacp.xyz               NOERROR AN:A=13.140.148.96
+  A   gg13.apnacp.xyz              NOERROR AN:A=109.199.112.136
+  A   gg19.apnacp.xyz              NOERROR AN:A=158.220.126.47
+  A   hh38.apnacp.xyz              NOERROR AN:A=169.58.93.195
+  A   gg25.apnacp.xyz              NOERROR AN:A=213.199.47.175
+  A   gg94.apnacp.xyz              NOERROR AN:A=37.60.235.134
+  A   hh50.apnacp.xyz              NOERROR AN:A=169.58.47.14
+  A   gg15.apnacp.xyz              NOERROR AN:A=109.199.111.116
+  A   hh30.apnacp.xyz              NOERROR AN:A=169.58.200.36
+  A   gg55.apnacp.xyz              NOERROR AN:A=84.247.136.158
+  sample alive: 12/12
+  NS  gg83.apnacp.xyz              NOERROR NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  del x7q690.gg83.apnacp.xyz       NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  NS  gg39.apnacp.xyz              NOERROR NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  del x7q326.gg39.apnacp.xyz       NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  NS  hh2.apnacp.xyz               NOERROR NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  del x7q396.hh2.apnacp.xyz        NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+
+=== ocsnormal  (HTTP/SOCKS (libxray.so))
+hosts in catalogue: 20
+  A   Um18.apnaghost.xyz           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   Um4.apnaghost.xyz            NOERROR AN:A=195.88.87.34
+  A   Um10.apnaghost.xyz           NOERROR AN:A=217.76.59.8
+  A   Um6.apnaghost.xyz            NOERROR AN:A=144.91.85.74
+  A   Um19.apnaghost.xyz           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   Um20.apnaghost.xyz           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   Um15.apnaghost.xyz           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   Um11.apnaghost.xyz           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   Um16.apnaghost.xyz           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   Um17.apnaghost.xyz           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   Um2.apnaghost.xyz            NOERROR AN:A=161.97.68.38
+  A   Um9.apnaghost.xyz            NOERROR AN:A=169.58.230.230
+  sample alive: 5/12
+  NS  Um18.apnaghost.xyz           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  del x7q815.Um18.apnaghost.xyz    NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  NS  Um4.apnaghost.xyz            NOERROR NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  del x7q688.Um4.apnaghost.xyz     NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  NS  Um10.apnaghost.xyz           NOERROR NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  del x7q996.Um10.apnaghost.xyz    NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+
+=== ocspdoq  (PDoQ  (libpdoq.so))
+hosts in catalogue: 270
+  A   pt48.amnupower.com           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   pq38.amnupower.com           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   pq61.amnupower.com           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   pu63.amnupower.com           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   pu15.amnupower.com           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   pq85.amnupower.com           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   pt76.amnupower.com           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   pq78.amnupower.com           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   pu51.amnupower.com           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   pu16.amnupower.com           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   pq21.amnupower.com           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  A   pq40.amnupower.com           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  sample alive: 0/12
+  NS  pt48.amnupower.com           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  del x7q762.pt48.amnupower.com    NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  NS  pq38.amnupower.com           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  del x7q833.pq38.amnupower.com    NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  NS  pq61.amnupower.com           NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  del x7q123.pq61.amnupower.com    NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+
+=== ocsslow  (SuperDNS / SlowDNS  (libsuperdns.so))
+hosts in catalogue: 50
+  A   sa11.supaghost.cc            NOERROR AN:A=169.58.137.218
+  A   sa40.supaghost.cc            NOERROR AN:A=169.58.195.174
+  A   sa8.supaghost.cc             NOERROR AN:A=169.58.203.169
+  A   sa32.supaghost.cc            NOERROR AN:A=169.58.92.35
+  A   sa4.supaghost.cc             NOERROR AN:A=169.58.203.172
+  A   sa14.supaghost.cc            NOERROR AN:A=169.58.137.179
+  A   sa19.supaghost.cc            NOERROR AN:A=169.58.137.149
+  A   sa9.supaghost.cc             NOERROR AN:A=169.58.65.24
+  A   sa16.supaghost.cc            NOERROR AN:A=169.58.137.172
+  A   sa26.supaghost.cc            NOERROR AN:A=169.58.203.154
+  A   sa41.supaghost.cc            NOERROR AN:A=169.58.203.149
+  A   sa47.supaghost.cc            NOERROR AN:A=169.58.203.118
+  sample alive: 12/12
+  NS  sa11.supaghost.cc            NOERROR NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  del x7q254.sa11.supaghost.cc     NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  NS  sa40.supaghost.cc            NOERROR NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  del x7q254.sa40.supaghost.cc     NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  NS  sa8.supaghost.cc             NOERROR NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  del x7q112.sa8.supaghost.cc      NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+
+=== ocsudp  (UDP  (libudpq.so))
+hosts in catalogue: 800
+  A   cc30.amnupower.com           NOERROR AN:A=169.58.195.147
+  A   cc49.amnupower.com           NOERROR AN:A=13.140.209.145
+  A   aa5.amnupower.com            NOERROR AN:A=94.250.203.5
+  A   bb30.amnupower.com           NOERROR AN:A=185.225.232.207
+  A   dd60.amnupower.com           NOERROR AN:A=109.199.110.156
+  A   ee58.amnupower.com           NOERROR AN:A=13.140.209.118
+  A   dd19.amnupower.com           NOERROR AN:A=84.247.141.204
+  A   ff25.amnupower.com           NOERROR AN:A=13.140.170.246
+  A   ee90.amnupower.com           NOERROR AN:A=158.220.104.45
+  A   cc77.amnupower.com           NOERROR AN:A=62.171.136.218
+  A   bb9.amnupower.com            NOERROR AN:A=161.97.101.241
+  A   gg8.amnupower.com            NOERROR AN:A=62.84.186.9
+  sample alive: 12/12
+  NS  cc30.amnupower.com           NOERROR NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  del x7q313.cc30.amnupower.com    NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  NS  cc49.amnupower.com           NOERROR NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  del x7q212.cc49.amnupower.com    NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  NS  aa5.amnupower.com            NOERROR NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+  del x7q204.aa5.amnupower.com     NXDOMAIN NS:SOA=anastasia.ns.cloudflare.com/dns.cloudflare.com
+
+=== transport payloads (the DNS resolver the client is told to use)
+  ocspdoq: 33 entries
+     8.8.8.8
+     8.8.4.4
+     1.1.1.1
+     1.0.0.1
+     9.9.9.9
+     custom
+     autodns1
+     autodns2
+     ... 25 more
+  ocsslow: 46 entries
+     udp://8.8.8.8
+     udp://8.8.4.4
+     udp://1.1.1.1
+     udp://1.0.0.1
+     udp://autodns1
+     udp://autodns2
+     doh://8.8.8.8
+     doh://8.8.4.4
+     ... 38 more
