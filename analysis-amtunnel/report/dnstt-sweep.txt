@@ -1,0 +1,435 @@
+=== verdict counts
+  ocsdnstt  unreachable              150
+  ocsslow   FORMERR/sl               45
+  ocsslow   FORMERR/sl_b32           5
+
+=== ocsslow: 50 hosts
+  sa1.supaghost.cc       169.58.203.175   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa10.supaghost.cc      169.58.203.162   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa11.supaghost.cc      169.58.137.218   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa12.supaghost.cc      169.58.137.191   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa13.supaghost.cc      169.58.137.182   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa14.supaghost.cc      169.58.137.179   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa15.supaghost.cc      109.199.127.126  FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa16.supaghost.cc      169.58.137.172   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa17.supaghost.cc      169.58.137.168   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa18.supaghost.cc      84.247.161.137   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa19.supaghost.cc      169.58.137.149   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa2.supaghost.cc       169.58.203.174   FORMERR/sl_b32 (dnstt-shaped)
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa20.supaghost.cc      169.58.137.138   FORMERR/sl (dnstt-shaped)
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa21.supaghost.cc      161.97.79.146    FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa22.supaghost.cc      169.58.203.159   FORMERR/sl_b32 (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa23.supaghost.cc      169.58.203.158   FORMERR/sl (dnstt-shaped)
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa24.supaghost.cc      169.58.203.156   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa25.supaghost.cc      169.58.203.155   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa26.supaghost.cc      169.58.203.154   FORMERR/sl (dnstt-shaped)
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa27.supaghost.cc      169.58.203.153   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa28.supaghost.cc      169.58.203.152   FORMERR/sl (dnstt-shaped)
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa29.supaghost.cc      169.58.203.151   FORMERR/sl_b32 (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa3.supaghost.cc       169.58.67.7      FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+  sa30.supaghost.cc      169.58.203.150   FORMERR/sl_b32 (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa31.supaghost.cc      169.58.9.155     FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa32.supaghost.cc      169.58.92.35     FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa33.supaghost.cc      84.247.130.172   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa34.supaghost.cc      169.58.94.198    FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa35.supaghost.cc      169.58.65.115    FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa36.supaghost.cc      169.58.65.132    FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa37.supaghost.cc      169.58.91.82     FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa38.supaghost.cc      169.58.65.143    FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa39.supaghost.cc      169.58.161.2     FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa4.supaghost.cc       169.58.203.172   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa40.supaghost.cc      169.58.195.174   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa41.supaghost.cc      169.58.203.149   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa42.supaghost.cc      169.58.203.127   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa43.supaghost.cc      169.58.203.122   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+  sa44.supaghost.cc      169.58.203.121   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa45.supaghost.cc      169.58.203.120   FORMERR/sl_b32 (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa46.supaghost.cc      169.58.203.119   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa47.supaghost.cc      169.58.203.118   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa48.supaghost.cc      169.58.203.117   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa49.supaghost.cc      169.58.203.116   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa5.supaghost.cc       169.58.203.171   FORMERR/sl (dnstt-shaped)
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+  sa50.supaghost.cc      169.58.202.238   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa6.supaghost.cc       169.58.203.170   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+  sa7.supaghost.cc       161.97.93.238    FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa8.supaghost.cc       169.58.203.169   FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+  sa9.supaghost.cc       169.58.65.24     FORMERR/sl (dnstt-shaped)
+      apex    rcode=3 an=0 []
+      b32     rcode=3 an=0 []
+      sl      rcode=1 an=0 []
+      sl_b32  rcode=1 an=0 []
+      sd_b32  rcode=3 an=0 []
+
+=== ocsdnstt: 150 hosts
+  gg1.apnacp.xyz         84.247.176.22    unreachable
+  gg10.apnacp.xyz        109.199.107.238  unreachable
+  gg100.apnacp.xyz       109.205.182.44   unreachable
+  gg11.apnacp.xyz        109.199.113.69   unreachable
+  gg12.apnacp.xyz        109.199.112.182  unreachable
+  gg13.apnacp.xyz        109.199.112.136  unreachable
+  gg14.apnacp.xyz        109.199.111.201  unreachable
+  gg15.apnacp.xyz        109.199.111.116  unreachable
+  gg16.apnacp.xyz        109.199.110.215  unreachable
+  gg17.apnacp.xyz        13.140.209.141   unreachable
+  gg18.apnacp.xyz        109.199.110.163  unreachable
+  gg19.apnacp.xyz        158.220.126.47   unreachable
+  gg2.apnacp.xyz         13.140.146.151   unreachable
+  gg20.apnacp.xyz        109.199.109.117  unreachable
+  gg21.apnacp.xyz        109.199.107.182  unreachable
+  gg22.apnacp.xyz        13.140.146.143   unreachable
+  gg23.apnacp.xyz        13.140.145.100   unreachable
+  gg24.apnacp.xyz        62.169.30.227    unreachable
+  gg25.apnacp.xyz        213.199.47.175   unreachable
+  gg26.apnacp.xyz        213.199.42.139   unreachable
+  gg27.apnacp.xyz        37.60.234.194    unreachable
+  gg28.apnacp.xyz        84.247.183.210   unreachable
+  gg29.apnacp.xyz        84.247.131.106   unreachable
+  gg3.apnacp.xyz         13.140.146.145   unreachable
+  gg30.apnacp.xyz        184.174.36.36    unreachable
+  gg31.apnacp.xyz        158.220.104.22   unreachable
+  gg32.apnacp.xyz        31.220.73.11     unreachable
+  gg33.apnacp.xyz        31.220.73.4      unreachable
+  gg34.apnacp.xyz        31.220.72.247    unreachable
+  gg35.apnacp.xyz        184.174.35.4     unreachable
+  gg36.apnacp.xyz        109.199.102.138  unreachable
+  gg37.apnacp.xyz        109.199.104.215  unreachable
+  gg38.apnacp.xyz        109.199.104.145  unreachable
+  gg39.apnacp.xyz        109.199.103.166  unreachable
+  gg4.apnacp.xyz         109.199.114.187  unreachable
+  gg40.apnacp.xyz        109.199.99.29    unreachable
+  gg41.apnacp.xyz        185.213.27.43    unreachable
+  gg42.apnacp.xyz        109.199.103.121  unreachable
+  gg43.apnacp.xyz        84.247.135.196   unreachable
+  gg44.apnacp.xyz        109.199.102.173  unreachable
+  gg45.apnacp.xyz        109.199.102.143  unreachable
+  gg46.apnacp.xyz        109.199.102.91   unreachable
+  gg47.apnacp.xyz        109.199.102.46   unreachable
+  gg48.apnacp.xyz        109.199.101.52   unreachable
+  gg49.apnacp.xyz        109.199.101.47   unreachable
+  gg5.apnacp.xyz         109.199.114.173  unreachable
+  gg50.apnacp.xyz        109.199.101.23   unreachable
+  gg51.apnacp.xyz        84.247.175.219   unreachable
+  gg52.apnacp.xyz        109.199.99.15    unreachable
+  gg53.apnacp.xyz        84.247.175.202   unreachable
+  gg54.apnacp.xyz        84.247.175.123   unreachable
+  gg55.apnacp.xyz        84.247.136.158   unreachable
+  gg56.apnacp.xyz        84.247.129.178   unreachable
+  gg57.apnacp.xyz        109.199.114.69   unreachable
+  gg58.apnacp.xyz        84.247.141.26    unreachable
+  gg59.apnacp.xyz        84.247.139.208   unreachable
+  gg6.apnacp.xyz         109.199.114.121  unreachable
+  gg60.apnacp.xyz        169.58.131.118   unreachable
+  gg61.apnacp.xyz        217.76.53.16     unreachable
+  gg62.apnacp.xyz        109.199.103.47   unreachable
+  gg63.apnacp.xyz        217.76.53.1      unreachable
+  gg64.apnacp.xyz        84.247.173.55    unreachable
+  gg65.apnacp.xyz        109.199.98.78    unreachable
+  gg66.apnacp.xyz        84.46.249.82     unreachable
+  gg67.apnacp.xyz        84.247.173.5     unreachable
+  gg68.apnacp.xyz        169.58.230.116   unreachable
+  gg69.apnacp.xyz        169.58.230.109   unreachable
+  gg7.apnacp.xyz         158.220.127.31   unreachable
+  gg70.apnacp.xyz        169.58.175.39    unreachable
+  gg71.apnacp.xyz        185.252.233.215  unreachable
+  gg72.apnacp.xyz        169.58.136.130   unreachable
+  gg73.apnacp.xyz        109.199.97.192   unreachable
+  gg74.apnacp.xyz        109.199.97.189   unreachable
+  gg75.apnacp.xyz        185.252.233.127  unreachable
+  gg76.apnacp.xyz        194.5.152.127    unreachable
+  gg77.apnacp.xyz        185.252.233.111  unreachable
+  gg78.apnacp.xyz        89.116.25.151    unreachable
+  gg79.apnacp.xyz        185.209.229.251  unreachable
+  gg8.apnacp.xyz         109.199.108.52   unreachable
+  gg80.apnacp.xyz        109.199.96.249   unreachable
+  gg81.apnacp.xyz        169.58.173.67    unreachable
+  gg82.apnacp.xyz        109.199.97.9     unreachable
+  gg83.apnacp.xyz        109.199.96.214   unreachable
+  gg84.apnacp.xyz        109.199.96.122   unreachable
+  gg85.apnacp.xyz        185.194.217.192  unreachable
+  gg86.apnacp.xyz        169.58.196.244   unreachable
+  gg87.apnacp.xyz        185.252.235.182  unreachable
+  gg88.apnacp.xyz        84.247.171.13    unreachable
+  gg89.apnacp.xyz        169.58.173.197   unreachable
+  gg9.apnacp.xyz         109.199.108.51   unreachable
+  gg90.apnacp.xyz        195.88.87.234    unreachable
+  gg91.apnacp.xyz        195.88.87.170    unreachable
+  gg92.apnacp.xyz        45.134.226.106   unreachable
+  gg93.apnacp.xyz        169.58.91.112    unreachable
+  gg94.apnacp.xyz        37.60.235.134    unreachable
+  gg95.apnacp.xyz        169.58.173.193   unreachable
+  gg96.apnacp.xyz        169.58.173.192   unreachable
+  gg97.apnacp.xyz        169.58.173.175   unreachable
+  gg98.apnacp.xyz        84.247.170.59    unreachable
+  gg99.apnacp.xyz        169.58.240.2     unreachable
+  hh1.apnacp.xyz         84.247.169.182   unreachable
+  hh10.apnacp.xyz        194.163.164.179  unreachable
+  hh11.apnacp.xyz        169.58.216.7     unreachable
+  hh12.apnacp.xyz        169.58.56.184    unreachable
+  hh13.apnacp.xyz        13.140.209.129   unreachable
+  hh14.apnacp.xyz        169.58.115.153   unreachable
+  hh15.apnacp.xyz        169.58.115.42    unreachable
+  hh16.apnacp.xyz        169.58.45.188    unreachable
+  hh17.apnacp.xyz        169.58.115.12    unreachable
+  hh18.apnacp.xyz        169.58.115.54    unreachable
+  hh19.apnacp.xyz        169.58.143.249   unreachable
+  hh2.apnacp.xyz         13.140.148.96    unreachable
+  hh20.apnacp.xyz        169.58.52.0      unreachable
+  hh21.apnacp.xyz        169.58.236.215   unreachable
+  hh22.apnacp.xyz        169.58.227.159   unreachable
+  hh23.apnacp.xyz        169.58.224.96    unreachable
+  hh24.apnacp.xyz        169.58.222.189   unreachable
+  hh25.apnacp.xyz        169.58.204.47    unreachable
+  hh26.apnacp.xyz        169.58.201.41    unreachable
+  hh27.apnacp.xyz        169.58.200.76    unreachable
+  hh28.apnacp.xyz        169.58.200.75    unreachable
+  hh29.apnacp.xyz        169.58.200.74    unreachable
+  hh3.apnacp.xyz         13.140.148.94    unreachable
+  hh30.apnacp.xyz        169.58.200.36    unreachable
+  hh31.apnacp.xyz        169.58.132.102   unreachable
+  hh32.apnacp.xyz        169.58.132.100   unreachable
+  hh33.apnacp.xyz        169.58.132.1     unreachable
+  hh34.apnacp.xyz        169.58.131.215   unreachable
+  hh35.apnacp.xyz        169.58.131.205   unreachable
+  hh36.apnacp.xyz        169.58.131.187   unreachable
+  hh37.apnacp.xyz        169.58.131.126   unreachable
+  hh38.apnacp.xyz        169.58.93.195    unreachable
+  hh39.apnacp.xyz        169.58.131.116   unreachable
+  hh4.apnacp.xyz         13.140.148.92    unreachable
+  hh40.apnacp.xyz        169.58.196.48    unreachable
+  hh41.apnacp.xyz        169.58.131.65    unreachable
+  hh42.apnacp.xyz        169.58.131.64    unreachable
+  hh43.apnacp.xyz        169.58.131.48    unreachable
+  hh44.apnacp.xyz        84.247.168.223   unreachable
+  hh45.apnacp.xyz        194.163.129.60   unreachable
+  hh46.apnacp.xyz        75.119.145.53    unreachable
+  hh47.apnacp.xyz        75.119.144.41    unreachable
+  hh48.apnacp.xyz        169.58.173.163   unreachable
+  hh49.apnacp.xyz        169.58.173.131   unreachable
+  hh5.apnacp.xyz         13.140.146.236   unreachable
+  hh50.apnacp.xyz        169.58.47.14     unreachable
+  hh6.apnacp.xyz         13.140.146.232   unreachable
+  hh7.apnacp.xyz         169.58.15.69     unreachable
+  hh8.apnacp.xyz         13.140.146.157   unreachable
+  hh9.apnacp.xyz         13.140.146.156   unreachable
+
+endpoints that answered anything: 44/200

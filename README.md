@@ -1,1 +1,176 @@
-# AM-MST
+# AM Tunnel MST — a working SlowDNS client
+
+**It carries traffic now.** Install the debug APK, leave the engine on
+`1` (SlowDNS through BD NET's own servers), press Connect, and point Telegram
+at SOCKS5 `127.0.0.1:1080` (no username, no password). Measured on a runner
+with the very binaries that ship in the APK:
+
+| test | result |
+| --- | --- |
+| `http://example.com/` through `127.0.0.1:1080` | 200, 577 B, 0.8 s |
+| the same through the **LAN address** `10.1.0.208:1080` | 200, 577 B, 2.0 s |
+| `https://api.telegram.org/` | 302, 145 B, 1.6 s |
+| `https://www.google.com/` | 200, 87 KB, 2.3 s |
+| 512 KiB from `speed.cloudflare.com` | 4.05 s (**129 KB/s**, ~1 Mbit/s) |
+| 5 concurrent streams | all connected in 2.2 s |
+
+The tunnel does not have to go straight at the server's IP. With **"DNS resolver
+for the tunnel"** set to `8.8.8.8`, BD's own client carried real pages through
+Google's resolver — and faster than direct:
+
+| transport | example.com | Telegram | Google |
+| --- | --- | --- | --- |
+| server IP | 200 in 3.4 s | 302 in 14.7 s | 200 in 9.6 s |
+| **8.8.8.8** | **200 in 2.2 s** | **302 in 3.0 s** | **200 in 3.9 s** |
+| 1.1.1.1 | 200 in 6.7 s | 302 in 4.7 s | 200 in 6.8 s |
+
+Raw log: `analysis-bdnet/report/resolver-page.txt`. That is what makes the app
+usable on networks that allow DNS and little else.
+
+Tick "Share it on the LAN" and every phone/laptop on the same Wi-Fi or on this
+phone's hotspot can use `phone-ip:1080` as a SOCKS5 — that is the "VPN SHARE"
+behaviour of BD's own app, without BD's app. How the far-end login was
+recovered, and the exact handshake: [`docs/SLOWDNS.md`](docs/SLOWDNS.md).
+
+### Ultra Tunnel (`co.strongteam.ultra`) — analysed, credentials recovered, servers dark
+
+A third APK was taken apart the same way: its encrypted catalogue is now fully
+decrypted (`analysis-ultra/config-decoded.json`) and everything a SlowDNS client
+needs is in [`analysis-ultra/slowdns.json`](analysis-ultra/slowdns.json) —
+8 dnstt domains, their 64-hex public keys, the SSH account each server expects,
+49 resolvers, ports and the exact `libdns` command line. The catalogue is an
+Argon2id + AES-256-GCM envelope with the passphrase compiled into `libgojni.so`;
+the app's live updater (`v5.28`) was decrypted too.
+
+What is *not* claimed: those 8 endpoints do not answer anything outside their
+carrier networks. A dnstt client that we proved can tunnel (self-test: real
+HTTP 200 through a local dnstt-server) never gets a single stream opened against
+them, and their authoritative name servers drop non-carrier traffic. Details and
+evidence: [`docs/ULTRA-TUNNEL.md`](docs/ULTRA-TUNNEL.md).
+
+### AM TUNNEL LITE VPN (`app.vpn.amtunnellite`) — SuperDNS servers recovered
+
+The "MOD Universal" build hides its catalogue behind two layers: every dex string
+is LSParanoid-encrypted *and* the server list is an encrypted asset. Both are open
+now, so the app's whole catalogue is in
+[`analysis-amtunnel/superdns.json`](analysis-amtunnel/superdns.json):
+
+* **SuperDNS** (category `ocsslow`, `SuperService` + `libsuperdns.so`):
+  **50 hosts** `sa1..sa50.supaghost.cc` — **50/50 resolve**, and each answers DNS
+  on UDP/53 (nothing on TCP/53 or the TLS ports).
+* SocksDNS/dnstt: 150 hosts `{gg,hh}*.apnacp.xyz` — 150/150 resolve.
+* UDP: 796/800 hosts resolve. PDoQ: 0/270 — that pool is dead.
+* 46 transport entries (`udp://`, `doh://`, `dot://`, per-carrier resolvers) and
+  the app's own credentials (`tanginaka`).
+
+The binary is not dnstt: 16.6 MB of Go, aarch64, linking TLS/QUIC/uTLS, exec'd as
+`libsuperdns.so -udp <resolver>:53 -utls Chrome -frequency N -report … -pubkey prince sl<host> 127.0.0.1:7000`.
+It is an Android-only ELF, so no handshake was driven off-device — but a reference
+dnstt client was run against the endpoints from a GitHub runner:
+`FORMERR` for `sl<host>` proves the tunnel domain, the session starts, and no
+stream is ever opened (the same harness loads a real Instagram page through a
+local dnstt server, 200 OK). How both layers were opened, the live test and what
+is still unverified: [`docs/AM-TUNNEL-SUPERDNS.md`](docs/AM-TUNNEL-SUPERDNS.md).
+
+---
+
+# AM Tunnel MST — DNS tunnel client with a MasterDNSVPN-style resolver engine
+
+A modified DNS-tunnel Android client whose DNS management layer is modelled on
+MasterDnsVPN: manual entry and bulk import, concurrent scanning, reachability
+**and** tunnel-capability testing, reliability scoring, automatic selection,
+continuous health monitoring, failover, recovery, persistence and live
+diagnostics.
+
+The resolver engine is a faithful port of MasterDnsVPN's balancer: all nine
+`RESOLVER_BALANCING_STRATEGY` modes with its exact scoring formulas, packet
+duplication (default 2), auto-disable with recheck, and stream-sticky failover.
+See `docs/MASTER-ENGINE.md` for the setting-by-setting mapping and the tests
+that prove each one. None of it changes the wire format, so stock servers stay
+compatible.
+
+The transport is a byte-compatible implementation of the MasterDnsVPN DNS
+tunnel protocol (`docs/PROTOCOL.md`), rebuilt in Kotlin from the upstream Go
+source and verified against the real Go server in CI. The DNS engine is
+independent of the transport: it is plugged in through `ResolverSelector` /
+`TunnelTransport`, so a different transport (for instance the original AM
+Tunnel engine, once its protocol is confirmed from the APK) can be dropped in
+without touching the resolver manager.
+
+> **Read `docs/STATUS.md`, `docs/AM-TUNNEL-PROTOCOL.md` and
+> `docs/BDNET-PROTOCOL.md` first.** Two real APKs have been decompiled in CI:
+> AM Tunnel (`app.vpn.amtunnellite`, Hysteria 2 + WireGuard + Xray) and BD NET
+> (`dastan.prince.bdfreevpn`, dnstt/SlowDNS + Hysteria 2 + Xray). The AM Tunnel
+> APK has been decompiled and its real protocol identified: it is **Hysteria 2
+> (QUIC/UDP) + WireGuard + Xray**, with pdnsd for local DNS — not a DNS-TXT
+> tunnel. Its server credentials live in a LIAPP-encrypted payload, so this
+> client does not pretend to reach their servers.
+
+---
+
+## Modules
+
+| Module | Contents |
+| --- | --- |
+| `core` | Pure Kotlin/JVM. Protocol codec, DNS envelope, session/stream transport, resolver store, probes, scanner, ranking, health monitor, SOCKS5 server |
+| `app` | Android application: programmatic UI, foreground `VpnService`, DNS-mode capture, settings |
+| `integration` | JUnit suite that drives the client against a **real** tunnel server |
+
+## Build
+
+```bash
+# JDK 17 + Android SDK 34 required; Gradle 8.9 (no wrapper is committed)
+gradle :core:test          # unit tests
+gradle :app:assembleDebug  # debug APK -> app/build/outputs/apk/debug/
+```
+
+CI does this automatically on every push (`.github/workflows/android.yml`). It
+runs the unit tests, compiles every module, runs the live tunnel integration
+suite against a freshly built MasterDnsVPN server inside the job, uploads the
+APK as a build artifact **and** publishes it as a GitHub Release.
+
+### Download the APK
+
+Grab the newest `amtunnel-mst-*.apk` from the
+[Releases page](https://github.com/minam67889-bit/AM-MST/releases/latest)
+(latest verified build: `amtunnel-mst-71f365a.apk`, 962,646 bytes). It is a
+debug-signed build (install with `adb install -r <file>.apk`); a release-signed
+APK is built automatically when the signing secrets are configured.
+
+## Run
+
+1. Install the APK.
+2. Enter the **tunnel domain**, the **encryption method** and the **shared key**
+   published by the server operator.
+3. Add or bulk-import DNS resolvers, then run a **Tunnel scan**. Only resolvers
+   that complete a real SESSION_INIT are marked tunnel-capable.
+4. Press **Connect**. The local SOCKS5 proxy (default `127.0.0.1:1080`) carries
+   app TCP traffic through the tunnel.
+5. Watch failover, latency and packet counters on the dashboard; the
+   diagnostics pane keeps a rolling log.
+
+## Testing
+
+* Unit tests: codec/frame/DNS envelope vectors, ranking and persistence rules.
+* Live integration (`:integration:test`, gated by `AMTUNNEL_IT=1`): builds the
+  reference Go server, starts it, and proves
+  * a real HTTP request/response travelling through the DNS tunnel,
+  * that a resolver answering normal DNS is correctly reported as *not*
+    tunnel-capable,
+  * that killing the active resolver triggers failover without a new session.
+
+## Repository layout
+
+```
+core/    protocol + DNS engine (no Android dependencies, unit-tested on the JVM)
+app/     Android client (UI, VpnService, settings, persistence wiring)
+integration/ live end-to-end tests against the reference server
+docs/    PROTOCOL.md, REPORT.md, STATUS.md
+```
+
+## Licensing / attribution
+
+The protocol implemented here comes from
+[MasterDnsVPN](https://github.com/masterking32/MasterDnsVPN) by
+Amin Mahmoudi (MIT). The wire format, packet-type table, codec and session
+semantics are reproduced from that source. See `THIRD_PARTY_NOTICES.md`.

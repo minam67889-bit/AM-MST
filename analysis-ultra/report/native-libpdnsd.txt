@@ -1,0 +1,90 @@
+### libpdnsd.so 215632 bytes
+--- usage/flags:
+timeout: failed to run command ‘qemu-aarch64-static’: No such file or directory
+--- strings:
+		file pdnsd.debug in your cache directory (in daemon mode).
+	Delegation-only zones: 
+	Use EDNS in outgoing queries: %s
+	uptest user: %s
+%s is in %s zone, but no authority information provided by server %s
+%s is in %s zone, but no delegation found in answer returned by server %s
+%spdnsd: %s: 
+--daemon	Start pdnsd in daemon mode (as background process.)
+--pdnsd-user
+--pdnsd-user	print the user pdnsd will run as and exit.
+--tcp		Enables the TCP server thread. pdnsd will then serve
+-mxx		sets the query method pdnsd uses. Possible values for xx are:
+-vn		sets the verbosity of pdnsd. n is a numeric argument from 0
+/pdnsd.cache
+/pdnsd.debug
+/pdnsd.status
+An ippp? device was specified for uptest, but pdnsd was compiled without ISDN support.
+Authority section in reply contains %d OPT pseudo-RRs!
+Bad cache flags.
+Bad qualifier in authrec= option.
+Bind pdnsd to a different local IP address or specify different port numbers in global section and server section if you want pdnsd to query servers on the same machine.
+Cache entry not found by del_dns_hash() in %s, line %d
+Could not change group id to that of run_as user '%s': %s
+Could not change user id to that of run_as user '%s': %s
+Could not initialize the group access list of run_as user '%s': %s
+DNSKEY
+Entry found in cache for '%s' with dflags=%s.
+Error reading DNS addresses.
+Error: -6: pdnsd was compiled without IPv6 support.
+Failed to obtain address of root server %s in dns_rootserver_resolv()
+Failed to send status report.
+Flags:%s
+No remaining authoritative name servers to try in authority section from %s.
+Out of memory in dns_rootserver_resolv()
+Please consider reporting this error to one of the maintainers.
+Query contains OPT pseudosection: EDNS udp size = %u, flag DO=%u
+Query contains non-zero EDNS rcode (%d)!
+Query contains unsupported EDNS version %d!
+Query has a non-empty authority section!
+Reply from %s contains OPT pseudosection: EDNS version = %u, udp size = %u, flag DO=%u
+Reply from %s contains unexpected EDNS rcode %u (%s)!
+Requery decision: dflags=%s, cflags=%s, req=%i, neg=%i, timed=%i, %s=%li
+Server %s returned error code: %s. Maybe cannot handle EDNS? Querying with empty additional section.
+The authrec= option has no effect unless it precedes name= in a rr section.
+The name server %s which is responsible for the %s domain, raised the aa flag, but appears to delegate to the sub-domain %s
+Tried to add rr to a rrset with CF_NEGATIVE set! flags=%s
+Try restarting pdnsd instead.
+Usage: pdnsd [-h] [-V] [-s] [-d] [-g] [-t] [-p file] [-vn] [-mxx] [-c file] [-4]
+Warning: -a option does nothing unless pdnsd is compiled with both IPv4 AND IPv6 support.
+Warning: uptest command "%s" will implicitly be executed as user 
+You can only set run_ipv4=off when pdnsd is compiled with IPv6 support.
+authority
+authrec
+bad qualifier in edns_query= option.
+be authoritative
+edns_query
+free_zone
+jni/pdnsd/src/cache.c
+jni/pdnsd/src/dns.c
+jni/pdnsd/src/dns_answer.c
+jni/pdnsd/src/dns_query.c
+jni/pdnsd/src/helpers.c
+jni/pdnsd/src/icmp.c
+jni/pdnsd/src/servers.c
+name not contained in zone
+non-authoritative
+p_dns_resolve: merging answer with cache failed, using local cent copy.
+p_dns_resolve: nocache.
+pdnsd - dns proxy daemon, version 1.2.9a-par
+pdnsd control thread is running.
+pdnsd is distributed in the hope that it will be useful,
+pdnsd is free software; you can redistribute it and/or modify
+pdnsd probably crashed due to a bug. Please consider sending a bug
+pdnsd was compiled without IPv6 support. %s will be ignored.
+pdnsd was compiled without IPv6 support. --ipv4_6_prefix will be ignored.
+pdnsd was compiled without IPv6 support. ipv4_6_prefix option in config file will be ignored.
+pdnsd-%s running on %s.
+pdnsd-%s starting.
+pointer returned by del_dns_hash() does not match cache entry in %s, line %d
+rcode=%u (%s), flags:%s
+report to p.a.rombouts@home.nl or tmoestl@gmx.net
+reportedly failed
+run_as user %s could not be found.
+server not authoritative for zone
+server_data_users non-positive before attempt to decrement it
+simple_dns_cached_resolve: merging answer with cache failed, using local cent copy.

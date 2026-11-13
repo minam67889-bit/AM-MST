@@ -1,0 +1,56 @@
+name: Ultra Tunnel - resolve the real dnstt endpoint per domain
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/ultra-dns-endpoint.yml"
+      - "analysis-ultra/probe_dns.py"
+
+permissions:
+  contents: write
+
+jobs:
+  endpoints:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Deps
+        run: pip install -q dnspython
+
+      - name: Walk the delegation chain
+        run: |
+          set +e
+          OUT=analysis-ultra/report/dns-endpoints.txt
+          python3 analysis-ultra/probe_dns.py \
+            sd-de1.liftmeon.org \
+            ns.up2.fcafessh.net \
+            slwdns.codefyinc.com \
+            ns.rovox.wampipti.net \
+            newca.dozapp.xyz \
+            dnsde1.dozapp.xyz \
+            nssshvip1.vpnprous.com \
+            nsVIPSSH087.vpnprous.com \
+            nssshtt.mdmonzo.com > "$OUT" 2>&1
+          cat "$OUT"
+
+      - name: Commit
+        if: always()
+        run: |
+          set +e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
+          git add analysis-ultra
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "ultra: delegation/endpoint walk [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" > /dev/null 2>&1
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done

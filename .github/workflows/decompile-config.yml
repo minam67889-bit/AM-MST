@@ -1,0 +1,134 @@
+name: Decompile the server-selection code
+
+# Still unknown: the two preferences that end up on libxdnstt's command line —
+#   f.b()  -> BackQuery  -> "-udp <BackQuery>:53"
+#   f.l()  -> SSH_HOST   -> the zone "sd-" + <SSH_HOST>
+# C0223If only writes the keys, so we need (a) which method reads which key
+# and (b) who calls the matching setter, with what value. baksmali gives us
+# both cheaply; jadx then prints the caller classes.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/decompile-config.yml"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  decompile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p art
+          run=$(gh run list --workflow=analyze-apk.yml --status success --limit 1 \
+                  --json databaseId --jq '.[0].databaseId')
+          art=$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$run/artifacts" \
+                  --jq '.artifacts[] | select(.name=="amtunnel-apk-analysis") | .id' | head -1)
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$art/zip" > art/a.zip
+          unzip -o -q art/a.zip -d art/x
+          cp "$(find art/x -name '*.apk' | head -1)" art/bdnet.apk
+          ls -l art/bdnet.apk
+
+      - name: Tooling
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq apktool
+          curl -sSL -o /tmp/jadx.zip \
+            https://github.com/skylot/jadx/releases/download/v1.5.0/jadx-1.5.0.zip
+          unzip -q /tmp/jadx.zip -d /tmp/jadx
+          chmod +x /tmp/jadx/bin/jadx
+          /tmp/jadx/bin/jadx --version
+
+      - name: baksmali and the preference class
+        run: |
+          exec > >(tee /tmp/writers.txt) 2>&1
+          set +e
+          timeout 1500 apktool d -f --no-res -o smali art/bdnet.apk 2>&1 | tail -3
+          ls -d smali* 2>/dev/null
+          cf=$(grep -rl -- "-0x8ec2d82d778bL" smali* 2>/dev/null | head -1)
+          echo "class file: $cf"
+          desc=$(grep -m1 '^\.class' "$cf" | sed 's/^.*L/defpackage\//; s/;$//')
+          echo "descriptor: L$desc;"
+          echo "========== the preference class (key id per method)"
+          cat "$cf"
+          echo "========== which methods exist"
+          grep -E '^\.method' "$cf"
+          echo "========== who calls them"
+          for m in $(grep -oE '^\.method public final [a-zA-Z0-9_]+\(\)Ljava/lang/String;' "$cf" \
+                     | sed 's/.*final //; s/()Ljava\/lang\/String;//'); do
+            n=$(grep -rl -- "L$desc;->$m()Ljava/lang/String;" smali* 2>/dev/null | wc -l)
+            [ "$n" = "0" ] && continue
+            echo "--- getter $m() called by $n class(es)"
+            grep -rl -- "L$desc;->$m()Ljava/lang/String;" smali* 2>/dev/null | head -8
+          done
+          for m in $(grep -oE '^\.method public final [a-zA-Z0-9_]+\(Ljava/lang/String;\)V' "$cf" \
+                     | sed 's/.*final //; s/(Ljava\/lang\/String;)V//'); do
+            n=$(grep -rl -- "L$desc;->$m(Ljava/lang/String;)V" smali* 2>/dev/null | wc -l)
+            [ "$n" = "0" ] && continue
+            echo "--- setter $m(String) called by $n class(es)"
+            grep -rl -- "L$desc;->$m(Ljava/lang/String;)V" smali* 2>/dev/null | head -8
+          done
+          echo "========== every class that mentions the two keys by id"
+          for mag in 8ec2d82d778b 8ffad82d778b; do
+            echo "--- key -0x${mag}L"
+            grep -rl -e "-0x${mag}L" smali* 2>/dev/null | head -8
+          done
+
+      - name: jadx the callers
+        run: |
+          exec > >(tee /tmp/decompile.txt) 2>&1
+          set +e
+          classes=$(grep -oE 'sa?m?l?i?[^ ]*/defpackage/[A-Za-z0-9_$]+\.smali' /tmp/writers.txt \
+                    | sed 's#.*/##; s/\.smali$//' | grep -vx 'If' | sort -u | head -18)
+          echo "candidates: $classes"
+          mkdir -p out
+          for cls in $classes; do
+            timeout 400 /tmp/jadx/bin/jadx -d "out/$cls" --no-res art/bdnet.apk \
+              --single-class "defpackage.$cls" 2>&1 | tail -1
+          done
+          find out -name '*.java' | head -25
+          for f in $(find out -name '*.java'); do
+            echo "===== $f  ($(wc -l <"$f") lines)"
+            grep -n -A10 "C0223If" "$f" | head -60
+          done
+
+      - name: Publish
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p analysis-bdnet/configs
+          for f in writers decompile; do
+            cp "/tmp/$f.txt" "analysis-bdnet/configs/$f.txt" 2>/dev/null || true
+          done
+          n=0
+          for f in $(find out -name '*.java' 2>/dev/null | head -18); do
+            n=$((n+1))
+            cp "$f" "analysis-bdnet/configs/caller-$n-$(basename "$f")" 2>/dev/null || true
+          done
+          cf=$(grep -rl -- "-0x8ec2d82d778bL" smali* 2>/dev/null | head -1)
+          [ -n "$cf" ] && cp "$cf" analysis-bdnet/configs/prefclass.smali
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-bdnet/configs
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "dns: decompiled server-selection code [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done

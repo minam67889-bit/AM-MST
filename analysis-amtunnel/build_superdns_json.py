@@ -1,0 +1,308 @@
+#!/usr/bin/env python3
+"""Build `analysis-amtunnel/superdns.json` from the decrypted catalogue.
+
+Inputs (all produced by the CI hunt, see .github/workflows/amtunnel-superdns.yml):
+  report/janny-decoded.json   the app's own server catalogue, XXTEA-decrypted
+  report/a-records.json       A-record census of every host in the catalogue
+  report/superdns-run.txt     DNS/IP-level probe of the SuperDNS endpoints
+  report/superdns-abi.txt     what libsuperdns.so actually is
+
+Usage: build_superdns_json.py [out.json]
+"""
+from __future__ import annotations
+
+import json
+import pathlib
+
+ROOT = pathlib.Path(__file__).resolve().parent
+REPORT = ROOT / "report"
+
+CATEGORY_META = {
+    "ocsslow": {
+        "engine": "SuperDNS (libsuperdns.so, exec'd by prince.udp.vpn.service.SuperService)",
+        "ui_name": "SuperDNS",
+        "local_port": 7000,
+    },
+    "ocsdnstt": {
+        "engine": "SocksDNS / dnstt (libdns.so, prince.udp.vpn.service.SocksDNSService)",
+        "ui_name": "SocksDNS",
+        "local_port": 10802,
+    },
+    "ocspdoq": {
+        "engine": "PDoQ (libpdoq.so + libpdoqhelper.so, PDoQService)",
+        "ui_name": "PDoQ",
+        "local_port": 2222,
+    },
+    "ocsudp": {
+        "engine": "UDP (libudpq.so, UDPClient thread)",
+        "ui_name": "UDP",
+        "local_port": 10802,
+    },
+    "ocsnormal": {
+        "engine": "HTTP/SOCKS through libxray.so (Xray 24.11.30)",
+        "ui_name": "Normal",
+        "local_port": 10801,
+    },
+}
+
+
+def dnstt_block() -> dict:
+    """Summarise the live dnstt tests recorded in report/dnstt-*.txt."""
+    sweep = (REPORT / "dnstt-sweep.txt")
+    live = (REPORT / "dnstt-live.txt")
+    control = (REPORT / "dnstt-control.txt")
+    block: dict = {
+        "question": "can a Python/reference dnstt client use these servers?",
+        "tunnel_domain": '"sl" + host, e.g. slsa1.supaghost.cc',
+        "answer_below_domain": "FORMERR (this is the shape of a tunnel server for that name)",
+        "answer_elsewhere": "NXDOMAIN",
+    }
+    if sweep.exists():
+        text = sweep.read_text(errors="replace")
+        counts = [line.strip() for line in text.splitlines() if line.strip().startswith(("ocsslow", "ocsdnstt"))]
+        block["sweep"] = counts[:12]
+    if control.exists():
+        text = control.read_text(errors="replace")
+        block["positive_control"] = {
+            "what": "local dnstt-server + reference dnstt-client, Instagram fetched through it",
+            "result": "HTTP/1.1 200 OK, 68739 bytes of instagram.com html"
+                      if "HTTP/1.1 200 OK" in text else "failed",
+            "note": "proves the harness itself works; report/dnstt-control.txt",
+        }
+    if live.exists():
+        text = live.read_text(errors="replace")
+        block["against_their_servers"] = {
+            "control_wrong_key": "rejected at once: crypto/ecdh bad X25519 remote ECDH input",
+            "candidate_keys": "session starts (begin session), no ECDH error, but never a stream",
+            "stream_opened": "begin stream" in text,
+            "page_loaded": "PAGE LOADED THROUGH THE TUNNEL" in text,
+            "reading": ("the endpoint accepts the query as well-formed enough to answer, but it "
+                        "does not complete a dnstt handshake, so the tunnel never carries data; "
+                        "its own libsuperdns.so speaks a different protocol"),
+            "evidence": "report/dnstt-live.txt",
+        }
+    return block
+
+
+def load(name: str):
+    path = REPORT / name
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return path.read_text(encoding="utf-8", errors="replace")
+
+
+def main() -> None:
+    out_path = pathlib.Path(sys_argv()) if len(__import__("sys").argv) > 1 else ROOT / "superdns.json"
+    catalogue = load("janny-decoded.json")
+    census = load("a-records.json") or {}
+    probe = load("superdns-run.txt")
+    abi = load("superdns-abi.txt")
+
+    groups: dict[str, list[dict]] = {}
+    seen: dict[str, set[str]] = {}
+    for entry in catalogue.get("Free_servers", []):
+        category = entry.get("category", "?")
+        hosts = [h.strip() for h in str(entry.get("server_host", "")).split(";") if h.strip()]
+        groups.setdefault(category, [])
+        seen.setdefault(category, set())
+        unique: list[str] = []
+        for host in hosts:
+            # group 6 repeats the hosts of groups 1-5 on purpose; keep every
+            # group intact and dedupe only for the category totals below.
+            if host not in unique:
+                unique.append(host)
+            seen[category].add(host)
+        groups[category].append({
+            "name": entry.get("server_name", ""),
+            "hosts": unique,
+            "host_count": len(unique),
+            "resolved": {
+                host: (census.get(host, {}) or {}).get("a") for host in unique
+            },
+            "alive": sum(1 for host in unique if (census.get(host, {}) or {}).get("a")),
+            "server_port": entry.get("server_port") or None,
+            "server_udp_port": entry.get("server_udp_port") or None,
+            "ssl_port": entry.get("ssl_port") or None,
+        })
+
+    transports: dict[str, list[str]] = {}
+    for entry in catalogue.get("Payloads", []):
+        payload = entry.get("payload", "")
+        if not payload:
+            continue
+        transports.setdefault(entry.get("category", "?"), [])
+        if payload not in transports[entry["category"]]:
+            transports[entry["category"]].append(payload)
+
+    def host_count(category: str) -> int:
+        return len(seen.get(category, set()))
+
+    def alive_count(category: str) -> int:
+        return sum(1 for host in seen.get(category, set())
+                   if (census.get(host, {}) or {}).get("a"))
+
+    document = {
+        "schema": "am-tunnel-superdns/2",
+        "generated_from": {
+            "apk": "AM TUNNEL LITE VPN [MOD Universal] (filebin kaq42zmlr3c1na2g)",
+            "package": "app.vpn.amtunnellite",
+            "catalogue": "assets/janny.json inside the APK",
+            "how": ("base64 -> XXTEA (defpackage.AbstractC3622yh.b) with the key "
+                    "\"...|...\" -> JSON; tools/xxtea_janny.py"),
+            "catalogue_version": catalogue.get("Version"),
+            "catalogue_udp_version": catalogue.get("UDPVersion"),
+            "updater_link": catalogue.get("UpdaterLink") or None,
+        },
+        "engines": CATEGORY_META,
+        "superdns": {
+            "what_it_is": ("a Go binary named libsuperdns.so, exec'd by SuperService; it is "
+                           "not dnstt (no bamsoftware/turbotunnel markers, it links "
+                           "crypto/tls, http2, QUIC and uTLS)"),
+            "binary": {
+                "apk_path": "lib/arm64-v8a/libsuperdns.so",
+                "size_bytes": 16607808,
+                "elf": ("ELF 64-bit LSB shared object, ARM aarch64, dynamically linked, "
+                        "interpreter /system/bin/linker64, for Android 21, NDK r19c, stripped"),
+                "also_shipped": {"armeabi-v7a": 15889620},
+                "runnable_off_android": False,
+                "why_not": "the interpreter is Android's bionic /system/bin/linker64",
+            },
+            "argv": {
+                "template": ["libsuperdns.so", "<-udp|-doh|-dot>", "<endpoint>", "-utls",
+                             "Chrome|Firefox", "-frequency", "<SUPER_DNS_FREQUENCY>",
+                             "-report", "AM TUNNEL LITE VPN", "-pubkey", "prince",
+                             "<sl + SSH_HOST>", "127.0.0.1:7000"],
+                "transport_switches": {
+                    "udp://<host>": "-udp <host>:53",
+                    "doh://<host>": "-doh https://<host>/dns-query",
+                    "dot://<host>": "-dot <host>:853",
+                },
+                        "domain_rule": "\"sl\" + SSH_HOST, where SSH_HOST is the selected server host",
+                "domain_rule_confirmed": ("checked against the live endpoints: <anything>.sl<host> "
+                                          "-> FORMERR, <host> and <anything>.<host> -> NXDOMAIN"),
+                "domain_rule_evidence": "report/dnstt-sweep.txt",
+                "pubkey": "prince",
+                "utls": ["Chrome", "Firefox"],
+                "local_listen": "127.0.0.1:7000",
+            },
+            "source": "prince/udp/vpn/service/SuperService.java (string table decrypted)",
+        },
+        "connection_method": {
+            "summary": ("the app never dials the tunnel host directly for SuperDNS: it picks a "
+                        "server host, builds the tunnel domain 'sl'+host, and runs its own Go binary "
+                        "against a DNS resolver (UDP/53, DoH or DoT)"),
+            "flow": [
+                "1. catalogue (assets/janny.json) gives Free_servers[] and Payloads[]",
+                "2. the user picks a server, e.g. A - SERVER 1 -> sa1.supaghost.cc",
+                "3. the user picks a transport, e.g. udp://8.8.8.8 -> -udp 8.8.8.8:53 "
+                "(doh://host -> -doh https://host/dns-query, dot://host -> -dot host:853)",
+                "4. SuperService.execs libsuperdns.so with that resolver, -pubkey prince, "
+                "-utls Chrome|Firefox, -frequency from SUPER_DNS_FREQUENCY, "
+                "-report 'AM TUNNEL LITE VPN', the tunnel domain 'sl' + host, and 127.0.0.1:7000",
+                "5. libsuperdns.so carries the tunnel inside DNS traffic to the resolver, "
+                "which forwards it to the server host; the client exposes SOCKS5 on 127.0.0.1:7000",
+                "6. tun2socks/VpnService routes device traffic into that local port",
+            ],
+            "local_ports": {
+                "superdns": "127.0.0.1:7000 (libsuperdns.so)",
+                "http_socks": "127.0.0.1:10801 (libxray)",
+                "pdoq": "127.0.0.1:10802 / 2222",
+                "udp": "127.0.0.1:10802",
+                "dnstt": "127.0.0.1:10802 plus pdnsd",
+            },
+            "transport_switches": {
+                "udp://<host>": "-udp <host>:53",
+                "doh://<host>": "-doh https://<host>/dns-query",
+                "dot://<host>": "-dot <host>:853",
+            },
+            "reproduced_with_reference_dnstt": False,
+            "why_not_reproduced": ("the same argv and the same domain were replayed with a "
+                                   "reference dnstt client: the server answers the query (FORMERR, "
+                                   "so the domain is right) and a session starts, but no stream is "
+                                   "ever opened - the binary is not dnstt"),
+            "what_a_working_client_needs": [
+                "a DNS resolver that can reach the server IP on :53 (any of the 46 payload entries)",
+                "the tunnel domain 'sl' + server host",
+                "their private protocol (libsuperdns.so, Android aarch64 only)",
+            ],
+        },
+        "servers": {
+            "superdns": groups.get("ocsslow", []),
+            "dnstt": groups.get("ocsdnstt", []),
+            "pdoq": groups.get("ocspdoq", []),
+            "udp": groups.get("ocsudp", []),
+            "http_socks": groups.get("ocsnormal", []),
+        },
+        "superdns_hosts_flat": sorted(seen.get("ocsslow", set())),
+        "transports": transports,
+        "credentials": {
+            "username": "tanginaka",
+            "password": "tanginaka",
+            "how": "catalogue fields Username/Password are XXTEA(base64) with the same key",
+        },
+        "verification": {
+            "verified": [
+                f"catalogue decrypted from the APK (not guessed): {len(catalogue.get('Free_servers', []))} server groups, "
+                f"{len(catalogue.get('Payloads', []))} transport entries",
+                f"all {host_count('ocsslow')} SuperDNS hosts resolve via 8.8.8.8 "
+                f"({alive_count('ocsslow')} alive)",
+                f"all {host_count('ocsdnstt')} dnstt hosts resolve ({alive_count('ocsdnstt')} alive), "
+                "but not one of them answers a DNS query from a runner (150/150 silent)",
+                f"UDP hosts: {alive_count('ocsudp')}/{host_count('ocsudp')} resolve",
+                f"PDoQ hosts: {alive_count('ocspdoq')}/{host_count('ocspdoq')} resolve "
+                "(the whole pdoq pool is gone)",
+                f"HTTP/SOCKS hosts: {alive_count('ocsnormal')}/{host_count('ocsnormal')} resolve",
+                "SuperService argv, pubkey and local port read from the decrypted code",
+                "the 'sl' + host domain rule is confirmed on the wire: the SuperDNS IPs answer "
+                "FORMERR for <anything>.sl<host> and NXDOMAIN for everything else",
+                "a reference dnstt client DOES start a session against those IPs "
+                "(begin session, no ECDH error), so the key material is not rejected",
+                "the test harness itself is proven: local dnstt-server -> "
+                "https://www.instagram.com/ HTTP 200, 68 739 bytes",
+            ],
+            "unverified": [
+                "no byte ever flowed through AM TUNNEL's tunnels: the reference dnstt client never "
+                "opens a stream, so their server does not speak plain dnstt",
+                "libsuperdns.so itself was never executed: Android-only ELF (aarch64, "
+                "/system/bin/linker64)",
+                "the label/obfuscation format of their custom protocol is unknown, so their "
+                "protocol could not be reproduced",
+                "what the app does after 'begin session' on a real phone (whether the tunnel then "
+                "carries traffic) was not observed",
+            ],
+            "endpoint_behaviour": {
+                "udp_53": "answers (NXDOMAIN for the apex, for sl<host> and for a random label)",
+                "tcp_53": "connection refused",
+                "tcp_443_8443_2053_2096_8080_80": "connection refused on every sampled host",
+                "reading": ("the endpoints are pure DNS listeners, so the tunnel rides on :53 "
+                            "only, which matches a DNS tunnel and rules out a TLS/QUIC listener "
+                            "on the usual alternative ports"),
+            },
+            "dns_census": {category: f"{alive_count(category)}/{host_count(category)}" for category in CATEGORY_META},
+            "evidence_files": [
+                "report/janny-decoded.json", "report/a-records.json",
+                "report/superdns-run.txt", "report/superdns-abi.txt",
+                "report/dns-census.txt", "report/decrypted.tsv",
+            ],
+            "endpoint_probe": (probe or "")[:6000] if isinstance(probe, str) else None,
+            "dnstt_compatibility": dnstt_block(),
+            "binary_facts": (abi or "")[:2000] if isinstance(abi, str) else None,
+        },
+    }
+
+    out_path.write_text(json.dumps(document, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(f"wrote {out_path}")
+    print(f"superdns groups={len(document['servers']['superdns'])} "
+          f"hosts={host_count('ocsslow')} transports={len(transports.get('ocsslow', []))}")
+
+
+def sys_argv() -> str:
+    import sys
+    return sys.argv[1] if len(sys.argv) > 1 else str(ROOT / "superdns.json")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,18 @@
+### libs
+/tmp/u/src/sources/org/conscrypt/NativeCryptoJni.java:11:            System.loadLibrary("conscrypt_gmscore_jni");
+/tmp/u/src/sources/org/conscrypt/NativeCryptoJni.java:13:            System.loadLibrary("conscrypt_jni");
+/tmp/u/src/sources/org/uproxy/tun2socks/Tun2SocksJni.java:7:        System.loadLibrary("tun2socks");
+/tmp/u/src/sources/androidx/camera/core/ImageProcessingUtil.java:31:        System.loadLibrary("image_processing_util_jni");
+/tmp/u/src/sources/androidx/camera/core/impl/utils/SurfaceUtil.java:18:        System.loadLibrary("surface_util_jni");
+/tmp/u/src/sources/androidx/datastore/core/MultiProcessCoordinator.java:172:                System.loadLibrary("datastore_shared_counter");
+/tmp/u/src/sources/go/Seq.java:307:        System.loadLibrary("gojni");
+/tmp/u/src/sources/com/google/firebase/sessions/c.java:26:            System.loadLibrary("datastore_shared_counter");
+/tmp/u/src/sources/com/tencent/mmkv/MMKV.java:32:        void loadLibrary(String str);
+/tmp/u/src/sources/com/tencent/mmkv/MMKV.java:169:        System.loadLibrary("mmkv");
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/DNSTunnelThread.java:17:    private static final String DNS_BIN = "libdns";
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/HysteriaUDP.java:250:            File file = new File(this.context.getApplicationInfo().nativeLibraryDir, "libuz.so");
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/vpn/Pdnsd.java:13:    private static final String PDNSD_BIN = "libpdnsd";
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/vpn/Pdnsd.java:100:            java.lang.String r0 = "libpdnsd"
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/vpn/Tun2Socks.java:20:    private static final String TUN2SOCKS_BIN = "libsocks";
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/vpn/Tun2Socks.java:173:        throw new IOException("Bin libsocks not found");
+/tmp/u/src/sources/com/sandok/tunnel/service/OpenVPNService.java:779:        System.loadLibrary("ovpncli");

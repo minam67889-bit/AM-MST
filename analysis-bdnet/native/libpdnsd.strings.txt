@@ -1,0 +1,1149 @@
+		%s/%s
+		%s: %s%s
+		(normal operation) to 9 (many messages for debugging).
+		@y)m
+		@y)y
+		@y?
+		On by default.
+		TCP and UDP queries.
+		Use like -v2
+		Works only in daemon mode.
+		does not support this, UDP) and ut (UDP and, if the reply was
+		file pdnsd.debug in your cache directory (in daemon mode).
+		truncated, TCP). Use like -muo. Preset: -muo
+		uo (UDP only), to (TCP only), tu (TCP or, if the server
+	1@y	
+	1@y)
+	Addresses which should be rejected in replies:
+	Assumed root server: %s
+	Cache size: %li kB
+	Control socket permissions (mode): %o
+	Default policy: %s
+	Delegation-only zones: 
+	Global timeout setting: %li
+	IP bound to interface used for querying remote servers: %s
+	Ignore cache when link is down: %s
+	Maximum parallel queries served: %i
+	Maximum queries queued for serving: %i
+	Maximum ttl: %li
+	Maximum udp buffer size: %i
+	Minimum ttl: %li
+	Negative RRS policy: %s
+	Negative domain policy: %s
+	Negative ttl: %li
+	Parallel queries increment: %i
+	Paranoid mode (cache pollution prevention): %s
+	Policies:%s
+	Query method: %s
+	Query port end: %i
+	Query port start: %i
+	Query port start: (let kernel choose)
+	Randomize records in answer: %s
+	Randomize server query order: %s
+	Reject policy: %s
+	Reject recursively: %s
+	Run as: %s
+	Scheme file (for Linux pcmcia support): %s
+	Server IP (%s=any available one): %s
+	Server directory: %s
+	Server port: %i
+	Strict run as: %s
+	TCP query timeout: %li
+	TCP server thread: %s
+	The following name servers will be used for discovery of rootservers only:
+	Use EDNS in outgoing queries: %s
+	Use NSS: %s
+	Use only proxy?: %s
+	a@9?
+	device (for special Linux ppp device support): %s
+	force cache purging: %s
+	interface: %s
+	ip: %s
+	label: %s
+	lean query: %s
+	name used in query uptest: %s
+	ping ip: %s
+	ping timeout: %li
+	port: %hu
+	qc=%s (%u), qt=%s (%u), query="%s"
+	scheme: %s
+	server assumed available: %s
+	server is cached: %s
+	timeout: %li
+	uptest command: %s
+	uptest interval: %li
+	uptest interval: %s
+	uptest user: %s
+	uptest: %s
+                  
+    %m/%d %T
+ %02x
+ (none)
+ 6+1@yk
+ 7I	(7I
+ d92O#
+"2@yB|
+"@yh"
+"no" can be prepended to the --status, --daemon, --debug and --tcp
+%Y/%m/%d %T
+%d %.2d %.2d.%.3d %c %d %.2d %.2d.%.3d %c %s%d.%.2dm %sm %sm %sm
+%d unhandled poll/select event(s) in p_recursive_query() at %s, line %d.
+%i running query threads (%i active, %i queued).
+%ld kB maximum disk cache size.
+%ld of %ld bytes (%.3g%%) memory cache used in %ld entries (avg %.5g bytes/entry).
+%lu %lu %lu %lu %lu
+%lu query threads spawned in total (%lu queries dropped).
+%s    %-7s %s
+%s    %-7s (negated)
+%s    (domain negated)
+%s encountered while reading %s from disk cache file.
+%s for the %s= option.
+%s for the ping_ip= option.
+%s in %s= option
+%s in line %u of file %s
+%s is in %s zone, but no authority information provided by server %s
+%s is in %s zone, but no delegation found in answer returned by server %s
+%s:%d: %s
+%sReturning error code "%s"
+%spdnsd: %s: 
+%u %s| 
+%u %u %u 
+%u.%u.%u.%u.in-addr.arpa.
+%x.%x.
+&0:Simple query for %s type A failed (rc: %s)
+&@yH0
+&@yh&
+(!@y 
+(at your option) any later version.
+(never retest)
+(none)
+(process owner)
+(using server ip)
+)/@8I
+)uB9?
+*		@y)
+*	@yJ9
+* %m/%d %T| 
+*(Ih8
+*)Hh8
+*,II.IIIIIII0IIIIIIIIIIII
+*1@y+
+*?i(8
+*@ky8\
+*Ih8	
+*JKh8	
+*Kh8	
+*Skh8
+*_k(8
+*_k68`
+*`ju8
+*`j|88
+*h)8)
+*zjh8
+*{jh8(kh8
++Ij8H
++ih8J	
++yhxJ	
+, source address: %s
+,,,	config file
+,,,,,
+- %s| 
+------
+-------
+--config-file
+--config-file	specifies the file the configuration is read from.
+--daemon
+--daemon	Start pdnsd in daemon mode (as background process.)
+--debug
+--debug		Print some debug messages on the console or to the
+--help
+--help		print this help page and exit.
+--ipv4_6_prefix
+--nodaemon
+--nodebug
+--nostatus
+--notcp
+--pdnsd-user
+--pdnsd-user	print the user pdnsd will run as and exit.
+--status
+--status	Enable status control socket in the cache directory.
+--tcp
+--tcp		Enables the TCP server thread. pdnsd will then serve
+--version
+--version	print version and license information and exit.
+-4		switches to IPv4 mode.
+-V		--or--
+-c		--or--
+-d		--or--
+-g		--or--
+-h		--or--
+-mxx		sets the query method pdnsd uses. Possible values for xx are:
+-p		Writes the pid the server runs as to a specified filename.
+-s		--or--
+-t		--or--
+-vn		sets the verbosity of pdnsd. n is a numeric argument from 0
+.comment
+.data
+.data.rel.ro
+.dynamic
+.dynstr
+.dynsym
+.eh_frame
+.eh_frame_hdr
+.fini_array
+.gnu.hash
+.gnu.version
+.gnu.version_r
+.init_array
+.interp
+.note.android.ident
+.note.gnu.build-id
+.preinit_array
+.rela.dyn
+.rela.plt
+.rodata
+.shstrtab
+.text
+/#@93'@9<+
+/bin/sh
+/dev/null
+/pdnsd.cache
+/pdnsd.debug
+/pdnsd.status
+/system/bin/linker64
+/var/lib/pcmcia/scheme
+/var/lock/LCK..
+/var/run/
+0.%.2u
+0.0.0.0
+1.2.9a-par
+16@y1
+2	1@y
+2?i(8
+2@y!|
+4hH@9
+4hnA9
+4hzA9
+4h~@9
+4h~A9
+4|&@y
+5*E@9+I@9,M@9)Q@9J
+5594570
+5H#@y
+5K	@y
+5h~@9
+5i~@9?	
+6h2@y?
+6hJ@9
+7+a@9
+7hJ@9h
+7u2@y
+<1@y*
+<http://www.gnu.org/licenses/>.
+======
+=============
+==============
+=JKh8	
+=hb@9
+?.?.?.?
+?i(8n
+@9(}D
+@9J	@9j
+@9wF@
+@y	C 
+@y('@y
+@y|fA9
+A server may not be specified as both a proxy and a root-server.
+AFSDB
+Additional section cannot be read due to truncation!
+Additional section in query contains %d OPT pseudo-RRs!
+Additional section in reply contains %d OPT pseudo-RRs!
+After destroying cache, %ld entries (%ld bytes) remaining.
+All threads started successfully.
+An ippp? device was specified for uptest, but pdnsd was compiled without ISDN support.
+Android
+Android (5220042 based on r346389c) clang version 8.0.7 (https://android.googlesource.com/toolchain/clang b55f2d4ebfd35bf643d27dbca1bb228957008617) (https://android.googlesource.com/toolchain/llvm 3c393fe7a7e13b0fba4ac75a01aa683d7a5b11cd) (based on LLVM 8.0.7svn)
+Answer from %s does not match query.
+Answer from server %s does not contain usable records.
+Answer section in reply contains %d OPT pseudo-RRs!
+Answering to: %s
+Attempting to discover root servers for server section #%d.
+Authority section in reply contains %d OPT pseudo-RRs!
+Bad answer received. Ignoring it.
+Bad arg.
+Bad argument for types= option.
+Bad arguments.
+Bad cache flags.
+Bad command.
+Bad domain name.
+Bad filename name.
+Bad input string.
+Bad number of query records in answer from %s
+Bad qualifier in authrec= option.
+Bad qualifier in serve_aliases= option.
+Bad rcode(%u).
+Bad record type.
+Bad server ip
+Bad server label.
+Before defining records for a name with a wildcard you must first define some records for the name with '*.' removed.
+Bind pdnsd to a different local IP address or specify different port numbers in global section and server section if you want pdnsd to query servers on the same machine.
+C9{J@
+CNAME
+Cache entry not found by del_dns_hash() in %s, line %d
+Cache file %s ignored because of incompatible version identifier
+Cache status:
+Caching domain %s negative with ttl %li
+Caching type %s for domain %s negative with ttl %li
+Can't convert IP address in a= option into form suitable for reverse resolving.
+Can't use label "all" to change server addresses.
+Cannot chdir to root directory: %s
+Cannot decompress QNAME in answer from %s
+Cannot get random number < range after %d tries in %s line %d, bad random number generator?
+Cannot install signal handler for server status thread: %s
+Cannot reload config file: Timed out while waiting for access to config data.
+Cannot reload config file: the daemon option has changed.
+Cannot reload config file: the debug option has changed.
+Cannot reload config file: the ping socket is not initialized and the new config contains uptest=ping in server section %i.
+Cannot reload config file: the specified cache_dir directory has changed.
+Cannot reload config file: the specified ctl_perms has changed.
+Cannot reload config file: the specified interface address (server_ip) has changed.
+Cannot reload config file: the specified pid_file has changed.
+Cannot reload config file: the specified run_as id has changed.
+Cannot reload config file: the specified scheme_file has changed.
+Cannot reload config file: the specified server_port has changed.
+Cannot reload config file: the status_ctl option has changed.
+Cannot reload config file: the strict_setuid option has changed.
+Cannot reload config file: the tcp_server option has changed.
+Caught signal %i. Exiting.
+Changing IPs of server section #%d
+Command code contains incompatible version number.
+Command code missing or too short.
+Configuration:
+Copyright (C) 2000, 2001 Thomas Moestl
+Copyright (C) 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2010 Paul A. Rombouts
+Could not become a daemon: fork #1 failed: %s
+Could not become a daemon: fork #2 failed: %s
+Could not become a daemon: open for /dev/null failed: %s
+Could not become a daemon: setsid failed: %s
+Could not bind tcp socket: %s
+Could not bind to socket: %s
+Could not bind to udp socket: %s
+Could not call sigaction to ignore SIGPIPE: %s
+Could not change group id to that of run_as user '%s': %s
+Could not change user id to that of run_as user '%s': %s
+Could not close cache file %s after writing cache: %s
+Could not close debug file: %s
+Could not create TCP server thread. Exiting.
+Could not create UDP server thread. Exiting.
+Could not discover udp destination address
+Could not find %s%s in the cache.
+Could not fork to perform exec uptest: %s
+Could not initialize the group access list of run_as user '%s': %s
+Could not listen on tcp socket: %s
+Could not lock the cache.
+Could not open disk cache file %s: %s
+Could not open socket in if_up(): %s
+Could not open socket in is_local_addr(): %s
+Could not open socket: %s
+Could not open tcp socket: %s
+Could not open udp socket: %s
+Could not reset uid or gid: %s
+Could not set options on tcp socket: %s
+Could not set options on udp socket: %s
+Could not start up or signal server status thread.
+Counted %d rr record types for %s but cached counter=%d
+Cyu*@
+DHCID
+DNAME
+DNSKEY
+Debug messages activated
+Discarding reply from server %s
+Domain name element too long
+EMPTY: received bad domain name: %s
+Empty domain name not allowed
+Empty name element in domain name
+Entry found in cache for '%s' with dflags=%s.
+Error
+Error in %s (line %u): %s
+Error in %s: %s
+Error in udp send: %s
+Error reading DNS addresses.
+Error reading server label.
+Error while connecting to %s: %s
+Error while reading config file: %s
+Error while reading from TCP client: %s
+Error while receiving data from %s: %s
+Error while sending data to %s: %s
+Error while waiting for uptest command "%s" to terminate: waitpid for pid %d failed: %s
+Error while waiting for uptest command "%s" to terminate: waitpid returned %d, expected pid %d
+Error while writing cache TTL and timestamp to disk cache: %s
+Error while writing cache entry header to disk cache: %s
+Error while writing cache version identifier to disk cache: %s
+Error while writing domain name to disk cache: %s
+Error while writing entry count to disk cache: %s
+Error while writing rr data to disk cache: %s
+Error while writing rr header to disk cache: %s
+Error while writing to TCP client: %s
+Error writing to control socket: %s
+Error: -6: pdnsd was compiled without IPv6 support.
+Error: Could not close %s file %s: %s
+Error: Could not open %s file %s: %s
+Error: IPv6 address expected after %s option.
+Error: cache_dir is unset
+Error: conf_file is unset
+Error: could not bind socket: %s.
+Error: could not close pid file %s: %s
+Error: could not listen on socket: %s.
+Error: could not open pid file %s: %s
+Error: could not unlink pid file %s: %s
+Error: could not write to pid file %s: %s
+Error: file name expected after %s option.
+Error: file name expected after -p option.
+Error: no server sections defined in config file %s
+Error: one digit expected after -v option (like -v2).
+Error: unknown option: %.*s
+Error: unknown option: %s
+Error: uo, to or tu expected after the  -m option (like -muo).
+Error: uo, to, tu or ut expected after the  -m option (like -muo).
+Failed to accept connection on status socket: %s. Status readback will be impossible
+Failed to discover root servers in servstat_thread() (server section #%d).
+Failed to get IP address of %s: %s
+Failed to obtain address of root server %s in dns_rootserver_resolv()
+Failed to open %s: %s
+Failed to open socket: %s. Status readback will be impossible
+Failed to read %s: %s
+Failed to send status report.
+Failed to send success code.
+Failed to source %s: %s
+Failed to start server status thread: %s
+Failed to start status thread. The status socket will be unuseable
+Failed to unlink %s: %s
+Failed to unlink %s: %s.
+Falling back to cached record.
+Filling server section #%d with %d root server addresses.
+Finished writing cache to disk.
+Flags:%s
+Format error in reply from %s (message truncated in qtype or qclass).
+Format error in reply from %s (message unexpectedly truncated).
+Format error in reply from %s.
+GNU General Public License for more details.
+Global:
+HINFO
+IAy	9
+ID mismatch: expected %04x, got %04x!
+IIII2	
+ILLEGAL!
+IPSECKEY
+Ia@9X
+Ignoring name-server address "%s" in config file (identical to server_ip address).
+Illegal port range in %s line %d, dropping query!
+In file %s included at line %u:
+In file %s:
+Incomplete item
+Inconsistent timestamps in reply from %s.
+Incorrect magic number in status-socket command code: %02x
+Internal error: could not remove additional section from query to server %s
+Internal inconsistency detected while parsing line %u of %s.
+Invalid domain name encountered while reading disk cache file.
+Invalid rr type encountered while reading disk cache file.
+J@9kIG
+J@y?9
+Jkh8)	
+JuB9_
+K!@9k
+K-@8k
+K@9h	
+Kki8J	
+Link is down.
+Local name-server address "%s" ignored in config file.
+Lock failed; could not destroy cache on exit.
+Lock failed; could not write disk cache.
+Looking up address for name server "%s" failed.
+M9)mG
+MAILA
+MAILB
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+MINFO
+Malformed or incomplete command.
+Malformed query (nonzero Z bit).
+Malformed response (nonzero Z bit).
+Marked server %s %s.
+Maximum hops count reached; not trying any more name servers.
+Message too short!
+Message too short.
+Missing support for caching SPF records in rr section
+Missing up|down|retest.
+NAPTR
+NEG: received bad domain name.
+NEG: received bad record type.
+NIMLOC
+NSAP_PTR
+NSEC3
+NSEC3PARAM
+No query succeeded. 
+No remaining authoritative name servers to try in authority section from %s.
+No server is marked up and allowed for this domain.
+Not a reply to a standard query (opcode=%u).
+Not a standard query (opcode=%u).
+Not looking up address for name server "%s": risk of infinite recursion.
+Not querying root-server %s, using cached information instead.
+Not trying name server %s, already queried.
+Options:
+Out of cache memory.
+Out of memory in add_qserv()
+Out of memory in add_rejectlist()
+Out of memory in change_servers().
+Out of memory in dns_rootserver_resolv()
+Out of memory in lookup_ns()
+Out of memory in query processing.
+Out of memory in query.
+Out of memory in reading cache file. Exiting.
+Out of memory in request handling.
+Out of memory in servstat_thread() while discovering root servers.
+Out of memory while processing reply from %s.
+Out of memory.
+Out of ports in the range %d-%d, dropping query!
+Outbound msg len %li, tc=%u, rc="%s"
+Please consider reporting this error to one of the maintainers.
+Q(Yhx
+Query contains OPT pseudosection: EDNS udp size = %u, flag DO=%u
+Query contains no questions.
+Query contains non-zero EDNS rcode (%d)!
+Query contains unsupported EDNS version %d!
+Query has a non-empty additional section: checking for OPT pseudo-RR.
+Query has a non-empty answer section!
+Query has a non-empty authority section!
+Query to %s succeeded.
+Questions are:
+RR set exists when it should not
+RR set that should exist does not
+RRSIG
+Received ADD command.
+Received CONFIG command.
+Received DUMP command.
+Received EMPTY command.
+Received EVAL command.
+Received INCLUDE command.
+Received NEG command.
+Received RECORD command.
+Received SERVER command.
+Received SOURCE command.
+Received STATUS query.
+Received query (msg len=%u).
+Received reply from %s (msg len=%u).
+Record for %s not in nsdomain %s; dropped.
+Record found in cache for %s
+Record(s) for root domain in %s section from %s dropped.
+Rejecting answer from server %s because it contains an A record for "%s" with an address in the reject list: %s
+Rejecting answer from server %s because it contains an AAAA record for "%s" with an address in the reject list: %s
+Reply from %s contains OPT pseudosection: EDNS version = %u, udp size = %u, flag DO=%u
+Reply from %s contains unexpected EDNS rcode %u (%s)!
+Reply from %s is negative for %s, dropping record(s) for %s in answer section.
+Reply from %s was truncated. Trying again using TCP.
+Requery decision: dflags=%s, cflags=%s, req=%i, neg=%i, timed=%i, %s=%li
+RhJ)8
+RhJ;8
+RiJ(8
+S		@y
+SSHFP
+Sending error message to control socket: '%s'
+Sending query to %s
+Sending server status thread an interrupt signal.
+Server %i:
+Server %s returned error code: %s
+Server %s returned error code: %s, but the answer section is not empty. Using the answer tentatively.
+Server %s returned error code: %s. Maybe cannot handle EDNS? Querying with empty additional section.
+Server %s returned error code: %s. Maybe does not support recursive query? Querying non-recursively.
+Server index out of range.
+Server section contains only local IP addresses.
+Server status thread exiting.
+Server status thread started.
+Server status thread woke up (%s signal).
+Signal %i caught.
+Simple query for root domain type NS failed (rc: %s)
+Starting cached resolve for: %s, query %s
+Starting simple cached resolve for: %s, query %s
+Status readback will be disabled
+Status readback will be impossible
+Status socket query pending.
+Status thread started.
+T	jj8
+T(;@9	
+T</@9a
+TCP connection refused by %s
+TCP connection to %s failed: %s
+TCP connection to %s timed out. Trying to use UDP.
+TCP query to %s failed. Trying to use UDP.
+TCP server thread started.
+TCP zero size query received.
+TNH)8
+T_CNAME/T_MB/...: got longer
+T_MINFO/T_RP: got longer
+T_MX/T_AFSDB/...: got longer
+T_MX/T_AFSDB/...: rr botch
+T_NAPTR: got longer
+T_NAPTR: rr botch
+T_NAPTR: rr botch 2
+T_NXT: got longer
+T_NXT: rr botch
+T_PX: got longer
+T_PX: rr botch
+T_SOA: got longer
+T_SOA: rr botch
+T_SRV: got longer
+T_SRV: rr botch
+TeB@y
+Th"O9
+Th6Ay
+ThJ@9
+The QR bit indicates this is a query, not a response!
+The QR bit indicates this is a response, not a query.
+The authrec= option has no effect unless it precedes name= in a rr section.
+The name server %s is responsible for the %s domain, which does not match %s
+The name server %s which is responsible for the %s domain, raised the aa flag, but appears to delegate to the sub-domain %s
+The uptest result will be wrong.
+This is a fatal signal probably triggered by a bug.
+ThnA9
+Thread status:
+Th~@9
+Th~A9
+Timed out while trying to gain access to server data.
+Timed out while waiting for exclusive access to server data to set root server addresses of server section #%d
+Too many root-server resolve failures (%u succeeded, %u failed), rejecting the result.
+Tried to add rr to a rrset with CF_NEGATIVE set! flags=%s
+Try restarting pdnsd instead.
+Trying name servers.
+TvB@yh
+TvbA9
+UDP server thread started.
+Unexpected rr type encountered (not in strict ascending order) while reading disk cache file.
+Unhandled poll/select event in ping4() at %s, line %d.
+Unhandled poll/select event in query_uptest() at %s, line %d.
+Unknown command.
+Unrecoverable error encountered while processing query.
+Unsupported QTYPE or QCLASS.
+Usage: pdnsd [-h] [-V] [-s] [-d] [-g] [-t] [-p file] [-vn] [-mxx] [-c file] [-4]
+Using %s reply from %s.
+Using IPv4.
+Using cached record.
+Using saved reply from %s that claims to %s.
+Warning: -a option does nothing unless pdnsd is compiled with both IPv4 AND IPv6 support.
+Warning: could not open debug file %s: %s
+Warning: ignore_cd option in configuration file is obsolete and currently has no effect.
+Warning: query_port_start=%i but source ports <1204 can only be used as root.
+Warning: uptest command "%s" will implicitly be executed as user 
+Warning: using policy=%s with a root-server usually makes no sense.
+Writing cache to %s
+You can only set run_ipv4=off when pdnsd is compiled with IPv6 support.
+You may not specify types=domain together with other types!
+You may specify only one name in a rr section.
+You must define some records for '%s' before you can define records for the wildcard name '%s'
+You should have received a copy of the GNU General Public License
+Z		@y)9
+Z?AHk
+[unknown]
+\%03o
+__FINI_ARRAY__
+__INIT_ARRAY__
+__PREINIT_ARRAY__
+__cmsg_nxthdr
+__cxa_atexit
+__errno
+__libc_init
+__pthread_cleanup_pop
+__pthread_cleanup_push
+__stack_chk_fail
+`jj8i
+aB9!|
+accept
+add_cent_rr: illegal rr type value for caching
+add_cent_rr: rr type value out of range
+add_cent_rrset_by_index: rr-set index out of range
+add_cent_rrset_by_type: rr type value out of range
+additional
+allowed suffixes are w,d,h,m,s.
+along with pdsnd; see the file COPYING.  If not, see
+answer
+any entries
+any entries matching 
+attr_detached
+authority
+authrec
+az@y7
+a~@y(0
+bad IP address
+bad IP address in a= option.
+bad OPT version
+bad qualifier in caching= option.
+bad qualifier in daemon= option.
+bad qualifier in debug= option.
+bad qualifier in edns_query= option.
+bad qualifier in ignore_cd= option.
+bad qualifier in interval= option.
+bad qualifier in lean_query= option.
+bad qualifier in linkdown_kluge= option.
+bad qualifier in neg_domain_pol= option.
+bad qualifier in neg_rrs_pol= option.
+bad qualifier in paranoid= option.
+bad qualifier in perm_cache= option.
+bad qualifier in policy= option.
+bad qualifier in preset= option.
+bad qualifier in proxy_only= option.
+bad qualifier in purge_cache= option.
+bad qualifier in query_method= option.
+bad qualifier in query_port_start= option.
+bad qualifier in randomize_recs= option.
+bad qualifier in randomize_servers= option.
+bad qualifier in reject_policy= option.
+bad qualifier in reject_recursively= option.
+bad qualifier in reverse= option.
+bad qualifier in root_server= option.
+bad qualifier in run_ipv4= option.
+bad qualifier in status_pipe= option.
+bad qualifier in strict_setuid= option.
+bad qualifier in tcp_server= option.
+bad qualifier in uptest= option.
+bad qualifier in use_nss= option.
+bad time specification in interval= option: %s
+bad value for par_queries.
+be authoritative
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+cache TTL and timestamp
+cache entry header
+cache version identifier
+cache_dir
+calloc
+cflgnames
+chdir
+closelog
+cmdline
+cname
+comment without closing */
+compress_name: length increased
+compress_name: name too long
+conf_file
+config string
+connect
+critical
+ctl_perms
+data exceeds maximum size (65535 bytes) in %s= option
+dbg_file
+debug_p
+decode_query: query truncated in qtype or qclass.
+decode_query_additional: RDATA field in OPT record not empty!
+decode_query_additional: Z field contains unknown nonzero bits (%04x).
+decode_query_additional: additional section truncated in RDATA field.
+decode_query_additional: additional section truncated in RR header.
+decode_query_additional: ignoring record of type %s (%d).
+decode_query_additional: ingnoring surplus OPT record.
+decode_query_additional: name in OPT record not empty!
+decompress_name: Bit-string labels not supported.
+decompress_name: compressed name extends outside data field.
+decompress_name: compressed name extends outside message.
+decompress_name: decompressed name larger than %u bytes.
+decompress_name: offset points outside message.
+decompress_name: too many offsets in compressed name.
+decompress_name: unsupported label type.
+default
+delegation_only
+device
+device: string too long
+dflgnames
+diald
+discover
+domain_match: too many name segments
+edns_query
+entry count
+error in UDP recv: %s
+exclude
+excluded
+execl
+expected a time specification for 4th argument of soa= option
+expected a time specification for 5th argument of soa= option
+expected a time specification for 6th argument of soa= option
+expected a time specification for 7th argument of soa= option
+expected a time specification for global timeout option
+expected a time specification for max_ttl option
+expected a time specification for min_ttl option
+expected a time specification for neg_ttl option
+expected a time specification for tcp_qtimeout option
+expected a time specification for timeout option
+expected a time specification for ttl option
+expected beginning of new option or closing brace
+expected equals sign after option name
+expected opening brace after section name
+expected section header
+expected unsigned integer value for 3rd argument of soa= option
+expected unsigned integer value for ctl_perms option
+expected unsigned integer value for par_queries option
+expected unsigned integer value for ping_timeout option
+expected unsigned integer value for port option
+expected unsigned integer value for proc_limit option
+expected unsigned integer value for procq_limit option
+expected unsigned integer value for query_port_end option
+expected unsigned integer value for second argument of mx= option
+expected unsigned integer value for server_port option
+expected unsigned integer value for udpbufsize
+expected unsigned integer value for verbosity option
+false
+fclose
+fcntl
+fcntl error while trying to make socket to %s non-blocking: %s
+fcntl(F_SETFD) failed: %s
+ferror
+fflush
+file descriptor not found in poll() array
+fnmatch
+follow_cname_chain: record too long
+fopen
+fputc
+fputs
+fqdn_only
+fread
+free_cent0
+free_servparm
+free_slist_domain
+free_zone
+fscanf
+fwrite
+g@y	=
+getgid
+getline
+getpwnam
+getpwuid
+getrlimit
+getrlimit() failed: %s
+getsockopt
+gettimeofday
+getuid
+global
+global section not allowed in eval string
+global section not allowed in include file
+h"@yi
+h"@yj&@y)
+h1@yf
+h^N9W
+hash_buckets
+have recursion available
+hij8)	
+hrA9h
+hvA9i
+iB9!@	
+iRN9hVN9{J@
+icmp ping: sendto() failed: %s.
+icmp ping: setsockopt() failed: %s
+icmp ping: socket() failed: %s
+ignore_cd
+ij8k	
+illegal rr type '%.*s' used as argument for types= option.
+include
+included
+incomplete data
+inconsistent
+inet_aton
+inet_ntop
+inet_ntop: %s
+inet_pton
+init_uid
+initgroups
+interface: string too long
+interrupt
+interval
+invalid option for global section: %.*s
+invalid option for include section: %.*s
+invalid option for neg section: %.*s
+invalid option for rr section: %.*s
+invalid option for server section: %.*s
+invalid option for source section: %.*s
+invalid section header: %.*s
+invalid time specification for %s: %s
+ioctl
+ip6.arpa.
+isalnum
+isalpha
+isgraph
+isprint
+isspace
+it under the terms of the GNU General Public License as published by
+j58<t
+j88<S
+jh8Hkh8
+jh8hkh8
+jijx_
+jni/pdnsd/src/cache.c
+jni/pdnsd/src/dns.c
+jni/pdnsd/src/dns_answer.c
+jni/pdnsd/src/dns_query.c
+jni/pdnsd/src/helpers.c
+jni/pdnsd/src/icmp.c
+jni/pdnsd/src/servers.c
+jyhx)	
+kh8Hkh8
+label
+lean_query
+libc.so
+libdl.so
+libm.so
+linkdown_kluge
+listen
+localtime_r
+lock_mutex
+loglock
+main_thrid
+malloc
+max_ttl
+maximum include depth (%d) exceeded.
+may not use backslash to escape end-of-line
+memcmp
+memcpy
+memset
+min_ttl
+missing 2nd argument of soa= option
+missing 3rd argument of soa= option
+missing 4th argument of soa= option
+missing 5th argument of soa= option
+missing 6th argument of soa= option
+missing 7th argument of soa= option
+missing second argument (preference level) of mx= option
+name exists when it should not
+name not contained in zone
+nameserver
+nanosleep
+neg_domain_pol
+neg_rrs_pol
+neg_ttl
+negate
+no data
+no digits before suffix.
+no error
+non-authoritative
+non-existent domain
+not supported
+onquery
+ontimeout
+openlog
+options (e.g. --notcp) to reverse their effect.
+out of memory!
+outgoing_ip
+outside_interface
+owner
+p_dns_resolve: merging answer with cache failed, using local cent copy.
+p_dns_resolve: nocache.
+par_queries
+paranoid
+pd13NEGLOCAUTNOCADDNOPRTSNEGLOCAUTNOCWLDconfig
+pdnsd
+pdnsd - dns proxy daemon, version 1.2.9a-par
+pdnsd control thread is running.
+pdnsd is distributed in the hope that it will be useful,
+pdnsd is free software; you can redistribute it and/or modify
+pdnsd probably crashed due to a bug. Please consider sending a bug
+pdnsd was compiled without IPv6 support. %s will be ignored.
+pdnsd was compiled without IPv6 support. --ipv4_6_prefix will be ignored.
+pdnsd was compiled without IPv6 support. ipv4_6_prefix option in config file will be ignored.
+pdnsd-%s running on %s.
+pdnsd-%s starting.
+performing uptest (type=%s) for %s
+perm_cache
+pid_file
+ping_ip
+ping_isocket
+ping_timeout
+pointer returned by del_dns_hash() does not match cache entry in %s, line %d
+poll/select failed: %s
+poll/select interrupted in server status thread.
+preset
+proc_limit
+procq_limit
+proxy_only
+pthread_attr_init
+pthread_attr_setdetachstate
+pthread_cond_broadcast
+pthread_cond_signal
+pthread_cond_timedwait
+pthread_cond_wait
+pthread_create
+pthread_create failed: %s
+pthread_equal
+pthread_exit
+pthread_getspecific
+pthread_key_create
+pthread_key_create failed: %s
+pthread_kill
+pthread_kill failed: %s
+pthread_mutex_lock
+pthread_mutex_trylock
+pthread_mutex_unlock
+pthread_self
+pthread_setspecific
+pthread_setspecific failed: %s
+pthread_sigmask
+purge_cache
+q		@y)m
+q?h)8
+qhJ)8
+qtype in answer (%u) from %s does not match expected qtype (%u).
+query format error
+query refused
+query_method
+query_port_end
+query_port_end may not be smaller than query_port_start.
+query_port_start
+query_test_name
+quoted string without closing quote
+r_cond
+randomize_recs
+randomize_servers
+rcode=%u (%s), flags:%s
+realloc
+recvfrom
+recvmsg
+reject
+reject_policy
+reject_recursively
+report to p.a.rombouts@home.nl or tmoestl@gmx.net
+reportedly failed
+result of uptest for %s: %s
+reverse
+rhncpy: src too long!
+root_server
+rr data
+rr data length
+rr header
+rr_info
+rrcachiterlist
+rrlkuptab
+rrmuiterlist
+rrnames
+rrs2cent: %s record contains unsupported gateway type (%u).
+rrs2cent: %s record has length %u.
+rrs2cent: %s record has trailing junk.
+rrs2cent: %s record too short.
+rrs2cent: RDATA field in OPT record not empty!
+rrs2cent: Z field contains unknown nonzero bits (%04x).
+rrs2cent: buffer too small to process %s record.
+rrs2cent: ignoring record of type %s (%d), class %s (%d).
+rrs2cent: ingnoring surplus OPT record.
+rrs2cent: name in OPT record not empty!
+run_as
+run_as user %s could not be found.
+run_as: string too long
+run_ipv4
+rw_cond
+scheme: string too long
+scheme_file
+second argument of uptest_cmd: string too long
+sendmsg
+sendto
+serv_presets
+serve_aliases
+server failed
+server label must be unique to change server addresses.
+server not authoritative for zone
+server section not allowed in eval string
+server section not allowed in include file
+server status thread interrupted.
+server status thread is running.
+server_data_users non-positive before attempt to decrement it
+server_ip
+server_port
+servers
+servstat_thread
+servstat_thrid
+setgid
+setsid
+setsockopt
+setuid
+short status-socket query
+sigaction
+sigaddset
+sigemptyset
+signal_interrupt
+sigs_msk
+sigwait
+sigwait failed: %s
+simple_dns_cached_resolve: merging answer with cache failed, using local cent copy.
+simple_only
+sock_path
+sort_rrl: tmp array overflowed
+source
+srandom
+stat_pipe
+stat_sock
+statsock_thrid
+status of uptest command "%s" is of unkown type (0x%x)
+status_ctl
+stpcpy
+strchr
+strcmp
+strdup
+strerror
+strftime
+strict_setuid
+string length exceeds buffer size
+string longer than 255 bytes in %s= option
+strlen
+strncmp
+strncpy
+strndup
+strtol
+tcp accept failed: %s
+tcp and udp initialization failed. Exiting.
+tcp server thread is running.
+tcp_only
+tcp_qtimeout
+tcp_server
+tcp_server_thread
+tcp_socket
+tcp_udp
+tcps_thrid
+test condition
+test_onquery(): couldn't signal server status thread: %s
+the Free Software Foundation; either version 3 of the License, or
+thrid_key
+timer
+tolower
+too many arguments to option or missing semicolon
+toupper
+truncated
+types
+udp server thread is running.
+udp_only
+udp_server_thread
+udp_socket
+udp_tcp
+udps_thrid
+umask
+uname
+unexpected end of file
+unexpected end of input string
+unknown error
+unlink
+unrecognized rr type '%.*s' used as argument for types= option.
+uptest
+uptest command "%s" exited with status %d
+uptest command "%s" was terminated by signal %d
+uptest_cmd
+uptest_sh
+use_cache_lock
+use_log_lock
+use_nss
+value for query_port_end out of range.
+value for query_port_start out of range.
+value for udpbufsize out of range.
+vasprintf
+verbosity
+vfprintf
+vsnprintf
+vsyslog
+waitpid
+warning
+yh:@y
+yhbB9
+yixJ	
+yiz@yhB
+you must specify a name before a,ptr,cname,mx,ns(owner) and soa records.
+you must specify a name before the types= option.
+you must specify owner before file= in source records.
+you must specify uptest_cmd if you specify uptest=exec!
+{hx)	

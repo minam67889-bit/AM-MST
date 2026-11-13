@@ -1,0 +1,562 @@
+name: AM Tunnel Lite - SuperDNS hunt
+
+# New build (MOD Universal) of AM TUNNEL LITE VPN. Goal: find the SuperDNS
+# servers the app connects to and dump them into a JSON. Previous build only
+# had `prince/udp/vpn/service/SuperService` referenced; this run decompiles it
+# and mines every string table for hosts, keys and config endpoints.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/amtunnel-superdns.yml"
+      - "analysis-amtunnel/scan_superdns.py"
+
+permissions:
+  contents: write
+
+jobs:
+  hunt:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq unzip curl binutils file python3 default-jre-headless
+
+      - name: Download the MOD build
+        run: |
+          set +e
+          mkdir -p /tmp/a && cd /tmp/a
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+          for URL in \
+            "https://filebin.net/kaq42zmlr3c1na2g/AM%20TUNNEL%20LITE%20VPN_AM%20%5BMOD%20Universal%5D.zip" \
+            "https://filebin.net/kaq42zmlr3c1na2g/AM TUNNEL LITE VPN_AM [MOD Universal].zip"; do
+            echo "== $URL"
+            curl -sS -c jar -A "$UA" -o /dev/null "$URL"
+            curl -sSL -c jar -b jar -A "$UA" -H "Referer: $URL" -o pack.zip "$URL"
+            file pack.zip; ls -l pack.zip
+            if unzip -l pack.zip > /dev/null 2>&1; then echo "OK zip"; break; fi
+          done
+          unzip -o -q pack.zip -d x || true
+          find x -maxdepth 3 | head -40
+          ls -l
+
+      - name: Locate the APK
+        run: |
+          set +e
+          cd /tmp/a
+          apk=$(find x -name '*.apk' -size +1M | head -1)
+          if [ -z "$apk" ] && unzip -l pack.zip 2>/dev/null | grep -qi 'AndroidManifest'; then
+            cp pack.zip universal.apk; apk=universal.apk
+          fi
+          echo "APK=$apk"
+          [ -z "$apk" ] && { echo "NO APK FOUND"; exit 1; }
+          cp "$apk" apk.apk
+          mkdir -p apkx && unzip -o -q apk.apk -d apkx
+          echo "--- entries: $(wc -l < <(unzip -Z1 apk.apk))"
+          unzip -Z1 apk.apk | grep -E '^(assets|lib)/' | head -60 > list.txt
+          unzip -Z1 apk.apk | wc -l
+          du -sh apkx
+          ls apkx
+          echo "--- assets"
+          unzip -Z1 apk.apk | grep '^assets/' | head -80
+          echo "--- libs"
+          unzip -Z1 apk.apk | grep '^lib/' | head -40
+          echo "--- dex"
+          unzip -Z1 apk.apk | grep -E '^classes[0-9]*\.dex$' | head -20
+
+      - name: Strings of every dex and native lib
+        run: |
+          set +e
+          cd /tmp/a
+          mkdir -p strs
+          for d in apkx/classes*.dex; do
+            [ -f "$d" ] || continue
+            b=$(basename "$d" .dex)
+            strings -n 5 "$d" > "strs/$b.txt"
+          done
+          for l in apkx/lib/*/*.so; do
+            [ -f "$l" ] || continue
+            b=$(basename "$l")
+            strings -n 5 "$l" > "strs/lib_$b.txt"
+          done
+          wc -l strs/*.txt | tail -20
+          python3 "$GITHUB_WORKSPACE/analysis-amtunnel/scan_superdns.py" strs scan.json
+          head -c 3000 scan.json
+
+      - name: Native libraries - which engine is SuperDNS?
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          mkdir -p "$R"
+          {
+            echo "### libraries"
+            for l in apkx/lib/arm64-v8a/*.so; do
+              [ -f "$l" ] || continue
+              printf "%-28s %10d  %s\n" "$(basename "$l")" "$(stat -c%s "$l")" "$(file -b "$l" | cut -c1-60)"
+            done
+            echo
+            echo "### dnstt / tunnel markers per library"
+            for l in apkx/lib/arm64-v8a/*.so; do
+              [ -f "$l" ] || continue
+              b=$(basename "$l")
+              hits=$(strings -n 6 "$l" | grep -icE "bamsoftware|turbotunnel|dnstt|pubkey|kcp|smux|noise" )
+              [ "$hits" -gt 0 ] && echo "$b: $hits marker lines" && \
+                strings -n 8 "$l" | grep -iE "bamsoftware|turbotunnel|dnstt|pubkey-file|slowdns" | sort -u | head -8
+            done
+            echo
+            echo "### superdns-ish strings anywhere"
+            grep -hiE "superdns|super dns|super_dns|SUPERDNS" strs/*.txt | sort -u | head -60
+          } > "$R/native.txt" 2>&1
+          cat "$R/native.txt" | head -80
+
+      - name: Decompile
+        run: |
+          set +e
+          cd /tmp/a
+          curl -sSL -o jadx.zip https://github.com/skylot/jadx/releases/download/v1.5.0/jadx-1.5.0.zip
+          unzip -o -q jadx.zip -d jadx && chmod +x jadx/bin/jadx
+          jadx/bin/jadx --version
+          timeout 1500 jadx/bin/jadx -d src --no-res --threads-count 4 apk.apk > jadx.log 2>&1
+          echo "exit=$?"
+          grep -c "ERROR" jadx.log || true
+          find src -name '*.java' | wc -l
+          ls src 2>/dev/null | head
+
+      - name: SuperDNS code
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          mkdir -p "$R"
+          mkdir -p "$GITHUB_WORKSPACE/analysis-amtunnel/code"
+          cp -r src/prince "$GITHUB_WORKSPACE/analysis-amtunnel/code/" 2>/dev/null
+          {
+            echo "### files mentioning super dns"
+            grep -rl -iE "superdns|super dns|startSuperDns|SuperService" src 2>/dev/null | head -30
+            echo
+            for f in $(grep -rl -iE "SuperService|startSuperDns" src 2>/dev/null | head -6); do
+              echo "=================== $f"
+              sed -n '1,140p' "$f"
+            done
+          } > "$R/superdns-code.txt" 2>&1
+          wc -l "$R/superdns-code.txt"
+          head -120 "$R/superdns-code.txt"
+
+      - name: Decrypt the LSParanoid string table
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          mkdir -p "$R"
+          {
+            echo "### chunks from apktool smali"
+            sudo apt-get install -y -qq apktool > /dev/null 2>&1
+            timeout 600 apktool d -f -r -o smali apk.apk > apktool.log 2>&1
+            echo "apktool exit=$?"
+            python3 "$GITHUB_WORKSPACE/tools/extract_paranoid_chunks.py" smali chunks.txt 2>&1 | tail -2
+            echo
+            echo "### ids: smali (complete) + jadx"
+            python3 "$GITHUB_WORKSPACE/tools/ids_from_smali.py" smali ids-smali.txt | tail -1
+            grep -rhoE 'getString\(\s*-?[0-9]+L?\s*\)' src 2>/dev/null | grep -oE '[-0-9]+' | sort -u > ids-jadx.txt
+            sort -u ids-smali.txt ids-jadx.txt > ids.txt
+            echo "smali=$(wc -l < ids-smali.txt) jadx=$(wc -l < ids-jadx.txt) total=$(wc -l < ids.txt)"
+          } > "$R/strings-decrypted.txt" 2>&1
+          if [ -s chunks.txt ]; then
+            python3 "$GITHUB_WORKSPACE/tools/lsparanoid_decode.py" --chunks-file chunks.txt \
+              --ids-file ids.txt --out decrypted.tsv --hosts-out hosts.txt \
+              >> "$R/strings-decrypted.txt" 2>&1
+          else
+            python3 "$GITHUB_WORKSPACE/tools/paranoid_from_dex.py" apk.apk ids.txt \
+              decrypted.tsv hosts.txt >> "$R/strings-decrypted.txt" 2>&1
+          fi
+          {
+            echo
+            echo "### app hosts (deobfuscated)"
+            cat hosts.txt 2>/dev/null
+            echo
+            echo "### every domain-looking token in the decoded table"
+            cut -f2 decrypted.tsv 2>/dev/null | grep -v '^#' \
+              | grep -oE "[a-z0-9][a-z0-9.-]{2,60}\.(com|net|org|io|xyz|top|site|online|app|dev|link|co|me|tk|ml|info|club|sbs|icu|pro|live|cloud|ir|ru|biz|store|shop|one|pw|cc)" \
+              | sort | uniq -c | sort -rn | head -60
+            echo
+            echo "### strings mentioning super/dns/tunnel/pubkey/host"
+            grep -iE "super|dnstt|slowdns|slow dns|pubkey|nameserver|tunnel|ssh_host|server" decrypted.tsv 2>/dev/null | head -150
+            echo
+            echo "### 64-hex keys"
+            grep -oE "\b[0-9a-f]{64}\b" decrypted.tsv 2>/dev/null | sort -u | head -20
+          } >> "$R/strings-decrypted.txt" 2>&1
+          head -40 "$R/strings-decrypted.txt"
+
+      - name: Readable SuperService / tunnel code
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          OUT="$GITHUB_WORKSPACE/analysis-amtunnel/code-resolved"
+          rm -rf "$OUT"; mkdir -p "$OUT"
+          python3 "$GITHUB_WORKSPACE/tools/resolve_paranoid_source.py" \
+            decrypted.tsv src "$OUT" "**/*.java"
+          ls "$OUT"/sources/prince/udp/vpn/service 2>/dev/null | head
+          {
+            for f in $(find "$OUT" -name 'SuperService.java' -o -name 'PDoQService.java' \
+                       -o -name 'SocksDNSService.java' | head -4); do
+              echo "=================== $f"
+              grep -nE "libsuperdns|libdns|exec|\-udp|\-pubkey|\-report|getString|ProcessBuilder|args" "$f" | head -60
+            done
+          } > "$R/superdns-args.txt" 2>&1
+          cat "$R/superdns-args.txt" | head -60
+
+      - name: What does libsuperdns.so want?
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          L=apkx/lib/arm64-v8a/libsuperdns.so
+          {
+            echo "### size: $(stat -c%s $L)"
+            echo
+            echo "### flags"
+            strings -n 2 "$L" | grep -xE "-[a-zA-Z][a-zA-Z0-9-]{1,18}" | sort -u | head -40
+            echo
+            echo "### usage / help lines"
+            strings -n 6 "$L" | grep -iE "usage|pubkey-file|\-udp ADDR|\-doh|\-dot|local address|slowdns" | sort -u | head -30
+            echo
+            echo "### protocol markers"
+            strings -n 8 "$L" | grep -iE "bamsoftware|turbotunnel|dnstt|kcp-go|smux|flynn/noise|superdns" | sort -u | head -30
+            echo
+            echo "### embedded hosts / keys"
+            strings -n 6 "$L" | grep -oE "\b[a-z0-9]([a-z0-9-]{0,40}\.)+(com|net|org|xyz|top|site|online|live|shop|app|io|me|tech|space|club|info|co|dev|pro|link|store|cloud|fun|sbs|cfd)\b" | sort | uniq -c | sort -rn | head -30
+            strings -n 32 "$L" | grep -oE "\b[0-9a-f]{64}\b" | sort -u | head -10
+          } > "$R/libsuperdns.txt" 2>&1
+          cat "$R/libsuperdns.txt" | head -70
+
+      - name: Assets that could hold servers
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          {
+            echo "### asset json/cnf/txt files"
+            for f in $(unzip -Z1 apk.apk | grep -E '^assets/.*\.(json|txt|cnf|conf|xml)$' | grep -v '/wg/' | head -20); do
+              echo "=================== $f"
+              unzip -p apk.apk "$f" | head -c 1200
+              echo
+            done
+            echo
+            echo "### janny.json"
+            unzip -p apk.apk assets/janny.json 2>/dev/null | head -c 1500
+            echo
+            echo "### protected_by_np"
+            unzip -p apk.apk 'assets/protected_by_np/*.txt' 2>/dev/null | head -c 600
+          } > "$R/assets-dump.txt" 2>&1
+          head -60 "$R/assets-dump.txt"
+
+      - name: Config sources and endpoints
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          {
+            python3 "$GITHUB_WORKSPACE/analysis-amtunnel/report_candidates.py" scan.json
+            echo
+            echo "### pref keys / config fields seen in code"
+            grep -rhoE "\"(super[A-Za-z]*|[a-z]*[Dd]ns[A-Za-z]*|[a-z]*[Hh]ost[a-z]*|pubkey|nameserver|tunnel[A-Za-z]*)\"" src 2>/dev/null | sort | uniq -c | sort -rn | head -50
+            echo
+            echo "### json / asset config names"
+            grep -rhoE "\"[A-Za-z0-9_./-]{3,40}\\.json\"" src 2>/dev/null | sort -u | head -40
+            echo
+            echo "### asset names in the apk"
+            unzip -Z1 apk.apk | grep '^assets/' | head -60
+          } > "$R/config-sources.txt" 2>&1
+          head -120 "$R/config-sources.txt"
+
+      - name: Probe endpoints
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          python3 "$GITHUB_WORKSPACE/analysis-amtunnel/report_candidates.py" scan.json --probe \
+            > "$R/probe.txt" 2>&1
+          sed -n '/### url probe/,$p' "$R/probe.txt" | head -60
+
+      - name: dnstt - recover the SocksDNS command line and the keys
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          mkdir -p "$R"
+          python3 "$GITHUB_WORKSPACE/tools/resolve_paranoid_source.py" decrypted.tsv src /tmp/res2 > /dev/null 2>&1
+          {
+            echo "### files that mention SocksDNS / libdns"
+            grep -rl "SocksDNS\|libdns" /tmp/res2 src 2>/dev/null | head -10
+            for f in $(grep -rl "libdns" /tmp/res2 src 2>/dev/null | head -4); do
+              echo
+              echo "=================== $f"
+              grep -nE 'libdns|"-|pubkey|ProcessBuilder|arrayList.add|startsWith|split|addAll|new String\[' "$f" | head -70
+            done
+            F=$(find /tmp/res2 -name 'SocksDNSService.java' | head -1)
+            echo
+            echo "=================== full $F"
+            sed -n '1,240p' "$F" 2>/dev/null
+          } > "$R/dnstt-code.txt" 2>&1
+          {
+            for lib in libdns libsuperdns libudpq libpdoq libxray; do
+              mkdir -p "libs/$lib"
+              unzip -o -j apk.apk "lib/arm64-v8a/$lib.so" -d "libs/$lib" > /dev/null 2>&1
+              f="libs/$lib/$lib.so"
+              if [ -s "$f" ]; then
+                echo "--- $lib.so $(stat -c %s "$f") bytes"
+                grep -aoE '[0-9a-f]{64}' "$f" | sort | uniq -c | sort -rn | head -8
+              fi
+            done
+            echo
+            echo "--- printable key-ish strings in libdns.so"
+            strings -n 8 libs/libdns/libdns.so 2>/dev/null | grep -iE "pubkey|dnstt|prince|noise|handshake" | sort -u | head -20
+          } > "$R/dnstt-keys.txt" 2>&1
+          head -60 "$R/dnstt-code.txt"; echo; head -30 "$R/dnstt-keys.txt"
+          chmod +x "$GITHUB_WORKSPACE/tools/bin/dnstt-client-linux-amd64"
+          python3 "$GITHUB_WORKSPACE/tools/dnstt_hunt.py" \
+            --catalogue "$GITHUB_WORKSPACE/analysis-amtunnel/report/janny-decoded.json" \
+            --keys-file "$R/dnstt-keys.txt" \
+            --client "$GITHUB_WORKSPACE/tools/bin/dnstt-client-linux-amd64" \
+            --out "$R/dnstt-test.txt" --probe-limit 6 --max-hosts 2 --max-keys 2 \
+            --max-domains 2 --seconds 20 2>&1 | tail -40
+
+      - name: dnstt - the exact domain string the client builds
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          mkdir -p "$R"
+          python3 "$GITHUB_WORKSPACE/tools/resolve_paranoid_source.py" decrypted.tsv src /tmp/res3 > /dev/null 2>&1
+          {
+            for f in sources/prince/udp/vpn/service/SocksDNSService.java \
+                     sources/prince/udp/vpn/service/vpn/Tunnel.java \
+                     sources/defpackage/Y4.java sources/defpackage/C2701hA.java \
+                     sources/defpackage/A2.java; do
+              echo "=================== $f"
+              if [ -f "/tmp/res3/$f" ]; then cat "/tmp/res3/$f"; else cat "src/$f" 2>/dev/null; fi
+              echo
+            done
+          } > "$R/dnstt-service.txt" 2>&1
+          wc -l "$R/dnstt-service.txt"
+          grep -nE "libdns|add\(|-sd|-udp|-pubkey|[a-z]+\.add|startsWith|\+ \"|getString" "$R/dnstt-service.txt" | head -80
+
+      - name: Where does the server list come from
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          G="$GITHUB_WORKSPACE/analysis-amtunnel/code-resolved"
+          mkdir -p "$R" "$G"
+          # The prefs keys only exist after the ids are resolved, so resolve the
+          # whole tree first and grep the readable copy.
+          python3 "$GITHUB_WORKSPACE/tools/resolve_paranoid_source.py" decrypted.tsv src /tmp/resolved > /tmp/res.log 2>&1
+          tail -1 /tmp/res.log
+          {
+            echo "### who writes SSH_HOST"
+            grep -rn "SSH_HOST" /tmp/resolved 2>/dev/null | head -20
+            echo
+            echo "### who touches janny.json"
+            grep -rn "janny" /tmp/resolved 2>/dev/null | head -20
+            echo
+            echo "### server-list plumbing"
+            grep -rln "SERVER_SELECTED_NAME\|isCustomSuperSet\|SUPER_DNS\|isCustomPDOQSet" /tmp/resolved 2>/dev/null | head -20
+            echo
+            echo "### superdns outbound json builder (address/method/password)"
+            grep -rln "\"servers\"\|superdns\"\|\"method\"" /tmp/resolved 2>/dev/null | head -20
+            echo
+            echo "### every domain-looking token in the resolved tree"
+            grep -rhoE "[a-z0-9][a-z0-9.-]{2,60}\.(com|net|org|io|xyz|top|site|online|app|dev|link|co|me|tk|ml|info|club|sbs|icu|pro|live|cloud|ir|ru|biz|store|shop|one|pw|cc)\b" /tmp/resolved 2>/dev/null \
+              | grep -viE "^(schemas|www\.w3|example|json|xml|apache|google|android|firebase|crashlytics|kotlin|golang|github|oracle|elasticsearch|squareup|okhttp|protobuf|unicode|joda|rfc|tools\.ietf|datatracker)" \
+              | sort | uniq -c | sort -rn | head -60
+            echo
+            echo "### assets/janny.json"
+            unzip -p apk.apk assets/janny.json > janny.b64 2>/dev/null
+            echo "bytes: $(wc -c < janny.b64)"
+            python3 "$GITHUB_WORKSPACE/tools/decode_asset_blob.py" janny.b64 "$R/janny-decoded.json" 2>&1 | head -25
+            echo
+            echo "### res/raw + assets"
+            find smali/assets smali/res/raw -maxdepth 1 -type f 2>/dev/null | head -30
+          } > "$R/server-list.txt" 2>&1
+          # keep the readable version of every file that mentions the catalogue
+          for f in $(grep -rl "SSH_HOST\|janny\|SERVER_SELECTED_NAME\|isCustomSuperSet" /tmp/resolved 2>/dev/null | head -12); do
+            rel="${f#/tmp/resolved/}"
+            mkdir -p "$G/$(dirname "$rel")"
+            cp "$f" "$G/$rel"
+          done
+          grep -h "" "$R/server-list.txt" | head -80
+
+      - name: The janny.json decryption plumbing
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          G="$GITHUB_WORKSPACE/analysis-amtunnel/code-resolved"
+          mkdir -p "$R" "$G"
+          {
+            for f in sources/defpackage/AbstractC3622yh.java sources/defpackage/AbstractC2866kI.java \
+                     sources/prince/udp/vpn/activities/a.java sources/defpackage/RunnableC0043Cb.java; do
+              echo "=================== $f"
+              if [ -f "/tmp/resolved/$f" ]; then cat "/tmp/resolved/$f"; else cat "src/$f" 2>/dev/null; fi
+              echo
+            done
+            echo "=================== who mentions oast.info"
+            grep -rn "oast.info" /tmp/resolved 2>/dev/null | head -5
+            echo
+            echo "=================== every string that looks like a secret/key"
+            cut -f2 decrypted.tsv 2>/dev/null | grep -v '^#' \
+              | grep -E "^[A-Za-z0-9+/=_-]{16,120}$" | sort -u | head -40
+          } > "$R/crypto-plumbing.txt" 2>&1
+          for f in sources/defpackage/AbstractC3622yh.java sources/defpackage/AbstractC2866kI.java \
+                   sources/prince/udp/vpn/activities/a.java sources/defpackage/RunnableC0043Cb.java; do
+            if [ -f "/tmp/resolved/$f" ]; then
+              mkdir -p "$G/$(dirname "$f")"; cp "/tmp/resolved/$f" "$G/$f"
+            elif [ -f "src/$f" ]; then
+              mkdir -p "$G/$(dirname "$f")"; cp "src/$f" "$G/$f"
+            fi
+          done
+          wc -l "$R/crypto-plumbing.txt"
+
+      - name: Live probe of the SuperDNS endpoints
+        run: |
+          set +e
+          cd /tmp/a
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          mkdir -p "$R"
+          {
+            echo "### libsuperdns entries in the apk"
+            unzip -l apk.apk | grep -E "lib/[^/]+/libsuperdns" || echo "(none)"
+            for abi in x86_64 arm64-v8a armeabi-v7a; do
+              mkdir -p "libs/$abi"
+              unzip -o -j apk.apk "lib/$abi/libsuperdns.so" -d "libs/$abi" > /dev/null 2>&1
+              f="libs/$abi/libsuperdns.so"
+              if [ -s "$f" ]; then
+                echo "$abi: $(stat -c %s "$f") bytes :: $(file -b "$f")"
+              fi
+            done
+          } > "$R/superdns-abi.txt" 2>&1
+          cat "$R/superdns-abi.txt"
+          {
+            echo "### the shipped binary cannot be executed off-Android:"
+            echo "###   it is an Android ELF whose interpreter is /system/bin/linker64"
+            echo
+            python3 "$GITHUB_WORKSPACE/tools/superdns_probe.py" \
+              sa1.supaghost.cc sa2.supaghost.cc sa25.supaghost.cc sa50.supaghost.cc \
+              gg1.apnacp.xyz
+            echo
+            echo "### what the SuperDNS endpoints speak on the tls ports"
+            python3 "$GITHUB_WORKSPACE/tools/tls_probe.py" \
+              sa1.supaghost.cc sa2.supaghost.cc sa25.supaghost.cc sa50.supaghost.cc
+          } > "$R/superdns-run.txt" 2>&1
+          cat "$R/superdns-run.txt" | head -60
+
+      - name: DNS census over the decrypted catalogue
+        run: |
+          set +e
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          python3 "$GITHUB_WORKSPACE/tools/catalogue_census.py" \
+            "$GITHUB_WORKSPACE/analysis-amtunnel/report/janny-decoded.json" \
+            "$R/dns-census.txt" 8.8.8.8 12 2>&1 | head -80
+
+      - name: Reachability sweep of every AM TUNNEL endpoint
+        run: |
+          set +e
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          {
+            echo "### what is libdns.so"
+            cd /tmp/a && mkdir -p libs/libdns
+            unzip -o -j apk.apk "lib/arm64-v8a/libdns.so" -d libs/libdns > /dev/null 2>&1
+            file -b libs/libdns/libdns.so 2>/dev/null
+            strings -n 6 libs/libdns/libdns.so 2>/dev/null | grep -iE "bamsoftware|dnstt|turbotunnel|smux|kcp|noise|pubkey|^-|/system/bin" | sort -u | head -40
+            echo
+            echo "### tunnel type table"
+            grep -rn "TUNNEL_TYPE" /tmp/res3/sources 2>/dev/null | head -12
+            echo
+            echo "### every resolved source naming a native lib"
+            grep -rhoE "lib[a-z]+\.so" /tmp/res3/sources 2>/dev/null | sort | uniq -c | sort -rn | head -15
+            echo
+          } > "$R/libdns-what.txt" 2>&1
+          cat "$R/libdns-what.txt"
+          python3 "$GITHUB_WORKSPACE/tools/amtunnel_dnstt_check.py" \
+            "$GITHUB_WORKSPACE/analysis-amtunnel/report/janny-decoded.json" \
+            "$R/dnstt-sweep.txt" --threads 24 2>&1 | head -70
+
+      - name: Positive control - a real DNS tunnel that loads Instagram
+        run: |
+          set +e
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          B="$GITHUB_WORKSPACE/tools"
+          cd /tmp
+          "$B/bin/dnstt-server-linux-amd64" -gen-key -privkey-file /tmp/ctl.key -pubkey-file /tmp/ctl.pub > /dev/null 2>&1
+          echo "control pubkey: $(cat /tmp/ctl.pub)"
+          python3 "$B/socks5_server.py" 11080 180 > /tmp/socks5.log 2>&1 &
+          sleep 1
+          setsid "$B/bin/dnstt-server-linux-amd64" -udp 127.0.0.1:5353 -privkey-file /tmp/ctl.key \
+            t.control 127.0.0.1:11080 > /tmp/ctl-server.log 2>&1 &
+          sleep 2
+          chmod +x "$B/bin/dnstt-client-linux-amd64"
+          python3 "$B/amtunnel_dnstt_e2e.py" \
+            --client "$B/bin/dnstt-client-linux-amd64" \
+            --hosts t.control --keys "$(cat /tmp/ctl.pub)" \
+            --resolver 127.0.0.1:5353 \
+            --url https://www.instagram.com/ --seconds 40 \
+            --out "$R/dnstt-control.txt" 2>&1 | tail -40
+          echo "--- server log"; tail -10 /tmp/ctl-server.log
+          pkill -f 'dnstt-server' ; pkill -f socks5_server.py
+
+      - name: dnstt - load a real page through AM TUNNEL's SuperDNS
+        run: |
+          set +e
+          R="$GITHUB_WORKSPACE/analysis-amtunnel/report"
+          chmod +x "$GITHUB_WORKSPACE/tools/bin/dnstt-client-linux-amd64"
+          # control first: a deliberately wrong key tells us what "rejected" looks like
+          python3 "$GITHUB_WORKSPACE/tools/amtunnel_dnstt_e2e.py" \
+            --client "$GITHUB_WORKSPACE/tools/bin/dnstt-client-linux-amd64" \
+            --hosts sa1.supaghost.cc \
+            --keys ea0710d912261ce6c8a6c91ea69f308f3d93959fe0c1ec034c5de474e276239b,9bd2ef7a9ddbb22386f27f5f6885f8eeef6cdf57e96bbdef0f9e0421f1ec4654,a43ffc4a4831591b9de7c1ed0cb93795c1209295578eacf0b17a0150abe1d3e7,2c587152c2f436fc5ec104c928e860879c863f40cd3cf40ed0b41cc2adca5048 \
+            --seconds 25 --out "$R/dnstt-live.txt" 2>&1 | tail -80
+
+      - name: Commit
+        if: always()
+        run: |
+          set +e
+          cd /tmp/a
+          DEST="$GITHUB_WORKSPACE/analysis-amtunnel"
+          mkdir -p "$DEST/report"
+          cp scan.json "$DEST/scan.json" 2>/dev/null
+          cp list.txt "$DEST/report/apk-entries.txt" 2>/dev/null
+          cp jadx.log "$DEST/report/jadx.log" 2>/dev/null
+          cp chunks.txt "$DEST/report/paranoid-chunks.json" 2>/dev/null
+          cp ids.txt "$DEST/report/paranoid-ids.txt" 2>/dev/null
+          cp decrypted.tsv "$DEST/report/decrypted.tsv" 2>/dev/null
+          cp hosts.txt "$DEST/report/hosts.txt" 2>/dev/null
+          cp janny.b64 "$DEST/report/janny.b64" 2>/dev/null
+          cp dns-census.txt "$DEST/report/dns-census.txt" 2>/dev/null
+          cp superdns-run.txt "$DEST/report/superdns-run.txt" 2>/dev/null
+          cp superdns-abi.txt "$DEST/report/superdns-abi.txt" 2>/dev/null
+          cp dnstt-code.txt "$DEST/report/dnstt-code.txt" 2>/dev/null
+          cp dnstt-keys.txt "$DEST/report/dnstt-keys.txt" 2>/dev/null
+          cp dnstt-test.txt "$DEST/report/dnstt-test.txt" 2>/dev/null
+          cp dnstt-service.txt "$DEST/report/dnstt-service.txt" 2>/dev/null
+          cp libdns-what.txt "$DEST/report/libdns-what.txt" 2>/dev/null
+          cp dnstt-sweep.txt "$DEST/report/dnstt-sweep.txt" 2>/dev/null
+          cp dnstt-live.txt "$DEST/report/dnstt-live.txt" 2>/dev/null
+          cp dnstt-control.txt "$DEST/report/dnstt-control.txt" 2>/dev/null
+          cd "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
+          git add analysis-amtunnel
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "amtunnel: SuperDNS hunt over the MOD build [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" > /dev/null 2>&1
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done

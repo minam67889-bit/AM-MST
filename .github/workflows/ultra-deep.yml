@@ -1,0 +1,120 @@
+name: Ultra Tunnel - deep code pass (server list + slowdns path)
+
+# Second pass: the first one proved the shape
+#   libdns -udp <resolver>:53 -pubkey <key> <domain> 127.0.0.1:2222
+# and that assets/configfile.json is encrypted. This job answers the three
+# remaining questions:
+#   1. how configfile.json is decrypted and what is inside (servers, keys)
+#   2. what authenticates to the SOCKS5 at 127.0.0.1:2222
+#   3. which prefs / UI fields feed DNS_KEY, CHAVE_KEY, NAMESERVER_KEY
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/ultra-deep.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  deep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq unzip file binutils curl jq python3 default-jre-headless
+
+      - name: XAPK + jadx
+        run: |
+          set +e
+          mkdir -p /tmp/u && cd /tmp/u
+          URL="https://filebin.net/tc28bjzj2p27ju9v/co.strongteam.ultra.zip"
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+          curl -sS -c jar -A "$UA" -o /dev/null "$URL"
+          curl -sSL -c jar -b jar -A "$UA" -H "Referer: $URL" -o u.zip "$URL"
+          unzip -o -q u.zip -d x
+          cp x/co.strongteam.ultra.59.apk base.apk
+          curl -sSL -o jadx.zip "https://github.com/skylot/jadx/releases/download/v1.5.0/jadx-1.5.0.zip"
+          unzip -o -q jadx.zip -d jadx && chmod +x jadx/bin/jadx
+          (setsid nohup jadx/bin/jadx -d /tmp/u/src --no-res --threads-count 4 /tmp/u/base.apk > /tmp/u/jadx.log 2>&1 < /dev/null &)
+          for i in $(seq 1 60); do grep -qE "finished|ERROR - finished" /tmp/u/jadx.log && break; sleep 10; done
+          tail -1 /tmp/u/jadx.log | cut -c1-200
+          du -sh /tmp/u/src
+
+      - name: Grep the whole tree and keep the evidence
+        run: |
+          set +e
+          S=/tmp/u/src/sources
+          R="$GITHUB_WORKSPACE/analysis-ultra/report"
+          mkdir -p "$R" "$GITHUB_WORKSPACE/analysis-ultra/code"
+
+          report() { # name, pattern
+            {
+              echo "### $1"
+              grep -rn --include=*.java -E "$2" "$S" 2>/dev/null | head -120 | cut -c1-400
+            } > "$R/$1.txt"
+            echo "== $1: $(wc -l < "$R/$1.txt") lines"
+          }
+
+          report configfile 'configfile'
+          report port2222 '2222'
+          report socksauth 'setUser|setPass|socks.*user|user.*socks|"user"|"pass"|username|password' 
+          report dnsprefs 'DNS_KEY|CHAVE_KEY|NAMESERVER_KEY'
+          report crypto 'AES|Cipher|getInstance\("|decrypt|encrypt|Base64' 
+          report servers 'nameserver|resolver|pubkey'
+          report tunnelmgr 'TunnelManager|startTunnel|SlowDNS|slowdns|dnstt'
+          report libs 'libdns|libuz|libsocks|libgojni|libpdnsd|loadLibrary'
+
+          echo "=== all package dirs"
+          find "$S" -maxdepth 4 -type d | sed "s#$S/##" | sort | head -120 > "$R/packages.txt"
+
+          echo "=== java files that touch the tunnel (copied out)"
+          for f in $(grep -rl --include=*.java -E 'DNSTunnelThread|configfile|NAMESERVER_KEY|CHAVE_KEY|libsocks|2222|SlowDNS|slowdns' "$S" 2>/dev/null | head -40); do
+            rel=${f#"$S/"}
+            mkdir -p "$GITHUB_WORKSPACE/analysis-ultra/code/$(dirname "$rel")"
+            cp "$f" "$GITHUB_WORKSPACE/analysis-ultra/code/$rel"
+            echo "  $rel"
+          done
+          du -sh "$GITHUB_WORKSPACE/analysis-ultra"
+
+      - name: Native strings for the tunnel pieces
+        run: |
+          set +e
+          cd /tmp/u && unzip -o -q x/config.arm64_v8a.apk -d arm64
+          R="$GITHUB_WORKSPACE/analysis-ultra/report"
+          mkdir -p "$R"
+          for lib in libdns libsocks libuz libgojni libpdnsd; do
+            f=arm64/lib/arm64-v8a/$lib.so
+            [ -f "$f" ] || continue
+            {
+              echo "### $lib.so $(stat -c%s "$f") bytes"
+              echo "--- usage/flags:"
+              timeout 30 qemu-aarch64-static "$f" -zzz 2>&1 | head -25
+              echo "--- strings:"
+              strings -n 6 "$f" | grep -iE "usage|flag|socks|user|pass|auth|pubkey|report|zone|dnstt|dns" | sort -u | head -120
+            } > "$R/native-$lib.txt"
+            echo "== $lib: $(wc -l < "$R/native-$lib.txt") lines"
+          done
+          # qemu may not be installed; that is fine, strings still land
+          sudo apt-get install -y -qq qemu-user-static > /dev/null 2>&1 || true
+
+      - name: Commit
+        if: always()
+        run: |
+          set +e
+          cd "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-ultra
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "ultra: deep code pass [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" > /dev/null 2>&1
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done

@@ -1,0 +1,10 @@
+### dnsprefs
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/DNSTunnelThread.java:50:            String privString = this.mConfig.getPrivString(SettingsConstants.DNS_KEY);
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/DNSTunnelThread.java:51:            String privString2 = this.mConfig.getPrivString(SettingsConstants.CHAVE_KEY);
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/DNSTunnelThread.java:52:            String privString3 = this.mConfig.getPrivString(SettingsConstants.NAMESERVER_KEY);
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/DNSTunnelThread.java:53:            String string = prefsPrivate.getString(SettingsConstants.CHAVE_KEY, privString);
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/DNSTunnelThread.java:54:            String string2 = prefsPrivate.getString(SettingsConstants.NAMESERVER_KEY, privString2);
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/DNSTunnelThread.java:55:            String string3 = prefsPrivate.getString(SettingsConstants.DNS_KEY, privString3);
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/config/SettingsConstants.java:9:    public static final String CHAVE_KEY = "chaveKey";
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/config/SettingsConstants.java:20:    public static final String DNS_KEY = "dnsKey";
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/config/SettingsConstants.java:29:    public static final String NAMESERVER_KEY = "serverNameKey";

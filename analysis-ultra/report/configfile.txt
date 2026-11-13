@@ -1,0 +1,2 @@
+### configfile
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerStatusVIew.java:43:            InputStream open = getAssets().open("configfile.json");

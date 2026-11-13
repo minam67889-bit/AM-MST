@@ -1,0 +1,12 @@
+  - ExcludedApplications: optional blacklist of applications to exclude from the tunnel.
+  - IncludedApplications: optional whitelist of applications to include in the tunnel.
+  - MTU: an optional MTU for the interface; if unspecified, auto-calculated.
+[#] <binder>::dnsResolver->createNetworkCache(%u)
+[#] <binder>::dnsResolver->setResolverConfiguration(%u, [%s], [%s], %d, %d, %d, %d, %d, %d, [], [])
+am broadcast -a com.wireguard.android.action.REFRESH_TUNNEL_STATES com.wireguard.android
+android.net.IDnsResolver
+dnsresolver
+interface setmtu %s %d
+interface setmtu %s %u
+mtu ([0-9]+)
+resolver setnetdns %u '%s' %s

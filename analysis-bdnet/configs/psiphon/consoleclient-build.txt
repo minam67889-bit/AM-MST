@@ -1,0 +1,15 @@
+=== go version ===
+go version go1.23.12 linux/amd64
+=== clone ===
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+=== build linux/arm64 (runs on android: static go binary) ===
+go: downloading go1.26.8 (linux/amd64)
+
+real	0m38.980s
+user	1m51.297s
+sys	0m16.268s
+=== result ===
+-rwxr-xr-x 1 runner runner 29678399 Oct 29 12:28 /tmp/psiphon-arm64
+/tmp/psiphon-arm64: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, Go BuildID=JfRSwTJBepnXKGaRNEDj/eQuNz9ia2oZAPQRf8A_3/iVTijZJNa3U0vtfZDWfB/ER_0C9KvcjxkC7DYrCBj, BuildID[sha1]=52e77eaeb9ff8b59d4e30a822efe8c46a414afc4, with debug_info, not stripped

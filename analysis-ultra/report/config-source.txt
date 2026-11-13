@@ -1,0 +1,162 @@
+### firebase / storage / config url literals
+/tmp/u/src/sources/com/google/android/gms/auth/api/signin/GoogleSignInOptions.java:46:"https://www.googleapis.com/auth/games_lite"
+/tmp/u/src/sources/com/google/android/gms/auth/api/signin/GoogleSignInOptions.java:48:"https://www.googleapis.com/auth/games"
+/tmp/u/src/sources/com/google/firebase/crashlytics/internal/settings/d.java:61:"https://firebase-settings.crashlytics.com/spi/v2/platforms/android/gmp/"
+/tmp/u/src/sources/com/google/firebase/installations/remote/FirebaseInstallationServiceClient.java:59:"https://firebaseinstallations.googleapis.com/v1/"
+/tmp/u/src/sources/com/google/gson/stream/JsonReader.java:290:"https://github.com/google/gson/blob/main/Troubleshooting.md#"
+/tmp/u/src/sources/com/google/gson/stream/JsonReader.java:304:"https://github.com/google/gson/blob/main/Troubleshooting.md#"
+/tmp/u/src/sources/com/v2ray/ang/handler/UpdateCheckerManager$checkForUpdate$2.java:57:"https://api.github.com/repos/2dust/v2rayNG/releases"
+/tmp/u/src/sources/com/v2ray/ang/handler/UpdateCheckerManager$checkForUpdate$2.java:59:"https://api.github.com/repos/2dust/v2rayNG/releases"
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java:35:"https://10xbdnet.xyz/login"
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java:35:"https://panel.vpnprous.com"
+/tmp/u/src/sources/defpackage/p32.java:1246:"https://imasdk.googleapis.com/admob/sdkloader/native_video.html"
+
+### classes that reference ConfigData / NetworkList / ServerList
+/tmp/u/src/sources/net/openvpn/openvpn/ClientAPI_EvalConfig.java
+/tmp/u/src/sources/defpackage/t.java
+/tmp/u/src/sources/defpackage/nd0.java
+/tmp/u/src/sources/defpackage/yc0.java
+/tmp/u/src/sources/defpackage/m61.java
+/tmp/u/src/sources/defpackage/e4.java
+/tmp/u/src/sources/defpackage/pd0.java
+/tmp/u/src/sources/defpackage/xd0.java
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ServerList.java
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/MainViewModel.java
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/NetworkList.java
+/tmp/u/src/sources/com/v2ray/ang/ui/d.java
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerStatusVIew.java
+/tmp/u/src/sources/com/v2ray/ang/ui/HomeFragment.java
+/tmp/u/src/sources/com/v2ray/ang/ui/HomeFragment$importBatchConfig$1.java
+/tmp/u/src/sources/com/v2ray/ang/Hometab.java
+/tmp/u/src/sources/com/v2ray/ang/TabFragment.java
+/tmp/u/src/sources/com/v2ray/ang/adapter/a.java
+/tmp/u/src/sources/com/v2ray/ang/adapter/ServerStatusAdapter.java
+/tmp/u/src/sources/com/v2ray/ang/adapter/ServerAdapter.java
+/tmp/u/src/sources/com/v2ray/ang/adapter/NetworkAdapter.java
+/tmp/u/src/sources/com/v2ray/ang/adapter/ServerStatusAdapter$onBindViewHolder$1.java
+/tmp/u/src/sources/com/v2ray/ang/adapter/b.java
+/tmp/u/src/sources/com/sandok/tunnel/service/OpenVPNService.java
+
+### retrofit / okhttp call sites building the config request
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-6-import kotlin.Metadata;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-7-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-8-/* compiled from: r8-map-id-6bfc5c3105a4be2b3e0ed36dbd4f8244cea9222f352ced40fd941a9b8aa981c8 */
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java:9:@Metadata(d1 = {"\u0000*\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0018\u0002\n\u0002\b
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-10-/* loaded from: classes3.dex */
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-11-public final class ConfigViewModel extends ViewModel {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java:12:    private final MutableLiveData<ConfigData> _config;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java:13:    private final LiveData<ConfigData> config;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-14-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-15-    public ConfigViewModel() {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java:16:        MutableLiveData<ConfigData> mutableLiveData = new MutableLiveData<>();
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-17-        this._config = mutableLiveData;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-18-        this.config = mutableLiveData;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-19-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-20-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java:21:    public final LiveData<ConfigData> getConfig() {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-22-        return this.config;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-23-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-24-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java:25:    public final ConfigData getConfigValue() {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java:26:        return (ConfigData) this._config.d();
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-27-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-28-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-29-    @Override // androidx.lifecycle.ViewModel
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-30-    public void onCleared() {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-31-        this._config.k(null);
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-32-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-33-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java:34:    public final void setConfig(ConfigData configData) {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-35-        this._config.k(configData);
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-36-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigViewModel.java-37-}
+--
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-11-import kotlin.Metadata;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-12-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-13-/* compiled from: r8-map-id-6bfc5c3105a4be2b3e0ed36dbd4f8244cea9222f352ced40fd941a9b8aa981c8 */
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java:14:@Metadata(d1 = {"\u00002\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0000\n\u0002\u0010\u000e\n\u0002\b\n\n\u0002\u0010\u000b\n\u0000\n\u0002\u0010\b\n\u0002\b\u0003\n\u0002\u0010
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-15-/* loaded from: classes3.dex */
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java:16:public final /* data */ class ConfigData {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-17-    private final String DefOVPNPass;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-18-    private final String DefOVPNUser;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-19-    private final String DefaultOVPNCert;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-20-    private final String Facebook;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-21-    private final String HysteriaOBFS;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-22-    private final String HysteriaUser;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java:23:    private final List<NetworkList> Networks;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-24-    private final String ReleaseNotes;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-25-    private final List<ServerList> Servers;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-26-    private final String Telegram;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-27-    private final String Version;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-28-    private final String WhatsApp;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-29-    private final String businesslink;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-30-    private final boolean isTimerOn;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-31-    private final Integer timetoadd;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-32-    private final String viplink;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-33-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java:34:    public /* synthetic */ ConfigData(String str, String str2, String str3, String str4, String str5, String str6, String str7, String str8, String str9, String str10, boolean z,
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-35-        this(str, str2, str3, str4, str5, str6, str7, str8, str9, str10, (i & 1024) != 0 ? true : z, (i & 2048) != 0 ? null : num, (i & AttribFlags.SSH_FILEXFER_ATTR_MIME_TYPE) !
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-36-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-37-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-38-    /* renamed from: component1, reason: from getter */
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-39-    public final String getVersion() {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-40-        return this.Version;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-41-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-42-
+--
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-69-        return this.Servers;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-70-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-71-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java:72:    public final List<NetworkList> component16() {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-73-        return this.Networks;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-74-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-75-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-76-    /* renamed from: component2, reason: from getter */
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-77-    public final String getReleaseNotes() {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-78-        return this.ReleaseNotes;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-79-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-80-
+--
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-113-        return this.HysteriaOBFS;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-114-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-115-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java:116:    public final ConfigData copy(String Version, String ReleaseNotes, String Telegram, String WhatsApp, String Facebook, String DefOVPNUser, String DefOVPNPass, String HysteriaU
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-117-        ec1.T(Version, ReleaseNotes, Telegram, WhatsApp, Facebook);
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-118-        ec1.T(DefOVPNUser, DefOVPNPass, HysteriaUser, HysteriaOBFS, DefaultOVPNCert);
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-119-        viplink.getClass();
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-120-        businesslink.getClass();
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-121-        Servers.getClass();
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-122-        Networks.getClass();
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java:123:        return new ConfigData(Version, ReleaseNotes, Telegram, WhatsApp, Facebook, DefOVPNUser, DefOVPNPass, HysteriaUser, HysteriaOBFS, DefaultOVPNCert, isTimerOn, timetoadd, v
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-124-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-125-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-126-    public boolean equals(Object other) {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-127-        if (this == other) {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-128-            return true;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-129-        }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java:130:        if (!(other instanceof ConfigData)) {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-131-            return false;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-132-        }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java:133:        ConfigData configData = (ConfigData) other;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-134-        if (yg0.a(this.Version, configData.Version) && yg0.a(this.ReleaseNotes, configData.ReleaseNotes) && yg0.a(this.Telegram, configData.Telegram) && yg0.a(this.WhatsApp, con
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-135-            return true;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-136-        }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-137-        return false;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-138-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-139-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-140-    public final String getBusinesslink() {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-141-        return this.businesslink;
+--
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-165-        return this.HysteriaUser;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-166-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-167-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java:168:    public final List<NetworkList> getNetworks() {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-169-        return this.Networks;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-170-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-171-
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-172-    public final String getReleaseNotes() {
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-173-        return this.ReleaseNotes;
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-174-    }
+/tmp/u/src/sources/com/v2ray/ang/viewmodel/ConfigData.java-175-

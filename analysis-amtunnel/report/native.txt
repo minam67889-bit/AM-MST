@@ -1,0 +1,32 @@
+### libraries
+libARYAN.so                     1047712  ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV),
+libdatastore_shared_counter.so       7112  ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV),
+libdns.so                       3197648  ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV),
+libpdnsd.so                      215632  ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV),
+libpdoq.so                      2612312  ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV)
+libpdoqhelper.so                6591584  ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV),
+libputils.so                    3193936  ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV),
+libsuperdns.so                 16607808  ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV),
+libtun2socks.so                  160232  ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV),
+libudpq.so                     19664392  ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV),
+libudpqtwo.so                  17924504  ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV),
+libwg-go.so                     3366160  ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV),
+libwg-quick.so                    30312  ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV),
+libwg.so                          82064  ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV),
+libxray.so                     27927632  ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV),
+
+### dnstt / tunnel markers per library
+libpdoq.so: 16 marker lines
+libpdoqhelper.so: 11 marker lines
+libputils.so: 66 marker lines
+libsuperdns.so: 32 marker lines
+libudpq.so: 12 marker lines
+libudpqtwo.so: 3 marker lines
+libwg-go.so: 28 marker lines
+libwg.so: 1 marker lines
+libxray.so: 546 marker lines
+
+### superdns-ish strings anywhere
+finishedexportersig_algsspdy/3.1auth_lenerrQueuercvlowatOffenderNetProtoLinkAddrHopLimitProtocolDenyTypeSYN-SENTSYN-RCVDLAST-ACKcapacitylistenEPTimeoutsuniqueIDrcvQueueintervalrcvdTimexmitTimerefCountnetProtorcvReadycookie--mac1----endpointSHUTDOWNFinishedGET_0RTT (local)HTTP/3.0SHA1-RSADSA-SHA1DNS nameNO_PROXYno_proxyRSV1 setRSV2 setRSV3 setbad MASKgeosite:dotless:use-ipv4use-ipv6use_ipv4use_ipv6tlshelloalwaysippasswordredirect10.0.0.1external ports: settingssuperdnsprotocolbalancer_key.pemECH KEYSXray Inc%d to %d_UNKNOWNXXX_weakmips64leproto:
+startSuperDns
+stopSuperDns

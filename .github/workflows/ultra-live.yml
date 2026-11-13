@@ -1,0 +1,84 @@
+name: Ultra Tunnel - live catalogue + SlowDNS liveness
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/ultra-live.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Deps
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq dnsutils netcat-openbsd
+          pip install -q argon2-cffi pycryptodome
+
+      - name: Remote catalogue (the app's own updater endpoint)
+        run: |
+          set +e
+          R=analysis-ultra
+          mkdir -p "$R/report"
+          {
+            echo "### strongteam.co /api/ultrasystem/ultrav3.txt"
+            curl -sS --max-time 40 -A "Ultra Tunnel" -D - -o "$R/remote-catalog.enc" \
+              "https://strongteam.co/api/ultrasystem/ultrav3.txt" | head -12
+            echo "bytes: $(wc -c < "$R/remote-catalog.enc")"
+            head -c 80 "$R/remote-catalog.enc"; echo
+          } > "$R/report/remote-fetch.txt" 2>&1
+          cat "$R/report/remote-fetch.txt"
+          if [ -s "$R/remote-catalog.enc" ]; then
+            python3 analysis-ultra/decrypt_config.py "$R/remote-catalog.enc" "$R/remote-config-decoded.json" \
+              > "$R/report/remote-decode.txt" 2>&1
+            cat "$R/report/remote-decode.txt"
+          fi
+
+      - name: SlowDNS liveness
+        run: |
+          set +e
+          R=analysis-ultra/report/liveness.txt
+          : > "$R"
+          hosts="slwdns.codefyinc.com ns.rovox.wampipti.net newca.dozapp.xyz dnsde1.dozapp.xyz nssshvip1.vpnprous.com nsVIPSSH087.vpnprous.com nssshtt.mdmonzo.com"
+          for h in $hosts; do
+            echo "== $h" >> "$R"
+            echo -n "  A: " >> "$R"; dig +short +time=4 +tries=1 "$h" A | tr '\n' ' ' >> "$R"; echo >> "$R"
+            echo -n "  NS delegation: " >> "$R"; dig +short +time=4 +tries=1 "$h" NS | tr '\n' ' ' >> "$R"; echo >> "$R"
+            echo -n "  TXT via 8.8.8.8: " >> "$R"
+            dig +short +time=5 +tries=1 @8.8.8.8 "$h" TXT | head -2 | tr '\n' ' ' >> "$R"; echo >> "$R"
+            echo -n "  TCP443: " >> "$R"
+            if timeout 6 nc -z "$h" 443; then echo -n "open" >> "$R"; else echo -n "closed/filtered" >> "$R"; fi; echo >> "$R"
+          done
+          echo >> "$R"
+          echo "== resolvers (BugDNS values, UDP53)" >> "$R"
+          for ip in 8.8.8.8 8.8.4.4 9.9.9.9 1.0.0.1 196.200.150.3 176.241.248.114 190.106.220.98 212.2.96.51 121.100.50.32 176.95.16.230 41.214.140.4 165.21.83.88 5.188.200.224 62.109.121.17 62.109.121.18 103.45.245.217 81.192.21.81 213.74.1.4 84.235.6.55 109.166.202.53; do
+            r=$(dig +short +time=3 +tries=1 @"$ip" example.com A 2>/dev/null | head -1)
+            echo "  $ip -> ${r:-NO-REPLY}" >> "$R"
+          done
+          cat "$R"
+
+      - name: Commit
+        if: always()
+        run: |
+          set +e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
+          git add analysis-ultra
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "ultra: remote catalogue + liveness [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" > /dev/null 2>&1
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done

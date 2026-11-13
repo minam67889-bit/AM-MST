@@ -1,0 +1,387 @@
+name: Native BD client under qemu
+
+# The only way left to prove a byte moves through the tunnel: run the app's own
+# tunnel binaries, unmodified. They are Android/arm64 PIE executables whose
+# interpreter is /system/bin/linker64, so they are executed with
+# qemu-aarch64-static and a sysroot that maps the bionic names onto glibc plus
+# stubs for the two bionic-only libs they need (liblog, libandroid).
+#
+# Everything is wrapped in `timeout` - a Go tunnel client that starts fine and
+# then waits forever must not eat the job again.
+
+on:
+  workflow_dispatch:
+    inputs:
+      host:
+        description: "FastDNS / SlowDNS endpoint"
+        default: "173.212.232.241"
+      slowdns_host:
+        description: "SlowDNS endpoint"
+        default: "13.140.185.158"
+  push:
+    paths:
+      - ".github/workflows/qemu-native.yml"
+      - "tools/tunnel_probe.py"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      FASTDNS_HOST: ${{ inputs.host || '173.212.232.241' }}
+      SLOWDNS_HOST: ${{ inputs.slowdns_host || '13.140.185.158' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq qemu-user-static libc6-arm64-cross \
+            gcc-aarch64-linux-gnu unzip binutils file dnsutils
+          qemu-aarch64-static --version | head -1
+          aarch64-linux-gnu-gcc --version | head -1
+
+      - name: APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          exec > >(tee /tmp/apk.txt) 2>&1
+          mkdir -p art libs
+          run=$(gh run list --workflow=analyze-apk.yml --status success --limit 1 \
+                  --json databaseId --jq '.[0].databaseId' || true)
+          echo "analysis run: $run"
+          art=$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$run/artifacts" \
+                  --jq '.artifacts[] | select(.name=="amtunnel-apk-analysis") | .id' | head -1 || true)
+          echo "artifact: $art"
+          if [ -n "${art:-}" ]; then
+            gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$art/zip" > art/a.zip || true
+            file art/a.zip || true
+            unzip -o -q art/a.zip -d art/x || true
+          fi
+          if ! find art -name '*.apk' | grep -q .; then
+            echo "falling back to gh run download"
+            gh run download "$run" -n amtunnel-apk-analysis -D art/dl -R "$GITHUB_REPOSITORY" || true
+          fi
+          apk=$(find art -name '*.apk' | head -1 || true)
+          echo "APK=$apk"
+          if [ -z "$apk" ]; then echo "NO APK"; exit 1; fi
+          unzip -o -j "$apk" 'lib/arm64-v8a/*' -d libs || true
+          chmod +x libs/* 2>/dev/null || true
+          ls -l libs
+
+      - name: "Sysroot - real bionic, taken from an arm64 Android image"
+        run: |
+          exec > >(tee /tmp/sysroot.txt) 2>&1
+          set +e
+          set -x
+          # glibc cannot satisfy bionic's versioned symbols (LIBC / LIBC_N).
+          # Get the real /system/bin/linker64 + /system/lib64 from an old, plain
+          # ext4 arm64 system image (API 24 - no dynamic-partition super.img).
+          sudo apt-get install -y -qq android-sdk-libsparse-utils e2fsprogs unzip
+          export ANDROID_HOME=${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}
+          echo "ANDROID_HOME=$ANDROID_HOME"; ls "$ANDROID_HOME" 2>/dev/null | head
+          SDKMANAGER=$(command -v sdkmanager || echo "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager")
+          echo "sdkmanager=$SDKMANAGER"
+          yes | "$SDKMANAGER" --licenses > /dev/null 2>&1
+          "$SDKMANAGER" "system-images;android-24;default;arm64-v8a" 2>&1 | tail -5
+          IMGDIR=$(find "$ANDROID_HOME" -type d -path '*android-24*arm64-v8a*' | head -1)
+          echo "IMGDIR=$IMGDIR"; ls -l "$IMGDIR" 2>/dev/null | head
+          IMGFILE="$IMGDIR/system.img"
+          ls -l "$IMGFILE" 2>/dev/null
+          mkdir -p sysroot/system/bin sysroot/system/lib64
+          sudo modprobe loop 2>/dev/null
+          if sudo mount -o loop,ro "$IMGFILE" /mnt; then
+            echo "mounted"; ls /mnt | head
+            sudo cp /mnt/bin/linker64 sysroot/system/bin/ 2>/dev/null
+            sudo cp -a /mnt/lib64/*.so sysroot/system/lib64/ 2>/dev/null
+            sudo umount /mnt
+          else
+            echo "mount failed; debugfs"
+            sudo chmod 644 "$IMGFILE"
+            debugfs -R "ls -l /" "$IMGFILE" 2>&1 | head -20
+            for f in bin/linker64 lib64/libc.so lib64/libdl.so lib64/libm.so lib64/liblog.so \
+                     lib64/libstdc++.so lib64/libc++.so lib64/libnetd_client.so lib64/libcrypto.so; do
+              debugfs -R "dump /$f /tmp/x.bin" "$IMGFILE" > /dev/null 2>&1 && \
+                sudo mv /tmp/x.bin "sysroot/system/$f" && echo "got $f"
+            done
+          fi
+          sudo chown -R "$USER" sysroot
+          ls -l sysroot/system/bin sysroot/system/lib64 | head -30
+          file sysroot/system/bin/linker64 2>/dev/null
+
+      - name: "Does it start at all?"
+        run: |
+          exec > >(tee /tmp/startup.txt) 2>&1
+          set +e            # GitHub runs bash -e: one failed probe killed the step
+          set -x
+          date -u
+          qemu-aarch64-static --version | head -1
+          printf 'int main(void){return 0;}' > /tmp/t.c
+          aarch64-linux-gnu-gcc -o /tmp/t /tmp/t.c
+          timeout 15 qemu-aarch64-static -L /usr/aarch64-linux-gnu /tmp/t; echo "trivial via cross loader exit=$?"
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          ls -l sysroot/bin sysroot/lib64
+          aarch64-linux-gnu-gcc -o /tmp/td /tmp/t.c
+          timeout 15 qemu-aarch64-static -L "$PWD/sysroot" /tmp/td; echo "trivial shimmed exit=$?"
+          for bin in libxdnstt libdns; do
+            for flag in -h --help -version; do
+              echo "===== $bin $flag"
+              timeout 25 qemu-aarch64-static "libs/$bin.so" "$flag" 2>&1 | head -30
+              echo "[pipeline exit ${PIPESTATUS[*]}]"
+            done
+          done
+          set +x
+          echo "done"
+
+      - name: "libdns: is 127.0.0.1:7777 a DNS listener, not a proxy?"
+        run: |
+          exec > >(tee /tmp/libdns-run.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          host=13.140.185.158
+          ENC=$(python3 -c "import sys; sys.path.insert(0,'tools'); import bdnet_dns as b; print(b.p_encrypt('$host:53'))")
+          echo "== host $host enc=$ENC"
+          timeout 200 qemu-aarch64-static libs/libdns.so \
+            -tunnel "$ENC" -report "BD NET VPN" > /tmp/d.log 2>&1 &
+          pid=$!
+          sleep 12
+          echo "--- log"; cat /tmp/d.log
+          echo "--- sockets (tcp AND udp)"; ss -ltnup 2>/dev/null | head -30
+          echo "--- /proc/net/udp"; cat /proc/net/udp /proc/net/udp6 2>/dev/null | head -20
+          echo "--- DNS query over UDP to 7777"
+          timeout 25 dig +time=12 +tries=1 @127.0.0.1 -p 7777 example.com A 2>&1 | head -20
+          echo "--- DNS query over TCP to 7777"
+          timeout 25 dig +tcp +time=12 +tries=1 @127.0.0.1 -p 7777 example.com A 2>&1 | head -20
+          echo "--- python raw UDP DNS on 7777"
+          timeout 30 python3 - <<'PY' || true
+          import socket, struct, random
+          qid = random.randrange(65535)
+          q = struct.pack(">HHHHHH", qid, 0x0100, 1, 0, 0, 0) + b"\x07example\x03com\x00" + struct.pack(">HH", 1, 1)
+          s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM); s.settimeout(20)
+          try:
+              s.sendto(q, ("127.0.0.1", 7777))
+              data, _ = s.recvfrom(4096)
+              print(f"UDP 7777 answered {len(data)} bytes rcode={data[3] & 15} answers={struct.unpack('>H', data[6:8])[0]}")
+              print(data[:80].hex())
+          except Exception as exc:
+              print("UDP 7777:", type(exc).__name__, exc)
+          PY
+          echo "--- log after queries"; cat /tmp/d.log
+          kill $pid 2>/dev/null
+
+      - name: "xdnstt: does it actually put packets on the wire under qemu?"
+        run: |
+          exec > >(tee /tmp/strace.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          timeout 40 qemu-aarch64-static -strace libs/libxdnstt.so \
+            -udp 173.212.232.241:53 -report "BD NET VPN" -pubkey prince \
+            sd-173.212.232.241 127.0.0.1:7500 2>&1 | grep -E "sendto|recvfrom|connect|socket" | head -40
+          echo "--- how many sends, how many receives"
+          timeout 40 qemu-aarch64-static -strace libs/libxdnstt.so \
+            -udp 173.212.232.241:53 -report "BD NET VPN" -pubkey prince \
+            sd-173.212.232.241 127.0.0.1:7501 > /tmp/st.log 2>&1
+          echo "sendto:  $(grep -c sendto /tmp/st.log)"
+          echo "recvfrom: $(grep -c recvfrom /tmp/st.log)"
+          grep -c "recvfrom(.*= 4[0-9])" /tmp/st.log 2>/dev/null || true
+          tail -5 /tmp/st.log
+
+      - name: "reply path: can the client receive at all? (local mock DNS)"
+        run: |
+          exec > >(tee /tmp/replypath.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          # A resolver that always answers. If the client cannot even hear this
+          # one, every "silent server" result so far is a qemu artefact.
+          cat > /tmp/mockdns.py <<'PY'
+          import socket, struct, sys, threading, time
+          port = int(sys.argv[1]); hits = []
+          def answer(pkt):
+              qt = pkt[12:]
+              end = 0
+              while qt[end] != 0: end += qt[end] + 1
+              qname = qt[:end + 1]; qtail = qt[end + 1:end + 5]
+              tid = pkt[:2]
+              rr = b"\xc0\x0c" + struct.pack(">HHIH", 16, 1, 60, 12) + b"\x0bmockreply01"
+              return tid + b"\x81\x80" + struct.pack(">HHHH", 1, 1, 0, 0) + qname + qtail + rr
+          s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+          s.bind(("127.0.0.1", port)); s.settimeout(0.5)
+          deadline = time.time() + 90
+          while time.time() < deadline:
+              try:
+                  data, peer = s.recvfrom(4096)
+              except socket.timeout:
+                  continue
+              hits.append(len(data))
+              s.sendto(answer(data), peer)
+              print(f"mock got {len(data)} B, answered", flush=True)
+          print(f"mock total queries: {len(hits)}", flush=True)
+          PY
+          python3 /tmp/mockdns.py 5399 > /tmp/mock.log 2>&1 &
+          mock=$!
+          sleep 1
+          echo "=== client against the local mock (must receive)"
+          timeout 30 qemu-aarch64-static -strace libs/libxdnstt.so \
+            -udp 127.0.0.1:5399 -report "BD NET VPN" -pubkey prince \
+            sd-mock.local 127.0.0.1:7600 > /tmp/mockrun.log 2>&1
+          echo "sendto:   $(grep -c sendto /tmp/mockrun.log)"
+          echo "recvfrom: $(grep -c recvfrom /tmp/mockrun.log)"
+          echo "recvfrom with data: $(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/mockrun.log)"
+          grep -E "recvfrom\(.*\) = [0-9]+$" /tmp/mockrun.log | head -3
+          echo "--- mock side"; cat /tmp/mock.log
+          kill $mock 2>/dev/null
+
+          echo
+          echo "=== client against 8.8.8.8 (always answers, wrong zone)"
+          timeout 25 qemu-aarch64-static -strace libs/libxdnstt.so \
+            -udp 8.8.8.8:53 -report "BD NET VPN" -pubkey prince \
+            sd-8.8.8.8 127.0.0.1:7601 > /tmp/gog.log 2>&1
+          echo "sendto:   $(grep -c sendto /tmp/gog.log)"
+          echo "recvfrom with data: $(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/gog.log)"
+
+          echo
+          echo "=== libdns: does it forward to its upstream and receive?"
+          ENC=$(python3 -c "import sys; sys.path.insert(0,'tools'); import bdnet_dns as b; print(b.p_encrypt('13.140.185.158:53'))")
+          timeout 60 qemu-aarch64-static -strace libs/libdns.so \
+            -tunnel "$ENC" -report "BD NET VPN" > /tmp/ld.log 2>&1 &
+          pid=$!
+          sleep 8
+          for i in 1 2 3; do
+            timeout 6 dig +time=3 +tries=1 @127.0.0.1 -p 7777 example.com A > /tmp/dig.log 2>&1
+            sleep 2
+          done
+          echo "libdns sendto:   $(grep -c sendto /tmp/ld.log)"
+          echo "libdns received: $(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/ld.log)"
+          kill $pid 2>/dev/null
+
+      - name: "zone: the hostnames the app actually lists (de1.liftmeon.org …)"
+        run: |
+          exec > >(tee /tmp/zones.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          echo "=== is the SlowDNS server reachable at all at the DNS level?"
+          for h in 13.140.185.158 de1.liftmeon.org; do
+            echo "--- dig @$h example.com"
+            timeout 8 dig +time=3 +tries=1 @$h example.com A 2>&1 | grep -E "status:|ANSWER:|connection timed out" | head -3
+            echo "--- dig @$h sd-de1.liftmeon.org"
+            timeout 8 dig +time=3 +tries=1 @$h sd-de1.liftmeon.org A 2>&1 | grep -E "status:|ANSWER:" | head -3
+          done
+          echo
+          echo "=== xdnstt handshake per zone (recvfrom > 0 == the server heard us)"
+          for target in 13.140.185.158 de1.liftmeon.org; do
+            for zone in sd-de1.liftmeon.org de1.liftmeon.org sd-de1 de1; do
+              port=$((7700 + RANDOM % 200))
+              timeout 22 qemu-aarch64-static -strace libs/libxdnstt.so \
+                -udp "$target:53" -report "BD NET VPN" -pubkey prince \
+                "$zone" 127.0.0.1:$port > /tmp/z.log 2>&1
+              s=$(grep -c sendto /tmp/z.log); r=$(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/z.log)
+              echo "target=$target zone=$zone -> sendto=$s recvfrom_data=$r"
+              [ "$r" -gt 0 ] && { echo "   *** HEARD BACK ***"; grep -E 'recvfrom\(.*\) = [0-9]+$' /tmp/z.log | head -3; }
+            done
+          done
+          echo
+          echo "=== and TCP:53 once, in case the zone lives there"
+          for zone in sd-de1.liftmeon.org de1.liftmeon.org; do
+            timeout 15 qemu-aarch64-static -strace libs/libxdnstt.so \
+              -tcp 13.140.185.158:53 -report "BD NET VPN" -pubkey prince \
+              "$zone" 127.0.0.1:7900 > /tmp/zt.log 2>&1
+            echo "tcp zone=$zone sendto=$(grep -c sendto /tmp/zt.log) recvfrom_data=$(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/zt.log)"
+          done
+
+      - name: "look inside the binary: who answers on 7000, and with what secret"
+        run: |
+          exec > >(tee /tmp/inside.txt) 2>&1
+          set +e
+          echo "=== sizes"; ls -l libs/ | head
+          echo "=== every 'prince' occurrence, with 200 bytes of context"
+          for off in $(grep -aob "prince" libs/libxdnstt.so | cut -d: -f1 | head -6); do
+            echo "--- offset $off"
+            dd if=libs/libxdnstt.so bs=1 skip=$((off > 200 ? off - 200 : 0)) count=420 2>/dev/null \
+              | tr -c '[:print:]\n' '.' | fold -w 120
+            echo
+          done
+          echo "=== strings mentioning socks / auth, with offsets"
+          strings -t x -n 6 libs/libxdnstt.so | grep -iE "socks|auth|password|username|greeting|no acceptable" | head -40
+          echo "=== the app's own tun2socks: does it know about SOCKS auth?"
+          strings -n 4 libs/libtun2socks.so 2>/dev/null | grep -iE "socks|auth" | head -30
+          echo "=== does libtun2socks take a user:pass@host address?"
+          strings -n 4 libs/libtun2socks.so 2>/dev/null | grep -E "%s:%s|:.*@|@" | head -20
+
+      - name: "socks: the app's own credentials are in its string table -- try them"
+        run: |
+          exec > >(tee /tmp/socks.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          for host in 13.140.185.158 13.140.185.161; do
+            echo "================= $host"
+            timeout 200 qemu-aarch64-static -strace libs/libxdnstt.so \
+              -udp "$host:53" -report "BD NET VPN" -pubkey prince \
+              sd-de1.liftmeon.org 127.0.0.1:7000 > /tmp/tun.out 2>/tmp/tun.err &
+            pid=$!
+            sleep 8
+            echo "--- listeners"; ss -lntp 2>/dev/null | grep ":7000" || echo "   (nothing on 7000)"
+            echo "--- curl through the socks listener with the app's credentials"
+            for url in http://example.com/ http://1.1.1.1/ https://example.com/; do
+              timeout 45 curl -sS -m 40 --socks5-hostname "tanginaka:wagditokupal@127.0.0.1:7000" \
+                -o /tmp/page.html -w "  $url -> http=%{http_code} bytes=%{size_download} time=%{time_total}\n" \
+                "$url" 2>&1 | tail -2
+              [ -s /tmp/page.html ] && head -c 160 /tmp/page.html && echo
+            done
+            echo "--- and the plain no-auth form, for the record"
+            timeout 30 curl -sS -m 25 -x "socks5h://127.0.0.1:7000" -o /dev/null \
+              -w "  noauth -> http=%{http_code}\n" http://example.com/ 2>&1 | tail -1
+            echo "--- client messages"
+            grep -avE "^[0-9]+ " /tmp/tun.err | head -8
+            echo "--- sendto/recvfrom: $(grep -c sendto /tmp/tun.err) / $(grep -cE 'recvfrom\(.*\) = [0-9]+$' /tmp/tun.err)"
+            kill $pid 2>/dev/null; wait $pid 2>/dev/null
+          done
+          exit 0
+
+      - name: "Is the gate keyed on -report?"
+        run: |
+          exec > >(tee /tmp/report-matrix.txt) 2>&1
+          set +e
+          export QEMU_LD_PREFIX="$PWD/sysroot"
+          AAPT=$(ls "$ANDROID_HOME"/build-tools/*/aapt2 2>/dev/null | tail -1)
+          echo "aapt2=$AAPT"
+          APK=$(find art -name '*.apk' | head -1)
+          [ -n "$AAPT" ] && "$AAPT" dump badging "$APK" 2>/dev/null | grep -E "application-label|package: name" | head -5
+          for rep in "BD NET" "BDNET" "BD NET VPN" "prince" "bdfreevpn" \
+                     "dastan.prince.bdfreevpn" "BD" "" "VPN" "BdNet"; do
+            echo "===== report=[$rep]"
+            timeout 20 qemu-aarch64-static libs/libxdnstt.so -udp 173.212.232.241:53 \
+              -report "$rep" -pubkey prince sd-173.212.232.241 127.0.0.1:7311 2>&1 | head -4
+          done
+          echo "===== no -report at all"
+          timeout 20 qemu-aarch64-static libs/libxdnstt.so -udp 173.212.232.241:53 \
+            -pubkey prince sd-173.212.232.241 127.0.0.1:7312 2>&1 | head -4
+          echo "===== slowdns with report variants"
+          ENC=$(python3 -c "import sys; sys.path.insert(0,'tools'); import bdnet_dns as b; print(b.p_encrypt('13.140.185.158:53'))")
+          for rep in "BD NET" "BDNET" "prince"; do
+            echo "===== libdns report=[$rep]"
+            timeout 20 qemu-aarch64-static libs/libdns.so -tunnel "$ENC" -report "$rep" 2>&1 | head -4
+          done
+
+      - name: Publish
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p analysis-bdnet/configs/dns/results
+          for f in apk sysroot startup xdnstt-run libdns-run xdnstt libdns report-matrix strace replypath zones socks inside; do
+            [ -f "/tmp/$f.txt" ] && cp "/tmp/$f.txt" "analysis-bdnet/configs/dns/results/qemu-$f.txt"
+            [ -f "/tmp/$f.log" ] && cp "/tmp/$f.log" "analysis-bdnet/configs/dns/results/qemu-$f.log"
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-bdnet/configs/dns/results
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "dns: qemu run of the app's own tunnel clients [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done

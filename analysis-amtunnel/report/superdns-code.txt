@@ -1,0 +1,669 @@
+### files mentioning super dns
+src/sources/prince/udp/vpn/service/vpn/TunnelManagerHelper.java
+src/sources/prince/udp/vpn/service/SuperService.java
+src/sources/defpackage/C2701hA.java
+src/sources/defpackage/FF.java
+src/sources/defpackage/Qw.java
+src/sources/defpackage/Rw.java
+src/sources/defpackage/A2.java
+src/sources/defpackage/Ww.java
+
+=================== src/sources/prince/udp/vpn/service/vpn/TunnelManagerHelper.java
+package prince.udp.vpn.service.vpn;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import prince.udp.vpn.service.PDoQService;
+import prince.udp.vpn.service.SocksDNSService;
+import prince.udp.vpn.service.SuperService;
+import prince.udp.vpn.service.WGService;
+
+/* loaded from: classes2.dex */
+public class TunnelManagerHelper {
+    public static void startPDoQ(Context context) {
+        Intent intent = new Intent(context, (Class<?>) PDoQService.class);
+        if (Build.VERSION.SDK_INT >= 26) {
+            context.startForegroundService(intent);
+        } else {
+            context.startService(intent);
+        }
+    }
+
+    public static void startSocksHttp(Context context) {
+        Intent intent = new Intent(context, (Class<?>) SocksDNSService.class);
+        TunnelUtils.restartRotate();
+        if (Build.VERSION.SDK_INT >= 26) {
+            context.startForegroundService(intent);
+        } else {
+            context.startService(intent);
+        }
+    }
+
+    public static void startSuperDns(Context context) {
+        Intent intent = new Intent(context, (Class<?>) SuperService.class);
+        if (Build.VERSION.SDK_INT >= 26) {
+            context.startForegroundService(intent);
+        } else {
+            context.startService(intent);
+        }
+    }
+
+    public static void startWg(Context context) {
+        Intent intent = new Intent(context, (Class<?>) WGService.class);
+        if (Build.VERSION.SDK_INT >= 26) {
+            context.startForegroundService(intent);
+        } else {
+            context.startService(intent);
+        }
+    }
+
+    public static void stopPDoQ(Context context) {
+        context.sendBroadcast(new Intent(PDoQService.C));
+    }
+
+    public static void stopSocksHttp(Context context) {
+        context.sendBroadcast(new Intent(SocksDNSService.w));
+    }
+
+    public static void stopSuperDns(Context context) {
+        context.sendBroadcast(new Intent(SuperService.F));
+    }
+
+    public static void stopWg(Context context) {
+        context.stopService(new Intent(context, (Class<?>) WGService.class));
+    }
+}
+=================== src/sources/prince/udp/vpn/service/SuperService.java
+package prince.udp.vpn.service;
+
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Binder;
+import android.os.Build;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.util.Log;
+import defpackage.A2;
+import defpackage.AbstractC0487bc;
+import defpackage.AbstractC2879kf;
+import defpackage.AbstractC3192qa;
+import defpackage.C2507db;
+import defpackage.C3303sg;
+import defpackage.FF;
+import defpackage.GF;
+import defpackage.HF;
+import defpackage.IF;
+import defpackage.Qw;
+import defpackage.Rw;
+import defpackage.Sw;
+import defpackage.Ww;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Random;
+import org.lsposed.lsparanoid.Deobfuscator$AMTUNNELLITE$app;
+import prince.udp.vpn.activities.UDPClient;
+import prince.udp.vpn.service.vpn.TunnelManagerHelper;
+import prince.udp.vpn.service.vpn.TunnelState;
+import prince.udp.vpn.service.vpn.TunnelVpnManager;
+import prince.udp.vpn.service.vpn.TunnelVpnService;
+import prince.udp.vpn.service.vpn.TunnelVpnSettings;
+import prince.udp.vpn.service.vpn.VpnUtils;
+import prince.udp.vpn.service.vpn.logger.ConnectionStatus;
+import prince.udp.vpn.service.vpn.logger.SkStatus;
+
+/* loaded from: classes2.dex */
+public class SuperService extends Service implements Runnable, Handler.Callback, SkStatus.StateListener {
+    public static final int A;
+    public static long B;
+    public static HF C;
+    public static IF D;
+    public static final String E;
+    public static final String F;
+    public static final int z;
+    public Thread a;
+    public Handler b;
+    public C2507db c;
+    public Process d;
+    public File e;
+    public Process f;
+    public File m;
+    public NotificationManager n;
+    public ConnectivityManager o;
+    public Ww p;
+    public String q;
+    public File u;
+    public String w;
+    public boolean r = false;
+    public boolean s = false;
+    public boolean t = false;
+    public final Qw v = new Qw(this, 1);
+    public final Sw x = new Sw(2);
+    public final A2 y = new A2(this, 5);
+
+    static {
+        Deobfuscator$AMTUNNELLITE$app.getString(750656514172678644L);
+        Deobfuscator$AMTUNNELLITE$app.getString(750656475517972980L);
+        Deobfuscator$AMTUNNELLITE$app.getString(750656333784052212L);
+        Deobfuscator$AMTUNNELLITE$app.getString(750656286539411956L);
+        Deobfuscator$AMTUNNELLITE$app.getString(750656217819935220L);
+        z = 10801;
+        A = 10802;
+        B = 0L;
+        E = SuperService.class.getName() + Deobfuscator$AMTUNNELLITE$app.getString(750656149100458484L);
+        F = SuperService.class.getName() + Deobfuscator$AMTUNNELLITE$app.getString(750656037431308788L);
+    }
+
+    public static String c() {
+        long time = new Date().getTime();
+        long j = B;
+        long j2 = time - j;
+        if (j == 0) {
+            return Deobfuscator$AMTUNNELLITE$app.getString(750656552827384308L);
+        }
+        return String.format(Deobfuscator$AMTUNNELLITE$app.getString(750656617251893748L), Long.valueOf((j2 / 3600000) % 24), Long.valueOf((j2 / 60000) % 60), Long.valueOf((j2 / 1000) % 60));
+    }
+
+    public final synchronized void a() {
+        h();
+    }
+
+    public final void b() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Deobfuscator$AMTUNNELLITE$app.getString(750657162712740340L));
+        NotificationChannel notificationChannel = new NotificationChannel(Deobfuscator$AMTUNNELLITE$app.getString(750657106878165492L), getString(2131951717), 1);
+        notificationChannel.setDescription(getString(2131951713));
+        notificationChannel.enableLights(false);
+        notificationChannel.setLightColor(2131100642);
+        notificationManager.createNotificationChannel(notificationChannel);
+        NotificationChannel notificationChannel2 = new NotificationChannel(Deobfuscator$AMTUNNELLITE$app.getString(750657059633525236L), getString(2131951718), 2);
+        notificationChannel2.setDescription(getString(2131951714));
+        notificationChannel2.enableLights(true);
+        notificationChannel2.setLightColor(2131100642);
+        notificationManager.createNotificationChannel(notificationChannel2);
+        NotificationChannel notificationChannel3 = new NotificationChannel(Deobfuscator$AMTUNNELLITE$app.getString(750656990914048500L), getString(2131951719), 1);
+        notificationChannel3.setDescription(getString(2131951715));
+        notificationChannel3.setLightColor(2131100642);
+        notificationManager.createNotificationChannel(notificationChannel3);
+    }
+
+    public final void d() {
+        String message;
+        try {
+            NetworkInfo activeNetworkInfo = this.o.getActiveNetworkInfo();
+            if (activeNetworkInfo == null) {
+                message = Deobfuscator$AMTUNNELLITE$app.getString(750656784755618292L);
+            } else {
+                String subtypeName = activeNetworkInfo.getSubtypeName();
+                if (subtypeName == null) {
+                    subtypeName = Deobfuscator$AMTUNNELLITE$app.getString(750656724626076148L);
+                }
+                String extraInfo = activeNetworkInfo.getExtraInfo();
+                if (extraInfo == null) {
+                    extraInfo = Deobfuscator$AMTUNNELLITE$app.getString(750656720331108852L);
+=================== src/sources/defpackage/C2701hA.java
+package defpackage;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowInsetsController;
+import android.webkit.WebView;
+import androidx.appcompat.widget.Toolbar;
+import com.google.android.gms.common.internal.Preconditions;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.Task;
+import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
+import org.chromium.support_lib_boundary.ProfileStoreBoundaryInterface;
+import org.chromium.support_lib_boundary.StaticsBoundaryInterface;
+import org.chromium.support_lib_boundary.WebViewProviderBoundaryInterface;
+import org.chromium.support_lib_boundary.WebViewProviderFactoryBoundaryInterface;
+import org.chromium.support_lib_boundary.util.BoundaryInterfaceReflectionUtil;
+import org.lsposed.lsparanoid.Deobfuscator$AMTUNNELLITE$app;
+import prince.udp.vpn.activities.SplashActivity;
+import prince.udp.vpn.activities.UDPClient;
+import prince.udp.vpn.service.SocksDNSService;
+import prince.udp.vpn.service.SuperService;
+import prince.udp.vpn.service.vpn.TunnelManagerHelper;
+import prince.udp.vpn.service.vpn.logger.SkStatus;
+
+/* renamed from: hA, reason: case insensitive filesystem */
+/* loaded from: classes2.dex */
+public final class C2701hA implements InterfaceC3554xI, InterfaceC2916lF, Kt, InterfaceC0418aC, InterfaceC3663zL, Continuation {
+    public static C2701hA c;
+    public final /* synthetic */ int a;
+    public Object b;
+
+    public /* synthetic */ C2701hA(int i) {
+        this.a = i;
+    }
+
+    public C2701hA(Context context) {
+        boolean isEmpty;
+        this.a = 3;
+        SharedPreferences sharedPreferences = context.getSharedPreferences("com.google.android.gms.appid", 0);
+        this.b = sharedPreferences;
+        File file = new File(AbstractC0487bc.getNoBackupFilesDir(context), "com.google.android.gms.appid-no-backup");
+        if (file.exists()) {
+            return;
+        }
+        try {
+            if (file.createNewFile()) {
+                synchronized (this) {
+                    isEmpty = sharedPreferences.getAll().isEmpty();
+                }
+                if (isEmpty) {
+                    return;
+                }
+                Log.i("FirebaseMessaging", "App restored, clearing state");
+                d();
+            }
+        } catch (IOException e) {
+            if (Log.isLoggable("FirebaseMessaging", 3)) {
+                Log.d("FirebaseMessaging", "Error creating file in no backup dir: " + e.getMessage());
+            }
+        }
+    }
+
+    /* JADX WARN: Type inference failed for: r0v4, types: [Rw, xE] */
+    public C2701hA(View view) {
+        Rw rw;
+        this.a = 1;
+        if (Build.VERSION.SDK_INT >= 30) {
+            ?? rw2 = new Rw(view, 7);
+            rw2.c = view;
+            rw = rw2;
+        } else {
+            rw = new Rw(view, 7);
+        }
+        this.b = rw;
+    }
+
+    /* JADX WARN: Type inference failed for: r0v1, types: [Rw, java.lang.Object, xE] */
+    public C2701hA(WindowInsetsController windowInsetsController) {
+        this.a = 1;
+        ?? rw = new Rw((Object) null, 7);
+        rw.d = windowInsetsController;
+        this.b = rw;
+    }
+
+    public /* synthetic */ C2701hA(Object obj, int i) {
+        this.a = i;
+        this.b = obj;
+    }
+
+    public void a() {
+        String string = Deobfuscator$AMTUNNELLITE$app.getString(750632264787325428L);
+        SharedPreferencesEditorC2544eC sharedPreferencesEditorC2544eC = (SharedPreferencesEditorC2544eC) ((SharedPreferencesC2597fC) this.b).edit();
+        sharedPreferencesEditorC2544eC.putBoolean(string, true);
+        sharedPreferencesEditorC2544eC.apply();
+    }
+
+    @Override // defpackage.InterfaceC3554xI
+    public void b() {
+        SplashActivity splashActivity = (SplashActivity) ((EE) this.b).b;
+        splashActivity.getClass();
+        splashActivity.startActivity(new Intent(splashActivity, (Class<?>) UDPClient.class));
+        splashActivity.finish();
+    }
+
+    @Override // defpackage.Kt
+    public boolean c(Mt mt, MenuItem menuItem) {
+        ((Toolbar) this.b).getClass();
+        return false;
+    }
+
+    @Override // defpackage.InterfaceC3663zL
+    public WebViewProviderBoundaryInterface createWebView(WebView webView) {
+        return (WebViewProviderBoundaryInterface) BoundaryInterfaceReflectionUtil.castToSuppLibClass(WebViewProviderBoundaryInterface.class, ((WebViewProviderFactoryBoundaryInterface) this.b).createWebView(webView));
+    }
+
+    public synchronized void d() {
+        ((SharedPreferences) this.b).edit().clear().commit();
+    }
+
+    public void e() {
+        AbstractC3605yG abstractC3605yG = (AbstractC3605yG) this.b;
+        abstractC3605yG.getClass();
+        String str = ((AG) abstractC3605yG).b;
+        if (str == null) {
+            throw new AssertionError();
+        }
+        throw new AssertionError(str);
+    }
+
+    @Override // defpackage.Kt
+    public void g(Mt mt) {
+        Toolbar toolbar = (Toolbar) this.b;
+        A0 a0 = toolbar.a.z;
+=================== src/sources/defpackage/FF.java
+package defpackage;
+
+import android.os.Build;
+import java.io.File;
+import org.lsposed.lsparanoid.Deobfuscator$AMTUNNELLITE$app;
+import prince.udp.vpn.activities.UDPClient;
+import prince.udp.vpn.service.SuperService;
+import prince.udp.vpn.service.vpn.VpnUtils;
+import prince.udp.vpn.service.vpn.logger.SkStatus;
+
+/* loaded from: classes.dex */
+public final class FF implements Runnable {
+    public final /* synthetic */ int a;
+    public final /* synthetic */ SuperService b;
+
+    public /* synthetic */ FF(SuperService superService, int i) {
+        this.a = i;
+        this.b = superService;
+    }
+
+    @Override // java.lang.Runnable
+    public final void run() {
+        switch (this.a) {
+            case 0:
+                SuperService superService = this.b;
+                superService.g();
+                superService.stopForeground(true);
+                superService.stopSelf();
+                return;
+            default:
+                SuperService superService2 = this.b;
+                synchronized (superService2) {
+                    try {
+                        SuperService.B = 0L;
+                        superService2.r = false;
+                        superService2.d();
+                        try {
+                            Thread thread = superService2.a;
+                            if (thread != null) {
+                                thread.interrupt();
+                                SkStatus.logInfo(2131952221, new Object[0]);
+                            }
+                            Process process = superService2.d;
+                            if (process != null) {
+                                process.destroy();
+                            }
+                            File file = superService2.e;
+                            if (file != null) {
+                                VpnUtils.killProcess(file);
+                            }
+                            Process process2 = superService2.f;
+                            if (process2 != null) {
+                                process2.destroy();
+                            }
+                            File file2 = superService2.m;
+                            if (file2 != null) {
+                                VpnUtils.killProcess(file2);
+                            }
+                            Ww ww = superService2.p;
+                            if (ww != null) {
+                                ww.b = true;
+                            }
+                            File file3 = superService2.u;
+                            if (file3 != null && file3.exists()) {
+                                superService2.u.delete();
+                            }
+                            superService2.d = null;
+                            superService2.f = null;
+                            superService2.e = null;
+                            superService2.m = null;
+                        } catch (Exception unused) {
+                        }
+                        try {
+                            superService2.unregisterReceiver(superService2.y);
+                        } catch (IllegalArgumentException unused2) {
+                        }
+                        try {
+                            if (Build.VERSION.SDK_INT >= 24) {
+                                superService2.o.unregisterNetworkCallback(superService2.x);
+                            }
+                        } catch (IllegalArgumentException unused3) {
+                        }
+                        SkStatus.removeStateListener(superService2);
+                    } catch (Throwable th) {
+                        throw th;
+                    }
+                }
+                this.b.a();
+                try {
+                    Thread.sleep(1000L);
+                } catch (InterruptedException unused4) {
+                }
+                SkStatus.updateStateString(Deobfuscator$AMTUNNELLITE$app.getString(750667805641699828L), this.b.getString(2131952180));
+                ((UDPClient) SuperService.C).i(Deobfuscator$AMTUNNELLITE$app.getString(750667749807124980L));
+                return;
+        }
+    }
+}
+=================== src/sources/defpackage/Qw.java
+package defpackage;
+
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import org.lsposed.lsparanoid.Deobfuscator$AMTUNNELLITE$app;
+import prince.udp.vpn.service.PDoQService;
+import prince.udp.vpn.service.SuperService;
+
+/* loaded from: classes.dex */
+public final class Qw extends BroadcastReceiver {
+    public final /* synthetic */ int a;
+    public final /* synthetic */ Service b;
+
+    public /* synthetic */ Qw(Service service, int i) {
+        this.a = i;
+        this.b = service;
+    }
+
+    private final synchronized void a(Context context, Intent intent) {
+        PDoQService pDoQService;
+        try {
+            String action = intent.getAction();
+            if (Deobfuscator$AMTUNNELLITE$app.getString(750674840798130676L).equals(action)) {
+                if (!intent.getBooleanExtra(Deobfuscator$AMTUNNELLITE$app.getString(750674737718915572L), true)) {
+                    pDoQService = (PDoQService) this.b;
+                    pDoQService.h();
+                }
+            } else if (Deobfuscator$AMTUNNELLITE$app.getString(750674621754798580L).equals(action)) {
+                pDoQService = (PDoQService) this.b;
+                pDoQService.h();
+            }
+        } catch (Throwable th) {
+            throw th;
+        }
+        throw th;
+    }
+
+    private final synchronized void b(Context context, Intent intent) {
+        SuperService superService;
+        try {
+            String action = intent.getAction();
+            if (Deobfuscator$AMTUNNELLITE$app.getString(750668149239083508L).equals(action)) {
+                if (!intent.getBooleanExtra(Deobfuscator$AMTUNNELLITE$app.getString(750668046159868404L), true)) {
+                    superService = (SuperService) this.b;
+                    superService.g();
+                }
+            } else if (Deobfuscator$AMTUNNELLITE$app.getString(750667930195751412L).equals(action)) {
+                superService = (SuperService) this.b;
+                superService.g();
+            }
+        } catch (Throwable th) {
+            throw th;
+        }
+        throw th;
+    }
+
+    @Override // android.content.BroadcastReceiver
+    public final synchronized void onReceive(Context context, Intent intent) {
+        switch (this.a) {
+            case 0:
+                a(context, intent);
+                return;
+            default:
+                b(context, intent);
+                return;
+        }
+    }
+}
+=================== src/sources/defpackage/Rw.java
+package defpackage;
+
+import android.R;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import androidx.fragment.app.z;
+import androidx.profileinstaller.ProfileInstallReceiver;
+import com.google.ads.mediation.facebook.FacebookMediationAdapter;
+import com.google.android.gms.common.internal.Preconditions;
+import com.google.android.gms.common.logging.Logger;
+import com.google.android.gms.common.util.DefaultClock;
+import com.google.android.gms.measurement.api.AppMeasurementSdk;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.android.material.behavior.SwipeDismissBehavior;
+import com.google.android.recaptcha.RecaptchaAction;
+import com.google.android.recaptcha.RecaptchaTasksClient;
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.WeakHashMap;
+import org.chromium.support_lib_boundary.WebMessageListenerBoundaryInterface;
+import org.chromium.support_lib_boundary.util.Features;
+import org.jacoco.core.runtime.AgentOptions;
+import org.json.JSONObject;
+import org.lsposed.lsparanoid.Deobfuscator$AMTUNNELLITE$app;
+import prince.udp.vpn.activities.UDPClient;
+import prince.udp.vpn.service.PDoQService;
+import prince.udp.vpn.service.SuperService;
+import prince.udp.vpn.service.vpn.TunnelManagerHelper;
+import prince.udp.vpn.service.vpn.logger.SkStatus;
+
+/* loaded from: classes2.dex */
+public class Rw implements InterfaceC2916lF, InterfaceC3110oy, InterfaceC2500dK, InterfaceC0122Hc, InterfaceC0220Nk, InterfaceC3279s8, InterfaceC2795j0, OnCompleteListener, D0, WebMessageListenerBoundaryInterface, OnFailureListener, Continuation {
+    public final /* synthetic */ int a;
+    public Object b;
+
+    public /* synthetic */ Rw(int i) {
+        this.a = i;
+    }
+
+    public Rw(G2 g2, RecaptchaAction recaptchaAction) {
+        this.a = 20;
+        this.b = recaptchaAction;
+        Objects.requireNonNull(g2);
+    }
+
+    public /* synthetic */ Rw(Object obj, int i) {
+        this.a = i;
+        this.b = obj;
+    }
+
+    public Rw(RunnableC3589y0 runnableC3589y0) {
+        this.a = 19;
+        Objects.requireNonNull(runnableC3589y0);
+        this.b = runnableC3589y0;
+    }
+
+    public static void k(C3574xm c3574xm) {
+        c3574xm.i("CREATE TABLE IF NOT EXISTS `Dependency` (`work_spec_id` TEXT NOT NULL, `prerequisite_id` TEXT NOT NULL, PRIMARY KEY(`work_spec_id`, `prerequisite_id`), FOREIGN KEY(`work_spec_id`) REFERENCES `WorkSpec`(`id`) ON UPDATE CASCADE ON DELETE CASCADE , FOREIGN KEY(`prerequisite_id`) REFERENCES `WorkSpec`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
+        c3574xm.i("CREATE INDEX IF NOT EXISTS `index_Dependency_work_spec_id` ON `Dependency` (`work_spec_id`)");
+        c3574xm.i("CREATE INDEX IF NOT EXISTS `index_Dependency_prerequisite_id` ON `Dependency` (`prerequisite_id`)");
+        c3574xm.i("CREATE TABLE IF NOT EXISTS `WorkSpec` (`id` TEXT NOT NULL, `state` INTEGER NOT NULL, `worker_class_name` TEXT NOT NULL, `input_merger_class_name` TEXT, `input` BLOB NOT NULL, `output` BLOB NOT NULL, `initial_delay` INTEGER NOT NULL, `interval_duration` INTEGER NOT NULL, `flex_duration` INTEGER NOT NULL, `run_attempt_count` INTEGER NOT NULL, `backoff_policy` INTEGER NOT NULL, `backoff_delay_duration` INTEGER NOT NULL, `period_start_time` INTEGER NOT NULL, `minimum_retention_duration` INTEGER NOT NULL, `schedule_requested_at` INTEGER NOT NULL, `run_in_foreground` INTEGER NOT NULL, `out_of_quota_policy` INTEGER NOT NULL, `required_network_type` INTEGER, `requires_charging` INTEGER NOT NULL, `requires_device_idle` INTEGER NOT NULL, `requires_battery_not_low` INTEGER NOT NULL, `requires_storage_not_low` INTEGER NOT NULL, `trigger_content_update_delay` INTEGER NOT NULL, `trigger_max_content_delay` INTEGER NOT NULL, `content_uri_triggers` BLOB, PRIMARY KEY(`id`))");
+        c3574xm.i("CREATE INDEX IF NOT EXISTS `index_WorkSpec_schedule_requested_at` ON `WorkSpec` (`schedule_requested_at`)");
+        c3574xm.i("CREATE INDEX IF NOT EXISTS `index_WorkSpec_period_start_time` ON `WorkSpec` (`period_start_time`)");
+        c3574xm.i("CREATE TABLE IF NOT EXISTS `WorkTag` (`tag` TEXT NOT NULL, `work_spec_id` TEXT NOT NULL, PRIMARY KEY(`tag`, `work_spec_id`), FOREIGN KEY(`work_spec_id`) REFERENCES `WorkSpec`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
+        c3574xm.i("CREATE INDEX IF NOT EXISTS `index_WorkTag_work_spec_id` ON `WorkTag` (`work_spec_id`)");
+        c3574xm.i("CREATE TABLE IF NOT EXISTS `SystemIdInfo` (`work_spec_id` TEXT NOT NULL, `system_id` INTEGER NOT NULL, PRIMARY KEY(`work_spec_id`), FOREIGN KEY(`work_spec_id`) REFERENCES `WorkSpec`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
+        c3574xm.i("CREATE TABLE IF NOT EXISTS `WorkName` (`name` TEXT NOT NULL, `work_spec_id` TEXT NOT NULL, PRIMARY KEY(`name`, `work_spec_id`), FOREIGN KEY(`work_spec_id`) REFERENCES `WorkSpec`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
+        c3574xm.i("CREATE INDEX IF NOT EXISTS `index_WorkName_work_spec_id` ON `WorkName` (`work_spec_id`)");
+        c3574xm.i("CREATE TABLE IF NOT EXISTS `WorkProgress` (`work_spec_id` TEXT NOT NULL, `progress` BLOB NOT NULL, PRIMARY KEY(`work_spec_id`), FOREIGN KEY(`work_spec_id`) REFERENCES `WorkSpec`(`id`) ON UPDATE CASCADE ON DELETE CASCADE )");
+        c3574xm.i("CREATE TABLE IF NOT EXISTS `Preference` (`key` TEXT NOT NULL, `long_value` INTEGER, PRIMARY KEY(`key`))");
+        c3574xm.i("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
+        c3574xm.i("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c103703e120ae8cc73c9248622f3cd1e')");
+    }
+
+    public static C3490w7 l(C3574xm c3574xm) {
+        HashMap hashMap = new HashMap(2);
+        hashMap.put("work_spec_id", new C3076oG(1, "work_spec_id", "TEXT", null, true, 1));
+        hashMap.put("prerequisite_id", new C3076oG(2, "prerequisite_id", "TEXT", null, true, 1));
+        HashSet hashSet = new HashSet(2);
+        hashSet.add(new C3129pG("WorkSpec", "CASCADE", "CASCADE", Arrays.asList("work_spec_id"), Arrays.asList(FacebookMediationAdapter.KEY_ID)));
+        hashSet.add(new C3129pG("WorkSpec", "CASCADE", "CASCADE", Arrays.asList("prerequisite_id"), Arrays.asList(FacebookMediationAdapter.KEY_ID)));
+        HashSet hashSet2 = new HashSet(2);
+        hashSet2.add(new C3234rG(Arrays.asList("work_spec_id"), "index_Dependency_work_spec_id", false));
+        hashSet2.add(new C3234rG(Arrays.asList("prerequisite_id"), "index_Dependency_prerequisite_id", false));
+        C3287sG c3287sG = new C3287sG("Dependency", hashMap, hashSet, hashSet2);
+        C3287sG a = C3287sG.a(c3574xm, "Dependency");
+        if (!c3287sG.equals(a)) {
+            return new C3490w7(false, "Dependency(androidx.work.impl.model.Dependency).\n Expected:\n" + c3287sG + "\n Found:\n" + a);
+        }
+        HashMap hashMap2 = new HashMap(25);
+        hashMap2.put(FacebookMediationAdapter.KEY_ID, new C3076oG(1, FacebookMediationAdapter.KEY_ID, "TEXT", null, true, 1));
+        hashMap2.put("state", new C3076oG(0, "state", "INTEGER", null, true, 1));
+        hashMap2.put("worker_class_name", new C3076oG(0, "worker_class_name", "TEXT", null, true, 1));
+        hashMap2.put("input_merger_class_name", new C3076oG(0, "input_merger_class_name", "TEXT", null, false, 1));
+        hashMap2.put("input", new C3076oG(0, "input", "BLOB", null, true, 1));
+        hashMap2.put(AgentOptions.OUTPUT, new C3076oG(0, AgentOptions.OUTPUT, "BLOB", null, true, 1));
+        hashMap2.put("initial_delay", new C3076oG(0, "initial_delay", "INTEGER", null, true, 1));
+        hashMap2.put("interval_duration", new C3076oG(0, "interval_duration", "INTEGER", null, true, 1));
+        hashMap2.put("flex_duration", new C3076oG(0, "flex_duration", "INTEGER", null, true, 1));
+        hashMap2.put("run_attempt_count", new C3076oG(0, "run_attempt_count", "INTEGER", null, true, 1));
+        hashMap2.put("backoff_policy", new C3076oG(0, "backoff_policy", "INTEGER", null, true, 1));
+        hashMap2.put("backoff_delay_duration", new C3076oG(0, "backoff_delay_duration", "INTEGER", null, true, 1));
+        hashMap2.put("period_start_time", new C3076oG(0, "period_start_time", "INTEGER", null, true, 1));
+        hashMap2.put("minimum_retention_duration", new C3076oG(0, "minimum_retention_duration", "INTEGER", null, true, 1));
+        hashMap2.put("schedule_requested_at", new C3076oG(0, "schedule_requested_at", "INTEGER", null, true, 1));
+        hashMap2.put("run_in_foreground", new C3076oG(0, "run_in_foreground", "INTEGER", null, true, 1));
+        hashMap2.put("out_of_quota_policy", new C3076oG(0, "out_of_quota_policy", "INTEGER", null, true, 1));
+        hashMap2.put("required_network_type", new C3076oG(0, "required_network_type", "INTEGER", null, false, 1));
+        hashMap2.put("requires_charging", new C3076oG(0, "requires_charging", "INTEGER", null, true, 1));
+        hashMap2.put("requires_device_idle", new C3076oG(0, "requires_device_idle", "INTEGER", null, true, 1));
+        hashMap2.put("requires_battery_not_low", new C3076oG(0, "requires_battery_not_low", "INTEGER", null, true, 1));
+        hashMap2.put("requires_storage_not_low", new C3076oG(0, "requires_storage_not_low", "INTEGER", null, true, 1));
+        hashMap2.put("trigger_content_update_delay", new C3076oG(0, "trigger_content_update_delay", "INTEGER", null, true, 1));
+        hashMap2.put("trigger_max_content_delay", new C3076oG(0, "trigger_max_content_delay", "INTEGER", null, true, 1));
+        hashMap2.put("content_uri_triggers", new C3076oG(0, "content_uri_triggers", "BLOB", null, false, 1));
+        HashSet hashSet3 = new HashSet(0);
+        HashSet hashSet4 = new HashSet(2);
+        hashSet4.add(new C3234rG(Arrays.asList("schedule_requested_at"), "index_WorkSpec_schedule_requested_at", false));
+        hashSet4.add(new C3234rG(Arrays.asList("period_start_time"), "index_WorkSpec_period_start_time", false));
+        C3287sG c3287sG2 = new C3287sG("WorkSpec", hashMap2, hashSet3, hashSet4);
+        C3287sG a2 = C3287sG.a(c3574xm, "WorkSpec");
+        if (!c3287sG2.equals(a2)) {
+            return new C3490w7(false, "WorkSpec(androidx.work.impl.model.WorkSpec).\n Expected:\n" + c3287sG2 + "\n Found:\n" + a2);
+        }
+        HashMap hashMap3 = new HashMap(2);
+        hashMap3.put("tag", new C3076oG(1, "tag", "TEXT", null, true, 1));
+        hashMap3.put("work_spec_id", new C3076oG(2, "work_spec_id", "TEXT", null, true, 1));
+        HashSet hashSet5 = new HashSet(1);
+        hashSet5.add(new C3129pG("WorkSpec", "CASCADE", "CASCADE", Arrays.asList("work_spec_id"), Arrays.asList(FacebookMediationAdapter.KEY_ID)));
+        HashSet hashSet6 = new HashSet(1);

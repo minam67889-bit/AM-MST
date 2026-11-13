@@ -1,0 +1,17 @@
+java/sources/bin/mt/signature/KillerApplication.java:167:        final Signature signature = new Signature(Base64.decode(str2, 0));
+java/sources/org/spongycastle/util/io/pem/PemReader.java:40:            return new PemObject(str, arrayList, Base64.decode(sb.toString()));
+java/sources/defpackage/AbstractC3634my.java:102:                            arrayList2.add(Base64.decode(str, 0));
+java/sources/defpackage/AbstractC3634my.java:111:                    arrayList3.add(Base64.decode(str2, 0));
+java/sources/defpackage/C2902di.java:328:                            bArr = Base64.decode(jsonReader.nextString(), 2);
+java/sources/defpackage/C2902di.java:576:                                str9 = new String(Base64.decode(jsonReader.nextString(), 2), AbstractC0827bi.a);
+java/sources/defpackage/C2902di.java:1515:                                c3732o8.b = new String(Base64.decode(jsonReader.nextString(), 2), AbstractC0827bi.a);
+java/sources/defpackage/AbstractC4589z20.java:232:            byte[] decode = Base64.decode(str, 0);
+java/sources/defpackage/Hg0.java:75:                str2 = new String(((zzbs) this.b.zza().zza(zzjh.zza(), zzbs.class)).zza(Base64.decode(str, 8), null), StandardCharsets.UTF_8);
+java/sources/defpackage/ML.java:773:            intent.putExtra("rawData", Base64.decode(stringExtra, 0));
+java/sources/defpackage/CP.java:95:                a.c = string == null ? null : Base64.decode(string, 0);
+java/sources/defpackage/sg0.java:140:                str2 = new String(((zzbm) a.b.zza().zza(zzje.zza(), zzbm.class)).zza(Base64.decode(substring, 2), null), StandardCharsets.UTF_8);
+java/sources/defpackage/C0188Gw.java:57:                publicKey = KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(Base64.decode(string, 8)));
+java/sources/smalihelper/heIran.java:45:            return new String(cipher.doFinal(Base64.decode(str, 0)));
+java/sources/com/pairip/licensecheck/LicenseResponseHelper.java:74:            return new JSONObject(new String(Base64.decode(input, 8), UTF_8));
+java/sources/com/pairip/licensecheck/LicenseResponseHelper.java:85:            if (signature2.verify(Base64.decode(signature, 8))) {
+java/sources/com/pairip/licensecheck/LicenseResponseHelper.java:102:            return KeyFactory.getInstance(KEY_FACTORY_ALGORITHM).generatePublic(new X509EncodedKeySpec(Base64.decode(LicenseClient.getLicensePubKey(), 0)));

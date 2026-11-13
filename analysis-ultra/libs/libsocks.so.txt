@@ -1,0 +1,52 @@
+### libsocks.so  160232 bytes
+--- file:
+/tmp/u/libs/libsocks.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /system/bin/linker64, BuildID[sha1]=12e699d19813b7ba6d408fd8d90b61ccb8fafa11, stripped
+--- interesting strings:
+        --socks-server-addr <addr>
+        [--append-source-to-username]
+        [--password <password>]
+        [--password-file <file>]
+        [--username <username>]
+--append-source-to-username
+--password
+--password and --password-file cannot both be given
+--password-file
+--socks-server-addr
+--socks-server-addr is required
+--username
+BEncryption
+BSocksClient
+BadVPN tun2socks 1.999.127
+PasswordListener
+SOCKS closed
+SOCKS error
+SOCKS up
+SocksUdpGwClient
+SocksUdpGwClient_Init failed
+_PacketPassInterface_job_done
+_PacketPassInterface_job_operation
+_PacketPassInterface_job_requestcancel
+_StreamPassInterface_job_done
+_StreamPassInterface_job_operation
+client reports server error
+device fd reports error?
+failed to read password file
+initializing BadVPN tun2socks 1.999.127
+invalid username/password length
+jni/badvpn/tun2socks/tun2socks.c
+listener accept: BSocksClient_Init failed
+net.typeblog.socks
+password authentication
+password reply has unknown version
+password reply is negative
+password_file_contents
+received password reply
+removing after SOCKS went down
+send password
+socks server addr: BAddr_Parse2 failed
+socks_auth_info
+socks_num_auth_info
+socks_server_addr
+tun2socks
+username given but password not given
+waiting untill buffered data is sent to SOCKS

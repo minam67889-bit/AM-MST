@@ -1,0 +1,47 @@
+### port2222
+/tmp/u/src/sources/org/spongycastle/crypto/digests/SHA256Digest.java:10:    static final int[] K = {1116352408, 1899447441, -1245643825, -373957723, 961987163, 1508970993, -1841331548, -1424204075, -670586216, 310598401, 607225278, 1426881987, 1925078388, -2132889090, -1680079193, -1046744716, -459576895, -272742522, 264347078, 604807628, 770255983, 1249150122, 1555081692, 1996064986, -1740746414,
+/tmp/u/src/sources/org/spongycastle/crypto/digests/SHA224Digest.java:10:    static final int[] K = {1116352408, 1899447441, -1245643825, -373957723, 961987163, 1508970993, -1841331548, -1424204075, -670586216, 310598401, 607225278, 1426881987, 1925078388, -2132889090, -1680079193, -1046744716, -459576895, -272742522, 264347078, 604807628, 770255983, 1249150122, 1555081692, 1996064986, -1740746414,
+/tmp/u/src/sources/defpackage/p32.java:1151:        i3 = new l32("gads:msa:experiments:incapi:trusted_cert", "308204433082032ba003020102020900c2e08746644a308d300d06092a864886f70d01010405003074310b3009060355040613025553311330110603550408130a43616c69666f726e6961311630140603550407130d4d6f756e7461696e205669657731143012060355040a130b476f6f676c6520496e632e3110300e060355040b1307416e64726f69643110300e0603
+/tmp/u/src/sources/defpackage/q92.java:79:                StringBuilder sb2222 = new StringBuilder(String.valueOf(z).length() + 38);
+/tmp/u/src/sources/defpackage/q92.java:80:                sb2222.append("Update ad debug logging enablement as ");
+/tmp/u/src/sources/defpackage/q92.java:81:                sb2222.append(z);
+/tmp/u/src/sources/defpackage/q92.java:82:                zzo.zzi(sb2222.toString());
+/tmp/u/src/sources/defpackage/fx2.java:11:    public static final UUID d = new UUID(-1301668207276963122L, -6645017420763422227L);
+/tmp/u/src/sources/defpackage/w91.java:65:    2280, 1577, 2295, 2293, 2291, 579, 577, 574, 571, 2298, 582, 581, 1592, 2263, 2262, 2260, 2258, 1545, 2255, 1544, 2252, 1541, 2273, 2271, 2269, 2266, 1550, 535, 532, 2279, 528, 2277, 546, 543, 549, 1575, 1573, 2224, 2222, 2220, 1486, 2217, 1485, 2214, 1482, 1479, 2238, 2236, 2234, 2231, 1496, 2228, 1492, 480, 477, 2248, 473, 2246, 469, 2243, 490, 487, 
+/tmp/u/src/sources/defpackage/w91.java:246:        int[] iArr = {350322227, 1077471394, 1759186290, 18931840, 769005128, 1847857001, 24413078, 1982275856, 1275373743};
+/tmp/u/src/sources/defpackage/oc0.java:9:    public static final double[] d = {0.015176349177441876d, 0.045529047532325624d, 0.07588174588720938d, 0.10623444424209313d, 0.13658714259697685d, 0.16693984095186062d, 0.19729253930674434d, 0.2276452376616281d, 0.2579979360165119d, 0.28835063437139563d, 0.3188300904430532d, 0.350925934958123d, 0.3848314933096426d, 0.42057480301049466d, 0.458183274052838
+/tmp/u/src/sources/defpackage/k03.java:52:            String[] strArr = {k5Var.H(), "308204433082032ba003020102020900c2e08746644a308d300d06092a864886f70d01010405003074310b3009060355040613025553311330110603550408130a43616c69666f726e6961311630140603550407130d4d6f756e7461696e205669657731143012060355040a130b476f6f676c6520496e632e3110300e060355040b1307416e64726f69643110300e06035504031307416e64726f69643
+/tmp/u/src/sources/com/google/android/gms/internal/ads/zzatq.java:135:        int i33 = (((((~1096079422) & 21345877) | 206269224) + ((1096079422 & 1367643255) | 1352213154)) - 1033422229) ^ (1998713308 % 1456575805);
+/tmp/u/src/sources/com/google/android/gms/internal/ads/zzbwf.java:156:                        MediationConfiguration mediationConfiguration2222 = new MediationConfiguration(adFormat, bundle2);
+/tmp/u/src/sources/com/google/android/gms/internal/ads/zzbwf.java:157:                        ArrayList arrayList2222 = new ArrayList();
+/tmp/u/src/sources/com/google/android/gms/internal/ads/zzbwf.java:158:                        arrayList2222.add(mediationConfiguration2222);
+/tmp/u/src/sources/com/google/android/gms/internal/ads/zzbwf.java:159:                        rtbAdapter.collectSignals(new RtbSignalData((Context) com.google.android.gms.dynamic.a.d(iObjectWrapper), arrayList2222, bundle, zzc.zza(zzrVar.zze, zzrVar.zzb, zzrVar.zza)), rb0Var);
+/tmp/u/src/sources/com/google/android/gms/internal/ads/zzbwf.java:167:                            MediationConfiguration mediationConfiguration22222 = new MediationConfiguration(adFormat, bundle2);
+/tmp/u/src/sources/com/google/android/gms/internal/ads/zzbwf.java:168:                            ArrayList arrayList22222 = new ArrayList();
+/tmp/u/src/sources/com/google/android/gms/internal/ads/zzbwf.java:169:                            arrayList22222.add(mediationConfiguration22222);
+/tmp/u/src/sources/com/google/android/gms/internal/ads/zzbwf.java:170:                            rtbAdapter.collectSignals(new RtbSignalData((Context) com.google.android.gms.dynamic.a.d(iObjectWrapper), arrayList22222, bundle, zzc.zza(zzrVar.zze, zzrVar.zzb, zzrVar.zza)), rb0Var);
+/tmp/u/src/sources/com/google/android/gms/internal/ads/zzbwf.java:178:                        MediationConfiguration mediationConfiguration222222 = new MediationConfiguration(adFormat, bundle2);
+/tmp/u/src/sources/com/google/android/gms/internal/ads/zzbwf.java:179:                        ArrayList arrayList222222 = new ArrayList();
+/tmp/u/src/sources/com/google/android/gms/internal/ads/zzbwf.java:180:                        arrayList222222.add(mediationConfiguration222222);
+/tmp/u/src/sources/com/google/android/gms/internal/ads/zzbwf.java:181:                        rtbAdapter.collectSignals(new RtbSignalData((Context) com.google.android.gms.dynamic.a.d(iObjectWrapper), arrayList222222, bundle, zzc.zza(zzrVar.zze, zzrVar.zzb, zzrVar.zza)), rb0Var);
+/tmp/u/src/sources/com/google/android/gms/internal/ads/zzaye.java:112:            java.lang.String r7 = "308204433082032ba003020102020900c2e08746644a308d300d06092a864886f70d01010405003074310b3009060355040613025553311330110603550408130a43616c69666f726e6961311630140603550407130d4d6f756e7461696e205669657731143012060355040a130b476f6f676c6520496e632e3110300e060355040b1307416e64726f69643110300e060355040
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:3065:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:3190:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:3315:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:3440:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:3565:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:3690:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:3814:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:3938:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:4062:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:4186:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:4310:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:4434:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:4558:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:4682:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:4807:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:4932:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/v2ray/ang/ui/ServerActivity.java:5057:                        int i2222 = ServerActivity.h0;
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/DNSTunnelThread.java:61:                sb.append(" -udp " + string3 + ":53   -pubkey " + string + " " + string2 + " 127.0.0.1:2222");
+/tmp/u/src/sources/com/trilead/ssh2/crypto/cipher/AES.java:28:    private static final int[] T3 = {-962239645, -125535108, -291932297, -158499973, -15863054, -692229269, -558796945, -1856715323, 1615867952, 33751297, -827758745, 1451043627, -417726722, -1251813417, 1306962859, -325421450, -1891251510, 530416258, -1992242743, -91783811, -283772166, -1293199015, -1899411641, -83103504, 1106029997, -
+/tmp/u/src/sources/com/trilead/ssh2/crypto/cipher/AES.java:31:    private static final int[] Tinv2 = {-195997529, 1098797925, 387629988, 658151006, -1422144661, -1658851003, -89347240, -481586429, 807425530, 1991112301, -863465098, 49620300, -447742761, 717608907, 891715652, 1656065955, -1310832294, -1171953893, -364537842, -27401792, 801309301, 1283527408, 1183687575, -747911431, -1895569569, -18

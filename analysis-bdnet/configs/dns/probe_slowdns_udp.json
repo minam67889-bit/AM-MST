@@ -1,0 +1,288 @@
+{
+  "transport": "udp",
+  "timeout": 4.0,
+  "alive": 0,
+  "total": 20,
+  "results": [
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de1.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.158"
+      },
+      "ok": false,
+      "ms": 4004.3,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de2.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.159"
+      },
+      "ok": false,
+      "ms": 4004.4,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de3.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.160"
+      },
+      "ok": false,
+      "ms": 4002.4,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de4.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.162"
+      },
+      "ok": false,
+      "ms": 4004.3,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de5.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.163"
+      },
+      "ok": false,
+      "ms": 4004.3,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de6.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.161"
+      },
+      "ok": false,
+      "ms": 4002.9,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de7.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.164"
+      },
+      "ok": false,
+      "ms": 4004.4,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de8.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.165"
+      },
+      "ok": false,
+      "ms": 4000.7,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de9.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.168"
+      },
+      "ok": false,
+      "ms": 4003.3,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de10.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.170"
+      },
+      "ok": false,
+      "ms": 4004.3,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de11.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.171"
+      },
+      "ok": false,
+      "ms": 4004.3,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de12.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.172"
+      },
+      "ok": false,
+      "ms": 4004.3,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de13.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.173"
+      },
+      "ok": false,
+      "ms": 4004.3,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de14.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.174"
+      },
+      "ok": false,
+      "ms": 4004.4,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de15.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.175"
+      },
+      "ok": false,
+      "ms": 4004.3,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de16.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.176"
+      },
+      "ok": false,
+      "ms": 4001.4,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de17.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.177"
+      },
+      "ok": false,
+      "ms": 4004.4,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de18.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.178"
+      },
+      "ok": false,
+      "ms": 4003.3,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de19.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.180"
+      },
+      "ok": false,
+      "ms": 4002.4,
+      "error": "TimeoutError"
+    },
+    {
+      "server": {
+        "mode": "slowdns",
+        "host": "de20.liftmeon.org",
+        "port": 53,
+        "port_spec": "Pulled",
+        "transport": "udp",
+        "server_name": "\ud83c\udf0d SlowDns Global",
+        "ip": "13.140.185.181"
+      },
+      "ok": false,
+      "ms": 4004.3,
+      "error": "TimeoutError"
+    }
+  ]
+}

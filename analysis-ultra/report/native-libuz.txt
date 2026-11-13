@@ -1,0 +1,124 @@
+### libuz.so 24745536 bytes
+--- usage/flags:
+timeout: failed to run command ‘qemu-aarch64-static’: No such file or directory
+--- strings:
+	*[]dns.RR
+	*dns.AAAA
+	*dns.CERT
+	*dns.Conn
+	*dns.GPOS
+	*dns.NSEC
+	*dns.NULL
+	*dns.RKEY
+	*dns.SVCB
+	*dns.TKEY
+	*dns.TLSA
+	*dns.TSIG
+	*dns.call
+	AddGoFlag
+	AuthLabel
+	Authority
+	BasicAuth
+	BindPFlag
+	KeyUsages
+	PublicKey!dns:"size-base64:PublicKeyLength"
+	Queuing ACK because there's a new missing packet to report.addr range base and limit are not in the same memory segmentarch-specific crc32 instruction for Castagnoli not availablebytes.Reader.UnreadRune: previous operation was not ReadRunecalled Float64Histogram on non-Float64Histogram metric valuecannot decrease addressState %s without freeing the endpointcollected metric %q { %s} must not have an explicit %q labelconflicting globalTypeDatabase entries for %T: name conflictcrypto/elliptic: CombinedMult was called on an invalid pointexternal certificate manager: %s: filling cert from leaf: %vfailed storage check: %v - storage is probably misconfiguredfound a tab character where an indentation space is expectedfound data (%v) at %v that the search tree does not point tointernal error: attempt to send frame on a closed stream: %vinvalid number of arguments for country: %d, expected 1 or 2invalid value for active_connection_id_limit: %d (minimum 2)malformed response from server: missing status pseudo headermanual span allocation called with non-manually-managed typemaximum response delay %dms is more than the allowed 65535msnet/http: server response headers exceeded %d bytes; abortedpkg/tcpip/network/ipv4.icmpv4DestinationHostUnknownSockErrorpkg/tcpip/network/ipv4.icmpv4DestinationUnreachableSockErrorpkg/tcpip/network/ipv6.icmpv6DestinationUnreachableSockErrorreflect: call of reflect.Value.Cap on ptr to non-array Valuereflect: call of reflect.Value.Len on ptr to non-array Valueruntime: failed to configure profiling timer; timer_settime(server hello can not be created without a compression methodstart pointer address (%d) is after end pointer address (%d)sync/atomic: compare and swap of inconsistently typed valuestls: client requested unsupported application protocols (%s)tls: initial handshake had non-empty renegotiation extensiontls: no supported versions satisfy MinVersion and MaxVersionunrecognized result from HandleUnknownDestinationPacket = %dviolation of WriteScheduler interface: cannot close stream 0A summary of the pause duration of garbage collection cycles.Cumulative sum of heap memory freed by the garbage collector.DNSOPT record is of length %d, it should be at least length 4ICMP layer less then 12 bytes for ICMPv6 router advertisementIncreasing receive flow control window for stream %d to %d kBMemory that is reserved for or used to hold runtime metadata.ReadAt(): offset out of bounds: want 0 < off < %d, got off=%dReceived a Version Negotiation packet. Supported Versions: %sRelease() called before fragmentation processing could finishSending stateless reset to %s (connection ID: %s). Token: %#x"version" flag declared as non-bool. Please correct your codeabiRegArgsType needs GC Prog, update methodValueCallFrameObjsexpected to consume transport header %d bytes from new packetexpected to read %d bytes from secure RNG, only read %d bytesfound fragment length = %d that is not a multiple of 8 octetsgo package net: GODEBUG setting forcing use of Go's resolver
+	SortFlags
+	ToCDNSKEY
+	UsageFunc
+	UserAgent
+	cacheZone
+	doOnePass
+	morebuf={pc:^([\t\f ]+)(.*)accept-encodingaccept-languageactifioudsagentaddress is IPv4address is IPv6advertise errorafs3-fileserveraggregate_valuealmobile-systemampl-tableproxyapplication/oggapplication/pdfapplication/zipasf-secure-rmcpaspcoordinationasyncpreemptoffaudio-activmailbad certificatebad file numberbad private keybad system callbad trailer keybad_certificatebad_path_methodcaldsoft-backupcardifftec-backcartographerxmpcert_cache_fillcisco-vpath-tuncitriximaclientcloudcheck-pingcodemeter-cmwancomposit-servercontenteditablecopy_file_rangecplscrambler-alcplscrambler-incplscrambler-lgcrescoctrl-discdamewaremobgtwydbcontrol-agentdouble scavengeelem size wrongemc-xsw-dconfigempty authz urlencrypted-adminequationbuildererunbook-serverexpected 'true'extension_rangeflags+=("-%s")
+	portFlags
+	proxyAuth
+	recvflags
+	usageFunc
+	userAgent
+                        # zsh completion needs --flag= prefix
+                        eval "COMPREPLY=( \"\${COMPREPLY[@]/#/${flag}=}\" )"
+                    ${flags_completion[${index}]}
+                # If flag parsing is disabled, we may not know all (or any) of the flags, so we fallthrough
+                # If flag parsing is enabled, we have completed the flags and can return.
+                # the user need to press space anyway to get the completion.
+                __%[1]s_index_of_word "${flag}" "${flags_with_completion[@]}"
+                _arguments '*:filename:_files'" ${flagPrefix}"
+                allflags=("${flags[*]} ${two_word_flags[*]}")
+                allflags=("${must_have_one_flag[@]}")
+                flag="${cur%%=*}"
+                local index flag
+            # complete after --flag=abc
+            # text the user had typed, it is workable enough.
+            $_.Name = $Flag + "=" + $_.Name
+            __%[1]s_debug "Join the equal sign flag back to the completion value"
+            __%[1]s_handle_subdirs_in_dir_flag "$subdir"
+            done < <(compgen -W "${allflags[*]}" -- "$cur")
+            flaghash[${flagname}]="true" # pad "true" for bool flag
+            flaghash[${flagname}]=${flagvalue}
+            flaghash[${flagname}]=${words[ $((c+1)) ]}
+            if [ ${#must_have_one_flag[@]} -ne 0 ]; then
+            if [[ -z "${flag_parsing_disabled}" ]]; then
+            local allflags
+        # If the user requested inserting one completion at a time, or all
+        # Join the flag back if we have an equal sign flag
+        # Remove the flag part
+        # We are dealing with a flag with an =
+        # We need to use `"`" to pass an empty argument a "" or '' does not work!!!
+        # if we are looking for a flags value, don't show commands
+        $Flag,$WordToComplete = $WordToComplete.Split("=",2)
+        ${flags_completion[${index}]}
+        __%[1]s_debug "${FUNCNAME[0]}: found a flag ${words[c]}, skip the next argument"
+        __%[1]s_debug "Completing equal sign flag"
+        __%[1]s_handle_flag
+        _arguments '*:dirname:_files -/'" ${flagPrefix}"
+        completions+=("${must_have_one_flag[@]}")
+        filteringCmd+=" ${flagPrefix}"
+        flagPrefix="-P ${BASH_REMATCH}"
+        flagname="${flagname}=" # but put the = back
+        flagname=${flagname%%=*} # strip everything after the =
+        flagvalue=${flagname#*=} # take in as flagvalue after the =
+        if ( $IsEqualFlag ) {
+        if [ -n "${flagvalue}" ] ; then
+        if eval _describe "completions" completions $flagPrefix $noSpace; then
+        must_have_one_flag=()
+        printf "%%s%%s\n" "$flagPrefix" "$comp"
+    # Check for flag with equal sign
+    # For Fish, when completing a flag with an = (e.g., <program> -n=<TAB>)
+    # For zsh, when completing a flag with an = (e.g., %[1]s -n=<TAB>)
+    # If there is only 1 completion and it is a flag with an = it will be completed
+    # The user could have moved the cursor backwards on the command-line.
+    # When completing a flag with an = (e.g., %[1]s -n=<TAB>)
+    # check if we are handling a flag with special work handling
+    # completions must be prefixed with the flag
+    # flaghash variable is an associative array which is only supported in bash > 3.
+    # if a command required a flag, and we found it, unset must_have_one_flag()
+    # if you set a flag which only applies to this command, don't show subcommands
+    # keep flag value with flagname as flaghash
+    # skip the argument to a two word flag
+    # the flag part from $cur
+    # we are parsing a flag and don't have a special handler, no completion
+    $IsEqualFlag = ($WordToComplete -Like "--*=*" )
+    __%[1]s_debug "${FUNCNAME[0]}: looking for ${flagname}"
+    __%[1]s_debug "flagPrefix: $flagPrefix"
+    __%[1]s_debug "flagPrefix: ${flagPrefix}"
+    __%[1]s_index_of_word "${prev}" "${flags_with_completion[@]}"
+    declare -A flaghash 2>/dev/null || :
+    flags_completion=()
+    flags_with_completion=()
+    if ( $IsEqualFlag ) {
+    if ( $WordToComplete -eq "" -And ( -Not $IsEqualFlag )) {
+    if [[ ${#must_have_one_flag[@]} -ne 0 ]]; then
+    if [[ ${words[c]} != *"="* ]] && __%[1]s_contains_word "${words[c]}" "${two_word_flags[@]}"; then
+    if __%[1]s_contains_word "${flagname}" "${local_nonpersistent_flags[@]}"; then
+    if __%[1]s_contains_word "${flagname}" "${must_have_one_flag[@]}"; then
+    local flag_parsing_disabled=
+    local flagname=${words[c]}
+    local flags=()
+    local flags_completion=()
+    local flags_with_completion=()
+    local flagvalue=""
+    local lastParam lastChar flagPrefix requestComp out directive comp lastComp noSpace
+    local local_nonpersistent_flags=()
+    local must_have_one_flag=()
+    local two_word_flags=()
+    local_nonpersistent_flags=()

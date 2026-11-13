@@ -1,0 +1,204 @@
+### libconscrypt_jni.so  2871488 bytes
+--- file:
+/tmp/u/libs/libconscrypt_jni.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, BuildID[sha1]=700362599225b65b05ee30a216ed32fa5d033ff0, stripped
+--- interesting strings:
+%*sOnly User Certificates
+%*sUser Notice:
+/home/runner/work/_temp/boringssl/crypto/x509/x_pubkey.cc
+/home/runner/work/_temp/boringssl/ssl/encrypted_client_hello.cc
+AES-CBC-decrypt KAT
+AES-CBC-encrypt KAT
+AES-GCM-decrypt KAT
+AES-GCM-decrypt KAT failed because EVP_AEAD_CTX_open failed.
+AES-GCM-encrypt KAT
+AES_cbc_encrypt
+AES_cfb128_encrypt
+AES_ctr128_encrypt
+AES_decrypt
+AES_ecb_encrypt
+AES_encrypt
+AES_ofb128_encrypt
+AES_set_decrypt_key
+AES_set_encrypt_key
+BAD_DECRYPT
+BAD_FIXED_HEADER_DECRYPT
+BAD_PASSWORD_READ
+BAD_RSA_ENCRYPT
+BCM_aes_set_decrypt_key failed.
+BCM_aes_set_encrypt_key failed.
+Could not find rsaDecryptWithPrivateKey
+DECRYPTION_FAILED
+DECRYPTION_FAILED_OR_BAD_RECORD_MAC
+DES_ecb3_encrypt
+DES_ecb_encrypt
+DES_ede2_cbc_encrypt
+DES_ede3_cbc_encrypt
+DES_ncbc_encrypt
+DUPLICATE_ZONE_ID
+ENCRYPTED
+ENCRYPTED PRIVATE KEY
+ENCRYPTED_LENGTH_TOO_LONG
+ENCRYPT_ERROR
+ERROR_CONVERTING_ZONE
+EVP_CIPHER_CTX_encrypting
+EVP_DecryptFinal
+EVP_DecryptFinal_ex
+EVP_DecryptFinal_ex2
+EVP_DecryptInit
+EVP_DecryptInit_ex
+EVP_DecryptUpdate
+EVP_DecryptUpdate_ex
+EVP_EncryptFinal
+EVP_EncryptFinal_ex
+EVP_EncryptFinal_ex2
+EVP_EncryptInit
+EVP_EncryptInit_ex
+EVP_EncryptUpdate
+EVP_EncryptUpdate_ex
+EVP_PKEY_decrypt
+EVP_PKEY_decrypt_init
+EVP_PKEY_encrypt
+EVP_PKEY_encrypt_init
+INCORRECT_PASSWORD
+INVALID_PUBKEY
+IPSec Tunnel
+IPSec User
+Microsoft Encrypted File System
+NOT_ENCRYPTED
+NO_CIPHERS_PASSED
+NULL_SSL_METHOD_PASSED
+NativeCrypto_RSA_private_decrypt
+NativeCrypto_RSA_private_encrypt
+NativeCrypto_RSA_public_decrypt
+NativeCrypto_RSA_public_encrypt
+Null JNI reference passed to EcdsaMethodSign!
+PASSED_NULL_PARAMETER
+PEM_read_DSA_PUBKEY
+PEM_read_EC_PUBKEY
+PEM_read_PUBKEY
+PEM_read_RSA_PUBKEY
+PEM_read_bio_DSA_PUBKEY
+PEM_read_bio_EC_PUBKEY
+PEM_read_bio_PUBKEY
+PEM_read_bio_RSA_PUBKEY
+PEM_write_DSA_PUBKEY
+PEM_write_EC_PUBKEY
+PEM_write_PUBKEY
+PEM_write_RSA_PUBKEY
+PEM_write_bio_DSA_PUBKEY
+PEM_write_bio_EC_PUBKEY
+PEM_write_bio_PUBKEY
+PEM_write_bio_RSA_PUBKEY
+PKCS7_type_is_encrypted
+PKCS8_decrypt
+PKCS8_encrypt
+PKCS8_marshal_encrypted_private_key
+PKCS8_parse_encrypted_private_key
+Policy Qualifier User Notice
+Proc-Type: 4,ENCRYPTED
+RSA_decrypt
+RSA_encrypt
+RSA_private_decrypt
+RSA_private_encrypt
+RSA_public_decrypt
+RSA_public_encrypt
+TICKET_ENCRYPTION_FAILED
+TLSV1_ALERT_DECRYPTION_FAILED
+TLSV1_ALERT_DECRYPT_ERROR
+TLSV1_ALERT_USER_CANCELLED
+TLS_RSA_ENCRYPTED_VALUE_LENGTH_IS_WRONG
+UNSUPPORTED_ENCRYPTION
+USERNOTICE
+USERNOTICE_free
+USERNOTICE_new
+USER_LIB
+USER_TOO_LONG
+User defined functions
+WRONG_ENCRYPTION_LEVEL_RECEIVED
+X509_PUBKEY
+X509_PUBKEY_free
+X509_PUBKEY_get
+X509_PUBKEY_get0
+X509_PUBKEY_get0_param
+X509_PUBKEY_get0_public_key
+X509_PUBKEY_new
+X509_PUBKEY_set
+X509_PUBKEY_set0_param
+X509_REQ_get0_pubkey
+X509_REQ_get_pubkey
+X509_get0_pubkey
+X509_get0_pubkey_bitstr
+X509_get_X509_PUBKEY
+X509_get_pubkey
+X509_pubkey_digest
+X509_set_pubkey
+_ZN4bssl12DES_decrypt3EPjPK6DES_ksS3_S3_
+_ZN4bssl12DES_encrypt3EPjPK6DES_ksS3_S3_
+_ZN4bssl14X509_PUBKEY_itE
+chacha20_encrypt_decrypt
+challengePassword
+d.usernotice
+d2i_DSA_PUBKEY
+d2i_DSA_PUBKEY_bio
+d2i_DSA_PUBKEY_fp
+d2i_EC_PUBKEY
+d2i_EC_PUBKEY_bio
+d2i_EC_PUBKEY_fp
+d2i_PUBKEY
+d2i_PUBKEY_bio
+d2i_PUBKEY_fp
+d2i_RSA_PUBKEY
+d2i_RSA_PUBKEY_bio
+d2i_RSA_PUBKEY_fp
+d2i_X509_PUBKEY
+decrypt
+dhSinglePass-cofactorDH-sha1kdf-scheme
+dhSinglePass-cofactorDH-sha224kdf-scheme
+dhSinglePass-cofactorDH-sha256kdf-scheme
+dhSinglePass-cofactorDH-sha384kdf-scheme
+dhSinglePass-cofactorDH-sha512kdf-scheme
+dhSinglePass-stdDH-sha1kdf-scheme
+dhSinglePass-stdDH-sha224kdf-scheme
+dhSinglePass-stdDH-sha256kdf-scheme
+dhSinglePass-stdDH-sha384kdf-scheme
+dhSinglePass-stdDH-sha512kdf-scheme
+dsaEncryption
+dsaEncryption-old
+encrypt
+encrypted track 2
+get_X509_pubkey_oid
+i2d_DSA_PUBKEY
+i2d_DSA_PUBKEY_bio
+i2d_DSA_PUBKEY_fp
+i2d_EC_PUBKEY
+i2d_EC_PUBKEY_bio
+i2d_EC_PUBKEY_fp
+i2d_PUBKEY
+i2d_PUBKEY_bio
+i2d_PUBKEY_fp
+i2d_RSA_PUBKEY
+i2d_RSA_PUBKEY_bio
+i2d_RSA_PUBKEY_fp
+i2d_X509_PUBKEY
+id-PasswordBasedMAC
+id-cmc-decryptedPOP
+id-cmc-encryptedPOP
+id-it-revPassphrase
+id-smime-aa-smimeEncryptCerts
+ipsecTunnel
+ipsecUser
+md2WithRSAEncryption
+md4WithRSAEncryption
+md5WithRSAEncryption
+onlyuser
+passed a null parameter
+password == null
+password based MAC
+pkcs7-encryptedData
+pubkey
+rsaDecryptWithPrivateKey
+rsaEncryption
+rsaOAEPEncryptionSET
+setAttr-GenCryptgrm
+setCext-tunneling
+setext-genCrypt

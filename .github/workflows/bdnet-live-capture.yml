@@ -1,0 +1,189 @@
+name: BD NET live capture (connect + inspect)
+
+# The far end of BD's DNS tunnel is a real SOCKS5 (SOCKS4 too) that requires
+# user/pass and refuses every pair we have tried. Rather than keep guessing,
+# this job runs *their* app, presses connect on a SlowDNS server, and reads the
+# evidence off the device:
+#
+#   * `ps -A -o ARGS` -> the exact libxdnstt / xray / tun2socks command lines
+#   * `ss -lntup`     -> which loopback ports are really listening
+#   * every config file their app wrote under /data/data
+#   * a loopback tcpdump, when the image ships one
+#
+# Everything is tee'd into /tmp/capture from the first line, so a failure still
+# leaves a readable trace in the artifact.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/bdnet-live-capture.yml"
+      - "tools/android_tap.py"
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: bdnet-live-capture-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          ls -l /dev/kvm || echo "no /dev/kvm (arm64 AVD will run under qemu)"
+
+      - name: Fetch the APK the analysis run prepared
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -uo pipefail
+          mkdir -p art
+          RUN=$(gh run list --workflow=analyze-apk.yml --status success --limit 1 \
+                  --json databaseId --jq '.[0].databaseId')
+          echo "analysis run: $RUN"
+          gh run download "$RUN" -n amtunnel-apk-analysis -D art -R "$GITHUB_REPOSITORY" || true
+          find art -name '*.apk' | head
+          ls -l art/amtunnel.apk || { echo "apk missing"; exit 1; }
+
+      - name: Run, connect, and harvest
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          target: default
+          arch: arm64-v8a
+          profile: pixel
+          emulator-boot-timeout: 3000
+          disable-animations: true
+          emulator-options: >-
+            -no-window -no-snapshot -gpu off -noaudio -no-boot-anim
+            -camera-back none -camera-front none -memory 2048 -no-metrics
+            -partition-size 2048
+          script: |
+            set +e
+            OUT=/tmp/capture
+            mkdir -p "$OUT"
+            exec > >(tee -a "$OUT/job.log") 2>&1
+            PKG=dastan.prince.bdfreevpn
+            echo "=== script start $(date -u) ==="
+
+            snapshot() {
+              echo "----- [$1] processes"
+              adb shell 'ps -A -o PID,PPID,ARGS' 2>&1 | grep -iE 'xray|dnstt|dns|tun2socks|badvpn|bdfreevpn' | head -40
+              echo "----- [$1] sockets"
+              adb shell 'ss -lntup 2>/dev/null' 2>&1 | head -40
+              echo "----- [$1] app files"
+              adb shell "find /data/data/$PKG -type f 2>/dev/null" 2>&1 | head -80
+            }
+
+            echo "=== device ==="
+            adb wait-for-device || true
+            adb shell getprop ro.product.cpu.abi || true
+            adb shell getprop ro.debuggable || true
+            for i in $(seq 1 60); do
+              b=$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')
+              echo "boot_completed=$b  ($(date -u +%H:%M:%S))"
+              [ "$b" = "1" ] && break
+              sleep 20
+            done
+            adb root || true
+            sleep 5
+            adb wait-for-device || true
+            adb shell id || true
+            adb shell settings put global window_animation_scale 0 || true
+
+            echo "=== tcpdump availability ==="
+            adb shell 'which tcpdump; ls -l /system/xbin/tcpdump /system/bin/tcpdump 2>/dev/null' || true
+
+            echo "=== install ==="
+            for i in 1 2 3; do
+              adb install -r -g art/amtunnel.apk && break
+              sleep 20
+            done
+            adb shell pm list packages | grep -i bdfreevpn || echo "package not installed"
+
+            echo "=== launch ==="
+            adb shell monkey -p "$PKG" -c android.intent.category.LAUNCHER 1 || true
+            sleep 150
+            adb shell dumpsys activity activities 2>/dev/null | grep -i "mResumedActivity" | head -3
+
+            echo "=== ui: what is on screen ==="
+            python3 tools/android_tap.py list 2>&1 | tee "$OUT/ui-1.txt" || true
+            snapshot "after-launch"
+
+            echo "=== ui: pick SlowDns ==="
+            python3 tools/android_tap.py tap --text-re "(?i)slow" 2>&1 | tee "$OUT/tap-slow.txt" || true
+            sleep 25
+            python3 tools/android_tap.py list 2>&1 | tee "$OUT/ui-2.txt" || true
+            snapshot "after-tap"
+
+            echo "=== ui: connect ==="
+            python3 tools/android_tap.py connect 2>&1 | tee "$OUT/tap-connect.txt" || true
+            sleep 60
+            python3 tools/android_tap.py list 2>&1 | tee "$OUT/ui-3.txt" || true
+            snapshot "after-connect-1"
+
+            if ! adb shell 'ss -lnt 2>/dev/null' | grep -qE ':(1080|1081|1082|7000|8080|10808|7890|2080)\b'; then
+              echo "=== nothing listening yet, pressing connect again ==="
+              python3 tools/android_tap.py connect 2>&1 | tee -a "$OUT/tap-connect.txt" || true
+              sleep 60
+              snapshot "after-connect-2"
+            fi
+
+            echo "=== start loopback capture (if tcpdump exists) ==="
+            adb shell 'if command -v tcpdump >/dev/null 2>&1; then nohup tcpdump -i lo -s 0 -w /data/local/tmp/lo.pcap >/dev/null 2>&1 & fi' || true
+            sleep 6
+            echo "=== settle ==="
+            sleep 60
+            snapshot "final"
+
+            echo "=== full command lines via /proc ==="
+            adb shell 'for p in /proc/[0-9]*; do c=$(tr "\0" " " < $p/cmdline 2>/dev/null); case "$c" in *xray*|*dns*|*tun2socks*|*bdfreevpn*) echo "$p $c";; esac; done' 2>&1 | head -60 | tee "$OUT/proc-cmdlines.txt"
+
+            echo "=== every app file, with contents when small ==="
+            adb shell "find /data/data/$PKG /data/user/0/$PKG -type f 2>/dev/null" | sort -u | tee "$OUT/files.txt"
+            while read -r f; do
+              [ -n "$f" ] || continue
+              echo "----- $f" >> "$OUT/configs.txt"
+              adb shell "head -c 60000 '$f'" >> "$OUT/configs.txt" 2>/dev/null
+              echo >> "$OUT/configs.txt"
+            done < "$OUT/files.txt"
+
+            echo "=== logcat ==="
+            adb logcat -d 2>/dev/null > "$OUT/logcat.txt" || true
+            grep -iE 'socks|dnstt|slowdns|slow|udpgw|tun2socks|xray|auth|pass|user|proxy|json|prince|dastan' \
+              "$OUT/logcat.txt" | tail -500 > "$OUT/logcat-filtered.txt" || true
+
+            echo "=== pcap ==="
+            adb shell 'kill $(pidof tcpdump) 2>/dev/null' || true
+            sleep 3
+            adb pull /data/local/tmp/lo.pcap "$OUT/lo.pcap" || true
+            ls -l "$OUT/lo.pcap" 2>/dev/null || true
+            [ -f "$OUT/lo.pcap" ] && python3 tools/pcap_auth.py "$OUT/lo.pcap" > "$OUT/pcap-auth.txt" 2>&1 || true
+
+            echo "=== screenshots ==="
+            adb exec-out screencap -p > "$OUT/screen-final.png" 2>/dev/null || true
+            ls -l "$OUT/screen-final.png" 2>/dev/null || true
+            echo "=== script end $(date -u) ==="
+            exit 0
+
+      - name: Upload everything the job learned
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bdnet-live-capture
+          path: /tmp/capture
+          retention-days: 21
+          if-no-files-found: warn

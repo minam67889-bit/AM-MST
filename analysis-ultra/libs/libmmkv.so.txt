@@ -1,0 +1,9 @@
+### libmmkv.so  597000 bytes
+--- file:
+/tmp/u/libs/libmmkv.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, BuildID[sha1]=ab7c5caf201f0d75bc58e90e5deea13b6c4a4029, stripped
+--- interesting strings:
+isEncryptionEnabled
+openssl_aes_armv8_decrypt
+openssl_aes_armv8_encrypt
+openssl_aes_armv8_set_decrypt_key
+openssl_aes_armv8_set_encrypt_key

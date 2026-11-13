@@ -1,0 +1,39 @@
+{
+  "measured_from": "arena sandbox (Falkenstein, DE) - 2026-10-28",
+  "why": "the test the user asked for has to come out of a host that can actually reach the tunnel; this records what this host can and cannot do",
+  "dns_resolution": {
+    "path": "system resolver -> 8.8.8.8",
+    "works": true,
+    "examples": {
+      "de1.liftmeon.org": "13.140.185.158",
+      "d34s3y8bmu8jw7.cloudfront.net": "52.85.97.179",
+      "github.com": "20.29.134.23"
+    }
+  },
+  "udp_egress": {
+    "8.8.8.8:53": "REPLY 61B rcode=0 (only host that answers)",
+    "8.8.4.4:53": "drop",
+    "9.9.9.9:53": "drop",
+    "208.67.222.222:53": "drop",
+    "94.140.14.14:53": "drop",
+    "1.0.0.1:53": "drop",
+    "1.1.1.1:53": "drop",
+    "13.140.185.158:53": "drop",
+    "161.97.73.205:5000": "drop",
+    "161.97.73.205:20000": "drop",
+    "8.8.8.8:443": "drop",
+    "conclusion": "UDP egress is allowlisted to 8.8.8.8:53 only; the tunnel servers are not reachable this way"
+  },
+  "tcp_egress": {
+    "13.140.185.158:53": "SYN accepted then immediate RST (ConnectionResetError) - proxy, not the server",
+    "13.140.185.158..181:53 (all 20)": "same RST within 0.5-1.1 ms",
+    "13.140.185.158:443": "TLS handshake EOF",
+    "192.0.2.55:443 (TEST-NET, must not exist)": "also accepts and EOFs -> every TCP port is a local proxy",
+    "conclusion": "no real TCP egress at all; a connect() here proves nothing about the far end"
+  },
+  "sandbox_probe_slowdns": {
+    "udp": "0/20 answered",
+    "tcp": "0/20 answered (RST)"
+  },
+  "verdict": "impossible to open a connection to the DNS tunnel from this sandbox; real tests run from GitHub Actions runners which have unrestricted UDP/53"
+}

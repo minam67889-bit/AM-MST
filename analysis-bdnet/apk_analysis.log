@@ -1,0 +1,152 @@
++ ls -l amtunnel.apk
+-rw-r--r-- 1 runner runner 65639039 Oct 28 19:15 amtunnel.apk
++ extras=
++ read -r split
++ python3 tools/apk_analysis.py --apk amtunnel.apk --out analysis
+{
+  "apk": "amtunnel.apk",
+  "size": 65639039,
+  "sha256": "b37a83b1e5044ebcce75554c0c413d20486d01824db97237fff1d8078cfaa811",
+  "entries": 1521,
+  "dex": [
+    "classes.dex",
+    "classes2.dex",
+    "classes3.dex"
+  ],
+  "native_libs": [
+    "lib/arm64-v8a/libSignatureKiller.so",
+    "lib/arm64-v8a/libdatastore_shared_counter.so",
+    "lib/arm64-v8a/libdns.so",
+    "lib/arm64-v8a/libfwpuncher.so",
+    "lib/arm64-v8a/libgojni.so",
+    "lib/arm64-v8a/libpdnsd.so",
+    "lib/arm64-v8a/libputils.so",
+    "lib/arm64-v8a/libtoolChecker.so",
+    "lib/arm64-v8a/libtun2socks.so",
+    "lib/arm64-v8a/libtunpsi.so",
+    "lib/arm64-v8a/libudpq.so",
+    "lib/arm64-v8a/libudpqtwo.so",
+    "lib/arm64-v8a/libxdnstt.so",
+    "lib/arm64-v8a/libxray.so"
+  ],
+  "res_raw": [
+    "res/raw/firebase_common_keep.xml",
+    "res/raw/firebase_crashlytics_keep.xml",
+    "res/raw/pdnsd_local",
+    "res/raw/psiphon_config"
+  ],
+  "native_libs_extra": 0,
+  "raw_strings": 719431,
+  "strings_per_dex": {
+    "classes.dex": 141535,
+    "classes2.dex": 28178,
+    "classes3.dex": 290
+  }
+}
+domains: 385  urls: 316  classes: 8377
++ echo '--- domains found ---'
+--- domains found ---
++ head -40 analysis/domains.txt
+42787  github.com
+ 6018  gvisor.dev
+ 4883  google.golang.org
+ 4174  golang.org
+  908  eq.github.com
+  623  go.uber.org
+  604  golang.zx2c4.com
+  536  gopkg.in
+  142  eq.gvisor.dev
+  123  xray.app
+   94  eq.google.golang.org
+   86  go4.org
+   71  eq.golang.org
+   61  eq.net
+   44  filippo.io
+   35  lukechampine.com
+   34  transport.link
+   29  yaml.org
+   16  net.network
+   16  com.xray.app
+   15  idna.info
+   14  eq.golang.zx2c4.com
+   13  www.googleapis.com
+   12  xray.common.net
+   11  0github.com
+   11  hash.github.com
+   10  www.verisign.com
+   10  androidx.work
+   10  hgithub.com
+    9  xray.core.app
+    9  android.net
+    9  www.geotrust.com
+    9  bitbucket.org
+    9  android.googlesource.com
+    9  hash.gvisor.dev
+    8  type.googleapis.com
+    8  agithub.com
+    8  openssl.org
+    8  egithub.com
+    8  xray.common.net.network
++ echo '--- protocol hints ---'
+--- protocol hints ---
++ head -60 analysis/keywords.txt
+
+### dns (3980)
+  !*[]*conf.FakeDNSPoolElementConfig
+  !*[]*dns.NameServer_PriorityDomain
+  !*func() []*dns.Config_HostMapping
+  !*func(*dns.Msg) (*dns.Msg, error)
+  !DNSResolverProtocolTransformSpecs
+  !Lokhttp3/Dns$Companion$DnsSystem;
+  !github.com/xtls/xray-core/app/dns
+  "*[2]*conf.FakeDNSPoolElementConfig
+  "*func(*dns.DNSKEY, []dns.RR) error
+  "*map.bucket[dnsmessage.Type]string
+  "*map.bucket[uint16]*dns.dnsRequest
+  "*map.group[dnsmessage.Class]string
+  "*map.group[dnsmessage.RCode]string
+  "DNSResolverIncludeEDNS0Probability
+  "getActiveNetworkDNSServerAddresses
+  "getStaleDnsAllowOtherNetworkOption
+  #*func(*dns.Header) ([]uint8, error)
+  #*func(dns.ResponseWriter, *dns.Msg)
+  #*map.bucket[dnsmessage.Class]string
+  #*map.bucket[dnsmessage.RCode]string
+  #DNSResolverAwaitTimeoutMilliseconds
+  #Xray.Transport.Internet.Headers.DNSb
+  #getActiveNetworkDnsResolvers failed
+  #getStaleDnsPersistDelayMillisOption
+  #github.com/xtls/xray-core/proxy/dns
+  #xray.transport.internet.headers.dns"
+  $*dispatcher.DNSThenOthersSniffResult
+  $*func(crypto.Signer, []dns.RR) error
+  $*map.group[dnsmessage.section]string
+  $DNSResolverPreferredAlternateServers
+  $DNSResolverPreresolvedIPAddressCIDRs
+  $DNSResolverQNameMustMatchProbability
+  $Failed to receive the dns resolvers.
+  %*map.bucket[dnsmessage.section]string
+  %*struct { F uintptr; X0 *dns.Client }
+  %DNSResolverAttemptsPerPreferredServer
+  %DNSResolverRequestTimeoutMilliseconds
+  %Landroid/net/http/DnsOptions$Builder;
+  %Lorg/chromium/net/DnsOptions$Builder;
+  %Lprince/dastan/vpn/service/vpn/Pdnsd;
+  %PacketTunnelTransparentDNSIPv4Address
+  %PacketTunnelTransparentDNSIPv6Address
+  %getStaleDnsMaxExpiredTimeMillisOption
+  %spdnsd: %s:
+  &*func() ([]dnsmessage.Resource, error)
+  &*func() []*dns.NameServer_OriginalRule
+  &*struct { F uintptr; X0 *dns.Handler }
+  &*struct { F uintptr; r rdns.Resolver }
+  &github.com/xtls/xray-core/features/dns
+  &vendor/golang.org/x/net/dns/dnsmessage
+  '*func(dns.Client, policy.Manager) error
+  '*func(policy.Manager, dns.Client) error
+  '*map.bucket[rdns.lruKey]*rdns.cacheItem
+  'AllowDefaultDNSResolverWithBindToDevice
+  'DNSResolverProtocolTransformProbability
+  'Lprince/dastan/vpn/service/vpn/Pdnsd$1;
+  'com.xray.transport.internet.headers.dnsP
+  (*func() (*dns.Msg, time.Duration, error)

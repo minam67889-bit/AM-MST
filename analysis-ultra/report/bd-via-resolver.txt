@@ -1,0 +1,24 @@
+==== sd-de1.liftmeon.org key=2c587152… via 8.8.8.8
+  sd-de1.liftmeon.org: NO-DATA after 27.0s TimeoutError: timed out
+  client: 2026/11/11 09:56:56 uTLS fingerprint Firefox 120
+  client: 2026/11/11 09:56:56 effective MTU 130
+  client: 2026/11/11 09:56:56 begin session 005df5f4
+
+==== sd-de2.liftmeon.org key=2c587152… via 8.8.8.8
+  sd-de2.liftmeon.org: NO-DATA after 27.0s TimeoutError: timed out
+  client: 2026/11/11 09:57:36 uTLS fingerprint Randomized-ALPN 0
+  client: 2026/11/11 09:57:36 effective MTU 130
+  client: 2026/11/11 09:57:36 begin session cebd6316
+
+==== sd-de1.liftmeon.org key=a43ffc4a… via 8.8.8.8
+  sd-de1.liftmeon.org: NO-DATA after 27.0s TimeoutError: timed out
+  client: 2026/11/11 09:58:16 uTLS fingerprint Chrome 120
+  client: 2026/11/11 09:58:16 effective MTU 130
+  client: 2026/11/11 09:58:16 begin session b8b53d5f
+
+==== sd-de2.liftmeon.org key=a43ffc4a… via 8.8.8.8
+  sd-de2.liftmeon.org: NO-DATA after 27.0s TimeoutError: timed out
+  client: 2026/11/11 09:58:56 uTLS fingerprint Randomized-ALPN 0
+  client: 2026/11/11 09:58:56 effective MTU 130
+  client: 2026/11/11 09:58:56 begin session e7d9fb79
+

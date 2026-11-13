@@ -1,0 +1,70 @@
++ mkdir -p analysis/app-sources
++ for pattern in java/prince java/dastan java/app/vpn java/com/prince java/*/prince java/*/dastan
++ '[' -d java/prince ']'
++ continue
++ for pattern in java/prince java/dastan java/app/vpn java/com/prince java/*/prince java/*/dastan
++ '[' -d java/dastan ']'
++ continue
++ for pattern in java/prince java/dastan java/app/vpn java/com/prince java/*/prince java/*/dastan
++ '[' -d java/app/vpn ']'
++ continue
++ for pattern in java/prince java/dastan java/app/vpn java/com/prince java/*/prince java/*/dastan
++ '[' -d java/com/prince ']'
++ continue
++ for pattern in java/prince java/dastan java/app/vpn java/com/prince java/*/prince java/*/dastan
++ '[' -d java/sources/prince ']'
+++ echo java/sources/prince
+++ sed 's|^java/||; s|/|_|g'
++ dest=analysis/app-sources/sources_prince
++ mkdir -p analysis/app-sources/sources_prince
++ cp -r java/sources/prince/. analysis/app-sources/sources_prince/
++ echo 'copied java/sources/prince'
+copied java/sources/prince
++ for pattern in java/prince java/dastan java/app/vpn java/com/prince java/*/prince java/*/dastan
++ '[' -d java/sources/dastan ']'
+++ echo java/sources/dastan
+++ sed 's|^java/||; s|/|_|g'
++ dest=analysis/app-sources/sources_dastan
++ mkdir -p analysis/app-sources/sources_dastan
++ cp -r java/sources/dastan/. analysis/app-sources/sources_dastan/
++ echo 'copied java/sources/dastan'
+copied java/sources/dastan
++ '[' -d java ']'
++ grep -rilE 'slowdns|slow_dns|xdnstt|dnstt|tunnelDomain|tunnel_domain|dnsTunnel|dns_tunnel' java '--include=*.java'
++ head -60
++ true
+++ wc -l
++ echo 'tunnel-related java files: 0'
+tunnel-related java files: 0
++ read -r file
++ find decoded/assets -maxdepth 2 -type f '(' -name '*.json' -o -name '*.ini' -o -name '*.conf' -o -name '*.txt' ')' -size -600k -exec cp --parents '{}' analysis/app-sources/ ';'
++ du -sh analysis/app-sources
+1.5M	analysis/app-sources
++ find analysis/app-sources -name '*.java'
++ head -20
+analysis/app-sources/sources_dastan/prince/bdfreevpn/R.java
+analysis/app-sources/sources_prince/dastan/vpn/utils/PUtils.java
+analysis/app-sources/sources_prince/dastan/vpn/tethering/ProxyService.java
+analysis/app-sources/sources_prince/dastan/vpn/core/MainReceiver.java
+analysis/app-sources/sources_prince/dastan/vpn/service/SocksDNSService.java
+analysis/app-sources/sources_prince/dastan/vpn/service/FWPuncherService.java
+analysis/app-sources/sources_prince/dastan/vpn/service/PushNotificationService.java
+analysis/app-sources/sources_prince/dastan/vpn/service/PsiphonDNSService.java
+analysis/app-sources/sources_prince/dastan/vpn/service/XRayDNSService.java
+analysis/app-sources/sources_prince/dastan/vpn/service/vpn/VpnUtils.java
+analysis/app-sources/sources_prince/dastan/vpn/service/vpn/PsiphonTunnelManagerThread.java
+analysis/app-sources/sources_prince/dastan/vpn/service/vpn/TunnelManagerThread.java
+analysis/app-sources/sources_prince/dastan/vpn/service/vpn/Pdnsd.java
+analysis/app-sources/sources_prince/dastan/vpn/service/vpn/TunnelState.java
+analysis/app-sources/sources_prince/dastan/vpn/service/vpn/Tunnel.java
+analysis/app-sources/sources_prince/dastan/vpn/service/vpn/TunnelVpnSettings.java
+analysis/app-sources/sources_prince/dastan/vpn/service/vpn/Tun2Socks.java
+analysis/app-sources/sources_prince/dastan/vpn/service/vpn/TunnelUtils.java
+analysis/app-sources/sources_prince/dastan/vpn/service/vpn/PsiphonVpnService.java
+analysis/app-sources/sources_prince/dastan/vpn/service/vpn/TunnelManagerHelper.java
++ echo '--- strings that look like a tunnel config ---'
+--- strings that look like a tunnel config ---
++ grep -rhoE '(slowdns|dnstt)[^ "'\'']{0,60}' analysis/app-sources
++ sort -u
++ head -20
++ true

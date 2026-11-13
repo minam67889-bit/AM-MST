@@ -1,0 +1,6 @@
+pubkey 77c37de15aff2805fffdbf770417eea5734b63adfe3a90df78255ac5e01ec120
+  local tunnel: HTTP 185B in 2.0s -> HTTP/1.0 200 OK\r\nServer: SimpleHTTP/0.6 Python/3.12.3\r\nDate: Wed, 11 Nov 2026 09:56:56 GMT\r\nContent-
+  client: 2026/11/11 09:56:51 effective MTU 137
+  client: 2026/11/11 09:56:51 begin session 40c608b5
+  client: 2026/11/11 09:56:54 begin stream 40c608b5:3
+  client: 2026/11/11 09:56:56 end stream 40c608b5:3

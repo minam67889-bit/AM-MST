@@ -1,0 +1,63 @@
+### chunks from apktool smali
+apktool exit=0
+smali/smali_classes2/org/lsposed/lsparanoid/Deobfuscator$AMTUNNELLITE$app.smali: 2 const-strings, kept 2 (sizes [8191, 6283]) -> chunks.txt
+
+### ids: smali (complete) + jadx
+19998 smali files: 431 call-site ids, 0 64-bit constants, 431 candidates
+smali=431 jadx=491 total=529
+wrote decrypted.tsv (532 lines)
+wrote hosts.txt (0 hosts)
+chunks=2 ids=529 decoded=492 errors=37
+
+### app hosts (deobfuscated)
+
+### every domain-looking token in the decoded table
+      1 googleapis.com
+
+### strings mentioning super/dns/tunnel/pubkey/host
+750636181797499380	app.vpn.amtunnellite
+750636263401878004	AM TUNNEL LITE VPN
+750640678628258292	SUPER_DNS_FREQUENCY
+750640764527604212	SUPER_DNS_FREQUENCY
+750640901966557684	SUPER_NETWORK_SELECTED_POSITION
+750641039405511156	SUPER_NETWORK_SELECTED_POSITION
+750641112419955188	isCustomSuperSet
+750641185434399220	isCustomSuperSet
+750641481787142644	SUPER_CUSTOM_DNS
+750641554801586676	SUPER_CUSTOM_DNS
+750641627816030708	SUPER_DNS
+750641670765703668	SUPER_DNS
+750643221248897524	SSH_HOST
+750643646450659828	TUNNEL_TYPE
+750643697990267380	TUNNEL_TYPE
+750644703012614644	SSH_HOST
+750645622135615988	SERVER_SELECTED_NAME
+  "server": "%s",
+  "server": "%s",
+  "server": "%s",
+750656475517972980	app.vpn.amtunnellite:startTunnel
+750656514172678644	SuperDNS
+750658021706199540	SuperDNS Helper Exception
+750658107605545460	SuperDNS Connecting
+  "dns":{"hosts":{"domain:googleapis.cn":"googleapis.com"},"servers":["1.1.1.1"]},"inbounds":[{"listen":"127.0.0.1","port":%s,"protocol":"socks","settings":{"auth":"noauth","udp":true,"userLevel":8},"sniffing":{"destOverride":["http","tls"],"enabled":true},"tag":"socks"},{"listen":"127.0.0.1","port":%s,"protocol":"http","settings":{"userLevel":8},"tag":"http"}],"log":{"loglevel":"warning"},"outbounds":[{"mux":{"concurrency":8,"enabled":false},"protocol":"superdns","settings":{"servers":[{"address":"%s","level":8,"method":"%s","ota":false,"password":"%s","port":%s}]},"streamSettings":{"network":"tcp","security":""},"tag":"proxy"},{"protocol":"freedom","settings":{},"tag":"direct"},{"protocol":"blackhole","settings":{"response":{"type":"http"}},"tag":"block"}],"policy":{"levels":{"8":{"connIdle":300,"downlinkOnly":1,"handshake":4,"uplinkOnly":1}},"system":{"statsOutboundUplink":true,"statsOutboundDownlink":true}},"routing":{"domainStrategy":"IPIfNonMatch","rules":[{"ip":["1.1.1.1"],"outboundTag":"proxy","port":"53","type":"field"}]},"stats":{}}
+750663222911594996	SuperDNS Exception
+750663321695842804	-pubkey
+750664678905508340	libsuperdns.so
+750665108402237940	SuperDNS
+750665507834196468	tunnelVpnStartBroadcast
+750665632388248052	tunnelVpnDisconnectBroadcast
+750665988870533620	app.vpn.amtunnellite:startTunnel
+750666152079290868	SuperDNS
+750667178576474612	SuperDNS Connected
+750667930195751412	tunnelVpnDisconnectBroadcast
+750668046159868404	tunnelVpnStartSuccessExtra
+750668149239083508	tunnelVpnStartBroadcast
+750668686109995508	app.vpn.amtunnellite:startTunnel
+750671842910958068	tunnelVpnStartBroadcast
+750671967465009652	tunnelVpnDisconnectBroadcast
+750672323947295220	app.vpn.amtunnellite:startTunnel
+750674621754798580	tunnelVpnDisconnectBroadcast
+750674737718915572	tunnelVpnStartSuccessExtra
+750674840798130676	tunnelVpnStartBroadcast
+
+### 64-hex keys

@@ -1,0 +1,68 @@
+### anything named like a server list
+/tmp/u/src/sources/defpackage/va.java
+/tmp/u/src/sources/defpackage/zi.java
+/tmp/u/src/sources/defpackage/sa1.java
+/tmp/u/src/sources/defpackage/tq2.java
+/tmp/u/src/sources/defpackage/ec1.java
+/tmp/u/src/sources/androidx/camera/core/ImageAnalysis$Builder.java
+/tmp/u/src/sources/androidx/camera/core/internal/ThreadConfig.java
+/tmp/u/src/sources/androidx/camera/core/impl/ImageAnalysisConfig.java
+/tmp/u/src/sources/androidx/camera/core/impl/PreviewConfig.java
+/tmp/u/src/sources/androidx/camera/core/impl/CameraFactory.java
+/tmp/u/src/sources/androidx/camera/core/impl/CameraThreadConfig.java
+/tmp/u/src/sources/androidx/camera/core/Preview$Builder.java
+/tmp/u/src/sources/androidx/camera/camera2/internal/Camera2CameraFactory.java
+/tmp/u/src/sources/androidx/camera/video/VideoCapture$Builder.java
+/tmp/u/src/sources/androidx/camera/video/impl/VideoCaptureConfig.java
+/tmp/u/src/sources/kotlinx/serialization/json/JsonBuilder.java
+/tmp/u/src/sources/kotlinx/serialization/json/internal/JsonTreeDecoder.java
+/tmp/u/src/sources/kotlinx/serialization/json/internal/StreamingJsonDecoder.java
+/tmp/u/src/sources/kotlinx/serialization/json/internal/c.java
+/tmp/u/src/sources/kotlinx/serialization/json/internal/JsonTreeReader.java
+/tmp/u/src/sources/kotlinx/serialization/json/Json.java
+/tmp/u/src/sources/kotlinx/serialization/json/JsonImpl.java
+/tmp/u/src/sources/co/strongteam/ultra/R.java
+/tmp/u/src/sources/com/google/android/gms/ads/internal/util/client/zzf.java
+/tmp/u/src/sources/com/google/android/gms/ads/internal/client/zzex.java
+/tmp/u/src/sources/com/google/android/gms/ads/appopen/AppOpenAdPreloader.java
+/tmp/u/src/sources/com/google/android/gms/ads/interstitial/InterstitialAdPreloader.java
+/tmp/u/src/sources/com/google/android/gms/ads/MobileAds.java
+/tmp/u/src/sources/com/google/android/gms/ads/rewarded/RewardedAdPreloader.java
+/tmp/u/src/sources/com/google/android/gms/ads/preload/PreloadCallback.java
+/tmp/u/src/sources/com/google/android/gms/ads/preload/zzb.java
+/tmp/u/src/sources/com/google/android/gms/ads/preload/PreloadConfiguration.java
+/tmp/u/src/sources/com/v2ray/ang/ui/HomeFragment.java
+/tmp/u/src/sources/com/sandok/tunnel/service/OpenVPNService.java
+
+### SecurePreferences users with literal keys
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/SocksHttpService.java:435:        sp = new Settings(this).getPrefsPrivate();
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/SocksHttpService.java:490:                int i = this.mPrefs.getPrefsPrivate().getInt(SettingsConstants.TUNNELTYPE_KEY, 1);
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/SocksHttpService.java:529:            if (this.mPrefs.getPrefsPrivate().getInt(SettingsConstants.TUNNELTYPE_KEY, 1) == 6) {
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/TunnelManagerThread.java:28:import com.vpn.sandok.ultrasshservice.util.securepreferences.SecurePreferences;
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/TunnelManagerThread.java:524:            SecurePreferences prefsPrivate = this.mConfig.getPrefsPrivate();
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/DNSTunnelThread.java:10:import com.vpn.sandok.ultrasshservice.util.securepreferences.SecurePreferences;
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/DNSTunnelThread.java:49:            SecurePreferences prefsPrivate = this.mConfig.getPrefsPrivate();
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/HysteriaUDP.java:19:import com.vpn.sandok.ultrasshservice.util.securepreferences.SecurePreferences;
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/HysteriaUDP.java:256:                    SecurePreferences prefsPrivate = HysteriaUDP.this.mConfig.getPrefsPrivate();
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/vpn/TunnelVpnManager.java:206:        if (new Settings(getContext()).getPrefsPrivate().getBoolean(SettingsConstants.CONFIG_PROTEGER_KEY, false)
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/vpn/DNSTunnelThread_DOH.java:46:            this.mConfig.getPrefsPrivate();
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/util/securepreferences/SecurePreferences.java:18:public final class SecurePreferences implements SharedPreferences {
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/util/securepreferences/SecurePreferences.java:23:    private SecurePreferences(Context context, String str, SecurityConfig securityConfig) {
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/util/securepreferences/SecurePreferences.java:57:    public static SecurePreferences getInstance(Context context, String str, SecurityConfig securityC
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/util/securepreferences/SecurePreferences.java:59:            return new SecurePreferences(context.getApplicationContext(), str, securityConfig);
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/util/securepreferences/SecurePreferences.java:158:            this.mProxyEditor = SecurePreferences.this.mProxyPreferences.edit();
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/util/securepreferences/SecurePreferences.java:179:            this.mProxyEditor.putString(SecurePreferences.this.generateKeyHash(str), SecurePreferenc
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/util/securepreferences/SecurePreferences.java:185:            this.mProxyEditor.putString(SecurePreferences.this.generateKeyHash(str), SecurePreferenc
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/util/securepreferences/SecurePreferences.java:191:            this.mProxyEditor.putString(SecurePreferences.this.generateKeyHash(str), SecurePreferenc
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/util/securepreferences/SecurePreferences.java:197:            this.mProxyEditor.putString(SecurePreferences.this.generateKeyHash(str), SecurePreferenc
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/util/securepreferences/SecurePreferences.java:203:            this.mProxyEditor.putString(SecurePreferences.this.generateKeyHash(str), SecurePreferenc
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/util/securepreferences/SecurePreferences.java:209:            String generateKeyHash = SecurePreferences.this.generateKeyHash(str);
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/util/securepreferences/SecurePreferences.java:213:                hashSet.add(SecurePreferences.this.encryptToBase64(it.next()));
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/util/securepreferences/SecurePreferences.java:221:            this.mProxyEditor.remove(SecurePreferences.this.generateKeyHash(str));
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/LaunchVpn.java:20:import com.vpn.sandok.ultrasshservice.util.securepreferences.SecurePreferences;
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/LaunchVpn.java:61:                SecurePreferences prefsPrivate = this.mConfig.getPrefsPrivate();
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/config/Settings.java:7:import com.vpn.sandok.ultrasshservice.util.securepreferences.SecurePreferences;
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/config/Settings.java:16:    private SecurePreferences mPrefsPrivate;
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/config/Settings.java:21:        this.mPrefsPrivate = SecurePreferences.getInstance(this.mContext, "SecureData", minimumConfig);
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/config/Settings.java:25:        SharedPreferences.Editor edit = SecurePreferences.getInstance(context, "SecureData", minimumConfig).edit();
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/config/Settings.java:108:    public SecurePreferences getPrefsPrivate() {

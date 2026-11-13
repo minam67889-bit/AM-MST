@@ -1,0 +1,14 @@
+### servers
+/tmp/u/src/sources/org/conscrypt/OpenSSLX509Certificate.java:331:            return new OpenSSLKey(NativeCrypto.X509_get_pubkey(this.mContext, this)).getPublicKey();
+/tmp/u/src/sources/org/conscrypt/OpenSSLX509Certificate.java:333:            String str = NativeCrypto.get_X509_pubkey_oid(this.mContext, this);
+/tmp/u/src/sources/org/conscrypt/NativeCrypto.java:704:    public static native long X509_get_pubkey(long j, OpenSSLX509Certificate openSSLX509Certificate) throws NoSuchAlgorithmException, InvalidKeyException;
+/tmp/u/src/sources/org/conscrypt/NativeCrypto.java:940:    public static native String get_X509_pubkey_oid(long j, OpenSSLX509Certificate openSSLX509Certificate);
+/tmp/u/src/sources/androidx/camera/video/MediaStoreOutputOptions$Builder.java:14:        jx0.f(contentResolver, "Content resolver can't be null.");
+/tmp/u/src/sources/j$/time/format/DateTimeFormatter.java:192:        this.d = (x) Objects.requireNonNull(xVar, "resolverStyle");
+/tmp/u/src/sources/coil3/intercept/RealInterceptorChain.java:60:                    oq.g("Interceptor '", interceptor, "' cannot modify the request's size resolver. Use `Interceptor.Chain.withSize` instead.");
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/DNSTunnelThread.java:61:                sb.append(" -udp " + string3 + ":53   -pubkey " + string + " " + string2 + " 127.0.0.1:2222");
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/HysteriaUDP.java:72:    private String resolver;
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/HysteriaUDP.java:223:        this.resolver = "udp://1.1.1.1:53";
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/HysteriaUDP.java:239:        String str12 = this.resolver;
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/HysteriaUDP.java:246:        hz.H(A, str10, ",\n \"hop_interval\": ", str11, ",\n \"resolver\": \"");
+/tmp/u/src/sources/com/vpn/sandok/ultrasshservice/tunnel/vpn/VpnUtils.java:147:        throw new Exception("no active network DNS resolver");

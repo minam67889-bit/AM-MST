@@ -1,0 +1,200 @@
+	%s &wire.CryptoFrame{Offset: %d, Data length: %d, Offset + Data length: %d}connection doesn't allow setting of receive buffer size. Not a *net.UDPConn?on-demand certificate's OCSP status is REVOKED; will try to forcefully renewtls: failed to send closeNotify alert (but connection was closed anyway): %wtls: server certificate contains incorrect key type for selected ciphersuiteunable to redefine %q shorthand in %q flagset: it's already used for %q flag<html><head><title>Timeout</title></head><body><h1>Timeout</h1></body></html>MapIter.Next called on an iterator that does not have an associated map ValueRemoving connection IDs %s for a closed connection after it has been retired.SRTP support was requested but server did not respond with use_srtp extensioncollected metric named %q collides with previously collected summary named %qcrypto/tls: ExportKeyingMaterial is unavailable when renegotiation is enabledinvalid Body.Read call. After hijacked, the original Request must not be usedreceived final offset %d for stream %d, but already received offset %d beforereceived offset %d for stream %d, but final offset was already received at %drecevedPacketTracker BUG: ReceivedPacket called for old / duplicate packet %d115792089210356248762697446949407573529996955224135760342422259061068512044369115792089210356248762697446949407573530086143415290314195533631308867097853951Failed to find flag %q and mark it as being in a mutually exclusive flag groupThis is a command line tool.
+	AddCookie
+	Handshake
+	LookupTXT
+	Nactivating packet info failed for both IPv4 and IPv6cannot use different tracers on the same packet conncasfrom_Gscanstatus: gp->status is not in scan statecobra_annotation_bash_completion_filename_extensionscrypto/rsa: PSSOptions.SaltLength cannot be negativedid not find chain matching preferences; using firstdnsmessage.OPTResource{Options: []dnsmessage.Option{downloading certificate chain from %s: %w (order=%s)ecdsa: internal error: unexpectedly masking off bitserrors: *target must be interface or implement errorexpected space, attr name, or end of tag, but got %qgeoip2: reader does not support the %q database typehttp2: Transport readFrame error on conn %p: (%T) %vhttp3: invalid http header field value %q for key %vinternal error: missing handler for resolver table: invalid value for max_ack_delay: %dms (maximum %dms)invalid value for max_packet_size: %d (minimum 1200)mallocgc called without a P or outside bootstrappingprotocol error: received DATA before a HEADERS frameprototext: error parsing unknown field wire type: %vrequest header "TE" may only be "trailers" in HTTP/2runtime.SetFinalizer: pointer not in allocated blockruntime: cannot disable permissions in address spaceruntime: use of FixAlloc_Alloc before FixAlloc_Init
+	PublicKey!dns:"size-base64:PublicKeyLength"
+	Queueing ACK because the first packet should be acknowledged.cannot have key %q in inlined map: conflicts with struct fieldcollected metric %q { %s} has a label with an invalid name: %scpu(\d+) (\d+) (\d+) (\d+) (\d+) (\d+) (\d+) (\d+) (\d+) (\d+)expected map[string]interface{}, struct, or pointer to struct.expected original_destination_connection_id to equal %s, is %sfound bad pointer in Go heap (incorrect use of unsafe or cgo?)http2: request header list larger than peer's advertised limitlimiterEvent.stop: found wrong event in p's limiter event slotno configuration associated with certificate; unable to managereflect.ArrayOf: array size would exceed virtual address spacereflect: reflect.Value.Pointer on an invalid notinheap pointerruntime: internal error: misuse of lockOSThread/unlockOSThreadstrings.Reader.UnreadRune: previous operation was not ReadRunetls: certificate cannot be used with the selected cipher suitetls: client used the legacy version field to negotiate TLS 1.3toml: cannot decode TOML %s into struct field %s.%s of type %swrong length for disable_active_migration: %d (expected empty)x509: certificate is not authorized to sign other certificatesx509: certificate private key does not implement crypto.Signerx509: failed to marshal EC private key while building PKCS#8: <h1>HTTP Error 431</h1><p>Request Header Field(s) Too Large</p>Number of bytes used for mspan structures obtained from system.PacketPacker BUG: packet too large (%d bytes, allowed %d bytes)Request shell completion choices for the specified command-lineThis is a proxy server. Does not respond to non-proxy requests.cryptobyte: BuilderContinuation reallocated a fixed-size bufferdns: internal error: unpack should never be called on RR_Headerecdsa: internal error: P256OrdInverse produced an invalid valuehttp2: push would exceed peer's SETTINGS_MAX_CONCURRENT_STREAMSinternal error: exactly one of res or err should be set; nil=%vmalformed GOMEMLIMIT; see `go doc runtime/debug.SetMemoryLimit`packetPacker BUG: Peeked and Popped packet numbers do not matchparser should not permit expression of kind %s at document rootreceived invalid offset %d on crypto stream, maximum allowed %drequest declared a Content-Length of %d but only wrote %d bytesviolation of WriteScheduler interface: stream %d already closed! }k
+	Queuing ACK because there's a new missing packet to report.
+	SessionID
+	aesCipher
+	ampload64 failedlock acquiredlookups_totalmallocs_totalmapping startmin too largemissing fieldmissing tablenext_gc_bytesnil stackbaseno children |out of memoryparsing time php_namespacepower failurepremature EOFprofMemActiveprofMemFuturepto (Initial)removing_hashreserved_nameruntime: seq=runtime: val=send_too_muchsending queryshort addressshort messagesocks connectsrmount errorstapling OCSPstop signal: stringToInt64testRInternaltime exceededtimer expiredtimer_settimetlsmaxrsasizetraceStackTabtrailing datatree is emptytv
+	handshake
+	lookupTXT
+	packetBuf
+	packetMap
+	sessionId
+    flags+=("--%s  Email address:  (DEPRECATED: %s) has invalid name spinningthreads=%%!%c(big.Int=%s)%s [command-line]%s at position %d(\d+) (\d+) (\d+), 0, {interval: {, p.searchAddr = , timeout omitted/etc/ssl/cert.pem0123456789ABCDEFX0123456789abcdefx060102150405Z07001192092895507812559604644775390625: missing method ; SameSite=StrictAPPLICATION_ERRORCOBRA_ACTIVE_HELPCOMPRESSION_ERRORCertificateVerifyClientKeyExchangeContainingMessageDBIP-Country-LiteENHANCE_YOUR_CALMExportRestrictionFaQ
+ (I don't know what causes this... if you do, please help?)http2: TLSConfig.CipherSuites is missing an HTTP/2-required AES_128_GCM_SHA256 cipher (need at least one of TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 or TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256)Cumulative count of heap allocations whose storage was freed by the garbage collector. Note that this does not include tiny objects as defined by /gc/heap/tiny/allocs:objects, only tiny blocks.Memory that is completely free and eligible to be returned to the underlying system, but has not been. This metric is the runtime's estimate of free address space that is backed by physical memory.00010203040506070809101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899All memory mapped by the Go runtime into the current process as read-write. Note that this does not include memory mapped by code called via cgo or via the syscall package. Sum of all metrics in /memory/classes.duplicate registration of %q
+ )	%s %#v	types 	value=_bucketabortedaccept4accountadd #%dallocmRallocmWalt -> alt-svcand #%dandroidanswersany -> archiveasimddpasimdhpasimrdmatomicsattemptbad keybad offbalancebdoUxXvbooleanbucket(charsetcheckedchtimeschunkedclassidclosurecmdlinecolspancommandcommentcomplexconnectconsolecontentcpuprofdefaultderiveddirnamediv #%ddns-tcpdns-udpdohpathelapsedenctypeentriesexpiredexpiresfields.finallyfixed32fixed64float32float64forcegcfstatatgctracego_infohead = headershttp-01http://ignoredillegalintegerinvalidipSliceissuerskeytypeld #cpuld #lenld #nlald [%d]ldx #%dlicenselookup lsh #%dmailto:managedmap keymessageminpc= mod #%dmul #%dnil keyno portnop -> nosniffnsu
+ *[8]protocol.CompressionMethodID
+ *func() protocol.EncryptionLevel
+ *func(quic.unknownPacketHandler)
+ *handshake.chachaHeaderProtector
+ *handshake.quicVersionContextKey
+ *nettrace.LookupIPAltResolverKey
+ *socks5.UserPassNegotiationReply
+ DisableVersionNegotiationPackets
+ GetLowestPacketNotConfirmedAcked
+ ReceivedVersionNegotiationPacket
+ cannot be converted to type %T does not implement Marshal%q is not a valid metric name%s: map must have string keys%s: obtaining certificate: %w): prefix length out of range/cpu/classes/idle:cpu-seconds/cpu/classes/user:cpu-seconds/gc/heap/allocs-by-size:bytes/gc/stack/starting-size:bytes45474735088646411895751953125BUG: internal error (unknown)Cannot handshake client %v %vChanging connection ID to %s.Command %q is deprecated, %s
+ idleprocs= in status  mallocing= ms clock,  nBSSRoots= p->status= s.nelems=  schedtick= span.list= timerslen=!!timestamp%!(BADPREC)%d.%d.%d.%d%s %s,%d,%d(.*)\[\d+\]) at entry+) returned , Refresh: , a123456=[, elemsize=, npages = , settings:,"nonce":%q.WithCancel/debug/vars/dev/stderr/dev/stdout/index.html0123456789_02 Jan 200630517578125: frame.sp=; Max-Age=0;; opcode: AUTHORITY: AnonymousIPArm LimitedBLAKE2b-256BLAKE2b-384BLAKE2b-512BLAKE2s-256Bad GatewayBad RequestCERTIFICATECardinalityCertificateClassHESIODClientHelloCloseNotifyCookie.PathDecodeErrorDives_AkuruENABLE_PUSHEND_HEADERSEarly HintsFieldRangesFileImportsFixed32KindFixed64KindFujitsu LtdGOMEMLIMIT=GOTRACEBACKHOSTALIASESHTTP %d: %sHTTPS_PROXYHasJSONNameHasPresenceIdeographicIn-Reply-ToInlineTableInstCaptureInstRuneAnyIsExtensionLOCALDOMAINMarshalJSONMarshalTextMedefaidrinMessageKindNandinagariNew_Tai_LueOld_PersianOld_SogdianPRIVATE KEYPau_Cin_HauRES_OPTIONSRetry-AfterReturn-PathSHA-512/224SHA-512/256ServerHelloSignWritingSoft_DottedTTL expiredTYPE_DOUBLETYPE_SINT32TYPE_SINT64TYPE_STRINGTYPE_UINT32TYPE_UINT64Warang_CitiWhite_Space[:^xdigit:]
+ returned zero Value to unallocated span%s: file info is nil/gc/heap/frees:bytes37252902984619140625BASH_COMP_DEBUG_FILEBroadcom CorporationDNSSEC IndeterminateDebugFlags called onDecompressionFailureDropping 0-RTT keys.Egyptian_HieroglyphsFRAME_ENCODING_ERRORGeoIP2-Precision-ISPHTTP/%d.%d %03d %s
+!!binary value contains invalid base64 data%s is an unexported field of struct type %s''' not allowed in multiline literal string'/' could start a division or regexp: %.32q): IPv6 zones cannot be present in a prefix/memory/classes/metadata/mcache/inuse:bytesConn can not be created with a nil nextConnError enabling Transport HTTP/2 support: %vFlag shorthand -%s has been deprecated, %s
+!*ackhandler.ReceivedPacketHandler
+!*ackhandler.packetNumberGenerator
+!*ackhandler.receivedPacketHandler
+!*ackhandler.receivedPacketHistory
+!*ackhandler.receivedPacketTracker
+!*func(net.Addr, *quic.packetInfo)
+!*func(protocol.PacketNumber) bool
+!*handshake.MessageServerHelloDone
+!*map.bucket[string][]*http.Cookie
+!initLegacySessionTicketKeyRLocked
+"*chacha20poly1305.chacha20poly1305
+"*func(protocol.PacketNumber) error
+"*socks5.UserPassNegotiationRequest
+"version" flag declared as non-bool. Please correct your codeabiRegArgsType needs GC Prog, update methodValueCallFrameObjsexec: Cmd started a Process but leaked without a call to Waitgo package net: GODEBUG setting forcing use of Go's resolver
+#*func(string) (*http.Cookie, error)
+#*handshake.MessageCertificateVerify
+#*handshake.MessageClientKeyExchange
+#*handshake.MessageServerKeyExchange
+$*func(protocol.EncryptionLevel) bool
+$*handshake.MessageCertificateRequest
+$*handshake.MessageHelloVerifyRequest
+$golang.org/x/crypto/chacha20poly1305
+%*func() (*quic.receivedPacket, error)
+%*func(*flate.compressor, []uint8) int
+%address family not supported by protocolattempted to copy pointer to FP registerbulkBarrierPreWrite: unaligned argumentscalled Uint64 on non-uint64 metric valuecannot free workbufs when work.full != 0cannot represent time as GeneralizedTimecertification path advertisement messagechacha20poly1305: invalid buffer overlapclient doesn't support certificate curveclient sent a retry_source_connection_idcollected metric %s %s should be Untypedcollected metric %s %s should be a Gaugecookie must not be longer then 255 bytescrypto/cipher: message too large for GCMcrypto/cipher: output smaller than inputcrypto/rsa: input must be hashed messagedeferproc: d.panic != nil after newdeferedwards25519: use of uninitialized Pointerrors: target must be a non-nil pointerevictOldest(%v) on table with %v entriesfailed to acquire lock to reset capacityfailed to determine send buffer size: %wfloat can have at most one decimal pointflow controller reset after reading datafound wrong type: got %v, want extensionhttp2: Transport encoding header %q = %qhttp2: timeout awaiting response headershttp3: invalid http header field name %qinternal error: expecting non-nil streaminvalid Unicode escape code %q in stringinvalid span in heapArena for user arenainvalid type: no encoder for %v %v %v/%vio.File directory missing ReadDir methodl
+%d error(s) occurred:%s flag redefined: %s%w, unable to decrypt%w, unable to encrypt, levelBits[level] = /gc/heap/allocs:bytes/proc/self/setgroups
+%q is not a valid label name for metric %q(\d+) blocks .*\[(\d+)/(\d+)\] \[([U_]+)\]/cpu/classes/gc/mark/dedicated:cpu-seconds/memory/classes/metadata/mcache/free:bytes/memory/classes/metadata/mspan/inuse:bytes173472347597680709441192448139190673828125867361737988403547205962240695953369140625Error occurred handling initial packet: %sError while parsing flags from args %v: %sFailed to parse goroutine ID out of %q: %vKeyValue should have at least two childrenMapIter.Value called on exhausted iteratorNumber of goroutines that currently exist.Number of heap bytes obtained from system.PRIORITY frame payload size was %d; want 5PrintableString contains invalid characterSVCB keys not in strictly increasing orderSending ACK because the ACK timer expired.Switching destination connection ID to: %sTime.MarshalBinary: unexpected zone offsetUnable to find a command for arguments: %v
+%s %q is not permitted by any constraint/cpu/classes/scavenge/assist:cpu-seconds0-RTT was rejected. Dropping 0-RTT keys.13877787807814456755295395851135253906256938893903907228377647697925567626953125Activating reading of ECN bits for IPv4.Activating reading of ECN bits for IPv6.Cannot drop keys for encryption level %sDropping (potentially) duplicate packet.F
+%s: reloading renewed certificate into memory: %v(Max \w+\s{0,1}?\w*\s{0,1}\w*)\s{2,}(\w+)\s+(\w+)/etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pemActivating reading of ECN bits for IPv4 and IPv6.Cannot sign host certificate with provided CA: %sCongestion limited: bytes in flight %d, window %dDropping long header packet of type %s (%d bytes)ECDSA signature contained zero or negative valuesPeer doesn't await address validation any longer.Version Negotiation packet has empty version listcasgstatus: waiting for Gwaiting but is Grunnablechacha20poly1305: bad nonce length passed to Openchacha20poly1305: bad nonce length passed to Sealclient sent an original_destination_connection_idcontext is not supported for ExportKeyingMaterialcould not remove compromised private key from usecrypto/elliptic: internal error: invalid encodingcrypto/tls: ExportKeyingMaterial context too longdatetime separator is expected to be T or a spacedecoding challenge token file %s (corrupted?): %vdelayed zeroing on data that may contain pointersecdsa: internal error: truncated hash is too longerror parsing connection ID on packet from %s: %sexpected character %c but the document ended herefailed to decode PEM block containing private keyfully empty unfreed span set block found in resetgob: registering duplicate names for %s: %q != %qgob: registering duplicate types for %q: %s != %shttp2: request body closed due to handler exitinghttp: wrote more than the declared Content-Lengthinternal error: fillWindow called with stale datainvalid memory address or nil pointer dereferenceinvalid or incomplete multibyte or wide characternet/http: Transport.Dial hook returned (nil, nil)not configured for on-demand certificate issuancenot enough significant bits after mult128bitPow10panicwrap: unexpected string after package name: putPacketBuffer called with packet of wrong size!received packet with unknown encryption level: %sreflect.Value.Slice: slice of unaddressable arrayrenewing certificate aborted by event handler: %wruntime.reflect_makemap: unsupported map key types.allocCount != s.nelems && freeIndex == s.nelemsserver required client verification, but got noneslice bounds out of range [::%x] with capacity %ystrings.Reader.UnreadByte: at beginning of stringstrings.Reader.UnreadRune: at beginning of stringstrings.Reader.WriteTo: invalid WriteString countsubject name does not qualify for certificate: %ssubslice address (%d) is before data address (%d)sweeper left outstanding across sweep generationsthe :: must expand to at least one field of zerostls: client illegally modified second ClientHellotls: client offered only unsupported versions: %xtls: client using inappropriate protocol fallbacktls: server advertised unrequested ALPN extensiontls: server sent a cookie in a normal ServerHellotoml: negative number %d does not fit in an uint8tried to delete incoming stream %d multiple timesunexpected Peek failure reading buffered byte: %vx509: Ed25519 key encoded with illegal parametersx509: invalid RDNSequence: invalid attribute typex509: private key contains zero or negative primex509: private key contains zero or negative value%s has arguments but cannot be invoked as functionCannot write response that reject http CONNECT: %vNot adding connection ID %s, as it already exists.Number of bytes used for other system allocations.^[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+(?:\.[0-9_]*)?$attempt to execute system stack code on user stackc
+%sError(PANIC=(empty), goid=, j0 = , time., type=, url: ,errno=19531252.5.4.32.5.4.52.5.4.62.5.4.72.5.4.82.5.4.99765625: type ::ffff::method:scheme:status; Path== (.+)%AvestanBADMODEBADNAMEBADTIMEBOM: %vBengaliBlockedBrailleCDNSKEYCOMMENTCONNECTCOUNTERChanDirCommentConvertCountryCreatedCypriotDEFAULTDefaultDeseretED25519Ed25519ElbasanElymaicExpiresFORMERRFloats:GODEBUGGranthaHEADERSHEREDOCHanunooIACPKIXILLEGALIM UsedIO waitImportsInitialInstAltInstNopIntegerInvalidJanuaryKannadaLOG:   MD2-RSAMD5-RSAMakasarMandaicMarchenMessageMethodsMultaniMyanmarNOERRORNOTAUTHNOTIMPLNOTZONENXRRSETOPTIONSOctoberOsmanyaPackageQUERY: REFUSEDRSASHA1RadicalRefererRefreshSHA-224SHA-256SHA-384SHA-512SUMMARYSharadaShavianSiddhamSignal SinhalaSogdianSoyomboSubjectSwapperTCP EOFTagalogTibetanTirhutaTrailerTuesdayTypeALLTypeOPTTypePTRTypeSOATypeSRVTypeTXTTypeWKSUDP EOFUNKNOWNUNTYPEDUnknownUpgradeUsage:
+%shttp: named cookie not presenticmp node information responseillegal window increment valuein exponent of numeric literalinappropriate ioctl for deviceinconsistent label cardinalityinvalid character %q in stringinvalid network interface nameinvalid pointer found on stackio.prometheus.client.Histogramio.prometheus.client.LabelPairline `%s` doesn't match formatlooking for beginning of valuememory page has hardware errormime: duplicate parameter namemissing keyKind string mappingmissing validateFirstLine funcmulticast router advertisementnegative packetBuffer refCountno certificate resources foundno unpack handler for type: %soverflow unpacking APL addressoverlapping ranges: %v with %vpacketBuffer refCount not zeroparsing issuer certificate: %vpersistConn was already in LRUproto: Marshal called with nilprotocol version not supportedprotocol wrong type for socketreading issuer certificate: %vreflect: Elem of invalid type reflect: Len of non-array typereflect: Out of non-func type reflect: unexpected GC programremoved certificate from cacheresult param must be a pointerrunning on the wrong goroutinerunqputslow: queue is not fullruntime: bad g in cgocallback
+%sparse error on line %d, column %d: %vpeer attempted to open send stream %dqtls.ClientSessionState doesn't matchreflect.Value.Bytes of non-byte arrayreflect.Value.Bytes of non-byte slicereflect.Value.Bytes of non-rune slicereflect.Value.Convert: value of type reflect: Bits of non-arithmetic Type reflect: IsVariadic of non-func type reflect: NumField of non-struct type reflect: funcLayout of non-func type renewing certificate on-demand failedruntime: allocation size out of rangeruntime: netpoll: break fd ready for runtime: unexpected SPWRITE function served key authentication certificateset socket option: IP_TRANSPARENT: %ssetprofilebucket: profile already setstartTheWorld: inconsistent mp->nextpstrings: Repeat count causes overflowsubtle: slices have different lengthstimestamp (%v) has out-of-range nanostimezone hour outside of range [0,23]tls: failed to verify certificate: %stls: unsupported certificate key (%T)token length insufficient for parsingtoo many Additionals to pack (>65535)too many Authorities to pack (>65535)type not registered for interface: %sunable to cast %#v of type %T to Timeunable to cast %#v of type %T to boolunable to cast %#v of type %T to uintunable to parse PEM certificate chainunexpected CONTINUATION for stream %dunexpected byte in data separator: %vunexpected write encryption level: %sunknown or unsupported hash algorithmunrecognized character in action: %#Uurn:ietf:params:acme:error:connectionuse of http3.Server without TLSConfigvalue too large for defined data typevariable value type must be a pointerwaiting for solver %T to be ready: %wx509: RSA key missing NULL parametersx509: invalid CRL distribution pointsx509: invalid Ed25519 private key: %vx509: malformed extension value fieldx509: unsupported private key versionx509: unsupported public key type: %T%s: not an object type for struct (%T)%v: unable to resolve extension %v: %v1110223024625156540423631668090820312555511151231257827021181583404541015625BrGVE
+&*ciphersuite.TLSPskWithAes128GcmSha256
+&*func(string, *tls.ClientSessionState)
+&*struct { F uintptr; R *net.Resolver }
+&*struct { F uintptr; r rdns.Resolver }
+&ALPN negotiation failed. Server didn't offer any protocolsAssuming CONNECT is plain HTTP tunneling, mitm proxying itDNS response contained records which contain invalid namesExportKeyingMaterial can not be used with a reserved labelGODEBUG=execwait=2 detected a leaked exec.Cmd created by:
+'*func(*ackhandler.Packet) (bool, error)
+'ackElicitingPacketsReceivedSinceLastAck
+(*ciphersuite.TLSEcdheRsaWithAes256CbcSha
+(*func([]uint8) (*handshake.Token, error)
+(firstAckElicitingPacketAfterIdleSentTime
+(o{t$Af?,e JSON-decoding response body: %wMetricFamily has no metrics: %sMon, 02 Jan 2006 15:04:05 -0700Network Authentication RequiredPRIORITY frame with stream ID 0Request Header Fields Too LargeRequested Range Not SatisfiableSERVER_HANDSHAKE_TRAFFIC_SECRETSIGSEGV: segmentation violationSent NegotiationReply: %#v %#v
+)*ackhandler.skippingPacketNumberGenerator
+)s+ (set GODEBUG=execwait=2 to capture stacks for debugging)Count of completed GC cycles generated by the Go runtime.Max outstanding limited: tracking %d packets, maximum: %dNumber of bytes obtained from system for stack allocator.	%s &wire.StreamsBlockedFrame{Type: bidi, MaxStreams: %d}
+**ciphersuite.TLSEcdheEcdsaWithAes256CbcSha
+*[1]*quic.longHeaderPacket
+*[2]http.socksAuthMethod
+*[8]*protocol.CompressionMethod
+*[8]*quic.packetBuffer
+*[8][]*http.Cookie
+*[8]protocol.PacketNumber
+*[8]quic.packetHandler
+*[]*ackhandler.Packet
+*[]*http.Cookie
+*[]*protocol.CompressionMethod
+*[]*quic.longHeaderPacket
+*[]*quic.packetBuffer
+*[]*quic.receivedPacket
+*[][]*http.Cookie
+*[]dns.EDNS0
+*[]http.socksAuthMethod
+*[]protocol.CompressionMethodID
+*[]protocol.PacketNumber
+*[]quic.packetHandler
+*ackhandler.Packet
+*ackhandler.SentPacketHandler
+*ackhandler.packetNumberSpace
+*ackhandler.sentPacketHandler
+*ackhandler.sentPacketHistory
+*ackhandler.sentPacketTracker
+*aes.KeySizeError
+*aes.aesCipher
+*aes.aesCipherAsm
+*aes.aesCipherGCM
+*aes.gcmAsm
+*base64.CorruptInputError
+*base64.Encoding
+*base64.encoder
+*chan *quic.packetBuffer
+*chan *quic.receivedPacket
+*chan quic.closePacket
+*cipher.cbcDecrypter
+*cipher.cbcEncrypter
+*ciphersuite.Aes128Ccm
+*ciphersuite.Aes256Ccm
+*ciphersuite.AesCcm
+*congestion.PacketNumber
+*crypto.Decrypter
+*crypto.DecrypterOpts
+*dns.EDNS0
+*dns.EDNS0_COOKIE
+*dns.EDNS0_DAU
+*dns.EDNS0_DHU
+*dns.EDNS0_EDE
+*dns.EDNS0_ESU
+*dns.EDNS0_EXPIRE
+*dns.EDNS0_LLQ
+*dns.EDNS0_LOCAL
+*dns.EDNS0_N3U
+*dns.EDNS0_NSID
+*dns.EDNS0_PADDING
+*dns.EDNS0_SUBNET
+*dns.EDNS0_TCP_KEEPALIVE
+*dns.EDNS0_UL
+*dns.TXT
+*dns.compressionMap
+*dnsmessage.TXTResource
+*filedesc.resolverByIndex
+*filetype.resolverByIndex
+*flate.compressionLevel
+*flate.compressor
+*flate.decompressor
+*func() *ackhandler.Packet
+*func() *base64.Encoding
+*func() *quic.receivedPacket
+*func() *struct { pragma.NoUnkeyedLiterals; Flags uint64; Size func(struct { pragma.NoUnkeyedLiterals; Message protoreflect.Message; Flags uint8 }) struct { pragma.NoUnkeyedLiterals; Size int }; Marshal func(struct { pragma.NoUnkeyedLiterals; Message protoreflect.Message; Buf []uint8; Flags uint8 }) (struct { pragma.NoUnkeyedLiterals; Buf []uint8 }, error); Unmarshal func(struct { pragma.NoUnkeyedLiterals; Message protoreflect.Message; Buf []uint8; Flags uint8; Resolver interface { FindExtensionByName(protoreflect.FullName) (protoreflect.ExtensionType, error); FindExtensionByNumber(protoreflect.FullName, protowire.Number) (protoreflect.ExtensionType, error) }; Depth int }) (struct { pragma.NoUnkeyedLiterals; Flags uint8 }, error); Merge func(struct { pragma.NoUnkeyedLiterals; Source protoreflect.Message; Destination protoreflect.Message }) struct { pragma.NoUnkeyedLiterals; Flags uint8 }; CheckInitialized func(struct { pragma.NoUnkeyedLiterals; Message protoreflect.Message }) (struct { pragma.NoUnkeyedLiterals }, error) }
+*func() []*http.Cookie
+*func() dns.EDNS0
+*func() handshake.Type
+*func() pkix.RDNSequence
+*func() protocol.PacketNumber
+*func() quic.packetHandler
+*func(*ackhandler.Packet)
+*func(*ackhandler.Packet, *list.Element[*github.com/quic-go/quic-go/internal/ackhandler.Packet]) *list.Element[*github.com/quic-go/quic-go/internal/ackhandler.Packet]
+*func(*flate.compressor)
+*func(*flate.decompressor)
+*func(*http.Cookie)
+*func(*list.Element[*github.com/quic-go/quic-go/internal/ackhandler.Packet], *list.Element[*github.com/quic-go/quic-go/internal/ackhandler.Packet])
+*func(*pkix.RDNSequence)
+*func(*quic.packetBuffer)
+*func(*quic.receivedPacket)
+*func(*url.URL) []*http.Cookie
+*func(*url.URL, []*http.Cookie)
+*func(ackhandler.Frame, protocol.ByteCount, time.Time, protocol.VersionNumber) (quic.shortHeaderPacket, *quic.packetBuffer, error)
+*func(int32) *base64.Encoding
+*func(protocol.EncryptionLevel)
+*func(protocol.PacketNumber)
+*func(quic.packetHandler)
+*func(quic.sendConn, quic.connRunner, protocol.ConnectionID, *protocol.ConnectionID, protocol.ConnectionID, protocol.ConnectionID, protocol.ConnectionID, protocol.StatelessResetToken, *quic.Config, *tls.Config, *handshake.TokenGenerator, bool, logging.ConnectionTracer, uint64, utils.Logger, protocol.VersionNumber) quic.quicConn
+*func(struct { pragma.NoUnkeyedLiterals; Message protoreflect.Message; Buf []uint8; Flags uint8; Resolver interface { FindExtensionByName(protoreflect.FullName) (protoreflect.ExtensionType, error); FindExtensionByNumber(protoreflect.FullName, protowire.Number) (protoreflect.ExtensionType, error) }; Depth int }) (struct { pragma.NoUnkeyedLiterals; Flags uint8 }, error)
+*go.shape.struct { SequenceNumber uint64; ConnectionID github.com/quic-go/quic-go/internal/protocol.ConnectionID; StatelessResetToken github.com/quic-go/quic-go/internal/protocol.StatelessResetToken }
+*go.shape.struct { Start github.com/quic-go/quic-go/internal/protocol.PacketNumber; End github.com/quic-go/quic-go/internal/protocol.PacketNumber }
+*goproxy.CounterEncryptorRand
+*goproxy.chunkedWriter
+*handshake.CryptoSetup
+*handshake.Handshake
+*handshake.Header
+*handshake.LongHeaderOpener
+*handshake.LongHeaderSealer
+*handshake.Message
+*handshake.MessageCertificate
+*handshake.MessageClientHello
+*handshake.MessageFinished
+*handshake.MessageServerHello
+*handshake.Random
+*handshake.ShortHeaderOpener
+*handshake.ShortHeaderSealer
+*handshake.Token
+*handshake.TokenGenerator
+*handshake.Type
+*handshake.aesHeaderProtector
+*handshake.conn
+*handshake.cryptoSetup
+*handshake.extensionHandler
+*handshake.handshakeOpener
+*handshake.handshakeRunner

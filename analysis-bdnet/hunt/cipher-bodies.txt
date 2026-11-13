@@ -1,0 +1,129 @@
+##### decoded/smali_assets/audience_network/classes2/com/facebook/ads/redexgen/X/Mi.smali
+585-    .line 52430
+586-    :try_start_0
+587-    const/16 v2, 0x14
+588-
+589-    const/4 v1, 0x2
+590-
+591-    const/16 v0, 0x51
+592-
+593-    invoke-static {v2, v1, v0}, Lcom/facebook/ads/redexgen/X/Mi;->A04(III)Ljava/lang/String;
+594-
+595-    move-result-object v0
+596-
+597:    invoke-static {v3, v0}, Ljavax/crypto/Cipher;->getInstance(Ljava/lang/String;Ljava/lang/String;)Ljavax/crypto/Cipher;
+598-
+599-    move-result-object v0
+600-
+601-    return-object v0
+602-    :try_end_0
+603-    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+604-
+605-    .line 52431
+606-    :catchall_0
+607-    :cond_0
+608:    invoke-static {v3}, Ljavax/crypto/Cipher;->getInstance(Ljava/lang/String;)Ljavax/crypto/Cipher;
+609-
+610-    move-result-object v3
+611-
+612-    sget-object v2, Lcom/facebook/ads/redexgen/X/Mi;->A07:[Ljava/lang/String;
+613-
+614-    const/4 v0, 0x6
+615-
+616-    aget-object v1, v2, v0
+617-
+618-    const/4 v0, 0x1
+619-
+620-    aget-object v0, v2, v0
+621-
+622-    invoke-virtual {v1}, Ljava/lang/String;->length()I
+623-
+624-    move-result v1
+625-
+626-    invoke-virtual {v0}, Ljava/lang/String;->length()I
+##### decoded/smali_assets/audience_network/classes2/com/facebook/ads/redexgen/X/kP.smali
+164-    const/4 v2, 0x0
+165-
+166-    const/4 v1, 0x3
+167-
+168-    const/16 v0, 0x55
+169-
+170-    invoke-static {v2, v1, v0}, Lcom/facebook/ads/redexgen/X/kP;->A02(III)Ljava/lang/String;
+171-
+172-    move-result-object v0
+173-
+174-    new-instance v1, Ljavax/crypto/spec/SecretKeySpec;
+175-
+176:    invoke-direct {v1, p2, v0}, Ljavax/crypto/spec/SecretKeySpec;-><init>([BLjava/lang/String;)V
+177-
+178-    goto :goto_3
+179-    :try_end_0
+180-    .catch Ljava/security/NoSuchAlgorithmException; {:try_start_0 .. :try_end_0} :catch_1
+181-    .catch Ljavax/crypto/NoSuchPaddingException; {:try_start_0 .. :try_end_0} :catch_0
+182-
+183-    .line 90030
+184-    :catch_0
+185-    move-exception v1
+186-
+187-    goto :goto_2
+188-
+189-    :catch_1
+190-    move-exception v1
+191-
+192-    .line 90031
+193-    .local v0, "e":Ljava/security/GeneralSecurityException;
+194-    :goto_2
+##### decoded/smali/x3.smali
+109-    invoke-direct {v3, v4, v1, v0, v2}, Ljavax/crypto/spec/GCMParameterSpec;-><init>(I[BII)V
+110-
+111-    .line 12
+112-    new-instance v1, Ljavax/crypto/spec/SecretKeySpec;
+113-
+114-    .line 14
+115-    sget-object v2, Lx3;->c:[B
+116-
+117-    .line 16
+118-    const-string v4, "AES"
+119-
+120-    .line 18
+121:    invoke-direct {v1, v2, v4}, Ljavax/crypto/spec/SecretKeySpec;-><init>([BLjava/lang/String;)V
+122-
+123-    .line 21
+124-    const/4 v2, 0x2
+125-
+126-    .line 22
+127-    invoke-virtual {p0, v2, v1, v3}, Ljavax/crypto/Cipher;->init(ILjava/security/Key;Ljava/security/spec/AlgorithmParameterSpec;)V
+128-
+129-    .line 25
+130-    sget-object v1, Lx3;->b:[B
+131-
+132-    .line 27
+133-    invoke-virtual {p0, v1}, Ljavax/crypto/Cipher;->updateAAD([B)V
+134-
+135-    .line 30
+136-    sget-object v1, Lx3;->e:[B
+137-
+138-    .line 32
+139-    array-length v2, v1
+140-
+141-    .line 33
+142:    invoke-virtual {p0, v1, v0, v2}, Ljavax/crypto/Cipher;->doFinal([BII)[B
+143-
+144-    .line 36
+145-    move-result-object p0
+146-
+147-    .line 37
+148-    sget-object v1, Lx3;->a:[B
+149-
+150-    .line 39
+151-    invoke-static {p0, v1}, Ljava/security/MessageDigest;->isEqual([B[B)Z
+152-
+153-    .line 42
+154-    move-result p0
+155-    :try_end_0
+156-    .catch Ljava/security/GeneralSecurityException; {:try_start_0 .. :try_end_0} :catch_0
+157-
+158-    .line 43
+159-    return p0
+160-
+##### decoded/smali/CP.smali

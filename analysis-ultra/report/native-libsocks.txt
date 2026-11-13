@@ -1,0 +1,71 @@
+### libsocks.so 160232 bytes
+--- usage/flags:
+timeout: failed to run command ‘qemu-aarch64-static’: No such file or directory
+--- strings:
+        --socks-server-addr <addr>
+        [--append-source-to-username]
+        [--dnsgw <dns_gateway_address>]
+        [--password <password>]
+        [--password-file <file>]
+        [--udpgw-transparent-dns]
+        [--username <username>]
+--append-source-to-username
+--dnsgw
+--password
+--password and --password-file cannot both be given
+--password-file
+--socks-server-addr
+--socks-server-addr is required
+--udpgw-transparent-dns
+--username
+BSocksClient
+BadVPN tun2socks 1.999.127
+PasswordListener
+SOCKS closed
+SOCKS error
+SOCKS up
+SocksUdpGwClient
+SocksUdpGwClient_Init failed
+UDP: from DNS %d bytes
+UDP: to DNS %d bytes
+Usage:
+_PacketPassInterface_job_done
+_PacketPassInterface_job_operation
+_PacketPassInterface_job_requestcancel
+_StreamPassInterface_job_done
+_StreamPassInterface_job_operation
+authpriv
+client reports server error
+device fd reports error?
+dnsgw addr: BAddr_Parse2 failed
+dnsgw addr: must be an IPv4 address
+failed to read password file
+initializing BadVPN tun2socks 1.999.127
+invalid number of authentication methods
+invalid username/password length
+jni/badvpn/tun2socks/tun2socks.c
+listener accept: BSocksClient_Init failed
+ncd_net_dns
+net.typeblog.socks
+no authentication
+password authentication
+password reply has unknown version
+password reply is negative
+password_file_contents
+pcb->flags & TF_RXCLOSED
+received password reply
+removing after SOCKS went down
+send password
+server didn't accept any authentication method
+socks server addr: BAddr_Parse2 failed
+socks_auth_info
+socks_num_auth_info
+socks_server_addr
+tcp_enqueue_flags
+tcp_enqueue_flags: check that first pbuf can hold optlen
+tcp_enqueue_flags: invalid queue length
+tcp_enqueue_flags: invalid segment length
+tcp_enqueue_flags: need either TCP_SYN or TCP_FIN in flags (programmer violates API)
+tun2socks
+username given but password not given
+waiting untill buffered data is sent to SOCKS

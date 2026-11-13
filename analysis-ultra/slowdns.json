@@ -1,0 +1,1439 @@
+{
+ "$schema_note": "Ultra Tunnel (co.strongteam.ultra) SlowDNS material. The tunnel is stock dnstt: domain + 64-hex pubkey + resolver is the complete credential set, so nothing here is guessed. Both the bundled catalogue (v3.95) and the app's live updater (v5.28) were decrypted and merged.",
+ "app": {
+  "package": "co.strongteam.ultra",
+  "version": "v1.0.8.8 / build 59",
+  "min_sdk": 32,
+  "abi": "arm64-v8a",
+  "engine_mode": "bTUNNEL_TYPE_SLOWDNS = 6"
+ },
+ "catalogue": {
+  "bundled_version": "3.95",
+  "bundled_servers": 56,
+  "bundled_networks": 859,
+  "live_version": "5.28",
+  "live_servers": 38,
+  "live_networks": 918,
+  "distinct_slowdns_tunnels": 8,
+  "slowdns_networks": 161,
+  "tunnel_types": {
+   "Direct TCP": 4,
+   "H2": 2,
+   "Http/Ws Proxy": 302,
+   "SSL + Payload + WS": 72,
+   "SSL Direct": 271,
+   "Slow DNS": 84,
+   "UDP Hysteria": 27,
+   "V2ray": 156
+  }
+ },
+ "encryption": {
+  "format": "base64( salt[16] || nonce[12] || AES-256-GCM ciphertext || tag[16] ), AAD = salt",
+  "kdf": "Argon2id v19, t=3, m=8192 KiB, p=1, 32-byte key",
+  "bundled_asset_and_protected_fields": "NurChickenPowder",
+  "remote_updater": "/4ssU0OjjtKH8AheiAxnc3DwSGDzsy+8 -- export framing inserts one random ASCII letter at index 3 after base64 (len%4==1)",
+  "protected_fields": [
+   "ServerIPHost",
+   "SlowDNSHost",
+   "SlowDNSKey",
+   "OVPNUser",
+   "OVPNPass",
+   "UDP_obfs",
+   "UDP_user",
+   "CustomCertificate",
+   "V2rayUUID",
+   "V2rayPath",
+   "H2pass",
+   "TrojanPass",
+   "Payload",
+   "CustomProxy",
+   "SNI",
+   "BugDNS"
+  ],
+  "where": "libgojni.so github.com/2dust/AndroidLibXrayLite.EO/DO",
+  "decoder_in_repo": "analysis-ultra/decrypt_config.py",
+  "decoded_catalogues": [
+   "analysis-ultra/config-decoded.json",
+   "analysis-ultra/remote-config-decoded.json"
+  ],
+  "remote_catalogue_url": "https://strongteam.co/api/ultrasystem/ultrav3.txt",
+  "remote_catalogue_ua": "Ultra Tunnel"
+ },
+ "engine": {
+  "mode": "slowdns (dnstt over DNS/UDP)",
+  "binary": {
+   "name": "libdns.so",
+   "size": 4912352,
+   "abi": "arm64-v8a",
+   "origin": "lib/arm64-v8a/libdns.so inside Ultra Tunnel's XAPK",
+   "upstream": "stock dnstt client (www.bamsoftware.com/git/dnstt.git/dns)"
+  },
+  "argv_template": [
+   "libdns.so",
+   "-udp",
+   "<resolver>:53",
+   "-pubkey",
+   "<64-hex>",
+   "<domain>",
+   "127.0.0.1:2222"
+  ],
+  "argv_example": [
+   "libdns.so",
+   "-udp",
+   "8.8.8.8:53",
+   "-pubkey",
+   "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "nssshtt.mdmonzo.com",
+   "127.0.0.1:2222"
+  ],
+  "flags": [
+   "-udp ADDR",
+   "-doh URL",
+   "-dot ADDR",
+   "-pubkey HEX64",
+   "-pubkey-file FILE"
+  ],
+  "not_present": [
+   "-report (BD NET licence gate)",
+   "-utls (BD NET camouflage)"
+  ],
+  "source": "DNSTunnelThread.java run(): exec(libdns -udp <dnsKey>:53 -pubkey <chaveKey> <serverNameKey> 127.0.0.1:2222)",
+  "prefs": {
+   "dnsKey": "resolver",
+   "chaveKey": "64-hex pubkey",
+   "serverNameKey": "SlowDNS domain"
+  }
+ },
+ "ports": {
+  "dns_upstream": 53,
+  "local_dnstt_forwarder": 2222,
+  "ssl_tunnel_port": 443,
+  "ssh_port": 22
+ },
+ "resolvers": {
+  "count": 56,
+  "note": "the app lets the user pick any of these; many are carrier/eSIM resolvers that only answer inside their own network, the public ones work anywhere -- this is the multi-resolver knob to auto-balance over",
+  "list": [
+   {
+    "resolver": "8.8.8.8",
+    "used_by_networks": 18,
+    "examples": [
+     "eSIM Webbing DNS Pro",
+     "Google DNS 🤝",
+     "Flag eSIM",
+     "Firsty esim DNS"
+    ],
+    "kind": "public"
+   },
+   {
+    "resolver": "8.8.4.4",
+    "used_by_networks": 6,
+    "examples": [
+     "World eSIM Webbing DNS Pro",
+     "Google Public DNS",
+     "World eSIM 2",
+     "🇦🇫 AF MTN DNSTT 2"
+    ],
+    "kind": "public"
+   },
+   {
+    "resolver": "83.181.60.97",
+    "used_by_networks": 3,
+    "examples": [
+     "Pildyk eSIM",
+     "Pildyk 🇱🇹 LT",
+     "Tele2 🇱🇹 LT"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "62.109.121.17",
+    "used_by_networks": 3,
+    "examples": [
+     "🇩🇪 DE O2.OrtelMobile.AldiTalk.Ayyildiz.Blau DNS ◆ {68142}",
+     "DE 🇩🇪 ALL Germany 🇩🇪 O2 DNS",
+     "🇩🇪 DE O2.OrtelMobile.AldiTalk.Ayyildiz.Blau DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "196.200.150.3",
+    "used_by_networks": 3,
+    "examples": [
+     "🇲🇦 MA AIM 0 DH [DNS]",
+     "🇲🇦 MA IAM 0DH DNS",
+     "🇲🇦 MA Telecom 4G DNS 🔵"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "176.241.248.114",
+    "used_by_networks": 2,
+    "examples": [
+     "Wonet eSIM",
+     "🌍 UBIGI DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "190.106.220.98",
+    "used_by_networks": 2,
+    "examples": [
+     "Jetpack Edge mobile eSIM DNS",
+     "🇬🇹 GT Tigo DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "212.2.96.51",
+    "used_by_networks": 2,
+    "examples": [
+     "Plus eSIM DNS 2",
+     "🇵🇱 Poland Plus"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "121.100.50.32",
+    "used_by_networks": 2,
+    "examples": [
+     "🇦🇫 AF AWWC DNSTT 2",
+     "🇦🇫 Af Wireless FR"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "10.122.6.68",
+    "used_by_networks": 2,
+    "examples": [
+     "🇦🇹 AT RedBull DNS 2️⃣",
+     "Redbull ESim Work"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "176.95.16.230",
+    "used_by_networks": 2,
+    "examples": [
+     "🇩🇪 DE ALL Germany Vodafone Router",
+     "🇩🇪 DE Vodafone Router"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "62.109.121.18",
+    "used_by_networks": 2,
+    "examples": [
+     "🇩🇪 DE O2.OrtelMobile.AldiTalk.Ayyildiz.Blau DNS ✪ {35097}",
+     "🇩🇪 DE O2.OrtelMobile.AldiTalk.Ayyildiz.Blau DNS 1️⃣"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "10.95.11.110",
+    "used_by_networks": 2,
+    "examples": [
+     "🇮🇳 IN VI FR  DNS",
+     "🇮🇳 Vi Config DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "41.214.140.4",
+    "used_by_networks": 2,
+    "examples": [
+     "🇲🇦 MA Orange *6 Fr DNS💯",
+     "🇲🇦 MA ORANGE 0DH DNS 2026"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "9.9.9.9",
+    "used_by_networks": 1,
+    "examples": [
+     "Quad9 Secure DNS"
+    ],
+    "kind": "public"
+   },
+   {
+    "resolver": "1.0.0.1",
+    "used_by_networks": 1,
+    "examples": [
+     "Cloudflare DNS"
+    ],
+    "kind": "public"
+   },
+   {
+    "resolver": "10.24.224.5",
+    "used_by_networks": 1,
+    "examples": [
+     "Nomad eSIM"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "165.21.83.88",
+    "used_by_networks": 1,
+    "examples": [
+     "Eskimo esim ONLINE DNS 2"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "165.21.100.88",
+    "used_by_networks": 1,
+    "examples": [
+     "Eskimo esim ONLINE DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "10.34.224.5",
+    "used_by_networks": 1,
+    "examples": [
+     "ALL Bunq esim SLOWDNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "5.188.200.224",
+    "used_by_networks": 1,
+    "examples": [
+     "Proximus eSIM 2"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "212.2.96.54",
+    "used_by_networks": 1,
+    "examples": [
+     "Plus eSIM DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "66.198.145.145",
+    "used_by_networks": 1,
+    "examples": [
+     "Firsty eSIM 03"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "backoffice.firsty.app",
+    "used_by_networks": 1,
+    "examples": [
+     "Firsty eSIM 01"
+    ],
+    "kind": "hostname"
+   },
+   {
+    "resolver": "firestore.googleapis.com",
+    "used_by_networks": 1,
+    "examples": [
+     "Firsty eSIM 0"
+    ],
+    "kind": "hostname"
+   },
+   {
+    "resolver": "121.100.50.168",
+    "used_by_networks": 1,
+    "examples": [
+     "🇦🇫 AF AWWC DNSTT"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "10.88.152.120",
+    "used_by_networks": 1,
+    "examples": [
+     "🇦🇹 AT RedBull DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "84.241.227.81",
+    "used_by_networks": 1,
+    "examples": [
+     "🇨🇿 CZ T-Mobile DNS 💯 ◆ {315}"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "61.8.132.52",
+    "used_by_networks": 1,
+    "examples": [
+     "🇩🇪 DE 1&1 GMX WebDNS Pro ✪ {61583}"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "103.45.245.217",
+    "used_by_networks": 1,
+    "examples": [
+     "🇪🇸 Spain Vodacom DNS 001"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "188.31.250.128",
+    "used_by_networks": 1,
+    "examples": [
+     "🇬🇧 GB Three DNSTT ✦ {4729}"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "181.174.127.182",
+    "used_by_networks": 1,
+    "examples": [
+     "🇬🇹 GT Claro DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "83.158.240.240",
+    "used_by_networks": 1,
+    "examples": [
+     "🇮🇹 LIAD Config 1️⃣"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "83.181.60.98",
+    "used_by_networks": 1,
+    "examples": [
+     "🇱🇹 IT Pildyk DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "81.192.21.81",
+    "used_by_networks": 1,
+    "examples": [
+     "🇲🇦 MA IAM 0DH DNS 0️⃣"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "196.200.178.31",
+    "used_by_networks": 1,
+    "examples": [
+     "🇲🇦 MA IAM IP 10.200 (DNS-1)"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "41.214.140.5",
+    "used_by_networks": 1,
+    "examples": [
+     "🇲🇦 MA Orange *6 Fr DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "76.76.10.0",
+    "used_by_networks": 1,
+    "examples": [
+     "🇲🇦 MA Orange 0 DHS DNS 1️⃣"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "160.162.62.172",
+    "used_by_networks": 1,
+    "examples": [
+     "🇲🇦 MA Telecom 4G Dns 🟣"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "58.71.136.20",
+    "used_by_networks": 1,
+    "examples": [
+     "🇲🇾 MALAYSIA Maxis"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "109.166.202.53",
+    "used_by_networks": 1,
+    "examples": [
+     "🇷🇴 RO Orange DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "84.235.6.55",
+    "used_by_networks": 1,
+    "examples": [
+     "🇸🇦 KSA Jawwy DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "196.203.82.66",
+    "used_by_networks": 1,
+    "examples": [
+     "🇹🇳 Telecom Config DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "213.74.1.4",
+    "used_by_networks": 1,
+    "examples": [
+     "🇹🇷 TR Turkcell DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "213.74.0.4",
+    "used_by_networks": 1,
+    "examples": [
+     "🇹🇷 TR Turkcell DNS 2️⃣"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "212.65.140.135",
+    "used_by_networks": 1,
+    "examples": [
+     "🇹🇷 TR Vodafone Fr DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "190.58.23.133",
+    "used_by_networks": 1,
+    "examples": [
+     "🇹🇹 TT B-MOBILE DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "176.241.248.113",
+    "used_by_networks": 1,
+    "examples": [
+     "🌍 UBIGI DNS 2"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "84.235.57.230",
+    "used_by_networks": 1,
+    "examples": [
+     "🇵🇱 Poland T-Mobile"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "firestore.googleapis.com;www.uber.com",
+    "used_by_networks": 1,
+    "examples": [
+     "Firsty eSIM 0"
+    ],
+    "kind": "hostname"
+   },
+   {
+    "resolver": "212.27.40.190",
+    "used_by_networks": 1,
+    "examples": [
+     "🇫🇷 France Free Sim Card"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "212.27.40.191",
+    "used_by_networks": 1,
+    "examples": [
+     "🇫🇷 France Free Sim Card 2️⃣"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "121.100.50.35",
+    "used_by_networks": 1,
+    "examples": [
+     "🇦🇫 AF ALL AWWC DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "10.74.210.210",
+    "used_by_networks": 1,
+    "examples": [
+     "Germany 🇩🇪Telekom-Congstar Free DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "10.178.88.32",
+    "used_by_networks": 1,
+    "examples": [
+     "🇵🇰 Pak Telenor DNS"
+    ],
+    "kind": "carrier/esim"
+   },
+   {
+    "resolver": "169.255.187.58",
+    "used_by_networks": 1,
+    "examples": [
+     "🇹🇿 Tanzania ALL Halotel DNS"
+    ],
+    "kind": "carrier/esim"
+   }
+  ]
+ },
+ "servers": [
+  {
+   "slowdns_domain": "nssshtt.mdmonzo.com",
+   "slowdns_pubkey_hex": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "names": [
+    "🇬🇧 UK - DATA FREE SERVER  🛜+ 00",
+    "🇬🇧 UK - DATA FREE SERVER  🛜+ 01",
+    "🇬🇧 UK - DATA FREE SERVER  🛜+ 02",
+    "🇬🇧 UK - DATA FREE SERVER  🛜+ 03",
+    "🇬🇧 UK - DATA FREE SERVER  🛜+ 04"
+   ],
+   "connect_hosts": [
+    "fudp1.focusapps.site",
+    "fudp2.focusapps.site",
+    "fudp3.focusapps.site",
+    "fudp4.focusapps.site",
+    "94.16.104.117",
+    "udfg.atnetvpn.xyz",
+    "aa2.mbaareinnovationsug.xyz",
+    "aa1.mbaareinnovationsug.xyz",
+    "108.181.59.55"
+   ],
+   "server_types": [
+    "WS Server"
+   ],
+   "ssl_port": "443",
+   "ssh_port": "22",
+   "catalog_versions": [
+    "3.95",
+    "5.28"
+   ],
+   "ssh_users": [],
+   "delegation_ns": [
+    "sierra.ns.cloudflare.com",
+    "reese.ns.cloudflare.com"
+   ],
+   "endpoint_ips": [
+    "108.162.194.245",
+    "108.162.195.117",
+    "162.159.38.245",
+    "162.159.44.117",
+    "172.64.34.245",
+    "172.64.35.117"
+   ],
+   "txt_at_endpoint": {
+    "108.162.194.245": "rcode=NXDOMAIN answers=0 []",
+    "108.162.195.117": "rcode=NXDOMAIN answers=0 []",
+    "162.159.38.245": "rcode=NXDOMAIN answers=0 []",
+    "162.159.44.117": "rcode=NXDOMAIN answers=0 []",
+    "172.64.34.245": "rcode=NXDOMAIN answers=0 []",
+    "172.64.35.117": "rcode=NXDOMAIN answers=0 []"
+   },
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=NXDOMAIN",
+    "1.1.1.1": "rcode=NXDOMAIN"
+   },
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [
+    {
+     "endpoint": "8.8.8.8",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
+   "usable_from_public_internet": false
+  },
+  {
+   "slowdns_domain": "slwdns.codefyinc.com",
+   "slowdns_pubkey_hex": "1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809",
+   "names": [
+    "DNSST - Online 🟢 01"
+   ],
+   "connect_hosts": [
+    "slwdns.codefyinc.com"
+   ],
+   "server_types": [
+    "WS Server"
+   ],
+   "ssl_port": "443",
+   "ssh_port": "22",
+   "catalog_versions": [
+    "3.95"
+   ],
+   "ssh_users": [
+    {
+     "user": "islam",
+     "pass": "islam",
+     "default_account": false
+    }
+   ],
+   "delegation_ns": [
+    "slw.codefyinc.com"
+   ],
+   "endpoint_ips": [],
+   "txt_at_endpoint": {},
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=SERVFAIL",
+    "1.1.1.1": "rcode=SERVFAIL"
+   },
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [
+    {
+     "endpoint": "1.1.1.1",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
+   "usable_from_public_internet": false
+  },
+  {
+   "slowdns_domain": "ns.rovox.wampipti.net",
+   "slowdns_pubkey_hex": "097256d14ca3780369c81867b09eea59990b2ffa4153c9a9662234868243a40d",
+   "names": [
+    "DNSST - Online 🟢 02"
+   ],
+   "connect_hosts": [
+    "ns.rovox.wampipti.net"
+   ],
+   "server_types": [
+    "WS Server"
+   ],
+   "ssl_port": "443",
+   "ssh_port": "22",
+   "catalog_versions": [
+    "3.95"
+   ],
+   "ssh_users": [
+    {
+     "user": "tcx",
+     "pass": "tcx",
+     "default_account": false
+    }
+   ],
+   "delegation_ns": [
+    "vita.ns.cloudflare.com",
+    "kirk.ns.cloudflare.com"
+   ],
+   "endpoint_ips": [
+    "108.162.192.238",
+    "108.162.193.192",
+    "172.64.32.238",
+    "172.64.33.192",
+    "173.245.58.238",
+    "173.245.59.192"
+   ],
+   "txt_at_endpoint": {
+    "108.162.192.238": "rcode=NXDOMAIN answers=0 []",
+    "108.162.193.192": "rcode=NXDOMAIN answers=0 []",
+    "172.64.32.238": "rcode=NXDOMAIN answers=0 []",
+    "172.64.33.192": "rcode=NXDOMAIN answers=0 []",
+    "173.245.58.238": "rcode=NXDOMAIN answers=0 []",
+    "173.245.59.192": "rcode=NXDOMAIN answers=0 []"
+   },
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=NXDOMAIN",
+    "1.1.1.1": "rcode=NXDOMAIN"
+   },
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [
+    {
+     "endpoint": "1.1.1.1",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
+   "usable_from_public_internet": false
+  },
+  {
+   "slowdns_domain": "newca.dozapp.xyz",
+   "slowdns_pubkey_hex": "b4e0dccf98092689d5c81fe4cf37b85f545ed5a770c35f004af99d749fda9e79",
+   "names": [
+    "DNSST - Online 🟢 03"
+   ],
+   "connect_hosts": [
+    "newca.dozapp.xyz"
+   ],
+   "server_types": [
+    "WS Server"
+   ],
+   "ssl_port": "443",
+   "ssh_port": "22",
+   "catalog_versions": [
+    "3.95"
+   ],
+   "ssh_users": [
+    {
+     "user": "edozprodoings",
+     "pass": "doingsedozpro",
+     "default_account": false
+    }
+   ],
+   "delegation_ns": [
+    "newcan.dozapp.xyz"
+   ],
+   "endpoint_ips": [
+    "144.217.81.86"
+   ],
+   "txt_at_endpoint": {
+    "144.217.81.86": "no reply (Timeout)"
+   },
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=SERVFAIL",
+    "1.1.1.1": "rcode=SERVFAIL"
+   },
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [
+    {
+     "endpoint": "144.217.81.86",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
+   "usable_from_public_internet": false
+  },
+  {
+   "slowdns_domain": "dnsde1.dozapp.xyz",
+   "slowdns_pubkey_hex": "569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809",
+   "names": [
+    "DNSST - Online 🟢 04"
+   ],
+   "connect_hosts": [
+    "dnsde1.dozapp.xyz"
+   ],
+   "server_types": [
+    "WS Server"
+   ],
+   "ssl_port": "443",
+   "ssh_port": "22",
+   "catalog_versions": [
+    "3.95"
+   ],
+   "ssh_users": [
+    {
+     "user": "edozprodoings",
+     "pass": "doingsedozpro",
+     "default_account": false
+    }
+   ],
+   "delegation_ns": [
+    "dedns1.dozapp.xyz",
+    "slowdnsde1.dozapp.xyz"
+   ],
+   "endpoint_ips": [
+    "154.53.57.37",
+    "84.46.252.158"
+   ],
+   "txt_at_endpoint": {
+    "154.53.57.37": "no reply (Timeout)",
+    "84.46.252.158": "no reply (Timeout)"
+   },
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=SERVFAIL",
+    "1.1.1.1": "rcode=SERVFAIL"
+   },
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [
+    {
+     "endpoint": "154.53.57.37",
+     "outcome": "silent (no stream opened)"
+    },
+    {
+     "endpoint": "84.46.252.158",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
+   "usable_from_public_internet": false
+  },
+  {
+   "slowdns_domain": "nssshvip1.vpnprous.com",
+   "slowdns_pubkey_hex": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "names": [
+    "DNSST - Online 🟢 05"
+   ],
+   "connect_hosts": [
+    "sshvip1.vpnprous.com"
+   ],
+   "server_types": [
+    "WS Server"
+   ],
+   "ssl_port": "443",
+   "ssh_port": "22",
+   "catalog_versions": [
+    "3.95"
+   ],
+   "ssh_users": [],
+   "delegation_ns": [
+    "sshvip1.vpnprous.com"
+   ],
+   "endpoint_ips": [
+    "51.83.129.208"
+   ],
+   "txt_at_endpoint": {
+    "51.83.129.208": "no reply (Timeout)"
+   },
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=SERVFAIL",
+    "1.1.1.1": "rcode=SERVFAIL"
+   },
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [
+    {
+     "endpoint": "51.83.129.208",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
+   "usable_from_public_internet": false
+  },
+  {
+   "slowdns_domain": "nsVIPSSH087.vpnprous.com",
+   "slowdns_pubkey_hex": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "names": [
+    "DNSST - Online 🟢 06"
+   ],
+   "connect_hosts": [
+    "VIPSSH087.vpnprous.com"
+   ],
+   "server_types": [
+    "WS Server"
+   ],
+   "ssl_port": "443",
+   "ssh_port": "22",
+   "catalog_versions": [
+    "3.95"
+   ],
+   "ssh_users": [],
+   "delegation_ns": [
+    "vipssh087.vpnprous.com"
+   ],
+   "endpoint_ips": [],
+   "txt_at_endpoint": {},
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=SERVFAIL",
+    "1.1.1.1": "rcode=SERVFAIL"
+   },
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [
+    {
+     "endpoint": "8.8.8.8",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
+   "usable_from_public_internet": false
+  },
+  {
+   "slowdns_domain": "ns.up2.fcafessh.net",
+   "slowdns_pubkey_hex": "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
+   "names": [
+    "DNSST - Online 🟢 01"
+   ],
+   "connect_hosts": [
+    "up2.fcafessh.net"
+   ],
+   "server_types": [
+    "WS Server"
+   ],
+   "ssl_port": "443",
+   "ssh_port": "22",
+   "catalog_versions": [
+    "5.28"
+   ],
+   "ssh_users": [
+    {
+     "user": "vertexsnipher",
+     "pass": "vertexsnipher",
+     "default_account": false
+    }
+   ],
+   "delegation_ns": [
+    "up2.fcafessh.net"
+   ],
+   "endpoint_ips": [
+    "209.94.59.213"
+   ],
+   "txt_at_endpoint": {
+    "209.94.59.213": "no reply (Timeout)"
+   },
+   "public_resolver_rcode": {
+    "8.8.8.8": "rcode=SERVFAIL",
+    "1.1.1.1": "rcode=SERVFAIL"
+   },
+   "endpoint_answers_raw_dns": false,
+   "end_to_end": [
+    {
+     "endpoint": "209.94.59.213",
+     "outcome": "silent (no stream opened)"
+    }
+   ],
+   "usable_from_public_internet": false
+  }
+ ],
+ "launch_recipes": [
+  {
+   "domain": "nssshtt.mdmonzo.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "8.8.8.8",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.8.8:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nssshtt.mdmonzo.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "nssshtt.mdmonzo.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "8.8.4.4",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.4.4:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nssshtt.mdmonzo.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "nssshtt.mdmonzo.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "9.9.9.9",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "9.9.9.9:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nssshtt.mdmonzo.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "nssshtt.mdmonzo.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "1.0.0.1",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "1.0.0.1:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nssshtt.mdmonzo.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "slwdns.codefyinc.com",
+   "pubkey": "1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809",
+   "resolver": "8.8.8.8",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.8.8:53",
+    "-pubkey",
+    "1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809",
+    "slwdns.codefyinc.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "slwdns.codefyinc.com",
+   "pubkey": "1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809",
+   "resolver": "8.8.4.4",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.4.4:53",
+    "-pubkey",
+    "1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809",
+    "slwdns.codefyinc.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "slwdns.codefyinc.com",
+   "pubkey": "1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809",
+   "resolver": "9.9.9.9",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "9.9.9.9:53",
+    "-pubkey",
+    "1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809",
+    "slwdns.codefyinc.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "slwdns.codefyinc.com",
+   "pubkey": "1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809",
+   "resolver": "1.0.0.1",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "1.0.0.1:53",
+    "-pubkey",
+    "1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809",
+    "slwdns.codefyinc.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "ns.rovox.wampipti.net",
+   "pubkey": "097256d14ca3780369c81867b09eea59990b2ffa4153c9a9662234868243a40d",
+   "resolver": "8.8.8.8",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.8.8:53",
+    "-pubkey",
+    "097256d14ca3780369c81867b09eea59990b2ffa4153c9a9662234868243a40d",
+    "ns.rovox.wampipti.net",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "ns.rovox.wampipti.net",
+   "pubkey": "097256d14ca3780369c81867b09eea59990b2ffa4153c9a9662234868243a40d",
+   "resolver": "8.8.4.4",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.4.4:53",
+    "-pubkey",
+    "097256d14ca3780369c81867b09eea59990b2ffa4153c9a9662234868243a40d",
+    "ns.rovox.wampipti.net",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "ns.rovox.wampipti.net",
+   "pubkey": "097256d14ca3780369c81867b09eea59990b2ffa4153c9a9662234868243a40d",
+   "resolver": "9.9.9.9",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "9.9.9.9:53",
+    "-pubkey",
+    "097256d14ca3780369c81867b09eea59990b2ffa4153c9a9662234868243a40d",
+    "ns.rovox.wampipti.net",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "ns.rovox.wampipti.net",
+   "pubkey": "097256d14ca3780369c81867b09eea59990b2ffa4153c9a9662234868243a40d",
+   "resolver": "1.0.0.1",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "1.0.0.1:53",
+    "-pubkey",
+    "097256d14ca3780369c81867b09eea59990b2ffa4153c9a9662234868243a40d",
+    "ns.rovox.wampipti.net",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "newca.dozapp.xyz",
+   "pubkey": "b4e0dccf98092689d5c81fe4cf37b85f545ed5a770c35f004af99d749fda9e79",
+   "resolver": "8.8.8.8",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.8.8:53",
+    "-pubkey",
+    "b4e0dccf98092689d5c81fe4cf37b85f545ed5a770c35f004af99d749fda9e79",
+    "newca.dozapp.xyz",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "newca.dozapp.xyz",
+   "pubkey": "b4e0dccf98092689d5c81fe4cf37b85f545ed5a770c35f004af99d749fda9e79",
+   "resolver": "8.8.4.4",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.4.4:53",
+    "-pubkey",
+    "b4e0dccf98092689d5c81fe4cf37b85f545ed5a770c35f004af99d749fda9e79",
+    "newca.dozapp.xyz",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "newca.dozapp.xyz",
+   "pubkey": "b4e0dccf98092689d5c81fe4cf37b85f545ed5a770c35f004af99d749fda9e79",
+   "resolver": "9.9.9.9",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "9.9.9.9:53",
+    "-pubkey",
+    "b4e0dccf98092689d5c81fe4cf37b85f545ed5a770c35f004af99d749fda9e79",
+    "newca.dozapp.xyz",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "newca.dozapp.xyz",
+   "pubkey": "b4e0dccf98092689d5c81fe4cf37b85f545ed5a770c35f004af99d749fda9e79",
+   "resolver": "1.0.0.1",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "1.0.0.1:53",
+    "-pubkey",
+    "b4e0dccf98092689d5c81fe4cf37b85f545ed5a770c35f004af99d749fda9e79",
+    "newca.dozapp.xyz",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "dnsde1.dozapp.xyz",
+   "pubkey": "569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809",
+   "resolver": "8.8.8.8",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.8.8:53",
+    "-pubkey",
+    "569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809",
+    "dnsde1.dozapp.xyz",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "dnsde1.dozapp.xyz",
+   "pubkey": "569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809",
+   "resolver": "8.8.4.4",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.4.4:53",
+    "-pubkey",
+    "569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809",
+    "dnsde1.dozapp.xyz",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "dnsde1.dozapp.xyz",
+   "pubkey": "569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809",
+   "resolver": "9.9.9.9",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "9.9.9.9:53",
+    "-pubkey",
+    "569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809",
+    "dnsde1.dozapp.xyz",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "dnsde1.dozapp.xyz",
+   "pubkey": "569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809",
+   "resolver": "1.0.0.1",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "1.0.0.1:53",
+    "-pubkey",
+    "569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809",
+    "dnsde1.dozapp.xyz",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "nssshvip1.vpnprous.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "8.8.8.8",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.8.8:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nssshvip1.vpnprous.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "nssshvip1.vpnprous.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "8.8.4.4",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.4.4:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nssshvip1.vpnprous.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "nssshvip1.vpnprous.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "9.9.9.9",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "9.9.9.9:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nssshvip1.vpnprous.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "nssshvip1.vpnprous.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "1.0.0.1",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "1.0.0.1:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nssshvip1.vpnprous.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "nsVIPSSH087.vpnprous.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "8.8.8.8",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.8.8:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nsVIPSSH087.vpnprous.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "nsVIPSSH087.vpnprous.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "8.8.4.4",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.4.4:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nsVIPSSH087.vpnprous.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "nsVIPSSH087.vpnprous.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "9.9.9.9",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "9.9.9.9:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nsVIPSSH087.vpnprous.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "nsVIPSSH087.vpnprous.com",
+   "pubkey": "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+   "resolver": "1.0.0.1",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "1.0.0.1:53",
+    "-pubkey",
+    "5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032",
+    "nsVIPSSH087.vpnprous.com",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "ns.up2.fcafessh.net",
+   "pubkey": "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
+   "resolver": "8.8.8.8",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.8.8:53",
+    "-pubkey",
+    "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
+    "ns.up2.fcafessh.net",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "ns.up2.fcafessh.net",
+   "pubkey": "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
+   "resolver": "8.8.4.4",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "8.8.4.4:53",
+    "-pubkey",
+    "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
+    "ns.up2.fcafessh.net",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "ns.up2.fcafessh.net",
+   "pubkey": "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
+   "resolver": "9.9.9.9",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "9.9.9.9:53",
+    "-pubkey",
+    "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
+    "ns.up2.fcafessh.net",
+    "127.0.0.1:2222"
+   ]
+  },
+  {
+   "domain": "ns.up2.fcafessh.net",
+   "pubkey": "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
+   "resolver": "1.0.0.1",
+   "argv": [
+    "libdns.so",
+    "-udp",
+    "1.0.0.1:53",
+    "-pubkey",
+    "25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026",
+    "ns.up2.fcafessh.net",
+    "127.0.0.1:2222"
+   ]
+  }
+ ],
+ "verification": {
+  "decrypted_in_sandbox": true,
+  "live_updater_fetch": "analysis-ultra/report/remote-fetch.txt (HTTP 200, 1,385,469 B)",
+  "dns_liveness": "analysis-ultra/report/liveness.txt",
+  "end_to_end": "analysis-ultra/report/e2e.txt",
+  "toolchain_self_test": "analysis-ultra/report/selftest.txt",
+  "summary": {
+   "catalogue": "VERIFIED - both catalogues decrypt completely (v3.95 bundled, v5.28 live)",
+   "credentials": "VERIFIED - domain + 64-hex dnstt pubkey + SSH account per SlowDNS server",
+   "engine_argv": "VERIFIED - read from DNSTunnelThread.run(), matches libdns.so flags",
+   "client_toolchain": "VERIFIED - a fresh dnstt client built from source moved a real HTTP 200 through a local dnstt-server over UDP (self-test)",
+   "ultra_endpoints_from_public_internet": "UNVERIFIED - all 8 domains are silent: no stream opens, no TXT answer; their authoritative NS IPs drop packets that do not come from the carrier resolvers listed in `resolvers`",
+   "carrier_path": "UNVERIFIED - none of the 49 non-public resolvers is reachable from a cloud runner, so the carrier/eSIM data-free path can only be tested from a device on one of those networks"
+  }
+ }
+}

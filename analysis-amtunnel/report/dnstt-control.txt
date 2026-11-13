@@ -1,0 +1,32 @@
+client: /home/runner/work/AM-MST/AM-MST/tools/bin/dnstt-client-linux-amd64
+urls: ['https://www.instagram.com/']
+
+=== t.control -> 127.0.0.1, tunnel domain t.control
+--- key 922180ed0b822021… on 127.0.0.1:53
+    socks=True begin_session=True stream=yes ecdh_error=no
+    log: 2026/11/13 11:42:04 uTLS fingerprint Randomized-ALPN 0
+    log: 2026/11/13 11:42:04 effective MTU 137
+    log: 2026/11/13 11:42:04 begin session 4c8ee5db
+    log: 2026/11/13 11:42:05 begin stream 4c8ee5db:3
+    log: 2026/11/13 11:42:05 begin stream 4c8ee5db:5
+    log: 2026/11/13 11:42:05 end stream 4c8ee5db:3
+    log: 2026/11/13 11:42:05 stream 4c8ee5db:5 copy stream←local: writeto tcp 127.0.0.1:23001->127.0.0.1:50640: read tcp 127.0.0.1:23001->127.0.0.1:50640: read: connection reset by peer
+    log: 2026/11/13 11:42:05 end stream 4c8ee5db:5
+    fetch: {"url": "https://www.instagram.com/", "ok": true, "stage": "done", "status": "HTTP/1.1 200 OK", "bytes": 68739, "title": "", "first_line": "4000\r\n<!DOCTYPE html><html class=\"_9dls touch _ar44\" lang=\"en\" dir=\"ltr\"><head><link data-default-ic", "seconds": 0.3}
+    *** PAGE LOADED THROUGH THE TUNNEL ***
+
+
+RESULT: tunnel carries traffic via t.control @ 127.0.0.1
+key: 922180ed0b822021edd5a760f4564340c2de972408dd4b40e45a31379cad2701
+[
+  {
+    "url": "https://www.instagram.com/",
+    "ok": true,
+    "stage": "done",
+    "status": "HTTP/1.1 200 OK",
+    "bytes": 68739,
+    "title": "",
+    "first_line": "4000\r\n<!DOCTYPE html><html class=\"_9dls touch _ar44\" lang=\"en\" dir=\"ltr\"><head><link data-default-ic",
+    "seconds": 0.3
+  }
+]

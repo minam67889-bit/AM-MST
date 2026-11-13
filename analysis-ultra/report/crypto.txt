@@ -1,0 +1,121 @@
+### crypto
+/tmp/u/src/sources/org/mindrot/jbcrypt/BCrypt.java:375:            MessageDigest messageDigest = MessageDigest.getInstance("SHA-512");
+/tmp/u/src/sources/org/spongycastle/util/io/pem/PemReader.java:12:import org.spongycastle.util.encoders.Base64;
+/tmp/u/src/sources/org/spongycastle/util/io/pem/PemReader.java:45:            return new PemObject(str, arrayList, Base64.decode(sb.toString()));
+/tmp/u/src/sources/org/spongycastle/util/io/pem/PemWriter.java:6:import org.spongycastle.util.encoders.Base64;
+/tmp/u/src/sources/org/spongycastle/util/io/pem/PemWriter.java:29:        byte[] encode = Base64.encode(bArr);
+/tmp/u/src/sources/org/spongycastle/util/encoders/Base64Encoder.java:8:public class Base64Encoder implements Encoder {
+/tmp/u/src/sources/org/spongycastle/util/encoders/Base64Encoder.java:13:    public Base64Encoder() {
+/tmp/u/src/sources/org/spongycastle/util/encoders/Base64.java:10:public class Base64 {
+/tmp/u/src/sources/org/spongycastle/util/encoders/Base64.java:11:    private static final Encoder encoder = new Base64Encoder();
+/tmp/u/src/sources/org/spongycastle/crypto/CipherParameters.java:5:public interface CipherParameters {
+/tmp/u/src/sources/org/spongycastle/crypto/PBEParametersGenerator.java:45:    public abstract CipherParameters generateDerivedMacParameters(int i);
+/tmp/u/src/sources/org/spongycastle/crypto/PBEParametersGenerator.java:47:    public abstract CipherParameters generateDerivedParameters(int i);
+/tmp/u/src/sources/org/spongycastle/crypto/PBEParametersGenerator.java:49:    public abstract CipherParameters generateDerivedParameters(int i, int i2);
+/tmp/u/src/sources/org/spongycastle/crypto/params/ParametersWithIV.java:3:import org.spongycastle.crypto.CipherParameters;
+/tmp/u/src/sources/org/spongycastle/crypto/params/ParametersWithIV.java:7:public class ParametersWithIV implements CipherParameters {
+/tmp/u/src/sources/org/spongycastle/crypto/params/ParametersWithIV.java:9:    private CipherParameters parameters;
+/tmp/u/src/sources/org/spongycastle/crypto/params/ParametersWithIV.java:11:    public ParametersWithIV(CipherParameters cipherParameters, byte[] bArr, int i, int i2) {
+/tmp/u/src/sources/org/spongycastle/crypto/params/ParametersWithIV.java:22:    public CipherParameters getParameters() {
+/tmp/u/src/sources/org/spongycastle/crypto/params/ParametersWithIV.java:26:    public ParametersWithIV(CipherParameters cipherParameters, byte[] bArr) {
+/tmp/u/src/sources/org/spongycastle/crypto/params/KeyParameter.java:3:import org.spongycastle.crypto.CipherParameters;
+/tmp/u/src/sources/org/spongycastle/crypto/params/KeyParameter.java:7:public class KeyParameter implements CipherParameters {
+/tmp/u/src/sources/org/spongycastle/crypto/Mac.java:12:    void init(CipherParameters cipherParameters) throws IllegalArgumentException;
+/tmp/u/src/sources/org/spongycastle/crypto/macs/HMac.java:5:import org.spongycastle.crypto.CipherParameters;
+/tmp/u/src/sources/org/spongycastle/crypto/macs/HMac.java:121:    public void init(CipherParameters cipherParameters) {
+/tmp/u/src/sources/org/spongycastle/crypto/generators/PKCS5S2ParametersGenerator.java:4:import org.spongycastle.crypto.CipherParameters;
+/tmp/u/src/sources/org/spongycastle/crypto/generators/PKCS5S2ParametersGenerator.java:76:    public CipherParameters generateDerivedMacParameters(int i) {
+/tmp/u/src/sources/org/spongycastle/crypto/generators/PKCS5S2ParametersGenerator.java:81:    public CipherParameters generateDerivedParameters(int i, int i2) {
+/tmp/u/src/sources/org/spongycastle/crypto/generators/PKCS5S2ParametersGenerator.java:93:    public CipherParameters generateDerivedParameters(int i) {
+/tmp/u/src/sources/org/conscrypt/KeyGeneratorImpl.java:20:    public static final class AES extends KeyGeneratorImpl {
+/tmp/u/src/sources/org/conscrypt/KeyGeneratorImpl.java:21:        public AES() {
+/tmp/u/src/sources/org/conscrypt/KeyGeneratorImpl.java:22:            super("AES", 128);
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:13:import org.conscrypt.OpenSSLCipher;
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:17:public abstract class OpenSSLAeadCipherAES extends OpenSSLAeadCipher {
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:18:    private static final int AES_BLOCK_SIZE = 16;
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:22:    public static class GCM extends OpenSSLAeadCipherAES {
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:26:        public static class AES_128 extends GCM {
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:27:            @Override // org.conscrypt.OpenSSLAeadCipherAES, org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:38:        public static class AES_256 extends GCM {
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:39:            @Override // org.conscrypt.OpenSSLAeadCipherAES, org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:49:            super(OpenSSLCipher.Mode.GCM);
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:52:        @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:53:        public void checkSupportedMode(OpenSSLCipher.Mode mode) throws NoSuchAlgorithmException {
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:54:            if (mode == OpenSSLCipher.Mode.GCM) {
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:60:        @Override // org.conscrypt.OpenSSLAeadCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:75:    public static class GCM_SIV extends OpenSSLAeadCipherAES {
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:79:        public static class AES_128 extends GCM_SIV {
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:80:            @Override // org.conscrypt.OpenSSLAeadCipherAES, org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:91:        public static class AES_256 extends GCM_SIV {
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:92:            @Override // org.conscrypt.OpenSSLAeadCipherAES, org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:102:            super(OpenSSLCipher.Mode.GCM_SIV);
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:105:        @Override // org.conscrypt.OpenSSLAeadCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:110:        @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:111:        public void checkSupportedMode(OpenSSLCipher.Mode mode) throws NoSuchAlgorithmException {
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:112:            if (mode == OpenSSLCipher.Mode.GCM_SIV) {
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:118:        @Override // org.conscrypt.OpenSSLAeadCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:126:        @Override // org.conscrypt.OpenSSLAeadCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:139:    public OpenSSLAeadCipherAES(OpenSSLCipher.Mode mode) {
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:143:    @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:150:    @Override // org.conscrypt.OpenSSLCipher, javax.crypto.CipherSpi
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:171:    @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:172:    public String getBaseCipherName() {
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:173:        return "AES";
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:176:    @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:177:    public int getCipherBlockSize() {
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:181:    @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLAeadCipherAES.java:191:    @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:17:import org.conscrypt.OpenSSLCipher;
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:21:public class OpenSSLCipherChaCha20 extends OpenSSLCipher {
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:32:    @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:40:    @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:41:    public void checkSupportedMode(OpenSSLCipher.Mode mode) throws NoSuchAlgorithmException {
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:42:        if (mode == OpenSSLCipher.Mode.NONE) {
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:48:    @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:49:    public void checkSupportedPadding(OpenSSLCipher.Padding padding) throws NoSuchPaddingException {
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:50:        if (padding == OpenSSLCipher.Padding.NOPADDING) {
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:56:    @Override // javax.crypto.CipherSpi
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:58:        OpenSSLCipherChaCha20 openSSLCipherChaCha20;
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:63:            openSSLCipherChaCha20 = this;
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:65:                i3 = openSSLCipherChaCha20.updateInternal(bArr, i, i2, bArr2, 0, outputSizeForFinal);
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:71:            openSSLCipherChaCha20 = this;
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:74:        openSSLCipherChaCha20.reset();
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:84:    @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:107:        zu0.p("IV must be specified when decrypting");
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:110:    @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:111:    public String getBaseCipherName() {
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:115:    @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:116:    public int getCipherBlockSize() {
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:120:    @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:132:                NativeCrypto.chacha20_encrypt_decrypt(bArr3, 0, bArr4, 0, 64, this.encodedKey, this.iv, this.blockCounter);
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:149:            NativeCrypto.chacha20_encrypt_decrypt(bArr, i6, bArr2, i7, i5, this.encodedKey, this.iv, this.blockCounter);
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:157:    @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:162:    @Override // org.conscrypt.OpenSSLCipher
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:167:    @Override // javax.crypto.CipherSpi
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:169:        OpenSSLCipherChaCha20 openSSLCipherChaCha20;
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:174:                openSSLCipherChaCha20 = this;
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:175:                i4 = openSSLCipherChaCha20.updateInternal(bArr, i, i2, bArr2, i3, outputSizeForFinal);
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:177:                openSSLCipherChaCha20 = this;
+/tmp/u/src/sources/org/conscrypt/OpenSSLCipherChaCha20.java:179:            openSSLCipherChaCha20.reset();
+/tmp/u/src/sources/org/conscrypt/ExternalSession.java:43:    public String getCipherSuite() {
+/tmp/u/src/sources/org/conscrypt/ExternalSession.java:44:        return this.provider.provideSession().getCipherSuite();
+/tmp/u/src/sources/org/conscrypt/ConscryptServerSocket.java:41:    public String[] getEnabledCipherSuites() {
+/tmp/u/src/sources/org/conscrypt/ConscryptServerSocket.java:42:        return this.sslParameters.getEnabledCipherSuites();
+/tmp/u/src/sources/org/conscrypt/ConscryptServerSocket.java:63:    public String[] getSupportedCipherSuites() {
+/tmp/u/src/sources/org/conscrypt/ConscryptServerSocket.java:64:        return NativeCrypto.getSupportedCipherSuites();
+/tmp/u/src/sources/org/conscrypt/ConscryptServerSocket.java:96:    public void setEnabledCipherSuites(String[] strArr) {
+/tmp/u/src/sources/org/conscrypt/ConscryptServerSocket.java:97:        this.sslParameters.setEnabledCipherSuites(strArr);
+/tmp/u/src/sources/org/conscrypt/ct/CertificateEntry.java:60:                MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+/tmp/u/src/sources/org/conscrypt/ct/LogInfo.java:64:                this.logId = MessageDigest.getInstance("SHA-256").digest(publicKey.getEncoded());
+/tmp/u/src/sources/org/conscrypt/SSLNullSession.java:49:    public String getCipherSuite() {
+/tmp/u/src/sources/org/conscrypt/metrics/StatsLogImpl.java:106:        write(317, z, Protocol.forName(str).getId(), CipherSuite.forName(str2).getId(), (int) j, Platform.getStatsSource().getId(), Platform.getUids());
+/tmp/u/src/sources/org/conscrypt/metrics/CipherSuite.java:5:public enum CipherSuite {
+/tmp/u/src/sources/org/conscrypt/metrics/CipherSuite.java:7:    TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA(ConscryptStatsLog.TLS_HANDSHAKE_REPORTED__CIPHER_SUITE__TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA),
+/tmp/u/src/sources/org/conscrypt/metrics/CipherSuite.java:8:    TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA(ConscryptStatsLog.TLS_HANDSHAKE_REPORTED__CIPHER_SUITE__TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA),
+/tmp/u/src/sources/org/conscrypt/metrics/CipherSuite.java:9:    TLS_RSA_WITH_AES_256_CBC_SHA(53),
+/tmp/u/src/sources/org/conscrypt/metrics/CipherSuite.java:10:    TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA(ConscryptStatsLog.TLS_HANDSHAKE_REPORTED__CIPHER_SUITE__TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA),
+/tmp/u/src/sources/org/conscrypt/metrics/CipherSuite.java:11:    TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA(ConscryptStatsLog.TLS_HANDSHAKE_REPORTED__CIPHER_SUITE__TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA),
+/tmp/u/src/sources/org/conscrypt/metrics/CipherSuite.java:12:    TLS_RSA_WITH_AES_128_CBC_SHA(47),
+/tmp/u/src/sources/org/conscrypt/metrics/CipherSuite.java:14:    TLS_RSA_WITH_AES_128_GCM_SHA256(ConscryptStatsLog.TLS_HANDSHAKE_REPORTED__CIPHER_SUITE__TLS_RSA_WITH_AES_128_GCM_SHA256),
+/tmp/u/src/sources/org/conscrypt/metrics/CipherSuite.java:15:    TLS_RSA_WITH_AES_256_GCM_SHA384(ConscryptStatsLog.TLS_HANDSHAKE_REPORTED__CIPHER_SUITE__TLS_RSA_WITH_AES_256_GCM_SHA384),
+/tmp/u/src/sources/org/conscrypt/metrics/CipherSuite.java:16:    TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256(ConscryptStatsLog.TLS_HANDSHAKE_REPORTED__CIPHER_SUITE__TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256),

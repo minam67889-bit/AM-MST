@@ -1,0 +1,132 @@
++ sudo apt-get install -y -qq android-sdk-libsparse-utils e2fsprogs unzip
+Selecting previously unselected package android-liblog:amd64.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 217763 files and directories currently installed.)
+Preparing to unpack .../android-liblog_1%3a34.0.4-1build3_amd64.deb ...
+Unpacking android-liblog:amd64 (1:34.0.4-1build3) ...
+Selecting previously unselected package android-libbase:amd64.
+Preparing to unpack .../android-libbase_1%3a34.0.4-1build3_amd64.deb ...
+Unpacking android-libbase:amd64 (1:34.0.4-1build3) ...
+Selecting previously unselected package android-libsparse:amd64.
+Preparing to unpack .../android-libsparse_1%3a34.0.4-1build3_amd64.deb ...
+Unpacking android-libsparse:amd64 (1:34.0.4-1build3) ...
+Selecting previously unselected package android-sdk-libsparse-utils.
+Preparing to unpack .../android-sdk-libsparse-utils_1%3a34.0.4-1build3_amd64.deb ...
+Unpacking android-sdk-libsparse-utils (1:34.0.4-1build3) ...
+Setting up android-liblog:amd64 (1:34.0.4-1build3) ...
+Setting up android-libbase:amd64 (1:34.0.4-1build3) ...
+Setting up android-libsparse:amd64 (1:34.0.4-1build3) ...
+Setting up android-sdk-libsparse-utils (1:34.0.4-1build3) ...
+Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
++ export ANDROID_HOME=/usr/local/lib/android/sdk
++ ANDROID_HOME=/usr/local/lib/android/sdk
++ echo ANDROID_HOME=/usr/local/lib/android/sdk
+ANDROID_HOME=/usr/local/lib/android/sdk
++ ls /usr/local/lib/android/sdk
++ head
+build-tools
+cmake
+cmdline-tools
+extras
+licenses
+ndk
+packages-list.txt
+platform-tools
+platforms
+++ command -v sdkmanager
+++ echo /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager
++ SDKMANAGER=/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager
++ echo sdkmanager=/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager
+sdkmanager=/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager
++ yes
++ /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses
+yes: standard output: Broken pipe
++ /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager 'system-images;android-24;default;arm64-v8a'
++ tail -5
+Loading package information...                                                  Loading local repository...                                                     [                                       ] 3% Loading local repository...        [                                       ] 3% Fetch remote repository...         [=                                      ] 3% Fetch remote repository...         [=                                      ] 4% Fetch remote repository...         [=                                      ] 5% Fetch remote repository...         [==                                     ] 5% Fetch remote repository...         [==                                     ] 6% Fetch remote repository...         [==                                     ] 7% Fetch remote repository...         [==                                     ] 7% Computing updates...               [===                                    ] 8% Computing updates...               [===                                    ] 10% Computing updates...              [===                                    ] 10% Installing ARM 64 v8a System Image[===                                    ] 10% Downloading arm64-v8a-24_r09.zip..[====                                   ] 10% Downloading arm64-v8a-24_r09.zip..[====                                   ] 11% Downloading arm64-v8a-24_r09.zip..[====                                   ] 12% Downloading arm64-v8a-24_r09.zip..[=====                                  ] 13% Downloading arm64-v8a-24_r09.zip..[=====                                  ] 14% Downloading arm64-v8a-24_r09.zip..[=====                                  ] 15% Downloading arm64-v8a-24_r09.zip..[======                                 ] 15% Downloading arm64-v8a-24_r09.zip..[======                                 ] 16% Downloading arm64-v8a-24_r09.zip..[======                                 ] 17% Downloading arm64-v8a-24_r09.zip..[=======                                ] 18% Downloading arm64-v8a-24_r09.zip..[=======                                ] 19% Downloading arm64-v8a-24_r09.zip..[=======                                ] 20% Downloading arm64-v8a-24_r09.zip..[========                               ] 20% Downloading arm64-v8a-24_r09.zip..[========                               ] 21% Downloading arm64-v8a-24_r09.zip..[========                               ] 22% Downloading arm64-v8a-24_r09.zip..[=========                              ] 23% Downloading arm64-v8a-24_r09.zip..[=========                              ] 24% Downloading arm64-v8a-24_r09.zip..[=========                              ] 25% Downloading arm64-v8a-24_r09.zip..[==========                             ] 25% Downloading arm64-v8a-24_r09.zip..[==========                             ] 26% Downloading arm64-v8a-24_r09.zip..[==========                             ] 27% Downloading arm64-v8a-24_r09.zip..[===========                            ] 28% Downloading arm64-v8a-24_r09.zip..[===========                            ] 29% Downloading arm64-v8a-24_r09.zip..[===========                            ] 30% Downloading arm64-v8a-24_r09.zip..[============                           ] 30% Downloading arm64-v8a-24_r09.zip..[============                           ] 31% Downloading arm64-v8a-24_r09.zip..[============                           ] 32% Downloading arm64-v8a-24_r09.zip..[============                           ] 33% Downloading arm64-v8a-24_r09.zip..[============                           ] 33% Unzipping...                      [============                           ] 33% Unzipping... arm64-v8a/           [============                           ] 33% Unzipping... arm64-v8a/advancedFea[=============                          ] 33% Unzipping... arm64-v8a/advancedFea[=============                          ] 33% Unzipping... arm64-v8a/kernel-ranc[=============                          ] 33% Unzipping... arm64-v8a/NOTICE.txt [=============                          ] 33% Unzipping... arm64-v8a/kernel-qemu[=============                          ] 33% Unzipping... arm64-v8a/build.prop [=============                          ] 33% Unzipping... arm64-v8a/userdata.im[=============                          ] 34% Unzipping... arm64-v8a/userdata.im[=============                          ] 34% Unzipping... arm64-v8a/source.prop[=============                          ] 34% Unzipping... arm64-v8a/ramdisk.img[=============                          ] 34% Unzipping... arm64-v8a/system.img [=============                          ] 35% Unzipping... arm64-v8a/system.img [==============                         ] 35% Unzipping... arm64-v8a/system.img [==============                         ] 36% Unzipping... arm64-v8a/system.img [==============                         ] 37% Unzipping... arm64-v8a/system.img [===============                        ] 38% Unzipping... arm64-v8a/system.img [===============                        ] 39% Unzipping... arm64-v8a/system.img [===============                        ] 40% Unzipping... arm64-v8a/system.img [================                       ] 40% Unzipping... arm64-v8a/system.img [================                       ] 41% Unzipping... arm64-v8a/system.img [================                       ] 42% Unzipping... arm64-v8a/system.img [=================                      ] 43% Unzipping... arm64-v8a/system.img [=================                      ] 44% Unzipping... arm64-v8a/system.img [=================                      ] 45% Unzipping... arm64-v8a/system.img [==================                     ] 45% Unzipping... arm64-v8a/system.img [==================                     ] 46% Unzipping... arm64-v8a/system.img [==================                     ] 47% Unzipping... arm64-v8a/system.img [===================                    ] 48% Unzipping... arm64-v8a/system.img [===================                    ] 49% Unzipping... arm64-v8a/system.img [===================                    ] 50% Unzipping... arm64-v8a/system.img [====================                   ] 50% Unzipping... arm64-v8a/system.img [====================                   ] 51% Unzipping... arm64-v8a/system.img [====================                   ] 52% Unzipping... arm64-v8a/system.img [=====================                  ] 53% Unzipping... arm64-v8a/system.img [=====================                  ] 54% Unzipping... arm64-v8a/system.img [=====================                  ] 55% Unzipping... arm64-v8a/system.img [=======================================] 100% Unzipping... arm64-v8a/system.img
+
+++ head -1
+++ find /usr/local/lib/android/sdk -type d -path '*android-24*arm64-v8a*'
++ IMGDIR=/usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a
++ echo IMGDIR=/usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a
+IMGDIR=/usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a
++ ls -l /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a
++ head
+total 3202888
+-rw-r--r-- 1 runner runner    1686439 Oct 29 10:23 NOTICE.txt
+-rw-r--r-- 1 runner runner        121 Oct 29 10:23 advancedFeatures.ini
+-rw-r--r-- 1 runner runner       2232 Oct 29 10:23 build.prop
+-rwxr-xr-x 1 runner runner    7748096 Oct 29 10:23 kernel-qemu
+-rwxr-xr-x 1 runner runner    7748096 Oct 29 10:23 kernel-ranchu
+-rw-r--r-- 1 runner runner      18469 Oct 29 10:24 package.xml
+-rw-r--r-- 1 runner runner    1455579 Oct 29 10:23 ramdisk.img
+-rw-r--r-- 1 runner runner        175 Oct 29 10:23 source.properties
+-rw-r--r-- 1 runner runner 2684354560 Oct 29 10:24 system.img
++ IMGFILE=/usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
++ ls -l /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
+-rw-r--r-- 1 runner runner 2684354560 Oct 29 10:24 /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img
++ mkdir -p sysroot/system/bin sysroot/system/lib64
++ sudo modprobe loop
++ sudo mount -o loop,ro /usr/local/lib/android/sdk/system-images/android-24/default/arm64-v8a/system.img /mnt
++ echo mounted
+mounted
++ head
++ ls /mnt
+app
+bin
+build.prop
+etc
+fake-libs
+fonts
+framework
+lib64
+lost+found
+media
++ sudo cp /mnt/bin/linker64 sysroot/system/bin/
++ sudo cp -a /mnt/lib64/interrupter.so /mnt/lib64/invoke_mock_media_player.so /mnt/lib64/libEGL.so /mnt/lib64/libETC1.so /mnt/lib64/libFFTEm.so /mnt/lib64/libGLESv1_CM.so /mnt/lib64/libGLESv1_enc.so /mnt/lib64/libGLESv2.so /mnt/lib64/libGLESv2_enc.so /mnt/lib64/libGLESv3.so /mnt/lib64/libLLVM.so /mnt/lib64/libOpenMAXAL.so /mnt/lib64/libOpenSLES.so /mnt/lib64/libOpenglSystemCommon.so /mnt/lib64/libRS.so /mnt/lib64/libRSCpuRef.so /mnt/lib64/libRSDriver.so /mnt/lib64/libRS_internal.so /mnt/lib64/libRScpp.so /mnt/lib64/libWnnEngDic.so /mnt/lib64/libWnnJpnDic.so /mnt/lib64/lib_renderControl_enc.so /mnt/lib64/libandroid.so /mnt/lib64/libandroid_runtime.so /mnt/lib64/libandroid_servers.so /mnt/lib64/libandroidfw.so /mnt/lib64/libapmanager-client.so /mnt/lib64/libappfuse_jni.so /mnt/lib64/libart-compiler.so /mnt/lib64/libart-disassembler.so /mnt/lib64/libart.so /mnt/lib64/libaudioeffect_jni.so /mnt/lib64/libaudioflinger.so /mnt/lib64/libaudiopolicyenginedefault.so /mnt/lib64/libaudiopolicymanager.so /mnt/lib64/libaudiopolicymanagerdefault.so /mnt/lib64/libaudiopolicyservice.so /mnt/lib64/libaudioresampler.so /mnt/lib64/libaudiospdif.so /mnt/lib64/libaudioutils.so /mnt/lib64/libavahi-client.so /mnt/lib64/libavahi-common.so /mnt/lib64/libbacktrace.so /mnt/lib64/libbacktrace_test.so /mnt/lib64/libbase.so /mnt/lib64/libbcc.so /mnt/lib64/libbcinfo.so /mnt/lib64/libbinary_parse.so /mnt/lib64/libbinder.so /mnt/lib64/libbinderwrapper.so /mnt/lib64/libblas.so /mnt/lib64/libbrillo-binder.so /mnt/lib64/libbrillo-dbus.so /mnt/lib64/libbrillo-http.so /mnt/lib64/libbrillo-stream.so /mnt/lib64/libbrillo.so /mnt/lib64/libc++.so /mnt/lib64/libc.so /mnt/lib64/libc_malloc_debug.so /mnt/lib64/libcamera2ndk.so /mnt/lib64/libcamera_client.so /mnt/lib64/libcamera_metadata.so /mnt/lib64/libcameraservice.so /mnt/lib64/libcap.so /mnt/lib64/libchrome-crypto.so /mnt/lib64/libchrome-dbus.so /mnt/lib64/libchrome.so /mnt/lib64/libcompiler_rt.so /mnt/lib64/libcrypto.so /mnt/lib64/libcurl.so /mnt/lib64/libcutils.so /mnt/lib64/libdbus.so /mnt/lib64/libdefcontainer_jni.so /mnt/lib64/libdiskconfig.so /mnt/lib64/libdl.so /mnt/lib64/libdng_sdk.so /mnt/lib64/libdrmframework.so /mnt/lib64/libdrmframework_jni.so /mnt/lib64/libeffects.so /mnt/lib64/libevent.so /mnt/lib64/libexif.so /mnt/lib64/libexpat.so /mnt/lib64/libext2_blkid.so /mnt/lib64/libext2_com_err.so /mnt/lib64/libext2_e2p.so /mnt/lib64/libext2_profile.so /mnt/lib64/libext2_quota.so /mnt/lib64/libext2_uuid.so /mnt/lib64/libext2fs.so /mnt/lib64/libext4_utils.so /mnt/lib64/libf2fs_sparseblock.so /mnt/lib64/libfilterfw.so /mnt/lib64/libfilterpack_imageproc.so /mnt/lib64/libframesequence.so /mnt/lib64/libft2.so /mnt/lib64/libgabi++.so /mnt/lib64/libgatekeeper.so /mnt/lib64/libgiftranscode.so /mnt/lib64/libgui.so /mnt/lib64/libhardware.so /mnt/lib64/libhardware_legacy.so /mnt/lib64/libharfbuzz_ng.so /mnt/lib64/libhidcommand_jni.so /mnt/lib64/libhwui.so /mnt/lib64/libicui18n.so /mnt/lib64/libicuuc.so /mnt/lib64/libimage_type_recognition.so /mnt/lib64/libimg_utils.so /mnt/lib64/libinput.so /mnt/lib64/libinputflinger.so /mnt/lib64/libinputservice.so /mnt/lib64/libiperf.so /mnt/lib64/libiprouteutil.so /mnt/lib64/libjavacore.so /mnt/lib64/libjavacrypto.so /mnt/lib64/libjni_eglfence.so /mnt/lib64/libjni_filtershow_filters.so /mnt/lib64/libjni_jpegstream.so /mnt/lib64/libjni_jpegutil.so /mnt/lib64/libjni_latinime.so /mnt/lib64/libjni_pacprocessor.so /mnt/lib64/libjni_tinyplanet.so /mnt/lib64/libjnigraphics.so /mnt/lib64/libjpeg.so /mnt/lib64/libkeymaster1.so /mnt/lib64/libkeymaster_messages.so /mnt/lib64/libkeystore-engine.so /mnt/lib64/libkeystore_binder.so /mnt/lib64/liblog.so /mnt/lib64/liblogwrap.so /mnt/lib64/liblz4.so /mnt/lib64/liblzma.so /mnt/lib64/libm.so /mnt/lib64/libmdnssd.so /mnt/lib64/libmedia.so /mnt/lib64/libmedia_jni.so /mnt/lib64/libmediacodecservice.so /mnt/lib64/libmediadrm.so /mnt/lib64/libmediaextractorservice.so /mnt/lib64/libmedialogservice.so /mnt/lib64/libmediandk.so /mnt/lib64/libmediaplayerservice.so /mnt/lib64/libmediautils.so /mnt/lib64/libmemtrack.so /mnt/lib64/libmemunreachable.so /mnt/lib64/libmicrohttpd.so /mnt/lib64/libminijail.so /mnt/lib64/libminikin.so /mnt/lib64/libmtp.so /mnt/lib64/libnativebridge.so /mnt/lib64/libnativehelper.so /mnt/lib64/libnativeloader.so /mnt/lib64/libnativepower.so /mnt/lib64/libnbaio.so /mnt/lib64/libnetd_client.so /mnt/lib64/libnetdaidl.so /mnt/lib64/libnetlink.so /mnt/lib64/libnetutils.so /mnt/lib64/libnfc_ndef.so /mnt/lib64/libnl.so /mnt/lib64/libopenjdk.so /mnt/lib64/libopenjdkjvm.so /mnt/lib64/libopus.so /mnt/lib64/libpac.so /mnt/lib64/libpackagelistparser.so /mnt/lib64/libpagemap.so /mnt/lib64/libpcre.so /mnt/lib64/libpcrecpp.so /mnt/lib64/libpdfium.so /mnt/lib64/libpiex.so /mnt/lib64/libpixelflinger.so /mnt/lib64/libpng.so /mnt/lib64/libpower.so /mnt/lib64/libpowermanager.so /mnt/lib64/libprintspooler_jni.so /mnt/lib64/libprocessgroup.so /mnt/lib64/libprotobuf-cpp-lite.so /mnt/lib64/libradio.so /mnt/lib64/libradio_metadata.so /mnt/lib64/libradioservice.so /mnt/lib64/libreference-ril.so /mnt/lib64/libresourcemanagerservice.so /mnt/lib64/libril.so /mnt/lib64/librilutils.so /mnt/lib64/librs_jni.so /mnt/lib64/librtp_jni.so /mnt/lib64/libselinux.so /mnt/lib64/libsensorservice.so /mnt/lib64/libserviceutility.so /mnt/lib64/libshill-client.so /mnt/lib64/libsigchain.so /mnt/lib64/libskia.so /mnt/lib64/libsoftkeymaster.so /mnt/lib64/libsoftkeymasterdevice.so /mnt/lib64/libsonic.so /mnt/lib64/libsonivox.so /mnt/lib64/libsoundpool.so /mnt/lib64/libsoundtrigger.so /mnt/lib64/libsoundtriggerservice.so /mnt/lib64/libsparse.so /mnt/lib64/libspeexresampler.so /mnt/lib64/libsqlite.so /mnt/lib64/libssl.so /mnt/lib64/libstagefright.so /mnt/lib64/libstagefright_amrnb_common.so /mnt/lib64/libstagefright_avc_common.so /mnt/lib64/libstagefright_enc_common.so /mnt/lib64/libstagefright_foundation.so /mnt/lib64/libstagefright_http_support.so /mnt/lib64/libstagefright_httplive.so /mnt/lib64/libstagefright_omx.so /mnt/lib64/libstagefright_soft_aacdec.so /mnt/lib64/libstagefright_soft_aacenc.so /mnt/lib64/libstagefright_soft_amrdec.so /mnt/lib64/libstagefright_soft_amrnbenc.so /mnt/lib64/libstagefright_soft_amrwbenc.so /mnt/lib64/libstagefright_soft_avcdec.so /mnt/lib64/libstagefright_soft_avcenc.so /mnt/lib64/libstagefright_soft_flacenc.so /mnt/lib64/libstagefright_soft_g711dec.so /mnt/lib64/libstagefright_soft_gsmdec.so /mnt/lib64/libstagefright_soft_hevcdec.so /mnt/lib64/libstagefright_soft_mp3dec.so /mnt/lib64/libstagefright_soft_mpeg2dec.so /mnt/lib64/libstagefright_soft_mpeg4dec.so /mnt/lib64/libstagefright_soft_mpeg4enc.so /mnt/lib64/libstagefright_soft_opusdec.so /mnt/lib64/libstagefright_soft_rawdec.so /mnt/lib64/libstagefright_soft_vorbisdec.so /mnt/lib64/libstagefright_soft_vpxdec.so /mnt/lib64/libstagefright_soft_vpxenc.so /mnt/lib64/libstagefright_wfd.so /mnt/lib64/libstagefright_yuv.so /mnt/lib64/libstdc++.so /mnt/lib64/libsurfaceflinger.so /mnt/lib64/libsurfaceflinger_ddmconnection.so /mnt/lib64/libsuspend.so /mnt/lib64/libsync.so /mnt/lib64/libsysutils.so /mnt/lib64/libtiff_directory.so /mnt/lib64/libtinyalsa.so /mnt/lib64/libttscompat.so /mnt/lib64/libttspico.so /mnt/lib64/libui.so /mnt/lib64/libunwind.so /mnt/lib64/libusbhost.so /mnt/lib64/libutils.so /mnt/lib64/libvixl.so /mnt/lib64/libvorbisidec.so /mnt/lib64/libvulkan.so /mnt/lib64/libweave.so /mnt/lib64/libwebrtc_audio_preprocessing.so /mnt/lib64/libwebserv.so /mnt/lib64/libwebservd-client-internal.so /mnt/lib64/libwebviewchromium_loader.so /mnt/lib64/libwebviewchromium_plat_support.so /mnt/lib64/libwifi-service.so /mnt/lib64/libwilhelm.so /mnt/lib64/libwnndict.so /mnt/lib64/libwpa_client.so /mnt/lib64/libxmlrpc++.so /mnt/lib64/libz.so sysroot/system/lib64/
++ sudo umount /mnt
++ sudo chown -R runner sysroot
++ ls -l sysroot/system/bin sysroot/system/lib64
++ head -30
+sysroot/system/bin:
+total 908
+-rwxr-xr-x 1 runner root 926936 Oct 29 10:25 linker64
+
+sysroot/system/lib64:
+total 100624
+-rw-r--r--. 1 runner root     6192 Jun  8  2022 interrupter.so
+-rw-r--r--. 1 runner root    10304 Jun  8  2022 invoke_mock_media_player.so
+-rw-r--r--. 1 runner root   129224 Jun  8  2022 libEGL.so
+-rw-r--r--. 1 runner root    14312 Jun  8  2022 libETC1.so
+-rw-r--r--. 1 runner root   329888 Jun  8  2022 libFFTEm.so
+-rw-r--r--. 1 runner root    38832 Jun  8  2022 libGLESv1_CM.so
+-rw-r--r--. 1 runner root   297088 Jun  8  2022 libGLESv1_enc.so
+-rw-r--r--. 1 runner root    87984 Jun  8  2022 libGLESv2.so
+-rw-r--r--. 1 runner root   497792 Jun  8  2022 libGLESv2_enc.so
+-rw-r--r--. 1 runner root    87984 Jun  8  2022 libGLESv3.so
+-rw-r--r--. 1 runner root 18484248 Jun  8  2022 libLLVM.so
+-rw-r--r--. 1 runner root    10296 Jun  8  2022 libOpenMAXAL.so
+-rw-r--r--. 1 runner root    10296 Jun  8  2022 libOpenSLES.so
+-rw-r--r--. 1 runner root    30864 Jun  8  2022 libOpenglSystemCommon.so
+-rw-r--r--. 1 runner root    47080 Jun  8  2022 libRS.so
+-rw-r--r--. 1 runner root   780432 Jun  8  2022 libRSCpuRef.so
+-rw-r--r--. 1 runner root   215160 Jun  8  2022 libRSDriver.so
+-rw-r--r--. 1 runner root   306040 Jun  8  2022 libRS_internal.so
+-rw-r--r--. 1 runner root   329848 Jun  8  2022 libRScpp.so
+-rw-r--r--. 1 runner root  1193552 Jun  8  2022 libWnnEngDic.so
+-rw-r--r--. 1 runner root  1342440 Jun  8  2022 libWnnJpnDic.so
+-rw-r--r--. 1 runner root    43144 Jun  8  2022 lib_renderControl_enc.so
+-rw-r--r--. 1 runner root   108848 Jun  8  2022 libandroid.so
+-rw-r--r--. 1 runner root  1646168 Jun  8  2022 libandroid_runtime.so
+ls: write error: Broken pipe
++ file sysroot/system/bin/linker64
+sysroot/system/bin/linker64: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), static-pie linked, BuildID[md5/uuid]=7c2ee2ea8fc36b28a84acff63989e5d9, not stripped

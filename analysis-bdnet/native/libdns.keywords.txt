@@ -1,0 +1,129 @@
+	JwmwWA14i!dns:"size-base64:PublicKeyLength"
+	LookupTXT
+	jlMtugp0J
+    	StringFormat[]byteuint16uint32uint64structchan<-<-chan Valuesysmontimersefenceselect, not object next= jobs= goid sweep  B -> % util alloc free  span= prev= list=, i =  code= addr=], sp= m->p= p->m=SCHED  curg= ctxt: min=  max= bad ts(...)
+ (scan  MB in pacer: % CPU ( zombie, j0 = head = ,errno=panic:  nmsys= locks= dying= allocsGODEBUGSignal signal  m->g0= pad1=  pad2=  text= minpc= 	value= (scan)	types : type 19531259765625TuesdayJanuaryOctoberAvestanBengaliBrailleCypriotDeseretElbasanElymaicGranthaHanunooKannadaMakasarMandaicMarchenMultaniMyanmarOsmanyaSharadaShavianSiddhamSinhalaSogdianSoyomboTagalogTibetanTirhutaRadicalRSASHA1ED25519BlockedNOERRORFORMERRREFUSEDYXRRSETNXRRSETNOTAUTHNOTZONEBADTIMEBADMODEBADNAMEdohpathCDNSKEYRESINFOIACPKIXNOTIMPL::ffff:%16.16x%12.12xrecvmsgsendmsgconnectlookup abortedstoppedatomicsos/execruntimetls3desnil keyDES-CBCEd25519MD5-RSASHA-224SHA-256SHA-384SHA-512ENOEXECENOTBLKENOTDIRETXTBSYEDEADLKEUNATCHEBADRQCEBADSLTENODATAEREMOTEENOLINKEDOTDOTEBADMSGEREMCHGELIBACCELIBBADELIBSCNELIBMAXENOTSUPENOBUFSEISCONNEUCLEANENOTNAMENAVAILERFKILLSIGQUITSIGTRAPSIGABRTSIGKILLSIGUSR1SIGSEGVSIGUSR2SIGPIPESIGALRMSIGTERMSIGCHLDSIGCONTSIGSTOPSIGTSTPSIGTTINSIGTTOUSIGXCPUSIGXFSZSIGPROFTypeSOATypePTRTypeTXTTypeSRVTypeOPTTypeWKSTypeALLanswers2.5.4.62.5.4.32.5.4.72.5.4.82.5.4.92.5.4.5asimdhpasimrdmasimddpNotAfterBikjaNxgCPxMhwSgD42qUCzLDETpUbOdDNSNamesDb1vXqPIValidityF28gpQsAFcGv9_8hKeyUsageGxxKDxLBI8i0GeZJProvinceJICdRJErJwIpUSG1LocalityK69bRNhCPoliciesKMtPpye8Kx8g8m9vLmN9_viXOPOwuaG7Pl66dkWkQYY4EiQiRas7efKaRbxZSeg0UsU0d5t7UniqueIdWeEBwtDoYhxjIbdxZXx2zlzlZpslHFjjayfcaFgEb8wDQqY4dx02XiBti1foaivWvalidityzS8m9a0xscavengepollDesctraceBufdeadlockraceFinipanicnilcgocheckrunnable is not  pointer, errno= packed=BAD RANK status unknown(trigger= npages= nalloc= nfreed=) errno=[signal  newval= mcount= bytes, r0      r1      r2      r3      r4      r5      r6      r7      r8      r9      r10     r11     r12     r13     r14     r15     r16     r17     r18     r19     r20     r21     r22     r23     r24     r25     r26     r27     r28     r29     lr      sp      pc      fault   
+ max=scav  ptr ] = (trap:init  ms, fault tab= top=[...], fp:1562578125MarchAprilAdlamBamumBatakBuhidDograGreekKhmerLatinLimbuNushuOghamOriyaOsageRunicTakriTamilSTermED448OtherQUERYohttpAFSDBCNAMECSYNCDHCIDDNAMEEUI48EUI64HINFOHTTPSMAILAMAILBMINFONAPTRNINFONSEC3RRSIGSSHFPUINFOISPKICLASSdns: udp: fileshttpsimap2imap3imapspop3shostspmullcrc32cpuidSHA-1P-256P-384P-521EPERMESRCHEINTRENXIOE2BIGEBADFEBUSYEXDEVEFBIGEROFSEPIPEELOOPEIDRMEBADEEBADRETIMEENOSRECOMMSIGIO (at TypeAClassasimdjscvtlrcpcdcpopA28mBVIssuerB63sKoBJmHW6BLHgTHDZchYnE1CTu5EnzCV9EvW4aeFiDQ1HGJZ74PGdvW0wGqiyWVH77Dn7HkqSV1IvWidHLP0xExTBSCSRSUQx1uSz6lDKTKzdQUNumberValuesU1G6OeUa_D53WMJtOMXqgbfOY3y5H1Ya7nX9ZKlHg6yDHaEXzeezVylistentunnelreportstring
+*chacha8rand.State
+, size = bad prune, tail = newosprocrecover:  not in [ctxt != 0, oldval=, newval= threads=: status= blocked= lockedg=atomicor8 runtime= sigcode= m->curg=(unknown)traceback} stack=[ gp.goid= lockedm=
+BytesCompressed
+CDy9pmTUy.go
+CertificateAmxMQGAsp_wTBSCertListBB65uUDOyjpC22OaXI3vjKC4TmPf_TsoXDcYbWXE4q6KGNmuNgTUqveExtKeyUsageGtaltR0u_PkHm0QaPrPus9HsaqOS03k52JP1bv1v3pLKOFEO9j5daYmOaDNieolcnpPVW8_FSULHQRDNSequenceQLRYhqxK3dIR6pIVCBNRPMRlhoUvNsLgbRpLBN4D1Eg5UWJN7s8epkfIPAddressesVVGBOdip2a2awrsTuLmsyAcertificatehjnD_Nn2x0uU
+Decrypt
+Dhau0IJjaa	dns:"txt"
+Dmny24JkSGO.(*JRgaR8).SetEDNS0
+Encrypt
+HN7aesbr5.go
+Iq0DcK.(*Lb0Jaj).IsEdns0
+Iq0DcK.zDO_U6Haa.d3htXtQSHYv
+IsEdns0
+P60kOc2	dns:"txt"
+ServeDNS
+SetEdns0
+TXTResource
+Vmheap.freeSpanLocked - invalid free of user arena chunkcasfrom_Gscanstatus:top gp->status is not in scan stateprofilealloc called without a P or outside bootstrappingin gcMark expecting to see gcphase as _GCmarkterminationruntime: netpoll: eventfd ready for something unexpectedruntime: checkmarks found unexpected unmarked object obj=runtime: failed to disable profiling timer; timer_delete(non-Go code set up signal handler without SA_ONSTACK flag
+XoraHYtFk.go
+Ybgo/typesnet/httpgo/buildnetedns0tlskyberx509sha1
+aEsfk4
+aeshashbody
+bIY56Az8/chacha8.go
+cgoCtxt
+chacha8
+d3htXtQSHYv
+dRNDqj.(*ksCYuw).im7mZXoR
+dns:"base64"
+e.XuR|YAescSfs=cHZq g^"rt
+eRevokedCertificatesPermittedURIDomainsRevocationListEntryPermittedDNSDomainsstrongFromWeakQueueGC mark terminationSIGTRAP: trace trapwait for debug callcgocall unavailablepanicwrap: no ( in panicwrap: no ) in  called using nil *unknown wait reasonnotesleep not on g0GC work not flushedunaligned sysUnused/gc/scan/heap:bytes/gc/heap/goal:bytes/gc/heap/live:bytesbad kind in runfinqmarkroot: bad indexnwait > work.nprocs, gp->atomicstatus=marking free object KiB work (eager),  [controller reset]mspan.sweep: state=sysMemStat overflowbad sequence numberpanic during mallocpanic holding locksmissing deferreturnunexpected gp.parampanic during panic
+gtxTEmRnevVP.go
+im7mZXoR
+internal/chacha8rand
+internal/chacha8rand.(*State).Init
+internal/chacha8rand.(*State).Init64
+internal/chacha8rand.(*State).Next
+internal/chacha8rand.(*State).Refill
+internal/chacha8rand.(*State).Reseed
+internal/chacha8rand.block
+isUnusedUserArenaChunk
+isUserArenaChunk
+lexorkDIJKIW.go
+pc=  G125625MayUTCHanLaoMroNkoVaiDSAANYechAPLAVCCAACDSDLVEIDGIDHIPKEYL32L64LOCNIDNXTOPTPTRSIGSOASPFSRVTXTUIDURIX25PGPtcp:0xkeycgodnsftpssh::1setaesMD4MD5EIO): TTLsm3sm4sveIsCANameSendAlgoQinvURIsTypeChanHashflagtyp_trueuintreadopenstatsyncfileboolint8chanfunccallkind on allgallprootitabsbrkidledead is LEAFbase of ) =  <==GOGC] = s + ,r2= pc=+Inf-Inf: p=cas1cas2cas3cas4cas5cas6 at 
+runtime.(*atomicScavChunkData).load
+runtime.(*atomicScavChunkData).store
+runtime.(*mheap).reclaimChunk
+runtime.(*mspan).setUserArenaChunkToFault
+runtime.(*mspan).setUserArenaChunkToFault.func1
+runtime.(*pageAlloc).chunkOf
+runtime.(*pageAlloc).enableChunkHugePages
+runtime.(*scavChunkData).alloc
+runtime.(*scavChunkData).free
+runtime.(*scavChunkFlags).isEmpty
+runtime.(*scavChunkFlags).setEmpty
+runtime.(*scavChunkFlags).setNonEmpty
+runtime.(*sigctxt).fault
+runtime.(*sigctxt).lr
+runtime.(*sigctxt).pc
+runtime.(*sigctxt).preparePanic
+runtime.(*sigctxt).pushCall
+runtime.(*sigctxt).r0
+runtime.(*sigctxt).r1
+runtime.(*sigctxt).r10
+runtime.(*sigctxt).r11
+runtime.(*sigctxt).r12
+runtime.(*sigctxt).r13
+runtime.(*sigctxt).r14
+runtime.(*sigctxt).r15
+runtime.(*sigctxt).r16
+runtime.(*sigctxt).r17
+runtime.(*sigctxt).r18
+runtime.(*sigctxt).r19
+runtime.(*sigctxt).r2
+runtime.(*sigctxt).r20
+runtime.(*sigctxt).r21
+runtime.(*sigctxt).r22
+runtime.(*sigctxt).r23
+runtime.(*sigctxt).r24
+runtime.(*sigctxt).r25
+runtime.(*sigctxt).r26
+runtime.(*sigctxt).r27
+runtime.(*sigctxt).r28
+runtime.(*sigctxt).r29
+runtime.(*sigctxt).r3
+runtime.(*sigctxt).r4
+runtime.(*sigctxt).r5
+runtime.(*sigctxt).r6
+runtime.(*sigctxt).r7
+runtime.(*sigctxt).r8
+runtime.(*sigctxt).r9
+runtime.(*sigctxt).regs
+runtime.(*sigctxt).set_lr
+runtime.(*sigctxt).set_pc
+runtime.(*sigctxt).set_r28
+runtime.(*sigctxt).set_sp
+runtime.(*sigctxt).sigFromSeccomp
+runtime.(*sigctxt).sigFromUser
+runtime.(*sigctxt).sigcode
+runtime.(*sigctxt).siglr
+runtime.(*sigctxt).sigpc
+runtime.(*sigctxt).sigsp
+runtime.(*sigctxt).sp
+runtime.adjustctxt
+runtime.badctxt
+runtime.chunkBase
+runtime.chunkIdx.l1
+runtime.chunkIndex
+runtime.chunkPageIndex
+runtime.inUserArenaChunk
+runtime.initAlgAES
+runtime.memclrNoHeapPointersChunked
+runtime.morestack_noctxt
+runtime.scavChunkData.pack
+runtime.scavChunkData.shouldScavenge
+runtime.traceCompressStackSize
+runtime.unpackScavChunkData
+setUserArenaChunkToFault
+slice bounds out of range [:%x:%y]slice bounds out of range [%x:%y:]SIGURG: urgent condition on socketruntime: standard file descriptor out of memory allocating allArenas/memory/classes/heap/objects:bytesruntime.SetFinalizer: cannot pass too many pages allocated in chunk?mspan.ensureSwept: m is not lockedruntime: netpollBreak write failedforEachP: sched.safePointWait != 0schedule: spinning with local workentersyscallblock inconsistent bp entersyscallblock inconsistent sp runtime: g is running but p is notinvalid timer channel: no capacity
+sysGrow bounds not aligned to pallocChunkBytesruntime: failed to create new OS thread (have runtime: panic before malloc heap initialized
+tJ2OtxTOZTu
+type:.eq.internal/chacha8rand.State
+user arena chunk size is not a multiple of the physical page sizeruntime: function marked with #cgo nocallback called back into Goruntime.SetFinalizer: pointer not at beginning of allocated blockruntime: unexpected error while checking standard file descriptor casGToWaitingForSuspendG with non-isWaitingForSuspendG wait reason
+userArenaChunkFree

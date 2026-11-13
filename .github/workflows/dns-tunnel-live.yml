@@ -1,0 +1,376 @@
+name: DNS tunnel live test
+
+# The real end-to-end test: take the app's *own* tunnel binaries out of its APK,
+# run them unmodified on an x86_64 runner under qemu-aarch64, and push actual
+# bytes through the DNS tunnel.
+#
+# What the app does (recovered from the prince dump, string table ids in
+# brackets):
+#
+#   FastDNS / dnstt   [binaries: libxdnstt.so]
+#     libxdnstt.so -udp <server>:53 -report <app> -pubkey prince sd-<server> 127.0.0.1:7000
+#                  [-98598896105355] [-98637550811019] [-98671910549387]
+#                  [-98706270287755] [-98581716236171]          [-98736335058827]
+#
+#   SlowDNS / libdns  [binary: libdns.so]
+#     libdns.so -tunnel <pEncrypt("<server>:53")> -report <app>
+#               [-85963102320523]                  [-86014641928075]
+#
+# There is no 64-hex dnstt pubkey to hunt for: the -pubkey value is the literal
+# string "prince", and the SlowDNS key never leaves libdns.so.
+
+on:
+  workflow_dispatch:
+    inputs:
+      fastdns_host:
+        description: "FastDNS endpoint to tunnel through"
+        default: "173.212.232.241"
+      slowdns_host:
+        description: "SlowDNS endpoint"
+        default: "13.140.185.158"
+      hold:
+        description: "seconds to keep the client running"
+        default: "90"
+  push:
+    paths:
+      - "tools/tunnel_probe.py"
+      - ".github/workflows/dns-tunnel-live.yml"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  native-binary:
+    name: run their own binaries
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      FASTDNS_HOST: ${{ inputs.fastdns_host || '173.212.232.241' }}
+      SLOWDNS_HOST: ${{ inputs.slowdns_host || '13.140.185.158' }}
+      HOLD: ${{ inputs.hold || '90' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: qemu + unzip
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq qemu-user-static unzip file binutils
+          qemu-aarch64-static --version | head -2
+
+      - name: Get the APK
+        run: |
+          exec > >(tee /tmp/apk.log) 2>&1
+          set -x
+          mkdir -p art libs
+          APK=""
+          RUN=$(gh run list --workflow=analyze-apk.yml --status success --limit 1 \
+                  --json databaseId --jq '.[0].databaseId')
+          echo "analysis run: $RUN"
+          ART=$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$RUN/artifacts" \
+                  --jq '.artifacts[] | select(.name=="amtunnel-apk-analysis") | .id' | head -1)
+          echo "artifact id: $ART"
+          if [ -n "$ART" ]; then
+            gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$ART/zip" > art/a.zip || true
+            file art/a.zip; ls -l art/a.zip
+            if file art/a.zip | grep -qi zip; then
+              unzip -o -q art/a.zip -d art/x || true
+              APK=$(find art/x -name '*.apk' | head -1)
+            fi
+          fi
+          if [ -z "$APK" ]; then
+            echo "== gh run download path"
+            gh run download "$RUN" -n amtunnel-apk-analysis -D art/dl -R "$GITHUB_REPOSITORY" || true
+            APK=$(find art/dl -name '*.apk' | head -1)
+          fi
+          if [ -z "$APK" ]; then
+            echo "== filebin path"
+            UA="Mozilla/5.0 (X11; Linux x86_64) Chrome/124 Safari/537.36"
+            JAR=/tmp/cookies.txt; : > "$JAR"
+            for attempt in 1 2 3; do
+              curl -sSL --connect-timeout 20 --max-time 900 -A "$UA" -c "$JAR" -b "$JAR" \
+                -e "https://filebin.net/" -o art/bdnet.zip \
+                "https://filebin.net/idukzq7kugvrtcau/BDNET.VPN%20v106%20Mod.zip" || true
+              file art/bdnet.zip; ls -l art/bdnet.zip
+              file art/bdnet.zip | grep -qi zip && break
+              sleep 5
+            done
+            if file art/bdnet.zip | grep -qi zip; then
+              unzip -o -q art/bdnet.zip -d art/zip || true
+              APK=$(find art/zip -name '*.apk' -o -name '*.xapk' | head -1)
+              if [ -z "$APK" ]; then
+                # some uploads wrap the apk inside another zip
+                find art/zip -name '*.zip' | head -3
+                for z in $(find art/zip -name '*.zip' | head -3); do
+                  unzip -o -q "$z" -d art/zip2 || true
+                done
+                APK=$(find art/zip art/zip2 -name '*.apk' 2>/dev/null | head -1)
+              fi
+            fi
+          fi
+          echo "APK=$APK"
+          if [ -n "$APK" ]; then
+            echo "APK=$APK" >> "$GITHUB_ENV"
+            unzip -l "$APK" | grep -E "lib/.*\.so" | head -20
+            unzip -o -j "$APK" 'lib/arm64-v8a/*' -d libs || true
+            chmod +x libs/* 2>/dev/null || true
+            ls -l libs
+          fi
+
+      - name: What are these binaries?
+        if: env.APK != ''
+        run: |
+          set -uo pipefail
+          for f in libs/*.so; do
+            echo "== $f"
+            file "$f"
+            readelf -d "$f" 2>/dev/null | grep -E "NEEDED|dynamic" || echo "  (static: no NEEDED)"
+            readelf -h "$f" | grep -E "Class|Machine|Type"
+          done
+
+      - name: Key material actually present in libxdnstt
+        if: env.APK != ''
+        continue-on-error: true
+        run: |
+          set -uo pipefail
+          echo "== every 64-hex literal"
+          strings -n 8 libs/libxdnstt.so | grep -oE '\b[0-9a-f]{64}\b' | sort -u | head -20
+          echo "== base64-ish 43/44 char tokens"
+          strings -n 43 libs/libxdnstt.so | grep -oE '\b[A-Za-z0-9+/_-]{43,44}={0,2}\b' | sort -u | head -20
+          echo "== context around the pubkey flag"
+          strings -n 4 libs/libxdnstt.so | grep -n -i "prince" | head -10
+          strings -n 4 libs/libxdnstt.so | grep -o ".\{0,60\}pubkey.\{0,80\}" | head -5
+          echo "== flag names the fork knows"
+          strings -n 3 libs/libxdnstt.so | grep -oE "^-?[a-z]{3,12}$" | sort -u | head -40
+          exit 0
+
+      - name: Publish what the binaries need
+        if: env.APK != ''
+        continue-on-error: true
+        run: |
+          set -uo pipefail
+          : > /tmp/readelf.txt
+          for f in libs/*.so; do
+            {
+              echo "== $f"
+              file "$f"
+              readelf -h "$f" 2>&1 | grep -E "Class|Machine|Type|Entry"
+              echo "-- interpreter"
+              readelf -l "$f" 2>&1 | grep -A1 INTERP | tail -2
+              echo "-- needed"
+              readelf -d "$f" 2>&1 | grep NEEDED
+              echo
+            } >> /tmp/readelf.txt 2>&1 || true
+          done
+          ls -l libs >> /tmp/readelf.txt
+          cat /tmp/readelf.txt
+          mkdir -p analysis-bdnet/configs/dns/results
+          cp /tmp/readelf.txt analysis-bdnet/configs/dns/results/native-readelf.txt
+
+      - name: "Plan B: shim the Android linker with glibc's aarch64 loader"
+        if: env.APK != ''
+        continue-on-error: true
+        run: |
+          set -uo pipefail
+          sudo apt-get install -y -qq libc6-arm64-cross gcc-aarch64-linux-gnu
+          mkdir -p sysroot/system/bin sysroot/system/lib64
+          ln -sf /usr/aarch64-linux-gnu/lib/ld-linux-aarch64.so.1 sysroot/system/bin/linker64
+          for lib in libc.so.6 libdl.so.2 libm.so.6 libpthread.so.0 librt.so.1; do
+            base=${lib%%.so*}
+            ln -sf "/usr/aarch64-linux-gnu/lib/$lib" "sysroot/system/lib64/$base.so"
+          done
+          # bionic-only libraries: real stubs, because a Go/cgo binary only logs
+          cat > /tmp/android_stubs.c <<'EOF'
+          #include <stdarg.h>
+          #include <stdio.h>
+          int __android_log_print(int prio, const char *tag, const char *fmt, ...) {
+            va_list ap; va_start(ap, fmt); if (tag) fprintf(stderr, "[%s] ", tag);
+            vfprintf(stderr, fmt, ap); fputc('\n', stderr); va_end(ap); return 0; }
+          int __android_log_write(int prio, const char *tag, const char *text) {
+            fprintf(stderr, "[%s] %s\n", tag ? tag : "android", text); return 0; }
+          int __android_log_vprint(int prio, const char *tag, const char *fmt, va_list ap) {
+            vfprintf(stderr, fmt, ap); return 0; }
+          int __android_log_assert(const char *cond, const char *tag, const char *fmt, ...) {
+            va_list ap; va_start(ap, fmt); vfprintf(stderr, fmt, ap); va_end(ap);
+            fputc('\n', stderr); return 0; }
+          void android_set_abort_message(const char *msg) {
+            fprintf(stderr, "abort: %s\n", msg ? msg : ""); }
+          int __system_property_get(const char *name, char *value) { value[0] = 0; return 0; }
+          EOF
+          aarch64-linux-gnu-gcc -shared -fPIC -O1 -o sysroot/system/lib64/liblog.so /tmp/android_stubs.c
+          cp sysroot/system/lib64/liblog.so sysroot/system/lib64/libandroid.so
+          ls -l sysroot/system/bin sysroot/system/lib64
+          : > /tmp/shim.txt
+          for round in 1 2 3 4 5 6 7 8; do
+            out=$(QEMU_LD_PREFIX=$PWD/sysroot qemu-aarch64-static libs/libxdnstt.so -h 2>&1 || true)
+            echo "--- round $round ---" >> /tmp/shim.txt
+            echo "$out" >> /tmp/shim.txt
+            missing=$(echo "$out" | sed -n "s/.*error while loading shared libraries: \([^:]*\):.*/\1/p" | head -1)
+            if [ -z "$missing" ]; then echo "no missing library left" >> /tmp/shim.txt; break; fi
+            echo "stubbing $missing" >> /tmp/shim.txt
+            cp sysroot/system/lib64/liblog.so "sysroot/system/lib64/$missing"
+          done
+          echo "== libdns through the shim" >> /tmp/shim.txt
+          QEMU_LD_PREFIX=$PWD/sysroot qemu-aarch64-static libs/libdns.so -h >> /tmp/shim.txt 2>&1 || true
+          cat /tmp/shim.txt
+          cp /tmp/shim.txt analysis-bdnet/configs/dns/results/native-shim.txt
+
+      - name: Their dnstt client, --help
+        if: env.APK != ''
+        continue-on-error: true
+        run: |
+          qemu-aarch64-static libs/libxdnstt.so -h 2>&1 | head -40 || true
+
+      - name: Run their dnstt client against a real FastDNS endpoint
+        if: env.APK != ''
+        run: |
+          set -uo pipefail
+          DOMAIN="sd-${FASTDNS_HOST}"
+          echo "== libxdnstt.so -udp ${FASTDNS_HOST}:53 -report BDNET -pubkey prince ${DOMAIN} 127.0.0.1:7000"
+          qemu-aarch64-static libs/libxdnstt.so \
+            -udp "${FASTDNS_HOST}:53" -report BDNET -pubkey prince \
+            "${DOMAIN}" 127.0.0.1:7000 > /tmp/xdnstt.log 2>&1 &
+          echo $! > /tmp/xdnstt.pid
+          for i in $(seq 1 20); do ss -ltn 2>/dev/null | grep -q ":7000" && break; sleep 1; done
+          ss -ltnp 2>/dev/null | grep 7000 || echo "listener not up"
+          sleep 5
+          echo "== client log so far"; cat /tmp/xdnstt.log
+          set +e
+          python3 tools/tunnel_probe.py 127.0.0.1:7000 --mode socks --timeout "$HOLD"
+          python3 tools/tunnel_probe.py 127.0.0.1:7000 --mode http --host example.com --timeout "$HOLD"
+          python3 tools/tunnel_probe.py 127.0.0.1:7000 --mode raw --payload 'GET / HTTP/1.0\r\n\r\n' --timeout "$HOLD"
+          echo "== full client log"; cat /tmp/xdnstt.log
+          kill "$(cat /tmp/xdnstt.pid)" 2>/dev/null || true
+
+      - name: Their SlowDNS client
+        if: env.APK != ''
+        continue-on-error: true
+        run: |
+          set -uo pipefail
+          ENC=$(python3 -c "import sys; sys.path.insert(0,'tools'); import bdnet_dns as b; print(b.p_encrypt('${SLOWDNS_HOST}:53'))")
+          echo "== libdns.so -tunnel ${ENC} -report BDNET"
+          qemu-aarch64-static libs/libdns.so -tunnel "$ENC" -report BDNET > /tmp/libdns.log 2>&1 &
+          echo $! > /tmp/libdns.pid
+          sleep 20
+          cat /tmp/libdns.log
+          echo "== listeners"
+          ss -ltnp 2>/dev/null | head -20
+          for port in 1080 1081 7000 8080 9050; do
+            python3 tools/tunnel_probe.py "127.0.0.1:$port" --mode socks --timeout 10 --wait 1 \
+              && echo "  ^ SlowDNS client speaks SOCKS on $port"
+          done
+          kill "$(cat /tmp/libdns.pid)" 2>/dev/null || true
+
+      - name: Publish logs into the branch
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p analysis-bdnet/configs/dns/results
+          cp /tmp/xdnstt.log analysis-bdnet/configs/dns/results/native-dnstt.log 2>/dev/null || true
+          cp /tmp/libdns.log analysis-bdnet/configs/dns/results/native-slowdns.log 2>/dev/null || true
+          cp /tmp/apk.log analysis-bdnet/configs/dns/results/native-apk-fetch.log 2>/dev/null || true
+          for f in readelf shim; do
+            cp "/tmp/$f.txt" "analysis-bdnet/configs/dns/results/native-$f.txt" 2>/dev/null || \
+              echo "missing /tmp/$f.txt" > "analysis-bdnet/configs/dns/results/native-$f.txt"
+          done
+          ls -l analysis-bdnet/configs/dns/results/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-bdnet/configs/dns/results
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "dns: native tunnel client logs [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done
+
+  stock-dnstt:
+    name: stock dnstt with candidate keys
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: Build a stock dnstt-client
+        run: |
+          git clone --depth 1 https://github.com/Mygod/dnstt.git /tmp/dnstt
+          cd /tmp/dnstt/dnstt-client
+          go build -o /tmp/dnstt-client . 2>&1 | tail -5
+          ls -l /tmp/dnstt-client
+          /tmp/dnstt-client -h 2>&1 | head -20 || true
+
+      - name: "Candidate keys: is 'prince' a seed or the key itself?"
+        env:
+          HOSTS: "173.212.232.241 173.249.10.48 185.196.21.114"
+        run: |
+          exec > >(tee /tmp/stock.log) 2>&1
+          set -uo pipefail
+          pip install -q cryptography
+          python3 - <<'PY' > /tmp/keys.txt
+          import hashlib
+          from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PrivateKey
+          from cryptography.hazmat.primitives import serialization
+          pw = b"prince"
+          def x25519_pub(seed):
+              k = X25519PrivateKey.from_private_bytes(seed)
+              return k.public_key().public_bytes(serialization.Encoding.Raw,
+                                                 serialization.PublicFormat.Raw)
+          seeds = {"sha256": hashlib.sha256(pw).digest(),
+                   "blake2s": hashlib.blake2s(pw).digest(),
+                   "sha512_32": hashlib.sha512(pw).digest()[:32],
+                   "raw_pad": pw + bytes(26)}
+          # hypothesis A: the string is the server's *private* seed
+          for name, seed in seeds.items():
+              print(f"x25519({name}) {x25519_pub(seed).hex()}")
+          # hypothesis B: the string is hashed straight into the key
+          for name, seed in seeds.items():
+              print(f"direct({name}) {seed.hex()}")
+          PY
+          cat /tmp/keys.txt
+          : > /tmp/stock-result.txt
+          for host in $HOSTS; do
+            for line in $(awk '{print $1"|"$2}' /tmp/keys.txt); do
+              name=${line%%|*}; key=${line##*|}
+              for zone in "sd-$host" "$host" "t.$host"; do
+                port=$((7000 + RANDOM % 400))
+                /tmp/dnstt-client -udp "$host:53" -pubkey "$key" "$zone" "127.0.0.1:$port" \
+                  > "/tmp/c-$port.log" 2>&1 &
+                pid=$!
+                for i in $(seq 1 8); do ss -ltn 2>/dev/null | grep -q ":$port" && break; sleep 1; done
+                if timeout 20 python3 tools/tunnel_probe.py "127.0.0.1:$port" --mode http \
+                     --host example.com --timeout 15; then
+                  echo "HIT $name $host $zone" | tee -a /tmp/stock-result.txt
+                else
+                  echo "miss $name $host $zone" >> /tmp/stock-result.txt
+                fi
+                kill $pid 2>/dev/null; sleep 1
+              done
+            done
+          done
+          echo "== summary"; grep -c miss /tmp/stock-result.txt || true; grep HIT /tmp/stock-result.txt || echo "no hits"
+
+      - name: Publish
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p analysis-bdnet/configs/dns/results
+          cp /tmp/stock.log analysis-bdnet/configs/dns/results/stock-dnstt.log 2>/dev/null || true
+          cp /tmp/stock-result.txt analysis-bdnet/configs/dns/results/stock-dnstt-result.txt 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-bdnet/configs/dns/results
+          git diff --cached --quiet && exit 0
+          git commit -q -m "dns: stock dnstt key trials [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done

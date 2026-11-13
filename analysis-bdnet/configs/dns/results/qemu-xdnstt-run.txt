@@ -1,0 +1,55 @@
+========== 173.212.232.241
+listener up after 2s
+SOCKS probe -> FAIL in 25.0s: no SOCKS5 greeting (silence)
+HTTP probe -> FAIL in 25.0s: no response
+RAW probe -> FAIL in 25.0s: 0 B: 
+--- client log
+Licensed to BD NET VPN
+NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:36:22 uTLS fingerprint Firefox 105
+2026/10/29 00:36:22 effective MTU 131
+2026/10/29 00:36:22 begin session f577ba0f
+========== 173.249.10.48
+listener up after 2s
+SOCKS probe -> FAIL in 25.0s: no SOCKS5 greeting (silence)
+HTTP probe -> FAIL in 25.0s: no response
+RAW probe -> FAIL in 25.0s: 0 B: 
+--- client log
+Licensed to BD NET VPN
+NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:37:40 uTLS fingerprint iOS 13
+2026/10/29 00:37:40 effective MTU 132
+2026/10/29 00:37:40 begin session 09a7f235
+========== 185.196.21.114
+listener up after 2s
+SOCKS probe -> FAIL in 25.0s: no SOCKS5 greeting (silence)
+HTTP probe -> FAIL in 25.0s: no response
+RAW probe -> FAIL in 25.0s: 0 B: 
+--- client log
+Licensed to BD NET VPN
+NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:38:59 uTLS fingerprint Firefox 120
+2026/10/29 00:38:59 effective MTU 132
+2026/10/29 00:38:59 begin session 05896486
+========== 173.212.252.3
+listener up after 2s
+SOCKS probe -> FAIL in 25.0s: no SOCKS5 greeting (silence)
+HTTP probe -> FAIL in 25.0s: no response
+RAW probe -> FAIL in 25.0s: 0 B: 
+--- client log
+Licensed to BD NET VPN
+NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:40:17 uTLS fingerprint Randomized-ALPN 0
+2026/10/29 00:40:17 effective MTU 132
+2026/10/29 00:40:17 begin session cf3f512b
+========== 192.145.37.229
+listener up after 2s
+SOCKS probe -> FAIL in 25.0s: no SOCKS5 greeting (silence)
+HTTP probe -> FAIL in 25.0s: no response
+RAW probe -> FAIL in 25.0s: 0 B: 
+--- client log
+Licensed to BD NET VPN
+NOTE: Using this app into unlicensed software/application will result into legal action
+2026/10/29 00:41:35 uTLS fingerprint Chrome 120
+2026/10/29 00:41:35 effective MTU 132
+2026/10/29 00:41:35 begin session 48a0308d

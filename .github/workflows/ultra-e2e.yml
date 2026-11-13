@@ -1,0 +1,103 @@
+name: Ultra Tunnel - end-to-end dnstt proof
+
+# Ultra Tunnel's libdns.so is a stock dnstt client, so the credential set from
+# analysis-ultra/slowdns.json (domain + 64-hex pubkey + resolver) can be tested
+# with upstream dnstt built for linux/amd64. dnstt-client exposes a SOCKS5 proxy
+# on the local address, which is exactly what the app's tun2socks consumes.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tunnels:
+        description: "domain|pubkey;domain|pubkey"
+        required: false
+  push:
+    paths:
+      - ".github/workflows/ultra-e2e.yml"
+      - "analysis-ultra/probe_dnstt.py"
+
+permissions:
+  contents: write
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - name: Build dnstt-client (upstream first)
+        run: |
+          set +e
+          mkdir -p analysis-ultra/report
+          D=analysis-ultra/report/e2e-build.txt
+          : > "$D"
+          echo "== upstream reachability" >> "$D"
+          curl -sSI --max-time 20 https://www.bamsoftware.com/git/dnstt.git >> "$D" 2>&1
+          cd /tmp
+          for src in https://www.bamsoftware.com/git/dnstt.git \
+                     https://github.com/Mygod/dnstt.git \
+                     https://github.com/gh4rib/dnstt.git; do
+            echo "== $src" >> "$GITHUB_WORKSPACE/$D"
+            rm -rf dt
+            if git clone --depth 1 "$src" dt >> "$GITHUB_WORKSPACE/$D" 2>&1; then
+              (cd dt && go build -o /tmp/dnstt-client ./dnstt-client) >> "$GITHUB_WORKSPACE/$D" 2>&1
+              if [ -x /tmp/dnstt-client ]; then
+                echo "BUILT_FROM=$src" >> "$GITHUB_WORKSPACE/$D"
+                /tmp/dnstt-client -h 2>&1 | head -12 >> "$GITHUB_WORKSPACE/$D"
+                cp /tmp/dnstt-client /tmp/dnstt-primary
+                break
+              fi
+            fi
+          done
+          cat "$D"
+          test -x /tmp/dnstt-primary
+
+      - name: Tunnel probes
+        run: |
+          set +e
+          OUT=analysis-ultra/report/e2e.txt
+          : > "$OUT"
+          run() {
+            dom="$1"; key="$2"; res="$3"
+            echo "==== $dom via $res" >> "$OUT"
+            timeout 120 /tmp/dnstt-primary -udp "$res:53" -pubkey "$key" "$dom" 127.0.0.1:2222 > /tmp/c.log 2>&1 &
+            pid=$!
+            sleep 12
+            python3 analysis-ultra/probe_tcp.py "local 2222 ($dom)" >> "$OUT" 2>&1
+            kill $pid 2>/dev/null; wait $pid 2>/dev/null
+            echo "  client log:" >> "$OUT"
+            tail -8 /tmp/c.log | sed 's/^/    /' >> "$OUT"
+            echo >> "$OUT"
+          }
+          # endpoints come from analysis-ultra/report/dns-endpoints.txt: the
+          # authoritative NS address found by walking the delegation chain.
+          run ns.up2.fcafessh.net   25978b7ee85744bba71e1f34c962bd9d812cd4fa7edd4221984fdb80d9b7c026 209.94.59.213
+          run newca.dozapp.xyz      b4e0dccf98092689d5c81fe4cf37b85f545ed5a770c35f004af99d749fda9e79 144.217.81.86
+          run dnsde1.dozapp.xyz     569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809 154.53.57.37
+          run dnsde1.dozapp.xyz     569486bcc15591d49d58b9045429f985f880b7c55ef9926b42cdcf1f46761809 84.46.252.158
+          run nssshvip1.vpnprous.com 5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032 51.83.129.208
+          run slwdns.codefyinc.com  1f259692993f67c5f5cba26da464ed16f57a394c20fb637d3d2a346781012809 1.1.1.1
+          run ns.rovox.wampipti.net 097256d14ca3780369c81867b09eea59990b2ffa4153c9a9662234868243a40d 1.1.1.1
+          run nssshtt.mdmonzo.com   5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032 8.8.8.8
+          run nsVIPSSH087.vpnprous.com 5d30d19aa2524d7bd89afdffd9c2141575b21a728ea61c8cd7c8bf3839f97032 8.8.8.8
+          cat "$OUT"
+
+      - name: Commit
+        if: always()
+        run: |
+          set +e
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-accounts[bot]@users.noreply.github.com"
+          git add analysis-ultra
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "ultra: dnstt end-to-end probe [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" > /dev/null 2>&1
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done

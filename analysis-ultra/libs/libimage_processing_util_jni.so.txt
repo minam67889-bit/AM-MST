@@ -1,0 +1,4 @@
+### libimage_processing_util_jni.so  29008 bytes
+--- file:
+/tmp/u/libs/libimage_processing_util_jni.so: ELF 64-bit LSB shared object, ARM aarch64, version 1 (SYSV), dynamically linked, BuildID[sha1]=e667d7f16c83b70a2cec5d8de25bd854a1a2ba53, stripped
+--- interesting strings:

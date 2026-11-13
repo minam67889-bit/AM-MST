@@ -1,0 +1,144 @@
+name: Ultra Tunnel - extract configs, libs and code
+
+# One shot analysis of co.strongteam.ultra (Ultra Tunnel), same treatment as
+# BD NET: pull the XAPK, unpack it, dump what the tunnel binaries and assets
+# say, decompile the dex, and commit the results into analysis-ultra/ so the
+# next steps can be done locally instead of inside a 240 s shell slot.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/ultra-extract.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq unzip file binutils curl jq python3 default-jre-headless
+          java -version 2>&1 | head -2
+
+      - name: Fetch the XAPK
+        run: |
+          set +e
+          mkdir -p /tmp/u && cd /tmp/u
+          URL="https://filebin.net/tc28bjzj2p27ju9v/co.strongteam.ultra.zip"
+          UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+          curl -sS -c jar -A "$UA" -o /dev/null "$URL"
+          curl -sSL -c jar -b jar -A "$UA" -H "Referer: $URL" -o u.zip "$URL"
+          ls -l u.zip
+          unzip -o -q u.zip -d x
+          ls -l x
+          echo "OK" > /tmp/u/ok
+
+      - name: Assets (the server list lives here)
+        run: |
+          set +e
+          mkdir -p analysis-ultra/assets
+          cd /tmp/u/x
+          for f in manifest.json; do cp "$f" "$GITHUB_WORKSPACE/analysis-ultra/$f" 2>/dev/null; done
+          unzip -o -q co.strongteam.ultra.59.apk 'assets/*' -d base > /dev/null
+          du -sh base/assets
+          ls -l base/assets | head -20
+          mkdir -p "$GITHUB_WORKSPACE/analysis-ultra/assets"
+          # small text assets are copied whole; huge ones are sampled
+          for f in base/assets/*.json base/assets/custom_routing_* ; do
+            [ -f "$f" ] || continue
+            sz=$(stat -c%s "$f")
+            out="$GITHUB_WORKSPACE/analysis-ultra/assets/$(basename "$f")"
+            if [ "$sz" -lt 8000000 ]; then cp "$f" "$out"; else head -c 2000000 "$f" > "$out"; fi
+            echo "== $f ($sz bytes)"
+            head -c 400 "$f"; echo; echo
+          done
+          # anything that is not a json/png and could be a config
+          find base/assets -maxdepth 1 -type f | while read -r f; do
+            case "$f" in *.png|*.json|custom_routing_*) continue;; esac
+            echo "== other: $f $(stat -c%s "$f")"
+            head -c 200 "$f" | strings | head -5
+          done
+
+      - name: Native binaries
+        run: |
+          set +e
+          cd /tmp/u/x
+          unzip -o -q config.arm64_v8a.apk -d arm64
+          mkdir -p /tmp/u/libs
+          cp arm64/lib/arm64-v8a/*.so /tmp/u/libs/ 2>/dev/null
+          unzip -o -j co.strongteam.ultra.59.apk 'lib/arm64-v8a/*' -d /tmp/u/libs > /dev/null 2>&1
+          chmod +x /tmp/u/libs/* 2>/dev/null
+          ls -l /tmp/u/libs
+          OUT="$GITHUB_WORKSPACE/analysis-ultra/libs"
+          mkdir -p "$OUT"
+          for lib in /tmp/u/libs/*.so; do
+            b=$(basename "$lib")
+            {
+              echo "### $b  $(stat -c%s "$lib") bytes"
+              echo "--- file:"; file "$lib"
+              echo "--- interesting strings:"
+              strings -n 5 "$lib" | grep -iE "slowdns|dnstt|socks|tunnel|127\.0\.0\.1|:53|:1080|:7000|:7777|user|pass|pubkey|report|dns-|sd-|zone|encrypt|decrypt" | sort -u | head -200
+            } > "$OUT/$b.txt"
+            echo "== $b -> $(wc -l < "$OUT/$b.txt") lines"
+          done
+
+      - name: Decompile the dex
+        run: |
+          set +e
+          cd /tmp/u
+          curl -sSL -o jadx.zip "https://github.com/skylot/jadx/releases/download/v1.5.0/jadx-1.5.0.zip"
+          unzip -o -q jadx.zip -d jadx
+          chmod +x jadx/bin/jadx
+          cp x/co.strongteam.ultra.59.apk /tmp/u/base.apk
+          (setsid nohup jadx/bin/jadx -d /tmp/u/src --no-res --threads-count 4 /tmp/u/base.apk > /tmp/u/jadx.log 2>&1 < /dev/null &)
+          sleep 150
+          tail -2 /tmp/u/jadx.log
+          ls /tmp/u/src 2>/dev/null | head
+
+      - name: Wait for jadx and grep the code
+        run: |
+          set +e
+          for i in $(seq 1 40); do
+            grep -qE "finished|ERROR" /tmp/u/jadx.log && break
+            sleep 15
+          done
+          tail -3 /tmp/u/jadx.log
+          OUT="$GITHUB_WORKSPACE/analysis-ultra/src"
+          mkdir -p "$OUT"
+          S=/tmp/u/src/sources
+          du -sh "$S" 2>/dev/null
+          echo "--- files mentioning the tunnel binaries:"
+          grep -rl "libdns\|libuz\|socks\.so\|libsocks" "$S" --include=*.java 2>/dev/null | head -20 | tee /tmp/u/hits.txt
+          for f in $(cat /tmp/u/hits.txt); do
+            rel=${f#"$S/"}
+            mkdir -p "$OUT/$(dirname "$rel")"
+            cp "$f" "$OUT/$rel"
+          done
+          echo "--- zone / server strings in code:"
+          grep -rhoE "\"[a-z0-9.-]+\.(com|net|org|io|xyz|top|site|info|me|live|world|fit|space)\"" "$S" --include=*.java 2>/dev/null | sort | uniq -c | sort -rn | head -40
+
+      - name: Commit what we learned
+        if: always()
+        run: |
+          set +e
+          cd "$GITHUB_WORKSPACE"
+          cp /tmp/u/jadx.log analysis-ultra/jadx.log 2>/dev/null
+          ls -la analysis-ultra
+          du -sh analysis-ultra
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-ultra
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "ultra: extracted assets, libs and decompiled sources [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" > /dev/null 2>&1
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done

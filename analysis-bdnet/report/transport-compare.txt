@@ -1,0 +1,44 @@
+==== control: server IP   (-udp 13.140.185.158:53  zone sd-de1.liftmeon.org)
+  far-end greeting: 05ff in 3.4s (no tunnel)
+  client log:
+    Licensed to BD NET VPN
+    NOTE: Using this app into unlicensed software/application will result into legal action
+    2026/11/11 10:40:18 uTLS fingerprint iOS 14
+    2026/11/11 10:40:18 effective MTU 130
+    2026/11/11 10:40:18 begin session bba6b2e6
+    2026/11/11 10:40:31 begin stream bba6b2e6:3
+    2026/11/11 10:40:34 end stream bba6b2e6:3
+
+==== via 8.8.8.8 (Google)   (-udp 8.8.8.8:53  zone sd-de1.liftmeon.org)
+  far-end greeting: 05ff in 0.4s (no tunnel)
+  client log:
+    Licensed to BD NET VPN
+    NOTE: Using this app into unlicensed software/application will result into legal action
+    2026/11/11 10:40:35 uTLS fingerprint Randomized-ALPN 0
+    2026/11/11 10:40:35 effective MTU 130
+    2026/11/11 10:40:35 begin session a4b46b3e
+    2026/11/11 10:40:49 begin stream a4b46b3e:3
+    2026/11/11 10:40:49 end stream a4b46b3e:3
+
+==== via 8.8.4.4 (Google)   (-udp 8.8.4.4:53  zone sd-de1.liftmeon.org)
+  far-end greeting: 05ff in 0.4s (no tunnel)
+  client log:
+    Licensed to BD NET VPN
+    NOTE: Using this app into unlicensed software/application will result into legal action
+    2026/11/11 10:40:50 uTLS fingerprint Randomized-ALPN 0
+    2026/11/11 10:40:50 effective MTU 130
+    2026/11/11 10:40:50 begin session 6ac639ba
+    2026/11/11 10:41:03 begin stream 6ac639ba:3
+    2026/11/11 10:41:03 end stream 6ac639ba:3
+
+==== via 1.1.1.1 (Cloudflare)   (-udp 1.1.1.1:53  zone sd-de1.liftmeon.org)
+  far-end greeting: 05ff in 0.5s (no tunnel)
+  client log:
+    Licensed to BD NET VPN
+    NOTE: Using this app into unlicensed software/application will result into legal action
+    2026/11/11 10:41:04 uTLS fingerprint Randomized-ALPN 0
+    2026/11/11 10:41:04 effective MTU 130
+    2026/11/11 10:41:04 begin session 1ad08838
+    2026/11/11 10:41:17 begin stream 1ad08838:3
+    2026/11/11 10:41:18 end stream 1ad08838:3
+

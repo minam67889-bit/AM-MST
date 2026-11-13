@@ -1,0 +1,70 @@
+### libdns.so with a bogus flag (Go prints every flag)
+flag provided but not defined: -zzz
+Usage:
+  arm64/lib/arm64-v8a/libdns.so [-doh URL|-dot ADDR|-udp ADDR] -pubkey-file PUBKEYFILE DOMAIN LOCALADDR
+
+Examples:
+  arm64/lib/arm64-v8a/libdns.so -doh https://resolver.example/dns-query -pubkey-file server.pub t.example.com 127.0.0.1:7000
+  arm64/lib/arm64-v8a/libdns.so -dot resolver.example:853 -pubkey-file server.pub t.example.com 127.0.0.1:7000
+
+  -doh string
+    	URL of DoH resolver
+  -dot string
+    	address of DoT resolver
+  -pubkey string
+    	server public key (64 hex digits)
+  -pubkey-file string
+    	read server public key from file
+  -udp string
+    	address of UDP DNS resolver
+
+### libdns.so --help
+Usage:
+  arm64/lib/arm64-v8a/libdns.so [-doh URL|-dot ADDR|-udp ADDR] -pubkey-file PUBKEYFILE DOMAIN LOCALADDR
+
+Examples:
+  arm64/lib/arm64-v8a/libdns.so -doh https://resolver.example/dns-query -pubkey-file server.pub t.example.com 127.0.0.1:7000
+  arm64/lib/arm64-v8a/libdns.so -dot resolver.example:853 -pubkey-file server.pub t.example.com 127.0.0.1:7000
+
+  -doh string
+    	URL of DoH resolver
+  -dot string
+    	address of DoT resolver
+  -pubkey string
+    	server public key (64 hex digits)
+  -pubkey-file string
+    	read server public key from file
+  -udp string
+    	address of UDP DNS resolver
+
+### libsocks.so --help
+BadVPN tun2socks 1.999.127
+Copyright (C) 2010 Ambroz Bizjak <ambrop7@gmail.com>
+Usage:
+    arm64/lib/arm64-v8a/libsocks.so
+        [--help]
+        [--version]
+        [--logger <stdout/syslog>]
+        (logger=syslog?
+            [--syslog-facility <string>]
+            [--syslog-ident <string>]
+        )
+        [--loglevel <0-5/none/error/warning/notice/info/debug>]
+        [--channel-loglevel <channel-name> <0-5/none/error/warning/notice/info/debug>] ...
+        [--fake-proc]
+        [--tunfd <fd>]
+        [--tunmtu <mtu>]
+        [--dnsgw <dns_gateway_address>]
+        [--pid <pid_file>]
+        [--sock <sock_file>]
+        --netif-ipaddr <ipaddr>
+        --netif-netmask <ipnetmask>
+        --socks-server-addr <addr>
+        [--netif-ip6addr <addr>]
+        [--username <username>]
+        [--password <password>]
+        [--password-file <file>]
+        [--append-source-to-username]
+        [--udpgw-remote-server-addr <addr>]
+        [--udpgw-max-connections <number>]
+        [--udpgw-connection-buffer-size <number>]

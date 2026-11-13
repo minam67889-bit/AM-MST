@@ -1,0 +1,129 @@
+name: BD NET on an emulator - real tunnel
+
+# The scenario the user describes: install BD NET, pick a SlowDNS server, press
+# connect. This job does exactly that on an arm64 emulator and then proves -
+# from outside the app - whether bytes move through the DNS tunnel:
+#
+#   * /proc/<pid>/cmdline of the native tunnel clients  (the real argv)
+#   * adb forward tcp:17000 tcp:7000  +  SOCKS/HTTP/DNS probes
+#   * logcat of the client, and a screenshot
+#
+# Everything is published back into the branch, because artifacts cannot be
+# pulled from the dev sandbox.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/emulator-tunnel.yml"
+      - "tools/android_tap.py"
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  emulator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          ls -l /dev/kvm || echo "no KVM - arm64 emulation will be slow"
+
+      - name: APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          exec > >(tee /tmp/apk.txt) 2>&1
+          set +e
+          mkdir -p art
+          run=$(gh run list --workflow=analyze-apk.yml --status success --limit 1 \
+                  --json databaseId --jq '.[0].databaseId')
+          art=$(gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$run/artifacts" \
+                  --jq '.artifacts[] | select(.name=="amtunnel-apk-analysis") | .id' | head -1)
+          gh api "/repos/$GITHUB_REPOSITORY/actions/artifacts/$art/zip" > art/a.zip
+          unzip -o -q art/a.zip -d art/x
+          find art/x -name '*.apk' | head
+          cp "$(find art/x -name '*.apk' | head -1)" art/bdnet.apk
+          ls -l art/bdnet.apk
+
+      - name: Boot, install, connect, and probe the tunnel
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          target: default
+          arch: arm64-v8a
+          profile: pixel
+          emulator-boot-timeout: 3600
+          disable-animations: true
+          emulator-options: >-
+            -no-window -no-snapshot -gpu off -noaudio -no-boot-anim
+            -camera-back none -camera-front none -memory 3072 -no-metrics
+            -partition-size 4096
+          script: |
+            set +e
+            exec > >(tee /tmp/emu.txt) 2>&1
+            adb wait-for-device
+            adb shell getprop ro.product.cpu.abi
+            adb install -r -g art/bdnet.apk
+            adb shell pm list packages | grep -i bdfreevpn
+            adb shell monkey -p dastan.prince.bdfreevpn -c android.intent.category.LAUNCHER 1
+            sleep 75
+            echo "=== screen 1"
+            python3 tools/android_tap.py list
+            echo "=== try to open the server list"
+            python3 tools/android_tap.py tap --text-re "(?i)free|server|config|سرور" --index 0
+            sleep 8
+            python3 tools/android_tap.py list
+            echo "=== pick a slowdns / dns entry"
+            python3 tools/android_tap.py tap --text-re "(?i)slow|dns|de1|de2" --index 0
+            sleep 8
+            python3 tools/android_tap.py list
+            echo "=== connect"
+            python3 tools/android_tap.py connect
+            sleep 45
+            echo "=== native tunnel processes"
+            for pid in $(adb shell "ps -A" | grep -Ei "xdnstt|libdns|udpq" | awk '{print $2}'); do
+              echo "--- pid $pid"
+              adb shell "cat /proc/$pid/cmdline | tr '\\0' ' '"
+              echo
+            done
+            echo "=== listening sockets"
+            adb shell "cat /proc/net/tcp /proc/net/tcp6" | head -30
+            echo "=== logcat"
+            adb logcat -d | grep -iE "dnstt|libdns|slowdns|udpq|tunnel|not allowed|error" | tail -80
+            echo "=== forward and probe"
+            adb forward tcp:17000 tcp:7000
+            timeout 90 python3 tools/tunnel_probe.py 127.0.0.1:17000 --mode socks --timeout 40 --wait 10
+            timeout 90 python3 tools/tunnel_probe.py 127.0.0.1:17000 --mode http --timeout 40 --wait 5
+            timeout 90 python3 tools/tunnel_probe.py 127.0.0.1:17000 --mode raw \
+              --payload 'GET / HTTP/1.0\r\nHost: example.com\r\n\r\n' --timeout 40
+            echo "=== final logcat"
+            adb logcat -d | tail -120
+            adb exec-out screencap -p > /tmp/screen.png
+
+      - name: Publish
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p analysis-bdnet/configs/dns/results
+          cp /tmp/emu.txt analysis-bdnet/configs/dns/results/emulator-run.txt 2>/dev/null || true
+          cp /tmp/apk.txt analysis-bdnet/configs/dns/results/emulator-apk.txt 2>/dev/null || true
+          cp /tmp/screen.png analysis-bdnet/configs/dns/results/emulator-screen.png 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis-bdnet/configs/dns/results
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -q -m "dns: emulator run of the real app [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && \
+              git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 5
+          done

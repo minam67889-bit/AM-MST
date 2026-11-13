@@ -1,0 +1,43 @@
+### who writes SSH_HOST
+/tmp/resolved/sources/prince/udp/vpn/service/vpn/Tunnel.java:178:                            this.mRoutes.a(new T7(sharedPreferencesC2597fC.getString("SSH_HOST", ""), 32), false);
+/tmp/resolved/sources/defpackage/C2507db.java:27:        return this.a.getString("SSH_HOST", "");
+/tmp/resolved/sources/defpackage/TI.java:133:                sharedPreferencesEditorC2544eC.putString("SSH_HOST", str3);
+
+### who touches janny.json
+/tmp/resolved/sources/prince/udp/vpn/activities/a.java:28:        File file = new File(getFilesDir().getAbsolutePath() + "/janny.json");
+/tmp/resolved/sources/prince/udp/vpn/activities/a.java:32:                    str = AbstractC3622yh.c(AbstractC2866kI.M(getApplicationContext(), "janny.json"), AbstractC3622yh.a);
+/tmp/resolved/sources/defpackage/RunnableC0043Cb.java:114:                            File file = new File(uDPClient.getFilesDir().getAbsolutePath() + "/janny.json");
+
+### server-list plumbing
+/tmp/resolved/sources/prince/udp/vpn/service/PDoQService.java
+/tmp/resolved/sources/prince/udp/vpn/service/SuperService.java
+/tmp/resolved/sources/defpackage/C2507db.java
+/tmp/resolved/sources/defpackage/KI.java
+/tmp/resolved/sources/com/michaelmuenzer/android/scrollablennumberpicker/ScrollableNumberPicker.java
+
+### superdns outbound json builder (address/method/password)
+
+### every domain-looking token in the resolved tree
+     27 java.io
+     12 java.net
+      6 rect.top
+      5 rect2.top
+      4 r12.top
+      4 r10.top
+      1 oast.info
+
+### assets/janny.json
+bytes: 121952
+blob: 121952 bytes, head=b'xLr8+MDEleNAywyu734WgWsjiG3SxQlKG72b3qLq'
+  base64 -> 91464 bytes, head=c4bafcf8c0c495e340cb0caeef7e16816b23886dd2c5094a1bbd9bdea2eafb87
+  no transform produced JSON-ish plaintext
+  as-is printable ratio: 0.38
+  first 256 bytes: c4bafcf8c0c495e340cb0caeef7e16816b23886dd2c5094a1bbd9bdea2eafb8700bd6d0089d7990be7afb50fd6616afe97803f6238c8ae94e8f6b8d2731dcb57428c2cf4766fb4c5c1b27347ec6b5d4bbc0bb363b32b5d25881abab9f8ae344a056a27e02d2282c7e41d6f1ef1f13d73723e4ecd77eb21659a19f08d3003325da33f72ccc99a9ceac4db5b439add2a3a799d748cd93ecc31ca429372324c621c6b6669da036ca2b6fe63af4d3afed6099e465f6b06f8f25947b1ef505ba917063da69a9e013e3d7d2198d7b83d83f21b0521e42877232819ebcc883ae1058804780166c992e0236199f48ec09f4fe80e5ed11ac82021af6a008b45c7be72442d
+
+### res/raw + assets
+smali/assets/ɑ ɾ վ ɑ ղ.png
+smali/assets/¹.otf
+smali/assets/janny.json
+smali/res/raw/firebase_crashlytics_keep.xml
+smali/res/raw/firebase_common_keep.xml
+smali/res/raw/pdnsd_local

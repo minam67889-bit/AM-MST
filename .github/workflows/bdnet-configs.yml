@@ -1,0 +1,83 @@
+name: BD NET config recovery
+
+# Re-derives the whole BD NET server catalogue from the payloads that ship in
+# the APK (committed under analysis-bdnet/) plus the live update bundle, using
+# tools/bdnet_sorter.py and tools/bdnet_decrypt.py. Fails unless every
+# known-good value comes back, so a regression in the cipher port breaks the
+# build instead of silently producing junk.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/bdnet_sorter.py"
+      - "tools/bdnet_decrypt.py"
+      - ".github/workflows/bdnet-configs.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  recover:
+    name: Decrypt catalogue
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch the live update bundle
+        run: |
+          set -euo pipefail
+          mkdir -p live
+          gh api "/repos/panigbatanc/BDNET2023/contents/JSONDEC2025" \
+            -H "Accept: application/vnd.github.raw" > live/JSONDEC2025.b64
+          echo "bytes=$(wc -c < live/JSONDEC2025.b64)"
+          test "$(wc -c < live/JSONDEC2025.b64)" -gt 100000
+
+      - name: Decrypt the bundled v106 catalogue
+        run: |
+          set -euo pipefail
+          python3 tools/bdnet_sorter.py analysis-bdnet/assets/assets_sorter.json \
+            -o out/bundled --json | tee out-bundled.log
+          grep -q 'SlowDns Global' out-bundled.log
+
+      - name: Decrypt the live catalogue
+        run: |
+          set -euo pipefail
+          python3 tools/bdnet_sorter.py live/JSONDEC2025.b64 -o out/live --json | tee out-live.log
+          python3 - <<'PY'
+          import pathlib
+          counts = {}
+          for name in ("slowdns", "fastdns", "udpq", "kp", "kpn-cf"):
+              f = pathlib.Path(f"out/live/{name}.txt")
+              counts[name] = len(f.read_text().split()) if f.exists() else 0
+          print("live hosts:", counts)
+          assert counts["slowdns"] == 20, counts
+          assert counts["fastdns"] >= 90, counts
+          assert counts["udpq"] >= 500, counts
+          assert counts["kp"] >= 1000, counts
+          assert counts["kpn-cf"] >= 1, counts
+          sips = pathlib.Path("out/live/sips.txt").read_text().split()
+          assert len(sips) >= 1000, len(sips)
+          print(f"SELFTEST PASS ({len(sips)} proxy ips, {counts['slowdns']} slowdns domains)")
+          PY
+
+      - name: Decrypt the Psiphon fallback
+        run: |
+          set -euo pipefail
+          python3 tools/bdnet_decrypt.py analysis-bdnet/assets/assets_server.psi \
+            -o out/psiphon --json | tee out-psiphon.log
+          test "$(wc -l < out/psiphon/psiphon_entries.txt)" -eq 18
+
+      - name: Self-test the tool
+        run: python3 tools/bdnet_sorter.py --selftest
+
+      - name: Upload catalogue
+        uses: actions/upload-artifact@v4
+        with:
+          name: bdnet-configs
+          path: out/
+          if-no-files-found: error
+          retention-days: 30
